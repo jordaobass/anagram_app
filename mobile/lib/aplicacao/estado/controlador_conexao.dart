@@ -21,6 +21,7 @@ final conexaoProvider = NotifierProvider<ControladorConexao, EstadoConexao>(Cont
 
 class ControladorConexao extends Notifier<EstadoConexao> {
   RepositorioPedaleira? _repositorio;
+  ClienteAnagram? _cliente;
   int _tentativa = 0;
   TransporteAnagram? _transporte;
   StreamSubscription<EstadoTransporte>? _vigia;
@@ -42,7 +43,14 @@ class ControladorConexao extends Notifier<EstadoConexao> {
   }
 
   Future<void> conectarDemonstracao() async {
-    final presets = await ref.read(presetsDemonstracaoProvider.future);
+    final Map<int, Map<String, dynamic>> presets;
+    try {
+      presets = await ref.read(presetsDemonstracaoProvider.future);
+    } on Object catch (erro, pilha) {
+      registro.e('conexão: presets da demonstração não carregaram', error: erro, stackTrace: pilha);
+      state = const FalhaDeConexao('Não foi possível abrir a demonstração.');
+      return;
+    }
     final midi = ref.read(midiDemonstracaoProvider)();
     final pedaleira = TransporteDemonstracao(presets: presets);
     ref.read(ajusteDemonstracaoProvider)(pedaleira);
@@ -80,14 +88,22 @@ class ControladorConexao extends Notifier<EstadoConexao> {
       registro.e('conexão: não abriu ${transporte.descricao}', error: erro);
       if (tentativa == _tentativa) state = FalhaDeConexao(_explicar(erro));
       return;
+    } on Object catch (erro, pilha) {
+      // erro fora do protocolo (DOMException do WebHID bloqueado por política,
+      // falha ao criar o isolate do hidapi): sem isto a tela ficaria em
+      // "Conectando…" para sempre
+      registro.e('conexão: falha inesperada ao abrir ${transporte.descricao}', error: erro, stackTrace: pilha);
+      if (tentativa == _tentativa) state = FalhaDeConexao('Não foi possível abrir ${transporte.descricao}: $erro');
+      return;
     }
-    if (tentativa != _tentativa) return unawaited(transporte.fechar());
+    if (tentativa != _tentativa) return unawaited(_fecharSemFalhar(transporte.descricao, transporte.fechar));
     final cliente = ClienteAnagram(
       transporte,
       pausaEntreRelatorios: () => ref.read(pausaRelatoriosProvider) ?? transporte.pausaSugerida,
       cronometro: ref.read(cronometroProvider),
     );
     _transporte = transporte;
+    _cliente = cliente;
     _repositorio = RepositorioPedaleira(ApiAnagram(cliente));
     await _abrirMidi(midi, tentativa);
     // cancelaram enquanto o MIDI abria: _soltar já fechou tudo
@@ -120,12 +136,26 @@ class ControladorConexao extends Notifier<EstadoConexao> {
     unawaited(_vigia?.cancel());
     _vigia = null;
     final transporte = _transporte;
-    _transporte = null;
-    _repositorio = null;
-    if (transporte != null && transporte.aberto) await transporte.fechar();
+    final cliente = _cliente;
     final midi = _midi;
+    _transporte = null;
+    _cliente = null;
+    _repositorio = null;
     _midi = null;
-    if (midi != null && midi.aberta) await midi.fechar();
+    if (transporte != null && transporte.aberto) await _fecharSemFalhar(transporte.descricao, transporte.fechar);
+    // depois do transporte: com ele fechado, nenhuma resposta nova gera medição
+    if (cliente != null) unawaited(cliente.encerrar());
+    if (midi != null && midi.aberta) await _fecharSemFalhar(midi.descricao, midi.fechar);
+  }
+
+  /// Fechar é arrumação: uma falha aqui (canal nativo que já sumiu) vai para o
+  /// log, mas não pode impedir o Desconectar nem o Cancelar.
+  static Future<void> _fecharSemFalhar(String meio, Future<void> Function() fechar) async {
+    try {
+      await fechar();
+    } on Object catch (erro, pilha) {
+      registro.w('conexão: $meio não fechou limpo', error: erro, stackTrace: pilha);
+    }
   }
 
   /// MIDI é opcional: sem ele, abrir um preset só faz audição.
@@ -133,9 +163,11 @@ class ControladorConexao extends Notifier<EstadoConexao> {
     if (midi == null) return;
     try {
       await midi.abrir();
-      if (tentativa != _tentativa) return unawaited(midi.fechar());
+      if (tentativa != _tentativa) return unawaited(_fecharSemFalhar(midi.descricao, midi.fechar));
       _midi = midi;
-    } on ErroAnagram catch (erro) {
+    } on Object catch (erro) {
+      // qualquer falha do MIDI (Web MIDI sem permissão, porta que sumiu) só
+      // tira a troca de slot; a conexão HID segue
       registro.w('conexão: sem MIDI (${midi.descricao}); abrir preset será só audição', error: erro);
     }
   }
