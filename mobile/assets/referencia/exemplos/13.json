@@ -1,0 +1,94 @@
+{
+ "preset": {
+  "bindings": {},
+  "chains": {
+   "1": {
+    "blocks": {
+     "1": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Gain",
+        "symbol": "gain",
+        "value": 7.200000286102295
+       },
+       "2": {
+        "name": "Overdrive",
+        "symbol": "overdrive",
+        "value": 0
+       },
+       "3": {
+        "name": "Bass",
+        "symbol": "bass",
+        "value": 8.199999809265137
+       },
+       "4": {
+        "name": "Middle",
+        "symbol": "mid",
+        "value": 2.5
+       },
+       "5": {
+        "name": "Treble",
+        "symbol": "high",
+        "value": 7
+       },
+       "6": {
+        "name": "Level",
+        "symbol": "level",
+        "value": 4.099999904632568
+       }
+      },
+      "properties": {},
+      "quickpot": "gain",
+      "scenes": {},
+      "uri": "urn:darkglass:neural-plugins:fruity"
+     },
+     "2": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Blend",
+        "symbol": "Blend",
+        "value": 31
+       },
+       "2": {
+        "name": "Time",
+        "symbol": "Time",
+        "value": 1.7000000476837158
+       },
+       "3": {
+        "name": "Range",
+        "symbol": "Range",
+        "value": 1
+       },
+       "4": {
+        "name": "Subdivision",
+        "symbol": "Subdivision",
+        "value": 5
+       },
+       "5": {
+        "name": "Feedback",
+        "symbol": "Feedback",
+        "value": 3
+       },
+       "6": {
+        "name": "Trails",
+        "symbol": "Trails",
+        "value": 0
+       }
+      },
+      "properties": {},
+      "quickpot": "Blend",
+      "scenes": {},
+      "uri": "urn:darkglass:DigitalDelay"
+     }
+    }
+   }
+  },
+  "name": "Orange",
+  "scene": 0,
+  "uuid": "978549cca1f34e01-86472996-f6441612-6c4d6743b2890ae9f23f3f81"
+ },
+ "type": "preset",
+ "version": 1
+}
