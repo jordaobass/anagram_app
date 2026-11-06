@@ -4,6 +4,7 @@
 import 'dart:convert';
 
 import '../modelo/documento_preset.dart';
+import '../modelo/json_util.dart';
 import '../modelo/slot_preset.dart';
 import 'cliente_anagram.dart';
 import 'erros_anagram.dart';
@@ -37,15 +38,17 @@ class ApiAnagram {
 
   Future<List<ResumoSlot>> listarSlots() async {
     final resposta = await cliente.chamar(AcoesAnagram.posicoes);
-    final arquivos = (resposta['data'] as Map<String, dynamic>?)?['files'];
+    final dados = resposta['data'];
+    final arquivos = dados is Map<String, dynamic> ? dados['files'] : null;
     if (arquivos is! List) throw const ErroRespostaInvalida('Lista de presets sem "files".');
+    // a resposta é entrada externa: campo com tipo inesperado vale como ausente
     return [
       for (final item in arquivos.whereType<Map<String, dynamic>>())
         if (_slotValido(item['filename']))
           ResumoSlot(
-            slot: SlotPreset.doArquivo(item['filename'] as String),
-            nome: item['name'] as String? ?? '',
-            id: item['id'] as String?,
+            slot: SlotPreset.doArquivo('${item['filename']}'),
+            nome: textoOuNulo(item['name']) ?? '',
+            id: textoOuNulo(item['id']),
           ),
     ];
   }

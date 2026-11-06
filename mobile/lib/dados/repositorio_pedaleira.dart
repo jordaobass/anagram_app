@@ -38,6 +38,11 @@ class RepositorioPedaleira {
     } on FormatException catch (erro) {
       registro.e('pedaleira: $operacao devolveu preset inválido', error: erro);
       return Falha(ErroRespostaInvalida('Preset inválido: ${erro.message}'));
+    } on TypeError catch (erro, pilha) {
+      // a resposta é entrada externa: um campo com tipo que o código não
+      // previu não pode escapar como exceção e deixar a tela carregando
+      registro.e('pedaleira: $operacao devolveu resposta fora do formato', error: erro, stackTrace: pilha);
+      return Falha(ErroRespostaInvalida('Resposta fora do formato esperado em "$operacao".'));
     }
   }
 }

@@ -20,3 +20,8 @@ String proximaChave(Map<String, dynamic> mapa) {
   final chaves = chavesNumericas(mapa);
   return chaves.isEmpty ? '1' : '${int.parse(chaves.last) + 1}';
 }
+
+/// Leitura tolerante de campo escalar: tipo inesperado vale como ausente.
+String? textoOuNulo(Object? valor) => valor is String ? valor : null;
+
+num? numeroOuNulo(Object? valor) => valor is num ? valor : null;

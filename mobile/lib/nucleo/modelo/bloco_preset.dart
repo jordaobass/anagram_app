@@ -28,7 +28,9 @@ class BlocoPreset {
   final PosicaoBloco posicao;
   final Map<String, dynamic> bruto;
 
-  String get uri => bruto['uri'] as String? ?? '';
+  // O JSON vem do aparelho ou de arquivo importado: campo com tipo inesperado
+  // vale como ausente, em vez de derrubar a tela com TypeError.
+  String get uri => textoOuNulo(bruto['uri']) ?? '';
   bool get habilitado => bruto['enabled'] != false;
 
   Map<String, dynamic> get _parametros => mapaOuVazio(bruto['parameters']);
@@ -54,7 +56,7 @@ class BlocoPreset {
   num? valorBase(String simbolo) {
     for (final entrada in _parametros.values) {
       if (entrada is Map<String, dynamic> && entrada['symbol'] == simbolo) {
-        return entrada['value'] as num?;
+        return numeroOuNulo(entrada['value']);
       }
     }
     return null;
@@ -66,7 +68,7 @@ class BlocoPreset {
     if (lista is! List) return null;
     for (final item in lista) {
       if (item is Map<String, dynamic> && item['symbol'] == simbolo) {
-        return item['value'] as num?;
+        return numeroOuNulo(item['value']);
       }
     }
     return null;

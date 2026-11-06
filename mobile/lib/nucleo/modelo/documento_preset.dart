@@ -38,11 +38,11 @@ class DocumentoPreset {
   /// Formato mais novo que o conhecido (1): abre e preserva, mas avisa.
   bool get versaoMaisNova => (_json['version'] as int) > 1;
 
-  String get nome => _preset['name'] as String? ?? 'Sem nome';
-  String? get uuid => _preset['uuid'] as String?;
+  String get nome => textoOuNulo(_preset['name']) ?? 'Sem nome';
+  String? get uuid => textoOuNulo(_preset['uuid']);
 
   /// Cena ativa de 1 a 3 (no arquivo ela conta a partir de 0).
-  int get cenaAtiva => ((_preset['scene'] as num?)?.toInt() ?? 0) + 1;
+  int get cenaAtiva => (numeroOuNulo(_preset['scene'])?.toInt() ?? 0) + 1;
 
   String nomeDaCena(int cena) {
     final nomes = mapaOuVazio(_preset['sceneNames']);
@@ -55,7 +55,9 @@ class DocumentoPreset {
     final blocos = _blocosBrutos(_preset, linha);
     return [
       for (final chave in chavesNumericas(blocos))
-        BlocoPreset(PosicaoBloco(linha, int.parse(chave)), blocos[chave] as Map<String, dynamic>),
+        // casa que não é objeto (arquivo editado à mão, firmware novo) é ignorada
+        if (blocos[chave] case final Map<String, dynamic> bruto)
+          BlocoPreset(PosicaoBloco(linha, int.parse(chave)), bruto),
     ];
   }
 
