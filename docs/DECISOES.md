@@ -109,6 +109,7 @@ ainda**: o que depende do aparelho está marcado como hipótese.
 | R8 | Segurar o knob volta ao padrão com snackbar DESFAZER (também ao vivo) | decidida | 2026-11-05 | `BotaoGiratorio` |
 | R9 | Lista ao lado do editor a partir de 780 px (iPad retrato); editor estreito ao lado da lista usa grade e parâmetros do celular abaixo de 700 px | decidida | 2026-11-05 | `Quebras`, `TelaEditor` |
 | R10 | Lista: "ORIGEM" e ícone de gravar no modo destino; ícone verde no slot em que a pedaleira está (com MIDI) | decidida | 2026-11-05 | `ListaPresets` |
+| P6 | O quadro HID termina no primeiro `DEND`, inclusive se ele aparecer dentro do JSON. O app recusa `DSTART`/`DEND` ao **renomear**, mas texto que vem de preset importado ou de outro campo livre não passa por essa guarda. Hipótese a conferir: se o firmware escapa esses marcadores ou também corta; até lá, validar na importação é a próxima defesa | **aberta** | 2026-11-06 | `MontadorQuadros`, `motivoNomeInvalido` |
 | D4 | Se no aparelho o Program Change cair um slot depois (01A → 01B), o firmware é 0-based: trocar para `slot.numero - 1` em `lib/nucleo/midi/saida_midi.dart` | **aberta — confirmar na bancada** | 2026-11-05 | `MensagensMidi.trocaDePrograma` |
 
 ## Tablet / iPad (rodada 4)
