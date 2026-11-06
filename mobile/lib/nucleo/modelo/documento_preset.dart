@@ -1,6 +1,7 @@
 // O arquivo de preset da Anagram, guardado como o JSON que veio do aparelho.
 // Toda edição copia o JSON e muda só o campo alvo: campos que o app não
 // conhece (bindings, sceneNames, chaves novas de firmware) voltam intactos.
+import 'dart:convert';
 import 'dart:math';
 
 import 'bloco_preset.dart';
@@ -43,6 +44,17 @@ class DocumentoPreset {
 
   /// Cena ativa de 1 a 3 (no arquivo ela conta a partir de 0).
   int get cenaAtiva => (numeroOuNulo(_preset['scene'])?.toInt() ?? 0) + 1;
+
+  /// O preset sem a cena ativa, serializado uma vez por documento. Trocar de
+  /// cena é tocar, não editar; e o editor compara isto a cada arraste de knob,
+  /// então refazer o JSON a cada comparação custaria seis passagens por quadro.
+  late final String assinaturaSemCena = _assinaturaSemCena();
+
+  String _assinaturaSemCena() {
+    final json = paraJson();
+    (json['preset'] as Map<String, dynamic>).remove('scene');
+    return jsonEncode(json);
+  }
 
   String nomeDaCena(int cena) {
     final nomes = mapaOuVazio(_preset['sceneNames']);

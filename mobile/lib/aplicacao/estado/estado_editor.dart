@@ -1,6 +1,4 @@
 // Fotografia do editor: o que está aberto, o que mudou e o que está soando.
-import 'dart:convert';
-
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../../nucleo/modelo/slot_preset.dart';
@@ -50,19 +48,14 @@ class EstadoEditor {
   /// A pedaleira trocou para o slot aberto (Program Change). Falso = só audição.
   final bool slotNaPedaleira;
 
+  /// Trocar de cena é tocar, não editar: a cena ativa não conta como mudança
+  /// (mas vai junto quando o preset é salvo).
   bool get naoSalvo {
     final editado = atual;
     if (editado == null) return false;
     final gravado = original;
-    return gravado == null || _semCena(editado) != _semCena(gravado);
-  }
-
-  /// Trocar de cena é tocar, não editar: a cena ativa não conta como mudança
-  /// (mas vai junto quando o preset é salvo).
-  static String _semCena(DocumentoPreset documento) {
-    final json = documento.paraJson();
-    (json['preset'] as Map<String, dynamic>).remove('scene');
-    return jsonEncode(json);
+    if (gravado == null) return true;
+    return !identical(editado, gravado) && editado.assinaturaSemCena != gravado.assinaturaSemCena;
   }
 
   BlocoPreset? get blocoSelecionado {
