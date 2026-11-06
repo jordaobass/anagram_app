@@ -136,8 +136,9 @@ class TransporteHidapi with FluxosDoTransporte implements TransporteAnagram {
 /// Uma leitura em curso: o isolate, a bandeira de parada (memória nativa
 /// compartilhada) e a porta por onde chegam relatórios e avisos.
 class _SessaoLeitura {
-  _SessaoLeitura._(this.dispositivo, this._parar, this._porta, this._aoReceber, this._aoPerder);
+  _SessaoLeitura._(this._api, this.dispositivo, this._parar, this._porta, this._aoReceber, this._aoPerder);
 
+  final HidApi _api;
   final Pointer<Void> dispositivo;
   final Pointer<Int32> _parar;
   final ReceivePort _porta;
@@ -148,15 +149,23 @@ class _SessaoLeitura {
 
   static Future<_SessaoLeitura> iniciar(HidApi api, Pointer<Void> dispositivo,
       {required void Function(Uint8List) aoReceber, required void Function(_SessaoLeitura) aoPerder}) async {
-    final sessao = _SessaoLeitura._(dispositivo, calloc<Int32>(), ReceivePort(), aoReceber, aoPerder);
+    final sessao = _SessaoLeitura._(api, dispositivo, calloc<Int32>(), ReceivePort(), aoReceber, aoPerder);
     sessao._porta.listen(sessao._aoMensagem);
     // onExit manda `null` pela mesma porta: é por ele que se sabe que o
     // isolate não toca mais na bandeira nem no dispositivo
-    await Isolate.spawn(
-      _lerEmLaco,
-      _PedidoLeitura(sessao._porta.sendPort, dispositivo.address, sessao._parar.address, api.nomeBiblioteca),
-      onExit: sessao._porta.sendPort,
-    );
+    try {
+      await Isolate.spawn(
+        _lerEmLaco,
+        _PedidoLeitura(sessao._porta.sendPort, dispositivo.address, sessao._parar.address, api.nomeBiblioteca),
+        onExit: sessao._porta.sendPort,
+      );
+    } on Object catch (erro, pilha) {
+      // sem isolate ninguém mais vai fechar o dispositivo: fecha aqui
+      registro.e('hidapi: a leitura não começou', error: erro, stackTrace: pilha);
+      sessao._liberar();
+      api.hid_close(dispositivo);
+      throw const ErroDesconectado('Não foi possível começar a ler o USB.');
+    }
     return sessao;
   }
 
@@ -167,6 +176,9 @@ class _SessaoLeitura {
       _aoPerder(this);
     } else if (mensagem == null) {
       _liberar();
+      // o isolate só sai do laço depois da parada; sem ela, ele caiu antes do
+      // hid_close e o dispositivo ainda está aberto
+      if (!_paradaPedida) _aoMorrerSemParada();
     }
   }
 
@@ -175,6 +187,12 @@ class _SessaoLeitura {
     if (_paradaPedida || _liberada) return;
     _paradaPedida = true;
     _parar.value = 1;
+  }
+
+  void _aoMorrerSemParada() {
+    registro.e('hidapi: a leitura parou sem ninguém pedir');
+    _api.hid_close(dispositivo);
+    _aoPerder(this);
   }
 
   void _liberar() {
