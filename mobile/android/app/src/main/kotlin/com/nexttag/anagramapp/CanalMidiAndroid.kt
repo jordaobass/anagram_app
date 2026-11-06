@@ -35,6 +35,8 @@ class CanalMidiAndroid(contexto: Context, mensageiro: BinaryMessenger) : MethodC
 
     @Suppress("DEPRECATION")
     private fun abrir(nome: String, resultado: MethodChannel.Result) {
+        // reabrir sem fechar vazaria a porta anterior (e a pedaleira só aceita um dono)
+        fechar()
         val midi = gerente
         if (midi == null) {
             resultado.error("sem_midi", "Este Android não tem MIDI.", null)
@@ -65,13 +67,16 @@ class CanalMidiAndroid(contexto: Context, mensageiro: BinaryMessenger) : MethodC
             resultado.error("desconectado", "MIDI fechado.", null)
             return
         }
-        destino.send(bytes, 0, bytes.size)
-        resultado.success(null)
+        // send declara IOException (cabo arrancado): o MethodChannel só segura
+        // RuntimeException, e a IOException solta derrubaria o app
+        runCatching { destino.send(bytes, 0, bytes.size) }
+            .onSuccess { resultado.success(null) }
+            .onFailure { resultado.error("desconectado", "Falha ao enviar MIDI: ${it.message}", null) }
     }
 
     fun fechar() {
-        porta?.close()
-        dispositivo?.close()
+        runCatching { porta?.close() }
+        runCatching { dispositivo?.close() }
         porta = null
         dispositivo = null
     }
