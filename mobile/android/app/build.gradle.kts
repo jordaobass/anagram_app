@@ -14,6 +14,9 @@ val propriedadesChave = Properties().apply {
     val arquivo = rootProject.file("key.properties")
     if (arquivo.exists()) arquivo.inputStream().use { load(it) }
 }
+if (propriedadesChave.isEmpty()) {
+    logger.warn("android/key.properties ausente: o release será assinado com a chave de DEBUG (não serve para a Play).")
+}
 
 android {
     namespace = "com.nexttag.anagramapp"
