@@ -44,7 +44,12 @@ class SaidaMidiWeb implements SaidaMidiAnagram {
   }
 
   @override
-  Future<void> enviar(List<int> mensagem) async => _saida?.send(Uint8List.fromList(mensagem).toJS);
+  Future<void> enviar(List<int> mensagem) async {
+    // mesmo contrato do MIDI nativo: sem porta, o Program Change não foi a lugar nenhum
+    final saida = _saida;
+    if (saida == null) throw const ErroDesconectado('MIDI: a saída "Anagram" não está aberta.');
+    saida.send(Uint8List.fromList(mensagem).toJS);
+  }
 
   @override
   Future<void> fechar() async => _saida = null;

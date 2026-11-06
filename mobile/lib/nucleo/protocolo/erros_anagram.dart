@@ -14,8 +14,15 @@ final class ErroDesconectado extends ErroAnagram {
 }
 
 /// A pedaleira está plugada, mas outro programa segura a interface.
-final class ErroInterfaceOcupada extends ErroAnagram {
+base class ErroInterfaceOcupada extends ErroAnagram {
   const ErroInterfaceOcupada(super.mensagem);
+}
+
+/// A pedaleira está plugada, mas o sistema negou o acesso ao USB (pedido de
+/// permissão recusado no Android). É uma interface que não abriu, como a
+/// ocupada, mas a frase para o usuário é outra: não adianta fechar o Suite.
+final class ErroPermissaoNegada extends ErroInterfaceOcupada {
+  const ErroPermissaoNegada(super.mensagem);
 }
 
 /// A pedaleira não respondeu no prazo. Carga com formato errado também

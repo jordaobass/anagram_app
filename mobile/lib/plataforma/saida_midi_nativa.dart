@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import '../nucleo/midi/saida_midi.dart';
 import '../nucleo/protocolo/erros_anagram.dart';
+import '../nucleo/registro.dart';
 
 class SaidaMidiNativa implements SaidaMidiAnagram {
   static const _canal = MethodChannel('anagram_app/midi');
@@ -38,9 +39,14 @@ class SaidaMidiNativa implements SaidaMidiAnagram {
     }
   }
 
+  /// Fechar nunca lança: acontece ao desconectar, quando o erro não muda nada.
   @override
   Future<void> fechar() async {
     _aberta = false;
-    await _canal.invokeMethod<void>('fechar');
+    try {
+      await _canal.invokeMethod<void>('fechar');
+    } on Exception catch (erro) {
+      registro.w('MIDI: o lado nativo falhou ao fechar', error: erro);
+    }
   }
 }
