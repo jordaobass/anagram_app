@@ -90,8 +90,12 @@ class ClienteAnagram {
     final assinaturaDados = _transporte.relatoriosRecebidos.listen((relatorio) {
       if (concluido.isCompleted) return;
       try {
-        final quadro = montador.acrescentar(relatorio);
-        if (quadro != null && _ehRespostaDe(acao, quadro)) concluido.complete(quadro);
+        // um relatório pode fechar a resposta atrasada de outra ação e já trazer esta
+        for (var quadro = montador.acrescentar(relatorio); quadro != null; quadro = montador.proximoQuadro()) {
+          if (!_ehRespostaDe(acao, quadro)) continue;
+          concluido.complete(quadro);
+          return;
+        }
       } on QuadroMalformado catch (erro) {
         concluido.completeError(ErroRespostaInvalida('$erro'));
       }
@@ -129,7 +133,8 @@ class ClienteAnagram {
       'anagram ${medicao.acao}: ida e volta ${medicao.duracao.inMilliseconds} ms '
       '(${medicao.relatoriosEnviados} relatórios, pausa ${medicao.pausa.inMilliseconds} ms)',
     );
-    _medicoes.add(medicao);
+    // uma chamada que termina depois do encerrar (cabo saiu, Desconectar) não pode estourar aqui
+    if (!_medicoes.isClosed) _medicoes.add(medicao);
   }
 
   Map<String, dynamic> _extrairCarga(String acao, Map<String, dynamic> quadro) {
@@ -142,6 +147,8 @@ class ClienteAnagram {
     return carga;
   }
 
+  /// Fecha o fluxo de medições quando a conexão acaba. Pode ser chamado mais
+  /// de uma vez, e chamadas ainda pendentes terminam sem medir.
   Future<void> encerrar() => _medicoes.close();
 }
 

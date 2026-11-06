@@ -71,10 +71,13 @@ class QuadroMalformado implements Exception {
 ///
 /// Os bytes 0x00 e 0x01 são descartados (preenchimento e id do relatório),
 /// exatamente como no código de referência.
+///
+/// O fluxo pode trazer sobra de uma resposta anterior (de uma chamada que
+/// estourou o prazo): um `DEND` sem `DSTART` antes dele, ou um `DSTART` cujo
+/// fim nunca chegou. Por isso o quadro é o PRIMEIRO `DEND` com o `DSTART`
+/// mais próximo antes dele, e o que vem depois do `DEND` fica guardado.
 class MontadorQuadros {
   final List<int> _acumulado = [];
-
-  void descartar() => _acumulado.clear();
 
   /// Acrescenta um relatório. Devolve o JSON decodificado quando o quadro
   /// fecha, ou `null` enquanto faltar pedaço.
@@ -84,19 +87,28 @@ class MontadorQuadros {
         _acumulado.add(byte);
       }
     }
-    return _tentarFechar();
+    return proximoQuadro();
   }
 
-  Map<String, dynamic>? _tentarFechar() {
-    final texto = latin1.decode(_acumulado);
-    final inicio = texto.indexOf(ProtocoloAnagram.marcadorInicio);
-    final fim = texto.lastIndexOf(ProtocoloAnagram.marcadorFim);
-    if (inicio == -1 || fim <= inicio) return null;
-    final corpo = _acumulado.sublist(
-      inicio + ProtocoloAnagram.marcadorInicio.length,
-      fim,
-    );
-    _acumulado.clear();
+  /// O próximo quadro completo que já está acumulado, sem acrescentar bytes:
+  /// um mesmo relatório pode fechar uma resposta velha e trazer a nova.
+  Map<String, dynamic>? proximoQuadro() {
+    while (true) {
+      // latin1: um caractere por byte, então o índice no texto é o do byte
+      final texto = latin1.decode(_acumulado);
+      final fim = texto.indexOf(ProtocoloAnagram.marcadorFim);
+      if (fim == -1) return null;
+      final inicio = texto.lastIndexOf(ProtocoloAnagram.marcadorInicio, fim);
+      final corpo = inicio == -1
+          ? null
+          : _acumulado.sublist(inicio + ProtocoloAnagram.marcadorInicio.length, fim);
+      _acumulado.removeRange(0, fim + ProtocoloAnagram.marcadorFim.length);
+      // fim de quadro sem começo: sobra de uma resposta anterior
+      if (corpo != null) return _decodificar(corpo);
+    }
+  }
+
+  static Map<String, dynamic> _decodificar(List<int> corpo) {
     try {
       final valor = jsonDecode(utf8.decode(corpo, allowMalformed: true));
       if (valor is Map<String, dynamic>) return valor;
