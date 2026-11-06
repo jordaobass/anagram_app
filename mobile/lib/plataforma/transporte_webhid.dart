@@ -8,10 +8,12 @@ import 'dart:typed_data';
 import '../nucleo/protocolo/erros_anagram.dart';
 import '../nucleo/protocolo/quadros_hid.dart';
 import '../nucleo/protocolo/transporte_anagram.dart';
+import '../nucleo/registro.dart';
 
 extension type _Hid._(JSObject _) implements JSObject {
   external JSPromise<JSArray<_DispositivoHid>> requestDevice(JSAny opcoes);
   external void addEventListener(String tipo, JSFunction ouvinte);
+  external void removeEventListener(String tipo, JSFunction ouvinte);
 }
 
 extension type _DispositivoHid._(JSObject _) implements JSObject {
@@ -21,6 +23,7 @@ extension type _DispositivoHid._(JSObject _) implements JSObject {
   external JSPromise<JSAny?> close();
   external JSPromise<JSAny?> sendReport(int idRelatorio, JSUint8Array dados);
   external void addEventListener(String tipo, JSFunction ouvinte);
+  external void removeEventListener(String tipo, JSFunction ouvinte);
 }
 
 extension type _Colecao._(JSObject _) implements JSObject {
@@ -32,10 +35,16 @@ extension type _EventoHid._(JSObject _) implements JSObject {
   external _DispositivoHid get device;
 }
 
-class TransporteWebHid implements TransporteAnagram {
-  final _estados = StreamController<EstadoTransporte>.broadcast();
-  final _entrada = StreamController<Uint8List>.broadcast();
+class TransporteWebHid with FluxosDoTransporte implements TransporteAnagram {
+  static const _eventoRelatorio = 'inputreport';
+  static const _eventoDesconexao = 'disconnect';
+
   _DispositivoHid? _dispositivo;
+
+  // `.toJS` cria uma função JS nova a cada chamada: para remover o ouvinte no
+  // fechar é preciso guardar exatamente a que foi registrada.
+  late final JSFunction _ouvinteRelatorio = _aoReceber.toJS;
+  late final JSFunction _ouvinteDesconexao = _aoDesconectar.toJS;
 
   @override
   Duration get pausaSugerida => const Duration(milliseconds: 10);
@@ -45,12 +54,6 @@ class TransporteWebHid implements TransporteAnagram {
 
   @override
   bool get aberto => _dispositivo?.opened ?? false;
-
-  @override
-  Stream<EstadoTransporte> get estados => _estados.stream;
-
-  @override
-  Stream<Uint8List> get relatoriosRecebidos => _entrada.stream;
 
   _Hid get _hid => globalContext.getProperty<JSObject>('navigator'.toJS).getProperty<_Hid>('hid'.toJS);
 
@@ -69,10 +72,10 @@ class TransporteWebHid implements TransporteAnagram {
     } catch (erro) {
       throw ErroInterfaceOcupada('$erro');
     }
-    dispositivo.addEventListener('inputreport', _aoReceber.toJS);
-    _hid.addEventListener('disconnect', _aoDesconectar.toJS);
+    dispositivo.addEventListener(_eventoRelatorio, _ouvinteRelatorio);
+    _hid.addEventListener(_eventoDesconexao, _ouvinteDesconexao);
     _dispositivo = dispositivo;
-    _estados.add(EstadoTransporte.aberto);
+    anunciarEstado(EstadoTransporte.aberto);
   }
 
   static bool _ehFornecedor(_DispositivoHid d) =>
@@ -80,14 +83,21 @@ class TransporteWebHid implements TransporteAnagram {
 
   void _aoReceber(_EventoHid evento) {
     final dados = evento.data.toDart;
-    _entrada.add(dados.buffer.asUint8List(dados.offsetInBytes, dados.lengthInBytes));
+    entregarRelatorio(dados.buffer.asUint8List(dados.offsetInBytes, dados.lengthInBytes));
   }
 
   void _aoDesconectar(_EventoHid evento) {
     final atual = _dispositivo;
     if (atual == null || !evento.device.strictEquals(atual).toDart) return;
+    _soltar(atual);
+    anunciarEstado(EstadoTransporte.perdido);
+  }
+
+  /// Tira os ouvintes: sem isso cada reconexão empilha mais um no navegador.
+  void _soltar(_DispositivoHid dispositivo) {
     _dispositivo = null;
-    _estados.add(EstadoTransporte.perdido);
+    dispositivo.removeEventListener(_eventoRelatorio, _ouvinteRelatorio);
+    _hid.removeEventListener(_eventoDesconexao, _ouvinteDesconexao);
   }
 
   @override
@@ -100,8 +110,15 @@ class TransporteWebHid implements TransporteAnagram {
   @override
   Future<void> fechar() async {
     final dispositivo = _dispositivo;
-    _dispositivo = null;
-    if (dispositivo != null) await dispositivo.close().toDart;
-    _estados.add(EstadoTransporte.fechado);
+    if (dispositivo != null) {
+      _soltar(dispositivo);
+      // como nos outros transportes, fechar não lança: só registra
+      try {
+        await dispositivo.close().toDart;
+      } catch (erro) {
+        registro.w('WebHID: o navegador falhou ao fechar a pedaleira', error: erro);
+      }
+    }
+    anunciarEstado(EstadoTransporte.fechado);
   }
 }
