@@ -11,7 +11,7 @@ import '../protocolo/erros_anagram.dart';
 import '../protocolo/quadros_hid.dart';
 import '../protocolo/transporte_anagram.dart';
 
-class TransporteDemonstracao implements TransporteAnagram {
+class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagram {
   TransporteDemonstracao({
     Map<int, Map<String, dynamic>> presets = const {},
     this.latencia = const Duration(milliseconds: 4),
@@ -21,8 +21,6 @@ class TransporteDemonstracao implements TransporteAnagram {
   final Map<int, dynamic> _slots;
   final Duration latencia;
   final String firmware;
-  final _estados = StreamController<EstadoTransporte>.broadcast();
-  final _saida = StreamController<Uint8List>.broadcast();
   final _montador = MontadorQuadros();
   final _codificador = const CodificadorQuadros();
   bool _aberto = false;
@@ -51,7 +49,7 @@ class TransporteDemonstracao implements TransporteAnagram {
   bool enviarRespostaAtrasadaAntes = false;
 
   /// Para os testes: alguém ainda espera resposta?
-  bool get temOuvintesDeResposta => _saida.hasListener;
+  bool get temOuvintesDeResposta => temOuvintesDeRelatorio;
 
   @override
   Duration get pausaSugerida => Duration.zero;
@@ -62,12 +60,6 @@ class TransporteDemonstracao implements TransporteAnagram {
   @override
   bool get aberto => _aberto;
 
-  @override
-  Stream<EstadoTransporte> get estados => _estados.stream;
-
-  @override
-  Stream<Uint8List> get relatoriosRecebidos => _saida.stream;
-
   /// Para os testes: outro programa mudou o slot por fora.
   void substituirSlot(int numero, Map<String, dynamic> conteudo) => _slots[numero] = jsonDecode(jsonEncode(conteudo));
 
@@ -76,19 +68,19 @@ class TransporteDemonstracao implements TransporteAnagram {
   @override
   Future<void> abrir() async {
     _aberto = true;
-    _estados.add(EstadoTransporte.aberto);
+    anunciarEstado(EstadoTransporte.aberto);
   }
 
   @override
   Future<void> fechar() async {
     _aberto = false;
-    _estados.add(EstadoTransporte.fechado);
+    anunciarEstado(EstadoTransporte.fechado);
   }
 
   /// Simula o cabo arrancado.
   void desconectar() {
     _aberto = false;
-    _estados.add(EstadoTransporte.perdido);
+    anunciarEstado(EstadoTransporte.perdido);
   }
 
   @override
@@ -113,7 +105,7 @@ class TransporteDemonstracao implements TransporteAnagram {
   Future<void> _responder(MensagemAnagram mensagem) async {
     await Future<void>.delayed(latencia);
     if (!_aberto) return;
-    if (enviarSobraAntes) _saida.add(_codificador.fatiar(utf8.encode('{"lixo":1}DEND')).first);
+    if (enviarSobraAntes) entregarRelatorio(_codificador.fatiar(utf8.encode('{"lixo":1}DEND')).first);
     if (enviarRespostaAtrasadaAntes) {
       _emitir({'action': AcoesAnagram.posicoes, 'payload': {'data': {'files': <dynamic>[]}}});
     }
@@ -123,7 +115,7 @@ class TransporteDemonstracao implements TransporteAnagram {
   void _emitir(Map<String, dynamic> quadro) {
     final texto = ProtocoloAnagram.marcadorInicio + jsonEncode(quadro) + ProtocoloAnagram.marcadorFim;
     for (final relatorio in _codificador.fatiar(utf8.encode(texto))) {
-      _saida.add(relatorio);
+      entregarRelatorio(relatorio);
     }
   }
 
