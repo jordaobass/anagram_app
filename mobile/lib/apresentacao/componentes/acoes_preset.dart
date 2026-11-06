@@ -20,24 +20,24 @@ class AcoesPreset extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final naoSalvo = ref.watch(editorProvider.select((e) => e.naoSalvo));
-    // enquanto um preset carrega, salvar gravaria o anterior no slot novo
-    final carregando = ref.watch(editorProvider.select((e) => e.carregando));
+    // lendo: salvar gravaria o anterior no slot novo; gravando: já há uma gravação
+    final ocupado = ref.watch(editorProvider.select((e) => e.ocupado));
     final controlador = ref.read(editorProvider.notifier);
     final botoes = <Widget>[
       FilledButton.icon(
         key: const ValueKey('botao-salvar'),
-        onPressed: carregando ? null : () => executarSalvar(context, ref, listaEmOutraTela: listaEmOutraTela),
+        onPressed: ocupado ? null : () => executarSalvar(context, ref, listaEmOutraTela: listaEmOutraTela),
         icon: const Icon(Icons.save_outlined),
         label: const Text('SALVAR'),
       ),
       OutlinedButton(
         key: const ValueKey('botao-salvar-como'),
-        onPressed: () => abrirEscolhaDeDestino(context, ref, listaEmOutraTela: listaEmOutraTela),
+        onPressed: ocupado ? null : () => abrirEscolhaDeDestino(context, ref, listaEmOutraTela: listaEmOutraTela),
         child: const Text('SALVAR COMO…'),
       ),
       OutlinedButton(
         key: const ValueKey('botao-descartar'),
-        onPressed: naoSalvo ? controlador.descartarEdicoes : null,
+        onPressed: naoSalvo && !ocupado ? controlador.descartarEdicoes : null,
         child: const Text('DESCARTAR'),
       ),
       _MenuArquivo(),

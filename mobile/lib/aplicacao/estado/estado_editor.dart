@@ -15,6 +15,7 @@ class EstadoEditor {
     this.selecionado,
     this.aoVivo = true,
     this.carregando = false,
+    this.salvando = false,
     this.latencia,
     this.aviso,
     this.blocoCopiado,
@@ -30,6 +31,13 @@ class EstadoEditor {
   final PosicaoBloco? selecionado;
   final bool aoVivo;
   final bool carregando;
+
+  /// Gravação em curso: abrir outro slot ou salvar de novo fica bloqueado até
+  /// ela terminar, senão o resultado dela cairia por cima do que foi aberto.
+  final bool salvando;
+
+  /// Ler ou gravar em curso: o preset na tela não pode ser trocado nem salvo.
+  bool get ocupado => carregando || salvando;
 
   /// Ida e volta do último envio ao vivo.
   final Duration? latencia;
@@ -69,6 +77,7 @@ class EstadoEditor {
     Object? selecionado = _manter,
     bool? aoVivo,
     bool? carregando,
+    bool? salvando,
     Object? latencia = _manter,
     Object? aviso = _manter,
     Object? blocoCopiado = _manter,
@@ -82,6 +91,7 @@ class EstadoEditor {
         selecionado: identical(selecionado, _manter) ? this.selecionado : selecionado as PosicaoBloco?,
         aoVivo: aoVivo ?? this.aoVivo,
         carregando: carregando ?? this.carregando,
+        salvando: salvando ?? this.salvando,
         latencia: identical(latencia, _manter) ? this.latencia : latencia as Duration?,
         aviso: identical(aviso, _manter) ? this.aviso : aviso as String?,
         blocoCopiado:

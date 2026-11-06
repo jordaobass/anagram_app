@@ -1,5 +1,6 @@
 // Presets por banco (01A … 42C). Tocar abre e faz tocar na pedaleira;
-// com edição não salva, pergunta antes de largar.
+// com edição não salva, pergunta antes de largar — também no slot já aberto,
+// porque abrir de novo relê da pedaleira por cima das edições.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,6 +27,8 @@ class ListaPresets extends ConsumerWidget {
     }
     final escolhendo = ref.watch(editorProvider.select((e) => e.escolhendoDestino));
     final naPedaleira = ref.watch(editorProvider.select((e) => e.slotNaPedaleira ? e.slot : null));
+    // gravando: o resultado da gravação ainda vai escrever o slot salvo
+    final salvando = ref.watch(editorProvider.select((e) => e.salvando));
     final lista = ListView.builder(
       key: const ValueKey('lista-presets'),
       itemCount: SlotPreset.bancos,
@@ -35,7 +38,7 @@ class ListaPresets extends ConsumerWidget {
         aberto: aberto,
         escolhendo: escolhendo,
         naPedaleira: naPedaleira,
-        aoEscolher: (slot) => _abrir(context, ref, slot),
+        aoEscolher: salvando ? null : (slot) => _abrir(context, ref, slot),
       ),
     );
     if (!escolhendo) return lista;
@@ -49,7 +52,7 @@ class ListaPresets extends ConsumerWidget {
       if (gravou) aoAbrir?.call();
       return;
     }
-    if (estado.naoSalvo && estado.slot != slot) {
+    if (estado.naoSalvo) {
       final largar = await _confirmarDescarte(context, estado.atual?.nome ?? '');
       if (!largar) return;
     }
@@ -84,7 +87,9 @@ class _Banco extends StatelessWidget {
   final int banco;
   final EstadoBiblioteca biblioteca;
   final SlotPreset? aberto;
-  final void Function(SlotPreset) aoEscolher;
+
+  /// `null` enquanto grava: a lista fica visível, mas não abre nem escolhe.
+  final void Function(SlotPreset)? aoEscolher;
 
   @override
   Widget build(BuildContext context) {
@@ -111,35 +116,39 @@ class _Banco extends StatelessWidget {
   }
 
   Widget _linha(BuildContext context, SlotPreset slot) {
-    final tema = Theme.of(context).textTheme;
-    final resumo = biblioteca.resumo(slot);
     final ativo = slot == aberto;
+    final escolher = aoEscolher;
     return Material(
       color: ativo ? Cores.painelElevado : Colors.transparent,
       child: InkWell(
         key: ValueKey('slot-${slot.rotulo}'),
-        onTap: () => aoEscolher(slot),
+        onTap: escolher == null ? null : () => escolher(slot),
         child: Container(
           constraints: const BoxConstraints(minHeight: Medidas.alvoMinimo),
           padding: const EdgeInsets.symmetric(horizontal: Espacos.m),
           decoration: BoxDecoration(
             border: Border(left: BorderSide(color: ativo ? Cores.tally : Colors.transparent, width: Medidas.contornoSelecao)),
           ),
-          child: Row(children: [
-            SizedBox(
-              width: Espacos.xxxl,
-              child: Text(slot.rotulo, style: tema.titleSmall?.copyWith(color: ativo ? Cores.tally : Cores.aluminioClaro)),
-            ),
-            Expanded(
-              child: Text(resumo?.nome ?? 'vazio',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: resumo == null ? tema.bodySmall : tema.bodyLarge),
-            ),
-            ?_marca(tema, slot),
-          ]),
+          child: _conteudo(Theme.of(context).textTheme, slot, ativo: ativo),
         ),
       ),
     );
+  }
+
+  Widget _conteudo(TextTheme tema, SlotPreset slot, {required bool ativo}) {
+    final resumo = biblioteca.resumo(slot);
+    return Row(children: [
+      SizedBox(
+        width: Espacos.xxxl,
+        child: Text(slot.rotulo, style: tema.titleSmall?.copyWith(color: ativo ? Cores.tally : Cores.aluminioClaro)),
+      ),
+      Expanded(
+        child: Text(resumo?.nome ?? 'vazio',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: resumo == null ? tema.bodySmall : tema.bodyLarge),
+      ),
+      ?_marca(tema, slot),
+    ]);
   }
 }
