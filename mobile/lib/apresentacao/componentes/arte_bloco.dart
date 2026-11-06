@@ -42,7 +42,6 @@ class ArteBlocoWidget extends ConsumerWidget {
   Widget _desenho(ArteBloco arte) => switch (arte) {
         ArteMiniatura(:final caminhoAsset) => _imagem(caminhoAsset),
         ArteDaFamilia(:final familia) => CustomPaint(painter: PintorArteFamilia(familia)),
-        ArteOficial() => CustomPaint(painter: PintorArteFamilia(definicao.familia)),
       };
 
   Widget _imagem(String caminho) => Image.asset(

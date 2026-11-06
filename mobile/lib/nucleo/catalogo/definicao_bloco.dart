@@ -109,7 +109,6 @@ class DefinicaoBloco {
   final String categoria;
   final List<DefinicaoParametro> parametros;
 
-  bool get conhecido => categoria.isNotEmpty;
   FamiliaBloco get familia => FamiliaBloco.de(uri: uri, nome: nome, categoria: categoria);
 
   DefinicaoParametro? parametro(String simbolo) {

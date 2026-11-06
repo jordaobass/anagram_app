@@ -26,8 +26,4 @@ class CatalogoBlocos {
   Iterable<DefinicaoBloco> get todos => _blocos.values;
 
   DefinicaoBloco definicao(String uri) => _blocos[uri] ?? DefinicaoBloco.desconhecido(uri);
-
-  /// Acrescenta definições vindas do próprio aparelho (get_plugin_info).
-  CatalogoBlocos comDefinicoes(Iterable<DefinicaoBloco> novas) =>
-      CatalogoBlocos({..._blocos, for (final d in novas) d.uri: d}, firmware: firmware);
 }

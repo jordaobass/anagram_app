@@ -25,12 +25,6 @@ final class ArteDaFamilia extends ArteBloco {
   final FamiliaBloco familia;
 }
 
-/// Reservado para arte autorizada pelo fabricante (url ou asset).
-final class ArteOficial extends ArteBloco {
-  const ArteOficial(this.endereco);
-  final String endereco;
-}
-
 class IndiceMiniaturas {
   IndiceMiniaturas(this._porUri, this._porNome, this.credito);
 

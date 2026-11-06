@@ -30,7 +30,6 @@ class BlocoPreset {
 
   String get uri => bruto['uri'] as String? ?? '';
   bool get habilitado => bruto['enabled'] != false;
-  String? get quickpot => bruto['quickpot'] as String?;
 
   Map<String, dynamic> get _parametros => mapaOuVazio(bruto['parameters']);
   Map<String, dynamic> get _cenas => mapaOuVazio(bruto['scenes']);
@@ -79,14 +78,4 @@ class BlocoPreset {
           if (_parametros[chave] case {'symbol': final String simbolo}) simbolo,
       ];
 
-  /// Valor de uma propriedade (ex.: arquivo do gabinete), pelo sufixo da uri.
-  String? propriedade(String sufixo) {
-    for (final entrada in mapaOuVazio(bruto['properties']).values) {
-      if (entrada is Map<String, dynamic> &&
-          (entrada['uri'] as String? ?? '').endsWith('#$sufixo')) {
-        return entrada['value'] as String?;
-      }
-    }
-    return null;
-  }
 }

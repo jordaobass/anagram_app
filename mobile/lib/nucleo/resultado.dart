@@ -4,12 +4,6 @@ import 'protocolo/erros_anagram.dart';
 
 sealed class Resultado<T> {
   const Resultado();
-
-  R quando<R>({required R Function(T valor) sucesso, required R Function(ErroAnagram erro) falha}) =>
-      switch (this) {
-        Sucesso<T>(:final valor) => sucesso(valor),
-        Falha<T>(:final erro) => falha(erro),
-      };
 }
 
 final class Sucesso<T> extends Resultado<T> {

@@ -3,7 +3,6 @@
 // documentados, então qualquer resposta sem "error" conta como aceite.
 import 'dart:convert';
 
-import '../catalogo/definicao_bloco.dart';
 import '../modelo/documento_preset.dart';
 import '../modelo/slot_preset.dart';
 import 'cliente_anagram.dart';
@@ -16,6 +15,7 @@ abstract final class AcoesAnagram {
   static const salvar = 'edit_anagram_presets';
   static const excluir = 'delete_anagram_preset';
   static const tocarAoVivo = 'try_anagram_preset';
+  /// O app não pede mais; fica porque a pedaleira de demonstração responde a ela.
   static const infoBloco = 'get_plugin_info';
 
   static const todas = {firmware, posicoes, lerPreset, salvar, excluir, tocarAoVivo, infoBloco};
@@ -85,22 +85,6 @@ class ApiAnagram {
         {'filename': slot.arquivo},
         const Duration(seconds: 25),
       );
-
-  /// Metadados de um bloco que não está no catálogo de fábrica.
-  Future<DefinicaoBloco> infoBloco(String uri) async {
-    final dados = (await cliente.chamar(AcoesAnagram.infoBloco, {'uri': uri}))['data'];
-    if (dados is! Map<String, dynamic>) return DefinicaoBloco.desconhecido(uri);
-    return DefinicaoBloco(
-      uri: uri,
-      nome: dados['name'] as String? ?? DefinicaoBloco.desconhecido(uri).nome,
-      abreviacao: (dados['abbreviation'] ?? dados['abbr'] ?? '') as String,
-      categoria: _textoCategoria(dados['category']),
-      parametros: const [],
-    );
-  }
-
-  static String _textoCategoria(Object? categoria) =>
-      categoria is List && categoria.isNotEmpty ? '${categoria.first}' : '${categoria ?? ''}';
 
   static bool _slotValido(Object? arquivo) {
     final numero = int.tryParse('$arquivo'.split('.').first);

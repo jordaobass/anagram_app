@@ -1,6 +1,5 @@
 // Porta única do app para a pedaleira. Converte exceções do protocolo em
 // [Resultado] e registra a causa real no log.
-import '../nucleo/catalogo/definicao_bloco.dart';
 import '../nucleo/modelo/documento_preset.dart';
 import '../nucleo/modelo/slot_preset.dart';
 import '../nucleo/protocolo/api_anagram.dart';
@@ -15,7 +14,6 @@ class RepositorioPedaleira {
   final ApiAnagram _api;
 
   Stream<MedicaoChamada> get medicoes => _api.cliente.medicoes;
-  String get descricaoTransporte => _api.cliente.transporte.descricao;
 
   Future<Resultado<String>> firmware({Duration? prazo}) =>
       _proteger('firmware', () => _api.firmware(prazo: prazo));
@@ -30,9 +28,6 @@ class RepositorioPedaleira {
 
   Future<Resultado<void>> salvar(SlotPreset slot, DocumentoPreset preset) =>
       _proteger('salvar ${slot.rotulo}', () => _api.salvar(slot, preset));
-
-  Future<Resultado<DefinicaoBloco>> infoBloco(String uri) =>
-      _proteger('info $uri', () => _api.infoBloco(uri));
 
   Future<Resultado<T>> _proteger<T>(String operacao, Future<T> Function() acao) async {
     try {
