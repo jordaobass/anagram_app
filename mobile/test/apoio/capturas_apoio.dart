@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 
-import 'app_de_teste.dart';
+import 'demonstracao_na_tela.dart';
 import 'fixtures.dart';
 
 /// Com miniaturas de terceiros, as capturas vão para uma pasta ignorada pelo git.
@@ -58,18 +58,11 @@ Future<void> assentarImagens(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-Future<void> preparar(WidgetTester tester, Tamanho t, {List<Override> overrides = const []}) async {
-  tester.view.physicalSize = Size(t.largura * t.densidade, t.altura * t.densidade);
-  tester.view.devicePixelRatio = t.densidade;
-  addTearDown(tester.view.reset);
-  await tester.pumpWidget(appDeTeste(overrides: overrides));
-  await tester.pumpAndSettle();
-}
+Future<void> preparar(WidgetTester tester, Tamanho t, {List<Override> overrides = const []}) =>
+    montarApp(tester, tamanho: Size(t.largura, t.altura), densidade: t.densidade, overrides: overrides);
 
 Future<ProviderContainer> abrirSlot(WidgetTester tester, String rotulo) async {
-  await tester.tap(find.byKey(const ValueKey('botao-demonstracao')));
-  await tester.pumpAndSettle();
-  final container = ProviderScope.containerOf(tester.element(find.byType(Scaffold).first));
+  final container = await entrarNaDemonstracao(tester);
   // sem await: o relógio é falso e só anda no pump
   unawaited(container.read(editorProvider.notifier).abrirSlot(SlotPreset.doRotulo(rotulo)));
   await tester.pumpAndSettle();

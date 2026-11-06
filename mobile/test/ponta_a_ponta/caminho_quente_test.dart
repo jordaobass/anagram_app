@@ -1,16 +1,14 @@
 // Caminho quente inteiro, no modo demonstração e pela interface:
 // conectar → abrir preset → girar knob → ver o try_anagram_preset sair com o
 // valor que a tela mostra → salvar com confirmação → reler e ver o valor.
-import 'package:anagram_app/apresentacao/app_anagram.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
 import 'package:anagram_app/nucleo/catalogo/formatador_valor.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:anagram_app/nucleo/protocolo/api_anagram.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../apoio/app_de_teste.dart';
+import '../apoio/demonstracao_na_tela.dart';
 import '../apoio/fixtures.dart';
 
 num? limiarEnviado(Map<String, dynamic>? documento) {
@@ -19,18 +17,9 @@ num? limiarEnviado(Map<String, dynamic>? documento) {
 }
 
 void main() {
-  testWidgets('should_play_edit_live_and_save_it_to_the_slot_in_demo_mode', (tester) async {
-    tester.view.physicalSize = const Size(1440, 900);
-    tester.view.devicePixelRatio = 1;
-    addTearDown(tester.view.reset);
-    await tester.pumpWidget(appDeTeste());
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.byKey(const ValueKey('botao-demonstracao')));
-    await tester.pumpAndSettle();
-    final contexto = tester.element(find.byType(AppAnagram));
-    final pedaleira = ProviderScope.containerOf(contexto).read(conexaoProvider.notifier).transporte!
-        as TransporteDemonstracao;
+  testWidgets('should_play_edit_live_and_save_to_the_slot_when_in_demo_mode', (tester) async {
+    final container = await abrirDemonstracao(tester);
+    final pedaleira = container.read(conexaoProvider.notifier).transporte! as TransporteDemonstracao;
 
     final linha01C = find.byKey(const ValueKey('slot-01C'));
     expect(find.descendant(of: linha01C, matching: find.text('Grave Limpo')), findsOneWidget,

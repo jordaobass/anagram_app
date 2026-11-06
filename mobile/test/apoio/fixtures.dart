@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
+import 'package:anagram_app/aplicacao/provedores.dart' show CaminhosAssets;
 import 'package:anagram_app/nucleo/catalogo/catalogo_blocos.dart';
 
 Map<String, dynamic> lerExemplo(String nome) =>
@@ -17,7 +18,7 @@ Map<int, Map<String, dynamic>> lerPresetsDemonstracao() {
       as Map<String, dynamic>;
   return {
     for (final e in bruto.entries) int.parse(e.key): e.value as Map<String, dynamic>,
-    for (final n in const [1, 2, 13, 41]) n: lerExemplo('$n'),
+    for (final n in CaminhosAssets.exemplos) n: lerExemplo('$n'),
   };
 }
 

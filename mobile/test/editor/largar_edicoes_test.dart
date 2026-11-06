@@ -4,23 +4,14 @@ import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../apoio/app_de_teste.dart';
+import '../apoio/demonstracao_na_tela.dart';
 
 void main() {
   testWidgets('should_ask_before_reloading_when_the_open_slot_is_tapped_with_unsaved_edits', (tester) async {
-    tester.view.physicalSize = const Size(1440, 900);
-    tester.view.devicePixelRatio = 1;
-    addTearDown(tester.view.reset);
-    await tester.pumpWidget(appDeTeste());
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('botao-demonstracao')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('slot-01A')));
-    await tester.pumpAndSettle();
-    final container = ProviderScope.containerOf(tester.element(find.byType(Scaffold).first));
+    final container = await abrirDemonstracao(tester);
+    await tocarNoSlot(tester, '01A');
     // sem await: a edição toca ao vivo, e no relógio falso só o pump faz andar
     unawaited(container.read(editorProvider.notifier).renomear('Ainda não salvo'));
     await tester.pumpAndSettle();

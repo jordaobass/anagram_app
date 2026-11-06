@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../apoio/app_de_teste.dart';
+import '../apoio/demonstracao_na_tela.dart';
 
 Future<void> abrirNoCelular(WidgetTester tester, String rotulo) async {
-  tester.view.physicalSize = const Size(780, 1688);
-  tester.view.devicePixelRatio = 2;
-  addTearDown(tester.view.reset);
-  await tester.pumpWidget(appDeTeste());
-  await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('botao-demonstracao')));
-  await tester.pumpAndSettle();
+  await abrirDemonstracao(tester, tamanho: telaCelular, densidade: 2);
   await tester.tap(find.text('VER PRESETS'));
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(ValueKey('slot-$rotulo')));
-  await tester.pumpAndSettle();
+  await tocarNoSlot(tester, rotulo);
 }
 
 void main() {
-  testWidgets('should_show_the_whole_chain_on_a_phone_without_side_scrolling', (tester) async {
+  testWidgets('should_show_the_whole_chain_without_side_scrolling_when_on_a_phone', (tester) async {
     await abrirNoCelular(tester, '02A');
     for (final casa in [1, 2, 3, 5, 7]) {
       final retangulo = tester.getRect(find.byKey(ValueKey('casa-1-$casa')));
@@ -26,7 +19,7 @@ void main() {
     }
   });
 
-  testWidgets('should_list_every_parameter_on_a_phone_without_pages', (tester) async {
+  testWidgets('should_list_every_parameter_without_pages_when_on_a_phone', (tester) async {
     await abrirNoCelular(tester, '02C');
     await tester.tap(find.byKey(const ValueKey('casa-1-2')));
     await tester.pumpAndSettle();
