@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../apoio/conexao_demo.dart';
 
 void main() {
-  test('should_not_write_into_occupied_slot_without_confirmation', () async {
+  test('should_not_write_when_the_slot_is_occupied_and_not_confirmed', () async {
     final (container, pedaleira) = await conectarDemonstracao();
     final editor = container.read(editorProvider.notifier);
     await editor.abrirSlot(SlotPreset(3));

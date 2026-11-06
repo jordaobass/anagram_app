@@ -4,7 +4,7 @@ import 'package:anagram_app/nucleo/protocolo/quadros_hid.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('should_frame_message_in_64_byte_reports_and_reassemble_it', () {
+  test('should_reassemble_the_message_when_it_is_framed_in_64_byte_reports', () {
     const mensagem = MensagemAnagram('fetch_anagram_preset', {'filename': '49.json', 'nome': 'Ação'});
     final relatorios = const CodificadorQuadros().codificar(mensagem);
 

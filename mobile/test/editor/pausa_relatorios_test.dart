@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../apoio/conexao_demo.dart';
 
 void main() {
-  test('should_use_transport_suggested_pause_unless_the_user_picks_another', () async {
+  test('should_use_the_transport_suggested_pause_when_the_user_picks_none', () async {
     final (container, _) = await conectarDemonstracao();
     final medicoes = <MedicaoChamada>[];
     container.read(conexaoProvider.notifier).repositorio!.medicoes.listen(medicoes.add);

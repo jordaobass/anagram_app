@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../apoio/fixtures.dart';
 
 void main() {
-  test('should_reassemble_reply_split_across_many_reports_after_leftover_bytes', () async {
+  test('should_reassemble_the_reply_when_it_is_split_across_reports_after_leftover_bytes', () async {
     final base = lerPresetsDemonstracao()[3]!;
     final presets = {for (var n = 1; n <= 126; n++) n: base};
     final pedaleira = TransporteDemonstracao(presets: presets)..enviarSobraAntes = true;

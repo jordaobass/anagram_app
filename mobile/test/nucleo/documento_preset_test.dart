@@ -12,7 +12,7 @@ void main() {
     }
   });
 
-  test('should_change_only_the_edited_value_and_keep_unknown_fields', () {
+  test('should_keep_unknown_fields_when_changing_one_value', () {
     final original = lerExemplo('1');
     const posicao = PosicaoBloco(1, 3);
     final editado = DocumentoPreset.doJson(original).comParametro(posicao, 'Gain', 9.5).paraJson();
@@ -35,7 +35,7 @@ void main() {
     expect(na3.comCena(1).comParametro(posicao, 'high_drive', 7).bloco(posicao)!.valorNaCena('high_drive', 3), 2);
   });
 
-  test('should_accept_a_newer_format_version_keeping_it_and_flagging_it', () {
+  test('should_keep_and_flag_the_version_when_the_format_is_newer', () {
     final futuro = {...lerExemplo('13'), 'version': 2};
     final documento = DocumentoPreset.doJson(futuro);
     expect(documento.versaoMaisNova, isTrue);

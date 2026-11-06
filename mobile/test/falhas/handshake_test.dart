@@ -23,7 +23,7 @@ void main() {
     expect((container.read(conexaoProvider) as FalhaDeConexao).mensagem, contains('não respondeu'));
   });
 
-  test('should_cancel_a_pending_handshake_and_stay_disconnected', () async {
+  test('should_stay_disconnected_when_a_pending_handshake_is_cancelled', () async {
     final container = pedaleiraMuda();
     final tentativa = container.read(conexaoProvider.notifier).conectarDemonstracao();
     await Future<void>.delayed(const Duration(milliseconds: 100));

@@ -19,7 +19,7 @@ void main() {
     expect(container.read(editorProvider).atual!.nome, antes);
   });
 
-  test('should_accept_a_name_that_only_resembles_a_marker_in_other_case', () async {
+  test('should_accept_the_name_when_it_only_resembles_a_marker_in_other_case', () async {
     final (container, _) = await conectarDemonstracao();
     final editor = container.read(editorProvider.notifier);
     await editor.abrirSlot(SlotPreset(3));

@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'knob_test.dart' show abrirSujoDeEnsaio;
 
 void main() {
-  testWidgets('should_let_space_press_the_focused_button_instead_of_toggling_bypass', (tester) async {
+  testWidgets('should_press_the_focused_button_instead_of_toggling_bypass_when_space_is_pressed', (tester) async {
     final container = await abrirSujoDeEnsaio(tester);
     final pedaleira = container.read(conexaoProvider.notifier).transporte! as TransporteDemonstracao;
     container.read(editorProvider.notifier).alterarParametro('Threshold', -12, arrastando: false);

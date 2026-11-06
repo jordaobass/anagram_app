@@ -19,7 +19,7 @@ void main() {
     expect(container.read(editorProvider).atual!.cenaAtiva, 2, reason: 'a cena vai junto ao salvar');
   });
 
-  test('should_bypass_only_in_active_scene_keeping_base_and_other_scenes', () {
+  test('should_keep_base_and_other_scenes_when_bypassing_in_the_active_scene', () {
     const posicao = PosicaoBloco(1, 1);
     final base = DocumentoPreset.doJson(lerPresetsDemonstracao()[3]!);
     final semCenas = DocumentoPreset.doJson(lerExemplo('13'));

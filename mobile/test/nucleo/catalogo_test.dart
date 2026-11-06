@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../apoio/fixtures.dart';
 
 void main() {
-  test('should_read_real_ranges_units_and_options_from_factory_catalog', () {
+  test('should_read_real_ranges_units_and_options_when_loading_the_factory_catalog', () {
     final catalogo = lerCatalogo();
     expect(catalogo.quantidade, 99);
 

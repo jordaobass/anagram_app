@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../apoio/conexao_demo.dart';
 
 void main() {
-  test('should_rename_remove_block_and_play_it_live', () async {
+  test('should_play_it_live_when_renaming_and_removing_a_block', () async {
     final (container, pedaleira) = await conectarDemonstracao();
     final editor = container.read(editorProvider.notifier);
     await editor.abrirSlot(SlotPreset(3));
@@ -22,7 +22,7 @@ void main() {
     expect(pedaleira.presetTocando!['preset']['name'], 'Grave de Igreja');
   });
 
-  test('should_create_a_new_preset_in_an_empty_slot_and_save_it_there', () async {
+  test('should_save_a_new_preset_there_when_the_slot_is_empty', () async {
     final (container, pedaleira) = await conectarDemonstracao();
     final editor = container.read(editorProvider.notifier);
     await editor.abrirSlot(SlotPreset.doRotulo('03C'));

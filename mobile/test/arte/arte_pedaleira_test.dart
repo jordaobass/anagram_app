@@ -23,7 +23,7 @@ const _indice = '''
 void main() {
   final b3k = lerCatalogo().definicao('urn:darkglass:B3K');
 
-  test('should_prefer_the_pedal_own_art_over_third_party_thumbnail_for_the_same_uri', () {
+  test('should_prefer_the_pedal_own_art_when_a_third_party_thumbnail_has_the_same_uri', () {
     final arte = IndiceMiniaturas.doTexto(_indice).arteDe(b3k) as ArteMiniatura;
 
     expect(arte.caminhoAsset, 'assets/blocos_terceiros/dg_B3K.png');
