@@ -8,6 +8,7 @@ import 'package:anagram_app/aplicacao/estado/estado_conexao.dart';
 import 'package:anagram_app/aplicacao/provedores.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:anagram_app/nucleo/midi/saida_midi.dart';
+import 'package:anagram_app/nucleo/protocolo/erros_anagram.dart';
 import 'package:anagram_app/nucleo/protocolo/transporte_anagram.dart';
 import 'package:anagram_app/plataforma/fabrica_transporte.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,8 +16,13 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/fixtures.dart';
 
-/// Abrir falha com um erro de fora do protocolo, como o DOMException do WebHID.
+/// Abrir falha com o erro dado: por padrão um de fora do protocolo, como o
+/// DOMException do WebHID.
 class _AparelhoBloqueado implements TransporteAnagram {
+  _AparelhoBloqueado([this._erro]);
+
+  final Object? _erro;
+
   @override
   String get descricao => 'WebHID';
   @override
@@ -28,7 +34,7 @@ class _AparelhoBloqueado implements TransporteAnagram {
   @override
   Stream<Uint8List> get relatoriosRecebidos => const Stream.empty();
   @override
-  Future<void> abrir() async => throw StateError('SecurityError: WebHID bloqueado por política');
+  Future<void> abrir() async => throw _erro ?? StateError('SecurityError: WebHID bloqueado por política');
   @override
   Future<void> enviarRelatorio(Uint8List relatorio) async {}
   @override
@@ -71,6 +77,16 @@ void main() {
     final estado = container.read(conexaoProvider);
     expect(estado, isA<FalhaDeConexao>());
     expect((estado as FalhaDeConexao).mensagem, contains('WebHID'));
+  });
+
+  test('should_explain_the_permission_and_not_blame_the_suite_when_the_system_denies_usb', () async {
+    final container = _container(() => _AparelhoBloqueado(const ErroPermissaoNegada('Permissão USB negada')));
+
+    await container.read(conexaoProvider.notifier).conectarAparelho();
+
+    final mensagem = (container.read(conexaoProvider) as FalhaDeConexao).mensagem;
+    expect(mensagem, contains('permissão'));
+    expect(mensagem, isNot(contains('Darkglass Suite')));
   });
 
   test('should_disconnect_when_closing_the_transport_throws', () async {

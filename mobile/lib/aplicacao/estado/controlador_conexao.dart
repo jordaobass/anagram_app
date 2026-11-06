@@ -173,6 +173,9 @@ class ControladorConexao extends Notifier<EstadoConexao> {
   }
 
   static String _explicar(ErroAnagram erro) => switch (erro) {
+        // antes do caso geral: é subtipo de ocupada, mas fechar o Suite não resolve
+        ErroPermissaoNegada() => 'O sistema negou a permissão de acesso ao USB da Anagram. No Android, toque '
+            'em Conectar de novo e aceite o pedido; no macOS, confira os ajustes de Privacidade e Segurança.',
         ErroInterfaceOcupada() =>
           'A Anagram está plugada, mas outro programa a segura. Feche o Darkglass Suite '
               'e qualquer aba do navegador conectada à pedaleira.',
