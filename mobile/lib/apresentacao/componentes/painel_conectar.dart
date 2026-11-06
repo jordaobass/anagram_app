@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../aplicacao/estado/controlador_conexao.dart';
 import '../../aplicacao/estado/estado_conexao.dart';
 import '../../aplicacao/provedores.dart';
-import '../../plataforma/fabrica_transporte.dart';
+import '../../nucleo/suporte_aparelho.dart';
 import '../tema/tokens.dart';
 
 class PainelConectar extends ConsumerWidget {
@@ -39,6 +39,23 @@ class PainelConectar extends ConsumerWidget {
   static List<Widget> _botoes(WidgetRef ref, TextTheme tema, SuporteAparelho suporte, {required bool ocupado}) {
     final controlador = ref.read(conexaoProvider.notifier);
     return [
+      ..._conectarPeloUsb(controlador, tema, suporte, ocupado: ocupado),
+      if (ocupado) ..._cancelar(controlador),
+      const SizedBox(height: Espacos.m),
+      OutlinedButton.icon(
+        key: const ValueKey('botao-demonstracao'),
+        onPressed: ocupado ? null : controlador.conectarDemonstracao,
+        icon: const Icon(Icons.science_outlined),
+        label: const Text('ABRIR DEMONSTRAÇÃO'),
+      ),
+    ];
+  }
+
+  /// Sem suporte na plataforma, o botão fica desligado e o motivo aparece logo
+  /// abaixo, em vez de um erro depois do toque.
+  static List<Widget> _conectarPeloUsb(ControladorConexao controlador, TextTheme tema, SuporteAparelho suporte,
+      {required bool ocupado}) {
+    return [
       FilledButton.icon(
         key: const ValueKey('botao-conectar'),
         onPressed: ocupado || suporte is AparelhoIndisponivel ? null : controlador.conectarAparelho,
@@ -53,7 +70,10 @@ class PainelConectar extends ConsumerWidget {
         },
         style: tema.bodySmall,
       ),
-      if (ocupado) ...[
+    ];
+  }
+
+  static List<Widget> _cancelar(ControladorConexao controlador) => [
         const SizedBox(height: Espacos.m),
         const LinearProgressIndicator(),
         const SizedBox(height: Espacos.s),
@@ -62,16 +82,7 @@ class PainelConectar extends ConsumerWidget {
           onPressed: controlador.cancelarConexao,
           child: const Text('CANCELAR'),
         ),
-      ],
-      const SizedBox(height: Espacos.m),
-      OutlinedButton.icon(
-        key: const ValueKey('botao-demonstracao'),
-        onPressed: ocupado ? null : controlador.conectarDemonstracao,
-        icon: const Icon(Icons.science_outlined),
-        label: const Text('ABRIR DEMONSTRAÇÃO'),
-      ),
-    ];
-  }
+      ];
 
   static List<Widget> _aviso(TextTheme tema, EstadoConexao conexao) {
     final texto = switch (conexao) {

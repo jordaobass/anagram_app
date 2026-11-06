@@ -1,5 +1,6 @@
-// Atalhos do HX Edit que valem aqui (Espaço e 1–3 só sem botão/campo focado): Ctrl/Cmd+S salva, Ctrl/Cmd+Shift+S salva como, Espaço liga/desliga
-// o bloco selecionado, 1–3 trocam de cena, Ctrl/Cmd+C/V copiam e colam.
+// Atalhos do HX Edit que valem aqui: Ctrl/Cmd+S salva, Ctrl/Cmd+Shift+S salva
+// como, Ctrl/Cmd+C/V copiam e colam o bloco selecionado. Espaço (bypass do
+// bloco) e 1–3 (cena) só valem sem botão ou campo focado.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,34 +19,9 @@ class AtalhosEditor extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controlador = ref.read(editorProvider.notifier);
-    void comSelecionado(void Function(PosicaoBloco posicao) acao) {
-      final posicao = ref.read(editorProvider).selecionado;
-      if (posicao != null) acao(posicao);
-    }
-
-    final atalhos = <ShortcutActivator, VoidCallback>{
-      for (final modificador in [true, false]) ...{
-        SingleActivator(LogicalKeyboardKey.keyS, meta: modificador, control: !modificador): () =>
-            executarSalvar(context, ref, listaEmOutraTela: listaEmOutraTela),
-        SingleActivator(LogicalKeyboardKey.keyS, meta: modificador, control: !modificador, shift: true): () =>
-            abrirEscolhaDeDestino(context, ref, listaEmOutraTela: listaEmOutraTela),
-        SingleActivator(LogicalKeyboardKey.keyC, meta: modificador, control: !modificador): () =>
-            comSelecionado((p) => controlador.copiarBloco(p)),
-        SingleActivator(LogicalKeyboardKey.keyV, meta: modificador, control: !modificador): () =>
-            comSelecionado((p) => controlador.colarBloco(p)),
-      },
-    };
-    // Espaço e 1–3 só valem com o foco no próprio editor: com um botão ou
-    // campo focado, a tecla é dele (Espaço aperta o botão).
-    final soDoEditor = <LogicalKeyboardKey, VoidCallback>{
-      LogicalKeyboardKey.space: () => comSelecionado((p) => controlador.alternarBypass(p)),
-      LogicalKeyboardKey.digit1: () => controlador.escolherCena(1),
-      LogicalKeyboardKey.digit2: () => controlador.escolherCena(2),
-      LogicalKeyboardKey.digit3: () => controlador.escolherCena(3),
-    };
+    final soDoEditor = _teclasDoEditor(ref);
     return CallbackShortcuts(
-      bindings: atalhos,
+      bindings: _atalhosComModificador(context, ref),
       child: Focus(
         autofocus: true,
         onKeyEvent: (no, evento) {
@@ -57,5 +33,39 @@ class AtalhosEditor extends ConsumerWidget {
         child: child,
       ),
     );
+  }
+
+  /// Cmd no macOS e Ctrl no resto: os dois valem em qualquer plataforma.
+  Map<ShortcutActivator, VoidCallback> _atalhosComModificador(BuildContext context, WidgetRef ref) {
+    final controlador = ref.read(editorProvider.notifier);
+    SingleActivator tecla(LogicalKeyboardKey tecla, {required bool meta, bool shift = false}) =>
+        SingleActivator(tecla, meta: meta, control: !meta, shift: shift);
+    return {
+      for (final meta in [true, false]) ...{
+        tecla(LogicalKeyboardKey.keyS, meta: meta): () =>
+            executarSalvar(context, ref, listaEmOutraTela: listaEmOutraTela),
+        tecla(LogicalKeyboardKey.keyS, meta: meta, shift: true): () =>
+            abrirEscolhaDeDestino(context, ref, listaEmOutraTela: listaEmOutraTela),
+        tecla(LogicalKeyboardKey.keyC, meta: meta): () => _comSelecionado(ref, controlador.copiarBloco),
+        tecla(LogicalKeyboardKey.keyV, meta: meta): () => _comSelecionado(ref, controlador.colarBloco),
+      },
+    };
+  }
+
+  /// Teclas sem modificador: com um botão ou campo focado, a tecla é dele
+  /// (Espaço aperta o botão), então só valem com o foco no próprio editor.
+  Map<LogicalKeyboardKey, VoidCallback> _teclasDoEditor(WidgetRef ref) {
+    final controlador = ref.read(editorProvider.notifier);
+    return {
+      LogicalKeyboardKey.space: () => _comSelecionado(ref, controlador.alternarBypass),
+      LogicalKeyboardKey.digit1: () => controlador.escolherCena(1),
+      LogicalKeyboardKey.digit2: () => controlador.escolherCena(2),
+      LogicalKeyboardKey.digit3: () => controlador.escolherCena(3),
+    };
+  }
+
+  static void _comSelecionado(WidgetRef ref, void Function(PosicaoBloco posicao) acao) {
+    final posicao = ref.read(editorProvider).selecionado;
+    if (posicao != null) acao(posicao);
   }
 }

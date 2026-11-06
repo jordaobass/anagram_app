@@ -1,3 +1,6 @@
+// Raiz do app: tema escuro único (DESIGN.md) e rotas tipadas do go_router.
+// O roteador nasce uma vez por app, no estado, para não perder a pilha de
+// telas a cada reconstrução.
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

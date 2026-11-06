@@ -29,18 +29,20 @@ class EditorVazio extends ConsumerWidget {
             const SizedBox(height: Espacos.s),
             Text(texto, style: tema.bodyMedium),
             const SizedBox(height: Espacos.l),
-            Wrap(spacing: Espacos.s, runSpacing: Espacos.s, children: [
-              if (slot != null)
-                FilledButton(
-                  key: const ValueKey('botao-novo-preset'),
-                  onPressed: ref.read(editorProvider.notifier).novoPresetNoSlot,
-                  child: const Text('CRIAR PRESET AQUI'),
-                ),
-              if (aoAbrirLista != null) OutlinedButton(onPressed: aoAbrirLista, child: const Text('VER PRESETS')),
-            ]),
+            _botoes(ref, slotVazio: slot != null),
           ]),
         ),
       ),
     );
   }
+
+  Widget _botoes(WidgetRef ref, {required bool slotVazio}) => Wrap(spacing: Espacos.s, runSpacing: Espacos.s, children: [
+        if (slotVazio)
+          FilledButton(
+            key: const ValueKey('botao-novo-preset'),
+            onPressed: ref.read(editorProvider.notifier).novoPresetNoSlot,
+            child: const Text('CRIAR PRESET AQUI'),
+          ),
+        if (aoAbrirLista != null) OutlinedButton(onPressed: aoAbrirLista, child: const Text('VER PRESETS')),
+      ]);
 }
