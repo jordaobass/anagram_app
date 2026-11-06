@@ -34,13 +34,10 @@ class CasaBloco extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final atual = bloco;
-    final rotulo = atual == null
-        ? 'Casa vazia ${posicao.casa}, linha ${posicao.linha}'
-        : '${ref.watch(definicaoBlocoProvider(atual.uri)).nome}, ${ligado ? 'ligado' : 'desligado'}';
     return Semantics(
       button: true,
       selected: selecionado,
-      label: rotulo,
+      label: _rotulo(ref, atual),
       child: GestureDetector(
         onTap: aoTocar,
         onDoubleTap: atual == null ? null : aoTocarDuas,
@@ -50,26 +47,33 @@ class CasaBloco extends ConsumerWidget {
           duration: Duracoes.curta,
           width: largura,
           padding: const EdgeInsets.all(Espacos.xs),
-          decoration: BoxDecoration(
-            color: selecionado ? Cores.painelElevado : Colors.transparent,
-            borderRadius: BorderRadius.circular(Raios.controle),
-            border: Border.all(
-              color: selecionado ? Cores.tally : Colors.transparent,
-              width: Medidas.contornoSelecao,
-            ),
-          ),
+          decoration: _moldura(),
           child: atual == null ? _vazia() : _ocupada(context, ref, atual),
         ),
       ),
     );
   }
 
+  /// O que o leitor de tela diz: a casa vazia pela posição, a ocupada pelo bloco.
+  String _rotulo(WidgetRef ref, BlocoPreset? atual) => atual == null
+      ? 'Casa vazia ${posicao.casa}, linha ${posicao.linha}'
+      : '${ref.watch(definicaoBlocoProvider(atual.uri)).nome}, ${ligado ? 'ligado' : 'desligado'}';
+
+  BoxDecoration _moldura() => BoxDecoration(
+        color: selecionado ? Cores.painelElevado : Colors.transparent,
+        borderRadius: BorderRadius.circular(Raios.controle),
+        border: Border.all(
+          color: selecionado ? Cores.tally : Colors.transparent,
+          width: Medidas.contornoSelecao,
+        ),
+      );
+
   Widget _vazia() => AspectRatio(
         aspectRatio: 1,
         child: Center(
           child: Container(
-            width: largura * 0.22,
-            height: largura * 0.22,
+            width: largura * Medidas.marcaCasaVazia,
+            height: largura * Medidas.marcaCasaVazia,
             decoration: BoxDecoration(
               color: Cores.fundoCase,
               shape: BoxShape.circle,

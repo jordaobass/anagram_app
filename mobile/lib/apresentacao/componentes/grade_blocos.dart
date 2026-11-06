@@ -18,7 +18,8 @@ class GradeBlocos extends ConsumerWidget {
     final documento = ref.watch(editorProvider.select((e) => e.atual));
     if (documento == null) return const SizedBox.shrink();
     return LayoutBuilder(builder: (context, restricoes) {
-      final largura = ((restricoes.maxWidth - 11 * Espacos.s) / 12).clamp(Medidas.casaMinima, Medidas.casaMaxima);
+      const casas = PosicaoBloco.casasPorLinha;
+      final largura = ((restricoes.maxWidth - (casas - 1) * Espacos.s) / casas).clamp(Medidas.casaMinima, Medidas.casaMaxima);
       final geometria = _geometria(largura);
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,

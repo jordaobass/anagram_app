@@ -23,7 +23,7 @@ class PintorKnob extends CustomPainter {
     final arco = Rect.fromCircle(center: centro, radius: raio);
     canvas.drawArc(arco, _inicio, _varredura, false, _traco(Cores.filete));
     canvas.drawArc(arco, _inicio, _varredura * fracao, false, _traco(cor));
-    final corpo = raio - Medidas.espessuraArco * 1.6;
+    final corpo = raio - Medidas.espessuraArco * Medidas.folgaCorpoKnob;
     canvas.drawCircle(centro, corpo, Paint()..color = Cores.painelElevado);
     canvas.drawCircle(
       centro,
@@ -34,9 +34,9 @@ class PintorKnob extends CustomPainter {
         ..strokeWidth = focado ? Medidas.contornoSelecao : Medidas.filete,
     );
     final angulo = _inicio + _varredura * fracao;
-    final ponta = centro + Offset(cos(angulo), sin(angulo)) * corpo * 0.82;
-    final base = centro + Offset(cos(angulo), sin(angulo)) * corpo * 0.25;
-    canvas.drawLine(base, ponta, _traco(Cores.fitaGaffer)..strokeWidth = Medidas.espessuraArco * 0.7);
+    final ponta = centro + Offset(cos(angulo), sin(angulo)) * corpo * Medidas.pontaPonteiroKnob;
+    final base = centro + Offset(cos(angulo), sin(angulo)) * corpo * Medidas.basePonteiroKnob;
+    canvas.drawLine(base, ponta, _traco(Cores.fitaGaffer)..strokeWidth = Medidas.espessuraArco * Medidas.espessuraPonteiroKnob);
   }
 
   Paint _traco(Color cor) => Paint()

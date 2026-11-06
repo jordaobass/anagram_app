@@ -5,52 +5,56 @@ import 'package:flutter/material.dart';
 import 'tokens.dart';
 
 abstract final class TemaApp {
-  static ThemeData escuro() {
-    const esquema = ColorScheme.dark(
-      surface: Cores.painel,
-      surfaceContainer: Cores.painelElevado,
-      onSurface: Cores.texto,
-      onSurfaceVariant: Cores.textoSecundario,
-      primary: Cores.tally,
-      onPrimary: Cores.sobreTally,
-      secondary: Cores.fitaGaffer,
-      onSecondary: Cores.tintaMarcador,
-      error: Cores.erro,
-      outline: Cores.filete,
-      outlineVariant: Cores.filete,
-    );
-    return ThemeData(
-      colorScheme: esquema,
-      scaffoldBackgroundColor: Cores.fundoCase,
-      fontFamily: Fontes.ui,
-      textTheme: _texto(),
-      materialTapTargetSize: MaterialTapTargetSize.padded,
-      visualDensity: VisualDensity.standard,
-      filledButtonTheme: FilledButtonThemeData(style: _botao(Cores.tally, Cores.sobreTally)),
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: Cores.texto,
-          minimumSize: const Size(Medidas.alvoMinimo, Medidas.alvoMinimo),
-          side: const BorderSide(color: Cores.aluminio),
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(Raios.controle))),
-          textStyle: _texto().labelLarge,
-        ),
-      ),
-      dialogTheme: DialogThemeData(
+  static ThemeData escuro() => ThemeData(
+        colorScheme: _esquema,
+        scaffoldBackgroundColor: Cores.fundoCase,
+        fontFamily: Fontes.ui,
+        textTheme: _texto(),
+        materialTapTargetSize: MaterialTapTargetSize.padded,
+        visualDensity: VisualDensity.standard,
+        filledButtonTheme: FilledButtonThemeData(style: _botao(Cores.tally, Cores.sobreTally)),
+        outlinedButtonTheme: OutlinedButtonThemeData(style: _botaoContornado()),
+        dialogTheme: _dialogo(),
+        snackBarTheme: _aviso(),
+        dividerTheme: const DividerThemeData(color: Cores.filete, thickness: Medidas.filete, space: Medidas.filete),
+        focusColor: Cores.tally.withValues(alpha: Opacidades.foco),
+      );
+
+  static const _esquema = ColorScheme.dark(
+    surface: Cores.painel,
+    surfaceContainer: Cores.painelElevado,
+    onSurface: Cores.texto,
+    onSurfaceVariant: Cores.textoSecundario,
+    primary: Cores.tally,
+    onPrimary: Cores.sobreTally,
+    secondary: Cores.fitaGaffer,
+    onSecondary: Cores.tintaMarcador,
+    error: Cores.erro,
+    outline: Cores.filete,
+    outlineVariant: Cores.filete,
+  );
+
+  static ButtonStyle _botaoContornado() => OutlinedButton.styleFrom(
+        foregroundColor: Cores.texto,
+        minimumSize: const Size(Medidas.alvoMinimo, Medidas.alvoMinimo),
+        side: const BorderSide(color: Cores.aluminio),
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(Raios.controle))),
+        textStyle: _texto().labelLarge,
+      );
+
+  static DialogThemeData _dialogo() => DialogThemeData(
         backgroundColor: Cores.painelElevado,
         titleTextStyle: _texto().titleLarge?.copyWith(fontFamily: Fontes.ui),
         contentTextStyle: _texto().bodyLarge?.copyWith(fontFamily: Fontes.ui),
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(Raios.painel))),
-      ),
-      snackBarTheme: SnackBarThemeData(
+      );
+
+  /// Aviso (SnackBar) como fita gaffer escrita a marcador, igual ao nome do preset.
+  static SnackBarThemeData _aviso() => SnackBarThemeData(
         backgroundColor: Cores.fitaGaffer,
         contentTextStyle: _texto().bodyMedium?.copyWith(color: Cores.tintaMarcador, fontFamily: Fontes.ui),
         behavior: SnackBarBehavior.floating,
-      ),
-      dividerTheme: const DividerThemeData(color: Cores.filete, thickness: Medidas.filete, space: Medidas.filete),
-      focusColor: Cores.tally.withValues(alpha: 0.24),
-    );
-  }
+      );
 
   static ButtonStyle _botao(Color fundo, Color frente) => FilledButton.styleFrom(
         backgroundColor: fundo,

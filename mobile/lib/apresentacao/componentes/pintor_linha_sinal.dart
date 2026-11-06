@@ -2,6 +2,7 @@
 // (paralela) desce em 45° no split e sobe no merge, como linha de metrô.
 import 'package:flutter/rendering.dart';
 
+import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 
 class GeometriaGrade {
@@ -16,7 +17,7 @@ class GeometriaGrade {
 
   double xDaCasa(int casa) => (casa - 1) * (larguraCasa + vao) + larguraCasa / 2;
   double yDaLinha(int linha) => (linha - 1) * (alturaLinha + vao) + centroArte;
-  double get larguraTotal => 12 * larguraCasa + 11 * vao;
+  double get larguraTotal => PosicaoBloco.casasPorLinha * larguraCasa + (PosicaoBloco.casasPorLinha - 1) * vao;
 }
 
 class PintorLinhaSinal extends CustomPainter {

@@ -5,7 +5,7 @@ import 'definicao_bloco.dart';
 abstract final class FormatadorValor {
   static String formatar(DefinicaoParametro parametro, num valor) {
     if (parametro.opcoes.isNotEmpty) return _opcao(parametro, valor);
-    if (parametro.alternavel) return valor >= 0.5 ? 'Ligado' : 'Desligado';
+    if (parametro.alternavel) return DefinicaoParametro.estaLigado(valor) ? 'Ligado' : 'Desligado';
     return switch (parametro.unidade) {
       'dB' => '${_decimal(valor, 1)} dB',
       'Hz' => _hertz(valor),

@@ -34,7 +34,7 @@ class ControleParametro extends StatelessWidget {
   }
 
   Widget _escolha(BuildContext context, List<String> opcoes) {
-    final atual = parametro.alternavel ? (valor >= 0.5 ? 1 : 0) : parametro.indiceOpcao(valor);
+    final atual = parametro.alternavel ? (DefinicaoParametro.estaLigado(valor) ? 1 : 0) : parametro.indiceOpcao(valor);
     final tema = Theme.of(context).textTheme;
     return SizedBox(
       width: tamanho + Espacos.l,

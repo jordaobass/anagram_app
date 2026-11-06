@@ -45,6 +45,10 @@ class DefinicaoParametro {
 
   bool get ehDiscreto => alternavel || inteiro || opcoes.isNotEmpty;
 
+  /// Parâmetro liga/desliga: o aparelho guarda 0 ou 1, mas um valor no meio
+  /// (preset editado à mão) conta como ligado da metade para cima.
+  static bool estaLigado(num valor) => valor >= 0.5;
+
   /// Valor gravado de cada opção. O catálogo só dá min/max: quando os
   /// rótulos são números dentro da faixa ("2:1" … "100:1"), eles são o
   /// valor; senão as opções andam de 1 em 1 ou se espalham de min a max.

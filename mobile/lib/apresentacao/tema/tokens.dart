@@ -75,9 +75,19 @@ abstract final class Medidas {
   /// Abaixo disto a casa mostra a abreviação do bloco em vez do nome.
   static const double casaRotuloCompleto = 76;
   static const double arteNaCasa = 0.86;
+
+  /// Diâmetro do furo da casa vazia, em fração da largura da casa.
+  static const double marcaCasaVazia = 0.22;
   static const double knobAmplo = 104;
   static const double knobCompacto = 84;
   static const double espessuraArco = 6;
+
+  /// Knob em proporções do próprio desenho: o corpo fica a 1,6 arco para
+  /// dentro do anel, e o ponteiro vai de 25% a 82% do raio do corpo.
+  static const double folgaCorpoKnob = 1.6;
+  static const double pontaPonteiroKnob = 0.82;
+  static const double basePonteiroKnob = 0.25;
+  static const double espessuraPonteiroKnob = 0.7;
   static const double cantoneira = 14;
   static const double linhaSinal = 2;
   static const double alturaRotuloCasa = 20;
@@ -116,4 +126,7 @@ abstract final class Fontes {
 
 abstract final class Opacidades {
   static const blocoDesligado = 0.38;
+
+  /// Realce de foco do teclado sobre o tally: visível sem competir com a seleção.
+  static const foco = 0.24;
 }

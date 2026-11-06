@@ -71,16 +71,23 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
     ));
   }
 
+  /// Um passo da rodinha, da seta ou do leitor de tela: 1% do curso do knob.
+  static const _passoFino = 0.01;
+
+  /// Com Shift: 10% do curso, para atravessar a faixa sem segurar a tecla.
+  static const _passoGrosso = 0.1;
+
   void _rodinha(PointerSignalEvent evento) {
-    if (evento is PointerScrollEvent) _passo(evento.scrollDelta.dy < 0 ? 0.01 : -0.01);
+    if (evento is PointerScrollEvent) _passo(evento.scrollDelta.dy < 0 ? _passoFino : -_passoFino);
   }
 
-  void _passo(double quanto) =>
-      widget.aoMudar(widget.parametro.valorDe((_fracao + quanto).clamp(0.0, 1.0)), arrastando: false);
+  double _fracaoMais(double quanto) => (_fracao + quanto).clamp(0.0, 1.0);
+
+  void _passo(double quanto) => widget.aoMudar(widget.parametro.valorDe(_fracaoMais(quanto)), arrastando: false);
 
   KeyEventResult _tecla(FocusNode _, KeyEvent evento) {
     if (evento is! KeyDownEvent && evento is! KeyRepeatEvent) return KeyEventResult.ignored;
-    final grande = HardwareKeyboard.instance.isShiftPressed ? 0.1 : 0.01;
+    final grande = HardwareKeyboard.instance.isShiftPressed ? _passoGrosso : _passoFino;
     final teclas = {
       LogicalKeyboardKey.arrowUp: grande,
       LogicalKeyboardKey.arrowRight: grande,
@@ -101,31 +108,33 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
       slider: true,
       label: p.nome,
       value: texto,
-      increasedValue: FormatadorValor.formatar(p, p.valorDe((_fracao + 0.01).clamp(0.0, 1.0))),
-      decreasedValue: FormatadorValor.formatar(p, p.valorDe((_fracao - 0.01).clamp(0.0, 1.0))),
-      onIncrease: () => _passo(0.01),
-      onDecrease: () => _passo(-0.01),
+      increasedValue: FormatadorValor.formatar(p, p.valorDe(_fracaoMais(_passoFino))),
+      decreasedValue: FormatadorValor.formatar(p, p.valorDe(_fracaoMais(-_passoFino))),
+      onIncrease: () => _passo(_passoFino),
+      onDecrease: () => _passo(-_passoFino),
       customSemanticsActions: {_acaoPadrao: _voltarAoPadrao},
       child: Focus(
         focusNode: _foco,
         onKeyEvent: _tecla,
         onFocusChange: (_) => setState(() {}),
-        child: GestureDetector(
-          onTap: _foco.requestFocus,
-          // segurar (não toque duplo, fácil de dar sem querer) volta ao padrão
-          onLongPress: _voltarAoPadrao,
-          // arraste vertical vence o rolar da tela; horizontal também gira
-          onVerticalDragUpdate: _arrastar,
-          onVerticalDragEnd: (_) => _soltar(),
-          onVerticalDragCancel: _soltar,
-          onHorizontalDragUpdate: _arrastar,
-          onHorizontalDragEnd: (_) => _soltar(),
-          onHorizontalDragCancel: _soltar,
-          child: Listener(onPointerSignal: _rodinha, child: _corpo(context, texto)),
-        ),
+        child: _gestos(Listener(onPointerSignal: _rodinha, child: _corpo(context, texto))),
       ),
     );
   }
+
+  Widget _gestos(Widget filho) => GestureDetector(
+        onTap: _foco.requestFocus,
+        // segurar (não toque duplo, fácil de dar sem querer) volta ao padrão
+        onLongPress: _voltarAoPadrao,
+        // arraste vertical vence o rolar da tela; horizontal também gira
+        onVerticalDragUpdate: _arrastar,
+        onVerticalDragEnd: (_) => _soltar(),
+        onVerticalDragCancel: _soltar,
+        onHorizontalDragUpdate: _arrastar,
+        onHorizontalDragEnd: (_) => _soltar(),
+        onHorizontalDragCancel: _soltar,
+        child: filho,
+      );
 
   Widget _corpo(BuildContext context, String texto) {
     final tema = Theme.of(context).textTheme;
