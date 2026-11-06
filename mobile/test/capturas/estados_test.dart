@@ -1,4 +1,6 @@
-// Capturas dos estados pedidos na revisão (rodada 2), com arte própria.
+// Capturas dos estados da interface (salvar, conectar, erros, avisos, celular,
+// tablet, iOS, créditos), com arte própria. Os nomes dos PNGs mantêm o prefixo
+// "rodada2-" de quando foram criados.
 import 'dart:async';
 import 'dart:typed_data';
 
@@ -175,7 +177,7 @@ void main() {
     await foto('14-sobre-diagnostico');
   });
 
-  testWidgets('rodada 3: desfazer depois de segurar o knob', (tester) async {
+  testWidgets('desfazer depois de segurar o knob', (tester) async {
     await preparar(tester, desktop);
     final c = await abrirSlot(tester, '02A');
     c.read(editorProvider.notifier).alterarParametro('Threshold', -12, arrastando: false);
