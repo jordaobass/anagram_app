@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../dados/arquivos_preset.dart';
 import '../nucleo/catalogo/catalogo_blocos.dart';
 import '../nucleo/catalogo/definicao_bloco.dart';
 import '../nucleo/demonstracao/transporte_demonstracao.dart';
@@ -70,6 +71,9 @@ final midiDemonstracaoProvider = Provider<SaidaMidiAnagram? Function()>((ref) =>
 
 /// Gancho de teste: ajusta a pedaleira simulada logo depois de criada.
 final ajusteDemonstracaoProvider = Provider<void Function(TransporteDemonstracao)>((ref) => (_) {});
+
+/// Arquivos do sistema (os testes trocam por um falso que não abre diálogo).
+final arquivosPresetProvider = Provider<ArquivosPreset>((ref) => const ArquivosPreset());
 
 final fabricaTransporteProvider = Provider<FabricaTransporte>((ref) => criarFabricaDaPlataforma());
 
