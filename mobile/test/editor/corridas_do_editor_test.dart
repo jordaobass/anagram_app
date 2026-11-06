@@ -8,6 +8,7 @@ import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/aplicacao/provedores.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:anagram_app/nucleo/midi/saida_midi.dart';
+import 'package:anagram_app/nucleo/modelo/documento_preset.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 import 'package:anagram_app/nucleo/protocolo/api_anagram.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -69,6 +70,21 @@ void main() {
     expect(estado.atual!.nome, 'Editado durante a gravação');
   });
 
+  test('should_keep_an_edit_made_while_saving_when_the_save_finishes', () async {
+    final (container, pedaleira) = await conectarDemonstracao();
+    final editor = container.read(editorProvider.notifier);
+    await editor.abrirSlot(SlotPreset(3));
+
+    final gravacao = editor.salvar();
+    await _esperarAte(() => _relendoDepoisDeGravar(pedaleira));
+    await editor.renomear('Renomeado durante a gravação');
+    await gravacao;
+
+    final estado = container.read(editorProvider);
+    expect(estado.atual!.nome, 'Renomeado durante a gravação');
+    expect(estado.naoSalvo, isTrue, reason: 'a edição posterior ainda não foi gravada');
+  });
+
   test('should_refuse_a_second_save_when_one_is_still_in_progress', () async {
     final (container, _) = await conectarDemonstracao();
     final editor = container.read(editorProvider.notifier);
@@ -106,5 +122,25 @@ void main() {
     midi.pendentes.last.complete();
     await segunda;
     expect(container.read(editorProvider).atual!.nome, lerPresetsDemonstracao()[2]!['preset']['name']);
+  });
+
+  test('should_keep_the_imported_preset_when_it_arrives_while_a_slot_is_still_opening', () async {
+    final midi = _MidiSegurado();
+    final container = ProviderContainer(overrides: [
+      presetsDemonstracaoProvider.overrideWith((ref) async => lerPresetsDemonstracao()),
+      midiDemonstracaoProvider.overrideWithValue(() => midi),
+    ]);
+    await container.read(conexaoProvider.notifier).conectarDemonstracao();
+    final editor = container.read(editorProvider.notifier);
+
+    final abertura = editor.abrirSlot(SlotPreset(1));
+    await _esperarAte(() => midi.pendentes.length == 1);
+    await editor.carregarDocumento(DocumentoPreset.vazio('Importado'));
+    midi.pendentes.single.complete();
+    await abertura;
+
+    final estado = container.read(editorProvider);
+    expect(estado.atual!.nome, 'Importado');
+    expect(estado.carregando, isFalse);
   });
 }

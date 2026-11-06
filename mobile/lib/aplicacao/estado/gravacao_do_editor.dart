@@ -1,6 +1,6 @@
 // Gravar no slot: Salvar (no slot aberto) e Salvar como (destino escolhido).
-// Enquanto grava, o estado fica "salvando" e abrir outro slot espera: o
-// resultado da gravação ainda vai escrever o slot salvo.
+// Enquanto grava, o estado fica "salvando" e abrir outro slot é recusado até
+// ela terminar: o resultado da gravação ainda vai escrever o slot salvo.
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -68,17 +68,27 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
     try {
       final resultado =
           await SalvarNoSlot(repositorio).executar(slot, documento, sobrescreverConfirmado: confirmado);
-      if (resultado case PresetSalvo(:final relido)) await _aplicarSalvo(slot, relido);
+      if (resultado case PresetSalvo(:final relido)) await _aplicarSalvo(slot, relido, gravado: atual);
       return resultado;
     } finally {
       state = state.copiar(salvando: false);
     }
   }
 
-  Future<void> _aplicarSalvo(SlotPreset slot, DocumentoPreset relido) async {
+  /// [gravado] é o documento que estava aberto quando a gravação começou. Se a
+  /// pessoa editou nesse meio-tempo (knob, bypass, nome), a edição fica na
+  /// tela, já com o uuid do que foi salvo, e o preset volta a "não salvo".
+  Future<void> _aplicarSalvo(SlotPreset slot, DocumentoPreset relido, {required DocumentoPreset gravado}) async {
     // gravou em outro slot: a pedaleira vai junto para ele
     final mudou = slot != state.slot;
-    state = state.copiar(slot: slot, original: relido, atual: relido);
+    final editadoDurante = state.atual;
+    final uuidSalvo = relido.uuid;
+    final atual = switch (editadoDurante) {
+      null => relido,
+      _ when identical(editadoDurante, gravado) => relido,
+      _ => uuidSalvo == null ? editadoDurante : editadoDurante.comUuid(uuidSalvo),
+    };
+    state = state.copiar(slot: slot, original: relido, atual: atual);
     if (mudou) state = state.copiar(slotNaPedaleira: await trocarSlotNaPedaleira(slot));
     ref.read(bibliotecaProvider.notifier).registrarSalvo(slot, relido.nome, id: relido.uuid);
   }

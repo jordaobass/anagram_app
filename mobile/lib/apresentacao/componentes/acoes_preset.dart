@@ -50,14 +50,20 @@ class AcoesPreset extends ConsumerWidget {
           onPressed: naoSalvo && !ocupado ? ref.read(editorProvider.notifier).descartarEdicoes : null,
           child: const Text('DESCARTAR'),
         ),
-        _MenuArquivo(),
+        _MenuArquivo(ocupado: ocupado),
       ];
 }
 
 class _MenuArquivo extends ConsumerWidget {
+  const _MenuArquivo({required this.ocupado});
+
+  /// Carregando ou gravando: importar agora disputaria o preset aberto.
+  final bool ocupado;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) => PopupMenuButton<bool>(
         tooltip: 'Importar ou exportar JSON',
+        enabled: !ocupado,
         icon: const Icon(Icons.more_vert, color: Cores.texto),
         onSelected: (importar) => importar ? _importar(context, ref) : _exportar(context, ref),
         itemBuilder: (_) => const [

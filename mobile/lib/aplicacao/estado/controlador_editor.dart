@@ -54,6 +54,15 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
     }
   }
 
+  /// Um preset importado (ou novo) vence a abertura que ainda estiver a
+  /// caminho: sem isto, o slot lido por cima apagaria o importado.
+  @override
+  Future<void> carregarDocumento(DocumentoPreset documento) async {
+    _abertura++;
+    state = state.copiar(carregando: false);
+    await super.carregarDocumento(documento);
+  }
+
   Future<void> _carregar(RepositorioPedaleira repositorio, SlotPreset slot, int abertura) async {
     final leitura = await repositorio.lerPreset(slot);
     // outro slot foi aberto enquanto este carregava: este resultado já não vale
