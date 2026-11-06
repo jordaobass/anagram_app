@@ -1,8 +1,8 @@
 # Decisões — Anagram App
 
 Registro único de decisões (aberta / decidida). Formato: **estado · data · onde aterrissou**.
-Fatos sobre o protocolo vêm de `docs/pesquisa-anagram-hid.md` do app Partitura (código conferido
-em 2026-11-05) e de `pesquisa-hx-stomp.md` (com fontes). **Nada foi testado com a pedaleira real
+Fatos sobre o protocolo vêm do código do [anagram-tone-maker](https://github.com/basster6/anagram-tone-maker)
+(MIT, conferido em 2026-11-05) e de `pesquisa-hx-stomp.md` (com fontes). **Nada foi testado com a pedaleira real
 ainda**: o que depende do aparelho está marcado como hipótese.
 
 ## Produto e escopo
@@ -85,7 +85,7 @@ ainda**: o que depende do aparelho está marcado como hipótese.
 
 | # | Decisão | Estado | Data | Onde |
 |---|---|---|---|---|
-| U1 | Celular: cadeia só com casas ocupadas + 1 livre por linha, quebrando fileiras (nada escondido à direita); parâmetros todos, sem páginas | decidida | 2026-11-05 | `GradeCompacta`, `PainelParametros(paginar:)` |
+| U1 | Celular: cadeia só com casas ocupadas + 1 livre por linha, quebrando fileiras (nada escondido à direita); parâmetros todos, sem páginas | decidida | 2026-11-05 | `GradeCompacta`, `PainelParametros` (a paginação saiu na T7) |
 | U2 | Knob volta ao padrão ao **segurar** (toque duplo era fácil de dar sem querer); ação acessível "Voltar ao padrão" | decidida | 2026-11-05 | `BotaoGiratorio` |
 | U3 | Renomear pela fita (até 24 caracteres — **hipótese** do limite do visor), criar preset em slot vazio, remover bloco pelo menu da casa | decidida | 2026-11-05 | `dialogo_renomear.dart`, `EditorVazio`, `menu_bloco.dart` |
 | U4 | Botão "CONECTAR PELO USB"; o meio técnico (IOKit/hidapi) fica no detalhe abaixo | decidida | 2026-11-05 | `PainelConectar` |
