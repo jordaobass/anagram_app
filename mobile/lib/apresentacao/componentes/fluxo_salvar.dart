@@ -7,6 +7,7 @@ import '../../aplicacao/casos_de_uso/salvar_no_slot.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../rotas.dart';
+import 'dialogo_confirmar.dart';
 
 Future<void> executarSalvar(BuildContext context, WidgetRef ref, {bool listaEmOutraTela = false}) async {
   final mensageiro = ScaffoldMessenger.of(context);
@@ -54,22 +55,12 @@ void _avisar(ScaffoldMessengerState mensageiro, ResultadoSalvar resultado) {
   if (texto != null) mensageiro.showSnackBar(SnackBar(content: Text(texto)));
 }
 
-Future<bool> _confirmarSubstituicao(BuildContext context, SlotPreset slot, String nomeAtual) async {
-  final resposta = await showDialog<bool>(
-    context: context,
-    builder: (contexto) => AlertDialog(
-      title: Text('Substituir ${slot.rotulo}?'),
-      content: Text('O slot ${slot.rotulo} guarda "$nomeAtual". Ele será substituído pelo preset editado.'),
-      actionsAlignment: MainAxisAlignment.spaceBetween,
-      actions: [
-        TextButton(onPressed: () => Navigator.pop(contexto, false), child: const Text('CANCELAR')),
-        FilledButton(
-          key: const ValueKey('confirmar-substituicao'),
-          onPressed: () => Navigator.pop(contexto, true),
-          child: const Text('SUBSTITUIR'),
-        ),
-      ],
-    ),
-  );
-  return resposta ?? false;
-}
+Future<bool> _confirmarSubstituicao(BuildContext context, SlotPreset slot, String nomeAtual) => confirmar(
+      context,
+      titulo: 'Substituir ${slot.rotulo}?',
+      texto: 'O slot ${slot.rotulo} guarda "$nomeAtual". Ele será substituído pelo preset editado.',
+      rotuloCancelar: 'CANCELAR',
+      rotuloConfirmar: 'SUBSTITUIR',
+      chaveConfirmar: const ValueKey('confirmar-substituicao'),
+      enfatizar: true,
+    );

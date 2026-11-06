@@ -7,6 +7,7 @@ import '../../aplicacao/estado/controlador_biblioteca.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../tema/tokens.dart';
+import 'dialogo_confirmar.dart';
 import 'faixa_escolher_destino.dart';
 import 'fluxo_salvar.dart';
 
@@ -56,20 +57,13 @@ class ListaPresets extends ConsumerWidget {
     aoAbrir?.call();
   }
 
-  Future<bool> _confirmarDescarte(BuildContext context, String nome) async =>
-      await showDialog<bool>(
-        context: context,
-        builder: (contexto) => AlertDialog(
-          title: const Text('Largar edições?'),
-          content: Text('"$nome" tem mudanças que não foram salvas no slot.'),
-          actionsAlignment: MainAxisAlignment.spaceBetween,
-          actions: [
-            TextButton(onPressed: () => Navigator.pop(contexto, false), child: const Text('CONTINUAR EDITANDO')),
-            OutlinedButton(onPressed: () => Navigator.pop(contexto, true), child: const Text('LARGAR')),
-          ],
-        ),
-      ) ??
-      false;
+  Future<bool> _confirmarDescarte(BuildContext context, String nome) => confirmar(
+        context,
+        titulo: 'Largar edições?',
+        texto: '"$nome" tem mudanças que não foram salvas no slot.',
+        rotuloCancelar: 'CONTINUAR EDITANDO',
+        rotuloConfirmar: 'LARGAR',
+      );
 }
 
 class _Banco extends StatelessWidget {
