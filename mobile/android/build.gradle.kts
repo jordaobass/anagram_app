@@ -20,5 +20,7 @@ subprojects {
 }
 
 tasks.register<Delete>("clean") {
+    group = "build"
+    description = "Apaga a pasta de build compartilhada pelos módulos."
     delete(rootProject.layout.buildDirectory)
 }
