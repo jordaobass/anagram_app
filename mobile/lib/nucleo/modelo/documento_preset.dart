@@ -4,6 +4,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import '../protocolo/quadros_hid.dart';
 import 'bloco_preset.dart';
 import 'json_util.dart';
 
@@ -171,4 +172,16 @@ String novoUuidPreset([Random? aleatorio]) {
   final hex = List.generate(56, (_) => gerador.nextInt(16).toRadixString(16)).join();
   return '${hex.substring(0, 16)}-${hex.substring(16, 24)}-'
       '${hex.substring(24, 32)}-${hex.substring(32)}';
+}
+
+/// Por que [nome] não serve para um preset, ou `null` se serve. O nome viaja
+/// dentro do quadro HID: com um marcador de quadro nele, a remontagem da
+/// resposta corta a mensagem no lugar errado e a leitura do preset falha.
+String? motivoNomeInvalido(String nome) {
+  final limpo = nome.trim();
+  if (limpo.isEmpty) return 'O nome não pode ficar vazio.';
+  for (final marcador in const [ProtocoloAnagram.marcadorInicio, ProtocoloAnagram.marcadorFim]) {
+    if (limpo.contains(marcador)) return 'O nome não pode conter "$marcador".';
+  }
+  return null;
 }

@@ -45,9 +45,10 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
     await aplicarDocumento(documento);
   }
 
+  /// Nome vazio ou com marcador de quadro HID é ignorado (o diálogo já explica).
   Future<void> renomear(String nome) async {
     final atual = state.atual;
-    if (atual != null && nome.trim().isNotEmpty) await aplicarDocumento(atual.comNome(nome.trim()));
+    if (atual != null && motivoNomeInvalido(nome) == null) await aplicarDocumento(atual.comNome(nome.trim()));
   }
 
   Future<void> removerBloco(PosicaoBloco posicao) async {
