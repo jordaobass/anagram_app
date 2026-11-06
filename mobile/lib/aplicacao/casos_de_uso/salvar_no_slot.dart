@@ -26,6 +26,17 @@ final class SlotOcupado extends ResultadoSalvar {
 final class FalhaAoSalvar extends ResultadoSalvar {
   const FalhaAoSalvar(this.erro);
   final ErroAnagram erro;
+
+  /// Frase para a tela, escolhida pelo tipo do erro: a mensagem dos erros do
+  /// protocolo traz o nome da ação e a exceção de origem, que só servem ao log.
+  /// Os recusados pelo próprio app já vêm com a frase certa.
+  String get motivo => switch (erro) {
+        ErroDesconectado() => 'a pedaleira está desconectada. Conecte e tente de novo.',
+        ErroSemResposta() => 'a pedaleira não respondeu a tempo. O slot pode não ter sido gravado; confira antes de tentar de novo.',
+        ErroRespostaInvalida() => 'a pedaleira recusou ou devolveu uma resposta inesperada.',
+        ErroInterfaceOcupada() => 'outro programa está segurando a pedaleira.',
+        ErroOperacaoEmCurso(:final mensagem) || ErroPlataformaSemSuporte(:final mensagem) => mensagem,
+      };
 }
 
 class SalvarNoSlot {

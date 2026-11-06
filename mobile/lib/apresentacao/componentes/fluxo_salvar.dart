@@ -49,7 +49,7 @@ Future<bool> salvarComoNoDestino(BuildContext context, WidgetRef ref, SlotPreset
 void _avisar(ScaffoldMessengerState mensageiro, ResultadoSalvar resultado) {
   final texto = switch (resultado) {
     PresetSalvo(:final relido, :final slot) => '"${relido.nome}" salvo em ${slot.rotulo}.',
-    FalhaAoSalvar(:final erro) => 'Não salvou: ${erro.mensagem}',
+    FalhaAoSalvar(:final motivo) => 'Não salvou: $motivo',
     SlotOcupado() => null,
   };
   if (texto != null) mensageiro.showSnackBar(SnackBar(content: Text(texto)));

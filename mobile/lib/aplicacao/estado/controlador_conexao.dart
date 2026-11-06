@@ -93,7 +93,7 @@ class ControladorConexao extends Notifier<EstadoConexao> {
       // falha ao criar o isolate do hidapi): sem isto a tela ficaria em
       // "Conectando…" para sempre
       registro.e('conexão: falha inesperada ao abrir ${transporte.descricao}', error: erro, stackTrace: pilha);
-      if (tentativa == _tentativa) state = FalhaDeConexao('Não foi possível abrir ${transporte.descricao}: $erro');
+      if (tentativa == _tentativa) state = FalhaDeConexao('Não foi possível abrir ${transporte.descricao}. Tente de novo; o detalhe ficou no log.');
       return;
     }
     if (tentativa != _tentativa) return unawaited(_fecharSemFalhar(transporte.descricao, transporte.fechar));
