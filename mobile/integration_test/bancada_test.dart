@@ -11,9 +11,9 @@ import 'package:anagram_app/nucleo/modelo/documento_preset.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 import 'package:anagram_app/nucleo/protocolo/api_anagram.dart';
 import 'package:anagram_app/nucleo/protocolo/cliente_anagram.dart';
+import 'package:anagram_app/nucleo/registro.dart';
 import 'package:anagram_app/plataforma/saida_midi_nativa.dart';
 import 'package:anagram_app/plataforma/transporte_canal_nativo.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -31,7 +31,7 @@ void main() {
     transporte = TransporteCanalNativo('USB (IOKit)', pausaSugerida: Duration.zero);
     await transporte.abrir();
     final cliente = ClienteAnagram(transporte, pausaEntreRelatorios: () => pausa);
-    cliente.medicoes.listen((m) => debugPrint(
+    cliente.medicoes.listen((m) => registro.i(
         'BANCADA medição ${m.acao}: ${m.duracao.inMilliseconds} ms, ${m.relatoriosEnviados} relatórios, pausa ${m.pausa.inMilliseconds} ms'));
     api = ApiAnagram(cliente);
   });
@@ -39,9 +39,9 @@ void main() {
   tearDownAll(() => transporte.fechar());
 
   testWidgets('bancada: firmware, lista e leitura sem perder campo', (tester) async {
-    debugPrint('BANCADA firmware: ${await api.firmware(prazo: const Duration(seconds: 3))}');
+    registro.i('BANCADA firmware: ${await api.firmware(prazo: const Duration(seconds: 3))}');
     final slots = await api.listarSlots();
-    debugPrint('BANCADA ${slots.length} presets na lista: '
+    registro.i('BANCADA ${slots.length} presets na lista: '
         '${slots.take(6).map((s) => '${s.slot.rotulo}=${s.nome}').join(', ')}…');
     expect(slots, isNotEmpty);
 
@@ -50,7 +50,7 @@ void main() {
       expect(preset, isNotNull, reason: '${resumo.slot.rotulo} está na lista mas não leu');
       final ida = jsonEncode(preset!.paraJson());
       expect(jsonEncode(DocumentoPreset.doJson(jsonDecode(ida) as Map<String, dynamic>).paraJson()), ida);
-      debugPrint('BANCADA ${resumo.slot.rotulo} "${preset.nome}" leu e preservou ${ida.length} bytes');
+      registro.i('BANCADA ${resumo.slot.rotulo} "${preset.nome}" leu e preservou ${ida.length} bytes');
     }
   });
 
@@ -65,7 +65,7 @@ void main() {
         await api.tocarAoVivo(preset);
         tempos.add(relogio.elapsedMilliseconds);
       }
-      debugPrint('BANCADA ao vivo "${preset.nome}" pausa $ms ms: $tempos ms');
+      registro.i('BANCADA ao vivo "${preset.nome}" pausa $ms ms: $tempos ms');
     }
     pausa = Duration.zero;
   });
@@ -77,12 +77,12 @@ void main() {
 
     await api.salvar(vazio, teste);
     final relido = await api.lerPreset(vazio);
-    debugPrint('BANCADA gravou ${vazio.rotulo}, releu "${relido?.nome}"');
+    registro.i('BANCADA gravou ${vazio.rotulo}, releu "${relido?.nome}"');
     expect(relido?.nome, teste.nome);
 
     await api.excluir(vazio);
     expect(await api.lerPreset(vazio), isNull, reason: '${vazio.rotulo} devia ter voltado a vazio');
-    debugPrint('BANCADA apagou ${vazio.rotulo}: slot vazio de novo');
+    registro.i('BANCADA apagou ${vazio.rotulo}: slot vazio de novo');
   }, skip: !_escrever);
 
   testWidgets('bancada: Program Change para o slot pedido (D4)', (tester) async {
@@ -91,6 +91,6 @@ void main() {
     final slot = SlotPreset.doRotulo(_slotMidi);
     await midi.enviar(MensagensMidi.trocaDePrograma(slot));
     await midi.fechar();
-    debugPrint('BANCADA mandei programa ${slot.numero} para ${slot.rotulo}: confira no visor qual slot abriu');
+    registro.i('BANCADA mandei programa ${slot.numero} para ${slot.rotulo}: confira no visor qual slot abriu');
   }, skip: _slotMidi.isEmpty);
 }

@@ -2,10 +2,11 @@
 // assets pelo rootBundle real, canal nativo real. Sem pedaleira plugada, o
 // "Conectar" tem de voltar a mensagem do lado nativo; depois o caminho
 // quente roda na demonstração.
-import 'package:anagram_app/apresentacao/app_anagram.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
+import 'package:anagram_app/apresentacao/app_anagram.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:anagram_app/nucleo/protocolo/erros_anagram.dart';
+import 'package:anagram_app/nucleo/registro.dart';
 import 'package:anagram_app/plataforma/saida_midi_nativa.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,7 +25,7 @@ void main() {
       await tester.tap(conectar);
       await tester.pumpAndSettle(const Duration(milliseconds: 100), EnginePhase.sendSemanticsUpdate, const Duration(seconds: 15));
       final aviso = tester.widget<Text>(find.byKey(const ValueKey('aviso-conexao')));
-      debugPrint('aviso do canal nativo sem pedaleira: ${aviso.data}');
+      registro.i('aviso do canal nativo sem pedaleira: ${aviso.data}');
       expect(aviso.data, isNotEmpty);
     }
 
@@ -50,7 +51,7 @@ void main() {
         as TransporteDemonstracao;
     final bloco = pedaleira.presetTocando!['preset']['chains']['1']['blocks']['1'] as Map<String, dynamic>;
     final limiar = (bloco['parameters'] as Map<String, dynamic>).values.firstWhere((p) => p['symbol'] == 'Threshold');
-    debugPrint('try_anagram_preset levou Threshold = ${limiar['value']}');
+    registro.i('try_anagram_preset levou Threshold = ${limiar['value']}');
     expect(limiar['value'] as num, greaterThan(-30));
   });
 
@@ -61,7 +62,7 @@ void main() {
     } on ErroAnagram catch (e) {
       erro = e;
     }
-    debugPrint('MIDI nativo sem pedaleira: $erro');
+    registro.i('MIDI nativo sem pedaleira: $erro');
     expect(erro, isA<ErroDesconectado>(), reason: 'CoreMIDI respondeu (não MissingPlugin)');
   });
 }
