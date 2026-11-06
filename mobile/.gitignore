@@ -56,3 +56,4 @@ app.*.map.json
 /assets/blocos_terceiros/*
 !/assets/blocos_terceiros/LEIAME.txt
 /test/capturas/goldens_terceiros/
+mobile/.impeccable/build/
