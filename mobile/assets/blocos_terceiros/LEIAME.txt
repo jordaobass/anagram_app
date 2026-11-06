@@ -1,0 +1,5 @@
+Pasta opcional de miniaturas de blocos de terceiros (anagramanswers.com).
+Não vai para o repositório: a publicação depende de autorização do autor das imagens.
+Para usar localmente: python3 ferramentas/gerar_miniaturas.py <pasta-com-os-png> <blocos.json>
+Arte da própria pedaleira (Darkglass, ligado/desligado): python3 ferramentas/baixar_arte_pedaleira.py
+Sem esta pasta preenchida, o app mostra a arte própria por categoria.

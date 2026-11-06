@@ -1,0 +1,21 @@
+import Cocoa
+import FlutterMacOS
+
+class MainFlutterWindow: NSWindow {
+  // mantém os canais vivos enquanto a janela existir
+  private var canalHid: CanalHidAnagram?
+  private var canalMidi: CanalMidiAnagram?
+
+  override func awakeFromNib() {
+    let flutterViewController = FlutterViewController()
+    let windowFrame = self.frame
+    self.contentViewController = flutterViewController
+    self.setFrame(windowFrame, display: true)
+
+    RegisterGeneratedPlugins(registry: flutterViewController)
+    canalHid = CanalHidAnagram(mensageiro: flutterViewController.engine.binaryMessenger)
+    canalMidi = CanalMidiAnagram(mensageiro: flutterViewController.engine.binaryMessenger)
+
+    super.awakeFromNib()
+  }
+}

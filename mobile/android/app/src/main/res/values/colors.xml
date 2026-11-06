@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Espelha Cores.fundoCase (lib/apresentacao/tema/tokens.dart) -->
+    <color name="fundo_case">#131416</color>
+</resources>
