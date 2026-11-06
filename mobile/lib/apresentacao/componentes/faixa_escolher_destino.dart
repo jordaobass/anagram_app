@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
+import '../navegacao.dart';
 import '../tema/tokens.dart';
 
 class FaixaEscolherDestino extends ConsumerWidget {
@@ -23,7 +24,7 @@ class FaixaEscolherDestino extends ConsumerWidget {
         TextButton(
           onPressed: () {
             ref.read(editorProvider.notifier).cancelarSalvarComo();
-            Navigator.of(context).maybePop();
+            voltarSePuder(context);
           },
           style: TextButton.styleFrom(foregroundColor: Cores.sobreTally),
           child: const Text('CANCELAR'),

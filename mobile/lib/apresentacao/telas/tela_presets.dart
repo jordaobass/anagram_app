@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../componentes/lista_presets.dart';
+import '../navegacao.dart';
 
 class TelaPresets extends StatelessWidget {
   const TelaPresets({super.key});
@@ -9,6 +10,6 @@ class TelaPresets extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Presets')),
-        body: ListaPresets(aoAbrir: () => Navigator.of(context).maybePop()),
+        body: ListaPresets(aoAbrir: () => voltarSePuder(context)),
       );
 }
