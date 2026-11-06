@@ -32,18 +32,20 @@ class TransporteCanalNativo with FluxosDoTransporte implements TransporteAnagram
   @override
   Future<void> abrir() async {
     anunciarEstado(EstadoTransporte.abrindo);
-    _assinatura ??= _eventos.receiveBroadcastStream().listen(_aoReceber, onError: _aoFalharEvento);
     try {
       await _metodos.invokeMethod<void>('abrir', {
         'idFornecedor': ProtocoloAnagram.idFornecedor,
         'idProduto': ProtocoloAnagram.idProduto,
       });
     } on PlatformException catch (erro) {
-      await _largarEventos();
       // quem ouviu "abrindo" precisa saber que não abriu
       anunciarEstado(EstadoTransporte.fechado);
       throw _traduzir(erro);
     }
+    // só depois de abrir: o EventChannel é um só para o app, e uma tentativa
+    // que falha tarde (permissão cancelada no Android) cancelaria a assinatura
+    // de quem conectou depois dela
+    _assinatura ??= _eventos.receiveBroadcastStream().listen(_aoReceber, onError: _aoFalharEvento);
     _aberto = true;
     anunciarEstado(EstadoTransporte.aberto);
   }
