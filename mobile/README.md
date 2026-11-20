@@ -87,23 +87,20 @@ flutter test integration_test/bancada_test.dart -d macos
 
 ## Publicar (release)
 
-Publique **sempre de um clone limpo** (`git clone`), nunca da pasta de trabalho: o Flutter embarca
-tudo o que estiver em `assets/blocos_terceiros/`, e as miniaturas de terceiros não podem ir para as
-lojas. Antes de cada build de release:
+Só existe a versão **com a arte da pedaleira** (DECISOES A12). Publique **sempre de um clone limpo**
+(`git clone`), nunca da pasta de trabalho: o Flutter embarca tudo o que estiver em
+`assets/blocos_terceiros/`, e a pasta de trabalho pode ter miniaturas de anagramanswers.com, que não
+vão para o público.
 
 ```bash
+git clone git@github.com:jordaobass/anagram_app.git && cd anagram_app/mobile
+python3 ferramentas/baixar_arte_pedaleira.py        # 101 blocos, 202 imagens (ligado e desligado)
 ferramentas/verificar_release.sh && flutter build <plataforma> --release
 ```
 
-O script falha (código 1) se houver qualquer arquivo além do `LEIAME.txt` nessa pasta.
-
-## Traduções
-
-Os textos da interface ficam em `lib/l10n/` (`app_pt.arb` é o modelo; `app_en.arb` e `app_es.arb`, as
-traduções) e são gerados pelo `flutter gen-l10n`, que o `flutter pub get` já roda. Para mudar ou criar
-uma frase, edite as três ARBs: o teste `test/idioma/idioma_test.dart` falha se faltar a chave em
-algum idioma. Núcleo e aplicação não guardam frases de tela, só o que aconteceu, tipado
-(`lib/aplicacao/avisos.dart`); a frase sai em `lib/apresentacao/textos.dart`.
+O script falha (código 1) sem a arte da pedaleira, com menos de 100 imagens dela ou com qualquer outro
+arquivo na pasta. No macOS com Xcode 27, o release só compila para arm64: acrescente `ARCHS = arm64` ao
+`macos/Runner/Configs/Release.xcconfig` do clone (o `lipo` recusa `-verify_arch` com várias arquiteturas).
 
 ## Estrutura
 
