@@ -1,0 +1,412 @@
+{
+ "preset": {
+  "bindings": {
+   "foot1": {
+    "name": "Peggy Bass",
+    "parameters": [
+     {
+      "block": 2,
+      "max": 1,
+      "min": 0,
+      "row": 1,
+      "symbol": ":bypass"
+     }
+    ],
+    "properties": [],
+    "value": 1
+   }
+  },
+  "chains": {
+   "1": {
+    "blocks": {
+     "2": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Ultra Lo",
+        "symbol": "ultra_lo",
+        "value": 0
+       },
+       "2": {
+        "name": "Ultra Hi",
+        "symbol": "ultra_hi",
+        "value": 0
+       },
+       "3": {
+        "name": "Bass",
+        "symbol": "bass",
+        "value": 3.9000000953674316
+       },
+       "4": {
+        "name": "Midrange",
+        "symbol": "midrange",
+        "value": 5
+       },
+       "5": {
+        "name": "Mid Shift",
+        "symbol": "mid_shift",
+        "value": 0.5
+       },
+       "6": {
+        "name": "Treble",
+        "symbol": "treble",
+        "value": 5
+       },
+       "7": {
+        "name": "Level",
+        "symbol": "level",
+        "value": 0
+       }
+      },
+      "properties": {},
+      "quickpot": "level",
+      "scenes": {
+       "1": {
+        "parameters": [
+         {
+          "symbol": "bass",
+          "value": 3.9000000953674316
+         }
+        ],
+        "properties": []
+       },
+       "2": {
+        "parameters": [
+         {
+          "symbol": "bass",
+          "value": 5
+         }
+        ],
+        "properties": []
+       },
+       "3": {
+        "parameters": [
+         {
+          "symbol": "bass",
+          "value": 5
+         }
+        ],
+        "properties": []
+       }
+      },
+      "uri": "urn:darkglass:neural-plugins:peggy-bass"
+     },
+     "4": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Low Pass",
+        "symbol": "low_pass",
+        "value": 250
+       },
+       "2": {
+        "name": "Low Comp",
+        "symbol": "low_comp",
+        "value": 6.599999904632568
+       },
+       "3": {
+        "name": "Low Level",
+        "symbol": "low_level",
+        "value": 4.900000095367432
+       },
+       "4": {
+        "name": "High Level",
+        "symbol": "high_level",
+        "value": 6
+       },
+       "5": {
+        "name": "High Drive",
+        "symbol": "high_drive",
+        "value": 7.800000190734863
+       },
+       "6": {
+        "name": "High Pass",
+        "symbol": "high_pass",
+        "value": 348
+       }
+      },
+      "properties": {},
+      "quickpot": "high_drive",
+      "scenes": {},
+      "uri": "urn:darkglass:neural-plugins:microtubes-x"
+     },
+     "6": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Level Row 1",
+        "symbol": "LevelRow1",
+        "value": 0
+       },
+       "2": {
+        "name": "Level Row 2",
+        "symbol": "LevelRow2",
+        "value": 0
+       },
+       "3": {
+        "name": "Crossover",
+        "symbol": "Crossover",
+        "value": 0
+       },
+       "4": {
+        "name": "Crossover Freq",
+        "symbol": "CrossoverFreq",
+        "value": 78.5
+       }
+      },
+      "properties": {},
+      "quickpot": "LevelRow1",
+      "scenes": {},
+      "uri": "urn:darkglass-anagram:split"
+     },
+     "7": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Blend",
+        "symbol": "Blend",
+        "value": 62
+       },
+       "2": {
+        "name": "Level",
+        "symbol": "Level",
+        "value": 6
+       }
+      },
+      "properties": {},
+      "quickpot": "Blend",
+      "scenes": {},
+      "uri": "urn:darkglass-anagram:merge"
+     },
+     "8": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Lowshelf Freq",
+        "symbol": "LSfreq",
+        "value": 25.100000381469727
+       },
+       "2": {
+        "name": "Lowshelf Width",
+        "symbol": "LSwidth",
+        "value": 0.33000001311302185
+       },
+       "3": {
+        "name": "Lowshelf Gain",
+        "symbol": "LSgain",
+        "value": -16.80000114440918
+       },
+       "4": {
+        "name": "Frequency 1",
+        "symbol": "freq1",
+        "value": 160
+       },
+       "5": {
+        "name": "Width 1",
+        "symbol": "width1",
+        "value": 0.5
+       },
+       "6": {
+        "name": "Gain 1",
+        "symbol": "gain1",
+        "value": 0
+       },
+       "7": {
+        "name": "Frequency 2",
+        "symbol": "freq2",
+        "value": 397
+       },
+       "8": {
+        "name": "Width 2",
+        "symbol": "width2",
+        "value": 0.5
+       },
+       "9": {
+        "name": "Gain 2",
+        "symbol": "gain2",
+        "value": 0
+       },
+       "10": {
+        "name": "Frequency 3",
+        "symbol": "freq3",
+        "value": 1250
+       },
+       "11": {
+        "name": "Width 3",
+        "symbol": "width3",
+        "value": 0.5
+       },
+       "12": {
+        "name": "Gain 3",
+        "symbol": "gain3",
+        "value": 0
+       },
+       "13": {
+        "name": "Frequency 4",
+        "symbol": "freq4",
+        "value": 2500
+       },
+       "14": {
+        "name": "Width 4",
+        "symbol": "width4",
+        "value": 0.5
+       },
+       "15": {
+        "name": "Gain 4",
+        "symbol": "gain4",
+        "value": 0
+       },
+       "16": {
+        "name": "Highshelf Freq",
+        "symbol": "HSfreq",
+        "value": 8000
+       },
+       "17": {
+        "name": "Highshelf W",
+        "symbol": "HSwidth",
+        "value": 0.33000001311302185
+       },
+       "18": {
+        "name": "Highshelf Gain",
+        "symbol": "HSgain",
+        "value": 0
+       }
+      },
+      "properties": {},
+      "quickpot": "LSgain",
+      "scenes": {},
+      "uri": "urn:darkglass:fil4#mono"
+     },
+     "9": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Blend",
+        "symbol": "Blend",
+        "value": 100
+       },
+       "2": {
+        "name": "Level",
+        "symbol": "Level",
+        "value": 0
+       }
+      },
+      "properties": {
+       "1": {
+        "name": "Cabinet File",
+        "uri": "urn:darkglass-anagram:cabinet-bass#file",
+        "value": "/factory-data/cabinets/212 103 on axis_01-MP.dat"
+       }
+      },
+      "quickpot": "Level",
+      "scenes": {},
+      "uri": "urn:darkglass-anagram:cabinet-bass"
+     }
+    }
+   },
+   "2": {
+    "blocks": {
+     "1": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Sensitivity",
+        "symbol": "Sensitivity",
+        "value": 8.199999809265137
+       },
+       "2": {
+        "name": "Attack",
+        "symbol": "Attack",
+        "value": 4.300000190734863
+       },
+       "3": {
+        "name": "Release",
+        "symbol": "Release",
+        "value": 6.400000095367432
+       },
+       "4": {
+        "name": "Cutoff Freq",
+        "symbol": "CutoffFreq",
+        "value": 5.200000286102295
+       },
+       "5": {
+        "name": "Mode",
+        "symbol": "Mode",
+        "value": 0.5
+       }
+      },
+      "properties": {},
+      "quickpot": "CutoffFreq",
+      "scenes": {
+       "1": {
+        "enabled": true,
+        "parameters": [],
+        "properties": []
+       },
+       "2": {
+        "enabled": true,
+        "parameters": [],
+        "properties": []
+       },
+       "3": {
+        "enabled": true,
+        "parameters": [],
+        "properties": []
+       }
+      },
+      "uri": "urn:darkglass:Gravitron"
+     },
+     "2": {
+      "enabled": false,
+      "parameters": {
+       "1": {
+        "name": "Env Amount",
+        "symbol": "EnvAmount",
+        "value": 8.40000057220459
+       },
+       "2": {
+        "name": "Env Mix",
+        "symbol": "EnvMix",
+        "value": 10
+       },
+       "3": {
+        "name": "Drive",
+        "symbol": "Drive",
+        "value": 4.400000095367432
+       },
+       "4": {
+        "name": "Filter Cutoff",
+        "symbol": "FilterCutoff",
+        "value": 3.700000047683716
+       },
+       "5": {
+        "name": "Filter Reson",
+        "symbol": "FilterResonance",
+        "value": 5.300000190734863
+       },
+       "6": {
+        "name": "Filter Poles",
+        "symbol": "FilterPoles",
+        "value": 0
+       },
+       "7": {
+        "name": "Env Decay",
+        "symbol": "EnvDecay",
+        "value": 1
+       }
+      },
+      "properties": {},
+      "quickpot": "FilterCutoff",
+      "scenes": {},
+      "uri": "urn:darkglass:moerfer"
+     }
+    }
+   }
+  },
+  "name": "FILTER TONE",
+  "scene": 0,
+  "uuid": "300f4fc86cd44634-b5dae48a-ccd3aca7-b86416872463ae11fcadb53f"
+ },
+ "type": "preset",
+ "version": 1
+}

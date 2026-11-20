@@ -1,0 +1,234 @@
+{
+ "preset": {
+  "bindings": {},
+  "chains": {
+   "1": {
+    "blocks": {
+     "1": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Threshold",
+        "symbol": "Threshold",
+        "value": -89.69999694824219
+       },
+       "2": {
+        "name": "Range",
+        "symbol": "Range",
+        "value": 40.5
+       },
+       "3": {
+        "name": "Gate",
+        "symbol": "Gate",
+        "value": 38.70000076293945
+       }
+      },
+      "properties": {},
+      "quickpot": "Threshold",
+      "scenes": {},
+      "uri": "urn:nembriniaudio:noisegate"
+     },
+     "2": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Gain",
+        "symbol": "Gain",
+        "value": 5
+       },
+       "2": {
+        "name": "Treble",
+        "symbol": "Treble",
+        "value": 5
+       },
+       "3": {
+        "name": "Output",
+        "symbol": "Output",
+        "value": 5
+       }
+      },
+      "properties": {},
+      "quickpot": "Gain",
+      "scenes": {},
+      "uri": "urn:nembriniaudio:clonminotaur"
+     },
+     "3": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Gain",
+        "symbol": "Gain",
+        "value": 5.25
+       },
+       "2": {
+        "name": "Edge",
+        "symbol": "Edge",
+        "value": 1
+       },
+       "3": {
+        "name": "Bass",
+        "symbol": "Bass",
+        "value": 4.099999904632568
+       },
+       "4": {
+        "name": "Middle",
+        "symbol": "Middle",
+        "value": 2.799999952316284
+       },
+       "5": {
+        "name": "Treble",
+        "symbol": "Treble",
+        "value": 6
+       },
+       "6": {
+        "name": "Master",
+        "symbol": "Master",
+        "value": 3.4000000953674316
+       },
+       "7": {
+        "name": "Presence",
+        "symbol": "Presence",
+        "value": 6.400000095367432
+       },
+       "8": {
+        "name": "Presence Mode",
+        "symbol": "PresenceMode",
+        "value": 1
+       },
+       "9": {
+        "name": "Cabinet",
+        "symbol": "Cabinet",
+        "value": 1
+       },
+       "10": {
+        "name": "Output",
+        "symbol": "Output",
+        "value": 1.9999999949504854e-06
+       }
+      },
+      "properties": {},
+      "quickpot": "Gain",
+      "scenes": {},
+      "uri": "urn:nembriniaudio:crunck"
+     },
+     "4": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Delay Level",
+        "symbol": "delaylevel",
+        "value": 2.9000000953674316
+       },
+       "2": {
+        "name": "Blend",
+        "symbol": "blend",
+        "value": 31
+       },
+       "3": {
+        "name": "Repeat Rate",
+        "symbol": "repeatrate",
+        "value": 3.6000001430511475
+       },
+       "4": {
+        "name": "Head Mode",
+        "symbol": "head_mode",
+        "value": 1
+       },
+       "5": {
+        "name": "Feedback",
+        "symbol": "feedback",
+        "value": 3.299999952316284
+       },
+       "6": {
+        "name": "Subdivision",
+        "symbol": "subdivision",
+        "value": 0
+       },
+       "7": {
+        "name": "Wow & Flutter",
+        "symbol": "wow_flutter",
+        "value": 3
+       },
+       "8": {
+        "name": "Tape Age",
+        "symbol": "tape_age",
+        "value": 4
+       },
+       "9": {
+        "name": "Drive",
+        "symbol": "drive",
+        "value": 3
+       },
+       "10": {
+        "name": "Trails",
+        "symbol": "trails",
+        "value": 0
+       }
+      },
+      "properties": {},
+      "quickpot": "delaylevel",
+      "scenes": {},
+      "uri": "urn:darkglass:tapedelay"
+     },
+     "5": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Dry",
+        "symbol": "Dry",
+        "value": 10
+       },
+       "2": {
+        "name": "Wet",
+        "symbol": "Wet",
+        "value": 5
+       },
+       "3": {
+        "name": "Decay",
+        "symbol": "Decay",
+        "value": 5
+       },
+       "4": {
+        "name": "Modulation",
+        "symbol": "Modulation",
+        "value": 5
+       },
+       "5": {
+        "name": "Damping",
+        "symbol": "Damping",
+        "value": 5
+       },
+       "6": {
+        "name": "High Cut",
+        "symbol": "HiCut",
+        "value": 0
+       },
+       "7": {
+        "name": "Low Cut",
+        "symbol": "LoCut",
+        "value": 0
+       },
+       "8": {
+        "name": "Trails",
+        "symbol": "Trails",
+        "value": 0
+       }
+      },
+      "properties": {},
+      "quickpot": "Wet",
+      "scenes": {},
+      "uri": "urn:darkglass:HallReverb"
+     }
+    }
+   }
+  },
+  "name": "GT",
+  "scene": 0,
+  "sceneNames": {
+   "1": ""
+  },
+  "uuid": "c2dbb30597c24a2d-a0e65ff6-87d0018b-fcaf8960e42f90c49a243fd7"
+ },
+ "type": "preset",
+ "version": 1
+}

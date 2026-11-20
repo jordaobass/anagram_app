@@ -1,0 +1,671 @@
+{
+ "preset": {
+  "bindings": {
+   "exp.pedal": {
+    "name": "WAU Pos",
+    "parameters": [
+     {
+      "block": 2,
+      "max": 10,
+      "min": 0,
+      "row": 1,
+      "symbol": "Position"
+     }
+    ],
+    "value": 0
+   },
+   "pot1": {
+    "name": "B3K",
+    "parameters": [
+     {
+      "block": 2,
+      "max": 1,
+      "min": 0,
+      "row": 2,
+      "symbol": ":bypass"
+     }
+    ],
+    "value": 0
+   },
+   "pot2": {
+    "name": "FX loop",
+    "parameters": [
+     {
+      "block": 8,
+      "max": 1,
+      "min": 0,
+      "row": 1,
+      "symbol": ":bypass"
+     }
+    ],
+    "value": 0
+   }
+  },
+  "chains": {
+   "1": {
+    "blocks": {
+     "1": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Threshold",
+        "symbol": "Threshold",
+        "value": -43.900001525878906
+       },
+       "2": {
+        "name": "Amount",
+        "symbol": "Amount",
+        "value": 6
+       }
+      },
+      "properties": {},
+      "quickpot": "Threshold",
+      "scenes": {
+       "1": {
+        "enabled": true,
+        "parameters": []
+       },
+       "2": {
+        "enabled": true,
+        "parameters": []
+       },
+       "3": {
+        "enabled": true,
+        "parameters": []
+       }
+      },
+      "uri": "urn:darkglass:Suppressor"
+     },
+     "2": {
+      "enabled": false,
+      "parameters": {
+       "1": {
+        "name": "Output Level",
+        "symbol": "OutLvl",
+        "value": 0
+       },
+       "2": {
+        "name": "Bypass at 0",
+        "symbol": "BypassAt0",
+        "value": 1
+       }
+      },
+      "properties": {},
+      "quickpot": "Position",
+      "scenes": {
+       "1": {
+        "enabled": true,
+        "parameters": []
+       },
+       "2": {
+        "enabled": false,
+        "parameters": []
+       },
+       "3": {
+        "enabled": true,
+        "parameters": []
+       }
+      },
+      "uri": "urn:darkglass:wah"
+     },
+     "3": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Output Level",
+        "symbol": "OutLevel",
+        "value": -1.6699999570846558
+       },
+       "2": {
+        "name": "Input Pad",
+        "symbol": "InputPad",
+        "value": 0
+       },
+       "3": {
+        "name": "Comp",
+        "symbol": "Comp",
+        "value": 0
+       },
+       "4": {
+        "name": "Gain",
+        "symbol": "Gain",
+        "value": 6.400000095367432
+       },
+       "5": {
+        "name": "Drive",
+        "symbol": "Drive",
+        "value": 4.400000095367432
+       },
+       "6": {
+        "name": "AGS",
+        "symbol": "AGS",
+        "value": 0
+       },
+       "7": {
+        "name": "Mid Level",
+        "symbol": "MidLevel",
+        "value": 4.799999713897705
+       },
+       "8": {
+        "name": "Mid Freq",
+        "symbol": "MidFreq",
+        "value": 1.899999976158142
+       },
+       "9": {
+        "name": "Bass",
+        "symbol": "Bass",
+        "value": 6.119999885559082
+       },
+       "10": {
+        "name": "Treble",
+        "symbol": "Treble",
+        "value": 6.940000057220459
+       },
+       "11": {
+        "name": "Blend",
+        "symbol": "Blend",
+        "value": 100
+       },
+       "12": {
+        "name": "Master",
+        "symbol": "Master",
+        "value": 4.110000133514404
+       },
+       "13": {
+        "name": "Eq 125 Hz",
+        "symbol": "Eq125",
+        "value": -1.7000000476837158
+       },
+       "14": {
+        "name": "Eq 250 Hz",
+        "symbol": "Eq250",
+        "value": -3.9000000953674316
+       },
+       "15": {
+        "name": "Eq 500 Hz",
+        "symbol": "Eq500",
+        "value": -3.4000000953674316
+       },
+       "16": {
+        "name": "Eq 1K Hz",
+        "symbol": "_1K",
+        "value": -6.5
+       },
+       "17": {
+        "name": "Eq 2K Hz",
+        "symbol": "_2K",
+        "value": -2.299999952316284
+       },
+       "18": {
+        "name": "Eq 4K Hz",
+        "symbol": "_4K",
+        "value": 4.099999904632568
+       },
+       "19": {
+        "name": "Cabinet Mode",
+        "symbol": "CabMode",
+        "value": 0
+       },
+       "20": {
+        "name": "Cabinet Type",
+        "symbol": "CabType",
+        "value": 1
+       },
+       "21": {
+        "name": "Mic Type",
+        "symbol": "MicType",
+        "value": 2
+       },
+       "22": {
+        "name": "Mic Position",
+        "symbol": "MicPos",
+        "value": 2.0999999046325684
+       },
+       "23": {
+        "name": "Mic Distance",
+        "symbol": "MicDist",
+        "value": 5.199999809265137
+       },
+       "24": {
+        "name": "Tweeter Position",
+        "symbol": "TweeterPos",
+        "value": 2.4000000953674316
+       },
+       "25": {
+        "name": "Tweeter Distance",
+        "symbol": "TweeterDist",
+        "value": 3.299999952316284
+       },
+       "26": {
+        "name": "Mic Gain",
+        "symbol": "MicGain",
+        "value": -11.79999828338623
+       },
+       "27": {
+        "name": "Tweeter Gain",
+        "symbol": "TweeterGain",
+        "value": -3.2999980449676514
+       },
+       "28": {
+        "name": "DI Mode",
+        "symbol": "DIMode",
+        "value": 1
+       },
+       "29": {
+        "name": "DI Low Cut",
+        "symbol": "DILowCut",
+        "value": 1347
+       },
+       "30": {
+        "name": "DI Tone",
+        "symbol": "DITone",
+        "value": 1.899999976158142
+       },
+       "31": {
+        "name": "DI High Cut",
+        "symbol": "DIHighCut",
+        "value": 10509
+       },
+       "32": {
+        "name": "DI Gain",
+        "symbol": "DIGain",
+        "value": -29.499998092651367
+       }
+      },
+      "properties": {},
+      "quickpot": "OutLevel",
+      "scenes": {
+       "1": {
+        "parameters": [
+         {
+          "symbol": "MidLevel",
+          "value": 4.049999713897705
+         },
+         {
+          "symbol": "Bass",
+          "value": 7.5
+         },
+         {
+          "symbol": "Treble",
+          "value": 7.289999961853027
+         }
+        ]
+       },
+       "2": {
+        "parameters": [
+         {
+          "symbol": "MidLevel",
+          "value": 4.799999713897705
+         },
+         {
+          "symbol": "Bass",
+          "value": 6.119999885559082
+         },
+         {
+          "symbol": "Treble",
+          "value": 6.940000057220459
+         }
+        ]
+       },
+       "3": {
+        "parameters": [
+         {
+          "symbol": "MidLevel",
+          "value": 4.049999713897705
+         },
+         {
+          "symbol": "Bass",
+          "value": 7.5
+         },
+         {
+          "symbol": "Treble",
+          "value": 7.289999961853027
+         }
+        ]
+       }
+      },
+      "uri": "urn:nembriniaudio:basshammer"
+     },
+     "5": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Level Row 1",
+        "symbol": "LevelRow1",
+        "value": 0
+       },
+       "2": {
+        "name": "Level Row 2",
+        "symbol": "LevelRow2",
+        "value": 0
+       },
+       "3": {
+        "name": "Crossover",
+        "symbol": "Crossover",
+        "value": 0
+       },
+       "4": {
+        "name": "Crossover Freq",
+        "symbol": "CrossoverFreq",
+        "value": 153
+       }
+      },
+      "properties": {},
+      "quickpot": "LevelRow1",
+      "scenes": {},
+      "uri": "urn:darkglass-anagram:split"
+     },
+     "6": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "HP Freq",
+        "symbol": "HPfreq",
+        "value": 493
+       },
+       "2": {
+        "name": "HP Slope",
+        "symbol": "HPPslope",
+        "value": 2
+       },
+       "3": {
+        "name": "LP Freq",
+        "symbol": "LPfreq",
+        "value": 20000
+       },
+       "4": {
+        "name": "LP Slope",
+        "symbol": "LPslope",
+        "value": 0
+       }
+      },
+      "properties": {},
+      "quickpot": "HPfreq",
+      "scenes": {
+       "1": {
+        "parameters": [
+         {
+          "symbol": "HPfreq",
+          "value": 20
+         },
+         {
+          "symbol": "HPPslope",
+          "value": 0
+         }
+        ]
+       },
+       "2": {
+        "parameters": [
+         {
+          "symbol": "HPfreq",
+          "value": 493
+         },
+         {
+          "symbol": "HPPslope",
+          "value": 2
+         }
+        ]
+       },
+       "3": {
+        "parameters": [
+         {
+          "symbol": "HPfreq",
+          "value": 20
+         },
+         {
+          "symbol": "HPPslope",
+          "value": 0
+         }
+        ]
+       }
+      },
+      "uri": "urn:darkglass:HPFLPF"
+     },
+     "7": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": " Level",
+        "symbol": "Level",
+        "value": 1.7599999904632568
+       },
+       "2": {
+        "name": " Drive",
+        "symbol": "Drive",
+        "value": -12.300000190734863
+       },
+       "3": {
+        "name": "Blend",
+        "symbol": "MixAmount",
+        "value": 80.5
+       },
+       "4": {
+        "name": " Low",
+        "symbol": "Low",
+        "value": 2.180000066757202
+       },
+       "5": {
+        "name": " Mid",
+        "symbol": "Mid",
+        "value": 0
+       },
+       "6": {
+        "name": " High",
+        "symbol": "High",
+        "value": 2.7100000381469727
+       },
+       "7": {
+        "name": " Presence",
+        "symbol": "Presence",
+        "value": 2.049999952316284
+       },
+       "8": {
+        "name": " Cab Enabled",
+        "symbol": "CabEnabled",
+        "value": 0
+       }
+      },
+      "properties": {},
+      "quickpot": "Level",
+      "scenes": {},
+      "uri": "https://fineclassicsplugins.com/plugins/FC_Punk_Sans"
+     },
+     "8": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Send Level",
+        "symbol": "SendLevel",
+        "value": 0
+       },
+       "2": {
+        "name": "Blend",
+        "symbol": "Mix",
+        "value": 55
+       },
+       "3": {
+        "name": "Output Level",
+        "symbol": "OutputLevel",
+        "value": 0
+       },
+       "4": {
+        "name": "Return Polarity",
+        "symbol": "RetPolInv",
+        "value": 0
+       },
+       "5": {
+        "name": "FXloop IO config",
+        "symbol": "FXloopIOconfig",
+        "value": 3
+       }
+      },
+      "properties": {},
+      "quickpot": "Mix",
+      "scenes": {},
+      "uri": "urn:darkglass-anagram:fxloop"
+     },
+     "11": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Blend",
+        "symbol": "Blend",
+        "value": 50
+       },
+       "2": {
+        "name": "Level",
+        "symbol": "Level",
+        "value": 0
+       }
+      },
+      "properties": {},
+      "quickpot": "Blend",
+      "scenes": {},
+      "uri": "urn:darkglass-anagram:merge"
+     }
+    }
+   },
+   "2": {
+    "blocks": {
+     "1": {
+      "enabled": true,
+      "parameters": {
+       "1": {
+        "name": "Input",
+        "symbol": "Input",
+        "value": 0.800000011920929
+       },
+       "2": {
+        "name": "Output",
+        "symbol": "Output",
+        "value": 0.30000001192092896
+       },
+       "3": {
+        "name": "Blend",
+        "symbol": "Blend",
+        "value": 80
+       },
+       "4": {
+        "name": "Slimmable Size",
+        "symbol": "SlimSize",
+        "value": 1
+       }
+      },
+      "properties": {
+       "1": {
+        "name": "Neural Model",
+        "uri": "urn:darkglass:neural:pedal#model",
+        "value": "/data/user-files/neural-models/C56.nam"
+       }
+      },
+      "quickpot": "Input",
+      "scenes": {
+       "1": {
+        "enabled": true,
+        "parameters": [
+         {
+          "symbol": "Input",
+          "value": 5.099999904632568
+         },
+         {
+          "symbol": "Output",
+          "value": 2.200000047683716
+         }
+        ]
+       },
+       "2": {
+        "enabled": true,
+        "parameters": [
+         {
+          "symbol": "Input",
+          "value": 0.800000011920929
+         },
+         {
+          "symbol": "Output",
+          "value": 0.30000001192092896
+         }
+        ]
+       },
+       "3": {
+        "enabled": true,
+        "parameters": [
+         {
+          "symbol": "Input",
+          "value": 5.300000190734863
+         },
+         {
+          "symbol": "Output",
+          "value": 3
+         }
+        ]
+       }
+      },
+      "uri": "urn:darkglass:neural:pedal"
+     },
+     "2": {
+      "enabled": false,
+      "parameters": {
+       "1": {
+        "name": "Drive",
+        "symbol": "Drive",
+        "value": 8.40000057220459
+       },
+       "2": {
+        "name": "Grunt",
+        "symbol": "Grunt",
+        "value": 1
+       },
+       "3": {
+        "name": "Mid Boost",
+        "symbol": "MidBoost",
+        "value": 1
+       },
+       "4": {
+        "name": "Tone",
+        "symbol": "Tone",
+        "value": 5
+       },
+       "5": {
+        "name": "Level",
+        "symbol": "Level",
+        "value": 5
+       },
+       "6": {
+        "name": "Blend",
+        "symbol": "Blend",
+        "value": 30
+       }
+      },
+      "properties": {},
+      "quickpot": "Drive",
+      "scenes": {
+       "1": {
+        "enabled": true,
+        "parameters": []
+       },
+       "2": {
+        "enabled": false,
+        "parameters": []
+       },
+       "3": {
+        "enabled": false,
+        "parameters": []
+       }
+      },
+      "uri": "urn:darkglass:B3K"
+     }
+    }
+   }
+  },
+  "name": "My faorite tone",
+  "scene": 1,
+  "sceneNames": {
+   "1": "DIST",
+   "2": "SOFT",
+   "3": "FX"
+  },
+  "uuid": "d2776ff73f804127-b76181ff-9712acac-6542d73cc1ad5478d9e00011"
+ },
+ "type": "preset",
+ "version": 1
+}

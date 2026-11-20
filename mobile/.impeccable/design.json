@@ -1,0 +1,648 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-05T09:29:34.477859+00:00",
+  "title": "Design System: Anagram App",
+  "extensions": {
+    "colorMeta": {
+      "fundo-case": {
+        "role": "neutral",
+        "displayName": "Preto de Case",
+        "canonical": "oklch(19.1% 0.004 264)",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#232425",
+          "#3f4041",
+          "#5c5e60",
+          "#7f8083",
+          "#a3a4a7",
+          "#c9cacd",
+          "#edeef0"
+        ]
+      },
+      "painel": {
+        "role": "neutral",
+        "displayName": "Painel",
+        "canonical": "oklch(22.7% 0.006 271)",
+        "tonalRamp": [
+          "#0b0b0d",
+          "#232426",
+          "#3f4042",
+          "#5c5d61",
+          "#7f8084",
+          "#a3a4a8",
+          "#c9cacd",
+          "#edeef1"
+        ]
+      },
+      "painel-elevado": {
+        "role": "neutral",
+        "displayName": "Painel Elevado",
+        "canonical": "oklch(26.8% 0.008 264)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#232427",
+          "#3e4043",
+          "#5c5e62",
+          "#7e8085",
+          "#a2a5a9",
+          "#c8cacf",
+          "#edeef2"
+        ]
+      },
+      "filete": {
+        "role": "neutral",
+        "displayName": "Filete",
+        "canonical": "oklch(33.6% 0.010 261)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#222427",
+          "#3d4044",
+          "#5b5e63",
+          "#7d8086",
+          "#a1a5aa",
+          "#c8cbcf",
+          "#eceff3"
+        ]
+      },
+      "aluminio": {
+        "role": "neutral",
+        "displayName": "Alumínio",
+        "canonical": "oklch(66.4% 0.012 252)",
+        "tonalRamp": [
+          "#090b0e",
+          "#212428",
+          "#3c4045",
+          "#595e64",
+          "#7b8188",
+          "#a0a5ab",
+          "#c6cbd1",
+          "#ebeff4"
+        ]
+      },
+      "aluminio-claro": {
+        "role": "neutral",
+        "displayName": "Alumínio Claro",
+        "canonical": "oklch(84.7% 0.008 254)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#222427",
+          "#3d4043",
+          "#5b5e62",
+          "#7d8185",
+          "#a1a5a9",
+          "#c8cbcf",
+          "#eceff2"
+        ]
+      },
+      "texto": {
+        "role": "neutral",
+        "displayName": "Texto",
+        "canonical": "oklch(94.6% 0.003 106)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#242423",
+          "#40403f",
+          "#5e5e5c",
+          "#80807e",
+          "#a5a5a3",
+          "#cacac9",
+          "#eeeeed"
+        ]
+      },
+      "texto-secundario": {
+        "role": "neutral",
+        "displayName": "Texto Secundário",
+        "canonical": "oklch(74.2% 0.010 253)",
+        "tonalRamp": [
+          "#090b0e",
+          "#222427",
+          "#3d4044",
+          "#5a5e63",
+          "#7c8186",
+          "#a1a5aa",
+          "#c7cbd0",
+          "#ebeff3"
+        ]
+      },
+      "fita-gaffer": {
+        "role": "secondary",
+        "displayName": "Fita Gaffer",
+        "canonical": "oklch(91.0% 0.028 91)",
+        "tonalRamp": [
+          "#0e0b05",
+          "#27241a",
+          "#443f33",
+          "#635d4e",
+          "#86806e",
+          "#aaa494",
+          "#cfcabb",
+          "#f3eee1"
+        ]
+      },
+      "fita-gaffer-sombra": {
+        "role": "secondary",
+        "displayName": "Sombra da Fita Gaffer",
+        "canonical": "oklch(82.7% 0.034 90)",
+        "tonalRamp": [
+          "#0e0b04",
+          "#282417",
+          "#453f30",
+          "#645d4a",
+          "#888069",
+          "#aca490",
+          "#d1cab8",
+          "#f4eede"
+        ]
+      },
+      "tinta-marcador": {
+        "role": "neutral",
+        "displayName": "Tinta de Marcador",
+        "canonical": "oklch(20.6% 0.006 286)",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242426",
+          "#3f3f42",
+          "#5d5d60",
+          "#808084",
+          "#a4a4a8",
+          "#cacacd",
+          "#eeeef1"
+        ]
+      },
+      "tally": {
+        "role": "primary",
+        "displayName": "Âmbar Tally",
+        "canonical": "oklch(80.4% 0.156 83)",
+        "tonalRamp": [
+          "#1b0400",
+          "#3b1b00",
+          "#5e3600",
+          "#835300",
+          "#ad7400",
+          "#ce9b27",
+          "#f0c36b",
+          "#ffe99f"
+        ]
+      },
+      "sobre-tally": {
+        "role": "primary",
+        "displayName": "Sobre o Tally",
+        "canonical": "oklch(19.4% 0.029 89)",
+        "tonalRamp": [
+          "#0e0b04",
+          "#282419",
+          "#443f32",
+          "#635d4d",
+          "#87806d",
+          "#aba493",
+          "#d0cabb",
+          "#f3eee1"
+        ]
+      },
+      "fita-alerta": {
+        "role": "secondary",
+        "displayName": "Fita de Alerta",
+        "canonical": "oklch(54.3% 0.180 32)",
+        "tonalRamp": [
+          "#280000",
+          "#4f0000",
+          "#781101",
+          "#a42d19",
+          "#d64a32",
+          "#f87a63",
+          "#ffa891",
+          "#ffd1bd"
+        ]
+      },
+      "led-ligado": {
+        "role": "tertiary",
+        "displayName": "LED Ligado",
+        "canonical": "oklch(78.0% 0.166 156)",
+        "tonalRamp": [
+          "#001400",
+          "#003209",
+          "#005220",
+          "#007438",
+          "#009c54",
+          "#43bf7e",
+          "#80e3a8",
+          "#b1ffd1"
+        ]
+      },
+      "led-demonstracao": {
+        "role": "tertiary",
+        "displayName": "LED Demonstração",
+        "canonical": "oklch(71.5% 0.130 248)",
+        "tonalRamp": [
+          "#000a27",
+          "#00254b",
+          "#004271",
+          "#1a619a",
+          "#3485ca",
+          "#67aae9",
+          "#96d1ff",
+          "#c2f4ff"
+        ]
+      },
+      "led-desligado": {
+        "role": "tertiary",
+        "displayName": "LED Desligado",
+        "canonical": "oklch(54.3% 0.012 257)",
+        "tonalRamp": [
+          "#090b0e",
+          "#212428",
+          "#3c4045",
+          "#5a5e64",
+          "#7b8188",
+          "#a0a5ac",
+          "#c7cbd1",
+          "#ebeff4"
+        ]
+      },
+      "erro": {
+        "role": "error",
+        "displayName": "Erro",
+        "canonical": "oklch(73.1% 0.166 30)",
+        "tonalRamp": [
+          "#260000",
+          "#4c0000",
+          "#75190f",
+          "#a03325",
+          "#d1503f",
+          "#f27e6c",
+          "#ffaa99",
+          "#ffd4c3"
+        ]
+      },
+      "familia-drive": {
+        "role": "tertiary",
+        "displayName": "Fita de Família: Drive",
+        "canonical": "oklch(68.8% 0.162 49)",
+        "tonalRamp": [
+          "#240000",
+          "#490800",
+          "#702300",
+          "#9a3d00",
+          "#ca5b00",
+          "#eb874c",
+          "#ffb281",
+          "#ffdaaf"
+        ]
+      },
+      "familia-compressor": {
+        "role": "tertiary",
+        "displayName": "Fita de Família: Compressor",
+        "canonical": "oklch(81.9% 0.151 95)",
+        "tonalRamp": [
+          "#160800",
+          "#332100",
+          "#533d00",
+          "#755b00",
+          "#9c7d00",
+          "#bea32f",
+          "#e1ca6f",
+          "#ffefa2"
+        ]
+      },
+      "familia-equalizador": {
+        "role": "tertiary",
+        "displayName": "Fita de Família: Equalizador",
+        "canonical": "oklch(72.5% 0.114 218)",
+        "tonalRamp": [
+          "#00101c",
+          "#002b3c",
+          "#004a5e",
+          "#006a83",
+          "#0090ae",
+          "#4fb4cf",
+          "#86d9f1",
+          "#b6fbff"
+        ]
+      },
+      "familia-filtro": {
+        "role": "tertiary",
+        "displayName": "Fita de Família: Filtro",
+        "canonical": "oklch(65.3% 0.157 297)",
+        "tonalRamp": [
+          "#11002a",
+          "#2b134f",
+          "#482d77",
+          "#6748a1",
+          "#8b68d1",
+          "#ae91f0",
+          "#d2baff",
+          "#f5e1ff"
+        ]
+      },
+      "familia-modulacao": {
+        "role": "tertiary",
+        "displayName": "Fita de Família: Modulacao",
+        "canonical": "oklch(73.4% 0.129 172)",
+        "tonalRamp": [
+          "#001308",
+          "#00301f",
+          "#00503a",
+          "#007156",
+          "#009878",
+          "#48bc9d",
+          "#83e0c3",
+          "#b4ffe8"
+        ]
+      },
+      "familia-delay": {
+        "role": "tertiary",
+        "displayName": "Fita de Família: Delay",
+        "canonical": "oklch(63.4% 0.166 264)",
+        "tonalRamp": [
+          "#000331",
+          "#061d58",
+          "#1b3a82",
+          "#3158af",
+          "#4b7ae2",
+          "#75a2ff",
+          "#a0c9ff",
+          "#caeeff"
+        ]
+      },
+      "familia-reverb": {
+        "role": "tertiary",
+        "displayName": "Fita de Família: Reverb",
+        "canonical": "oklch(67.3% 0.157 341)",
+        "tonalRamp": [
+          "#1f0016",
+          "#420533",
+          "#671e53",
+          "#8e3875",
+          "#bb559c",
+          "#dd80bf",
+          "#ffabe2",
+          "#ffd4ff"
+        ]
+      },
+      "familia-amplificador": {
+        "role": "tertiary",
+        "displayName": "Fita de Família: Amplificador",
+        "canonical": "oklch(63.2% 0.177 32)",
+        "tonalRamp": [
+          "#280000",
+          "#4e0000",
+          "#771304",
+          "#a32f1c",
+          "#d54c35",
+          "#f67b65",
+          "#ffa893",
+          "#ffd2be"
+        ]
+      },
+      "familia-gabinete": {
+        "role": "tertiary",
+        "displayName": "Fita de Família: Gabinete",
+        "canonical": "oklch(72.5% 0.059 82)",
+        "tonalRamp": [
+          "#120900",
+          "#2d220c",
+          "#4c3d23",
+          "#6c5b3b",
+          "#927d57",
+          "#b5a280",
+          "#d9c8aa",
+          "#fcedd2"
+        ]
+      },
+      "familia-utilitario": {
+        "role": "tertiary",
+        "displayName": "Fita de Família: Utilitario",
+        "canonical": "oklch(66.3% 0.014 252)",
+        "tonalRamp": [
+          "#090b0e",
+          "#212429",
+          "#3c4046",
+          "#595e65",
+          "#7a8189",
+          "#9fa5ac",
+          "#c5cbd2",
+          "#eaeff5"
+        ]
+      },
+      "sobre-alerta": {
+        "role": "secondary",
+        "displayName": "Sobre o Alerta",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "#262626",
+          "#3b3b3b",
+          "#555555",
+          "#717171",
+          "#919191",
+          "#b3b3b3",
+          "#d6d6d6",
+          "#ffffff"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Estêncil",
+        "purpose": "Slot do preset e número de cena."
+      },
+      "headline": {
+        "displayName": "Marcador",
+        "purpose": "Só o nome do preset sobre a fita gaffer."
+      },
+      "headline-valor": {
+        "displayName": "Valor grande",
+        "purpose": "Valores numéricos grandes, figuras tabulares."
+      },
+      "title-large": {
+        "displayName": "Título",
+        "purpose": "Nome do bloco, título de diálogo."
+      },
+      "title-medium": {
+        "displayName": "Título médio",
+        "purpose": "Valor sob o knob."
+      },
+      "title-small": {
+        "displayName": "Título condensado",
+        "purpose": "Estado da conexão, rótulo de slot."
+      },
+      "body-large": {
+        "displayName": "Corpo",
+        "purpose": "Nome na lista, avisos."
+      },
+      "body-medium": {
+        "displayName": "Corpo médio",
+        "purpose": "Instruções."
+      },
+      "body-small": {
+        "displayName": "Corpo pequeno",
+        "purpose": "Metadados, 'vazio'."
+      },
+      "label-large": {
+        "displayName": "Rótulo de botão",
+        "purpose": "Botões e cenas, caixa alta."
+      },
+      "label-medium": {
+        "displayName": "Rótulo de painel",
+        "purpose": "Nome de parâmetro, nome da casa, selo."
+      },
+      "label-small": {
+        "displayName": "Rótulo pequeno",
+        "purpose": "Rótulos menores condensados."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "curta",
+        "value": "150ms",
+        "purpose": "Seleção da casa de bloco."
+      },
+      {
+        "name": "envio-ao-vivo",
+        "value": "100ms",
+        "purpose": "Cadência de envio da edição ao vivo à pedaleira (não é animação visual)."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "amplo",
+        "value": "largura >= 1000 e altura >= 600 (lógicos)"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botão Primário",
+      "kind": "button",
+      "refersTo": "botao-primario",
+      "description": "Ação principal: salvar no slot, conectar, bloco ligado.",
+      "html": "<button class=\"ds-btn-primario\">SALVAR NO SLOT</button>",
+      "css": ".ds-btn-primario{background:#F0B429;color:#1A1405;border:none;border-radius:6px;min-height:48px;padding:0 16px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;transition:filter .15s}.ds-btn-primario:hover{filter:brightness(1.08)}.ds-btn-primario:focus-visible{outline:2px solid #F0B429;outline-offset:2px;box-shadow:0 0 0 6px rgba(240,180,41,.24)}"
+    },
+    {
+      "name": "Botão Contorno",
+      "kind": "button",
+      "refersTo": "botao-contorno",
+      "description": "Ação secundária ou destrutiva isolada: descartar, largar, desligado.",
+      "html": "<button class=\"ds-btn-contorno\">DESCARTAR</button>",
+      "css": ".ds-btn-contorno{background:transparent;color:#EDEDEB;border:1px solid #8E949B;border-radius:6px;min-height:48px;padding:0 16px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;transition:background .15s}.ds-btn-contorno:hover{background:#24262A}.ds-btn-contorno:focus-visible{outline:2px solid #F0B429;outline-offset:2px}"
+    },
+    {
+      "name": "Cenas",
+      "kind": "chip",
+      "refersTo": "botao-cena",
+      "description": "Três cenas de largura igual; a ativa é preenchida em âmbar.",
+      "html": "<div class=\"ds-cenas\"><button class=\"ds-cena\"><b>1</b>VERSO</button><button class=\"ds-cena ds-cena-ativa\"><b>2</b>REFRÃO</button><button class=\"ds-cena\"><b>3</b>SOLO</button></div>",
+      "css": ".ds-cenas{display:flex;gap:8px;background:#131416;padding:8px}.ds-cena{flex:1;display:flex;align-items:center;gap:8px;min-height:56px;padding:4px 12px;background:#24262A;color:#EDEDEB;border:1px solid #34373C;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;text-align:left}.ds-cena b{font-family:'Saira Stencil One',sans-serif;font-size:20px;font-weight:400}.ds-cena:hover{border-color:#8E949B}.ds-cena:focus-visible{outline:2px solid #F0B429;outline-offset:2px}.ds-cena-ativa{background:#F0B429;color:#1A1405;border-color:#F0B429}"
+    },
+    {
+      "name": "Fita do Preset",
+      "kind": "custom",
+      "refersTo": "fita-preset",
+      "description": "Assinatura: slot em estêncil, nome a marcador na fita gaffer e selo NÃO SALVO.",
+      "html": "<div class=\"ds-faixa\"><span class=\"ds-slot\">02A</span><div class=\"ds-fita\"><span class=\"ds-nome\">Sujo de Ensaio</span><span class=\"ds-selo\">NÃO SALVO</span></div></div>",
+      "css": ".ds-faixa{display:flex;align-items:center;gap:12px;background:#131416;padding:16px}.ds-slot{font-family:'Saira Stencil One',sans-serif;font-size:40px;line-height:1;color:#EDEDEB}.ds-fita{flex:1;display:flex;align-items:center;gap:8px;min-height:56px;padding:8px 16px;background:#E8E1CD;border-bottom:2px solid #CFC6AE}.ds-nome{flex:1;font-family:'Permanent Marker',cursive;font-size:26px;line-height:1.1;color:#17171A}.ds-selo{background:#C2361F;color:#fff;padding:2px 8px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:14px;letter-spacing:.7px}"
+    },
+    {
+      "name": "Moldura de Case",
+      "kind": "card",
+      "refersTo": "moldura-case",
+      "description": "Painel com filete de 1px e cantoneiras de alumínio nas quinas.",
+      "html": "<div class=\"ds-moldura\"><i class=\"a\"></i><i class=\"b\"></i><i class=\"c\"></i><i class=\"d\"></i><span>Suppressor</span></div>",
+      "css": ".ds-moldura{position:relative;background:#1B1C1F;border:1px solid #34373C;border-radius:3px;padding:16px;color:#EDEDEB;font-family:Barlow,sans-serif;font-size:20px;font-weight:600;min-height:80px}.ds-moldura i{position:absolute;width:14px;height:14px;border:0 solid #8E949B}.ds-moldura .a{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px}.ds-moldura .b{top:-1px;right:-1px;border-top-width:2px;border-right-width:2px}.ds-moldura .c{bottom:-1px;left:-1px;border-bottom-width:2px;border-left-width:2px}.ds-moldura .d{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px}"
+    },
+    {
+      "name": "Casa de Bloco",
+      "kind": "custom",
+      "refersTo": "casa-bloco",
+      "description": "Pedal na grade com fita de família de 4px; selecionado ganha contorno âmbar.",
+      "html": "<div class=\"ds-grade\"><button class=\"ds-casa ds-casa-sel\"><span class=\"ds-arte\" style=\"--f:#E2C23A\"></span><span class=\"ds-fam\" style=\"--f:#E2C23A\"></span>SUP</button><button class=\"ds-casa\"><span class=\"ds-arte\" style=\"--f:#3BB7D6\"></span><span class=\"ds-fam\" style=\"--f:#3BB7D6\"></span>DGQ</button><button class=\"ds-casa\"><span class=\"ds-vazia\"></span></button></div>",
+      "css": ".ds-grade{display:flex;gap:12px;align-items:flex-start;background:#1B1C1F;padding:12px;background-image:linear-gradient(#8E949B,#8E949B);background-size:100% 2px;background-position:0 46px;background-repeat:no-repeat}.ds-casa{width:84px;padding:4px;background:transparent;border:2px solid transparent;border-radius:6px;color:#EDEDEB;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:14px;letter-spacing:.7px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;transition:background .15s,border-color .15s}.ds-casa:focus-visible{outline:2px solid #F0B429}.ds-casa-sel{background:#24262A;border-color:#F0B429}.ds-arte{width:62px;height:62px;border-radius:6px;background:var(--f);margin-bottom:2px}.ds-fam{width:100%;height:4px;background:var(--f)}.ds-vazia{width:18px;height:18px;margin:31px 0;border-radius:50%;background:#131416;border:2px solid #34373C}"
+    },
+    {
+      "name": "Knob",
+      "kind": "custom",
+      "refersTo": "knob",
+      "description": "Knob de 270°: trilho de filete, arco na cor da família, ponteiro de fita gaffer.",
+      "html": "<div class=\"ds-knob\" tabindex=\"0\"><span class=\"ds-knob-nome\">THRESHOLD</span><svg viewBox=\"0 0 104 104\" width=\"104\" height=\"104\"><path d=\"M24.4 79.6 A39 39 0 1 1 79.6 79.6\" fill=\"none\" stroke=\"#34373C\" stroke-width=\"6\" stroke-linecap=\"round\"/><path d=\"M24.4 79.6 A39 39 0 0 1 24.4 24.4\" fill=\"none\" stroke=\"#E2C23A\" stroke-width=\"6\" stroke-linecap=\"round\"/><circle cx=\"52\" cy=\"52\" r=\"29\" fill=\"#24262A\" stroke=\"#8E949B\" stroke-width=\"1\"/><line x1=\"46.9\" y1=\"46.9\" x2=\"35.2\" y2=\"35.2\" stroke=\"#E8E1CD\" stroke-width=\"4.2\" stroke-linecap=\"round\"/></svg><span class=\"ds-knob-valor\">-52,0 dB</span></div>",
+      "css": ".ds-knob{display:inline-flex;flex-direction:column;align-items:center;gap:4px;padding:8px;background:#1B1C1F;outline:none}.ds-knob-nome{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:14px;letter-spacing:.7px;color:#A7ACB2}.ds-knob-valor{font-family:Barlow,sans-serif;font-weight:600;font-size:17px;color:#EDEDEB;font-variant-numeric:tabular-nums}.ds-knob:focus-visible circle{stroke:#F0B429;stroke-width:2}"
+    },
+    {
+      "name": "Barra de Conexão",
+      "kind": "nav",
+      "refersTo": "barra-conexao",
+      "description": "Estado da conexão com LED, interruptor Ao vivo e latência.",
+      "html": "<div class=\"ds-barra\"><span class=\"ds-led\"></span><span class=\"ds-estado\">Anagram · USB · 1.4.0</span><span class=\"ds-lat\">ida e volta 12 ms</span><span class=\"ds-aovivo\">AO VIVO</span><span class=\"ds-switch\"></span></div>",
+      "css": ".ds-barra{display:flex;align-items:center;gap:8px;min-height:64px;padding:0 16px;background:#1B1C1F;border-bottom:1px solid #34373C}.ds-led{width:10px;height:10px;border-radius:50%;background:#41D68A}.ds-estado{flex:1;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:15px;letter-spacing:.6px;color:#EDEDEB}.ds-lat{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:14px;color:#A7ACB2}.ds-aovivo{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;letter-spacing:.8px;color:#F0B429}.ds-switch{width:52px;height:32px;border-radius:16px;background:rgba(240,180,41,.4);position:relative}.ds-switch:after{content:'';position:absolute;right:4px;top:4px;width:24px;height:24px;border-radius:50%;background:#F0B429}"
+    },
+    {
+      "name": "Linha da Lista de Presets",
+      "kind": "nav",
+      "refersTo": "linha-preset",
+      "description": "Slot e nome por banco; a linha aberta ganha filete âmbar à esquerda.",
+      "html": "<div class=\"ds-lista\"><a class=\"ds-linha\"><b>01C</b>Grave Limpo</a><a class=\"ds-linha ds-linha-ativa\"><b>02A</b>Sujo de Ensaio</a><a class=\"ds-linha ds-vazio\"><b>03C</b>vazio</a></div>",
+      "css": ".ds-lista{width:304px;background:#131416}.ds-linha{display:flex;align-items:center;min-height:48px;padding:0 12px;border-left:2px solid transparent;color:#EDEDEB;font-family:Barlow,sans-serif;font-size:16px;cursor:pointer;text-decoration:none}.ds-linha b{width:48px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:15px;letter-spacing:.6px;color:#C9CDD2}.ds-linha:hover{background:#1B1C1F}.ds-linha-ativa{background:#24262A;border-left-color:#F0B429}.ds-linha-ativa b{color:#F0B429}.ds-vazio{font-size:13px;color:#A7ACB2}"
+    }
+  ],
+  "narrative": {
+    "northStar": "O Case de Estrada",
+    "overview": "**Creative North Star: \"O Case de Estrada\"**\n\nO app é o flight case da pedaleira, não um site de configurações. Tudo é desenhado como equipamento de turnê visto no chão do palco: casco escuro, quinas de alumínio, nomes escritos a marcador em fita gaffer, numeração em estêncil e fitas de cor de roadie que dizem a família de cada bloco. A densidade é de ferramenta de bancada (lista de 126 slots, grade de 2 × 12 casas, knobs grandes), mas tudo legível de longe e com alvo de toque de no mínimo 48dp.\n\nTema escuro único, sem variante clara. A cor é rara e funcional: o âmbar \"tally\" marca o que está ativo/selecionado, a fita gaffer marca o nome do preset, o vermelho de alerta marca o que ainda não foi gravado, e as cores de família só aparecem onde há bloco. Recusa explícita do contrato: a tela de cards cinza com sliders genéricos.\n\nDivergência entre direção e construído: o contrato pede \"ABS preto texturizado\"; o construído é um preto chapado (`fundo-case`), sem textura. O registro segue o construído. A linha do sinal com dobras de 45° (estilo metrô) só aparece quando o preset tem a segunda pista (ver captura `desktop-4-paralelo`).",
+    "keyCharacteristics": [
+      "Casco escuro em três degraus tonais, sem sombra.",
+      "Filetes de 1px de alumínio e cantoneiras de 14px nas quinas dos painéis.",
+      "Fita gaffer creme com letra de marcador apenas no nome do preset.",
+      "Slot do preset em estêncil grande (40px), legível de longe.",
+      "Fita de 4px na cor da família sob cada bloco; o arco do knob herda a mesma cor.",
+      "Âmbar tally como única cor de ação/seleção."
+    ],
+    "rules": [
+      {
+        "name": "The One Tally Rule",
+        "body": "Âmbar é seleção e ação, nada mais. Não use âmbar como decoração nem como cor de família.",
+        "section": "colors"
+      },
+      {
+        "name": "The Family Stripe Rule",
+        "body": "Cor de família só existe onde há um bloco (fita, arco, arte, opção marcada). Superfícies, textos e botões de ação nunca usam cor de família.",
+        "section": "colors"
+      },
+      {
+        "name": "The Hand-Lettered Tape Rule",
+        "body": "Marcador só existe em cima de fita gaffer, e fita só existe onde há nome escrito à mão. Fora da fita do preset, nada de Permanent Marker.",
+        "section": "typography"
+      },
+      {
+        "name": "The Stencil Is A Number Rule",
+        "body": "Estêncil é para identificador numérico (slot, cena), nunca para frase.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Value Rule",
+        "body": "Todo valor de parâmetro usa figuras tabulares, para o número não dançar enquanto o knob gira.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Shadow Rule",
+        "body": "Nenhuma sombra projetada. Separar camadas por tom e filete.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do usar só tokens de `lib/apresentacao/tema/tokens.dart`; nenhuma cor ou medida fora dali.",
+      "Do manter alvo mínimo de 48dp em todo controle tocável.",
+      "Do separar camadas por tom (`fundo-case` → `painel` → `painel-elevado`) e filete de 1px.",
+      "Do marcar seleção com contorno âmbar de 2px ou preenchimento âmbar, nunca com sombra.",
+      "Do colocar a fita de família de 4px sob todo bloco e herdar a mesma cor no arco do knob.",
+      "Do usar figuras tabulares em todo valor numérico que muda.",
+      "Do deixar \"salvar\" como ato separado: edição ao vivo nunca grava sozinha, e o selo \"NÃO SALVO\" fica visível enquanto houver diferença."
+    ],
+    "donts": [
+      "Don't usar Permanent Marker fora da fita gaffer, nem fita gaffer sem nome escrito.",
+      "Don't usar âmbar como cor de família ou decoração.",
+      "Don't pintar ação destrutiva em cor cheia; descartar/largar é contorno.",
+      "Don't usar sombra projetada nem cantos acima de 8px.",
+      "Don't usar logo, foto ou marca da Darkglass na arte de bloco.",
+      "Don't criar tela de cards cinza com sliders genéricos; parâmetro contínuo é knob."
+    ]
+  }
+}
