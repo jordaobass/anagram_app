@@ -11,6 +11,7 @@ import '../tema/tokens.dart';
 import 'dialogo_confirmar.dart';
 import 'faixa_escolher_destino.dart';
 import 'fluxo_salvar.dart';
+import 'seletor_area.dart';
 
 class ListaPresets extends ConsumerWidget {
   const ListaPresets({super.key, this.aoAbrir});
@@ -22,9 +23,6 @@ class ListaPresets extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final biblioteca = ref.watch(bibliotecaProvider);
     final aberto = ref.watch(editorProvider.select((e) => e.slot));
-    if (biblioteca.carregando && biblioteca.ocupados.isEmpty) {
-      return const Center(child: CircularProgressIndicator());
-    }
     final escolhendo = ref.watch(editorProvider.select((e) => e.escolhendoDestino));
     final naPedaleira = ref.watch(editorProvider.select((e) => e.slotNaPedaleira ? e.slot : null));
     // gravando: o resultado da gravação ainda vai escrever o slot salvo
@@ -41,8 +39,13 @@ class ListaPresets extends ConsumerWidget {
         aoEscolher: salvando ? null : (slot) => _abrir(context, ref, slot),
       ),
     );
-    if (!escolhendo) return lista;
-    return Column(children: [const FaixaEscolherDestino(), Expanded(child: lista)]);
+    // o seletor de área fica à vista também enquanto a lista da área carrega
+    final carregandoLista = biblioteca.carregando && biblioteca.ocupados.isEmpty;
+    return Column(children: [
+      if (escolhendo) const FaixaEscolherDestino(),
+      const SeletorArea(),
+      Expanded(child: carregandoLista ? const Center(child: CircularProgressIndicator()) : lista),
+    ]);
   }
 
   Future<void> _abrir(BuildContext context, WidgetRef ref, SlotPreset slot) async {
