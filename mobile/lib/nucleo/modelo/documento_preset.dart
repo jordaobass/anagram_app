@@ -7,6 +7,7 @@ import 'dart:math';
 import '../protocolo/quadros_hid.dart';
 import 'bloco_preset.dart';
 import 'json_util.dart';
+import 'vinculos_preset.dart';
 
 class DocumentoPreset {
   DocumentoPreset._(this._json);
@@ -109,14 +110,21 @@ class DocumentoPreset {
         _mudarBase(bloco, simbolo, valor, nomeExibicao ?? simbolo);
       });
 
-  /// Coloca uma cópia do bloco (colar) na posição, substituindo o que houver.
+  /// Coloca uma cópia do bloco (colar, efeito novo da biblioteca) na posição,
+  /// substituindo o que houver.
   DocumentoPreset comBlocoColado(PosicaoBloco posicao, Map<String, dynamic> bloco) =>
-      _editar((p) {
-        final chains = p.putIfAbsent('chains', () => <String, dynamic>{}) as Map<String, dynamic>;
-        final linha = chains.putIfAbsent('${posicao.linha}', () => <String, dynamic>{})
-            as Map<String, dynamic>;
-        final blocos = linha.putIfAbsent('blocks', () => <String, dynamic>{}) as Map<String, dynamic>;
-        blocos['${posicao.casa}'] = copiaProfunda(bloco);
+      _editar((p) => _colocar(p, posicao, copiaProfunda(bloco)));
+
+  /// Muda o bloco de casa; com a casa ocupada, os dois trocam de lugar.
+  /// Parâmetros e cenas moram dentro do bloco e vão junto; os controles
+  /// (pots, footswitches, pedal) são remapeados para seguir o bloco.
+  DocumentoPreset comBlocoMovido(PosicaoBloco de, PosicaoBloco para) => _editar((p) {
+        final origem = _blocosBrutos(p, de.linha).remove('${de.casa}');
+        if (origem is! Map<String, dynamic>) throw StateError('Não há bloco em $de.');
+        final destino = _blocosBrutos(p, para.linha).remove('${para.casa}');
+        _colocar(p, para, origem);
+        if (destino is Map<String, dynamic>) _colocar(p, de, destino);
+        trocarVinculos(p, de, para);
       });
 
   DocumentoPreset semBloco(PosicaoBloco posicao) =>
@@ -160,6 +168,21 @@ class DocumentoPreset {
     final copia = copiaProfunda(_json);
     mudar(copia['preset'] as Map<String, dynamic>);
     return DocumentoPreset._(copia);
+  }
+
+  /// Põe o bloco na casa criando a linha se faltar, e mantém as casas em
+  /// ordem numérica, como a pedaleira grava.
+  static void _colocar(Map<String, dynamic> preset, PosicaoBloco posicao, Map<String, dynamic> bloco) {
+    final chains = preset.putIfAbsent('chains', () => <String, dynamic>{}) as Map<String, dynamic>;
+    final linha = chains.putIfAbsent('${posicao.linha}', () => <String, dynamic>{}) as Map<String, dynamic>;
+    final blocos = linha.putIfAbsent('blocks', () => <String, dynamic>{}) as Map<String, dynamic>;
+    blocos['${posicao.casa}'] = bloco;
+    final ordenado = {for (final chave in chavesNumericas(blocos)) chave: blocos[chave]};
+    final outras = {for (final e in blocos.entries) if (!ordenado.containsKey(e.key)) e.key: e.value};
+    blocos
+      ..clear()
+      ..addAll(ordenado)
+      ..addAll(outras);
   }
 
   static Map<String, dynamic> _blocosBrutos(Map<String, dynamic> preset, int linha) =>
