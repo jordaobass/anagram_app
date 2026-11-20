@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "jordao_bass" "\0"
-            VALUE "FileDescription", "anagram_app" "\0"
+            VALUE "FileDescription", "Anagram App" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "anagram_app" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 jordao_bass. MIT License." "\0"
             VALUE "OriginalFilename", "anagram_app.exe" "\0"
-            VALUE "ProductName", "anagram_app" "\0"
+            VALUE "ProductName", "Anagram App" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
