@@ -2,6 +2,8 @@
 // [aplicarDocumento], que atualiza o estado e toca ao vivo se ligado.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../nucleo/catalogo/biblioteca_blocos.dart';
+import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import 'estado_editor.dart';
@@ -56,6 +58,24 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
     if (atual == null || atual.bloco(posicao) == null) return;
     await aplicarDocumento(atual.semBloco(posicao));
     state = state.copiar(selecionado: primeiraPosicao(state.atual!));
+  }
+
+  /// Efeito escolhido na biblioteca entra numa casa vazia, com os padrões do
+  /// catálogo. Casa ocupada fica como está: substituir é remover e adicionar.
+  Future<void> adicionarBloco(PosicaoBloco posicao, DefinicaoBloco definicao) async {
+    final atual = state.atual;
+    if (atual == null || atual.bloco(posicao) != null) return;
+    await aplicarDocumento(atual.comBlocoColado(posicao, blocoNovo(definicao)));
+    state = state.copiar(selecionado: posicao);
+  }
+
+  /// Arrastar ou "Mover para": casa vazia recebe o bloco, ocupada troca.
+  /// Split e merge ficam onde estão (definem o caminho da linha paralela).
+  Future<void> moverBloco(PosicaoBloco de, PosicaoBloco para) async {
+    final atual = state.atual;
+    if (atual == null || !podeMover(atual, de, para)) return;
+    await aplicarDocumento(atual.comBlocoMovido(de, para));
+    state = state.copiar(selecionado: para);
   }
 
   /// Slot vazio aberto: começa um preset novo ali (com uuid próprio).
