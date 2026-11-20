@@ -2,6 +2,7 @@
 // em isolate do rootBundle (arquivo > 50 KB) não anda no relógio falso.
 import 'package:anagram_app/apresentacao/app_anagram.dart';
 import 'package:anagram_app/aplicacao/provedores.dart';
+import 'package:anagram_app/aplicacao/versao_app.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -23,6 +24,8 @@ class CronometroFixo implements Stopwatch {
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
+const versaoNasCapturas = '0.1.3';
+
 Widget appDeTeste({List<Override> overrides = const []}) => ProviderScope(
       overrides: [
         ...overrides,
@@ -30,6 +33,8 @@ Widget appDeTeste({List<Override> overrides = const []}) => ProviderScope(
         catalogoProvider.overrideWith((ref) async => lerCatalogo()),
         presetsDemonstracaoProvider.overrideWith((ref) async => lerPresetsDemonstracao()),
         indiceMiniaturasProvider.overrideWith((ref) async => lerIndiceMiniaturas()),
+        // versão fixa: com a do pubspec, toda release mudaria todas as capturas
+        versaoAppProvider.overrideWith((ref) async => versaoNasCapturas),
       ],
       child: const AppAnagram(),
     );

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/provedores.dart';
 import '../app_anagram.dart';
+import '../componentes/rotulo_versao.dart';
 import '../componentes/seletor_pausa.dart';
 import '../tema/tokens.dart';
 
@@ -33,6 +34,7 @@ class TelaCreditos extends ConsumerWidget {
         padding: const EdgeInsets.all(Espacos.xl),
         children: [
           Text(AppAnagram.titulo, style: tema.titleLarge),
+          RotuloVersao(estilo: tema.bodyMedium?.copyWith(color: Cores.textoSecundario)),
           const SizedBox(height: Espacos.xl),
           for (final (titulo, texto) in itens) ...[
             Text(titulo.toUpperCase(), style: tema.labelLarge?.copyWith(color: Cores.tally)),
