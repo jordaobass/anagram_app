@@ -8,9 +8,12 @@ import '../../aplicacao/estado/controlador_editor.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../rotas.dart';
 import 'dialogo_confirmar.dart';
+import '../../l10n/app_localizations.dart';
+import '../textos.dart';
 
 Future<void> executarSalvar(BuildContext context, WidgetRef ref, {bool listaEmOutraTela = false}) async {
   final mensageiro = ScaffoldMessenger.of(context);
+  final l = AppLocalizations.of(context);
   final controlador = ref.read(editorProvider.notifier);
   final resultado = await controlador.salvar();
   if (resultado == null) {
@@ -20,10 +23,10 @@ Future<void> executarSalvar(BuildContext context, WidgetRef ref, {bool listaEmOu
   if (resultado case SlotOcupado(:final slot, :final nomeAtual)) {
     // preset importado sobre um slot ocupado: confirma antes
     if (!context.mounted || !await _confirmarSubstituicao(context, slot, nomeAtual)) return;
-    _avisar(mensageiro, await controlador.salvarComo(slot, confirmado: true));
+    _avisar(mensageiro, l, await controlador.salvarComo(slot, confirmado: true));
     return;
   }
-  _avisar(mensageiro, resultado);
+  _avisar(mensageiro, l, resultado);
 }
 
 /// Põe a lista em modo "escolher destino"; no celular a lista é outra tela.
@@ -35,6 +38,7 @@ void abrirEscolhaDeDestino(BuildContext context, WidgetRef ref, {bool listaEmOut
 /// Chamado pela lista quando o destino é tocado. Devolve se gravou.
 Future<bool> salvarComoNoDestino(BuildContext context, WidgetRef ref, SlotPreset slot) async {
   final mensageiro = ScaffoldMessenger.of(context);
+  final l = AppLocalizations.of(context);
   final controlador = ref.read(editorProvider.notifier);
   var resultado = await controlador.salvarComo(slot);
   if (resultado case SlotOcupado(:final nomeAtual)) {
@@ -42,25 +46,28 @@ Future<bool> salvarComoNoDestino(BuildContext context, WidgetRef ref, SlotPreset
     if (!await _confirmarSubstituicao(context, slot, nomeAtual)) return false;
     resultado = await controlador.salvarComo(slot, confirmado: true);
   }
-  _avisar(mensageiro, resultado);
+  _avisar(mensageiro, l, resultado);
   return resultado is PresetSalvo;
 }
 
-void _avisar(ScaffoldMessengerState mensageiro, ResultadoSalvar resultado) {
+void _avisar(ScaffoldMessengerState mensageiro, AppLocalizations l, ResultadoSalvar resultado) {
   final texto = switch (resultado) {
-    PresetSalvo(:final relido, :final slot) => '"${relido.nome}" salvo em ${slot.rotulo}.',
-    FalhaAoSalvar(:final motivo) => 'Não salvou: $motivo',
+    PresetSalvo(:final relido, :final slot) => l.presetSalvoEm(relido.nome, slot.rotulo),
+    final FalhaAoSalvar falha => l.falhaAoSalvar(falha),
     SlotOcupado() => null,
   };
   if (texto != null) mensageiro.showSnackBar(SnackBar(content: Text(texto)));
 }
 
-Future<bool> _confirmarSubstituicao(BuildContext context, SlotPreset slot, String nomeAtual) => confirmar(
-      context,
-      titulo: 'Substituir ${slot.rotulo}?',
-      texto: 'O slot ${slot.rotulo} guarda "$nomeAtual". Ele será substituído pelo preset editado.',
-      rotuloCancelar: 'CANCELAR',
-      rotuloConfirmar: 'SUBSTITUIR',
-      chaveConfirmar: const ValueKey('confirmar-substituicao'),
-      enfatizar: true,
-    );
+Future<bool> _confirmarSubstituicao(BuildContext context, SlotPreset slot, String nomeAtual) {
+  final l = AppLocalizations.of(context);
+  return confirmar(
+    context,
+    titulo: l.substituirTitulo(slot.rotulo),
+    texto: l.substituirTexto(slot.rotulo, nomeAtual),
+    rotuloCancelar: l.cancelar,
+    rotuloConfirmar: l.substituir,
+    chaveConfirmar: const ValueKey('confirmar-substituicao'),
+    enfatizar: true,
+  );
+}

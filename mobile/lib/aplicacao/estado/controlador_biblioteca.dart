@@ -5,6 +5,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../avisos.dart';
 import '../../nucleo/modelo/areas_presets.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../../nucleo/resultado.dart';
@@ -22,7 +23,7 @@ class EstadoBiblioteca {
 
   final Map<SlotPreset, ResumoSlot> ocupados;
   final bool carregando;
-  final String? erro;
+  final Aviso? erro;
   final AreasDaPedaleira areas;
 
   /// Id da área cuja lista está na tela; nulo = firmware sem áreas.
@@ -37,7 +38,7 @@ class EstadoBiblioteca {
   EstadoBiblioteca copiar({
     Map<SlotPreset, ResumoSlot>? ocupados,
     bool? carregando,
-    String? erro,
+    Aviso? erro,
     AreasDaPedaleira? areas,
     String? areaSelecionada,
   }) =>
@@ -91,7 +92,7 @@ class ControladorBiblioteca extends Notifier<EstadoBiblioteca> {
     if (state.areaSelecionada != area) return;
     state = switch (resultado) {
       Sucesso(:final valor) => state.copiar(ocupados: {for (final r in valor) r.slot: r}, carregando: false),
-      Falha(:final erro) => state.copiar(carregando: false, erro: erro.mensagem),
+      Falha(:final erro) => state.copiar(carregando: false, erro: AvisoErro(erro)),
     };
   }
 
@@ -112,7 +113,7 @@ class ControladorBiblioteca extends Notifier<EstadoBiblioteca> {
     if (repositorio == null || id == null) return;
     state = switch (await repositorio.tornarAreaAtiva(id)) {
       Sucesso() => state.copiar(areas: AreasDaPedaleira(state.areas.areas, ativa: id)),
-      Falha(:final erro) => state.copiar(erro: 'A pedaleira não trocou de área: ${erro.mensagem}'),
+      Falha(:final erro) => state.copiar(erro: AvisoAreaNaoTrocou(erro)),
     };
   }
 

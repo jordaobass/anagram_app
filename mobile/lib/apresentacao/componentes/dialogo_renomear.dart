@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../nucleo/modelo/documento_preset.dart';
+import '../../l10n/app_localizations.dart';
+import '../textos.dart';
 
 /// Nome curto o bastante para o visor da pedaleira (hipótese: ver DECISOES).
 const tamanhoMaximoNome = 24;
@@ -28,7 +30,7 @@ class _DialogoRenomear extends StatefulWidget {
 
 class _EstadoDialogoRenomear extends State<_DialogoRenomear> {
   late final _campo = TextEditingController(text: widget.nomeAtual);
-  String? _motivo;
+  NomeInvalido? _motivo;
 
   @override
   void dispose() {
@@ -46,20 +48,24 @@ class _EstadoDialogoRenomear extends State<_DialogoRenomear> {
   }
 
   @override
-  Widget build(BuildContext context) => AlertDialog(
-        title: const Text('Nome do preset'),
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final motivo = _motivo;
+    return AlertDialog(
+        title: Text(l.nomeDoPreset),
         content: TextField(
           key: const ValueKey('campo-nome'),
           controller: _campo,
           autofocus: true,
           maxLength: tamanhoMaximoNome,
-          decoration: InputDecoration(labelText: 'Nome', errorText: _motivo),
+          decoration: InputDecoration(labelText: l.nome, errorText: motivo == null ? null : l.nomeInvalido(motivo)),
           onChanged: (_) => setState(() => _motivo = null),
           onSubmitted: (_) => _confirmar(),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('CANCELAR')),
-          FilledButton(onPressed: _confirmar, child: const Text('RENOMEAR')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text(l.cancelar)),
+          FilledButton(onPressed: _confirmar, child: Text(l.renomear)),
         ],
       );
+  }
 }

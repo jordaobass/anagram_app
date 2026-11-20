@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../tema/tokens.dart';
 import 'botao_giratorio.dart';
+import '../../l10n/app_localizations.dart';
 
 class ControleParametro extends StatelessWidget {
   const ControleParametro({
@@ -26,7 +27,10 @@ class ControleParametro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (parametro.alternavel) return _escolha(context, const ['Desligado', 'Ligado']);
+    if (parametro.alternavel) {
+      final l = AppLocalizations.of(context);
+      return _escolha(context, [l.valorDesligado, l.valorLigado]);
+    }
     if (parametro.opcoes.isNotEmpty && parametro.opcoes.length <= maximoSegmentos) {
       return _escolha(context, parametro.opcoes);
     }

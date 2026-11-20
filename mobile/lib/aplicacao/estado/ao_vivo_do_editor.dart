@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../avisos.dart';
 import '../../dados/repositorio_pedaleira.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../../nucleo/protocolo/api_anagram.dart';
@@ -59,7 +60,7 @@ mixin AoVivoDoEditor on Notifier<EstadoEditor> {
         .listen((m) => state = state.copiar(latencia: m.duracao));
     return EnvioAoVivo((documento) async {
       final envio = await repositorio.tocarAoVivo(documento);
-      if (envio case Falha(:final erro)) state = state.copiar(aviso: erro.mensagem);
+      if (envio case Falha(:final erro)) state = state.copiar(aviso: AvisoErro(erro));
     });
   }
 }

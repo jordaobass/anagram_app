@@ -1,0 +1,522 @@
+{
+  "@@locale": "pt",
+  "desconectar": "Desconectar",
+  "creditos": "Créditos",
+  "estadoSemConexao": "Sem conexão",
+  "estadoConectando": "Conectando ({meio})…",
+  "@estadoConectando": {
+    "placeholders": {
+      "meio": {
+        "type": "String"
+      }
+    }
+  },
+  "estadoDemonstracao": "Demonstração · sem pedaleira",
+  "estadoConectada": "Anagram · {meio} · {firmware}",
+  "@estadoConectada": {
+    "placeholders": {
+      "meio": {
+        "type": "String"
+      },
+      "firmware": {
+        "type": "String"
+      }
+    }
+  },
+  "estadoFalha": "Falha na conexão",
+  "conexaoSemantica": "Conexão: {texto}",
+  "@conexaoSemantica": {
+    "placeholders": {
+      "texto": {
+        "type": "String"
+      }
+    }
+  },
+  "idaEVolta": "ida e volta {ms} ms",
+  "@idaEVolta": {
+    "placeholders": {
+      "ms": {
+        "type": "int"
+      }
+    }
+  },
+  "aoVivo": "AO VIVO",
+  "aoVivoDesligado": "AO VIVO DESLIGADO",
+  "conexaoPermissaoNegada": "O sistema negou a permissão de acesso ao USB da Anagram. No Android, toque em Conectar de novo e aceite o pedido; no macOS, confira os ajustes de Privacidade e Segurança.",
+  "conexaoOcupada": "A Anagram está plugada, mas outro programa a segura. Feche o Darkglass Suite e qualquer aba do navegador conectada à pedaleira.",
+  "conexaoSemAnagram": "Nenhuma Anagram encontrada no USB. Confira o cabo e se ela está ligada.",
+  "conexaoSemResposta": "A Anagram não respondeu. Desligue e ligue o cabo e tente de novo.",
+  "conexaoRespostaInvalida": "Resposta inesperada da pedaleira: {detalhe}",
+  "@conexaoRespostaInvalida": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "erroOcupada": "{detalhe}",
+  "@erroOcupada": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "erroDesconectado": "{detalhe}",
+  "@erroDesconectado": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "erroSemResposta": "{detalhe}",
+  "@erroSemResposta": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "erroRespostaInvalida": "{detalhe}",
+  "@erroRespostaInvalida": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "erroOperacaoEmCurso": "{detalhe}",
+  "@erroOperacaoEmCurso": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "erroSemSuporte": "{detalhe}",
+  "@erroSemSuporte": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "avisoDemonstracaoFalhou": "Não foi possível abrir a demonstração.",
+  "avisoFalhaInesperada": "Não foi possível abrir {meio}. Tente de novo; o detalhe ficou no log.",
+  "@avisoFalhaInesperada": {
+    "placeholders": {
+      "meio": {
+        "type": "String"
+      }
+    }
+  },
+  "avisoPedaleiraDesconectada": "A pedaleira foi desconectada. Edições não salvas continuam no app.",
+  "avisoFormatoMaisNovo": "Preset de formato mais novo que o deste app: campos desconhecidos são preservados.",
+  "avisoPresetTrocado": "A pedaleira devolveu outro preset para {slot} (id diferente da lista). A lista foi relida; abra de novo.",
+  "@avisoPresetTrocado": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "avisoAreaNaoTrocou": "A pedaleira não trocou de área: {detalhe}",
+  "@avisoAreaNaoTrocou": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "naoSalvou": "Não salvou: {motivo}",
+  "@naoSalvou": {
+    "placeholders": {
+      "motivo": {
+        "type": "String"
+      }
+    }
+  },
+  "salvarDesconectada": "a pedaleira está desconectada. Conecte e tente de novo.",
+  "salvarSemResposta": "a pedaleira não respondeu a tempo. O slot pode não ter sido gravado; confira antes de tentar de novo.",
+  "salvarRespostaInvalida": "a pedaleira recusou ou devolveu uma resposta inesperada.",
+  "salvarOcupada": "outro programa está segurando a pedaleira.",
+  "indisponivelIos": "iPhone e iPad não deixam apps comuns abrirem a interface USB de controle da Anagram: isso exige um driver DriverKit com permissão especial da Apple, que este app ainda não tem. Use o modo demonstração aqui, ou edite pelo Mac, PC, Android ou Chrome.",
+  "indisponivelNavegador": "Este navegador não tem WebHID. Use Chrome ou Edge no computador, ou o modo demonstração.",
+  "indisponivelSemUsb": "Esta plataforma não tem acesso USB à pedaleira.",
+  "importacaoIlegivel": "Não foi possível ler o arquivo.",
+  "importacaoNaoEhPreset": "Arquivo não é um preset da Anagram: {detalhe}",
+  "@importacaoNaoEhPreset": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "exportacaoFalhou": "Não foi possível gravar o arquivo.",
+  "nomeVazio": "O nome não pode ficar vazio.",
+  "nomeComMarcador": "O nome não pode conter \"{marcador}\".",
+  "@nomeComMarcador": {
+    "placeholders": {
+      "marcador": {
+        "type": "String"
+      }
+    }
+  },
+  "familiaDrive": "Drive",
+  "familiaDinamica": "Dinâmica",
+  "familiaEq": "EQ",
+  "familiaFiltro": "Filtro",
+  "familiaModulacao": "Modulação",
+  "familiaDelay": "Delay",
+  "familiaReverb": "Reverb",
+  "familiaAmp": "Amp",
+  "familiaGabinete": "Gabinete",
+  "familiaUtilitario": "Utilitário",
+  "areaSemNome": "Área {numero}",
+  "@areaSemNome": {
+    "placeholders": {
+      "numero": {
+        "type": "int"
+      }
+    }
+  },
+  "conecteTitulo": "Conecte a Anagram pelo USB",
+  "conecteFecheSuite": "Feche o Darkglass Suite antes: só um programa por vez controla a pedaleira.",
+  "abrirDemonstracao": "ABRIR DEMONSTRAÇÃO",
+  "conectarPeloUsb": "CONECTAR PELO USB",
+  "viaMeio": "Via {meio}.",
+  "@viaMeio": {
+    "placeholders": {
+      "meio": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelar": "CANCELAR",
+  "versaoApp": "v{versao}",
+  "@versaoApp": {
+    "placeholders": {
+      "versao": {
+        "type": "String"
+      }
+    }
+  },
+  "versaoAppComArte": "v{versao} · arte da pedaleira",
+  "@versaoAppComArte": {
+    "placeholders": {
+      "versao": {
+        "type": "String"
+      }
+    }
+  },
+  "fecharAviso": "Fechar aviso",
+  "largarEdicoesTitulo": "Largar edições?",
+  "largarEdicoesTexto": "\"{nome}\" tem mudanças que não foram salvas no slot.",
+  "@largarEdicoesTexto": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "continuarEditando": "CONTINUAR EDITANDO",
+  "largar": "LARGAR",
+  "origem": "ORIGEM",
+  "gravarAqui": "Gravar aqui",
+  "pedaleiraNesteSlot": "A pedaleira está neste slot",
+  "slotVazio": "vazio",
+  "area": "ÁREA",
+  "areaAtivaNaPedaleira": "{nome} · ativa na pedaleira",
+  "@areaAtivaNaPedaleira": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "largarAoTrocarArea": "\"{nome}\" tem mudanças que não foram salvas e será fechado ao trocar de área.",
+  "@largarAoTrocarArea": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "areaInativa": "Esta área não está ativa na pedaleira: abrir um preset só toca, sem trocar o slot nela.",
+  "tornarAtiva": "TORNAR ATIVA",
+  "salvar": "SALVAR",
+  "salvarComo": "SALVAR COMO…",
+  "descartar": "DESCARTAR",
+  "menuArquivo": "Importar ou exportar JSON",
+  "importarPreset": "Importar preset (.json)",
+  "exportarPreset": "Exportar preset (.json)",
+  "presetImportado": "\"{nome}\" importado. Salve no slot para gravar.",
+  "@presetImportado": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "presetExportado": "Preset exportado.",
+  "presetCopiado": "JSON do preset copiado para a área de transferência.",
+  "presetSalvoEm": "\"{nome}\" salvo em {slot}.",
+  "@presetSalvoEm": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      },
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "substituirTitulo": "Substituir {slot}?",
+  "@substituirTitulo": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "substituirTexto": "O slot {slot} guarda \"{nome}\". Ele será substituído pelo preset editado.",
+  "@substituirTexto": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      },
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "substituir": "SUBSTITUIR",
+  "salvarComoEscolhaDestino": "SALVAR COMO: TOQUE NO SLOT DE DESTINO",
+  "slotSemantica": "Slot {slot}",
+  "@slotSemantica": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "slotNovo": "novo",
+  "abrirListaSemantica": ", abrir lista de presets",
+  "renomearPresetSemantica": "Renomear preset {nome}",
+  "@renomearPresetSemantica": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "avisoAoVivoDesligado": "AO VIVO DESLIGADO — as edições ficam só no app, a pedaleira não muda.",
+  "avisoAudicao": "AUDIÇÃO — a pedaleira continua no slot dela (sem USB MIDI).",
+  "naoSalvo": "NÃO SALVO",
+  "escolhaUmPreset": "Escolha um preset",
+  "slotEstaVazio": "O slot {slot} está vazio",
+  "@slotEstaVazio": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "escolhaUmPresetTexto": "Ao abrir, ele passa a tocar na pedaleira. As mudanças soam na hora e só ficam gravadas quando você salva.",
+  "slotVazioTexto": "Crie um preset aqui e cole blocos copiados de outro preset (toque longo numa casa).",
+  "criarPresetAqui": "CRIAR PRESET AQUI",
+  "verPresets": "VER PRESETS",
+  "nomeDoPreset": "Nome do preset",
+  "nome": "Nome",
+  "renomear": "RENOMEAR",
+  "blocoPosicao": "{familia} · linha {linha}, casa {casa}",
+  "@blocoPosicao": {
+    "placeholders": {
+      "familia": {
+        "type": "String"
+      },
+      "linha": {
+        "type": "int"
+      },
+      "casa": {
+        "type": "int"
+      }
+    }
+  },
+  "arrasteComMouse": "Arraste na grade para mudar de lugar",
+  "arrasteNoToque": "Segure e arraste na grade para mudar de lugar",
+  "ligadoSoNaCena": "LIGADO SÓ NA CENA {cena}",
+  "@ligadoSoNaCena": {
+    "placeholders": {
+      "cena": {
+        "type": "int"
+      }
+    }
+  },
+  "desligadoSoNaCena": "DESLIGADO SÓ NA CENA {cena}",
+  "@desligadoSoNaCena": {
+    "placeholders": {
+      "cena": {
+        "type": "int"
+      }
+    }
+  },
+  "copiarBloco": "Copiar bloco",
+  "maisAcoesBloco": "Mais ações do bloco",
+  "blocoLigadoSemantica": "Bloco ligado",
+  "ligado": "LIGADO",
+  "desligado": "DESLIGADO",
+  "adicionarEfeitoMenu": "Adicionar efeito…",
+  "colarAqui": "Colar aqui",
+  "ligarDesligar": "Ligar / desligar",
+  "moverEsquerda": "Mover para a esquerda",
+  "moverDireita": "Mover para a direita",
+  "moverParaLinha": "Mover para a linha {linha}",
+  "@moverParaLinha": {
+    "placeholders": {
+      "linha": {
+        "type": "int"
+      }
+    }
+  },
+  "removerBloco": "Remover bloco",
+  "semParametros": "Este bloco não tem parâmetros ajustáveis.",
+  "soNaCena": "SÓ NA CENA {cena}",
+  "@soNaCena": {
+    "placeholders": {
+      "cena": {
+        "type": "int"
+      }
+    }
+  },
+  "dicaMontarCadeia": "Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar, e arraste para mudar de lugar.",
+  "faixaEstimada": "{simbolo} (faixa estimada)",
+  "@faixaEstimada": {
+    "placeholders": {
+      "simbolo": {
+        "type": "String"
+      }
+    }
+  },
+  "adicionarEfeito": "Adicionar efeito",
+  "linhaCasa": "Linha {linha}, casa {casa}",
+  "@linhaCasa": {
+    "placeholders": {
+      "linha": {
+        "type": "int"
+      },
+      "casa": {
+        "type": "int"
+      }
+    }
+  },
+  "buscarPeloNome": "Buscar pelo nome",
+  "todos": "Todos",
+  "nenhumEfeito": "Nenhum efeito com \"{busca}\".",
+  "@nenhumEfeito": {
+    "placeholders": {
+      "busca": {
+        "type": "String"
+      }
+    }
+  },
+  "nenhumEfeitoNaFamilia": "Nenhum efeito com \"{busca}\" em {familia}.",
+  "@nenhumEfeitoNaFamilia": {
+    "placeholders": {
+      "busca": {
+        "type": "String"
+      },
+      "familia": {
+        "type": "String"
+      }
+    }
+  },
+  "sobreTitulo": "Sobre e diagnóstico",
+  "creditoAutorTitulo": "Autor",
+  "creditoAutor": "jordao_bass · software livre, licença MIT. Gratuito, sem anúncios, sem compras no app e sem coleta de dados.",
+  "creditoProtocoloTitulo": "Protocolo USB e catálogo de blocos",
+  "creditoProtocolo": "Portado do projeto anagram-tone-maker, de basster6 — licença MIT (github.com/basster6/anagram-tone-maker).",
+  "creditoArteTitulo": "Arte dos blocos",
+  "creditoArtePropria": "Arte própria do app, por categoria de bloco.",
+  "creditoImagensTitulo": "Imagens dos blocos",
+  "creditoImagens": "{credito}. Blocos sem imagem usam arte própria, por categoria.",
+  "@creditoImagens": {
+    "placeholders": {
+      "credito": {
+        "type": "String"
+      }
+    }
+  },
+  "creditoFontesTitulo": "Fontes",
+  "creditoFontes": "Barlow e Saira Stencil (SIL Open Font License) · Permanent Marker (Apache 2.0).",
+  "creditoAvisoTitulo": "Aviso",
+  "creditoAviso": "App não oficial, sem vínculo com a Darkglass Electronics. Anagram é marca do fabricante.",
+  "diagnosticoPausa": "DIAGNÓSTICO · PAUSA ENTRE RELATÓRIOS USB",
+  "diagnosticoPausaTexto": "Compare 0, 2 e 10 ms e veja a \"ida e volta\" na barra e no log.",
+  "idioma": "Idioma",
+  "idiomaDoSistema": "Do sistema",
+  "separadorDecimal": ",",
+  "valorLigado": "Ligado",
+  "valorDesligado": "Desligado",
+  "voltarAoPadrao": "Voltar ao padrão",
+  "voltouAoPadrao": "{parametro} voltou ao padrão.",
+  "@voltouAoPadrao": {
+    "placeholders": {
+      "parametro": {
+        "type": "String"
+      }
+    }
+  },
+  "desfazer": "DESFAZER",
+  "pausaAuto": "Auto",
+  "linha1": "LINHA 1",
+  "linha2Paralela": "LINHA 2 · PARALELA",
+  "cenaSemantica": "Cena {numero}, {nome}",
+  "@cenaSemantica": {
+    "placeholders": {
+      "numero": {
+        "type": "int"
+      },
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "cenaPadrao": "Cena {numero}",
+  "@cenaPadrao": {
+    "placeholders": {
+      "numero": {
+        "type": "int"
+      }
+    }
+  },
+  "adicionarEfeitoNaCasa": "Adicionar efeito na casa {casa}, linha {linha}",
+  "@adicionarEfeitoNaCasa": {
+    "placeholders": {
+      "casa": {
+        "type": "int"
+      },
+      "linha": {
+        "type": "int"
+      }
+    }
+  },
+  "blocoLigado": "{nome}, ligado",
+  "@blocoLigado": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "blocoDesligado": "{nome}, desligado",
+  "@blocoDesligado": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "presets": "Presets"
+}

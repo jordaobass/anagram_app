@@ -7,6 +7,7 @@ import 'package:anagram_app/apresentacao/componentes/barra_conexao.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:anagram_app/l10n/app_localizations.dart';
 
 const _comArteDaPedaleira = '''
 {"blocos": {"dg_b3k": {"nome": "", "origem": "pedaleira", "arquivo": "a.png", "uris": ["urn:darkglass:B3K"]}}}''';
@@ -17,7 +18,12 @@ Future<void> _montarBarra(WidgetTester tester, IndiceMiniaturas indice) async {
       versaoAppProvider.overrideWith((ref) async => '0.1.3'),
       indiceMiniaturasProvider.overrideWith((ref) async => indice),
     ],
-    child: const MaterialApp(home: Scaffold(body: BarraConexao(compacta: false))),
+    child: const MaterialApp(
+      locale: Locale('pt'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(body: BarraConexao(compacta: false)),
+    ),
   ));
   await tester.pumpAndSettle();
 }

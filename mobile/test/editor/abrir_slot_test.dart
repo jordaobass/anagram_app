@@ -3,10 +3,12 @@ import 'package:anagram_app/aplicacao/estado/controlador_biblioteca.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/aplicacao/estado/estado_editor.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
+import 'package:anagram_app/apresentacao/textos.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/conexao_demo.dart';
 import '../apoio/fixtures.dart';
+import '../apoio/textos_pt.dart';
 
 void main() {
   test('should_never_show_one_slot_with_another_slots_preset_when_switching_quickly', () async {
@@ -36,6 +38,6 @@ void main() {
 
     final estado = container.read(editorProvider);
     expect(estado.atual, isNull);
-    expect(estado.aviso, contains('outro preset'));
+    expect(textosPt.aviso(estado.aviso!), contains('outro preset'));
   });
 }

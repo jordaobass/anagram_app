@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../navegacao.dart';
 import '../tema/tokens.dart';
+import '../../l10n/app_localizations.dart';
 
 class FaixaEscolherDestino extends ConsumerWidget {
   const FaixaEscolherDestino({super.key});
@@ -12,13 +13,14 @@ class FaixaEscolherDestino extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tema = Theme.of(context).textTheme;
+    final l = AppLocalizations.of(context);
     return Container(
       key: const ValueKey('faixa-escolher-destino'),
       color: Cores.tally,
       padding: const EdgeInsets.only(left: Espacos.m),
       child: Row(children: [
         Expanded(
-          child: Text('SALVAR COMO: TOQUE NO SLOT DE DESTINO',
+          child: Text(l.salvarComoEscolhaDestino,
               style: tema.labelLarge?.copyWith(color: Cores.sobreTally)),
         ),
         TextButton(
@@ -27,7 +29,7 @@ class FaixaEscolherDestino extends ConsumerWidget {
             voltarSePuder(context);
           },
           style: TextButton.styleFrom(foregroundColor: Cores.sobreTally),
-          child: const Text('CANCELAR'),
+          child: Text(l.cancelar),
         ),
       ]),
     );

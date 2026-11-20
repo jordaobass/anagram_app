@@ -17,10 +17,10 @@ final versaoAppProvider = FutureProvider<String>((ref) async {
   }
 });
 
-/// "v0.1.3 · arte da pedaleira" no build com a arte; só "v0.1.3" no padrão.
-final rotuloVersaoProvider = Provider<String>((ref) {
+/// A versão e se o build traz a arte da pedaleira; a tela monta a frase
+/// ("v0.1.3 · arte da pedaleira") no idioma em uso. Versão vazia = sem rótulo.
+final rotuloVersaoProvider = Provider<({String versao, bool comArte})>((ref) {
   final versao = ref.watch(versaoAppProvider).value ?? '';
-  if (versao.isEmpty) return '';
   final comArte = ref.watch(indiceMiniaturasProvider).value?.temArteDaPedaleira ?? false;
-  return comArte ? 'v$versao · arte da pedaleira' : 'v$versao';
+  return (versao: versao, comArte: comArte);
 });

@@ -9,7 +9,13 @@ class AreaPresets {
   const AreaPresets(this.id, this.nome);
 
   final String id;
+
+  /// O nome dado na pedaleira; vazio quando a pessoa não deu nenhum (a tela
+  /// mostra "Área N" no idioma em uso).
   final String nome;
+
+  /// Posição da área, contando de 1, tirada do id ("user" = 1, "user-3" = 3).
+  int get numero => id == 'user' ? 1 : int.tryParse(id.split('-').last) ?? 1;
 
   @override
   bool operator ==(Object other) => other is AreaPresets && other.id == id && other.nome == nome;
@@ -52,7 +58,6 @@ class AreasDaPedaleira {
   static String idDaArea(int posicao) => posicao == 0 ? 'user' : 'user-${posicao + 1}';
 
   static String _nome(Object? nome, int posicao) {
-    final texto = textoOuNulo(nome)?.trim() ?? '';
-    return texto.isEmpty ? 'Área ${posicao + 1}' : texto;
+    return textoOuNulo(nome)?.trim() ?? '';
   }
 }

@@ -12,6 +12,8 @@ import '../../nucleo/catalogo/familia_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'arte_bloco.dart';
+import '../../l10n/app_localizations.dart';
+import '../textos.dart';
 
 /// Escolhe um efeito e põe na casa [posicao]. Fechar sem escolher não muda nada.
 Future<void> adicionarEfeitoNaCasa(BuildContext context, WidgetRef ref, PosicaoBloco posicao) async {
@@ -61,27 +63,32 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
 
   Widget _cabecalho(BuildContext context) {
     final tema = Theme.of(context).textTheme;
+    final l = AppLocalizations.of(context);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text('Adicionar efeito', style: tema.titleLarge),
-      Text('Linha ${widget.posicao.linha}, casa ${widget.posicao.casa}', style: tema.bodySmall),
+      Text(l.adicionarEfeito, style: tema.titleLarge),
+      Text(l.linhaCasa(widget.posicao.linha, widget.posicao.casa), style: tema.bodySmall),
     ]);
   }
 
   Widget _campoBusca() => TextField(
         key: const ValueKey('busca-efeito'),
         autofocus: true,
-        decoration: const InputDecoration(prefixIcon: Icon(Icons.search), hintText: 'Buscar pelo nome'),
+        decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.search), hintText: AppLocalizations.of(context).buscarPeloNome),
         onChanged: (texto) => setState(() => _busca = texto),
       );
 
   /// "Todos" e uma pílula por família com efeitos; tocar de novo na escolhida
   /// volta a "Todos".
-  Widget _filtros(List<FamiliaBloco> familias) => Wrap(spacing: Espacos.xs, runSpacing: Espacos.xs, children: [
-        _filtro('todos', 'Todos', selecionado: _familia == null, aoTocar: () => setState(() => _familia = null)),
+  Widget _filtros(List<FamiliaBloco> familias) {
+    final l = AppLocalizations.of(context);
+    return Wrap(spacing: Espacos.xs, runSpacing: Espacos.xs, children: [
+        _filtro('todos', l.todos, selecionado: _familia == null, aoTocar: () => setState(() => _familia = null)),
         for (final f in familias)
-          _filtro(f.name, f.rotulo,
+          _filtro(f.name, l.familia(f),
               selecionado: _familia == f, aoTocar: () => setState(() => _familia = _familia == f ? null : f)),
       ]);
+  }
 
   Widget _filtro(String chave, String rotulo, {required bool selecionado, required VoidCallback aoTocar}) => ChoiceChip(
         key: ValueKey('filtro-$chave'),
@@ -91,13 +98,15 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
       );
 
   Widget _lista(BuildContext context, List<GrupoBiblioteca> grupos) {
+    final l = AppLocalizations.of(context);
     if (grupos.isEmpty) {
-      final onde = _familia == null ? '' : ' em ${_familia!.rotulo}';
-      return Center(child: Text('Nenhum efeito com "$_busca"$onde.', style: Theme.of(context).textTheme.bodyMedium));
+      final familia = _familia;
+      final texto = familia == null ? l.nenhumEfeito(_busca) : l.nenhumEfeitoNaFamilia(_busca, l.familia(familia));
+      return Center(child: Text(texto, style: Theme.of(context).textTheme.bodyMedium));
     }
     return ListView(children: [
       for (final grupo in grupos) ...[
-        _tituloCategoria(context, grupo.categoria),
+        _tituloCategoria(context, l.familia(grupo.familia)),
         for (final bloco in grupo.blocos) _ItemEfeito(definicao: bloco),
       ],
     ]);
@@ -121,7 +130,7 @@ class _ItemEfeito extends StatelessWidget {
         contentPadding: EdgeInsets.zero,
         leading: ArteBlocoWidget(definicao: definicao, tamanho: Medidas.alvoMinimo),
         title: Text(definicao.nome),
-        subtitle: Text(definicao.familia.rotulo),
+        subtitle: Text(AppLocalizations.of(context).familia(definicao.familia)),
         trailing: Container(width: Medidas.fitaCategoria, height: Medidas.alvoMinimo, color: Cores.daFamilia(definicao.familia)),
         onTap: () => Navigator.pop(context, definicao),
       );

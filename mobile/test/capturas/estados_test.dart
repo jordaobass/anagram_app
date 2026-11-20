@@ -14,7 +14,6 @@ import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:anagram_app/nucleo/protocolo/api_anagram.dart';
 import 'package:anagram_app/nucleo/protocolo/erros_anagram.dart';
 import 'package:anagram_app/nucleo/protocolo/transporte_anagram.dart';
-import 'package:anagram_app/plataforma/fabrica_plataforma_io.dart';
 import 'package:anagram_app/plataforma/fabrica_transporte.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -165,7 +164,7 @@ void main() {
 
   testWidgets('iOS: conectar indisponível', (tester) async {
     await preparar(tester, celular, overrides: [
-      fabricaTransporteProvider.overrideWithValue(const _Fabrica(AparelhoIndisponivel(FabricaIo.motivoIos))),
+      fabricaTransporteProvider.overrideWithValue(const _Fabrica(AparelhoIndisponivel(MotivoIndisponivel.ios))),
     ]);
     await foto('13-ios-indisponivel');
   });

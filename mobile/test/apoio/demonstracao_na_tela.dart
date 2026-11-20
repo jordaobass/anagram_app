@@ -1,5 +1,6 @@
 // Preparo comum dos testes de interface: tela do tamanho pedido, app montado
 // e, quando preciso, já conectado à pedaleira de demonstração.
+import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -15,11 +16,14 @@ const telaCelular = Size(390, 844);
 
 /// Ajusta a tela ao tamanho lógico pedido e monta o app, ainda desconectado.
 Future<void> montarApp(WidgetTester tester,
-    {Size tamanho = telaDesktop, double densidade = 1, List<Override> overrides = const []}) async {
+    {Size tamanho = telaDesktop,
+    double densidade = 1,
+    List<Override> overrides = const [],
+    IdiomaApp? idioma = IdiomaApp.portugues}) async {
   tester.view.physicalSize = tamanho * densidade;
   tester.view.devicePixelRatio = densidade;
   addTearDown(tester.view.reset);
-  await tester.pumpWidget(appDeTeste(overrides: overrides));
+  await tester.pumpWidget(appDeTeste(overrides: overrides, idioma: idioma));
   await tester.pumpAndSettle();
 }
 

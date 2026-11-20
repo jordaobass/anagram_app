@@ -15,6 +15,7 @@ import '../../nucleo/protocolo/transporte_anagram.dart';
 import '../../nucleo/registro.dart';
 import '../../nucleo/resultado.dart';
 import '../../plataforma/fabrica_transporte.dart';
+import '../avisos.dart';
 import '../provedores.dart';
 import 'estado_conexao.dart';
 
@@ -49,7 +50,7 @@ class ControladorConexao extends Notifier<EstadoConexao> {
       presets = await ref.read(presetsDemonstracaoProvider.future);
     } on Object catch (erro, pilha) {
       registro.e('conexão: presets da demonstração não carregaram', error: erro, stackTrace: pilha);
-      state = const FalhaDeConexao('Não foi possível abrir a demonstração.');
+      state = const FalhaDeConexao(AvisoDemonstracaoFalhou());
       return;
     }
     final midi = ref.read(midiDemonstracaoProvider)();
@@ -66,7 +67,7 @@ class ControladorConexao extends Notifier<EstadoConexao> {
   Future<void> conectarAparelho() async {
     final fabrica = ref.read(fabricaTransporteProvider);
     if (fabrica.suporte case AparelhoIndisponivel(:final motivo)) {
-      state = FalhaDeConexao(motivo);
+      state = FalhaDeConexao(AvisoPlataformaIndisponivel(motivo));
       return;
     }
     await _conectar(fabrica.criarAparelho(), demonstracao: false, midi: fabrica.criarMidi());
@@ -92,14 +93,14 @@ class ControladorConexao extends Notifier<EstadoConexao> {
       await transporte.abrir();
     } on ErroAnagram catch (erro) {
       registro.e('conexão: não abriu ${transporte.descricao}', error: erro);
-      if (tentativa == _tentativa) state = FalhaDeConexao(_explicar(erro));
+      if (tentativa == _tentativa) state = FalhaDeConexao(AvisoConexao(erro));
       return;
     } on Object catch (erro, pilha) {
       // erro fora do protocolo (DOMException do WebHID bloqueado por política,
       // falha ao criar o isolate do hidapi): sem isto a tela ficaria em
       // "Conectando…" para sempre
       registro.e('conexão: falha inesperada ao abrir ${transporte.descricao}', error: erro, stackTrace: pilha);
-      if (tentativa == _tentativa) state = FalhaDeConexao('Não foi possível abrir ${transporte.descricao}. Tente de novo; o detalhe ficou no log.');
+      if (tentativa == _tentativa) state = FalhaDeConexao(AvisoFalhaInesperada(transporte.descricao));
       return;
     }
     if (tentativa != _tentativa) return unawaited(_fecharSemFalhar(transporte.descricao, transporte.fechar));
@@ -124,7 +125,7 @@ class ControladorConexao extends Notifier<EstadoConexao> {
     if (tentativa != _tentativa) return;
     state = switch (firmware) {
       Sucesso(:final valor) => Conectada(meio: meio, firmware: valor, demonstracao: demonstracao),
-      Falha(:final erro) => FalhaDeConexao(_explicar(erro)),
+      Falha(:final erro) => FalhaDeConexao(AvisoConexao(erro)),
     };
     if (state is FalhaDeConexao) await _soltar();
   }
@@ -133,7 +134,7 @@ class ControladorConexao extends Notifier<EstadoConexao> {
     if (estado != EstadoTransporte.perdido) return;
     registro.w('conexão: pedaleira desconectada');
     unawaited(_soltar());
-    state = const SemConexao(aviso: 'A pedaleira foi desconectada. Edições não salvas continuam no app.');
+    state = const SemConexao(aviso: AvisoPedaleiraDesconectada());
   }
 
   Future<void> _soltar() async {
@@ -177,18 +178,4 @@ class ControladorConexao extends Notifier<EstadoConexao> {
       registro.w('conexão: sem MIDI (${midi.descricao}); abrir preset será só audição', error: erro);
     }
   }
-
-  static String _explicar(ErroAnagram erro) => switch (erro) {
-        // antes do caso geral: é subtipo de ocupada, mas fechar o Suite não resolve
-        ErroPermissaoNegada() => 'O sistema negou a permissão de acesso ao USB da Anagram. No Android, toque '
-            'em Conectar de novo e aceite o pedido; no macOS, confira os ajustes de Privacidade e Segurança.',
-        ErroInterfaceOcupada() =>
-          'A Anagram está plugada, mas outro programa a segura. Feche o Darkglass Suite '
-              'e qualquer aba do navegador conectada à pedaleira.',
-        ErroDesconectado() => 'Nenhuma Anagram encontrada no USB. Confira o cabo e se ela está ligada.',
-        ErroSemResposta() => 'A Anagram não respondeu. Desligue e ligue o cabo e tente de novo.',
-        ErroPlataformaSemSuporte(:final mensagem) => mensagem,
-        ErroOperacaoEmCurso(:final mensagem) => mensagem,
-        ErroRespostaInvalida(:final mensagem) => 'Resposta inesperada da pedaleira: $mensagem',
-      };
 }

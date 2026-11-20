@@ -9,6 +9,8 @@ import '../tema/tokens.dart';
 import 'arte_bloco.dart';
 import 'casa_arrastavel.dart';
 import 'menu_bloco.dart';
+import '../../l10n/app_localizations.dart';
+import '../textos.dart';
 
 class CabecalhoBloco extends ConsumerWidget {
   const CabecalhoBloco({super.key, required this.bloco, required this.definicao, required this.cena});
@@ -20,7 +22,7 @@ class CabecalhoBloco extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final identidade = _identidade(context);
-    final acoes = _acoes(ref);
+    final acoes = _acoes(context, ref);
     // estreito (celular): ações embaixo, para o nome não ser espremido
     return LayoutBuilder(
       builder: (context, restricoes) => restricoes.maxWidth < Medidas.larguraCabecalhoEmLinha
@@ -36,29 +38,30 @@ class CabecalhoBloco extends ConsumerWidget {
   Widget _identidade(BuildContext context) {
     final ligado = bloco.habilitadoNaCena(cena);
     final tema = Theme.of(context).textTheme;
+    final l = AppLocalizations.of(context);
     return Row(children: [
       ArteBlocoWidget(definicao: definicao, tamanho: Medidas.alvoMinimo, ligado: ligado),
       const SizedBox(width: Espacos.m),
       Expanded(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(definicao.nome, style: tema.titleLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
-          Text('${definicao.familia.rotulo} · linha ${bloco.posicao.linha}, casa ${bloco.posicao.casa}',
+          Text(l.blocoPosicao(l.familia(definicao.familia), bloco.posicao.linha, bloco.posicao.casa),
               style: tema.bodySmall),
-          Text(arrastoComMouse ? 'Arraste na grade para mudar de lugar' : 'Segure e arraste na grade para mudar de lugar',
+          Text(arrastoComMouse ? l.arrasteComMouse : l.arrasteNoToque,
               style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
           if (bloco.bypassSoNaCena(cena))
-            Text('${ligado ? 'LIGADO' : 'DESLIGADO'} SÓ NA CENA $cena',
+            Text(ligado ? l.ligadoSoNaCena(cena) : l.desligadoSoNaCena(cena),
                 style: tema.labelSmall?.copyWith(color: Cores.tally)),
         ]),
       ),
     ]);
   }
 
-  Widget _acoes(WidgetRef ref) {
+  Widget _acoes(BuildContext context, WidgetRef ref) {
     final controlador = ref.read(editorProvider.notifier);
     return Row(mainAxisSize: MainAxisSize.min, children: [
       IconButton(
-        tooltip: 'Copiar bloco',
+        tooltip: AppLocalizations.of(context).copiarBloco,
         icon: const Icon(Icons.copy_outlined),
         onPressed: () => controlador.copiarBloco(bloco.posicao),
       ),
@@ -79,7 +82,7 @@ class _BotaoMaisAcoes extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => IconButton(
         key: const ValueKey('mais-acoes-bloco'),
-        tooltip: 'Mais ações do bloco',
+        tooltip: AppLocalizations.of(context).maisAcoesBloco,
         icon: const Icon(Icons.more_vert),
         onPressed: () {
           final caixa = context.findRenderObject()! as RenderBox;
@@ -95,21 +98,24 @@ class _BotaoBypass extends StatelessWidget {
   final VoidCallback aoTocar;
 
   @override
-  Widget build(BuildContext context) => Semantics(
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Semantics(
         toggled: ligado,
-        label: 'Bloco ligado',
+        label: l.blocoLigadoSemantica,
         child: ligado
             ? FilledButton.icon(
                 key: const ValueKey('bypass'),
                 onPressed: aoTocar,
                 icon: const Icon(Icons.power_settings_new),
-                label: const Text('LIGADO'),
+                label: Text(l.ligado),
               )
             : OutlinedButton.icon(
                 key: const ValueKey('bypass'),
                 onPressed: aoTocar,
                 icon: const Icon(Icons.power_settings_new),
-                label: const Text('DESLIGADO'),
+                label: Text(l.desligado),
               ),
       );
+  }
 }

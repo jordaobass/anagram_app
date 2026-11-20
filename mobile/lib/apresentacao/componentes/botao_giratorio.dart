@@ -8,9 +8,10 @@ import 'package:flutter/services.dart';
 
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/escala_parametro.dart';
-import '../../nucleo/catalogo/formatador_valor.dart';
 import '../tema/tokens.dart';
 import 'pintor_knob.dart';
+import '../../l10n/app_localizations.dart';
+import '../textos.dart';
 
 typedef AoMudarValor = void Function(num valor, {required bool arrastando});
 
@@ -35,7 +36,6 @@ class BotaoGiratorio extends StatefulWidget {
 }
 
 class _BotaoGiratorioState extends State<BotaoGiratorio> {
-  static const _acaoPadrao = CustomSemanticsAction(label: 'Voltar ao padrão');
   final _foco = FocusNode();
   double? _fracaoArraste;
 
@@ -65,9 +65,10 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
     final aoMudar = widget.aoMudar;
     HapticFeedback.mediumImpact();
     aoMudar(widget.parametro.padrao, arrastando: false);
+    final l = AppLocalizations.of(context);
     ScaffoldMessenger.maybeOf(context)?.showSnackBar(SnackBar(
-      content: Text('${widget.parametro.nome} voltou ao padrão.'),
-      action: SnackBarAction(label: 'DESFAZER', onPressed: () => aoMudar(anterior, arrastando: false)),
+      content: Text(l.voltouAoPadrao(widget.parametro.nome)),
+      action: SnackBarAction(label: l.desfazer, onPressed: () => aoMudar(anterior, arrastando: false)),
     ));
   }
 
@@ -103,16 +104,17 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
   @override
   Widget build(BuildContext context) {
     final p = widget.parametro;
-    final texto = FormatadorValor.formatar(p, p.valorDe(_fracao));
+    final l = AppLocalizations.of(context);
+    final texto = l.valorDe(p, p.valorDe(_fracao));
     return Semantics(
       slider: true,
       label: p.nome,
       value: texto,
-      increasedValue: FormatadorValor.formatar(p, p.valorDe(_fracaoMais(_passoFino))),
-      decreasedValue: FormatadorValor.formatar(p, p.valorDe(_fracaoMais(-_passoFino))),
+      increasedValue: l.valorDe(p, p.valorDe(_fracaoMais(_passoFino))),
+      decreasedValue: l.valorDe(p, p.valorDe(_fracaoMais(-_passoFino))),
       onIncrease: () => _passo(_passoFino),
       onDecrease: () => _passo(-_passoFino),
-      customSemanticsActions: {_acaoPadrao: _voltarAoPadrao},
+      customSemanticsActions: {CustomSemanticsAction(label: l.voltarAoPadrao): _voltarAoPadrao},
       child: Focus(
         focusNode: _foco,
         onKeyEvent: _tecla,

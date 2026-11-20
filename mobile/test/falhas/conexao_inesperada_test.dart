@@ -11,10 +11,12 @@ import 'package:anagram_app/nucleo/midi/saida_midi.dart';
 import 'package:anagram_app/nucleo/protocolo/erros_anagram.dart';
 import 'package:anagram_app/nucleo/protocolo/transporte_anagram.dart';
 import 'package:anagram_app/plataforma/fabrica_transporte.dart';
+import 'package:anagram_app/apresentacao/textos.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/fixtures.dart';
+import '../apoio/textos_pt.dart';
 
 /// Abrir falha com o erro dado: por padrão um de fora do protocolo, como o
 /// DOMException do WebHID.
@@ -76,7 +78,7 @@ void main() {
 
     final estado = container.read(conexaoProvider);
     expect(estado, isA<FalhaDeConexao>());
-    expect((estado as FalhaDeConexao).mensagem, contains('WebHID'));
+    expect(textosPt.aviso((estado as FalhaDeConexao).aviso), contains('WebHID'));
   });
 
   test('should_explain_the_permission_and_not_blame_the_suite_when_the_system_denies_usb', () async {
@@ -84,7 +86,7 @@ void main() {
 
     await container.read(conexaoProvider.notifier).conectarAparelho();
 
-    final mensagem = (container.read(conexaoProvider) as FalhaDeConexao).mensagem;
+    final mensagem = textosPt.aviso((container.read(conexaoProvider) as FalhaDeConexao).aviso);
     expect(mensagem, contains('permissão'));
     expect(mensagem, isNot(contains('Darkglass Suite')));
   });

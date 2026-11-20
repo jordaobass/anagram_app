@@ -10,6 +10,7 @@ import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'cabecalho_bloco.dart';
 import 'controle_parametro.dart';
+import '../../l10n/app_localizations.dart';
 
 class PainelParametros extends ConsumerWidget {
   const PainelParametros({super.key, required this.tamanhoKnob, this.compacto = false});
@@ -27,7 +28,8 @@ class PainelParametros extends ConsumerWidget {
     // sem o catálogo, faixas seriam chutadas: espera em vez de editar errado
     if (!ref.watch(catalogoProvider).hasValue) return const Center(child: CircularProgressIndicator());
     final definicao = ref.watch(definicaoBlocoProvider(bloco.uri));
-    final parametros = parametrosVisiveis(definicao, bloco);
+    final l = AppLocalizations.of(context);
+    final parametros = parametrosVisiveis(definicao, bloco, nomeEstimado: l.faixaEstimada);
     final cena = estado.atual!.cenaAtiva;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       CabecalhoBloco(bloco: bloco, definicao: definicao, cena: cena),
@@ -40,7 +42,7 @@ class PainelParametros extends ConsumerWidget {
           runSpacing: Espacos.l,
           children: [
             if (parametros.isEmpty)
-              Text('Este bloco não tem parâmetros ajustáveis.', style: Theme.of(context).textTheme.bodyMedium),
+              Text(l.semParametros, style: Theme.of(context).textTheme.bodyMedium),
             for (final p in parametros) _controle(context, ref, p, bloco, definicao, cena, tamanho),
           ],
         );
@@ -80,7 +82,7 @@ class PainelParametros extends ConsumerWidget {
       ),
       // como o valor "atribuído ao snapshot" do HX: esta cena sobrepõe
       if (bloco.sobreposicaoDaCena(p.simbolo, cena) != null)
-        Text('SÓ NA CENA $cena', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.tally)),
+        Text(AppLocalizations.of(context).soNaCena(cena), style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.tally)),
     ]);
   }
 }
@@ -95,8 +97,7 @@ class DicaMontarCadeia extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.all(Espacos.l),
         child: Text(
-          'Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar, '
-          'e arraste para mudar de lugar.',
+          AppLocalizations.of(context).dicaMontarCadeia,
           key: const ValueKey('dica-montar-cadeia'),
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Cores.textoSecundario),
@@ -105,17 +106,20 @@ class DicaMontarCadeia extends StatelessWidget {
 }
 
 /// Parâmetros do catálogo; para bloco desconhecido, os que o preset guarda,
-/// com faixa estimada (marcada no nome).
-List<DefinicaoParametro> parametrosVisiveis(DefinicaoBloco definicao, BlocoPreset bloco) {
+/// com faixa estimada (marcada no nome por [nomeEstimado], no idioma da tela).
+List<DefinicaoParametro> parametrosVisiveis(DefinicaoBloco definicao, BlocoPreset bloco,
+    {String Function(String simbolo) nomeEstimado = _nomeEstimadoPadrao}) {
   if (definicao.parametros.isNotEmpty) return definicao.parametros;
   return [
     for (final simbolo in bloco.simbolosGuardados)
       DefinicaoParametro(
         simbolo: simbolo,
-        nome: '$simbolo (faixa estimada)',
+        nome: nomeEstimado(simbolo),
         minimo: 0,
         maximo: ((bloco.valorBase(simbolo) ?? 0).abs() * 2).clamp(10, 100000),
         padrao: bloco.valorBase(simbolo) ?? 0,
       ),
   ];
 }
+
+String _nomeEstimadoPadrao(String simbolo) => '$simbolo (faixa estimada)';

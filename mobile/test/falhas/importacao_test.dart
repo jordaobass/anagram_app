@@ -5,7 +5,9 @@ import 'dart:io';
 import 'package:anagram_app/aplicacao/casos_de_uso/transferir_preset.dart';
 import 'package:anagram_app/dados/arquivos_preset.dart';
 import 'package:anagram_app/nucleo/modelo/documento_preset.dart';
+import 'package:anagram_app/apresentacao/textos.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../apoio/textos_pt.dart';
 
 /// Sistema de arquivos falso: devolve o texto dado ou lança o erro dado.
 class _ArquivosFalsos implements ArquivosPreset {
@@ -34,7 +36,7 @@ void main() {
     final resultado = await TransferirPreset(_ArquivosFalsos(texto: '[1, 2, 3]')).importar();
 
     expect(resultado, isA<ImportacaoRecusada>());
-    expect((resultado as ImportacaoRecusada).motivo, contains('não é um preset'));
+    expect(textosPt.importacaoRecusada(resultado as ImportacaoRecusada), contains('não é um preset'));
   });
 
   test('should_refuse_the_import_when_the_file_cannot_be_read', () async {

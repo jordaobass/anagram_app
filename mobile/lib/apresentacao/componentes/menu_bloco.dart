@@ -9,6 +9,7 @@ import '../../nucleo/catalogo/biblioteca_blocos.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import 'biblioteca_efeitos.dart';
+import '../../l10n/app_localizations.dart';
 
 enum _AcaoMenu { adicionar, copiar, colar, bypass, esquerda, direita, outraLinha, remover }
 
@@ -19,30 +20,31 @@ Future<void> abrirMenuBloco(BuildContext context, WidgetRef ref, PosicaoBloco po
   final acao = await showMenu<_AcaoMenu>(
     context: context,
     position: RelativeRect.fromLTRB(ponto.dx, ponto.dy, ponto.dx, ponto.dy),
-    items: _itens(documento, posicao, temCopia: estado.blocoCopiado != null),
+    items: _itens(AppLocalizations.of(context), documento, posicao, temCopia: estado.blocoCopiado != null),
   );
   if (acao == null || !context.mounted) return;
   await _executar(context, ref, acao, posicao);
 }
 
-List<PopupMenuEntry<_AcaoMenu>> _itens(DocumentoPreset documento, PosicaoBloco posicao, {required bool temCopia}) {
+List<PopupMenuEntry<_AcaoMenu>> _itens(AppLocalizations l, DocumentoPreset documento, PosicaoBloco posicao,
+    {required bool temCopia}) {
   final temBloco = documento.bloco(posicao) != null;
   PopupMenuItem<_AcaoMenu> item(_AcaoMenu acao, String rotulo, {bool ativo = true}) =>
       PopupMenuItem(value: acao, enabled: ativo, child: Text(rotulo));
   bool podeIr(_AcaoMenu acao) => podeMover(documento, posicao, _destino(posicao, acao));
   return [
-    if (!temBloco) item(_AcaoMenu.adicionar, 'Adicionar efeito…'),
-    item(_AcaoMenu.copiar, 'Copiar bloco', ativo: temBloco),
-    item(_AcaoMenu.colar, 'Colar aqui', ativo: temCopia),
-    item(_AcaoMenu.bypass, 'Ligar / desligar', ativo: temBloco),
+    if (!temBloco) item(_AcaoMenu.adicionar, l.adicionarEfeitoMenu),
+    item(_AcaoMenu.copiar, l.copiarBloco, ativo: temBloco),
+    item(_AcaoMenu.colar, l.colarAqui, ativo: temCopia),
+    item(_AcaoMenu.bypass, l.ligarDesligar, ativo: temBloco),
     if (temBloco) ...[
       const PopupMenuDivider(),
-      item(_AcaoMenu.esquerda, 'Mover para a esquerda', ativo: podeIr(_AcaoMenu.esquerda)),
-      item(_AcaoMenu.direita, 'Mover para a direita', ativo: podeIr(_AcaoMenu.direita)),
-      item(_AcaoMenu.outraLinha, 'Mover para a linha ${posicao.linha == 1 ? 2 : 1}', ativo: podeIr(_AcaoMenu.outraLinha)),
+      item(_AcaoMenu.esquerda, l.moverEsquerda, ativo: podeIr(_AcaoMenu.esquerda)),
+      item(_AcaoMenu.direita, l.moverDireita, ativo: podeIr(_AcaoMenu.direita)),
+      item(_AcaoMenu.outraLinha, l.moverParaLinha(posicao.linha == 1 ? 2 : 1), ativo: podeIr(_AcaoMenu.outraLinha)),
       const PopupMenuDivider(),
     ],
-    item(_AcaoMenu.remover, 'Remover bloco', ativo: temBloco),
+    item(_AcaoMenu.remover, l.removerBloco, ativo: temBloco),
   ];
 }
 

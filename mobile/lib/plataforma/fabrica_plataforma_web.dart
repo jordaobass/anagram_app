@@ -19,8 +19,7 @@ class _FabricaWeb implements FabricaTransporte {
     final navegador = globalContext.getProperty<JSObject>('navigator'.toJS);
     return navegador.has('hid')
         ? const AparelhoDisponivel('WebHID')
-        : const AparelhoIndisponivel(
-            'Este navegador não tem WebHID. Use Chrome ou Edge no computador, ou o modo demonstração.');
+        : const AparelhoIndisponivel(MotivoIndisponivel.navegadorSemWebHid);
   }
 
   @override

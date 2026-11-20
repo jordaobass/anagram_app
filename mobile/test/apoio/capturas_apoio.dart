@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
+import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,8 +59,9 @@ Future<void> assentarImagens(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-Future<void> preparar(WidgetTester tester, Tamanho t, {List<Override> overrides = const []}) =>
-    montarApp(tester, tamanho: Size(t.largura, t.altura), densidade: t.densidade, overrides: overrides);
+Future<void> preparar(WidgetTester tester, Tamanho t,
+        {List<Override> overrides = const [], IdiomaApp idioma = IdiomaApp.portugues}) =>
+    montarApp(tester, tamanho: Size(t.largura, t.altura), densidade: t.densidade, overrides: overrides, idioma: idioma);
 
 Future<ProviderContainer> abrirSlot(WidgetTester tester, String rotulo) async {
   final container = await entrarNaDemonstracao(tester);
