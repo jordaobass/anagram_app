@@ -8,21 +8,56 @@ Um código Flutter só para macOS, Windows, Linux, Android e navegador (Chrome/E
 
 Sem anúncios, sem telemetria e sem chamadas de rede: o app só conversa com a pedaleira pelo USB.
 
-## Download
+## Como instalar
 
-**[Baixar a última versão](https://github.com/jordaobass/anagram_app/releases/latest)**: os zips de cada
-sistema ficam na página da versão.
+O app não tem instalador: é uma pasta que você extrai e abre. Todas as versões ficam em
+**[Releases › última versão](https://github.com/jordaobass/anagram_app/releases/latest)**.
 
-- **Windows 10/11 (64 bits):** extraia o zip e abra `Anagram App.exe`. Não há instalador. Mantenha os
-  arquivos juntos: a `hidapi.dll` da pasta é quem fala com a pedaleira pelo USB. O app ainda não é
-  assinado, então na primeira vez o Windows pode mostrar "O Windows protegeu o computador": clique em
-  **Mais informações › Executar assim mesmo**.
-- **macOS (Apple Silicon):** arraste o app para Aplicativos. Ainda não é notarizado; na primeira vez,
-  libere em **Ajustes do Sistema › Privacidade e Segurança › Abrir Mesmo Assim**.
+### Windows 10 ou 11 (64 bits)
 
-Antes de conectar, feche o **Darkglass Suite** (só um programa por vez fala com a Anagram) e, para o app
-trocar de slot, ligue o **USB MIDI** nos ajustes de MIDI da pedaleira. Sem pedaleira, use
-**Abrir demonstração**.
+1. Abra a [última versão](https://github.com/jordaobass/anagram_app/releases/latest) e, em **Assets**,
+   baixe `anagram-app-windows-<versão>.zip`.
+2. Na pasta Downloads, clique com o botão direito no zip e escolha **Extrair Tudo…**. Não abra o app de
+   dentro do zip: ele precisa dos outros arquivos da pasta.
+3. Mova a pasta **Anagram App** para onde quiser (ex. `Documentos`) e abra **Anagram App.exe**.
+4. Na primeira vez, o Windows pode mostrar **"O Windows protegeu o computador"**, porque o app ainda não
+   é assinado. Clique em **Mais informações › Executar assim mesmo**. Isso só aparece uma vez.
+5. Para achar fácil depois: botão direito em `Anagram App.exe` › **Mostrar mais opções › Enviar para ›
+   Área de trabalho (criar atalho)**, ou **Fixar em Iniciar**.
+
+Mantenha todos os arquivos juntos na pasta: a `hidapi.dll` é quem fala com a pedaleira pelo USB, e as
+`vcruntime`/`msvcp` fazem o app abrir em PCs sem o runtime do Visual C++.
+
+- **Atualizar:** feche o app, apague a pasta antiga e extraia a nova no lugar. Os presets ficam na
+  pedaleira, não no app, então nada se perde.
+- **Desinstalar:** apague a pasta (e o atalho, se criou). O app não grava nada no registro.
+
+### macOS (Apple Silicon, M1 ou mais novo)
+
+1. Baixe o zip do macOS na [última versão](https://github.com/jordaobass/anagram_app/releases/latest)
+   (quando houver build para a versão) e dê dois cliques para extrair.
+2. Arraste **Anagram App** para **Aplicativos**.
+3. Na primeira vez, o macOS bloqueia porque o app ainda não é notarizado: abra **Ajustes do Sistema ›
+   Privacidade e Segurança** e clique em **Abrir Mesmo Assim**. Ou, no Terminal:
+   `xattr -dr com.apple.quarantine "/Applications/Anagram App.app"`.
+
+### Linux
+
+Ainda não há build pronto; compile pelo [README do app](mobile/README.md#desenvolvimento). Instale a
+`libhidapi-hidraw0` e uma regra udev que dê acesso ao USB da Anagram ao seu usuário.
+
+### Primeira conexão com a pedaleira
+
+1. **Feche o Darkglass Suite** (e qualquer aba do navegador conectada à Anagram): só um programa por vez
+   fala com ela.
+2. Na pedaleira, abra os ajustes de **MIDI** e ligue o **USB MIDI**. É por ele que o app troca de slot
+   quando você toca num preset; sem ele, o app só deixa ouvir o preset sem a pedaleira mudar de slot.
+3. Ligue a Anagram no computador pelo cabo USB, abra o app e clique em **Conectar pelo USB**. A barra de
+   cima mostra o firmware quando conecta.
+4. Toque num preset da lista para abrir. Para montar a cadeia, use o **+** de uma casa vazia (abre a
+   biblioteca de efeitos) e arraste os blocos para mudar a ordem. **Salvar** grava no slot.
+
+Sem pedaleira, **Abrir demonstração** simula uma Anagram em memória para você conhecer o app.
 
 > Os builds publicados usam a arte própria do app. A arte da Darkglass não vai junto (veja
 > [Arte de terceiros](#arte-de-terceiros)).
