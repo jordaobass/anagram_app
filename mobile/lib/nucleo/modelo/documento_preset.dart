@@ -58,10 +58,12 @@ class DocumentoPreset {
     return jsonEncode(json);
   }
 
-  String nomeDaCena(int cena) {
+  /// O nome que o preset dá à cena, ou nulo (a tela mostra "Cena N" no
+  /// idioma em uso).
+  String? nomeDaCena(int cena) {
     final nomes = mapaOuVazio(_preset['sceneNames']);
     final nome = nomes['$cena'];
-    return nome is String && nome.trim().isNotEmpty ? nome : 'Cena $cena';
+    return nome is String && nome.trim().isNotEmpty ? nome : null;
   }
 
   /// Blocos de uma linha (1 ou 2), em ordem de casa.
@@ -204,11 +206,25 @@ String novoUuidPreset([Random? aleatorio]) {
 /// Por que [nome] não serve para um preset, ou `null` se serve. O nome viaja
 /// dentro do quadro HID: com um marcador de quadro nele, a remontagem da
 /// resposta corta a mensagem no lugar errado e a leitura do preset falha.
-String? motivoNomeInvalido(String nome) {
+NomeInvalido? motivoNomeInvalido(String nome) {
   final limpo = nome.trim();
-  if (limpo.isEmpty) return 'O nome não pode ficar vazio.';
+  if (limpo.isEmpty) return const NomeVazio();
   for (final marcador in const [ProtocoloAnagram.marcadorInicio, ProtocoloAnagram.marcadorFim]) {
-    if (limpo.contains(marcador)) return 'O nome não pode conter "$marcador".';
+    if (limpo.contains(marcador)) return NomeComMarcador(marcador);
   }
   return null;
+}
+
+/// Por que um nome não serve; a frase fica na tela, no idioma em uso.
+sealed class NomeInvalido {
+  const NomeInvalido();
+}
+
+final class NomeVazio extends NomeInvalido {
+  const NomeVazio();
+}
+
+final class NomeComMarcador extends NomeInvalido {
+  const NomeComMarcador(this.marcador);
+  final String marcador;
 }

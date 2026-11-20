@@ -7,6 +7,9 @@ multiplataforma.
 
 > **App não oficial, sem vínculo com a Darkglass Electronics.** Anagram é marca do fabricante.
 
+Interface em **português, inglês e espanhol**: segue o idioma do sistema e pode ser trocada na tela
+Sobre (ícone ⓘ). Os textos ficam em `lib/l10n/app_*.arb`; o português é o modelo.
+
 Sem anúncios, sem compras no app, sem telemetria e sem coleta de dados: o app só conversa com a
 pedaleira pelo USB e não faz nenhuma chamada de rede.
 
@@ -93,6 +96,14 @@ ferramentas/verificar_release.sh && flutter build <plataforma> --release
 ```
 
 O script falha (código 1) se houver qualquer arquivo além do `LEIAME.txt` nessa pasta.
+
+## Traduções
+
+Os textos da interface ficam em `lib/l10n/` (`app_pt.arb` é o modelo; `app_en.arb` e `app_es.arb`, as
+traduções) e são gerados pelo `flutter gen-l10n`, que o `flutter pub get` já roda. Para mudar ou criar
+uma frase, edite as três ARBs: o teste `test/idioma/idioma_test.dart` falha se faltar a chave em
+algum idioma. Núcleo e aplicação não guardam frases de tela, só o que aconteceu, tipado
+(`lib/aplicacao/avisos.dart`); a frase sai em `lib/apresentacao/textos.dart`.
 
 ## Estrutura
 

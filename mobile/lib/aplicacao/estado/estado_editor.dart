@@ -1,4 +1,5 @@
 // Fotografia do editor: o que está aberto, o que mudou e o que está soando.
+import '../avisos.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../../nucleo/modelo/slot_preset.dart';
@@ -39,7 +40,7 @@ class EstadoEditor {
 
   /// Ida e volta do último envio ao vivo.
   final Duration? latencia;
-  final String? aviso;
+  final Aviso? aviso;
   final Map<String, dynamic>? blocoCopiado;
 
   /// "Salvar como" em curso: tocar num slot da lista escolhe o destino.
@@ -86,7 +87,7 @@ class EstadoEditor {
         carregando: carregando ?? this.carregando,
         salvando: salvando ?? this.salvando,
         latencia: identical(latencia, _manter) ? this.latencia : latencia as Duration?,
-        aviso: identical(aviso, _manter) ? this.aviso : aviso as String?,
+        aviso: identical(aviso, _manter) ? this.aviso : aviso as Aviso?,
         blocoCopiado:
             identical(blocoCopiado, _manter) ? this.blocoCopiado : blocoCopiado as Map<String, dynamic>?,
         escolhendoDestino: escolhendoDestino ?? this.escolhendoDestino,

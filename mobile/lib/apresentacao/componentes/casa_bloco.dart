@@ -10,6 +10,7 @@ import '../../aplicacao/provedores.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'arte_bloco.dart';
+import '../../l10n/app_localizations.dart';
 
 class CasaBloco extends ConsumerWidget {
   const CasaBloco({
@@ -39,7 +40,7 @@ class CasaBloco extends ConsumerWidget {
     return Semantics(
       button: true,
       selected: selecionado,
-      label: _rotulo(ref, atual),
+      label: _rotulo(AppLocalizations.of(context), ref, atual),
       child: GestureDetector(
         onTap: aoTocar,
         onDoubleTap: atual == null ? null : aoTocarDuas,
@@ -57,9 +58,11 @@ class CasaBloco extends ConsumerWidget {
   }
 
   /// O que o leitor de tela diz: a casa vazia pela posição, a ocupada pelo bloco.
-  String _rotulo(WidgetRef ref, BlocoPreset? atual) => atual == null
-      ? 'Adicionar efeito na casa ${posicao.casa}, linha ${posicao.linha}'
-      : '${ref.watch(definicaoBlocoProvider(atual.uri)).nome}, ${ligado ? 'ligado' : 'desligado'}';
+  String _rotulo(AppLocalizations l, WidgetRef ref, BlocoPreset? atual) {
+    if (atual == null) return l.adicionarEfeitoNaCasa(posicao.casa, posicao.linha);
+    final nome = ref.watch(definicaoBlocoProvider(atual.uri)).nome;
+    return ligado ? l.blocoLigado(nome) : l.blocoDesligado(nome);
+  }
 
   BoxDecoration _moldura() => BoxDecoration(
         color: selecionado ? Cores.painelElevado : Colors.transparent,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/provedores.dart';
+import '../../l10n/app_localizations.dart';
 
 class SeletorPausa extends ConsumerWidget {
   const SeletorPausa({super.key});
@@ -17,7 +18,7 @@ class SeletorPausa extends ConsumerWidget {
     return SegmentedButton<int?>(
       key: const ValueKey('seletor-pausa'),
       segments: [
-        for (final ms in opcoes) ButtonSegment(value: ms, label: Text(ms == null ? 'Auto' : '$ms ms')),
+        for (final ms in opcoes) ButtonSegment(value: ms, label: Text(ms == null ? AppLocalizations.of(context).pausaAuto : '$ms ms')),
       ],
       selected: {atual},
       onSelectionChanged: (escolha) => ref

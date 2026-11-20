@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../tema/tokens.dart';
+import '../../l10n/app_localizations.dart';
 
 class SeletorCenas extends ConsumerWidget {
   const SeletorCenas({super.key});
@@ -21,7 +22,7 @@ class SeletorCenas extends ConsumerWidget {
         Expanded(
           child: _BotaoCena(
             numero: cena,
-            nome: documento.nomeDaCena(cena),
+            nome: documento.nomeDaCena(cena) ?? AppLocalizations.of(context).cenaPadrao(cena),
             ativa: documento.cenaAtiva == cena,
             aoTocar: () => controlador.escolherCena(cena),
           ),
@@ -46,7 +47,7 @@ class _BotaoCena extends StatelessWidget {
     return Semantics(
       selected: ativa,
       button: true,
-      label: 'Cena $numero, $nome',
+      label: AppLocalizations.of(context).cenaSemantica(numero, nome),
       child: Material(
         color: ativa ? Cores.tally : Cores.painelElevado,
         shape: RoundedRectangleBorder(

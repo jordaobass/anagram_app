@@ -2,10 +2,12 @@ import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
 import 'package:anagram_app/aplicacao/estado/estado_conexao.dart';
 import 'package:anagram_app/aplicacao/provedores.dart';
 import 'package:anagram_app/nucleo/protocolo/api_anagram.dart';
+import 'package:anagram_app/apresentacao/textos.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/fixtures.dart';
+import '../apoio/textos_pt.dart';
 
 ProviderContainer pedaleiraMuda() => ProviderContainer(overrides: [
       presetsDemonstracaoProvider.overrideWith((ref) async => lerPresetsDemonstracao()),
@@ -20,7 +22,7 @@ void main() {
     await container.read(conexaoProvider.notifier).conectarDemonstracao();
 
     expect(relogio.elapsed, lessThan(const Duration(seconds: 5)));
-    expect((container.read(conexaoProvider) as FalhaDeConexao).mensagem, contains('não respondeu'));
+    expect(textosPt.aviso((container.read(conexaoProvider) as FalhaDeConexao).aviso), contains('não respondeu'));
   });
 
   test('should_stay_disconnected_when_a_pending_handshake_is_cancelled', () async {

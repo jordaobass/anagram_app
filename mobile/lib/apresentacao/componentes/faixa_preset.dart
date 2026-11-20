@@ -8,6 +8,7 @@ import '../../aplicacao/estado/estado_editor.dart';
 import '../tema/tokens.dart';
 import 'acoes_preset.dart';
 import 'dialogo_renomear.dart';
+import '../../l10n/app_localizations.dart';
 
 class FaixaPreset extends ConsumerWidget {
   const FaixaPreset({super.key, required this.compacta, this.aoTocarSlot});
@@ -47,9 +48,11 @@ class FaixaPreset extends ConsumerWidget {
   }
 
   /// Slot em estêncil; no layout de uma coluna, abre a lista.
-  Widget _slot(BuildContext context, EstadoEditor estado) => Semantics(
+  Widget _slot(BuildContext context, EstadoEditor estado) {
+    final l = AppLocalizations.of(context);
+    return Semantics(
         button: aoTocarSlot != null,
-        label: 'Slot ${estado.slot?.rotulo ?? 'novo'}${aoTocarSlot != null ? ', abrir lista de presets' : ''}',
+        label: '${l.slotSemantica(estado.slot?.rotulo ?? l.slotNovo)}${aoTocarSlot != null ? l.abrirListaSemantica : ''}',
         child: InkWell(
           key: const ValueKey('abrir-lista'),
           onTap: aoTocarSlot,
@@ -59,11 +62,12 @@ class FaixaPreset extends ConsumerWidget {
           ),
         ),
       );
+  }
 
   /// A fita com o nome: tocar renomeia.
   Widget _fitaTocavel(BuildContext context, WidgetRef ref, EstadoEditor estado) => Semantics(
         button: true,
-        label: 'Renomear preset ${estado.atual!.nome}',
+        label: AppLocalizations.of(context).renomearPresetSemantica(estado.atual!.nome),
         child: InkWell(
           key: const ValueKey('fita-nome'),
           onTap: () => renomearPreset(context, ref),
@@ -81,10 +85,10 @@ class _Avisos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.tally);
+    final l = AppLocalizations.of(context);
     final avisos = [
-      if (!estado.aoVivo) 'AO VIVO DESLIGADO — as edições ficam só no app, a pedaleira não muda.',
-      if (estado.slot != null && !estado.slotNaPedaleira)
-        'AUDIÇÃO — a pedaleira continua no slot dela (sem USB MIDI).',
+      if (!estado.aoVivo) l.avisoAoVivoDesligado,
+      if (estado.slot != null && !estado.slotNaPedaleira) l.avisoAudicao,
     ];
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       for (final aviso in avisos)
@@ -118,7 +122,7 @@ class _Fita extends StatelessWidget {
             key: const ValueKey('selo-nao-salvo'),
             padding: const EdgeInsets.symmetric(horizontal: Espacos.s, vertical: Espacos.xxs),
             color: Cores.fitaAlerta,
-            child: Text('NÃO SALVO', style: tema.labelMedium?.copyWith(color: Cores.sobreAlerta)),
+            child: Text(AppLocalizations.of(context).naoSalvo, style: tema.labelMedium?.copyWith(color: Cores.sobreAlerta)),
           ),
         ],
       ]),

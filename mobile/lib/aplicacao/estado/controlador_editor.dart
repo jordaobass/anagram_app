@@ -9,6 +9,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../avisos.dart';
 import '../../dados/repositorio_pedaleira.dart';
 import '../../nucleo/midi/saida_midi.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
@@ -79,7 +80,7 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
         await _mostrar(slot, valor, abertura);
       case Falha(:final erro):
         // o slot mudou mas não foi lido: o preset anterior não pode ficar sob ele
-        state = state.copiar(original: null, atual: null, carregando: false, aviso: erro.mensagem);
+        state = state.copiar(original: null, atual: null, carregando: false, aviso: AvisoErro(erro));
     }
   }
 
@@ -96,14 +97,14 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
     );
     if (preset == null) return;
     if (preset.versaoMaisNova) {
-      state = state.copiar(aviso: 'Preset de formato mais novo que o deste app: campos desconhecidos são preservados.');
+      state = state.copiar(aviso: const AvisoFormatoMaisNovo());
     }
     await enviarAoVivo(preset);
   }
 
   void _recusarPresetTrocado(SlotPreset slot) {
     state = state.copiar(original: null, atual: null, carregando: false,
-        aviso: 'A pedaleira devolveu outro preset para ${slot.rotulo} (id diferente da lista). A lista foi relida; abra de novo.');
+        aviso: AvisoPresetTrocado(slot.rotulo));
     unawaited(ref.read(bibliotecaProvider.notifier).recarregar());
   }
 

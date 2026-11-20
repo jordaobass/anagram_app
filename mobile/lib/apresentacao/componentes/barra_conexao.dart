@@ -9,6 +9,7 @@ import '../../aplicacao/estado/estado_conexao.dart';
 import '../rotas.dart';
 import '../tema/tokens.dart';
 import 'rotulo_versao.dart';
+import '../../l10n/app_localizations.dart';
 
 class BarraConexao extends ConsumerWidget {
   const BarraConexao({super.key, required this.compacta});
@@ -18,7 +19,8 @@ class BarraConexao extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final conexao = ref.watch(conexaoProvider);
-    final (cor, texto) = _resumo(conexao);
+    final l = AppLocalizations.of(context);
+    final (cor, texto) = _resumo(l, conexao);
     return Container(
       constraints: const BoxConstraints(minHeight: Medidas.barraConexaoAltura),
       padding: const EdgeInsets.symmetric(horizontal: Espacos.l),
@@ -43,13 +45,13 @@ class BarraConexao extends ConsumerWidget {
           if (conexao is Conectada) _AoVivo(compacta: compacta),
           if (conexao is Conectada)
             IconButton(
-              tooltip: 'Desconectar',
+              tooltip: l.desconectar,
               icon: const Icon(Icons.link_off),
               onPressed: ref.read(conexaoProvider.notifier).desconectar,
             ),
           if (!compacta) const Flexible(child: RotuloVersao()),
           IconButton(
-            tooltip: 'Créditos',
+            tooltip: l.creditos,
             icon: const Icon(Icons.info_outline),
             onPressed: () => const RotaCreditos().push<void>(context),
           ),
@@ -58,12 +60,12 @@ class BarraConexao extends ConsumerWidget {
     );
   }
 
-  static (Color, String) _resumo(EstadoConexao estado) => switch (estado) {
-    SemConexao() => (Cores.ledDesligado, 'Sem conexão'),
-    Conectando(:final meio) => (Cores.tally, 'Conectando ($meio)…'),
-    Conectada(demonstracao: true) => (Cores.ledDemonstracao, 'Demonstração · sem pedaleira'),
-    Conectada(:final meio, :final firmware) => (Cores.ledLigado, 'Anagram · $meio · $firmware'),
-    FalhaDeConexao() => (Cores.erro, 'Falha na conexão'),
+  static (Color, String) _resumo(AppLocalizations l, EstadoConexao estado) => switch (estado) {
+    SemConexao() => (Cores.ledDesligado, l.estadoSemConexao),
+    Conectando(:final meio) => (Cores.tally, l.estadoConectando(meio)),
+    Conectada(demonstracao: true) => (Cores.ledDemonstracao, l.estadoDemonstracao),
+    Conectada(:final meio, :final firmware) => (Cores.ledLigado, l.estadoConectada(meio, firmware)),
+    FalhaDeConexao() => (Cores.erro, l.estadoFalha),
   };
 }
 
@@ -78,7 +80,7 @@ class _Estado extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Semantics(
     liveRegion: true,
-    label: 'Conexão: $texto',
+    label: AppLocalizations.of(context).conexaoSemantica(texto),
     child: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -107,18 +109,19 @@ class _AoVivo extends ConsumerWidget {
     final aoVivo = ref.watch(editorProvider.select((e) => e.aoVivo));
     final latencia = ref.watch(editorProvider.select((e) => e.latencia));
     final tema = Theme.of(context).textTheme;
+    final l = AppLocalizations.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         if (latencia != null && aoVivo && !compacta)
-          Text('ida e volta ${latencia.inMilliseconds} ms', style: tema.labelMedium),
+          Text(l.idaEVolta(latencia.inMilliseconds), style: tema.labelMedium),
         const SizedBox(width: Espacos.s),
         // desligado precisa saltar aos olhos: a pedaleira não ouve as edições
         Container(
           key: const ValueKey('rotulo-ao-vivo'),
           padding: const EdgeInsets.symmetric(horizontal: Espacos.s, vertical: Espacos.xxs),
           color: aoVivo ? Colors.transparent : Cores.fitaAlerta,
-          child: Text(aoVivo ? 'AO VIVO' : 'AO VIVO DESLIGADO',
+          child: Text(aoVivo ? l.aoVivo : l.aoVivoDesligado,
               style: tema.labelLarge?.copyWith(color: aoVivo ? Cores.tally : Cores.sobreAlerta)),
         ),
         Switch(

@@ -8,9 +8,9 @@ import 'definicao_bloco.dart';
 import 'familia_bloco.dart';
 
 class GrupoBiblioteca {
-  const GrupoBiblioteca(this.categoria, this.blocos);
+  const GrupoBiblioteca(this.familia, this.blocos);
 
-  final String categoria;
+  final FamiliaBloco familia;
   final List<DefinicaoBloco> blocos;
 }
 
@@ -72,7 +72,7 @@ List<GrupoBiblioteca> blocosDaBiblioteca(CatalogoBlocos catalogo, {String busca 
   }
   return [
     for (final f in FamiliaBloco.values)
-      if (porFamilia[f] case final blocos?) GrupoBiblioteca(f.rotulo, blocos..sort((a, b) => a.nome.compareTo(b.nome))),
+      if (porFamilia[f] case final blocos?) GrupoBiblioteca(f, blocos..sort((a, b) => a.nome.compareTo(b.nome))),
   ];
 }
 

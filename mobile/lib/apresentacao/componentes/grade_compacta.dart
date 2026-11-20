@@ -8,6 +8,7 @@ import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../tema/tokens.dart';
 import 'grade_blocos.dart';
+import '../../l10n/app_localizations.dart';
 
 class GradeCompacta extends ConsumerWidget {
   const GradeCompacta({super.key});
@@ -39,7 +40,8 @@ class GradeCompacta extends ConsumerWidget {
     return [
       Padding(
         padding: const EdgeInsets.only(top: Espacos.xs, bottom: Espacos.xs),
-        child: Text(linha == 1 ? 'LINHA 1' : 'LINHA 2 · PARALELA', style: tema.labelSmall),
+        child: Text(linha == 1 ? AppLocalizations.of(context).linha1 : AppLocalizations.of(context).linha2Paralela,
+            style: tema.labelSmall),
       ),
       Wrap(spacing: Espacos.s, runSpacing: Espacos.s, children: [
         for (final casa in [...casas, ?livre])

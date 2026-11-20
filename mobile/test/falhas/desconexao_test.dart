@@ -5,9 +5,11 @@ import 'package:anagram_app/aplicacao/estado/estado_conexao.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 import 'package:anagram_app/nucleo/protocolo/api_anagram.dart';
 import 'package:anagram_app/nucleo/protocolo/erros_anagram.dart';
+import 'package:anagram_app/apresentacao/textos.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/conexao_demo.dart';
+import '../apoio/textos_pt.dart';
 
 void main() {
   test('should_report_disconnection_and_keep_unsaved_edit_when_cable_drops_mid_save', () async {
@@ -26,7 +28,7 @@ void main() {
     final estado = container.read(editorProvider);
     expect(estado.naoSalvo, isTrue);
     expect(estado.blocoSelecionado!.valorBase('Threshold'), -12);
-    expect((container.read(conexaoProvider) as SemConexao).aviso, contains('desconectada'),
+    expect(textosPt.aviso((container.read(conexaoProvider) as SemConexao).aviso!), contains('desconectada'),
         reason: 'o aviso aparece uma vez, na tela de conectar');
   });
 }

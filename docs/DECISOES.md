@@ -99,6 +99,14 @@ ainda**: o que depende do aparelho está marcado como hipótese.
 | U11 | **Hipótese a conferir na bancada**: "Tornar ativa" grava `edit_settings {settings: {"selected-preset-area": id}, reloadLvgl: true}`. O Suite usa `edit_settings` para outras chaves e lê esta por `export_settings`, mas não vimos ele gravá-la. Conferir com `export_anagram_logs` depois de trocar de área no Suite | aberta | 2026-11-20 | `ApiAnagram.tornarAreaAtiva` |
 | U12 | **Área Factory fora do seletor por ora**: no Suite os presets de fábrica vêm embutidos no próprio app, não lidos da pedaleira, e não há id de área `factory` confirmado. Descobrir na bancada (log da pedaleira ao abrir a Factory no aparelho) antes de mostrar | aberta | 2026-11-20 | — |
 
+## Idiomas (pedido do usuário)
+
+| # | Decisão | Estado | Data | Onde |
+|---|---|---|---|---|
+| I1 | **Português, inglês e espanhol**, pelo mecanismo oficial do Flutter (`flutter_localizations` + gen-l10n): `lib/l10n/app_pt.arb` é o modelo, `app_en.arb` e `app_es.arb` as traduções. Padrão = idioma do sistema (pt*, en*, es*; qualquer outro cai no inglês); a escolha fica na tela Sobre (Do sistema · Português · English · Español), muda na hora e é guardada (`shared_preferences`, lida no `main` antes da primeira tela). Nomes de blocos e efeitos da Darkglass, de presets, cenas e áreas não se traduzem (são dados da pedaleira) | decidida | 2026-11-20 | `IdiomaApp`, `ControladorIdioma`, `SeletorIdioma`, `lib/l10n` |
+| I2 | **Núcleo e aplicação sem frase de tela**: o estado guarda o que aconteceu tipado (`Aviso`, `MotivoIndisponivel`, `MotivoImportacao`, `NomeInvalido`, `FamiliaBloco`) e a apresentação escolhe as palavras (`lib/apresentacao/textos.dart`); os logs seguem em português. Erros do protocolo trazem o detalhe técnico em português: o português continua mostrando esse detalhe; inglês e espanhol mostram uma frase geral do tipo de erro (o detalhe vai ao log) | decidida | 2026-11-20 | `avisos.dart`, `textos.dart` |
+| I3 | **Valores com o separador do idioma**: vírgula decimal em português e espanhol, ponto em inglês ("−52.0 dB"); "Ligado/Desligado" dos parâmetros de liga-desliga também traduzidos. O `FormatadorValor` recebe separador e palavras da tela, com o português como padrão | decidida | 2026-11-20 | `FormatadorValor`, `TextosDoApp.valorDe` |
+
 ## Rodada 3 (revisão)
 
 | # | Decisão | Estado | Data | Onde |

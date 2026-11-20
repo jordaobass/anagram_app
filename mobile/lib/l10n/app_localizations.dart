@@ -1,0 +1,1116 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+import 'app_localizations_pt.dart';
+
+// ignore_for_file: type=lint
+
+/// Callers can lookup localized strings with an instance of AppLocalizations
+/// returned by `AppLocalizations.of(context)`.
+///
+/// Applications need to include `AppLocalizations.delegate()` in their app's
+/// `localizationDelegates` list, and the locales they support in the app's
+/// `supportedLocales` list. For example:
+///
+/// ```dart
+/// import 'l10n/app_localizations.dart';
+///
+/// return MaterialApp(
+///   localizationsDelegates: AppLocalizations.localizationsDelegates,
+///   supportedLocales: AppLocalizations.supportedLocales,
+///   home: MyApplicationHome(),
+/// );
+/// ```
+///
+/// ## Update pubspec.yaml
+///
+/// Please make sure to update your pubspec.yaml to include the following
+/// packages:
+///
+/// ```yaml
+/// dependencies:
+///   # Internationalization support.
+///   flutter_localizations:
+///     sdk: flutter
+///   intl: any # Use the pinned version from flutter_localizations
+///
+///   # Rest of dependencies
+/// ```
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the AppLocalizations.supportedLocales
+/// property.
+abstract class AppLocalizations {
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+
+  final String localeName;
+
+  static AppLocalizations of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+  }
+
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
+
+  /// A list of this localizations delegate along with the default localizations
+  /// delegates.
+  ///
+  /// Returns a list of localizations delegates containing this delegate along with
+  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
+  /// and GlobalWidgetsLocalizations.delegate.
+  ///
+  /// Additional delegates can be added by appending to this list in
+  /// MaterialApp. This list does not have to be used at all if a custom list
+  /// of delegates is preferred or required.
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
+
+  /// A list of this localizations delegate's supported locales.
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('es'),
+    Locale('pt'),
+  ];
+
+  /// No description provided for @desconectar.
+  ///
+  /// In pt, this message translates to:
+  /// **'Desconectar'**
+  String get desconectar;
+
+  /// No description provided for @creditos.
+  ///
+  /// In pt, this message translates to:
+  /// **'Créditos'**
+  String get creditos;
+
+  /// No description provided for @estadoSemConexao.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sem conexão'**
+  String get estadoSemConexao;
+
+  /// No description provided for @estadoConectando.
+  ///
+  /// In pt, this message translates to:
+  /// **'Conectando ({meio})…'**
+  String estadoConectando(String meio);
+
+  /// No description provided for @estadoDemonstracao.
+  ///
+  /// In pt, this message translates to:
+  /// **'Demonstração · sem pedaleira'**
+  String get estadoDemonstracao;
+
+  /// No description provided for @estadoConectada.
+  ///
+  /// In pt, this message translates to:
+  /// **'Anagram · {meio} · {firmware}'**
+  String estadoConectada(String meio, String firmware);
+
+  /// No description provided for @estadoFalha.
+  ///
+  /// In pt, this message translates to:
+  /// **'Falha na conexão'**
+  String get estadoFalha;
+
+  /// No description provided for @conexaoSemantica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Conexão: {texto}'**
+  String conexaoSemantica(String texto);
+
+  /// No description provided for @idaEVolta.
+  ///
+  /// In pt, this message translates to:
+  /// **'ida e volta {ms} ms'**
+  String idaEVolta(int ms);
+
+  /// No description provided for @aoVivo.
+  ///
+  /// In pt, this message translates to:
+  /// **'AO VIVO'**
+  String get aoVivo;
+
+  /// No description provided for @aoVivoDesligado.
+  ///
+  /// In pt, this message translates to:
+  /// **'AO VIVO DESLIGADO'**
+  String get aoVivoDesligado;
+
+  /// No description provided for @conexaoPermissaoNegada.
+  ///
+  /// In pt, this message translates to:
+  /// **'O sistema negou a permissão de acesso ao USB da Anagram. No Android, toque em Conectar de novo e aceite o pedido; no macOS, confira os ajustes de Privacidade e Segurança.'**
+  String get conexaoPermissaoNegada;
+
+  /// No description provided for @conexaoOcupada.
+  ///
+  /// In pt, this message translates to:
+  /// **'A Anagram está plugada, mas outro programa a segura. Feche o Darkglass Suite e qualquer aba do navegador conectada à pedaleira.'**
+  String get conexaoOcupada;
+
+  /// No description provided for @conexaoSemAnagram.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nenhuma Anagram encontrada no USB. Confira o cabo e se ela está ligada.'**
+  String get conexaoSemAnagram;
+
+  /// No description provided for @conexaoSemResposta.
+  ///
+  /// In pt, this message translates to:
+  /// **'A Anagram não respondeu. Desligue e ligue o cabo e tente de novo.'**
+  String get conexaoSemResposta;
+
+  /// No description provided for @conexaoRespostaInvalida.
+  ///
+  /// In pt, this message translates to:
+  /// **'Resposta inesperada da pedaleira: {detalhe}'**
+  String conexaoRespostaInvalida(String detalhe);
+
+  /// No description provided for @erroOcupada.
+  ///
+  /// In pt, this message translates to:
+  /// **'{detalhe}'**
+  String erroOcupada(String detalhe);
+
+  /// No description provided for @erroDesconectado.
+  ///
+  /// In pt, this message translates to:
+  /// **'{detalhe}'**
+  String erroDesconectado(String detalhe);
+
+  /// No description provided for @erroSemResposta.
+  ///
+  /// In pt, this message translates to:
+  /// **'{detalhe}'**
+  String erroSemResposta(String detalhe);
+
+  /// No description provided for @erroRespostaInvalida.
+  ///
+  /// In pt, this message translates to:
+  /// **'{detalhe}'**
+  String erroRespostaInvalida(String detalhe);
+
+  /// No description provided for @erroOperacaoEmCurso.
+  ///
+  /// In pt, this message translates to:
+  /// **'{detalhe}'**
+  String erroOperacaoEmCurso(String detalhe);
+
+  /// No description provided for @erroSemSuporte.
+  ///
+  /// In pt, this message translates to:
+  /// **'{detalhe}'**
+  String erroSemSuporte(String detalhe);
+
+  /// No description provided for @avisoDemonstracaoFalhou.
+  ///
+  /// In pt, this message translates to:
+  /// **'Não foi possível abrir a demonstração.'**
+  String get avisoDemonstracaoFalhou;
+
+  /// No description provided for @avisoFalhaInesperada.
+  ///
+  /// In pt, this message translates to:
+  /// **'Não foi possível abrir {meio}. Tente de novo; o detalhe ficou no log.'**
+  String avisoFalhaInesperada(String meio);
+
+  /// No description provided for @avisoPedaleiraDesconectada.
+  ///
+  /// In pt, this message translates to:
+  /// **'A pedaleira foi desconectada. Edições não salvas continuam no app.'**
+  String get avisoPedaleiraDesconectada;
+
+  /// No description provided for @avisoFormatoMaisNovo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Preset de formato mais novo que o deste app: campos desconhecidos são preservados.'**
+  String get avisoFormatoMaisNovo;
+
+  /// No description provided for @avisoPresetTrocado.
+  ///
+  /// In pt, this message translates to:
+  /// **'A pedaleira devolveu outro preset para {slot} (id diferente da lista). A lista foi relida; abra de novo.'**
+  String avisoPresetTrocado(String slot);
+
+  /// No description provided for @avisoAreaNaoTrocou.
+  ///
+  /// In pt, this message translates to:
+  /// **'A pedaleira não trocou de área: {detalhe}'**
+  String avisoAreaNaoTrocou(String detalhe);
+
+  /// No description provided for @naoSalvou.
+  ///
+  /// In pt, this message translates to:
+  /// **'Não salvou: {motivo}'**
+  String naoSalvou(String motivo);
+
+  /// No description provided for @salvarDesconectada.
+  ///
+  /// In pt, this message translates to:
+  /// **'a pedaleira está desconectada. Conecte e tente de novo.'**
+  String get salvarDesconectada;
+
+  /// No description provided for @salvarSemResposta.
+  ///
+  /// In pt, this message translates to:
+  /// **'a pedaleira não respondeu a tempo. O slot pode não ter sido gravado; confira antes de tentar de novo.'**
+  String get salvarSemResposta;
+
+  /// No description provided for @salvarRespostaInvalida.
+  ///
+  /// In pt, this message translates to:
+  /// **'a pedaleira recusou ou devolveu uma resposta inesperada.'**
+  String get salvarRespostaInvalida;
+
+  /// No description provided for @salvarOcupada.
+  ///
+  /// In pt, this message translates to:
+  /// **'outro programa está segurando a pedaleira.'**
+  String get salvarOcupada;
+
+  /// No description provided for @indisponivelIos.
+  ///
+  /// In pt, this message translates to:
+  /// **'iPhone e iPad não deixam apps comuns abrirem a interface USB de controle da Anagram: isso exige um driver DriverKit com permissão especial da Apple, que este app ainda não tem. Use o modo demonstração aqui, ou edite pelo Mac, PC, Android ou Chrome.'**
+  String get indisponivelIos;
+
+  /// No description provided for @indisponivelNavegador.
+  ///
+  /// In pt, this message translates to:
+  /// **'Este navegador não tem WebHID. Use Chrome ou Edge no computador, ou o modo demonstração.'**
+  String get indisponivelNavegador;
+
+  /// No description provided for @indisponivelSemUsb.
+  ///
+  /// In pt, this message translates to:
+  /// **'Esta plataforma não tem acesso USB à pedaleira.'**
+  String get indisponivelSemUsb;
+
+  /// No description provided for @importacaoIlegivel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Não foi possível ler o arquivo.'**
+  String get importacaoIlegivel;
+
+  /// No description provided for @importacaoNaoEhPreset.
+  ///
+  /// In pt, this message translates to:
+  /// **'Arquivo não é um preset da Anagram: {detalhe}'**
+  String importacaoNaoEhPreset(String detalhe);
+
+  /// No description provided for @exportacaoFalhou.
+  ///
+  /// In pt, this message translates to:
+  /// **'Não foi possível gravar o arquivo.'**
+  String get exportacaoFalhou;
+
+  /// No description provided for @nomeVazio.
+  ///
+  /// In pt, this message translates to:
+  /// **'O nome não pode ficar vazio.'**
+  String get nomeVazio;
+
+  /// No description provided for @nomeComMarcador.
+  ///
+  /// In pt, this message translates to:
+  /// **'O nome não pode conter \"{marcador}\".'**
+  String nomeComMarcador(String marcador);
+
+  /// No description provided for @familiaDrive.
+  ///
+  /// In pt, this message translates to:
+  /// **'Drive'**
+  String get familiaDrive;
+
+  /// No description provided for @familiaDinamica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dinâmica'**
+  String get familiaDinamica;
+
+  /// No description provided for @familiaEq.
+  ///
+  /// In pt, this message translates to:
+  /// **'EQ'**
+  String get familiaEq;
+
+  /// No description provided for @familiaFiltro.
+  ///
+  /// In pt, this message translates to:
+  /// **'Filtro'**
+  String get familiaFiltro;
+
+  /// No description provided for @familiaModulacao.
+  ///
+  /// In pt, this message translates to:
+  /// **'Modulação'**
+  String get familiaModulacao;
+
+  /// No description provided for @familiaDelay.
+  ///
+  /// In pt, this message translates to:
+  /// **'Delay'**
+  String get familiaDelay;
+
+  /// No description provided for @familiaReverb.
+  ///
+  /// In pt, this message translates to:
+  /// **'Reverb'**
+  String get familiaReverb;
+
+  /// No description provided for @familiaAmp.
+  ///
+  /// In pt, this message translates to:
+  /// **'Amp'**
+  String get familiaAmp;
+
+  /// No description provided for @familiaGabinete.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gabinete'**
+  String get familiaGabinete;
+
+  /// No description provided for @familiaUtilitario.
+  ///
+  /// In pt, this message translates to:
+  /// **'Utilitário'**
+  String get familiaUtilitario;
+
+  /// No description provided for @areaSemNome.
+  ///
+  /// In pt, this message translates to:
+  /// **'Área {numero}'**
+  String areaSemNome(int numero);
+
+  /// No description provided for @conecteTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Conecte a Anagram pelo USB'**
+  String get conecteTitulo;
+
+  /// No description provided for @conecteFecheSuite.
+  ///
+  /// In pt, this message translates to:
+  /// **'Feche o Darkglass Suite antes: só um programa por vez controla a pedaleira.'**
+  String get conecteFecheSuite;
+
+  /// No description provided for @abrirDemonstracao.
+  ///
+  /// In pt, this message translates to:
+  /// **'ABRIR DEMONSTRAÇÃO'**
+  String get abrirDemonstracao;
+
+  /// No description provided for @conectarPeloUsb.
+  ///
+  /// In pt, this message translates to:
+  /// **'CONECTAR PELO USB'**
+  String get conectarPeloUsb;
+
+  /// No description provided for @viaMeio.
+  ///
+  /// In pt, this message translates to:
+  /// **'Via {meio}.'**
+  String viaMeio(String meio);
+
+  /// No description provided for @cancelar.
+  ///
+  /// In pt, this message translates to:
+  /// **'CANCELAR'**
+  String get cancelar;
+
+  /// No description provided for @versaoApp.
+  ///
+  /// In pt, this message translates to:
+  /// **'v{versao}'**
+  String versaoApp(String versao);
+
+  /// No description provided for @versaoAppComArte.
+  ///
+  /// In pt, this message translates to:
+  /// **'v{versao} · arte da pedaleira'**
+  String versaoAppComArte(String versao);
+
+  /// No description provided for @fecharAviso.
+  ///
+  /// In pt, this message translates to:
+  /// **'Fechar aviso'**
+  String get fecharAviso;
+
+  /// No description provided for @largarEdicoesTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Largar edições?'**
+  String get largarEdicoesTitulo;
+
+  /// No description provided for @largarEdicoesTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'\"{nome}\" tem mudanças que não foram salvas no slot.'**
+  String largarEdicoesTexto(String nome);
+
+  /// No description provided for @continuarEditando.
+  ///
+  /// In pt, this message translates to:
+  /// **'CONTINUAR EDITANDO'**
+  String get continuarEditando;
+
+  /// No description provided for @largar.
+  ///
+  /// In pt, this message translates to:
+  /// **'LARGAR'**
+  String get largar;
+
+  /// No description provided for @origem.
+  ///
+  /// In pt, this message translates to:
+  /// **'ORIGEM'**
+  String get origem;
+
+  /// No description provided for @gravarAqui.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gravar aqui'**
+  String get gravarAqui;
+
+  /// No description provided for @pedaleiraNesteSlot.
+  ///
+  /// In pt, this message translates to:
+  /// **'A pedaleira está neste slot'**
+  String get pedaleiraNesteSlot;
+
+  /// No description provided for @slotVazio.
+  ///
+  /// In pt, this message translates to:
+  /// **'vazio'**
+  String get slotVazio;
+
+  /// No description provided for @area.
+  ///
+  /// In pt, this message translates to:
+  /// **'ÁREA'**
+  String get area;
+
+  /// No description provided for @areaAtivaNaPedaleira.
+  ///
+  /// In pt, this message translates to:
+  /// **'{nome} · ativa na pedaleira'**
+  String areaAtivaNaPedaleira(String nome);
+
+  /// No description provided for @largarAoTrocarArea.
+  ///
+  /// In pt, this message translates to:
+  /// **'\"{nome}\" tem mudanças que não foram salvas e será fechado ao trocar de área.'**
+  String largarAoTrocarArea(String nome);
+
+  /// No description provided for @areaInativa.
+  ///
+  /// In pt, this message translates to:
+  /// **'Esta área não está ativa na pedaleira: abrir um preset só toca, sem trocar o slot nela.'**
+  String get areaInativa;
+
+  /// No description provided for @tornarAtiva.
+  ///
+  /// In pt, this message translates to:
+  /// **'TORNAR ATIVA'**
+  String get tornarAtiva;
+
+  /// No description provided for @salvar.
+  ///
+  /// In pt, this message translates to:
+  /// **'SALVAR'**
+  String get salvar;
+
+  /// No description provided for @salvarComo.
+  ///
+  /// In pt, this message translates to:
+  /// **'SALVAR COMO…'**
+  String get salvarComo;
+
+  /// No description provided for @descartar.
+  ///
+  /// In pt, this message translates to:
+  /// **'DESCARTAR'**
+  String get descartar;
+
+  /// No description provided for @menuArquivo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Importar ou exportar JSON'**
+  String get menuArquivo;
+
+  /// No description provided for @importarPreset.
+  ///
+  /// In pt, this message translates to:
+  /// **'Importar preset (.json)'**
+  String get importarPreset;
+
+  /// No description provided for @exportarPreset.
+  ///
+  /// In pt, this message translates to:
+  /// **'Exportar preset (.json)'**
+  String get exportarPreset;
+
+  /// No description provided for @presetImportado.
+  ///
+  /// In pt, this message translates to:
+  /// **'\"{nome}\" importado. Salve no slot para gravar.'**
+  String presetImportado(String nome);
+
+  /// No description provided for @presetExportado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Preset exportado.'**
+  String get presetExportado;
+
+  /// No description provided for @presetCopiado.
+  ///
+  /// In pt, this message translates to:
+  /// **'JSON do preset copiado para a área de transferência.'**
+  String get presetCopiado;
+
+  /// No description provided for @presetSalvoEm.
+  ///
+  /// In pt, this message translates to:
+  /// **'\"{nome}\" salvo em {slot}.'**
+  String presetSalvoEm(String nome, String slot);
+
+  /// No description provided for @substituirTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Substituir {slot}?'**
+  String substituirTitulo(String slot);
+
+  /// No description provided for @substituirTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'O slot {slot} guarda \"{nome}\". Ele será substituído pelo preset editado.'**
+  String substituirTexto(String slot, String nome);
+
+  /// No description provided for @substituir.
+  ///
+  /// In pt, this message translates to:
+  /// **'SUBSTITUIR'**
+  String get substituir;
+
+  /// No description provided for @salvarComoEscolhaDestino.
+  ///
+  /// In pt, this message translates to:
+  /// **'SALVAR COMO: TOQUE NO SLOT DE DESTINO'**
+  String get salvarComoEscolhaDestino;
+
+  /// No description provided for @slotSemantica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Slot {slot}'**
+  String slotSemantica(String slot);
+
+  /// No description provided for @slotNovo.
+  ///
+  /// In pt, this message translates to:
+  /// **'novo'**
+  String get slotNovo;
+
+  /// No description provided for @abrirListaSemantica.
+  ///
+  /// In pt, this message translates to:
+  /// **', abrir lista de presets'**
+  String get abrirListaSemantica;
+
+  /// No description provided for @renomearPresetSemantica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Renomear preset {nome}'**
+  String renomearPresetSemantica(String nome);
+
+  /// No description provided for @avisoAoVivoDesligado.
+  ///
+  /// In pt, this message translates to:
+  /// **'AO VIVO DESLIGADO — as edições ficam só no app, a pedaleira não muda.'**
+  String get avisoAoVivoDesligado;
+
+  /// No description provided for @avisoAudicao.
+  ///
+  /// In pt, this message translates to:
+  /// **'AUDIÇÃO — a pedaleira continua no slot dela (sem USB MIDI).'**
+  String get avisoAudicao;
+
+  /// No description provided for @naoSalvo.
+  ///
+  /// In pt, this message translates to:
+  /// **'NÃO SALVO'**
+  String get naoSalvo;
+
+  /// No description provided for @escolhaUmPreset.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escolha um preset'**
+  String get escolhaUmPreset;
+
+  /// No description provided for @slotEstaVazio.
+  ///
+  /// In pt, this message translates to:
+  /// **'O slot {slot} está vazio'**
+  String slotEstaVazio(String slot);
+
+  /// No description provided for @escolhaUmPresetTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ao abrir, ele passa a tocar na pedaleira. As mudanças soam na hora e só ficam gravadas quando você salva.'**
+  String get escolhaUmPresetTexto;
+
+  /// No description provided for @slotVazioTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'Crie um preset aqui e cole blocos copiados de outro preset (toque longo numa casa).'**
+  String get slotVazioTexto;
+
+  /// No description provided for @criarPresetAqui.
+  ///
+  /// In pt, this message translates to:
+  /// **'CRIAR PRESET AQUI'**
+  String get criarPresetAqui;
+
+  /// No description provided for @verPresets.
+  ///
+  /// In pt, this message translates to:
+  /// **'VER PRESETS'**
+  String get verPresets;
+
+  /// No description provided for @nomeDoPreset.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nome do preset'**
+  String get nomeDoPreset;
+
+  /// No description provided for @nome.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nome'**
+  String get nome;
+
+  /// No description provided for @renomear.
+  ///
+  /// In pt, this message translates to:
+  /// **'RENOMEAR'**
+  String get renomear;
+
+  /// No description provided for @blocoPosicao.
+  ///
+  /// In pt, this message translates to:
+  /// **'{familia} · linha {linha}, casa {casa}'**
+  String blocoPosicao(String familia, int linha, int casa);
+
+  /// No description provided for @arrasteComMouse.
+  ///
+  /// In pt, this message translates to:
+  /// **'Arraste na grade para mudar de lugar'**
+  String get arrasteComMouse;
+
+  /// No description provided for @arrasteNoToque.
+  ///
+  /// In pt, this message translates to:
+  /// **'Segure e arraste na grade para mudar de lugar'**
+  String get arrasteNoToque;
+
+  /// No description provided for @ligadoSoNaCena.
+  ///
+  /// In pt, this message translates to:
+  /// **'LIGADO SÓ NA CENA {cena}'**
+  String ligadoSoNaCena(int cena);
+
+  /// No description provided for @desligadoSoNaCena.
+  ///
+  /// In pt, this message translates to:
+  /// **'DESLIGADO SÓ NA CENA {cena}'**
+  String desligadoSoNaCena(int cena);
+
+  /// No description provided for @copiarBloco.
+  ///
+  /// In pt, this message translates to:
+  /// **'Copiar bloco'**
+  String get copiarBloco;
+
+  /// No description provided for @maisAcoesBloco.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mais ações do bloco'**
+  String get maisAcoesBloco;
+
+  /// No description provided for @blocoLigadoSemantica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Bloco ligado'**
+  String get blocoLigadoSemantica;
+
+  /// No description provided for @ligado.
+  ///
+  /// In pt, this message translates to:
+  /// **'LIGADO'**
+  String get ligado;
+
+  /// No description provided for @desligado.
+  ///
+  /// In pt, this message translates to:
+  /// **'DESLIGADO'**
+  String get desligado;
+
+  /// No description provided for @adicionarEfeitoMenu.
+  ///
+  /// In pt, this message translates to:
+  /// **'Adicionar efeito…'**
+  String get adicionarEfeitoMenu;
+
+  /// No description provided for @colarAqui.
+  ///
+  /// In pt, this message translates to:
+  /// **'Colar aqui'**
+  String get colarAqui;
+
+  /// No description provided for @ligarDesligar.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ligar / desligar'**
+  String get ligarDesligar;
+
+  /// No description provided for @moverEsquerda.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mover para a esquerda'**
+  String get moverEsquerda;
+
+  /// No description provided for @moverDireita.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mover para a direita'**
+  String get moverDireita;
+
+  /// No description provided for @moverParaLinha.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mover para a linha {linha}'**
+  String moverParaLinha(int linha);
+
+  /// No description provided for @removerBloco.
+  ///
+  /// In pt, this message translates to:
+  /// **'Remover bloco'**
+  String get removerBloco;
+
+  /// No description provided for @semParametros.
+  ///
+  /// In pt, this message translates to:
+  /// **'Este bloco não tem parâmetros ajustáveis.'**
+  String get semParametros;
+
+  /// No description provided for @soNaCena.
+  ///
+  /// In pt, this message translates to:
+  /// **'SÓ NA CENA {cena}'**
+  String soNaCena(int cena);
+
+  /// No description provided for @dicaMontarCadeia.
+  ///
+  /// In pt, this message translates to:
+  /// **'Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar, e arraste para mudar de lugar.'**
+  String get dicaMontarCadeia;
+
+  /// No description provided for @faixaEstimada.
+  ///
+  /// In pt, this message translates to:
+  /// **'{simbolo} (faixa estimada)'**
+  String faixaEstimada(String simbolo);
+
+  /// No description provided for @adicionarEfeito.
+  ///
+  /// In pt, this message translates to:
+  /// **'Adicionar efeito'**
+  String get adicionarEfeito;
+
+  /// No description provided for @linhaCasa.
+  ///
+  /// In pt, this message translates to:
+  /// **'Linha {linha}, casa {casa}'**
+  String linhaCasa(int linha, int casa);
+
+  /// No description provided for @buscarPeloNome.
+  ///
+  /// In pt, this message translates to:
+  /// **'Buscar pelo nome'**
+  String get buscarPeloNome;
+
+  /// No description provided for @todos.
+  ///
+  /// In pt, this message translates to:
+  /// **'Todos'**
+  String get todos;
+
+  /// No description provided for @nenhumEfeito.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nenhum efeito com \"{busca}\".'**
+  String nenhumEfeito(String busca);
+
+  /// No description provided for @nenhumEfeitoNaFamilia.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nenhum efeito com \"{busca}\" em {familia}.'**
+  String nenhumEfeitoNaFamilia(String busca, String familia);
+
+  /// No description provided for @sobreTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sobre e diagnóstico'**
+  String get sobreTitulo;
+
+  /// No description provided for @creditoAutorTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Autor'**
+  String get creditoAutorTitulo;
+
+  /// No description provided for @creditoAutor.
+  ///
+  /// In pt, this message translates to:
+  /// **'jordao_bass · software livre, licença MIT. Gratuito, sem anúncios, sem compras no app e sem coleta de dados.'**
+  String get creditoAutor;
+
+  /// No description provided for @creditoProtocoloTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Protocolo USB e catálogo de blocos'**
+  String get creditoProtocoloTitulo;
+
+  /// No description provided for @creditoProtocolo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Portado do projeto anagram-tone-maker, de basster6 — licença MIT (github.com/basster6/anagram-tone-maker).'**
+  String get creditoProtocolo;
+
+  /// No description provided for @creditoArteTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Arte dos blocos'**
+  String get creditoArteTitulo;
+
+  /// No description provided for @creditoArtePropria.
+  ///
+  /// In pt, this message translates to:
+  /// **'Arte própria do app, por categoria de bloco.'**
+  String get creditoArtePropria;
+
+  /// No description provided for @creditoImagensTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Imagens dos blocos'**
+  String get creditoImagensTitulo;
+
+  /// No description provided for @creditoImagens.
+  ///
+  /// In pt, this message translates to:
+  /// **'{credito}. Blocos sem imagem usam arte própria, por categoria.'**
+  String creditoImagens(String credito);
+
+  /// No description provided for @creditoFontesTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Fontes'**
+  String get creditoFontesTitulo;
+
+  /// No description provided for @creditoFontes.
+  ///
+  /// In pt, this message translates to:
+  /// **'Barlow e Saira Stencil (SIL Open Font License) · Permanent Marker (Apache 2.0).'**
+  String get creditoFontes;
+
+  /// No description provided for @creditoAvisoTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Aviso'**
+  String get creditoAvisoTitulo;
+
+  /// No description provided for @creditoAviso.
+  ///
+  /// In pt, this message translates to:
+  /// **'App não oficial, sem vínculo com a Darkglass Electronics. Anagram é marca do fabricante.'**
+  String get creditoAviso;
+
+  /// No description provided for @diagnosticoPausa.
+  ///
+  /// In pt, this message translates to:
+  /// **'DIAGNÓSTICO · PAUSA ENTRE RELATÓRIOS USB'**
+  String get diagnosticoPausa;
+
+  /// No description provided for @diagnosticoPausaTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'Compare 0, 2 e 10 ms e veja a \"ida e volta\" na barra e no log.'**
+  String get diagnosticoPausaTexto;
+
+  /// No description provided for @idioma.
+  ///
+  /// In pt, this message translates to:
+  /// **'Idioma'**
+  String get idioma;
+
+  /// No description provided for @idiomaDoSistema.
+  ///
+  /// In pt, this message translates to:
+  /// **'Do sistema'**
+  String get idiomaDoSistema;
+
+  /// No description provided for @separadorDecimal.
+  ///
+  /// In pt, this message translates to:
+  /// **','**
+  String get separadorDecimal;
+
+  /// No description provided for @valorLigado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ligado'**
+  String get valorLigado;
+
+  /// No description provided for @valorDesligado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Desligado'**
+  String get valorDesligado;
+
+  /// No description provided for @voltarAoPadrao.
+  ///
+  /// In pt, this message translates to:
+  /// **'Voltar ao padrão'**
+  String get voltarAoPadrao;
+
+  /// No description provided for @voltouAoPadrao.
+  ///
+  /// In pt, this message translates to:
+  /// **'{parametro} voltou ao padrão.'**
+  String voltouAoPadrao(String parametro);
+
+  /// No description provided for @desfazer.
+  ///
+  /// In pt, this message translates to:
+  /// **'DESFAZER'**
+  String get desfazer;
+
+  /// No description provided for @pausaAuto.
+  ///
+  /// In pt, this message translates to:
+  /// **'Auto'**
+  String get pausaAuto;
+
+  /// No description provided for @linha1.
+  ///
+  /// In pt, this message translates to:
+  /// **'LINHA 1'**
+  String get linha1;
+
+  /// No description provided for @linha2Paralela.
+  ///
+  /// In pt, this message translates to:
+  /// **'LINHA 2 · PARALELA'**
+  String get linha2Paralela;
+
+  /// No description provided for @cenaSemantica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cena {numero}, {nome}'**
+  String cenaSemantica(int numero, String nome);
+
+  /// No description provided for @cenaPadrao.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cena {numero}'**
+  String cenaPadrao(int numero);
+
+  /// No description provided for @adicionarEfeitoNaCasa.
+  ///
+  /// In pt, this message translates to:
+  /// **'Adicionar efeito na casa {casa}, linha {linha}'**
+  String adicionarEfeitoNaCasa(int casa, int linha);
+
+  /// No description provided for @blocoLigado.
+  ///
+  /// In pt, this message translates to:
+  /// **'{nome}, ligado'**
+  String blocoLigado(String nome);
+
+  /// No description provided for @blocoDesligado.
+  ///
+  /// In pt, this message translates to:
+  /// **'{nome}, desligado'**
+  String blocoDesligado(String nome);
+
+  /// No description provided for @presets.
+  ///
+  /// In pt, this message translates to:
+  /// **'Presets'**
+  String get presets;
+}
+
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
+  const _AppLocalizationsDelegate();
+
+  @override
+  Future<AppLocalizations> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
+  }
+
+  @override
+  bool isSupported(Locale locale) =>
+      <String>['en', 'es', 'pt'].contains(locale.languageCode);
+
+  @override
+  bool shouldReload(_AppLocalizationsDelegate old) => false;
+}
+
+AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'en':
+      return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+    case 'pt':
+      return AppLocalizationsPt();
+  }
+
+  throw FlutterError(
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
+}

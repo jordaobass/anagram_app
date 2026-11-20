@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/versao_app.dart';
 import '../tema/tokens.dart';
+import '../../l10n/app_localizations.dart';
 
 class RotuloVersao extends ConsumerWidget {
   const RotuloVersao({super.key, this.estilo});
@@ -14,10 +15,11 @@ class RotuloVersao extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rotulo = ref.watch(rotuloVersaoProvider);
-    if (rotulo.isEmpty) return const SizedBox.shrink();
+    final (:versao, :comArte) = ref.watch(rotuloVersaoProvider);
+    if (versao.isEmpty) return const SizedBox.shrink();
+    final l = AppLocalizations.of(context);
     return Text(
-      rotulo,
+      comArte ? l.versaoAppComArte(versao) : l.versaoApp(versao),
       key: const ValueKey('versao-app'),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,

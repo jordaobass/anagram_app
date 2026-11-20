@@ -34,17 +34,4 @@ enum FamiliaBloco {
     if (texto.startsWith('eqs')) return equalizador;
     return utilitario;
   }
-
-  String get rotulo => switch (this) {
-        drive => 'Drive',
-        compressor => 'Dinâmica',
-        equalizador => 'EQ',
-        filtro => 'Filtro',
-        modulacao => 'Modulação',
-        delay => 'Delay',
-        reverb => 'Reverb',
-        amplificador => 'Amp',
-        gabinete => 'Gabinete',
-        utilitario => 'Utilitário',
-      };
 }

@@ -1,4 +1,6 @@
 // Estados da conexão mostrados o tempo todo na barra superior.
+import '../avisos.dart';
+
 sealed class EstadoConexao {
   const EstadoConexao();
 }
@@ -7,7 +9,7 @@ final class SemConexao extends EstadoConexao {
   const SemConexao({this.aviso});
 
   /// Por que caiu, quando caiu (ex.: cabo desconectado).
-  final String? aviso;
+  final Aviso? aviso;
 }
 
 final class Conectando extends EstadoConexao {
@@ -23,6 +25,6 @@ final class Conectada extends EstadoConexao {
 }
 
 final class FalhaDeConexao extends EstadoConexao {
-  const FalhaDeConexao(this.mensagem);
-  final String mensagem;
+  const FalhaDeConexao(this.aviso);
+  final Aviso aviso;
 }

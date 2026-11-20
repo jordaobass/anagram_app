@@ -13,6 +13,8 @@ import '../componentes/lista_presets.dart';
 import '../componentes/painel_conectar.dart';
 import '../rotas.dart';
 import '../tema/tokens.dart';
+import '../../l10n/app_localizations.dart';
+import '../textos.dart';
 
 class TelaEditor extends ConsumerWidget {
   const TelaEditor({super.key});
@@ -62,16 +64,17 @@ class _Aviso extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final aviso = ref.watch(editorProvider.select((e) => e.aviso));
     if (aviso == null) return const SizedBox.shrink();
+    final l = AppLocalizations.of(context);
     return Container(
       key: const ValueKey('aviso-editor'),
       color: Cores.fitaAlerta,
       padding: const EdgeInsets.symmetric(horizontal: Espacos.l),
       child: Row(children: [
         Expanded(
-          child: Text(aviso, style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Cores.sobreAlerta)),
+          child: Text(l.aviso(aviso), style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Cores.sobreAlerta)),
         ),
         IconButton(
-          tooltip: 'Fechar aviso',
+          tooltip: l.fecharAviso,
           color: Cores.sobreAlerta,
           icon: const Icon(Icons.close),
           onPressed: ref.read(editorProvider.notifier).limparAviso,

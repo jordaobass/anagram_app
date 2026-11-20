@@ -89,7 +89,7 @@ void main() {
     expect(uris, isNot(contains('urn:darkglass-anagram:split')));
     expect(uris, isNot(contains('urn:darkglass-anagram:merge')));
     expect(uris, contains('urn:darkglass:Suppressor'));
-    expect(grupos.map((g) => g.categoria).toSet().length, grupos.length, reason: 'uma seção por categoria');
+    expect(grupos.map((g) => g.familia).toSet().length, grupos.length, reason: 'uma seção por família');
 
     final busca = blocosDaBiblioteca(catalogo, busca: 'SUPPRESS');
     expect([for (final g in busca) for (final b in g.blocos) b.nome], ['Suppressor']);
@@ -122,7 +122,7 @@ void main() {
 
     expect(blocos, isNotEmpty);
     expect(blocos.map((b) => b.familia).toSet(), {FamiliaBloco.modulacao});
-    expect(grupos.map((g) => g.categoria), ['Modulação'], reason: 'as seções usam o mesmo rótulo do filtro');
+    expect(grupos.map((g) => g.familia), [FamiliaBloco.modulacao], reason: 'as seções são as mesmas famílias do filtro');
   });
 
   test('should_combine_the_filter_with_the_name_search_when_both_are_used', () {

@@ -22,9 +22,14 @@ final class ImportacaoCancelada extends ResultadoImportacao {
 }
 
 final class ImportacaoRecusada extends ResultadoImportacao {
-  const ImportacaoRecusada(this.motivo);
-  final String motivo;
+  const ImportacaoRecusada(this.motivo, {this.detalhe = ''});
+  final MotivoImportacao motivo;
+
+  /// O que o validador encontrou (técnico; a tela decide se mostra).
+  final String detalhe;
 }
+
+enum MotivoImportacao { arquivoIlegivel, naoEhPreset }
 
 sealed class ResultadoExportacao {
   const ResultadoExportacao();
@@ -36,8 +41,7 @@ final class PresetExportado extends ResultadoExportacao {
 }
 
 final class ExportacaoFalhou extends ResultadoExportacao {
-  const ExportacaoFalhou(this.motivo);
-  final String motivo;
+  const ExportacaoFalhou();
 }
 
 class TransferirPreset {
@@ -54,7 +58,7 @@ class TransferirPreset {
       texto = await _arquivos.lerEscolhido();
     } on Exception catch (erro, pilha) {
       registro.e('importação: arquivo não foi lido', error: erro, stackTrace: pilha);
-      return const ImportacaoRecusada('Não foi possível ler o arquivo.');
+      return const ImportacaoRecusada(MotivoImportacao.arquivoIlegivel);
     }
     if (texto == null) return const ImportacaoCancelada();
     return interpretar(texto);
@@ -68,7 +72,7 @@ class TransferirPreset {
       return PresetImportado(DocumentoPreset.doJson(json));
     } on FormatException catch (erro) {
       registro.w('importação recusada', error: erro);
-      return ImportacaoRecusada('Arquivo não é um preset da Anagram: ${erro.message}');
+      return ImportacaoRecusada(MotivoImportacao.naoEhPreset, detalhe: erro.message);
     }
   }
 
@@ -78,7 +82,7 @@ class TransferirPreset {
       return PresetExportado(await _arquivos.gravar(nomeDeArquivo(documento.nome), texto));
     } on Exception catch (erro, pilha) {
       registro.e('exportação: arquivo não foi gravado', error: erro, stackTrace: pilha);
-      return const ExportacaoFalhou('Não foi possível gravar o arquivo.');
+      return const ExportacaoFalhou();
     }
   }
 

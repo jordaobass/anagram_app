@@ -8,6 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import 'fixtures.dart';
+import 'package:anagram_app/aplicacao/idioma.dart';
+import 'package:anagram_app/dados/preferencias_idioma.dart';
 
 /// Latência fixa: a real varia de execução para execução e sujaria as capturas.
 class CronometroFixo implements Stopwatch {
@@ -26,7 +28,7 @@ class CronometroFixo implements Stopwatch {
 
 const versaoNasCapturas = '0.1.3';
 
-Widget appDeTeste({List<Override> overrides = const []}) => ProviderScope(
+Widget appDeTeste({List<Override> overrides = const [], IdiomaApp? idioma = IdiomaApp.portugues}) => ProviderScope(
       overrides: [
         ...overrides,
         cronometroProvider.overrideWithValue(CronometroFixo.new),
@@ -35,6 +37,20 @@ Widget appDeTeste({List<Override> overrides = const []}) => ProviderScope(
         indiceMiniaturasProvider.overrideWith((ref) async => lerIndiceMiniaturas()),
         // versão fixa: com a do pubspec, toda release mudaria todas as capturas
         versaoAppProvider.overrideWith((ref) async => versaoNasCapturas),
+        // o ambiente de teste é en-US: as capturas de referência são em português
+        // (nulo = seguir o idioma do sistema)
+        idiomaSalvoProvider.overrideWithValue(idioma),
       ],
       child: const AppAnagram(),
     );
+
+/// Guarda a escolha de idioma só em memória (o teste não toca no disco).
+class PreferenciasIdiomaEmMemoria implements PreferenciasIdioma {
+  String? salvo;
+
+  @override
+  Future<String?> ler() async => salvo;
+
+  @override
+  Future<void> gravar(String? codigo) async => salvo = codigo;
+}
