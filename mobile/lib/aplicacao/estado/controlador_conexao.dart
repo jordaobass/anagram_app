@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../dados/repositorio_pedaleira.dart';
+import '../../nucleo/demonstracao/areas_demonstracao.dart';
 import '../../nucleo/demonstracao/transporte_demonstracao.dart';
 import '../../nucleo/midi/saida_midi.dart';
 import '../../nucleo/protocolo/api_anagram.dart';
@@ -52,7 +53,12 @@ class ControladorConexao extends Notifier<EstadoConexao> {
       return;
     }
     final midi = ref.read(midiDemonstracaoProvider)();
-    final pedaleira = TransporteDemonstracao(presets: presets);
+    // como uma Anagram com firmware 1.18+: três áreas de presets
+    final pedaleira = TransporteDemonstracao(
+      presets: presets,
+      outrasAreas: AreasDemonstracao.outras(presets),
+      nomesAreas: AreasDemonstracao.nomes,
+    );
     ref.read(ajusteDemonstracaoProvider)(pedaleira);
     await _conectar(pedaleira, demonstracao: true, midi: midi);
   }

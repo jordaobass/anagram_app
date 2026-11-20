@@ -1,5 +1,5 @@
-// Estado da conexão sempre à vista, interruptor "Ao vivo" e a latência
-// do último envio.
+// Estado da conexão sempre à vista, interruptor "Ao vivo", a latência
+// do último envio e a versão do app.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,6 +8,7 @@ import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/estado/estado_conexao.dart';
 import '../rotas.dart';
 import '../tema/tokens.dart';
+import 'rotulo_versao.dart';
 
 class BarraConexao extends ConsumerWidget {
   const BarraConexao({super.key, required this.compacta});
@@ -27,7 +28,17 @@ class BarraConexao extends ConsumerWidget {
       ),
       child: Row(
         children: [
-          Flexible(child: _Estado(cor: cor, texto: texto, linhas: compacta ? 2 : 1)),
+          Flexible(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _Estado(cor: cor, texto: texto, linhas: compacta ? 2 : 1),
+                // no celular não cabe ao lado: a versão vai embaixo do estado
+                if (compacta) const RotuloVersao(),
+              ],
+            ),
+          ),
           const SizedBox(width: Espacos.s),
           if (conexao is Conectada) _AoVivo(compacta: compacta),
           if (conexao is Conectada)
@@ -36,6 +47,7 @@ class BarraConexao extends ConsumerWidget {
               icon: const Icon(Icons.link_off),
               onPressed: ref.read(conexaoProvider.notifier).desconectar,
             ),
+          if (!compacta) const Flexible(child: RotuloVersao()),
           IconButton(
             tooltip: 'Créditos',
             icon: const Icon(Icons.info_outline),

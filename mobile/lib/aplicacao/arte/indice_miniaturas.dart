@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/familia_bloco.dart';
+import '../../nucleo/catalogo/variantes_uri.dart';
 
 sealed class ArteBloco {
   const ArteBloco();
@@ -26,7 +27,7 @@ final class ArteDaFamilia extends ArteBloco {
 }
 
 class IndiceMiniaturas {
-  IndiceMiniaturas(this._porUri, this._porNome, this.credito);
+  IndiceMiniaturas(this._porUri, this._porNome, this.credito, {this.temArteDaPedaleira = false});
 
   factory IndiceMiniaturas.doTexto(String texto) {
     final json = jsonDecode(texto) as Map<String, dynamic>;
@@ -42,7 +43,8 @@ class IndiceMiniaturas {
         porUri['$uri'] = arquivos;
       }
     }
-    return IndiceMiniaturas(porUri, porNome, json['credito'] as String? ?? '');
+    return IndiceMiniaturas(porUri, porNome, json['credito'] as String? ?? '',
+        temArteDaPedaleira: entradas.any((bloco) => _prioridade(bloco) == 1));
   }
 
   factory IndiceMiniaturas.vazio() => IndiceMiniaturas(const {}, const {}, '');
@@ -56,9 +58,14 @@ class IndiceMiniaturas {
 
   bool get vazio => _porUri.isEmpty && _porNome.isEmpty;
 
-  /// Casa pela uri que a pedaleira informa; senão pelo nome do bloco.
+  /// O índice traz a arte da própria pedaleira (o build com arte): a barra
+  /// de cima mostra isso para a pessoa saber qual versão abriu.
+  final bool temArteDaPedaleira;
+
+  /// Casa pela uri que a pedaleira informa (com ou sem sufixo de canal);
+  /// senão pelo nome do bloco.
   ArteBloco arteDe(DefinicaoBloco bloco) {
-    final arquivos = _porUri[bloco.uri] ?? _porNome[normalizarNome(bloco.nome)];
+    final arquivos = buscarPorVariantes(_porUri, bloco.uri) ?? _porNome[normalizarNome(bloco.nome)];
     if (arquivos == null) return ArteDaFamilia(bloco.familia);
     final (ligado, desligado) = arquivos;
     return ArteMiniatura(ligado, credito, caminhoDesligado: desligado);

@@ -1,8 +1,13 @@
 // Ações do protocolo com tipos do app. Formatos de pedido conferidos no
-// anagram-tone-maker (MIT); formatos de resposta de escrita não estão
+// anagram-tone-maker (MIT) e, para as áreas de presets (firmware 1.18+), no
+// Darkglass Suite 6.11.4; formatos de resposta de escrita não estão
 // documentados, então qualquer resposta sem "error" conta como aceite.
+//
+// [area]: id da área de presets ("user", "user-2"…). Nulo = firmware sem
+// áreas, e o pedido sai sem `userArea`, igual ao de antes.
 import 'dart:convert';
 
+import '../modelo/areas_presets.dart';
 import '../modelo/documento_preset.dart';
 import '../modelo/json_util.dart';
 import '../modelo/slot_preset.dart';
@@ -16,16 +21,20 @@ abstract final class AcoesAnagram {
   static const salvar = 'edit_anagram_presets';
   static const excluir = 'delete_anagram_preset';
   static const tocarAoVivo = 'try_anagram_preset';
+  static const lerAjustes = 'export_settings';
+  static const gravarAjustes = 'edit_settings';
   /// O app não pede mais; fica porque a pedaleira de demonstração responde a ela.
   static const infoBloco = 'get_plugin_info';
 
-  static const todas = {firmware, posicoes, lerPreset, salvar, excluir, tocarAoVivo, infoBloco};
+  static const todas = {firmware, posicoes, lerPreset, salvar, excluir, tocarAoVivo, lerAjustes, gravarAjustes, infoBloco};
 }
 
 class ApiAnagram {
   ApiAnagram(this.cliente);
 
   final ClienteAnagram cliente;
+
+  static const prazoAjustes = Duration(seconds: 3);
 
   Future<String> firmware({Duration? prazo}) async {
     final dados = (await cliente.chamar(AcoesAnagram.firmware, const {}, prazo))['data'];
@@ -36,8 +45,31 @@ class ApiAnagram {
     return 'desconhecido';
   }
 
-  Future<List<ResumoSlot>> listarSlots() async {
-    final resposta = await cliente.chamar(AcoesAnagram.posicoes);
+  /// Áreas e a ativa, pelos ajustes da pedaleira. Firmware que não conhece
+  /// `export_settings` responde com erro ou não responde: aí vale área única,
+  /// com prazo curto para não atrasar a conexão.
+  Future<AreasDaPedaleira> lerAreas() async {
+    final Map<String, dynamic> resposta;
+    try {
+      resposta = await cliente.chamar(AcoesAnagram.lerAjustes, const {}, prazoAjustes);
+    } on ErroRespostaInvalida {
+      return const AreasDaPedaleira.unica();
+    } on ErroSemResposta {
+      return const AreasDaPedaleira.unica();
+    }
+    final ajustes = resposta['settings'] ?? mapaOuVazio(resposta['data'])['settings'];
+    return ajustes is Map<String, dynamic> ? AreasDaPedaleira.dosAjustes(ajustes) : const AreasDaPedaleira.unica();
+  }
+
+  /// Passa a pedaleira para [area] (a dos footswitches e do Program Change).
+  /// HIPÓTESE (DECISOES, U11): a chave é a mesma que `export_settings` devolve.
+  Future<void> tornarAreaAtiva(String area) => cliente.chamar(
+        AcoesAnagram.gravarAjustes,
+        {'settings': {'selected-preset-area': area}, 'reloadLvgl': true},
+      );
+
+  Future<List<ResumoSlot>> listarSlots({String? area}) async {
+    final resposta = await cliente.chamar(AcoesAnagram.posicoes, _comArea(const {}, area));
     final dados = resposta['data'];
     final arquivos = dados is Map<String, dynamic> ? dados['files'] : null;
     if (arquivos is! List) throw const ErroRespostaInvalida('Lista de presets sem "files".');
@@ -53,8 +85,8 @@ class ApiAnagram {
     ];
   }
 
-  Future<DocumentoPreset?> lerPreset(SlotPreset slot) async {
-    final resposta = await cliente.chamar(AcoesAnagram.lerPreset, {'filename': slot.arquivo});
+  Future<DocumentoPreset?> lerPreset(SlotPreset slot, {String? area}) async {
+    final resposta = await cliente.chamar(AcoesAnagram.lerPreset, _comArea({'filename': slot.arquivo}, area));
     final dados = resposta['data'];
     // resposta sem "data" não é "slot vazio": é resposta que não entendemos
     if (dados is! Map<String, dynamic>) {
@@ -73,21 +105,24 @@ class ApiAnagram {
         const Duration(seconds: 25),
       );
 
-  Future<void> salvar(SlotPreset slot, DocumentoPreset preset) => cliente.chamar(
+  Future<void> salvar(SlotPreset slot, DocumentoPreset preset, {String? area}) => cliente.chamar(
         AcoesAnagram.salvar,
-        {
+        _comArea({
           'presets': [
             {'name': slot.arquivo, 'content': preset.paraJson()},
           ],
-        },
+        }, area),
         const Duration(seconds: 30),
       );
 
-  Future<void> excluir(SlotPreset slot) => cliente.chamar(
+  Future<void> excluir(SlotPreset slot, {String? area}) => cliente.chamar(
         AcoesAnagram.excluir,
-        {'filename': slot.arquivo},
+        _comArea({'filename': slot.arquivo}, area),
         const Duration(seconds: 25),
       );
+
+  static Map<String, dynamic> _comArea(Map<String, dynamic> carga, String? area) =>
+      area == null ? carga : {...carga, 'userArea': area};
 
   static bool _slotValido(Object? arquivo) {
     final numero = int.tryParse('$arquivo'.split('.').first);

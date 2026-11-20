@@ -33,6 +33,11 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
   @override
   EstadoEditor build() {
     ref.listen(conexaoProvider, (_, estado) => _aoMudarConexao(estado));
+    ref.listen(bibliotecaProvider.select((b) => b.areaSelecionada), (antes, depois) {
+      // só troca entre duas áreas: desconectar zera a área, e a edição não
+      // salva tem de sobreviver ao cabo que saiu
+      if (antes != null && depois != null && antes != depois) _fecharPreset();
+    });
     ref.onDispose(largarEnvioAoVivo);
     return const EstadoEditor();
   }
@@ -109,10 +114,12 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
   }
 
   /// Program Change: a pedaleira passa a ESTAR no slot (o try sozinho só toca).
+  /// O Program Change vale na área ATIVA da pedaleira: com outra área na tela,
+  /// ele levaria a pedaleira ao mesmo número na área errada, então não sai.
   @override
   Future<bool> trocarSlotNaPedaleira(SlotPreset slot) async {
     final midi = ref.read(conexaoProvider.notifier).midi;
-    if (midi == null) return false;
+    if (midi == null || ref.read(bibliotecaProvider).areaForaDaPedaleira) return false;
     try {
       await midi.enviar(MensagensMidi.trocaDePrograma(slot));
       return true;
@@ -143,6 +150,13 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
   Future<void> aplicarDocumento(DocumentoPreset documento) async {
     state = state.copiar(atual: documento);
     await enviarAoVivo(documento);
+  }
+
+  /// Outra área na tela: o preset aberto é de um slot da área anterior e não
+  /// pode continuar sob o mesmo rótulo (nem ser gravado na área nova).
+  void _fecharPreset() {
+    _abertura++;
+    state = EstadoEditor(aoVivo: state.aoVivo, latencia: state.latencia);
   }
 
   void _aoMudarConexao(EstadoConexao estado) {

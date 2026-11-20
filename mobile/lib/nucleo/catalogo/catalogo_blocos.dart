@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'definicao_bloco.dart';
+import 'variantes_uri.dart';
 
 class CatalogoBlocos {
   CatalogoBlocos(Map<String, DefinicaoBloco> blocos, {this.firmware = ''})
@@ -25,5 +26,6 @@ class CatalogoBlocos {
   int get quantidade => _blocos.length;
   Iterable<DefinicaoBloco> get todos => _blocos.values;
 
-  DefinicaoBloco definicao(String uri) => _blocos[uri] ?? DefinicaoBloco.desconhecido(uri);
+  /// Aceita a uri com ou sem sufixo de canal ("#stereo", "#mono").
+  DefinicaoBloco definicao(String uri) => buscarPorVariantes(_blocos, uri) ?? DefinicaoBloco.desconhecido(uri);
 }
