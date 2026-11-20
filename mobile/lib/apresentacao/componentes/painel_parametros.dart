@@ -85,6 +85,25 @@ class PainelParametros extends ConsumerWidget {
   }
 }
 
+/// No lugar do painel quando nenhum bloco está selecionado (preset novo,
+/// cadeia vazia): como pôr e mudar efeitos de lugar, já que nenhum dos dois
+/// gestos se descobre olhando a grade.
+class DicaMontarCadeia extends StatelessWidget {
+  const DicaMontarCadeia({super.key});
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.all(Espacos.l),
+        child: Text(
+          'Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar, '
+          'e arraste para mudar de lugar.',
+          key: const ValueKey('dica-montar-cadeia'),
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Cores.textoSecundario),
+        ),
+      );
+}
+
 /// Parâmetros do catálogo; para bloco desconhecido, os que o preset guarda,
 /// com faixa estimada (marcada no nome).
 List<DefinicaoParametro> parametrosVisiveis(DefinicaoBloco definicao, BlocoPreset bloco) {

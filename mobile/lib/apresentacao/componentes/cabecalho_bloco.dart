@@ -7,6 +7,8 @@ import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'arte_bloco.dart';
+import 'casa_arrastavel.dart';
+import 'menu_bloco.dart';
 
 class CabecalhoBloco extends ConsumerWidget {
   const CabecalhoBloco({super.key, required this.bloco, required this.definicao, required this.cena});
@@ -42,6 +44,8 @@ class CabecalhoBloco extends ConsumerWidget {
           Text(definicao.nome, style: tema.titleLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
           Text('${definicao.familia.rotulo} · linha ${bloco.posicao.linha}, casa ${bloco.posicao.casa}',
               style: tema.bodySmall),
+          Text(arrastoComMouse ? 'Arraste na grade para mudar de lugar' : 'Segure e arraste na grade para mudar de lugar',
+              style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
           if (bloco.bypassSoNaCena(cena))
             Text('${ligado ? 'LIGADO' : 'DESLIGADO'} SÓ NA CENA $cena',
                 style: tema.labelSmall?.copyWith(color: Cores.tally)),
@@ -58,10 +62,30 @@ class CabecalhoBloco extends ConsumerWidget {
         icon: const Icon(Icons.copy_outlined),
         onPressed: () => controlador.copiarBloco(bloco.posicao),
       ),
+      _BotaoMaisAcoes(posicao: bloco.posicao),
       const SizedBox(width: Espacos.s),
       _BotaoBypass(ligado: bloco.habilitadoNaCena(cena), aoTocar: () => controlador.alternarBypass(bloco.posicao)),
     ]);
   }
+}
+
+/// O menu do bloco (mover, remover, colar) à vista: o botão direito e o toque
+/// longo não se descobrem sozinhos, e no toque o longo virou arrastar.
+class _BotaoMaisAcoes extends ConsumerWidget {
+  const _BotaoMaisAcoes({required this.posicao});
+
+  final PosicaoBloco posicao;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => IconButton(
+        key: const ValueKey('mais-acoes-bloco'),
+        tooltip: 'Mais ações do bloco',
+        icon: const Icon(Icons.more_vert),
+        onPressed: () {
+          final caixa = context.findRenderObject()! as RenderBox;
+          abrirMenuBloco(context, ref, posicao, caixa.localToGlobal(caixa.size.bottomLeft(Offset.zero)));
+        },
+      );
 }
 
 class _BotaoBypass extends StatelessWidget {

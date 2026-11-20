@@ -6,6 +6,8 @@ import '../../aplicacao/estado/controlador_editor.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../tema/tokens.dart';
+import 'biblioteca_efeitos.dart';
+import 'casa_arrastavel.dart';
 import 'casa_bloco.dart';
 import 'menu_bloco.dart';
 import 'pintor_linha_sinal.dart';
@@ -76,20 +78,26 @@ class GradeBlocos extends ConsumerWidget {
       ]);
 }
 
-/// Uma casa ligada ao editor (selecionar, bypass, menu). Usada nas duas grades.
+/// Uma casa ligada ao editor (selecionar, bypass, menu, adicionar efeito na
+/// vazia, arrastar para mudar de lugar). Usada nas duas grades.
 Widget casaDaGrade(BuildContext context, WidgetRef ref, DocumentoPreset documento, PosicaoBloco posicao, double largura) {
   final selecionado = ref.watch(editorProvider.select((e) => e.selecionado));
   final controlador = ref.read(editorProvider.notifier);
   final bloco = documento.bloco(posicao);
-  return CasaBloco(
-    key: ValueKey('casa-${posicao.linha}-${posicao.casa}'),
+  return CasaArrastavel(
     posicao: posicao,
-    bloco: bloco,
-    ligado: bloco?.habilitadoNaCena(documento.cenaAtiva) ?? false,
-    selecionado: selecionado == posicao && bloco != null,
     largura: largura,
-    aoTocar: () => bloco == null ? null : controlador.selecionarBloco(posicao),
-    aoTocarDuas: () => controlador.alternarBypass(posicao),
-    aoPedirMenu: (ponto) => abrirMenuBloco(context, ref, posicao, ponto),
+    child: CasaBloco(
+      key: ValueKey('casa-${posicao.linha}-${posicao.casa}'),
+      posicao: posicao,
+      bloco: bloco,
+      ligado: bloco?.habilitadoNaCena(documento.cenaAtiva) ?? false,
+      selecionado: selecionado == posicao && bloco != null,
+      largura: largura,
+      aoTocar: () =>
+          bloco == null ? adicionarEfeitoNaCasa(context, ref, posicao) : controlador.selecionarBloco(posicao),
+      aoTocarDuas: () => controlador.alternarBypass(posicao),
+      aoPedirMenu: (ponto) => abrirMenuBloco(context, ref, posicao, ponto),
+    ),
   );
 }

@@ -45,7 +45,9 @@ class EditorPrincipal extends ConsumerWidget {
               tamanhoKnob: compacto ? Medidas.knobCompacto : Medidas.knobAmplo,
               compacto: compacto,
             ),
-          ),
+          )
+        else
+          const DicaMontarCadeia(),
       ],
     );
   }

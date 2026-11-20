@@ -1,6 +1,8 @@
 // Uma casa da grade: o pedal, o nome que a pedaleira informa e a fita de
-// cor da família. Toque seleciona; toque duplo liga/desliga; toque longo
-// (ou botão direito) abre copiar/colar.
+// cor da família. Toque seleciona (na vazia, abre a biblioteca de efeitos);
+// toque duplo liga/desliga; botão direito abre o menu do bloco. No toque, o
+// toque longo da casa ocupada é o arrasto, então o menu dela fica no botão
+// visível do painel; na vazia, o toque longo ainda abre o menu (colar).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,7 +43,7 @@ class CasaBloco extends ConsumerWidget {
       child: GestureDetector(
         onTap: aoTocar,
         onDoubleTap: atual == null ? null : aoTocarDuas,
-        onLongPressStart: (d) => aoPedirMenu(d.globalPosition),
+        onLongPressStart: atual == null ? (d) => aoPedirMenu(d.globalPosition) : null,
         onSecondaryTapUp: (d) => aoPedirMenu(d.globalPosition),
         child: AnimatedContainer(
           duration: Duracoes.curta,
@@ -56,7 +58,7 @@ class CasaBloco extends ConsumerWidget {
 
   /// O que o leitor de tela diz: a casa vazia pela posição, a ocupada pelo bloco.
   String _rotulo(WidgetRef ref, BlocoPreset? atual) => atual == null
-      ? 'Casa vazia ${posicao.casa}, linha ${posicao.linha}'
+      ? 'Adicionar efeito na casa ${posicao.casa}, linha ${posicao.linha}'
       : '${ref.watch(definicaoBlocoProvider(atual.uri)).nome}, ${ligado ? 'ligado' : 'desligado'}';
 
   BoxDecoration _moldura() => BoxDecoration(
@@ -78,6 +80,11 @@ class CasaBloco extends ConsumerWidget {
               color: Cores.fundoCase,
               shape: BoxShape.circle,
               border: Border.all(color: Cores.filete, width: Medidas.contornoSelecao),
+            ),
+            child: Icon(
+              Icons.add,
+              size: largura * Medidas.marcaCasaVazia * Medidas.maisNaCasaVazia,
+              color: Cores.textoSecundario,
             ),
           ),
         ),

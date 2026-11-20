@@ -186,4 +186,12 @@ void main() {
     await tester.pumpAndSettle();
     await foto('15-knob-desfazer');
   });
+
+  testWidgets('biblioteca de efeitos ao tocar no + de uma casa vazia', (tester) async {
+    await preparar(tester, desktop);
+    await abrirSlot(tester, '02A');
+    await tester.tap(find.byKey(const ValueKey('casa-1-4')));
+    await tester.pumpAndSettle();
+    await foto('16-biblioteca-efeitos');
+  });
 }

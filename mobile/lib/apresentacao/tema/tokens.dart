@@ -78,6 +78,9 @@ abstract final class Medidas {
 
   /// Diâmetro do furo da casa vazia, em fração da largura da casa.
   static const double marcaCasaVazia = 0.22;
+
+  /// O "+" dentro do furo, em fração do furo: o convite para pôr um efeito.
+  static const double maisNaCasaVazia = 0.75;
   static const double knobAmplo = 104;
   static const double knobCompacto = 84;
   static const double espessuraArco = 6;
@@ -94,6 +97,11 @@ abstract final class Medidas {
   static const double arrasteFaixaInteira = 200;
   static const double barraConexaoAltura = 64;
   static const double larguraDialogo = 440;
+
+  /// Biblioteca de efeitos: cabe uma lista confortável no notebook, e no
+  /// celular o diálogo encolhe até a tela.
+  static const double larguraBiblioteca = 560;
+  static const double alturaBiblioteca = 640;
   static const double larguraConteudoVazio = 520;
   static const double larguraCabecalhoEmLinha = 480;
 
@@ -126,6 +134,12 @@ abstract final class Fontes {
 
 abstract final class Opacidades {
   static const blocoDesligado = 0.38;
+
+  /// A casa de onde o bloco saiu fica em sombra enquanto ele é arrastado.
+  static const origemDoArrasto = 0.3;
+
+  /// O bloco "na mão" deixa ver a grade embaixo, para mirar a casa.
+  static const blocoArrastado = 0.85;
 
   /// Realce de foco do teclado sobre o tally: visível sem competir com a seleção.
   static const foco = 0.24;
