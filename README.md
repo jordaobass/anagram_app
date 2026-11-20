@@ -18,7 +18,8 @@ O app não tem instalador: é uma pasta que você extrai e abre. Todas as versõ
 ### Windows 10 ou 11 (64 bits)
 
 1. Abra a [última versão](https://github.com/jordaobass/anagram_app/releases/latest) e, em **Assets**,
-   baixe `anagram-app-windows-<versão>.zip`.
+   baixe `anagram-app-windows-<versão>-arte.zip` (com a foto de cada pedal, como na tela da Anagram) ou
+   `anagram-app-windows-<versão>.zip` (com a arte própria do app).
 2. Na pasta Downloads, clique com o botão direito no zip e escolha **Extrair Tudo…**. Não abra o app de
    dentro do zip: ele precisa dos outros arquivos da pasta.
 3. Mova a pasta **Anagram App** para onde quiser (ex. `Documentos`) e abra **Anagram App.exe**.
@@ -61,8 +62,9 @@ Ainda não há build pronto; compile pelo [README do app](mobile/README.md#desen
 
 Sem pedaleira, **Abrir demonstração** simula uma Anagram em memória para você conhecer o app.
 
-> Os builds publicados usam a arte própria do app. A arte da Darkglass não vai junto (veja
-> [Arte de terceiros](#arte-de-terceiros)).
+> Cada versão sai em dois sabores: `…-arte.zip`, com a arte dos blocos da Darkglass Electronics (a mesma
+> da tela da pedaleira), e `….zip`, com a arte própria do app. Na barra de cima, "· arte da pedaleira"
+> indica qual você abriu. O código-fonte não traz a arte (veja [Arte de terceiros](#arte-de-terceiros)).
 
 ## Organização do repositório
 
