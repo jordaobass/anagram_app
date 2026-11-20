@@ -1,6 +1,7 @@
 // Metadados de bloco lidos de blocks-factory.json (get_plugin_info do
 // firmware v1.18.1.23): nome, categoria e faixas reais dos parâmetros.
 import 'familia_bloco.dart';
+import 'variantes_uri.dart';
 
 class DefinicaoParametro {
   const DefinicaoParametro({
@@ -103,7 +104,8 @@ class DefinicaoBloco {
   /// Bloco que não está no catálogo (comprado no Marketplace, firmware novo):
   /// mostra o fim da uri e os parâmetros que o preset guardar.
   factory DefinicaoBloco.desconhecido(String uri) {
-    final fim = uri.split(RegExp('[:/#]')).lastWhere((p) => p.isNotEmpty, orElse: () => uri);
+    // o sufixo de canal não é nome: "…:Chorus#stereo" se chama Chorus
+    final fim = semSufixoDeCanal(uri).split(RegExp('[:/]')).lastWhere((p) => p.isNotEmpty, orElse: () => uri);
     return DefinicaoBloco(uri: uri, nome: fim, abreviacao: '', categoria: '', parametros: const []);
   }
 
