@@ -66,6 +66,16 @@ void main() {
     expect(subtitulos, {'Modulação'});
   });
 
+  testWidgets('should_show_the_full_block_name_in_the_chain_when_the_slot_is_narrow', (tester) async {
+    await abrirDemonstracao(tester);
+    await tocarNoSlot(tester, '02A');
+
+    // como na tela da pedaleira: "Suppressor", não a abreviação "SUP"
+    final nomes = tester.widgetList<Text>(find.descendant(of: _casa(1, 1), matching: find.byType(Text))).map((t) => t.data);
+    expect(nomes, contains('Suppressor'));
+    expect(nomes, isNot(contains('SUP')));
+  });
+
   testWidgets('should_explain_how_to_add_an_effect_when_a_new_preset_has_no_blocks', (tester) async {
     await abrirDemonstracao(tester);
     await tocarNoSlot(tester, '03C');
