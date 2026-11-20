@@ -17,7 +17,7 @@ Autor: **jordao_bass** · Licença: [MIT](../LICENSE) · Publicado nas lojas por
 | Plataforma | Como fala com a pedaleira | Estado |
 |---|---|---|
 | macOS | IOKit (`macos/Runner/CanalHidAnagram.swift`) | build de release roda; sem teste com aparelho |
-| Windows | hidapi por FFI (`hidapi.dll` ao lado do .exe) | build de release roda e a `hidapi.dll` enumera o USB; sem teste com aparelho |
+| Windows | hidapi por FFI (`hidapi.dll` ao lado do .exe); MIDI pela winmm.dll (FFI) | build de release roda, a `hidapi.dll` enumera o USB e a winmm lista as portas MIDI; sem teste com aparelho |
 | Android | USB Host (`android/.../CanalHidAndroid.kt`), pede permissão | APK de release compila (R8); sem teste com aparelho |
 | Web | WebHID (Chrome/Edge no computador) | compila (`flutter build web`); sem teste com aparelho |
 | Linux | hidapi por FFI (instale `libhidapi-hidraw0` e uma regra udev para o USB da Anagram) | não compilado ainda |
