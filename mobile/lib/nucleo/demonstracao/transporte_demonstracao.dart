@@ -1,7 +1,9 @@
 // Pedaleira simulada em memória. Fala o MESMO protocolo de relatórios que
 // o aparelho (recebe quadros fatiados, responde fatiado), então o caminho
 // inteiro do cliente é exercitado sem hardware. Serve ao modo demonstração
-// e aos testes, que podem injetar as falhas reais conhecidas.
+// e aos testes, que podem injetar as falhas reais conhecidas. Com
+// [outrasAreas], simula o firmware 1.18+ com várias áreas de presets; sem,
+// responde como o firmware de uma área só.
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
@@ -14,11 +16,27 @@ import '../protocolo/transporte_anagram.dart';
 class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagram {
   TransporteDemonstracao({
     Map<int, Map<String, dynamic>> presets = const {},
+    Map<String, Map<int, Map<String, dynamic>>> outrasAreas = const {},
+    List<String>? nomesAreas,
     this.latencia = const Duration(milliseconds: 4),
     this.firmware = 'v1.18.1.23 (demonstração)',
-  }) : _slots = {for (final e in presets.entries) e.key: jsonDecode(jsonEncode(e.value))};
+  })  : _slots = _copia(presets),
+        _nomesAreas = nomesAreas {
+    _areas['user'] = _slots;
+    for (final e in outrasAreas.entries) {
+      _areas[e.key] = _copia(e.value);
+    }
+  }
 
   final Map<int, dynamic> _slots;
+  final Map<String, Map<int, dynamic>> _areas = {};
+  final List<String>? _nomesAreas;
+
+  /// Área que a pedaleira simulada está usando (a do Program Change).
+  String areaAtiva = 'user';
+
+  /// Falha injetada: firmware anterior aos ajustes, que recusa `export_settings`.
+  bool semAjustes = false;
   final Duration latencia;
   final String firmware;
   final _montador = MontadorQuadros();
@@ -63,7 +81,8 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
   /// Para os testes: outro programa mudou o slot por fora.
   void substituirSlot(int numero, Map<String, dynamic> conteudo) => _slots[numero] = jsonDecode(jsonEncode(conteudo));
 
-  Map<String, dynamic>? conteudoDoSlot(int numero) => _slots[numero] as Map<String, dynamic>?;
+  Map<String, dynamic>? conteudoDoSlot(int numero, {String area = 'user'}) =>
+      _areas[area]?[numero] as Map<String, dynamic>?;
 
   @override
   Future<void> abrir() async {
@@ -121,44 +140,68 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
 
   Map<String, dynamic> _processar(MensagemAnagram m) => switch (m.acao) {
         AcoesAnagram.firmware => {'data': {'version': firmware}},
-        AcoesAnagram.posicoes => {'data': {'files': _posicoes()}},
-        AcoesAnagram.lerPreset => _lerPreset(m.carga['filename'] as String?),
-        AcoesAnagram.salvar => _salvar(m.carga['presets']),
-        AcoesAnagram.excluir => _excluir(m.carga['filename'] as String?),
+        AcoesAnagram.posicoes => {'data': {'files': _posicoes(_daArea(m))}},
+        AcoesAnagram.lerPreset => _lerPreset(_daArea(m), m.carga['filename'] as String?),
+        AcoesAnagram.salvar => _salvar(_daArea(m), m.carga['presets']),
+        AcoesAnagram.excluir => _excluir(_daArea(m), m.carga['filename'] as String?),
+        AcoesAnagram.lerAjustes => _ajustes(),
+        AcoesAnagram.gravarAjustes => _gravarAjustes(m.carga['settings']),
         AcoesAnagram.tocarAoVivo => _tocar(m.carga['presetData']),
         AcoesAnagram.infoBloco => {'data': {'name': '${m.carga['uri']}'.split(':').last}},
         _ => {'error': 'Ação desconhecida: ${m.acao}'},
       };
 
-  List<Map<String, dynamic>> _posicoes() {
-    final numeros = _slots.keys.toList()..sort();
+  /// Os slots da área pedida; sem `userArea` (firmware antigo), a primeira.
+  /// Área que não existe responde vazia, como uma área recém-criada.
+  Map<int, dynamic> _daArea(MensagemAnagram m) => _areas.putIfAbsent('${m.carga['userArea'] ?? 'user'}', () => {});
+
+  List<Map<String, dynamic>> _posicoes(Map<int, dynamic> slots) {
+    final numeros = slots.keys.toList()..sort();
     return [
       for (final n in numeros)
         {
           'filename': '$n.json',
-          'id': (_slots[n]['preset'] as Map<String, dynamic>)['uuid'] ?? '',
-          'name': (_slots[n]['preset'] as Map<String, dynamic>)['name'] ?? '',
+          'id': (slots[n]['preset'] as Map<String, dynamic>)['uuid'] ?? '',
+          'name': (slots[n]['preset'] as Map<String, dynamic>)['name'] ?? '',
         },
     ];
   }
 
-  Map<String, dynamic> _lerPreset(String? arquivo) {
-    final conteudo = _slots[_numero(arquivo)];
+  Map<String, dynamic> _ajustes() {
+    if (semAjustes) return {'error': 'Ação desconhecida: ${AcoesAnagram.lerAjustes}'};
+    final nomes = _nomesAreas;
+    return {
+      'settings': {
+        'user-areas': ?nomes,
+        'selected-preset-area': areaAtiva,
+        'selected-preset': 0,
+      },
+    };
+  }
+
+  Map<String, dynamic> _gravarAjustes(Object? ajustes) {
+    final area = ajustes is Map<String, dynamic> ? ajustes['selected-preset-area'] : null;
+    if (area is String) areaAtiva = area;
+    return {'status': 'ok'};
+  }
+
+  Map<String, dynamic> _lerPreset(Map<int, dynamic> slots, String? arquivo) {
+    final conteudo = slots[_numero(arquivo)];
     return {
       'data': {'presetFile': conteudo == null ? <String, dynamic>{} : {'content': conteudo}},
     };
   }
 
-  Map<String, dynamic> _salvar(Object? presets) {
+  Map<String, dynamic> _salvar(Map<int, dynamic> slots, Object? presets) {
     for (final item in (presets as List<dynamic>? ?? const [])) {
       final mapa = item as Map<String, dynamic>;
-      _slots[_numero(mapa['name'] as String?)] = jsonDecode(jsonEncode(mapa['content']));
+      slots[_numero(mapa['name'] as String?)] = jsonDecode(jsonEncode(mapa['content']));
     }
     return {'status': 'ok'};
   }
 
-  Map<String, dynamic> _excluir(String? arquivo) {
-    _slots.remove(_numero(arquivo));
+  Map<String, dynamic> _excluir(Map<int, dynamic> slots, String? arquivo) {
+    slots.remove(_numero(arquivo));
     return {'status': 'ok'};
   }
 
@@ -166,6 +209,9 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
     presetTocando = documento as Map<String, dynamic>?;
     return {'status': 'ok'};
   }
+
+  static Map<int, dynamic> _copia(Map<int, Map<String, dynamic>> presets) =>
+      {for (final e in presets.entries) e.key: jsonDecode(jsonEncode(e.value))};
 
   static int _numero(String? arquivo) => int.tryParse('$arquivo'.split('.').first) ?? -1;
 }

@@ -1,5 +1,8 @@
 // Porta única do app para a pedaleira. Converte exceções do protocolo em
-// [Resultado] e registra a causa real no log.
+// [Resultado] e registra a causa real no log. Ler, gravar e listar valem para
+// a [areaEmUso] (firmware 1.18+), que a biblioteca escolhe: assim nenhum
+// chamador consegue gravar numa área diferente da que está na tela.
+import '../nucleo/modelo/areas_presets.dart';
 import '../nucleo/modelo/documento_preset.dart';
 import '../nucleo/modelo/slot_preset.dart';
 import '../nucleo/protocolo/api_anagram.dart';
@@ -13,21 +16,30 @@ class RepositorioPedaleira {
 
   final ApiAnagram _api;
 
+  /// Id da área de presets em uso ("user", "user-2"…); nulo = sem áreas.
+  String? areaEmUso;
+
   Stream<MedicaoChamada> get medicoes => _api.cliente.medicoes;
 
   Future<Resultado<String>> firmware({Duration? prazo}) =>
       _proteger('firmware', () => _api.firmware(prazo: prazo));
 
-  Future<Resultado<List<ResumoSlot>>> listarSlots() => _proteger('listar', _api.listarSlots);
+  Future<Resultado<AreasDaPedaleira>> lerAreas() => _proteger('ler áreas', _api.lerAreas);
+
+  Future<Resultado<void>> tornarAreaAtiva(String area) =>
+      _proteger('tornar $area ativa', () => _api.tornarAreaAtiva(area));
+
+  Future<Resultado<List<ResumoSlot>>> listarSlots() =>
+      _proteger('listar', () => _api.listarSlots(area: areaEmUso));
 
   Future<Resultado<DocumentoPreset?>> lerPreset(SlotPreset slot) =>
-      _proteger('ler ${slot.rotulo}', () => _api.lerPreset(slot));
+      _proteger('ler ${slot.rotulo}', () => _api.lerPreset(slot, area: areaEmUso));
 
   Future<Resultado<void>> tocarAoVivo(DocumentoPreset preset) =>
       _proteger('tocar ao vivo', () => _api.tocarAoVivo(preset));
 
   Future<Resultado<void>> salvar(SlotPreset slot, DocumentoPreset preset) =>
-      _proteger('salvar ${slot.rotulo}', () => _api.salvar(slot, preset));
+      _proteger('salvar ${slot.rotulo}', () => _api.salvar(slot, preset, area: areaEmUso));
 
   Future<Resultado<T>> _proteger<T>(String operacao, Future<T> Function() acao) async {
     try {
