@@ -127,8 +127,12 @@ class DocumentoPreset {
         trocarVinculos(p, de, para);
       });
 
-  DocumentoPreset semBloco(PosicaoBloco posicao) =>
-      _editar((p) => _blocosBrutos(p, posicao.linha).remove('${posicao.casa}'));
+  /// Remove o bloco e solta os controles que mexiam nele: senão o próximo
+  /// bloco posto na casa herdaria o pot ou o pedal sem a pessoa pedir.
+  DocumentoPreset semBloco(PosicaoBloco posicao) => _editar((p) {
+        _blocosBrutos(p, posicao.linha).remove('${posicao.casa}');
+        soltarVinculos(p, posicao);
+      });
 
   bool _mudarSobreposicao(Map<String, dynamic> bloco, String simbolo, num valor) {
     final cena = mapaOuVazio(bloco['scenes'])['$cenaAtiva'];

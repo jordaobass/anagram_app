@@ -102,4 +102,16 @@ void main() {
     expect(podeMover(documento, const PosicaoBloco(1, 1), split), isFalse, reason: 'trocar também tiraria o split do lugar');
     expect(podeMover(documento, const PosicaoBloco(1, 1), const PosicaoBloco(1, 4)), isTrue);
   });
+
+  test('should_release_the_controls_of_a_removed_block_when_another_block_takes_its_slot', () {
+    final preset = DocumentoPreset.doJson(lerExemplo('1'));
+    final wah = const PosicaoBloco(1, 2);
+    expect(_alvosDosControles(preset)['exp.pedal'], ['1·2'], reason: 'no exemplo 1 o pedal move o wah');
+
+    final semWah = preset.semBloco(wah);
+
+    expect(_alvosDosControles(semWah).containsKey('exp.pedal'), isFalse,
+        reason: 'o pedal não pode passar a mexer no próximo bloco posto nessa casa');
+    expect(_alvosDosControles(semWah).keys, containsAll(['pot1', 'pot2']), reason: 'os outros controles ficam');
+  });
 }
