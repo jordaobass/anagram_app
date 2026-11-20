@@ -8,6 +8,25 @@ Um código Flutter só para macOS, Windows, Linux, Android e navegador (Chrome/E
 
 Sem anúncios, sem telemetria e sem chamadas de rede: o app só conversa com a pedaleira pelo USB.
 
+## Download
+
+**[Baixar a última versão](https://github.com/jordaobass/anagram_app/releases/latest)**: os zips de cada
+sistema ficam na página da versão.
+
+- **Windows 10/11 (64 bits):** extraia o zip e abra `Anagram App.exe`. Não há instalador. Mantenha os
+  arquivos juntos: a `hidapi.dll` da pasta é quem fala com a pedaleira pelo USB. O app ainda não é
+  assinado, então na primeira vez o Windows pode mostrar "O Windows protegeu o computador": clique em
+  **Mais informações › Executar assim mesmo**.
+- **macOS (Apple Silicon):** arraste o app para Aplicativos. Ainda não é notarizado; na primeira vez,
+  libere em **Ajustes do Sistema › Privacidade e Segurança › Abrir Mesmo Assim**.
+
+Antes de conectar, feche o **Darkglass Suite** (só um programa por vez fala com a Anagram) e, para o app
+trocar de slot, ligue o **USB MIDI** nos ajustes de MIDI da pedaleira. Sem pedaleira, use
+**Abrir demonstração**.
+
+> Os builds publicados usam a arte própria do app. A arte da Darkglass não vai junto (veja
+> [Arte de terceiros](#arte-de-terceiros)).
+
 ## Organização do repositório
 
 | Pasta | O que tem |
