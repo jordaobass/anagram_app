@@ -72,8 +72,6 @@ abstract final class Medidas {
   static const double casaMinima = 56;
   static const double casaMaxima = 112;
 
-  /// Abaixo disto a casa mostra a abreviação do bloco em vez do nome.
-  static const double casaRotuloCompleto = 76;
   static const double arteNaCasa = 0.86;
 
   /// Diâmetro do furo da casa vazia, em fração da largura da casa.
@@ -93,7 +91,9 @@ abstract final class Medidas {
   static const double espessuraPonteiroKnob = 0.7;
   static const double cantoneira = 14;
   static const double linhaSinal = 2;
-  static const double alturaRotuloCasa = 20;
+  /// Duas linhas do nome do bloco embaixo da arte da casa.
+  static const double alturaRotuloCasa = 28;
+  static const double entrelinhaRotuloCasa = 1.15;
   static const double arrasteFaixaInteira = 200;
   static const double barraConexaoAltura = 64;
   static const double larguraDialogo = 440;

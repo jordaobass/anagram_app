@@ -100,15 +100,20 @@ class CasaBloco extends ConsumerWidget {
         const SizedBox(height: Espacos.xs),
         Container(height: Medidas.fitaCategoria, color: Cores.daFamilia(definicao.familia)),
         const SizedBox(height: Espacos.xxs),
-        Text(
-          definicao.abreviacao.isNotEmpty && interno < Medidas.casaRotuloCompleto ? definicao.abreviacao : definicao.nome,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.center,
-          style: Theme.of(context)
-              .textTheme
-              .labelMedium
-              ?.copyWith(color: ligado ? Cores.texto : Cores.textoSecundario),
+        // o nome inteiro, como na tela da pedaleira: a abreviação ("SUP") não
+        // diz qual bloco é; duas linhas cabem "Black & Yellow TLIII"
+        SizedBox(
+          height: Medidas.alturaRotuloCasa,
+          child: Text(
+            definicao.nome,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: ligado ? Cores.texto : Cores.textoSecundario,
+                  height: Medidas.entrelinhaRotuloCasa,
+                ),
+          ),
         ),
       ],
     );
