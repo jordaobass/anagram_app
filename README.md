@@ -8,6 +8,8 @@ Um código Flutter só para macOS, Windows, Linux, Android e navegador (Chrome/E
 
 Sem anúncios, sem telemetria e sem chamadas de rede: o app só conversa com a pedaleira pelo USB.
 
+Interface em **português, inglês e espanhol** (segue o idioma do sistema; dá para trocar na tela Sobre).
+
 ## Como instalar
 
 O app não tem instalador: é uma pasta que você extrai e abre. Todas as versões ficam em
