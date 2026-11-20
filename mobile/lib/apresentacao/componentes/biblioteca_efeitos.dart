@@ -1,5 +1,6 @@
 // Biblioteca de efeitos: abre ao tocar no "+" de uma casa vazia. Os blocos do
-// catálogo vêm por categoria, com a arte de cada um e busca por nome.
+// catálogo vêm por família (drive, modulação, delay…), com a arte de cada um,
+// busca por nome e filtro por família.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,6 +8,7 @@ import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/provedores.dart';
 import '../../nucleo/catalogo/biblioteca_blocos.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
+import '../../nucleo/catalogo/familia_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'arte_bloco.dart';
@@ -31,11 +33,13 @@ class _BibliotecaEfeitos extends ConsumerStatefulWidget {
 
 class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
   String _busca = '';
+  FamiliaBloco? _familia;
 
   @override
   Widget build(BuildContext context) {
     final catalogo = ref.watch(catalogoProvider).value;
-    final grupos = catalogo == null ? const <GrupoBiblioteca>[] : blocosDaBiblioteca(catalogo, busca: _busca);
+    final grupos =
+        catalogo == null ? const <GrupoBiblioteca>[] : blocosDaBiblioteca(catalogo, busca: _busca, familia: _familia);
     return Dialog(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: Medidas.larguraBiblioteca, maxHeight: Medidas.alturaBiblioteca),
@@ -45,7 +49,9 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
             _cabecalho(context),
             const SizedBox(height: Espacos.m),
             _campoBusca(),
-            const SizedBox(height: Espacos.m),
+            const SizedBox(height: Espacos.s),
+            if (catalogo != null) _filtros(familiasDaBiblioteca(catalogo)),
+            const SizedBox(height: Espacos.s),
             Expanded(child: catalogo == null ? const Center(child: CircularProgressIndicator()) : _lista(context, grupos)),
           ]),
         ),
@@ -68,9 +74,26 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
         onChanged: (texto) => setState(() => _busca = texto),
       );
 
+  /// "Todos" e uma pílula por família com efeitos; tocar de novo na escolhida
+  /// volta a "Todos".
+  Widget _filtros(List<FamiliaBloco> familias) => Wrap(spacing: Espacos.xs, runSpacing: Espacos.xs, children: [
+        _filtro('todos', 'Todos', selecionado: _familia == null, aoTocar: () => setState(() => _familia = null)),
+        for (final f in familias)
+          _filtro(f.name, f.rotulo,
+              selecionado: _familia == f, aoTocar: () => setState(() => _familia = _familia == f ? null : f)),
+      ]);
+
+  Widget _filtro(String chave, String rotulo, {required bool selecionado, required VoidCallback aoTocar}) => ChoiceChip(
+        key: ValueKey('filtro-$chave'),
+        label: Text(rotulo),
+        selected: selecionado,
+        onSelected: (_) => aoTocar(),
+      );
+
   Widget _lista(BuildContext context, List<GrupoBiblioteca> grupos) {
     if (grupos.isEmpty) {
-      return Center(child: Text('Nenhum efeito com "$_busca".', style: Theme.of(context).textTheme.bodyMedium));
+      final onde = _familia == null ? '' : ' em ${_familia!.rotulo}';
+      return Center(child: Text('Nenhum efeito com "$_busca"$onde.', style: Theme.of(context).textTheme.bodyMedium));
     }
     return ListView(children: [
       for (final grupo in grupos) ...[

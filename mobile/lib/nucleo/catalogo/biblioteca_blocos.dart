@@ -5,6 +5,7 @@ import '../modelo/bloco_preset.dart';
 import '../modelo/documento_preset.dart';
 import 'catalogo_blocos.dart';
 import 'definicao_bloco.dart';
+import 'familia_bloco.dart';
 
 class GrupoBiblioteca {
   const GrupoBiblioteca(this.categoria, this.blocos);
@@ -58,21 +59,32 @@ Map<String, dynamic> blocoNovo(DefinicaoBloco definicao) {
   };
 }
 
-/// Efeitos por categoria, em ordem alfabética, sem os blocos de sistema. A
-/// busca ignora maiúsculas e pega nome ou abreviação.
-List<GrupoBiblioteca> blocosDaBiblioteca(CatalogoBlocos catalogo, {String busca = ''}) {
+/// Efeitos agrupados pela família (a mesma da cor e do filtro), na ordem do
+/// enum, sem os blocos de sistema. A busca ignora maiúsculas e pega nome ou
+/// abreviação; [familia] restringe a uma família só.
+List<GrupoBiblioteca> blocosDaBiblioteca(CatalogoBlocos catalogo, {String busca = '', FamiliaBloco? familia}) {
   final termo = busca.trim().toLowerCase();
-  final porCategoria = <String, List<DefinicaoBloco>>{};
-  for (final bloco in catalogo.todos) {
-    if (_blocosDeSistema.contains(bloco.uri) || !_casaComBusca(bloco, termo)) continue;
-    porCategoria.putIfAbsent(bloco.categoria, () => []).add(bloco);
+  final porFamilia = <FamiliaBloco, List<DefinicaoBloco>>{};
+  for (final bloco in _efeitos(catalogo)) {
+    if (familia != null && bloco.familia != familia) continue;
+    if (!_casaComBusca(bloco, termo)) continue;
+    porFamilia.putIfAbsent(bloco.familia, () => []).add(bloco);
   }
-  final categorias = porCategoria.keys.toList()..sort();
   return [
-    for (final categoria in categorias)
-      GrupoBiblioteca(categoria, porCategoria[categoria]!..sort((a, b) => a.nome.compareTo(b.nome))),
+    for (final f in FamiliaBloco.values)
+      if (porFamilia[f] case final blocos?) GrupoBiblioteca(f.rotulo, blocos..sort((a, b) => a.nome.compareTo(b.nome))),
   ];
 }
+
+/// Famílias que têm ao menos um efeito na biblioteca: só elas viram filtro,
+/// para nenhum filtro levar a uma lista vazia.
+List<FamiliaBloco> familiasDaBiblioteca(CatalogoBlocos catalogo) {
+  final presentes = {for (final bloco in _efeitos(catalogo)) bloco.familia};
+  return [for (final f in FamiliaBloco.values) if (presentes.contains(f)) f];
+}
+
+Iterable<DefinicaoBloco> _efeitos(CatalogoBlocos catalogo) =>
+    catalogo.todos.where((bloco) => !_blocosDeSistema.contains(bloco.uri));
 
 bool _casaComBusca(DefinicaoBloco bloco, String termo) =>
     termo.isEmpty || bloco.nome.toLowerCase().contains(termo) || bloco.abreviacao.toLowerCase().contains(termo);

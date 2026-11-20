@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:anagram_app/nucleo/catalogo/biblioteca_blocos.dart';
+import 'package:anagram_app/nucleo/catalogo/familia_bloco.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:anagram_app/nucleo/modelo/documento_preset.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -113,5 +114,31 @@ void main() {
     expect(_alvosDosControles(semWah).containsKey('exp.pedal'), isFalse,
         reason: 'o pedal não pode passar a mexer no próximo bloco posto nessa casa');
     expect(_alvosDosControles(semWah).keys, containsAll(['pot1', 'pot2']), reason: 'os outros controles ficam');
+  });
+
+  test('should_list_only_modulation_effects_when_the_modulation_filter_is_chosen', () {
+    final grupos = blocosDaBiblioteca(catalogo, familia: FamiliaBloco.modulacao);
+    final blocos = [for (final g in grupos) ...g.blocos];
+
+    expect(blocos, isNotEmpty);
+    expect(blocos.map((b) => b.familia).toSet(), {FamiliaBloco.modulacao});
+    expect(grupos.map((g) => g.categoria), ['Modulação'], reason: 'as seções usam o mesmo rótulo do filtro');
+  });
+
+  test('should_combine_the_filter_with_the_name_search_when_both_are_used', () {
+    final semFiltro = blocosDaBiblioteca(catalogo, busca: 'cabinet');
+    final comFiltro = blocosDaBiblioteca(catalogo, busca: 'cabinet', familia: FamiliaBloco.drive);
+
+    expect(semFiltro, isNotEmpty);
+    expect(comFiltro, isEmpty, reason: 'nenhum gabinete é drive');
+  });
+
+  test('should_offer_as_filters_only_the_families_that_have_effects_in_the_library', () {
+    final familias = familiasDaBiblioteca(catalogo);
+
+    expect(familias, containsAll([FamiliaBloco.drive, FamiliaBloco.modulacao, FamiliaBloco.delay, FamiliaBloco.reverb]));
+    for (final familia in familias) {
+      expect(blocosDaBiblioteca(catalogo, familia: familia), isNotEmpty, reason: '$familia não pode ser filtro vazio');
+    }
   });
 }

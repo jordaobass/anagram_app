@@ -54,6 +54,18 @@ void main() {
     expect(find.text('NÃO SALVO'), findsOneWidget);
   });
 
+  testWidgets('should_show_only_modulation_effects_when_the_modulation_filter_is_tapped', (tester) async {
+    await _abrirPresetComBuracos(tester);
+    await tester.tap(_casa(1, 4));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('filtro-modulacao')));
+    await tester.pumpAndSettle();
+
+    final subtitulos = tester.widgetList<ListTile>(find.byType(ListTile)).map((t) => (t.subtitle! as Text).data).toSet();
+    expect(subtitulos, {'Modulação'});
+  });
+
   testWidgets('should_explain_how_to_add_an_effect_when_a_new_preset_has_no_blocks', (tester) async {
     await abrirDemonstracao(tester);
     await tocarNoSlot(tester, '03C');
