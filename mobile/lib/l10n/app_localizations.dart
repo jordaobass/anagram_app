@@ -194,31 +194,31 @@ abstract class AppLocalizations {
   ///
   /// In pt, this message translates to:
   /// **'Resposta inesperada da pedaleira.'**
-  String conexaoRespostaInvalida(String detalhe);
+  String get conexaoRespostaInvalida;
 
   /// No description provided for @erroOcupada.
   ///
   /// In pt, this message translates to:
   /// **'Outro programa está segurando a pedaleira.'**
-  String erroOcupada(String detalhe);
+  String get erroOcupada;
 
   /// No description provided for @erroDesconectado.
   ///
   /// In pt, this message translates to:
   /// **'A pedaleira está desconectada.'**
-  String erroDesconectado(String detalhe);
+  String get erroDesconectado;
 
   /// No description provided for @erroSemResposta.
   ///
   /// In pt, this message translates to:
   /// **'A pedaleira não respondeu a tempo.'**
-  String erroSemResposta(String detalhe);
+  String get erroSemResposta;
 
   /// No description provided for @erroRespostaInvalida.
   ///
   /// In pt, this message translates to:
   /// **'A pedaleira recusou ou mandou uma resposta inesperada.'**
-  String erroRespostaInvalida(String detalhe);
+  String get erroRespostaInvalida;
 
   /// Recusa do próprio app (ex. "Espere a gravação em curso terminar."): já é uma frase para a pessoa, não detalhe do protocolo.
   ///
@@ -230,7 +230,7 @@ abstract class AppLocalizations {
   ///
   /// In pt, this message translates to:
   /// **'Esta plataforma não consegue falar com a pedaleira.'**
-  String erroSemSuporte(String detalhe);
+  String get erroSemSuporte;
 
   /// No description provided for @avisoDemonstracaoFalhou.
   ///
@@ -266,7 +266,7 @@ abstract class AppLocalizations {
   ///
   /// In pt, this message translates to:
   /// **'A pedaleira não trocou de área.'**
-  String avisoAreaNaoTrocou(String detalhe);
+  String get avisoAreaNaoTrocou;
 
   /// No description provided for @naoSalvou.
   ///
@@ -1119,18 +1119,6 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Abrindo a demonstração…'**
   String get txEstadoAbrindoDemonstracao;
-
-  /// No description provided for @viaMeio.
-  ///
-  /// In pt, this message translates to:
-  /// **'Via {meio}.'**
-  String viaMeio(String meio);
-
-  /// No description provided for @areaAtivaNaPedaleira.
-  ///
-  /// In pt, this message translates to:
-  /// **'{nome} · ativa na pedaleira'**
-  String areaAtivaNaPedaleira(String nome);
 
   /// Nome do preset criado num slot vazio; vai gravado na pedaleira.
   ///

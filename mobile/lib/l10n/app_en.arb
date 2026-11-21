@@ -170,7 +170,5 @@
   "txAtiva": "ACTIVE",
   "txAtivaNaPedaleiraDica": "Area active on the pedal",
   "txEstadoAbrindoDemonstracao": "Opening the demo…",
-  "viaMeio": "Via {meio}.",
-  "areaAtivaNaPedaleira": "{nome} · active on the pedal",
   "cdNovoPreset": "New preset"
 }
