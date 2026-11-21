@@ -27,36 +27,41 @@ class SeletorTipoDrive extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
     final tipos = TiposDeDrive(parametro.opcoes);
-    final atual = parametro.indiceOpcao(valor);
-    final (tipo, modo) = tipos.doIndice(atual);
-    final modos = tipos.modos(tipo);
-    void gravar(int indice) {
-      if (indice != atual) aoMudar(parametro.valorDaOpcao(indice), arrastando: false);
-    }
-
+    final (tipo, modo) = tipos.doIndice(parametro.indiceOpcao(valor));
     return SizedBox(
       width: largura,
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
-        _BotaoMenu(
-          chave: 'tipo-${parametro.simbolo}',
-          rotulo: l.mbTipoDrive,
-          opcoes: tipos.tipos,
-          atual: tipo,
-          cor: cor,
-          aoEscolher: (novo) => gravar(tipos.trocarTipo(atual, novo)),
-        ),
+        _seletorTipo(context, tipos, tipo),
         const SizedBox(height: Espacos.s),
-        _BotaoMenu(
-          chave: 'modo-${parametro.simbolo}',
-          rotulo: l.mbModoDrive,
-          opcoes: modos,
-          atual: modo ?? '—',
-          cor: cor,
-          aoEscolher: modos.isEmpty ? null : (novo) => gravar(tipos.indice(tipo, novo)!),
-        ),
+        _seletorModo(context, tipos, tipo, modo),
       ]),
+    );
+  }
+
+  /// Grava a opção escolhida, se for outra.
+  void _gravar(int indice) {
+    if (indice != parametro.indiceOpcao(valor)) aoMudar(parametro.valorDaOpcao(indice), arrastando: false);
+  }
+
+  Widget _seletorTipo(BuildContext context, TiposDeDrive tipos, String tipo) => _BotaoMenu(
+        chave: 'tipo-${parametro.simbolo}',
+        rotulo: AppLocalizations.of(context).mbTipoDrive,
+        opcoes: tipos.tipos,
+        atual: tipo,
+        cor: cor,
+        aoEscolher: (novo) => _gravar(tipos.trocarTipo(parametro.indiceOpcao(valor), novo)),
+      );
+
+  Widget _seletorModo(BuildContext context, TiposDeDrive tipos, String tipo, String? modo) {
+    final modos = tipos.modos(tipo);
+    return _BotaoMenu(
+      chave: 'modo-${parametro.simbolo}',
+      rotulo: AppLocalizations.of(context).mbModoDrive,
+      opcoes: modos,
+      atual: modo ?? '—',
+      cor: cor,
+      aoEscolher: modos.isEmpty ? null : (novo) => _gravar(tipos.indice(tipo, novo)!),
     );
   }
 }

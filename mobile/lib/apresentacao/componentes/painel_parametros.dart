@@ -54,18 +54,25 @@ class PainelParametros extends ConsumerWidget {
         CabecalhoBloco(bloco: bloco, definicao: definicao, cena: cena),
         const SizedBox(height: Espacos.m),
         SeletorGabinete(bloco: bloco, definicao: definicao),
-        if (arranjoMultibanda(definicao.uri) case final arranjo?)
-          PainelMultibanda(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros)
-        else if (ehEqParametrico(definicao.uri))
-          PainelEqParametrico(bloco: bloco, definicao: definicao, cena: cena, parametros: parametros)
-        else if (arranjoSintetizador(definicao.uri) case final arranjo?)
-          PainelSintetizador(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros)
-        else
-          LayoutBuilder(
-              builder: (context, restricoes) =>
-                  _controles(context, ref, restricoes.maxWidth, parametros, bloco, definicao, cena)),
+        _painelDoBloco(ref, parametros, bloco, definicao, cena),
       ]),
     );
+  }
+
+  /// Os blocos com tela própria (multibanda, paramétrico, synth); o resto, knobs.
+  Widget _painelDoBloco(
+      WidgetRef ref, List<DefinicaoParametro> parametros, BlocoPreset bloco, DefinicaoBloco definicao, int cena) {
+    if (arranjoMultibanda(definicao.uri) case final arranjo?) {
+      return PainelMultibanda(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros);
+    }
+    if (ehEqParametrico(definicao.uri)) {
+      return PainelEqParametrico(bloco: bloco, definicao: definicao, cena: cena, parametros: parametros);
+    }
+    if (arranjoSintetizador(definicao.uri) case final arranjo?) {
+      return PainelSintetizador(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros);
+    }
+    return LayoutBuilder(
+        builder: (context, restricoes) => _controles(context, ref, restricoes.maxWidth, parametros, bloco, definicao, cena));
   }
 
   Widget _controles(BuildContext context, WidgetRef ref, double largura, List<DefinicaoParametro> parametros,

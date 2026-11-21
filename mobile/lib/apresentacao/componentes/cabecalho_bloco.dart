@@ -38,8 +38,6 @@ class CabecalhoBloco extends ConsumerWidget {
 
   Widget _identidade(BuildContext context, WidgetRef ref) {
     final ligado = bloco.habilitadoNaCena(cena);
-    final tema = Theme.of(context).textTheme;
-    final l = AppLocalizations.of(context);
     return Row(children: [
       // duplo clique no pedal = o botão LIGADO, como pisar no footswitch
       ToqueDuplo(
@@ -49,24 +47,26 @@ class CabecalhoBloco extends ConsumerWidget {
             definicao: definicao, tamanho: Medidas.artePainelBloco, ligado: ligado, arquivoIr: bloco.arquivoDeIr),
       ),
       const SizedBox(width: Espacos.m),
-      Expanded(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(l.nomeDoBloco(definicao), style: tema.titleLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
-          Text(l.blocoPosicao(l.familia(definicao.familia), bloco.posicao.linha, bloco.posicao.casa),
-              style: tema.bodySmall),
-          Text(arrastoComMouse ? l.arrasteComMouse : l.arrasteNoToque,
-              style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
-          Text(arrastoComMouse ? l.uiDicaDuploClique : l.uiDicaToqueDuplo,
-              style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
-          // o balão dos parâmetros não se descobre olhando: a dica fica aqui,
-          // não num "?" em cada rótulo (cortava nomes que cabiam)
-          Text(arrastoComMouse ? l.ttDicaMouse : l.ttDicaToque,
-              key: const ValueKey('dica-explicacao'), style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
-          if (bloco.bypassSoNaCena(cena))
-            Text(ligado ? l.ligadoSoNaCena(cena) : l.desligadoSoNaCena(cena),
-                style: tema.labelSmall?.copyWith(color: Cores.aluminioClaro)),
-        ]),
-      ),
+      Expanded(child: _textos(context, ligado: ligado)),
+    ]);
+  }
+
+  /// Nome, onde o bloco está e as dicas de gesto do aparelho em uso.
+  Widget _textos(BuildContext context, {required bool ligado}) {
+    final tema = Theme.of(context).textTheme;
+    final l = AppLocalizations.of(context);
+    final dica = tema.bodySmall?.copyWith(color: Cores.textoSecundario);
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text(l.nomeDoBloco(definicao), style: tema.titleLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
+      Text(l.blocoPosicao(l.familia(definicao.familia), bloco.posicao.linha, bloco.posicao.casa), style: tema.bodySmall),
+      Text(arrastoComMouse ? l.arrasteComMouse : l.arrasteNoToque, style: dica),
+      Text(arrastoComMouse ? l.uiDicaDuploClique : l.uiDicaToqueDuplo, style: dica),
+      // o balão dos parâmetros não se descobre olhando: a dica fica aqui,
+      // não num "?" em cada rótulo (cortava nomes que cabiam)
+      Text(arrastoComMouse ? l.ttDicaMouse : l.ttDicaToque, key: const ValueKey('dica-explicacao'), style: dica),
+      if (bloco.bypassSoNaCena(cena))
+        Text(ligado ? l.ligadoSoNaCena(cena) : l.desligadoSoNaCena(cena),
+            style: tema.labelSmall?.copyWith(color: Cores.aluminioClaro)),
     ]);
   }
 
