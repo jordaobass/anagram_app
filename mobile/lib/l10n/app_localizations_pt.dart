@@ -629,4 +629,34 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get cdNovoPreset => 'Novo preset';
+
+  @override
+  String get uiPresets => 'PRESETS';
+
+  @override
+  String get uiMaisAcoesPreset => 'Mais ações do preset';
+
+  @override
+  String get uiMenuArquivo => 'Importar ou exportar o preset';
+
+  @override
+  String get uiDescartarEdicoes => 'Descartar edições';
+
+  @override
+  String get uiFecharBiblioteca => 'Fechar';
+
+  @override
+  String get uiCena => 'CENA';
+
+  @override
+  String get uiSeloDesligado => 'OFF';
+
+  @override
+  String get uiRenomear => 'Renomear';
+
+  @override
+  String get uiDicaDuploClique => 'Duplo clique no pedal liga e desliga';
+
+  @override
+  String get uiDicaToqueDuplo => 'Toque duplo no pedal liga e desliga';
 }

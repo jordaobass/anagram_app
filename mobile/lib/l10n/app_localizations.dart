@@ -1125,6 +1125,66 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Novo preset'**
   String get cdNovoPreset;
+
+  /// No description provided for @uiPresets.
+  ///
+  /// In pt, this message translates to:
+  /// **'PRESETS'**
+  String get uiPresets;
+
+  /// No description provided for @uiMaisAcoesPreset.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mais ações do preset'**
+  String get uiMaisAcoesPreset;
+
+  /// No description provided for @uiMenuArquivo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Importar ou exportar o preset'**
+  String get uiMenuArquivo;
+
+  /// No description provided for @uiDescartarEdicoes.
+  ///
+  /// In pt, this message translates to:
+  /// **'Descartar edições'**
+  String get uiDescartarEdicoes;
+
+  /// No description provided for @uiFecharBiblioteca.
+  ///
+  /// In pt, this message translates to:
+  /// **'Fechar'**
+  String get uiFecharBiblioteca;
+
+  /// No description provided for @uiCena.
+  ///
+  /// In pt, this message translates to:
+  /// **'CENA'**
+  String get uiCena;
+
+  /// No description provided for @uiSeloDesligado.
+  ///
+  /// In pt, this message translates to:
+  /// **'OFF'**
+  String get uiSeloDesligado;
+
+  /// No description provided for @uiRenomear.
+  ///
+  /// In pt, this message translates to:
+  /// **'Renomear'**
+  String get uiRenomear;
+
+  /// No description provided for @uiDicaDuploClique.
+  ///
+  /// In pt, this message translates to:
+  /// **'Duplo clique no pedal liga e desliga'**
+  String get uiDicaDuploClique;
+
+  /// No description provided for @uiDicaToqueDuplo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Toque duplo no pedal liga e desliga'**
+  String get uiDicaToqueDuplo;
 }
 
 class _AppLocalizationsDelegate

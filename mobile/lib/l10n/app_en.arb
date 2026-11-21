@@ -170,5 +170,15 @@
   "txAtiva": "ACTIVE",
   "txAtivaNaPedaleiraDica": "Area active on the pedal",
   "txEstadoAbrindoDemonstracao": "Opening the demo…",
-  "cdNovoPreset": "New preset"
+  "cdNovoPreset": "New preset",
+  "uiPresets": "PRESETS",
+  "uiMaisAcoesPreset": "More preset actions",
+  "uiMenuArquivo": "Import or export the preset",
+  "uiDescartarEdicoes": "Discard edits",
+  "uiFecharBiblioteca": "Close",
+  "uiCena": "SCENE",
+  "uiSeloDesligado": "OFF",
+  "uiRenomear": "Rename",
+  "uiDicaDuploClique": "Double-click the pedal to turn it on or off",
+  "uiDicaToqueDuplo": "Double-tap the pedal to turn it on or off"
 }

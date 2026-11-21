@@ -467,5 +467,15 @@
   "cdNovoPreset": "Novo preset",
   "@cdNovoPreset": {
     "description": "Nome do preset criado num slot vazio; vai gravado na pedaleira."
-  }
+  },
+  "uiPresets": "PRESETS",
+  "uiMaisAcoesPreset": "Mais ações do preset",
+  "uiMenuArquivo": "Importar ou exportar o preset",
+  "uiDescartarEdicoes": "Descartar edições",
+  "uiFecharBiblioteca": "Fechar",
+  "uiCena": "CENA",
+  "uiSeloDesligado": "OFF",
+  "uiRenomear": "Renomear",
+  "uiDicaDuploClique": "Duplo clique no pedal liga e desliga",
+  "uiDicaToqueDuplo": "Toque duplo no pedal liga e desliga"
 }

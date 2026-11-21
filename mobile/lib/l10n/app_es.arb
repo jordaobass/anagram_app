@@ -170,5 +170,15 @@
   "txAtiva": "ACTIVA",
   "txAtivaNaPedaleiraDica": "Área activa en la pedalera",
   "txEstadoAbrindoDemonstracao": "Abriendo la demostración…",
-  "cdNovoPreset": "Preset nuevo"
+  "cdNovoPreset": "Preset nuevo",
+  "uiPresets": "PRESETS",
+  "uiMaisAcoesPreset": "Más acciones del preset",
+  "uiMenuArquivo": "Importar o exportar el preset",
+  "uiDescartarEdicoes": "Descartar ediciones",
+  "uiFecharBiblioteca": "Cerrar",
+  "uiCena": "ESCENA",
+  "uiSeloDesligado": "OFF",
+  "uiRenomear": "Renombrar",
+  "uiDicaDuploClique": "Doble clic en el pedal lo enciende y apaga",
+  "uiDicaToqueDuplo": "Doble toque en el pedal lo enciende y apaga"
 }

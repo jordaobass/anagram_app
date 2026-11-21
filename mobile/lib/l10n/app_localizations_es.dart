@@ -628,4 +628,34 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cdNovoPreset => 'Preset nuevo';
+
+  @override
+  String get uiPresets => 'PRESETS';
+
+  @override
+  String get uiMaisAcoesPreset => 'Más acciones del preset';
+
+  @override
+  String get uiMenuArquivo => 'Importar o exportar el preset';
+
+  @override
+  String get uiDescartarEdicoes => 'Descartar ediciones';
+
+  @override
+  String get uiFecharBiblioteca => 'Cerrar';
+
+  @override
+  String get uiCena => 'ESCENA';
+
+  @override
+  String get uiSeloDesligado => 'OFF';
+
+  @override
+  String get uiRenomear => 'Renombrar';
+
+  @override
+  String get uiDicaDuploClique => 'Doble clic en el pedal lo enciende y apaga';
+
+  @override
+  String get uiDicaToqueDuplo => 'Doble toque en el pedal lo enciende y apaga';
 }
