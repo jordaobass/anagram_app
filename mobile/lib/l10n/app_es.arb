@@ -361,5 +361,14 @@
   "registroSecao": "Registro para soporte",
   "registroOnde": "La app guarda lo que ocurre en este archivo:",
   "registroCopiar": "Copiar registro",
-  "registroCopiado": "Registro copiado. Pégalo en el issue de GitHub junto con lo que pasó."
+  "registroCopiado": "Registro copiado. Pégalo en el issue de GitHub junto con lo que pasó.",
+  "versaoNovaNaBarra": "v{versao} disponible",
+  "versaoNovaBaixar": "DESCARGAR",
+  "versaoNovaLembrarDepois": "Recordar más tarde",
+  "versaoNovaSecao": "Actualizaciones",
+  "versaoNovaVerificar": "Buscar versión nueva al abrir",
+  "versaoNovaVerificarTexto": "Al abrir, la app consulta solo GitHub para saber cuál es la última versión publicada. No se envía ningún dato tuyo. Desactivada, la app no se conecta a internet.",
+  "versaoNovaEmDia": "Tienes la versión más reciente.",
+  "versaoNovaDisponivel": "Versión {versao} disponible.",
+  "versaoNovaSemResposta": "No se pudo comprobar ahora; la app lo intentará de nuevo la próxima vez que se abra."
 }

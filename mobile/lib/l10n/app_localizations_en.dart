@@ -1231,4 +1231,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get registroCopiado => 'Log copied. Paste it in the GitHub issue along with what happened.';
+
+  @override
+  String versaoNovaNaBarra(String versao) {
+    return 'v$versao available';
+  }
+
+  @override
+  String get versaoNovaBaixar => 'DOWNLOAD';
+
+  @override
+  String get versaoNovaLembrarDepois => 'Remind me later';
+
+  @override
+  String get versaoNovaSecao => 'Updates';
+
+  @override
+  String get versaoNovaVerificar => 'Check for a new version on launch';
+
+  @override
+  String get versaoNovaVerificarTexto => 'On launch the app asks only GitHub which version is the latest one published. None of your data is sent. When off, the app does not go online.';
+
+  @override
+  String get versaoNovaEmDia => 'You are on the latest version.';
+
+  @override
+  String versaoNovaDisponivel(String versao) {
+    return 'Version $versao is available.';
+  }
+
+  @override
+  String get versaoNovaSemResposta => 'Could not check right now; the app will try again next time it opens.';
 }

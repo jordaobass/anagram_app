@@ -2268,6 +2268,60 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Registro copiado. Cole na issue do GitHub junto com o que aconteceu.'**
   String get registroCopiado;
+
+  /// Aviso de versão nova: barra de cima e seção Atualizações das Configurações
+  ///
+  /// In pt, this message translates to:
+  /// **'v{versao} disponível'**
+  String versaoNovaNaBarra(String versao);
+
+  /// Aviso de versão nova: barra de cima e seção Atualizações das Configurações
+  ///
+  /// In pt, this message translates to:
+  /// **'BAIXAR'**
+  String get versaoNovaBaixar;
+
+  /// Aviso de versão nova: barra de cima e seção Atualizações das Configurações
+  ///
+  /// In pt, this message translates to:
+  /// **'Lembrar depois'**
+  String get versaoNovaLembrarDepois;
+
+  /// Aviso de versão nova: barra de cima e seção Atualizações das Configurações
+  ///
+  /// In pt, this message translates to:
+  /// **'Atualizações'**
+  String get versaoNovaSecao;
+
+  /// Aviso de versão nova: barra de cima e seção Atualizações das Configurações
+  ///
+  /// In pt, this message translates to:
+  /// **'Verificar versão nova ao abrir'**
+  String get versaoNovaVerificar;
+
+  /// Aviso de versão nova: barra de cima e seção Atualizações das Configurações
+  ///
+  /// In pt, this message translates to:
+  /// **'Ao abrir, o app consulta só o GitHub para saber qual é a última versão publicada. Nenhum dado seu é enviado. Desligado, o app não acessa a internet.'**
+  String get versaoNovaVerificarTexto;
+
+  /// Aviso de versão nova: barra de cima e seção Atualizações das Configurações
+  ///
+  /// In pt, this message translates to:
+  /// **'Você está na versão mais recente.'**
+  String get versaoNovaEmDia;
+
+  /// Aviso de versão nova: barra de cima e seção Atualizações das Configurações
+  ///
+  /// In pt, this message translates to:
+  /// **'Versão {versao} disponível.'**
+  String versaoNovaDisponivel(String versao);
+
+  /// Aviso de versão nova: barra de cima e seção Atualizações das Configurações
+  ///
+  /// In pt, this message translates to:
+  /// **'Não deu para verificar agora; o app tenta de novo na próxima abertura.'**
+  String get versaoNovaSemResposta;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

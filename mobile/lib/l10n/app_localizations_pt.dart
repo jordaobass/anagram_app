@@ -1231,4 +1231,35 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get registroCopiado => 'Registro copiado. Cole na issue do GitHub junto com o que aconteceu.';
+
+  @override
+  String versaoNovaNaBarra(String versao) {
+    return 'v$versao disponível';
+  }
+
+  @override
+  String get versaoNovaBaixar => 'BAIXAR';
+
+  @override
+  String get versaoNovaLembrarDepois => 'Lembrar depois';
+
+  @override
+  String get versaoNovaSecao => 'Atualizações';
+
+  @override
+  String get versaoNovaVerificar => 'Verificar versão nova ao abrir';
+
+  @override
+  String get versaoNovaVerificarTexto => 'Ao abrir, o app consulta só o GitHub para saber qual é a última versão publicada. Nenhum dado seu é enviado. Desligado, o app não acessa a internet.';
+
+  @override
+  String get versaoNovaEmDia => 'Você está na versão mais recente.';
+
+  @override
+  String versaoNovaDisponivel(String versao) {
+    return 'Versão $versao disponível.';
+  }
+
+  @override
+  String get versaoNovaSemResposta => 'Não deu para verificar agora; o app tenta de novo na próxima abertura.';
 }

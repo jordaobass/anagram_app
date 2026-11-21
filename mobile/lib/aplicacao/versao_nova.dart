@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../dados/preferencias_versao.dart';
 import '../nucleo/versao/release_publicada.dart';
 import '../nucleo/versao/versao_semantica.dart';
+import '../plataforma/abrir_link.dart';
 import '../plataforma/consulta_http.dart';
 import 'busca_ultima_release.dart';
 import 'versao_app.dart';
@@ -58,6 +59,9 @@ final consultaHttpProvider = Provider<ConsultaHttp>((ref) => criarConsultaHttp()
 /// Desktop sim, celular e web não (os testes fixam).
 final verificacaoVersaoDisponivelProvider = Provider<bool>((ref) => verificacaoVersaoDisponivel);
 
+/// Abre a página da release no navegador (os testes trocam por um falso).
+final abridorDeLinkProvider = Provider<AbridorDeLink>((ref) => abrirNoNavegador);
+
 final versaoNovaProvider = NotifierProvider<ControladorVersaoNova, EstadoVersaoNova>(ControladorVersaoNova.new);
 
 class ControladorVersaoNova extends Notifier<EstadoVersaoNova> {
@@ -84,6 +88,11 @@ class ControladorVersaoNova extends Notifier<EstadoVersaoNova> {
     if (state.avisoNaBarra case final release?) {
       await _guardar(state.configuracao.copiar(dispensada: release.versao));
     }
+  }
+
+  /// "Baixar": a página da release, onde estão os arquivos de cada sistema.
+  Future<void> baixar(ReleasePublicada release) async {
+    await ref.read(abridorDeLinkProvider)(release.pagina);
   }
 
   Future<void> _verificar() async {

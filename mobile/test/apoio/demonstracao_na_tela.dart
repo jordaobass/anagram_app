@@ -4,12 +4,14 @@ import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
 import 'package:anagram_app/plataforma/servidor_mcp.dart';
+import 'package:anagram_app/dados/preferencias_versao.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 
 import 'app_de_teste.dart';
+import 'versao_falsa.dart';
 
 /// Tamanho lógico de um notebook comum, o padrão dos testes de interface.
 const telaDesktop = Size(1440, 900);
@@ -26,7 +28,9 @@ Future<void> montarApp(WidgetTester tester,
     IndiceMiniaturas? indice,
     PresetsDeFabrica? fabrica,
     ServidorMcp? servidorMcp,
-    bool mcpDisponivel = true}) async {
+    bool mcpDisponivel = true,
+    GithubFalso? github,
+    PreferenciasVersao? preferenciasVersao}) async {
   tester.view.physicalSize = tamanho * densidade;
   tester.view.devicePixelRatio = densidade;
   addTearDown(tester.view.reset);
@@ -36,7 +40,9 @@ Future<void> montarApp(WidgetTester tester,
       indice: indice,
       fabrica: fabrica,
       servidorMcp: servidorMcp,
-      mcpDisponivel: mcpDisponivel));
+      mcpDisponivel: mcpDisponivel,
+      github: github,
+      preferenciasVersao: preferenciasVersao));
   await tester.pumpAndSettle();
 }
 

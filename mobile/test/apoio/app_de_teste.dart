@@ -16,6 +16,9 @@ import 'package:anagram_app/dados/preferencias_mcp.dart';
 import 'package:anagram_app/nucleo/mcp/protocolo_mcp.dart';
 import 'package:anagram_app/plataforma/servidor_mcp.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
+import 'package:anagram_app/aplicacao/versao_nova.dart';
+import 'package:anagram_app/dados/preferencias_versao.dart';
+import 'versao_falsa.dart';
 
 /// Latência fixa: a real varia de execução para execução e sujaria as capturas.
 class CronometroFixo implements Stopwatch {
@@ -36,13 +39,17 @@ const versaoNasCapturas = '0.1.3';
 
 /// [indice]: o índice de arte (o padrão é o das capturas, sem a arte de terceiros).
 /// [fabrica]: os presets de fábrica (o padrão é nenhum, como no build sem a arte).
+/// [github]: a última release roteirizada; sem ele, a verificação de versão
+/// nova fica indisponível (como no celular) e nada aparece nas capturas.
 Widget appDeTeste(
         {List<Override> overrides = const [],
         IdiomaApp? idioma = IdiomaApp.portugues,
         IndiceMiniaturas? indice,
         PresetsDeFabrica? fabrica,
         ServidorMcp? servidorMcp,
-        bool mcpDisponivel = true}) =>
+        bool mcpDisponivel = true,
+        GithubFalso? github,
+        PreferenciasVersao? preferenciasVersao}) =>
     ProviderScope(
       overrides: [
         ...overrides,
@@ -50,6 +57,10 @@ Widget appDeTeste(
         servidorMcpProvider.overrideWithValue(servidorMcp ?? ServidorMcpFalso()),
         preferenciasMcpProvider.overrideWithValue(PreferenciasMcpEmMemoria()),
         mcpDisponivelProvider.overrideWithValue(mcpDisponivel),
+        // nenhum teste de tela chama a rede de verdade
+        consultaHttpProvider.overrideWithValue(github ?? GithubFalso()),
+        verificacaoVersaoDisponivelProvider.overrideWithValue(github != null),
+        preferenciasVersaoProvider.overrideWithValue(preferenciasVersao ?? PreferenciasVersaoEmMemoria()),
         cronometroProvider.overrideWithValue(CronometroFixo.new),
         catalogoProvider.overrideWith((ref) async => lerCatalogo()),
         explicacoesProvider.overrideWith((ref) async => lerExplicacoes()),

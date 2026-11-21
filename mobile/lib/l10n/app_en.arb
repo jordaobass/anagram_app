@@ -361,5 +361,14 @@
   "registroSecao": "Log for support",
   "registroOnde": "The app keeps a log of what happens in this file:",
   "registroCopiar": "Copy log",
-  "registroCopiado": "Log copied. Paste it in the GitHub issue along with what happened."
+  "registroCopiado": "Log copied. Paste it in the GitHub issue along with what happened.",
+  "versaoNovaNaBarra": "v{versao} available",
+  "versaoNovaBaixar": "DOWNLOAD",
+  "versaoNovaLembrarDepois": "Remind me later",
+  "versaoNovaSecao": "Updates",
+  "versaoNovaVerificar": "Check for a new version on launch",
+  "versaoNovaVerificarTexto": "On launch the app asks only GitHub which version is the latest one published. None of your data is sent. When off, the app does not go online.",
+  "versaoNovaEmDia": "You are on the latest version.",
+  "versaoNovaDisponivel": "Version {versao} is available.",
+  "versaoNovaSemResposta": "Could not check right now; the app will try again next time it opens."
 }
