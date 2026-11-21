@@ -1,4 +1,5 @@
-// Cadeia em grade: 2 linhas × 12 casas sobre a linha do sinal.
+// Cadeia em grade: 2 linhas × 12 casas, entre o jaque IN e o OUT, com o
+// caminho do sinal desenhado por trás (ver PintorLinhaSinal).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,8 +22,9 @@ class GradeBlocos extends ConsumerWidget {
     if (documento == null) return const SizedBox.shrink();
     return LayoutBuilder(builder: (context, restricoes) {
       const casas = PosicaoBloco.casasPorLinha;
-      final largura = ((restricoes.maxWidth - (casas - 1) * Espacos.s) / casas).clamp(Medidas.casaMinima, Medidas.casaMaxima);
-      final geometria = _geometria(largura);
+      final util = restricoes.maxWidth - Medidas.margemJaque * 2 - (casas - 1) * Espacos.s;
+      final largura = (util / casas).clamp(Medidas.casaMinima, Medidas.casaMaxima);
+      final geometria = geometriaDaCasa(largura);
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: SizedBox(
@@ -30,18 +32,23 @@ class GradeBlocos extends ConsumerWidget {
           height: geometria.alturaLinha * 2 + Espacos.s,
           child: CustomPaint(
             painter: _pintor(documento, geometria),
-            child: Column(children: [
-              _linha(context, ref, documento, 1, largura),
-              const SizedBox(height: Espacos.s),
-              _linha(context, ref, documento, 2, largura),
-            ]),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Medidas.margemJaque),
+              child: Column(children: [
+                _linha(context, ref, documento, 1, largura),
+                const SizedBox(height: Espacos.s),
+                _linha(context, ref, documento, 2, largura),
+              ]),
+            ),
           ),
         ),
       );
     });
   }
 
-  static GeometriaGrade _geometria(double largura) {
+  /// Altura da linha e centro da caixa do pedal para uma casa desta largura
+  /// (as duas grades usam, para o fio passar no centro das caixas).
+  static GeometriaGrade geometriaDaCasa(double largura) {
     final interno = largura - Espacos.xs * 2 - Medidas.contornoSelecao * 2;
     final arte = interno * Medidas.arteNaCasa;
     final alturaTexto = Medidas.alturaRotuloCasa + Medidas.fitaCategoria + Espacos.xs + Espacos.xxs;
@@ -63,19 +70,23 @@ class GradeBlocos extends ConsumerWidget {
 
     return PintorLinhaSinal(
       geometria: geometria,
-      temLinha2: documento.blocosDaLinha(2).isNotEmpty,
+      ocupadas: [for (final bloco in documento.blocosDaLinha(1)) bloco.posicao.casa]..sort(),
       casaSplit: casaCom(':split'),
       casaMerge: casaCom(':merge'),
     );
   }
 
-  Widget _linha(BuildContext context, WidgetRef ref, DocumentoPreset documento, int linha, double largura) =>
-      Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        for (var casa = 1; casa <= PosicaoBloco.casasPorLinha; casa++) ...[
-          if (casa > 1) const SizedBox(width: Espacos.s),
-          casaDaGrade(context, ref, documento, PosicaoBloco(linha, casa), largura),
-        ],
-      ]);
+  /// Altura fixa: a linha 2 fica no mesmo lugar com a linha 1 cheia ou vazia,
+  /// e a pista do sinal continua passando no centro das casas.
+  Widget _linha(BuildContext context, WidgetRef ref, DocumentoPreset documento, int linha, double largura) => SizedBox(
+        height: geometriaDaCasa(largura).alturaLinha,
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          for (var casa = 1; casa <= PosicaoBloco.casasPorLinha; casa++) ...[
+            if (casa > 1) const SizedBox(width: Espacos.s),
+            casaDaGrade(context, ref, documento, PosicaoBloco(linha, casa), largura),
+          ],
+        ]),
+      );
 }
 
 /// Uma casa ligada ao editor (selecionar, bypass, menu, adicionar efeito na

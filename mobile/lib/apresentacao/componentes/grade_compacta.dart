@@ -1,5 +1,8 @@
-// Cadeia no celular: só as casas ocupadas (em ordem) e uma casa livre por
-// linha para colar, quebrando em fileiras. Nada fica escondido à direita.
+// Cadeia no celular: as casas na posição real, da 1 até a seguinte à última
+// ocupada, quebrando em fileiras. Os buracos entre blocos aparecem como
+// encaixe com "+" (como na grade ampla), para o bloco não parecer colado no
+// vizinho e para dar para pôr efeito no meio. Nada fica escondido à direita.
+// O fio do sinal liga as caixas de cada fileira; a linha 2 só tem fio com split.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,6 +11,7 @@ import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../tema/tokens.dart';
 import 'grade_blocos.dart';
+import 'pintor_linha_sinal.dart';
 import '../../l10n/app_localizations.dart';
 
 class GradeCompacta extends ConsumerWidget {
@@ -27,32 +31,85 @@ class GradeCompacta extends ConsumerWidget {
     return LayoutBuilder(builder: (context, restricoes) {
       final porFileira = casasPorFileira(restricoes.maxWidth);
       final largura = (restricoes.maxWidth - (porFileira - 1) * Espacos.s) / porFileira;
+      final comSplit = documento.blocosDaLinha(1).any((b) => b.uri.endsWith(':split'));
       return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        for (final linha in const [1, 2]) ..._linha(context, ref, documento, linha, largura),
+        for (final linha in const [1, 2])
+          ..._linha(context, ref, documento, linha, _Fileiras(porFileira, largura, comFio: linha == 1 || comSplit)),
       ]);
     });
   }
 
-  List<Widget> _linha(BuildContext context, WidgetRef ref, DocumentoPreset documento, int linha, double largura) {
+  List<Widget> _linha(BuildContext context, WidgetRef ref, DocumentoPreset documento, int linha, _Fileiras fileiras) {
     final tema = Theme.of(context).textTheme;
-    final casas = [for (final b in documento.blocosDaLinha(linha)) b.posicao.casa];
-    final livre = _primeiraLivre(casas);
+    final casas = casasVisiveis([for (final b in documento.blocosDaLinha(linha)) b.posicao.casa]);
+    final geometria = GradeBlocos.geometriaDaCasa(fileiras.largura);
     return [
       Padding(
         padding: const EdgeInsets.only(top: Espacos.xs, bottom: Espacos.xs),
         child: Text(linha == 1 ? AppLocalizations.of(context).linha1 : AppLocalizations.of(context).linha2Paralela,
             style: tema.labelSmall),
       ),
-      Wrap(spacing: Espacos.s, runSpacing: Espacos.s, children: [
-        for (final casa in [...casas, ?livre])
-          casaDaGrade(context, ref, documento, PosicaoBloco(linha, casa), largura),
-      ]),
+      CustomPaint(
+        painter: fileiras.comFio ? _PintorFileiras(fileiras, geometria, casas.length) : null,
+        child: Wrap(spacing: Espacos.s, runSpacing: Espacos.s, children: [
+          for (final casa in casas)
+            // altura fixa da fileira (o fio passa no centro das caixas), com a
+            // casa no topo: esticada, o encaixe vazio viraria um retângulo alto
+            SizedBox(
+              width: fileiras.largura,
+              height: geometria.alturaLinha,
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: casaDaGrade(context, ref, documento, PosicaoBloco(linha, casa), fileiras.largura),
+              ),
+            ),
+        ]),
+      ),
     ];
   }
 
-  /// Primeira casa vazia depois da última ocupada (ou a 1 numa linha vazia).
-  static int? _primeiraLivre(List<int> ocupadas) {
-    final depois = ocupadas.isEmpty ? 1 : ocupadas.last + 1;
-    return depois <= PosicaoBloco.casasPorLinha ? depois : null;
+  /// Da casa 1 até a seguinte à última ocupada (a 1 numa linha vazia), sem
+  /// passar da última casa da linha.
+  static List<int> casasVisiveis(List<int> ocupadas) {
+    final ultima = ocupadas.isEmpty ? 0 : ocupadas.reduce((a, b) => a > b ? a : b);
+    final ate = (ultima + 1).clamp(1, PosicaoBloco.casasPorLinha);
+    return [for (var casa = 1; casa <= ate; casa++) casa];
   }
+}
+
+/// Como as casas se arrumam: quantas por fileira, de que largura e se a linha tem fio.
+class _Fileiras {
+  const _Fileiras(this.porFileira, this.largura, {required this.comFio});
+
+  final int porFileira;
+  final double largura;
+  final bool comFio;
+}
+
+/// O fio de cada fileira, do centro da primeira caixa ao da última: entre as
+/// caixas (opacas) sobra a ligação curta de pedal a pedal.
+class _PintorFileiras extends CustomPainter {
+  const _PintorFileiras(this.fileiras, this.geometria, this.quantidade);
+
+  final _Fileiras fileiras;
+  final GeometriaGrade geometria;
+  final int quantidade;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final fio = Paint()
+      ..color = Cores.aluminio
+      ..strokeWidth = Medidas.linhaSinal;
+    final passo = fileiras.largura + Espacos.s;
+    for (var inicio = 0; inicio < quantidade; inicio += fileiras.porFileira) {
+      final naFileira = (quantidade - inicio).clamp(1, fileiras.porFileira);
+      if (naFileira < 2) continue;
+      final y = (inicio ~/ fileiras.porFileira) * (geometria.alturaLinha + Espacos.s) + geometria.centroArte;
+      canvas.drawLine(Offset(fileiras.largura / 2, y), Offset((naFileira - 1) * passo + fileiras.largura / 2, y), fio);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_PintorFileiras antigo) =>
+      antigo.quantidade != quantidade || antigo.fileiras.largura != fileiras.largura;
 }

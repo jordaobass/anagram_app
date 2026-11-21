@@ -1,8 +1,10 @@
-// Uma casa da grade: o pedal, o nome que a pedaleira informa e a fita de
-// cor da família. Toque seleciona (na vazia, abre a biblioteca de efeitos);
-// toque duplo liga/desliga; botão direito abre o menu do bloco. No toque, o
-// toque longo da casa ocupada é o arrasto, então o menu dela fica no botão
-// visível do painel; na vazia, o toque longo ainda abre o menu (colar).
+// Uma casa da grade: o pedal numa caixa de tamanho fixo (as fotos da
+// pedaleira têm proporções diferentes e na caixa ficam alinhadas), o nome que
+// a pedaleira informa e a fita de cor da família. A casa vazia é um encaixe
+// tracejado com "+". Toque seleciona na hora (na vazia, abre a biblioteca de
+// efeitos); toque duplo liga/desliga; botão direito abre o menu do bloco. No
+// toque, o toque longo da casa ocupada é o arrasto, então o menu dela fica no
+// botão visível do painel; na vazia, o toque longo ainda abre o menu (colar).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,6 +12,8 @@ import '../../aplicacao/provedores.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'arte_bloco.dart';
+import 'pintor_encaixe.dart';
+import 'toque_duplo.dart';
 import '../../l10n/app_localizations.dart';
 
 class CasaBloco extends ConsumerWidget {
@@ -41,17 +45,19 @@ class CasaBloco extends ConsumerWidget {
       button: true,
       selected: selecionado,
       label: _rotulo(AppLocalizations.of(context), ref, atual),
-      child: GestureDetector(
-        onTap: aoTocar,
-        onDoubleTap: atual == null ? null : aoTocarDuas,
-        onLongPressStart: atual == null ? (d) => aoPedirMenu(d.globalPosition) : null,
-        onSecondaryTapUp: (d) => aoPedirMenu(d.globalPosition),
-        child: AnimatedContainer(
-          duration: Duracoes.curta,
-          width: largura,
-          padding: const EdgeInsets.all(Espacos.xs),
-          decoration: _moldura(),
-          child: atual == null ? _vazia() : _ocupada(context, ref, atual),
+      child: ToqueDuplo(
+        aoTocar: aoTocar,
+        aoTocarDuas: atual == null ? null : aoTocarDuas,
+        child: GestureDetector(
+          onLongPressStart: atual == null ? (d) => aoPedirMenu(d.globalPosition) : null,
+          onSecondaryTapUp: (d) => aoPedirMenu(d.globalPosition),
+          child: AnimatedContainer(
+            duration: Duracoes.curta,
+            width: largura,
+            padding: const EdgeInsets.all(Espacos.xs),
+            decoration: _moldura(),
+            child: atual == null ? _vazia() : _ocupada(context, ref, atual),
+          ),
         ),
       ),
     );
@@ -73,52 +79,83 @@ class CasaBloco extends ConsumerWidget {
         ),
       );
 
-  Widget _vazia() => AspectRatio(
-        aspectRatio: 1,
-        child: Center(
-          child: Container(
-            width: largura * Medidas.marcaCasaVazia,
-            height: largura * Medidas.marcaCasaVazia,
-            decoration: BoxDecoration(
-              color: Cores.fundoCase,
-              shape: BoxShape.circle,
-              border: Border.all(color: Cores.filete, width: Medidas.contornoSelecao),
-            ),
-            child: Icon(
-              Icons.add,
-              size: largura * Medidas.marcaCasaVazia * Medidas.maisNaCasaVazia,
-              color: Cores.textoSecundario,
-            ),
-          ),
+  double get _caixa => _interno * Medidas.arteNaCasa;
+
+  /// Encaixe tracejado do tamanho da caixa do pedal, no mesmo lugar dela.
+  Widget _vazia() => SizedBox.square(
+        dimension: _caixa,
+        child: CustomPaint(
+          painter: const PintorEncaixe(),
+          child: Center(child: Icon(Icons.add, size: _caixa * Medidas.marcaCasaVazia, color: Cores.textoSecundario)),
         ),
       );
 
+  double get _interno => largura - Espacos.xs * 2 - Medidas.contornoSelecao * 2;
+
   Widget _ocupada(BuildContext context, WidgetRef ref, BlocoPreset atual) {
     final definicao = ref.watch(definicaoBlocoProvider(atual.uri));
-    final interno = largura - Espacos.xs * 2 - Medidas.contornoSelecao * 2;
+    final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(
+          color: ligado ? Cores.texto : Cores.textoSecundario,
+          height: Medidas.entrelinhaRotuloCasa,
+        );
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ArteBlocoWidget(definicao: definicao, tamanho: interno * Medidas.arteNaCasa, ligado: ligado),
+        CaixaPedal(tamanho: _caixa, child: ArteBlocoWidget(definicao: definicao, tamanho: _caixa - Espacos.xs * 2, ligado: ligado)),
         const SizedBox(height: Espacos.xs),
         Container(height: Medidas.fitaCategoria, color: Cores.daFamilia(definicao.familia)),
         const SizedBox(height: Espacos.xxs),
-        // o nome inteiro, como na tela da pedaleira: a abreviação ("SUP") não
-        // diz qual bloco é; duas linhas cabem "Black & Yellow TLIII"
         SizedBox(
           height: Medidas.alturaRotuloCasa,
           child: Text(
-            definicao.nome,
+            rotuloQueCabe(definicao.nome, definicao.abreviacao, estilo, _interno, Directionality.of(context)),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: ligado ? Cores.texto : Cores.textoSecundario,
-                  height: Medidas.entrelinhaRotuloCasa,
-                ),
+            style: estilo,
           ),
         ),
       ],
     );
   }
+}
+
+/// O nome inteiro, como na tela da pedaleira ("SUP" não diz qual bloco é),
+/// desde que nenhuma palavra precise ser partida: numa casa estreita
+/// "Suppress/or" lê pior que a abreviação. Sem abreviação, fica o nome.
+String rotuloQueCabe(String nome, String abreviacao, TextStyle? estilo, double largura, TextDirection direcao) {
+  if (abreviacao.isEmpty) return nome;
+  final pintor = TextPainter(textDirection: direcao, maxLines: 1);
+  for (final palavra in nome.split(' ')) {
+    pintor.text = TextSpan(text: palavra, style: estilo);
+    pintor.layout();
+    if (pintor.width > largura) {
+      pintor.dispose();
+      return abreviacao;
+    }
+  }
+  pintor.dispose();
+  return nome;
+}
+
+/// Caixa fixa do pedal na cadeia: fundo de painel opaco (a linha do sinal
+/// passa por trás) e a foto, de qualquer proporção, centrada dentro dela.
+class CaixaPedal extends StatelessWidget {
+  const CaixaPedal({super.key, required this.tamanho, required this.child});
+
+  final double tamanho;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        width: tamanho,
+        height: tamanho,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Cores.painel,
+          borderRadius: BorderRadius.circular(Raios.controle),
+          border: Border.all(color: Cores.filete),
+        ),
+        child: child,
+      );
 }
