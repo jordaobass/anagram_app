@@ -84,7 +84,9 @@ class PainelParametros extends ConsumerWidget {
       ),
       // como o valor "atribuído ao snapshot" do HX: esta cena sobrepõe
       if (bloco.sobreposicaoDaCena(p.simbolo, cena) != null)
-        Text(AppLocalizations.of(context).soNaCena(cena), style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.tally)),
+        // neutro: o âmbar é da ação e da seleção, não de marca informativa
+        Text(AppLocalizations.of(context).soNaCena(cena),
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.aluminioClaro)),
     ]);
   }
 }

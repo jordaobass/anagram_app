@@ -16,6 +16,8 @@ abstract final class TemaApp {
         outlinedButtonTheme: OutlinedButtonThemeData(style: _botaoContornado()),
         dialogTheme: _dialogo(),
         snackBarTheme: _aviso(),
+        chipTheme: _chip(),
+        segmentedButtonTheme: _segmentos(),
         dividerTheme: const DividerThemeData(color: Cores.filete, thickness: Medidas.filete, space: Medidas.filete),
         focusColor: Cores.tally.withValues(alpha: Opacidades.foco),
       );
@@ -27,8 +29,12 @@ abstract final class TemaApp {
     onSurfaceVariant: Cores.textoSecundario,
     primary: Cores.tally,
     onPrimary: Cores.sobreTally,
-    secondary: Cores.fitaGaffer,
-    onSecondary: Cores.tintaMarcador,
+    // a fita creme só existe onde há nome escrito: seleção de chip e de
+    // segmento usa o painel elevado, com o contorno em tally (ver _chip)
+    secondary: Cores.aluminioClaro,
+    onSecondary: Cores.fundoCase,
+    secondaryContainer: Cores.painelElevado,
+    onSecondaryContainer: Cores.texto,
     error: Cores.erro,
     outline: Cores.filete,
     outlineVariant: Cores.filete,
@@ -40,6 +46,28 @@ abstract final class TemaApp {
         side: const BorderSide(color: Cores.aluminio),
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(Raios.controle))),
         textStyle: _texto().labelLarge,
+      );
+
+  static final _contornoSelecao = WidgetStateBorderSide.resolveWith((estados) => estados.contains(WidgetState.selected)
+      ? const BorderSide(color: Cores.tally, width: Medidas.contornoSelecao)
+      : const BorderSide(color: Cores.filete));
+
+  static ChipThemeData _chip() => ChipThemeData(
+        backgroundColor: Cores.painel,
+        selectedColor: Cores.painelElevado,
+        checkmarkColor: Cores.tally,
+        side: _contornoSelecao,
+        labelStyle: _texto().labelMedium?.copyWith(color: Cores.texto),
+      );
+
+  static SegmentedButtonThemeData _segmentos() => SegmentedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith(
+              (estados) => estados.contains(WidgetState.selected) ? Cores.painelElevado : Cores.painel),
+          foregroundColor: WidgetStateProperty.resolveWith(
+              (estados) => estados.contains(WidgetState.selected) ? Cores.tally : Cores.texto),
+          side: _contornoSelecao,
+        ),
       );
 
   static DialogThemeData _dialogo() => DialogThemeData(

@@ -28,7 +28,8 @@ abstract final class Cores {
 
   static Color daFamilia(FamiliaBloco familia) => switch (familia) {
         FamiliaBloco.drive => const Color(0xFFE8772E),
-        FamiliaBloco.compressor => const Color(0xFFE2C23A),
+        // verde-limão: o amarelo antigo (E2C23A) se confundia com o âmbar de ação
+        FamiliaBloco.compressor => const Color(0xFFB5D334),
         FamiliaBloco.equalizador => const Color(0xFF3BB7D6),
         FamiliaBloco.filtro => const Color(0xFF9B78E3),
         FamiliaBloco.modulacao => const Color(0xFF34C3A0),
@@ -74,11 +75,17 @@ abstract final class Medidas {
 
   static const double arteNaCasa = 0.86;
 
-  /// Diâmetro do furo da casa vazia, em fração da largura da casa.
-  static const double marcaCasaVazia = 0.22;
+  /// O "+" do encaixe vazio, em fração da caixa do pedal: grande o bastante
+  /// para se ler a um metro da tela.
+  static const double marcaCasaVazia = 0.32;
 
-  /// O "+" dentro do furo, em fração do furo: o convite para pôr um efeito.
-  static const double maisNaCasaVazia = 0.75;
+  /// Comprimento de cada traço do contorno do encaixe vazio.
+  static const double tracoEncaixe = 5;
+
+  /// Espaço antes da casa 1 e depois da 12 para os jaques IN e OUT da cadeia.
+  static const double margemJaque = 28;
+  static const double raioJaque = 5;
+  static const double rotuloJaque = 11;
   static const double knobAmplo = 104;
   static const double knobCompacto = 84;
   static const double espessuraArco = 6;
@@ -90,9 +97,16 @@ abstract final class Medidas {
   static const double basePonteiroKnob = 0.25;
   static const double espessuraPonteiroKnob = 0.7;
   static const double cantoneira = 14;
+
+  /// Selo "OFF" sobre a arte do bloco desligado: um sinal só, com ou sem a
+  /// imagem de bypass da pedaleira.
+  static const double seloDesligadoAltura = 16;
+
+  /// Lápis na ponta da fita do preset: discreto, em alumínio sobre o creme.
+  static const double iconeLapis = 18;
   static const double linhaSinal = 2;
-  /// Duas linhas do nome do bloco embaixo da arte da casa.
-  static const double alturaRotuloCasa = 28;
+  /// Duas linhas do nome do bloco (14 px) embaixo da arte da casa.
+  static const double alturaRotuloCasa = 34;
   static const double entrelinhaRotuloCasa = 1.15;
   static const double arrasteFaixaInteira = 200;
   static const double barraConexaoAltura = 64;
