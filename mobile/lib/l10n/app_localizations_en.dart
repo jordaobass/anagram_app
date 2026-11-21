@@ -798,15 +798,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get gxModeloAnterior => 'Previous cabinet';
-
-  @override
-  String get gxProximoModelo => 'Next cabinet';
-
-  @override
-  String get gxBuscarGabinete => 'Type to search';
-
-  @override
   String get fbAreaFabrica => 'Factory';
 
   @override
@@ -885,4 +876,171 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mbBuscarOpcao => 'Search (e.g. turbo grunt)';
+
+  @override
+  String get smFaixaCriar => '+ Add parallel row · Split, row 2 and Merge';
+
+  @override
+  String get smItemBiblioteca => 'Split + Merge (parallel row)';
+
+  @override
+  String get smItemBibliotecaDica =>
+      'Splits the signal at this position: row 2 plays in parallel and the Merge joins both.';
+
+  @override
+  String get smJaTemLinhaParalela =>
+      'This preset already has a parallel row (one Split and one Merge per preset).';
+
+  @override
+  String get smDividirDepois => 'Split the signal after this block';
+
+  @override
+  String get smOrdemInvalida =>
+      'The Split has to stay before the Merge on row 1.';
+
+  @override
+  String get smSoNaLinha1 => 'Split and Merge stay on row 1.';
+
+  @override
+  String gvAnterior(String rotulo) {
+    return '$rotulo: previous option';
+  }
+
+  @override
+  String gvProximo(String rotulo) {
+    return '$rotulo: next option';
+  }
+
+  @override
+  String gvAbrirLista(String rotulo, String nome) {
+    return '$rotulo: $nome. Tap to see all';
+  }
+
+  @override
+  String get gvBuscar => 'Type to search';
+
+  @override
+  String get gvNadaEncontrado => 'Nothing found';
+
+  @override
+  String get gxModeloAnterior => 'Previous cabinet';
+
+  @override
+  String get gxProximoModelo => 'Next cabinet';
+
+  @override
+  String get gxBuscarGabinete => 'Type to search';
+
+  @override
+  String get mcpConfiguracoes => 'Settings';
+
+  @override
+  String get mcpSecao => 'Local AI (MCP)';
+
+  @override
+  String get mcpPermitir => 'Allow AI via MCP';
+
+  @override
+  String get mcpPermitirTexto =>
+      'An AI assistant on your computer (LM Studio, Claude Desktop…) can read the open preset and adjust the tone. Changes are heard right away and only go to the pedal if you save.';
+
+  @override
+  String get mcpEstadoDesligado => 'Off: no program can talk to the app.';
+
+  @override
+  String get mcpEstadoIniciando => 'Starting…';
+
+  @override
+  String mcpEstadoEscutando(String endereco) {
+    return 'Listening on $endereco';
+  }
+
+  @override
+  String mcpEstadoPortaOcupada(int porta) {
+    return 'Port $porta is already used by another program (or another app window). Pick another port.';
+  }
+
+  @override
+  String get mcpPorta => 'Port';
+
+  @override
+  String get mcpPortaInvalida => 'Use a number from 1024 to 65535.';
+
+  @override
+  String get mcpAplicarPorta => 'APPLY';
+
+  @override
+  String get mcpToken => 'Access token';
+
+  @override
+  String get mcpTokenTexto =>
+      'The AI client sends this token with every request. Without it, the app does not obey.';
+
+  @override
+  String get mcpMostrarToken => 'Show token';
+
+  @override
+  String get mcpOcultarToken => 'Hide token';
+
+  @override
+  String get mcpCopiarToken => 'Copy token';
+
+  @override
+  String get mcpGerarNovoToken => 'NEW TOKEN';
+
+  @override
+  String get mcpGerarNovoTitulo => 'Generate a new token?';
+
+  @override
+  String get mcpGerarNovoTexto =>
+      'The current token stops working right away: the AI client will need the new one.';
+
+  @override
+  String get mcpCopiarConfiguracao => 'Copy configuration for';
+
+  @override
+  String get mcpClienteLmStudio => 'LM Studio';
+
+  @override
+  String get mcpClienteClaudeDesktop => 'Claude Desktop';
+
+  @override
+  String get mcpClienteGenerico => 'Other client';
+
+  @override
+  String get mcpCopiado => 'Copied to the clipboard.';
+
+  @override
+  String get mcpLimitacoes =>
+      'The AI cannot hear the sound: it adjusts from what you describe, and you tell it if it got better. Small models often describe what they would do instead of calling the tools; prefer a model with good tool support.';
+
+  @override
+  String get mcpAtivoNaBarra => 'AI';
+
+  @override
+  String get mcpAtivoDica => 'Local AI can adjust the tone (MCP on)';
+
+  @override
+  String mcpMudancaDaIa(String resumo) {
+    return 'AI: $resumo';
+  }
+
+  @override
+  String get mcpPedidoSalvarTitulo => 'Save what the AI adjusted?';
+
+  @override
+  String mcpPedidoSalvarTexto(String nome, String slot) {
+    return 'The AI asked to write \"$nome\" to slot $slot on the pedal.';
+  }
+
+  @override
+  String mcpPedidoSalvarSemSlot(String nome) {
+    return 'The AI asked to write \"$nome\" to the pedal. You will pick the slot.';
+  }
+
+  @override
+  String get mcpSalvar => 'SAVE';
+
+  @override
+  String get mcpAgoraNao => 'NOT NOW';
 }
