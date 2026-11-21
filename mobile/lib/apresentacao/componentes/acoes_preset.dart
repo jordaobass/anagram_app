@@ -4,10 +4,13 @@
 // "Salvar como", os botões de cima ficam parados: a ação está na lista.
 // No celular cabem numa linha: SALVAR, SALVAR COMO e um menu com Descartar,
 // Importar e Exportar; no computador, Descartar fica à vista.
+// Com a fábrica na tela (só leitura), SALVAR e SALVAR COMO viram um botão só:
+// COPIAR PARA A MINHA ÁREA…
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/casos_de_uso/transferir_preset.dart';
+import '../../aplicacao/estado/controlador_biblioteca.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/provedores.dart';
 import '../../dados/arquivos_preset.dart';
@@ -31,28 +34,32 @@ class AcoesPreset extends ConsumerWidget {
     // lendo: salvar gravaria o anterior no slot novo; gravando: já há uma
     // gravação; escolhendo o destino: a ação está na lista
     final parado = ref.watch(editorProvider.select((e) => e.ocupado || e.escolhendoDestino));
+    final naFabrica = ref.watch(bibliotecaProvider.select((b) => b.naFabrica));
     return Wrap(
       spacing: Espacos.s,
       runSpacing: Espacos.s,
       alignment: compactas ? WrapAlignment.start : WrapAlignment.end,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        _salvar(context, ref, naoSalvo: naoSalvo, parado: parado),
-        OutlinedButton(
-          key: const ValueKey('botao-salvar-como'),
-          onPressed: parado ? null : () => abrirEscolhaDeDestino(context, ref, listaEmOutraTela: listaEmOutraTela),
-          child: Text(AppLocalizations.of(context).salvarComo),
-        ),
+        _salvar(context, ref, naoSalvo: naoSalvo, parado: parado, naFabrica: naFabrica),
+        if (!naFabrica)
+          OutlinedButton(
+            key: const ValueKey('botao-salvar-como'),
+            onPressed: parado ? null : () => abrirEscolhaDeDestino(context, ref, listaEmOutraTela: listaEmOutraTela),
+            child: Text(AppLocalizations.of(context).salvarComo),
+          ),
         if (!compactas) _descartar(context, ref, naoSalvo: naoSalvo, parado: parado),
         _MenuArquivo(parado: parado, comDescartar: compactas, naoSalvo: naoSalvo),
       ],
     );
   }
 
-  Widget _salvar(BuildContext context, WidgetRef ref, {required bool naoSalvo, required bool parado}) {
+  Widget _salvar(BuildContext context, WidgetRef ref,
+      {required bool naoSalvo, required bool parado, required bool naFabrica}) {
     final aoTocar = parado ? null : () => executarSalvar(context, ref, listaEmOutraTela: listaEmOutraTela);
-    final rotulo = Text(AppLocalizations.of(context).salvar);
-    const icone = Icon(Icons.save_outlined);
+    final l = AppLocalizations.of(context);
+    final rotulo = Text(naFabrica ? l.fbCopiarParaMinhaArea : l.salvar);
+    final icone = Icon(naFabrica ? Icons.copy_outlined : Icons.save_outlined);
     const chave = ValueKey('botao-salvar');
     return naoSalvo
         ? FilledButton.icon(key: chave, onPressed: aoTocar, icon: icone, label: rotulo)

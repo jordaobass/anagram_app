@@ -11,6 +11,7 @@ import '../nucleo/catalogo/catalogo_blocos.dart';
 import '../nucleo/catalogo/definicao_bloco.dart';
 import '../nucleo/demonstracao/transporte_demonstracao.dart';
 import '../nucleo/midi/saida_midi.dart';
+import '../nucleo/modelo/presets_fabrica.dart';
 import '../nucleo/registro.dart';
 import '../plataforma/fabrica_transporte.dart';
 import 'arte/indice_miniaturas.dart';
@@ -19,6 +20,8 @@ abstract final class CaminhosAssets {
   static const catalogo = 'assets/referencia/blocks-factory.json';
   /// Opcional: fica fora do git até haver autorização (ver DECISOES A2).
   static const miniaturas = 'assets/blocos_terceiros/indice.json';
+  /// Opcional, gerado do Darkglass Suite junto com a arte (DECISOES U18).
+  static const fabrica = 'assets/blocos_terceiros/fabrica.json';
   static const demonstracao = 'assets/demonstracao/presets.json';
   static const exemplos = [1, 2, 13, 41];
   static String exemplo(int n) => 'assets/referencia/exemplos/$n.json';
@@ -39,6 +42,16 @@ final indiceMiniaturasProvider = FutureProvider<IndiceMiniaturas>((ref) async {
   } on FlutterError catch (erro) {
     registro.i('miniaturas de terceiros ausentes; usando arte própria (${erro.message})');
     return IndiceMiniaturas.vazio();
+  }
+});
+
+/// Sem o arquivo da fábrica (build sem a arte do Suite), não há área Fábrica.
+final presetsFabricaProvider = FutureProvider<PresetsDeFabrica>((ref) async {
+  try {
+    return PresetsDeFabrica.doTexto(await ref.watch(pacoteAssetsProvider).loadString(CaminhosAssets.fabrica));
+  } on FlutterError catch (erro) {
+    registro.i('presets de fábrica ausentes; sem área Fábrica (${erro.message})');
+    return const PresetsDeFabrica.vazio();
   }
 });
 

@@ -10,10 +10,12 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../avisos.dart';
+import '../provedores.dart';
 import '../../dados/repositorio_pedaleira.dart';
 import '../../nucleo/midi/saida_midi.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
+import '../../nucleo/modelo/presets_fabrica.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../../nucleo/registro.dart';
 import '../../nucleo/resultado.dart';
@@ -68,7 +70,10 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
   }
 
   Future<void> _carregar(RepositorioPedaleira repositorio, SlotPreset slot, String? area, int abertura) async {
-    final leitura = await repositorio.lerPreset(slot, area: area);
+    // a fábrica vem do arquivo do Suite: a pedaleira não a entrega (U18)
+    final leitura = area == PresetsDeFabrica.idArea
+        ? Sucesso((await ref.read(presetsFabricaProvider.future)).documento(slot))
+        : await repositorio.lerPreset(slot, area: area);
     // outro slot foi aberto enquanto este carregava: este resultado já não vale
     if (abertura != _abertura) return;
     switch (leitura) {

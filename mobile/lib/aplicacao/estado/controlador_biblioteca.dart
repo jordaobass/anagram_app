@@ -4,13 +4,17 @@
 // mudar na própria pedaleira, então é relida antes de cada lista e de cada
 // Program Change. Toda resposta que chega depois de uma espera só vale se a
 // conexão ainda for a mesma: o cabo pode ter saído no meio.
+// A área Fábrica (U18) é do app, não da pedaleira: a lista dela sai do
+// arquivo gerado do Suite e nenhum pedido com ela vai pelo USB.
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../avisos.dart';
+import '../provedores.dart';
 import '../../dados/repositorio_pedaleira.dart';
 import '../../nucleo/modelo/areas_presets.dart';
+import '../../nucleo/modelo/presets_fabrica.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../../nucleo/protocolo/erros_anagram.dart';
 import '../../nucleo/resultado.dart';
@@ -39,6 +43,9 @@ class EstadoBiblioteca {
   /// A lista na tela é de uma área que a pedaleira não está usando (ou não se
   /// sabe qual ela usa): o Program Change trocaria o slot de OUTRA área, então
   /// abrir um preset só o toca.
+  /// A lista na tela é a da fábrica: só leitura, e o Program Change não vale.
+  bool get naFabrica => areaSelecionada == PresetsDeFabrica.idArea;
+
   bool get areaForaDaPedaleira => areas.temAreas && (areas.ativa == null || areaSelecionada != areas.ativa);
 
   EstadoBiblioteca copiar({
@@ -110,6 +117,11 @@ class ControladorBiblioteca extends Notifier<EstadoBiblioteca> {
   Future<void> recarregar({bool relerAreas = true}) async {
     final repositorio = _repositorio;
     if (repositorio == null) return;
+    // a fábrica não muda; só a área ativa da pedaleira pode ter mudado
+    if (state.naFabrica) {
+      if (relerAreas) await _atualizarAtiva(repositorio);
+      return;
+    }
     final area = state.areaSelecionada;
     state = state.copiar(carregando: true);
     if (relerAreas) await _atualizarAtiva(repositorio);
@@ -124,9 +136,22 @@ class ControladorBiblioteca extends Notifier<EstadoBiblioteca> {
 
   /// Mostra os presets de outra área. Não muda a área da pedaleira.
   Future<void> selecionarArea(String id) async {
-    if (_repositorio == null || id == state.areaSelecionada || state.areas.area(id) == null) return;
+    if (_repositorio == null || id == state.areaSelecionada) return;
+    if (id == PresetsDeFabrica.idArea) return _mostrarFabrica();
+    if (state.areas.area(id) == null) return;
     state = EstadoBiblioteca(carregando: true, areas: state.areas, areaSelecionada: id);
     await recarregar();
+  }
+
+  /// Só com áreas (o seletor só existe com elas) e com o arquivo no build.
+  Future<void> _mostrarFabrica() async {
+    final fabrica = await ref.read(presetsFabricaProvider.future);
+    if (fabrica.vazio || !state.areas.temAreas || _repositorio == null) return;
+    state = EstadoBiblioteca(
+      areas: state.areas,
+      areaSelecionada: PresetsDeFabrica.idArea,
+      ocupados: {for (final resumo in fabrica.resumos) resumo.slot: resumo},
+    );
   }
 
   /// A área na tela é a que a pedaleira está usando agora, relida da própria

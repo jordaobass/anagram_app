@@ -651,5 +651,33 @@
   "gxBuscarGabinete": "Escreva para buscar",
   "@gxBuscarGabinete": {
     "description": "Dica do campo de busca do modelo de gabinete"
+  },
+  "fbAreaFabrica": "Fábrica",
+  "@fbAreaFabrica": {
+    "description": "Nome da área dos presets de fábrica no seletor de área"
+  },
+  "fbSoLeitura": "SÓ LEITURA",
+  "@fbSoLeitura": {
+    "description": "Selo ao lado da área Fábrica: dali nada é gravado"
+  },
+  "fbAreaSoLeitura": "Presets de fábrica da Darkglass: abrir um só faz tocar. Para guardar, copie para uma área sua.",
+  "@fbAreaSoLeitura": {
+    "description": "Explicação sob o seletor quando a área Fábrica está na tela"
+  },
+  "fbAvisoPresetDeFabrica": "PRESET DE FÁBRICA — só toca. Copie para uma área sua para guardar.",
+  "@fbAvisoPresetDeFabrica": {
+    "description": "Aviso na faixa do preset aberto quando ele é de fábrica"
+  },
+  "fbCopiarParaMinhaArea": "COPIAR PARA A MINHA ÁREA…",
+  "@fbCopiarParaMinhaArea": {
+    "description": "Botão que substitui SALVAR quando a fábrica está na tela"
+  },
+  "fbCopiarTitulo": "Copiar para qual área?",
+  "@fbCopiarTitulo": {
+    "description": "Título do diálogo que pergunta a área de destino da cópia"
+  },
+  "fbCopiarPara": "Copiar para a minha área…",
+  "@fbCopiarPara": {
+    "description": "Item do menu de um preset da fábrica"
   }
 }

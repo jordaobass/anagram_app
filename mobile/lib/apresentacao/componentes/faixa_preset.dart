@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/estado/estado_editor.dart';
+import '../../nucleo/modelo/presets_fabrica.dart';
 import '../tema/tokens.dart';
 import 'acoes_preset.dart';
 import 'dialogo_renomear.dart';
@@ -94,7 +95,8 @@ class FaixaPreset extends ConsumerWidget {
 }
 
 /// Ao vivo desligado e audição (sem USB MIDI), em letra de alerta: o âmbar
-/// é da ação e da seleção, não de aviso.
+/// é da ação e da seleção, não de aviso. Preset de fábrica tem aviso próprio
+/// (a audição é o único jeito de tocá-lo, então não é alerta repetir).
 class _Avisos extends StatelessWidget {
   const _Avisos({required this.estado});
 
@@ -104,11 +106,18 @@ class _Avisos extends StatelessWidget {
   Widget build(BuildContext context) {
     final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.erro);
     final l = AppLocalizations.of(context);
+    final daFabrica = estado.area == PresetsDeFabrica.idArea;
     final avisos = [
       if (!estado.aoVivo) l.avisoAoVivoDesligado,
-      if (estado.slot != null && !estado.slotNaPedaleira) l.avisoAudicao,
+      if (estado.slot != null && !estado.slotNaPedaleira && !daFabrica) l.avisoAudicao,
     ];
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      if (daFabrica)
+        Padding(
+          padding: const EdgeInsets.only(top: Espacos.xs),
+          child: Text(l.fbAvisoPresetDeFabrica,
+              key: const ValueKey('aviso-preset-fabrica'), style: estilo?.copyWith(color: Cores.textoSecundario)),
+        ),
       for (final aviso in avisos)
         Padding(padding: const EdgeInsets.only(top: Espacos.xs), child: Text(aviso, style: estilo)),
     ]);
