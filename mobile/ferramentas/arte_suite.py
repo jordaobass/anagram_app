@@ -15,6 +15,9 @@ import re
 import shutil
 
 PREFIXO_GABINETE = 'dg_cab_'
+# colunas da tabela de gabinetes de baixo (qv) do Suite
+COLUNA_ARQUIVO_ORIGINAL = 'Original file name'
+COLUNA_NOME_GABINETE = 'Cab listing name'
 # sem modelo reconhecido, o Suite mostra o gabinete de vidro
 PADRAO_GABINETE = ('Glass-Cabinet.webp', 'Bypass-Glass-Cabinet.webp')
 
@@ -50,7 +53,8 @@ def _modelos(texto):
 
 
 def _uris(texto):
-    padrao = r'((?:"urn:[^"]+"===e\.uri(?:\|\|)?)+)\?Gce\+"/devices/anagram/effects/([^"/]+)"'
+    # um ou mais `"urn:…"===e.uri` ligados por `||`, sem quantificador aninhado
+    padrao = r'((?:"urn:[^"]+"===e\.uri\|\|)*"urn:[^"]+"===e\.uri)\?Gce\+"/devices/anagram/effects/([^"/]+)"'
     ligadas, desligadas = {}, {}
     for grupo, arquivo in re.findall(padrao, texto):
         for uri in re.findall(r'"(urn:[^"]+)"', grupo):
@@ -71,24 +75,24 @@ def modelo_do_artista(descricao, modelos):
 
 def gabinetes_por_arquivo(tabelas, modelos):
     """Nome do arquivo de IR (sem extensão) -> modelo, nos três tipos de gabinete."""
-    porArquivo = {}
+    por_arquivo = {}
     for linha in tabelas.get('qv', []):
-        if linha.get('Original file name'):
-            porArquivo[linha['Original file name']] = linha.get('Cab listing name', '')
+        if linha.get(COLUNA_ARQUIVO_ORIGINAL):
+            por_arquivo[linha[COLUNA_ARQUIVO_ORIGINAL]] = linha.get(COLUNA_NOME_GABINETE, '')
     for linha in tabelas.get('hP', []):
-        porArquivo[linha['Filename']] = linha['Cab']
+        por_arquivo[linha['Filename']] = linha['Cab']
     for linha in tabelas.get('Rh', []):
-        porArquivo[linha['Filename']] = modelo_do_artista(linha['Description'], modelos) or ''
-    return porArquivo
+        por_arquivo[linha['Filename']] = modelo_do_artista(linha['Description'], modelos) or ''
+    return por_arquivo
 
 
 def escolhas_de_gabinete(tabelas):
     """O que se escolhe no bloco de gabinete, como na pedaleira: por tipo,
     [modelo, microfone, posição, arquivo de IR]. Os Artists não têm posição: a
     descrição é "Modelo - Microfone"."""
-    bass = [[linha['Cab listing name'], linha.get('Mic name in Suite', ''), linha.get('Mic position', ''),
-             linha['Original file name']]
-            for linha in tabelas.get('qv', []) if linha.get('Original file name') and linha.get('Cab listing name')]
+    bass = [[linha[COLUNA_NOME_GABINETE], linha.get('Mic name in Suite', ''), linha.get('Mic position', ''),
+             linha[COLUNA_ARQUIVO_ORIGINAL]]
+            for linha in tabelas.get('qv', []) if linha.get(COLUNA_ARQUIVO_ORIGINAL) and linha.get(COLUNA_NOME_GABINETE)]
     guitar = [[linha['Cab'], linha.get('Mic', ''), linha.get('Position', ''), linha['Filename']]
               for linha in tabelas.get('hP', []) if linha.get('Filename') and linha.get('Cab')]
     artists = [[*_modelo_e_microfone(linha['Description']), '', linha['Filename']]
@@ -147,7 +151,7 @@ def montar_gabinetes(tabelas, modelos, pasta_cabs, destino_pasta):
 # USB (DECISOES U18); o Suite traz uma cópia embutida no array `Ah` do renderer,
 # como literal JavaScript (chaves sem aspas, !0/!1, Pp.FACTORY).
 INICIO_FABRICA = 'Ah=[{name:"Harmonic Booster"'
-_NUMERO = re.compile(r'-?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?')
+_NUMERO = re.compile(r'-?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?')
 _PALAVRA = re.compile(r'[A-Za-z_$][\w$]*(?:\.[\w$]+)*|!0|!1')
 
 

@@ -20,4 +20,13 @@ void main() {
     }
     expect(quadro, {'action': 'fetch_anagram_preset', 'payload': {'filename': '49.json', 'nome': 'Ação'}});
   });
+
+  test('should_refuse_to_encode_a_message_whose_text_carries_a_frame_marker', () {
+    const mensagem = MensagemAnagram('try_anagram_preset', {'name': 'LEGENDEND'});
+
+    expect(
+      () => const CodificadorQuadros().codificar(mensagem),
+      throwsA(isA<MensagemComMarcador>().having((erro) => erro.marcador, 'marcador', ProtocoloAnagram.marcadorFim)),
+    );
+  });
 }

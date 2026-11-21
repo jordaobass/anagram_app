@@ -17,6 +17,7 @@ import '../nucleo/protocolo/erros_anagram.dart';
 import '../nucleo/protocolo/quadros_hid.dart';
 import '../nucleo/protocolo/transporte_anagram.dart';
 import '../nucleo/registro.dart';
+import 'ciclo_leitura_hid.dart';
 import 'hidapi_ffi.dart';
 
 /// Uma interface da Anagram que o `hid_enumerate` listou.
@@ -134,79 +135,57 @@ class TransporteHidapi with FluxosDoTransporte implements TransporteAnagram {
 }
 
 /// Uma leitura em curso: o isolate, a bandeira de parada (memória nativa
-/// compartilhada) e a porta por onde chegam relatórios e avisos.
+/// compartilhada) e a porta por onde chegam relatórios e avisos. O que fazer
+/// com cada mensagem é do [CicloLeituraHid].
 class _SessaoLeitura {
-  _SessaoLeitura._(this._api, this.dispositivo, this._parar, this._porta, this._aoReceber, this._aoPerder);
+  _SessaoLeitura._(this.dispositivo, this._ciclo);
 
-  final HidApi _api;
   final Pointer<Void> dispositivo;
-  final Pointer<Int32> _parar;
-  final ReceivePort _porta;
-  final void Function(Uint8List) _aoReceber;
-  final void Function(_SessaoLeitura) _aoPerder;
-  bool _paradaPedida = false;
-  bool _liberada = false;
+  final CicloLeituraHid _ciclo;
 
   static Future<_SessaoLeitura> iniciar(HidApi api, Pointer<Void> dispositivo,
       {required void Function(Uint8List) aoReceber, required void Function(_SessaoLeitura) aoPerder}) async {
-    final sessao = _SessaoLeitura._(api, dispositivo, calloc<Int32>(), ReceivePort(), aoReceber, aoPerder);
-    sessao._porta.listen(sessao._aoMensagem);
-    // onExit manda `null` pela mesma porta: é por ele que se sabe que o
-    // isolate não toca mais na bandeira nem no dispositivo
-    try {
-      await Isolate.spawn(
-        _lerEmLaco,
-        _PedidoLeitura(sessao._porta.sendPort, dispositivo.address, sessao._parar.address, api.nomeBiblioteca),
-        onExit: sessao._porta.sendPort,
-      );
-    } on Object catch (erro, pilha) {
-      // sem isolate ninguém mais vai fechar o dispositivo: fecha aqui
-      registro.e('hidapi: a leitura não começou', error: erro, stackTrace: pilha);
-      sessao._liberar();
-      api.hid_close(dispositivo);
-      throw const ErroDesconectado('Não foi possível começar a ler o USB.');
-    }
+    final parar = calloc<Int32>();
+    final porta = ReceivePort();
+    late final _SessaoLeitura sessao;
+    final ciclo = CicloLeituraHid(
+      aoReceber: aoReceber,
+      aoPerder: () => aoPerder(sessao),
+      escreverParada: () => parar.value = 1,
+      fecharDispositivo: () => api.hid_close(dispositivo),
+      liberarRecursos: () {
+        porta.close();
+        calloc.free(parar);
+      },
+    );
+    sessao = _SessaoLeitura._(dispositivo, ciclo);
+    porta.listen(ciclo.receber);
+    await _iniciarIsolate(api, dispositivo, parar, porta, ciclo);
     return sessao;
   }
 
-  void _aoMensagem(Object? mensagem) {
-    if (mensagem is Uint8List) {
-      if (!_paradaPedida) _aoReceber(mensagem);
-    } else if (mensagem == _PedidoLeitura.avisoPerdido) {
-      _aoPerder(this);
-    } else if (mensagem == null) {
-      _liberar();
-      // o isolate só sai do laço depois da parada; sem ela, ele caiu antes do
-      // hid_close e o dispositivo ainda está aberto
-      if (!_paradaPedida) _aoMorrerSemParada();
+  /// onExit manda `null` pela mesma porta: é por ele que se sabe que o
+  /// isolate não toca mais na bandeira nem no dispositivo.
+  static Future<void> _iniciarIsolate(
+      HidApi api, Pointer<Void> dispositivo, Pointer<Int32> parar, ReceivePort porta, CicloLeituraHid ciclo) async {
+    try {
+      await Isolate.spawn(
+        _lerEmLaco,
+        _PedidoLeitura(porta.sendPort, dispositivo.address, parar.address, api.nomeBiblioteca),
+        onExit: porta.sendPort,
+      );
+    } on Object catch (erro, pilha) {
+      registro.e('hidapi: a leitura não começou', error: erro, stackTrace: pilha);
+      ciclo.abortar();
+      throw const ErroDesconectado('Não foi possível começar a ler o USB.');
     }
   }
 
-  void pedirParada() {
-    // depois de liberada, a bandeira é memória devolvida: não se escreve nela
-    if (_paradaPedida || _liberada) return;
-    _paradaPedida = true;
-    _parar.value = 1;
-  }
-
-  void _aoMorrerSemParada() {
-    registro.e('hidapi: a leitura parou sem ninguém pedir');
-    _api.hid_close(dispositivo);
-    _aoPerder(this);
-  }
-
-  void _liberar() {
-    _liberada = true;
-    _porta.close();
-    calloc.free(_parar);
-  }
+  void pedirParada() => _ciclo.pedirParada();
 }
 
 class _PedidoLeitura {
   const _PedidoLeitura(this.porta, this.dispositivo, this.parar, this.biblioteca);
-
-  /// O isolate avisa que a leitura falhou (cabo saiu) e espera a parada.
-  static const avisoPerdido = 'perdido';
 
   final SendPort porta;
   final int dispositivo;
@@ -231,7 +210,7 @@ void _lerEmLaco(_PedidoLeitura pedido) {
     }
     final lidos = api.hid_read_timeout(dispositivo, memoria, ProtocoloAnagram.tamanhoRelatorio, prazo);
     if (lidos < 0) {
-      pedido.porta.send(_PedidoLeitura.avisoPerdido);
+      pedido.porta.send(AvisosLeitura.perdido);
       avisou = true;
     } else if (lidos > 0) {
       pedido.porta.send(Uint8List.fromList(memoria.asTypedList(lidos)));

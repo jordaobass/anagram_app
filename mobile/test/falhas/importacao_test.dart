@@ -62,4 +62,13 @@ void main() {
 
     expect(arquivos.nomeGravado, TransferirPreset.nomePadrao);
   });
+
+  test('should_refuse_the_import_when_a_text_of_the_preset_carries_a_frame_marker', () async {
+    const texto = '{"type":"preset","version":1,"preset":{"name":"LEGENDEND","chains":{}}}';
+
+    final resultado = await TransferirPreset(_ArquivosFalsos(texto: texto)).importar();
+
+    expect(resultado, isA<ImportacaoRecusada>());
+    expect((resultado as ImportacaoRecusada).detalhe, contains('DEND'));
+  });
 }

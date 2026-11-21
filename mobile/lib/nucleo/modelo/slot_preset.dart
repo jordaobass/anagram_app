@@ -17,7 +17,11 @@ class SlotPreset implements Comparable<SlotPreset> {
 
   /// "49.json" → slot 49.
   factory SlotPreset.doArquivo(String arquivo) =>
-      SlotPreset(int.parse(arquivo.split('.').first));
+      SlotPreset(numeroDoArquivo(arquivo) ?? (throw FormatException('"$arquivo" não é o arquivo de um slot.')));
+
+  /// "49.json" → 49, sem conferir a faixa; `null` se o nome não começa por
+  /// um número. Único lugar que sabe como a pedaleira nomeia os arquivos.
+  static int? numeroDoArquivo(String arquivo) => int.tryParse(arquivo.split('.').first);
 
   /// "17A" → slot 49.
   factory SlotPreset.doRotulo(String rotulo) {

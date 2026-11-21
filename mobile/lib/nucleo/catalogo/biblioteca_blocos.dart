@@ -6,6 +6,9 @@ import '../modelo/documento_preset.dart';
 import 'catalogo_blocos.dart';
 import 'definicao_bloco.dart';
 import 'familia_bloco.dart';
+import 'linha_paralela.dart';
+
+export 'linha_paralela.dart' show ehBlocoDeRoteamento;
 
 class GrupoBiblioteca {
   const GrupoBiblioteca(this.familia, this.blocos);
@@ -28,11 +31,6 @@ const _blocosDeSistema = {
   'urn:darkglass-anagram:sine-gen',
 };
 
-/// Split e merge marcam onde a linha 2 sai e volta: copiar ou colar por cima
-/// deles quebraria o roteamento. Mudar de lugar pode, com as regras de
-/// [recusaAoMover]; pôr e tirar, com as de linha_paralela.dart.
-bool ehBlocoDeRoteamento(String uri) =>
-    uri == 'urn:darkglass-anagram:split' || uri == 'urn:darkglass-anagram:merge';
 
 /// Papéis de parâmetro que os presets gravados pela pedaleira não guardam:
 /// o liga/desliga é o `enabled` do bloco, e reset e tempo são ações do aparelho.
@@ -87,8 +85,8 @@ List<FamiliaBloco> familiasDaBiblioteca(CatalogoBlocos catalogo) {
 /// do nome e da abreviação do catálogo: quem procura "paralela" ou "dividir"
 /// não sabe que o bloco se chama Split.
 const _sinonimos = {
-  'urn:darkglass-anagram:split': ['paralel', 'parallel', 'dividir', 'divide', 'linha 2', 'fila 2', 'row 2'],
-  'urn:darkglass-anagram:merge': ['paralel', 'parallel', 'juntar', 'unir', 'join', 'linha 2', 'fila 2', 'row 2'],
+  uriSplit: ['paralel', 'parallel', 'dividir', 'divide', 'linha 2', 'fila 2', 'row 2'],
+  uriMerge: ['paralel', 'parallel', 'juntar', 'unir', 'join', 'linha 2', 'fila 2', 'row 2'],
 };
 
 Iterable<DefinicaoBloco> _efeitos(CatalogoBlocos catalogo) =>
@@ -113,8 +111,8 @@ RecusaMover? recusaAoMover(DocumentoPreset documento, PosicaoBloco de, PosicaoBl
   if (origem == null) return RecusaMover.semOrigem;
   if (de == para) return RecusaMover.mesmaCasa;
   PosicaoBloco depois(PosicaoBloco p) => p == de ? para : (p == para ? de : p);
-  final split = _posicaoDe(documento, ':split');
-  final merge = _posicaoDe(documento, ':merge');
+  final split = posicaoNaLinha1(documento, uriSplit);
+  final merge = posicaoNaLinha1(documento, uriMerge);
   final novoSplit = split == null ? null : depois(split);
   final novoMerge = merge == null ? null : depois(merge);
   if ((novoSplit != null && novoSplit.linha != 1) || (novoMerge != null && novoMerge.linha != 1)) {
@@ -126,6 +124,3 @@ RecusaMover? recusaAoMover(DocumentoPreset documento, PosicaoBloco de, PosicaoBl
 
 bool podeMover(DocumentoPreset documento, PosicaoBloco de, PosicaoBloco para) =>
     recusaAoMover(documento, de, para) == null;
-
-PosicaoBloco? _posicaoDe(DocumentoPreset documento, String fimDaUri) =>
-    documento.blocosDaLinha(1).where((b) => b.uri.endsWith(fimDaUri)).firstOrNull?.posicao;
