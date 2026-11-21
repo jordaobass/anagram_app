@@ -31,4 +31,22 @@ void main() {
     expect(_enviosAoVivo(pedaleira), antes, reason: 'desligado o "Ao vivo", nada mais vai para a pedaleira');
   });
 
+  test('should_not_play_the_previous_preset_drag_after_another_slot_was_opened', () async {
+    final (container, pedaleira) = await conectarDemonstracao();
+    addTearDown(container.dispose);
+    final editor = container.read(editorProvider.notifier);
+    await editor.abrirSlot(SlotPreset(3));
+    final antes = _enviosAoVivo(pedaleira);
+
+    editor.alterarParametro('Threshold', -20, arrastando: true);
+    await editor.abrirSlot(SlotPreset(4));
+    final depoisDeAbrir = _enviosAoVivo(pedaleira);
+    await _passarDaJanela();
+
+    expect(_enviosAoVivo(pedaleira), depoisDeAbrir,
+        reason: 'o arraste do 01C não pode chegar depois de o 02A abrir (de $antes envios)');
+    final tocando = pedaleira.presetTocando?['preset']['name'];
+    expect(tocando, anyOf(isNull, container.read(editorProvider).atual!.nome));
+  });
+
 }

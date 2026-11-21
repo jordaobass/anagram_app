@@ -25,7 +25,7 @@ mixin AoVivoDoEditor on Notifier<EstadoEditor> {
   Future<void> definirAoVivo(bool ligado) async {
     state = state.copiar(aoVivo: ligado);
     // desligado, nem o valor do arraste já agendado sai mais
-    if (!ligado) _envio?.cancelar();
+    if (!ligado) descartarEnvioPendente();
     final atual = state.atual;
     if (ligado && atual != null) await enviarAoVivo(atual);
   }
@@ -40,6 +40,11 @@ mixin AoVivoDoEditor on Notifier<EstadoEditor> {
     if (!state.aoVivo) return;
     await _envioAtivo()?.enviarAgora(documento);
   }
+
+  /// O que estava agendado (arraste) ou esperando a vez deixa de valer; o
+  /// envio já em voo termina, porque a pedaleira atende uma conversa por vez.
+  @protected
+  void descartarEnvioPendente() => _envio?.cancelar();
 
   /// A conexão acabou: o envio pendente e a escuta das medições morrem com ela.
   @protected
