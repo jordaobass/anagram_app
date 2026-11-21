@@ -17,7 +17,8 @@ import 'package:anagram_app/plataforma/transporte_canal_nativo.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-const _escrever = bool.fromEnvironment('BANCADA_ESCRITA');
+// bool.fromEnvironment só aceita "true": "=1", como diz o cabeçalho, seria lido como falso
+const _escrever = String.fromEnvironment('BANCADA_ESCRITA') == '1' || bool.fromEnvironment('BANCADA_ESCRITA');
 const _slotMidi = String.fromEnvironment('BANCADA_MIDI');
 const _pausasMs = [0, 2, 10];
 

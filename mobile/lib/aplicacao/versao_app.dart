@@ -9,7 +9,9 @@ import 'provedores.dart';
 /// A versão do pubspec, que o Flutter grava no build de cada plataforma.
 final versaoAppProvider = FutureProvider<String>((ref) async {
   try {
-    return (await PackageInfo.fromPlatform()).version;
+    final versao = (await PackageInfo.fromPlatform()).version;
+    registro.i('versão do app: $versao');
+    return versao;
   } on Object catch (erro) {
     // sem a versão o app segue igual; só o rótulo fica sem número
     registro.w('versão do app indisponível', error: erro);

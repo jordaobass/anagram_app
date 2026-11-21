@@ -50,20 +50,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get aoVivoDesligado => 'AO VIVO DESLIGADO';
 
   @override
-  String get conexaoPermissaoNegada =>
-      'O sistema negou a permissão de acesso ao USB da Anagram. No Android, toque em Conectar de novo e aceite o pedido; no macOS, confira os ajustes de Privacidade e Segurança.';
+  String get conexaoPermissaoNegada => 'O sistema negou a permissão de acesso ao USB da Anagram. No Android, toque em Conectar de novo e aceite o pedido; no macOS, confira os ajustes de Privacidade e Segurança.';
 
   @override
-  String get conexaoOcupada =>
-      'A Anagram está plugada, mas outro programa a segura. Feche o Darkglass Suite e qualquer aba do navegador conectada à pedaleira.';
+  String get conexaoOcupada => 'A Anagram está plugada, mas outro programa a segura. Feche o Darkglass Suite e qualquer aba do navegador conectada à pedaleira.';
 
   @override
-  String get conexaoSemAnagram =>
-      'Nenhuma Anagram encontrada no USB. Confira o cabo e se ela está ligada.';
+  String get conexaoSemAnagram => 'Nenhuma Anagram encontrada no USB. Confira o cabo e se ela está ligada.';
 
   @override
-  String get conexaoSemResposta =>
-      'A Anagram não respondeu. Desligue e ligue o cabo e tente de novo.';
+  String get conexaoSemResposta => 'A Anagram não respondeu. Desligue e ligue o cabo e tente de novo.';
 
   @override
   String get conexaoRespostaInvalida => 'Resposta inesperada da pedaleira.';
@@ -78,8 +74,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get erroSemResposta => 'A pedaleira não respondeu a tempo.';
 
   @override
-  String get erroRespostaInvalida =>
-      'A pedaleira recusou ou mandou uma resposta inesperada.';
+  String get erroRespostaInvalida => 'A pedaleira recusou ou mandou uma resposta inesperada.';
 
   @override
   String erroOperacaoEmCurso(String detalhe) {
@@ -87,12 +82,10 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get erroSemSuporte =>
-      'Esta plataforma não consegue falar com a pedaleira.';
+  String get erroSemSuporte => 'Esta plataforma não consegue falar com a pedaleira.';
 
   @override
-  String get avisoDemonstracaoFalhou =>
-      'Não foi possível abrir a demonstração.';
+  String get avisoDemonstracaoFalhou => 'Não foi possível abrir a demonstração.';
 
   @override
   String avisoFalhaInesperada(String meio) {
@@ -100,12 +93,10 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get avisoPedaleiraDesconectada =>
-      'A pedaleira foi desconectada. Conecte de novo para continuar de onde parou.';
+  String get avisoPedaleiraDesconectada => 'A pedaleira foi desconectada. Conecte de novo para continuar de onde parou.';
 
   @override
-  String get avisoFormatoMaisNovo =>
-      'Preset de formato mais novo que o deste app: campos desconhecidos são preservados.';
+  String get avisoFormatoMaisNovo => 'Preset de formato mais novo que o deste app: campos desconhecidos são preservados.';
 
   @override
   String avisoPresetAtualizado(String slot) {
@@ -126,38 +117,31 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get salvarDesconectada =>
-      'a pedaleira está desconectada. Conecte e tente de novo.';
+  String get salvarDesconectada => 'a pedaleira está desconectada. Conecte e tente de novo.';
 
   @override
-  String get salvarSemResposta =>
-      'a pedaleira não respondeu a tempo. O slot pode não ter sido gravado; confira antes de tentar de novo.';
+  String get salvarSemResposta => 'a pedaleira não respondeu a tempo. O slot pode não ter sido gravado; confira antes de tentar de novo.';
 
   @override
-  String get salvarRespostaInvalida =>
-      'a pedaleira recusou ou devolveu uma resposta inesperada.';
+  String get salvarRespostaInvalida => 'a pedaleira recusou ou devolveu uma resposta inesperada.';
 
   @override
   String get salvarOcupada => 'outro programa está segurando a pedaleira.';
 
   @override
-  String get indisponivelIos =>
-      'iPhone e iPad não deixam apps comuns abrirem a interface USB de controle da Anagram: isso exige um driver DriverKit com permissão especial da Apple, que este app ainda não tem. Use o modo demonstração aqui, ou edite pelo Mac, PC, Android ou Chrome.';
+  String get indisponivelIos => 'iPhone e iPad não deixam apps comuns abrirem a interface USB de controle da Anagram: isso exige um driver DriverKit com permissão especial da Apple, que este app ainda não tem. Use o modo demonstração aqui, ou edite pelo Mac, PC, Android ou Chrome.';
 
   @override
-  String get indisponivelNavegador =>
-      'Este navegador não tem WebHID. Use Chrome ou Edge no computador, ou o modo demonstração.';
+  String get indisponivelNavegador => 'Este navegador não tem WebHID. Use Chrome ou Edge no computador, ou o modo demonstração.';
 
   @override
-  String get indisponivelSemUsb =>
-      'Esta plataforma não tem acesso USB à pedaleira.';
+  String get indisponivelSemUsb => 'Esta plataforma não tem acesso USB à pedaleira.';
 
   @override
   String get importacaoIlegivel => 'Não foi possível ler o arquivo.';
 
   @override
-  String get importacaoNaoEhPreset =>
-      'Este arquivo não é um preset da Anagram.';
+  String get importacaoNaoEhPreset => 'Este arquivo não é um preset da Anagram.';
 
   @override
   String get exportacaoFalhou => 'Não foi possível gravar o arquivo.';
@@ -209,8 +193,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get conecteTitulo => 'Conecte a Anagram pelo USB';
 
   @override
-  String get conecteFecheSuite =>
-      'Feche o Darkglass Suite antes: só um programa por vez controla a pedaleira.';
+  String get conecteFecheSuite => 'Feche o Darkglass Suite antes: só um programa por vez controla a pedaleira.';
 
   @override
   String get abrirDemonstracao => 'ABRIR DEMONSTRAÇÃO';
@@ -274,8 +257,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get areaInativa =>
-      'Esta área não está ativa na pedaleira: abrir um preset só toca, sem trocar o slot nela.';
+  String get areaInativa => 'Esta área não está ativa na pedaleira: abrir um preset só toca, sem trocar o slot nela.';
 
   @override
   String get tornarAtiva => 'TORNAR ATIVA';
@@ -307,8 +289,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get presetExportado => 'Preset exportado.';
 
   @override
-  String get presetCopiado =>
-      'JSON do preset copiado para a área de transferência.';
+  String get presetCopiado => 'JSON do preset copiado para a área de transferência.';
 
   @override
   String presetSalvoEm(String nome, String slot) {
@@ -329,8 +310,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get substituir => 'SUBSTITUIR';
 
   @override
-  String get salvarComoEscolhaDestino =>
-      'SALVAR COMO: TOQUE NO SLOT DE DESTINO';
+  String get salvarComoEscolhaDestino => 'SALVAR COMO: TOQUE NO SLOT DE DESTINO';
 
   @override
   String slotSemantica(String slot) {
@@ -349,12 +329,10 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get avisoAoVivoDesligado =>
-      'AO VIVO DESLIGADO — as edições ficam só no app, a pedaleira não muda.';
+  String get avisoAoVivoDesligado => 'AO VIVO DESLIGADO — as edições ficam só no app, a pedaleira não muda.';
 
   @override
-  String get avisoAudicao =>
-      'AUDIÇÃO — a pedaleira continua no slot dela (sem USB MIDI).';
+  String get avisoAudicao => 'AUDIÇÃO — a pedaleira continua no slot dela (sem USB MIDI).';
 
   @override
   String get naoSalvo => 'NÃO SALVO';
@@ -368,12 +346,10 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get escolhaUmPresetTexto =>
-      'Ao abrir, ele passa a tocar na pedaleira. As mudanças soam na hora e só ficam gravadas quando você salva.';
+  String get escolhaUmPresetTexto => 'Ao abrir, ele passa a tocar na pedaleira. As mudanças soam na hora e só ficam gravadas quando você salva.';
 
   @override
-  String get slotVazioTexto =>
-      'Crie um preset aqui. Para trazer blocos de outro preset, use o ícone de copiar no painel do bloco e depois segure uma casa vazia para colar.';
+  String get slotVazioTexto => 'Crie um preset aqui. Para trazer blocos de outro preset, use o ícone de copiar no painel do bloco e depois segure uma casa vazia para colar.';
 
   @override
   String get criarPresetAqui => 'CRIAR PRESET AQUI';
@@ -458,8 +434,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get dicaMontarCadeia =>
-      'Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar; segure e arraste para mudar de lugar.';
+  String get dicaMontarCadeia => 'Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar; segure e arraste para mudar de lugar.';
 
   @override
   String faixaEstimada(String simbolo) {
@@ -497,22 +472,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get creditoAutorTitulo => 'Autor';
 
   @override
-  String get creditoAutor =>
-      'jordao_bass · software livre, licença MIT. Gratuito, sem anúncios, sem compras no app e sem coleta de dados.';
+  String get creditoAutor => 'jordao_bass · software livre, licença MIT. Gratuito, sem anúncios, sem compras no app e sem coleta de dados.';
 
   @override
   String get creditoProtocoloTitulo => 'Protocolo USB e catálogo de blocos';
 
   @override
-  String get creditoProtocolo =>
-      'Portado do projeto anagram-tone-maker, de basster6 — licença MIT (github.com/basster6/anagram-tone-maker).';
+  String get creditoProtocolo => 'Portado do projeto anagram-tone-maker, de basster6 — licença MIT (github.com/basster6/anagram-tone-maker).';
 
   @override
   String get creditoArteTitulo => 'Arte dos blocos';
 
   @override
-  String get creditoArtePropria =>
-      'Arte própria do app, por categoria de bloco.';
+  String get creditoArtePropria => 'Arte própria do app, por categoria de bloco.';
 
   @override
   String get creditoImagensTitulo => 'Imagens dos blocos';
@@ -526,22 +498,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get creditoFontesTitulo => 'Fontes';
 
   @override
-  String get creditoFontes =>
-      'Barlow e Saira Stencil (SIL Open Font License) · Permanent Marker (Apache 2.0).';
+  String get creditoFontes => 'Barlow e Saira Stencil (SIL Open Font License) · Permanent Marker (Apache 2.0).';
 
   @override
   String get creditoAvisoTitulo => 'Aviso';
 
   @override
-  String get creditoAviso =>
-      'App não oficial, sem vínculo com a Darkglass Electronics. Anagram é marca do fabricante.';
+  String get creditoAviso => 'App não oficial, sem vínculo com a Darkglass Electronics. Anagram é marca do fabricante.';
 
   @override
   String get diagnosticoPausa => 'DIAGNÓSTICO · PAUSA ENTRE RELATÓRIOS USB';
 
   @override
-  String get diagnosticoPausaTexto =>
-      'Compare 0, 2 e 10 ms e veja a \"ida e volta\" na barra e no log.';
+  String get diagnosticoPausaTexto => 'Compare 0, 2 e 10 ms e veja a \"ida e volta\" na barra e no log.';
 
   @override
   String get idioma => 'Idioma';
@@ -607,19 +576,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get presets => 'Presets';
 
   @override
-  String get txDicaMontarCadeiaMouse =>
-      'Clique num + da grade para adicionar um efeito. Clique num bloco para ajustar e arraste para mudar de lugar.';
+  String get txDicaMontarCadeiaMouse => 'Clique num + da grade para adicionar um efeito. Clique num bloco para ajustar e arraste para mudar de lugar.';
 
   @override
-  String get txSlotVazioMouse =>
-      'Crie um preset aqui. Para trazer blocos de outro preset, use o ícone de copiar no painel do bloco e depois clique com o botão direito numa casa vazia para colar.';
+  String get txSlotVazioMouse => 'Crie um preset aqui. Para trazer blocos de outro preset, use o ícone de copiar no painel do bloco e depois clique com o botão direito numa casa vazia para colar.';
 
   @override
   String get txModoDemonstracaoTitulo => 'Modo demonstração';
 
   @override
-  String get txSemUsbAquiCurto =>
-      'Aqui o app não alcança a pedaleira pelo USB. Explore tudo no modo demonstração.';
+  String get txSemUsbAquiCurto => 'Aqui o app não alcança a pedaleira pelo USB. Explore tudo no modo demonstração.';
 
   @override
   String get txPorQue => 'POR QUÊ?';
@@ -804,12 +770,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get fbSoLeitura => 'SÓ LEITURA';
 
   @override
-  String get fbAreaSoLeitura =>
-      'Presets de fábrica da Darkglass: abrir um só faz tocar. Para guardar, copie para uma área sua.';
+  String get fbAreaSoLeitura => 'Presets de fábrica da Darkglass: abrir um só faz tocar. Para guardar, copie para uma área sua.';
 
   @override
-  String get fbAvisoPresetDeFabrica =>
-      'PRESET DE FÁBRICA — só toca. Copie para uma área sua para guardar.';
+  String get fbAvisoPresetDeFabrica => 'PRESET DE FÁBRICA — só toca. Copie para uma área sua para guardar.';
 
   @override
   String get fbCopiarParaMinhaArea => 'COPIAR PARA A MINHA ÁREA…';
@@ -871,15 +835,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get mbOutros => 'Outros';
 
   @override
-  String get mbExplicaMisturaLimpa =>
-      'Comp Level é o volume das três bandas comprimidas. Clean Level mistura em paralelo o sinal seco, sem compressão: no mínimo (−24 dB) quase só se ouve o comprimido; subindo, volta o ataque natural da corda.';
+  String get mbExplicaMisturaLimpa => 'Comp Level é o volume das três bandas comprimidas. Clean Level mistura em paralelo o sinal seco, sem compressão: no mínimo (−24 dB) quase só se ouve o comprimido; subindo, volta o ataque natural da corda.';
 
   @override
   String get mbBuscarOpcao => 'Buscar (ex.: turbo grunt)';
 
   @override
-  String get smOrdemInvalida =>
-      'O Split precisa ficar antes do Merge na linha 1.';
+  String get smOrdemInvalida => 'O Split precisa ficar antes do Merge na linha 1.';
 
   @override
   String get smSoNaLinha1 => 'Split e Merge ficam na linha 1.';
@@ -924,12 +886,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get mcpPermitir => 'Permitir IA via MCP';
 
   @override
-  String get mcpPermitirTexto =>
-      'Um assistente de IA no seu computador (LM Studio, Claude Desktop…) pode ler o preset aberto e ajustar o timbre. As mudanças soam na hora e só vão para a pedaleira se você salvar.';
+  String get mcpPermitirTexto => 'Um assistente de IA no seu computador (LM Studio, Claude Desktop…) pode ler o preset aberto e ajustar o timbre. As mudanças soam na hora e só vão para a pedaleira se você salvar.';
 
   @override
-  String get mcpEstadoDesligado =>
-      'Desligado: nenhum programa consegue falar com o app.';
+  String get mcpEstadoDesligado => 'Desligado: nenhum programa consegue falar com o app.';
 
   @override
   String get mcpEstadoIniciando => 'Iniciando…';
@@ -957,8 +917,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get mcpToken => 'Token de acesso';
 
   @override
-  String get mcpTokenTexto =>
-      'O cliente de IA manda este token em cada pedido. Sem ele, o app não obedece.';
+  String get mcpTokenTexto => 'O cliente de IA manda este token em cada pedido. Sem ele, o app não obedece.';
 
   @override
   String get mcpMostrarToken => 'Mostrar token';
@@ -976,8 +935,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get mcpGerarNovoTitulo => 'Gerar um token novo?';
 
   @override
-  String get mcpGerarNovoTexto =>
-      'O token atual deixa de valer na hora: o cliente de IA vai precisar do novo.';
+  String get mcpGerarNovoTexto => 'O token atual deixa de valer na hora: o cliente de IA vai precisar do novo.';
 
   @override
   String get mcpCopiarConfiguracao => 'Copiar configuração para';
@@ -995,8 +953,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get mcpCopiado => 'Copiado para a área de transferência.';
 
   @override
-  String get mcpLimitacoes =>
-      'A IA não ouve o som: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a ferramentas.';
+  String get mcpLimitacoes => 'A IA não ouve o som: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a ferramentas.';
 
   @override
   String get mcpAtivoNaBarra => 'IA';
@@ -1029,12 +986,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get mcpAgoraNao => 'AGORA NÃO';
 
   @override
-  String get ttDicaMouse =>
-      'Pare o mouse sobre o nome de um controle para saber o que ele faz com o som';
+  String get ttDicaMouse => 'Pare o mouse sobre o nome de um controle para saber o que ele faz com o som';
 
   @override
-  String get ttDicaToque =>
-      'Toque no nome de um controle para saber o que ele faz com o som';
+  String get ttDicaToque => 'Toque no nome de um controle para saber o que ele faz com o som';
 
   @override
   String get smUmSplit => 'Este preset já tem um Split (um por preset).';
@@ -1043,26 +998,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get smUmMerge => 'Este preset já tem um Merge (um por preset).';
 
   @override
-  String get smMergeSemSplit =>
-      'Coloque o Split antes: o Merge junta a linha 2, que só existe com o Split.';
+  String get smMergeSemSplit => 'Coloque o Split antes: o Merge junta a linha 2, que só existe com o Split.';
 
   @override
-  String get smLinha2SemSplit =>
-      'Sem Split na linha 1, esta linha ainda não recebe sinal.';
+  String get smLinha2SemSplit => 'Sem Split na linha 1, esta linha ainda não recebe sinal.';
 
   @override
   String get lpCriar => 'CRIAR LINHA PARALELA';
 
   @override
-  String get lpCriarDica =>
-      'Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.';
+  String get lpCriarDica => 'Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.';
 
   @override
   String get lpRemover => 'REMOVER LINHA PARALELA';
 
   @override
-  String get lpSemEspaco =>
-      'A linha 1 precisa de duas casas livres para o Split e o Merge.';
+  String get lpSemEspaco => 'A linha 1 precisa de duas casas livres para o Split e o Merge.';
 
   @override
   String get smFaixaCriar => '+ Criar linha paralela · Split, linha 2 e Merge';
@@ -1071,12 +1022,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get smItemBiblioteca => 'Split + Merge (linha paralela)';
 
   @override
-  String get smItemBibliotecaDica =>
-      'Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.';
+  String get smItemBibliotecaDica => 'Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.';
 
   @override
-  String get smJaTemLinhaParalela =>
-      'Este preset já tem linha paralela (um Split e um Merge por preset).';
+  String get smJaTemLinhaParalela => 'Este preset já tem linha paralela (um Split e um Merge por preset).';
 
   @override
   String get smDividirDepois => 'Dividir o sinal depois deste bloco';
@@ -1194,8 +1143,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pdSecao => 'Pedaleira';
 
   @override
-  String get pdDica =>
-      'Ajustes globais da Anagram: valem para todos os presets e não entram no preset. Mudam na hora.';
+  String get pdDica => 'Ajustes globais da Anagram: valem para todos os presets e não entram no preset. Mudam na hora.';
 
   @override
   String get pdSaidas => 'Saídas';
@@ -1219,8 +1167,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get eqbResetTitulo => 'Voltar o Parametric EQ ao padrão?';
 
   @override
-  String get eqbResetTexto =>
-      'Todas as bandas, os cortes e o ganho voltam ao padrão do bloco. Dá para desfazer logo depois.';
+  String get eqbResetTexto => 'Todas as bandas, os cortes e o ganho voltam ao padrão do bloco. Dá para desfazer logo depois.';
 
   @override
   String get eqbResetFeito => 'Parametric EQ de volta ao padrão.';
@@ -1232,8 +1179,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pdEqResetTitulo => 'Voltar o Global EQ ao padrão?';
 
   @override
-  String get pdEqResetTexto =>
-      'As 6 bandas voltam a 35 Hz, 160 Hz, 397 Hz, 1,25 kHz, 2,5 kHz e 9,63 kHz, com ganho 0 e a largura de fábrica. Dá para desfazer logo depois.';
+  String get pdEqResetTexto => 'As 6 bandas voltam a 35 Hz, 160 Hz, 397 Hz, 1,25 kHz, 2,5 kHz e 9,63 kHz, com ganho 0 e a largura de fábrica. Dá para desfazer logo depois.';
 
   @override
   String get pdEqResetConfirmar => 'VOLTAR AO PADRÃO';
@@ -1242,22 +1188,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pdEqResetFeito => 'Global EQ de volta ao padrão.';
 
   @override
-  String get pdEqDica =>
-      'Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho. Os knobs mexem no que o modo escolhido mostra.';
+  String get pdEqDica => 'Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho. Os knobs mexem no que o modo escolhido mostra.';
 
   @override
   String get pdEntrada => 'Entrada';
 
   @override
-  String get pdEntradaDica =>
-      'Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; os outros cinco e os nomes entram quando o app conhecer as chaves deles.';
+  String get pdEntradaDica => 'Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; os outros cinco e os nomes entram quando o app conhecer as chaves deles.';
 
   @override
   String get pdPlaca => 'Placa de som';
 
   @override
-  String get pdPlacaDica =>
-      'Só leitura: a pedaleira não aceita mudar estes pelo USB.';
+  String get pdPlacaDica => 'Só leitura: a pedaleira não aceita mudar estes pelo USB.';
 
   @override
   String get pdAtualizar => 'Atualizar';
@@ -1272,10 +1215,20 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pdTentarDeNovo => 'Tentar de novo';
 
   @override
-  String get pdErroGravar =>
-      'A pedaleira não aceitou a última mudança. Os valores mostrados são os que ela tem agora.';
+  String get pdErroGravar => 'A pedaleira não aceitou a última mudança. Os valores mostrados são os que ela tem agora.';
 
   @override
-  String get pdPendentes =>
-      'Ainda não dá para mudar pelo app: Master, Mute e Link do mixer e os nomes dos instrumentos.';
+  String get pdPendentes => 'Ainda não dá para mudar pelo app: Master, Mute e Link do mixer e os nomes dos instrumentos.';
+
+  @override
+  String get registroSecao => 'Registro para suporte';
+
+  @override
+  String get registroOnde => 'O app guarda o que acontece neste arquivo:';
+
+  @override
+  String get registroCopiar => 'Copiar registro';
+
+  @override
+  String get registroCopiado => 'Registro copiado. Cole na issue do GitHub junto com o que aconteceu.';
 }

@@ -357,5 +357,9 @@
   "pdFalhaLer": "No se pudieron leer los ajustes de la pedalera.",
   "pdTentarDeNovo": "Reintentar",
   "pdErroGravar": "La pedalera no aceptó el último cambio. Los valores mostrados son los que tiene ahora.",
-  "pdPendentes": "Todavía no se puede cambiar desde la app: Master, Mute y Link del mixer y los nombres de los instrumentos."
+  "pdPendentes": "Todavía no se puede cambiar desde la app: Master, Mute y Link del mixer y los nombres de los instrumentos.",
+  "registroSecao": "Registro para soporte",
+  "registroOnde": "La app guarda lo que ocurre en este archivo:",
+  "registroCopiar": "Copiar registro",
+  "registroCopiado": "Registro copiado. Pégalo en el issue de GitHub junto con lo que pasó."
 }

@@ -38,6 +38,9 @@ class ClienteAnagram {
   final _medicoes = StreamController<MedicaoChamada>.broadcast();
   Future<void> _fila = Future.value();
 
+  /// Leituras que estouraram o prazo e ainda podem responder (RN10).
+  final _atrasadas = RespostasAtrasadas();
+
   TransporteAnagram get transporte => _transporte;
   Stream<MedicaoChamada> get medicoes => _medicoes.stream;
 
@@ -67,10 +70,20 @@ class ClienteAnagram {
     final pausa = _pausa();
     final espera = _aguardarResposta(pedido, prazo);
     await _enviar(acao, relatorios, pausa, prazo, espera);
-    final quadro = await espera.resposta;
+    final quadro = await _respostaAnotandoAtraso(acao, espera.resposta);
     relogio.stop();
     _registrarMedicao(MedicaoChamada(acao, relogio.elapsed, relatorios.length, pausa));
     return _extrairCarga(acao, quadro);
+  }
+
+  /// Se o prazo estourar, a resposta ainda pode chegar no meio da próxima conversa.
+  Future<Map<String, dynamic>> _respostaAnotandoAtraso(String acao, Future<Map<String, dynamic>> resposta) async {
+    try {
+      return await resposta;
+    } on ErroSemResposta {
+      _atrasadas.anotar(acao);
+      rethrow;
+    }
   }
 
   List<Uint8List> _codificar(MensagemAnagram pedido) {
@@ -108,7 +121,7 @@ class ClienteAnagram {
 
   _Espera _aguardarResposta(MensagemAnagram pedido, Duration prazo) {
     final concluido = Completer<Map<String, dynamic>>();
-    final assinaturaDados = _transporte.relatoriosRecebidos.listen(_receptor(pedido, concluido));
+    final assinaturaDados = _transporte.relatoriosRecebidos.listen(_receptor(pedido, concluido, _atrasadas));
     final assinaturaEstado = _transporte.estados.listen((estado) {
       if (estado == EstadoTransporte.perdido && !concluido.isCompleted) {
         concluido.completeError(ErroDesconectado('A pedaleira foi desconectada durante "${pedido.acao}".'));
@@ -129,14 +142,15 @@ class ClienteAnagram {
 
   /// Remonta os relatórios e completa com o primeiro quadro que responde a
   /// [pedido]; os de outra conversa (respostas atrasadas) são pulados.
-  static void Function(Uint8List) _receptor(MensagemAnagram pedido, Completer<Map<String, dynamic>> concluido) {
+  static void Function(Uint8List) _receptor(
+      MensagemAnagram pedido, Completer<Map<String, dynamic>> concluido, RespostasAtrasadas atrasadas) {
     final montador = MontadorQuadros();
     return (relatorio) {
       if (concluido.isCompleted) return;
       try {
         // um relatório pode fechar a resposta atrasada de outra ação e já trazer esta
         for (var quadro = montador.acrescentar(relatorio); quadro != null; quadro = montador.proximoQuadro()) {
-          if (!ehRespostaDe(pedido, quadro)) continue;
+          if (!ehRespostaDe(pedido, quadro, atrasadas)) continue;
           concluido.complete(quadro);
           return;
         }
