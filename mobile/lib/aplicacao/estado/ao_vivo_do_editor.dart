@@ -24,6 +24,8 @@ mixin AoVivoDoEditor on Notifier<EstadoEditor> {
 
   Future<void> definirAoVivo(bool ligado) async {
     state = state.copiar(aoVivo: ligado);
+    // desligado, nem o valor do arraste já agendado sai mais
+    if (!ligado) _envio?.cancelar();
     final atual = state.atual;
     if (ligado && atual != null) await enviarAoVivo(atual);
   }
