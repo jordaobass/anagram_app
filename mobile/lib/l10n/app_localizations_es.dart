@@ -1058,4 +1058,47 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get ttDicaToque =>
       'Toca el nombre de un control para ver qué hace con el sonido';
+
+  @override
+  String get ppTemplates => 'Templates';
+
+  @override
+  String get ppPersonalizado => 'Personalizado';
+
+  @override
+  String ppAplicado(String nome) {
+    return 'Template $nome aplicado';
+  }
+
+  @override
+  String get ppEscolherTemplate => 'Elegir template';
+
+  @override
+  String get ppDaDarkglass => 'De Darkglass (los de la pedalera)';
+
+  @override
+  String get ppDoApp => 'De la app (nuestros puntos de partida)';
+
+  @override
+  String get ppAConfirmar => 'Valores aún no leídos de la pedalera';
+
+  @override
+  String get mbTipoDrive => 'Drive type';
+
+  @override
+  String get mbModoDrive => 'Drive mode';
+
+  @override
+  String get mbSolo => 'Solo';
+
+  @override
+  String mbSoloLigado(String banda) {
+    return 'Solo suena $banda';
+  }
+
+  @override
+  String get mbSoloDesligado => 'Solo apagado: suenan las tres bandas';
+
+  @override
+  String get mbOff => 'OFF';
 }

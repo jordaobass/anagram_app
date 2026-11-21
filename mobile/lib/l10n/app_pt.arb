@@ -832,5 +832,32 @@
   "mcpSalvar": "SALVAR",
   "mcpAgoraNao": "AGORA NÃO",
   "ttDicaMouse": "Pare o mouse sobre o nome de um controle para saber o que ele faz com o som",
-  "ttDicaToque": "Toque no nome de um controle para saber o que ele faz com o som"
+  "ttDicaToque": "Toque no nome de um controle para saber o que ele faz com o som",
+  "ppTemplates": "Templates",
+  "ppPersonalizado": "Personalizado",
+  "ppAplicado": "Template {nome} aplicado",
+  "@ppAplicado": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "ppEscolherTemplate": "Escolher template",
+  "ppDaDarkglass": "Da Darkglass (os da pedaleira)",
+  "ppDoApp": "Do app (pontos de partida nossos)",
+  "ppAConfirmar": "Valores ainda não lidos da pedaleira",
+  "mbTipoDrive": "Drive type",
+  "mbModoDrive": "Drive mode",
+  "mbSolo": "Solo",
+  "mbSoloLigado": "Só {banda} soando",
+  "@mbSoloLigado": {
+    "placeholders": {
+      "banda": {
+        "type": "String"
+      }
+    }
+  },
+  "mbSoloDesligado": "Solo desligado: as três bandas soam",
+  "mbOff": "OFF"
 }

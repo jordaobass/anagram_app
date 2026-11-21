@@ -11,8 +11,12 @@ import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import '../textos.dart';
+import 'botoes_banda.dart';
 import 'controle_no_painel.dart';
 import 'controle_parametro.dart';
+import 'faixa_frequencias.dart' show textoDoCorte;
+import 'grafico_banda.dart';
+import 'seletor_tipo_drive.dart';
 
 class ColunaBanda extends ConsumerWidget {
   const ColunaBanda({
@@ -22,6 +26,7 @@ class ColunaBanda extends ConsumerWidget {
     required this.definicao,
     required this.cena,
     required this.largura,
+    required this.mutes,
   });
 
   final ArranjoBanda arranjo;
@@ -29,6 +34,9 @@ class ColunaBanda extends ConsumerWidget {
   final DefinicaoBloco definicao;
   final int cena;
   final double largura;
+
+  /// Os mutes de todas as bandas: o Solo desta muta as outras.
+  final Map<BandaMultibanda, String> mutes;
 
   num _valor(DefinicaoParametro p) => ControleNoPainel.valorNaCena(bloco, p, cena);
 
@@ -49,14 +57,20 @@ class ColunaBanda extends ConsumerWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
-        Container(height: Medidas.fitaCategoria, color: Cores.daBanda(arranjo.banda)),
+        Container(height: Medidas.fitaCategoria, color: Cores.daBanda(arranjo.banda, arranjo.paleta)),
         Padding(
           padding: const EdgeInsets.all(Espacos.m),
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
             _titulo(context, ref, muda),
             if (arranjo.chave != null) _chaveComp(context, ref),
             const SizedBox(height: Espacos.s),
-            Opacity(opacity: muda ? Medidas.opacidadeBandaDesligada : 1, child: _controles()),
+            Opacity(
+              opacity: muda ? Medidas.opacidadeBandaDesligada : 1,
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
+                ?_grafico(),
+                _controles(),
+              ]),
+            ),
           ]),
         ),
       ]),
@@ -73,7 +87,13 @@ class ColunaBanda extends ConsumerWidget {
           Text(_faixa(l), style: tema.labelSmall?.copyWith(color: Cores.textoSecundario)),
         ]),
       ),
-      if (definicao.parametro(arranjo.mudo) case final mudo?) _botaoMudo(ref, l, mudo, muda),
+      BotoesBanda(
+          banda: arranjo.banda,
+          mutes: mutes,
+          bloco: bloco,
+          definicao: definicao,
+          cena: cena,
+          cor: Cores.daBanda(arranjo.banda, arranjo.paleta)),
     ]);
   }
 
@@ -81,28 +101,33 @@ class ColunaBanda extends ConsumerWidget {
   String _faixa(AppLocalizations l) {
     String limite(String? simbolo, String borda) {
       final p = simbolo == null ? null : definicao.parametro(simbolo);
-      return p == null ? borda : l.valorDe(p, _valor(p));
+      return p == null ? borda : textoDoCorte(l, p, _valor(p));
     }
 
     return '${limite(arranjo.inferior, l.mbBordaGraves)} – ${limite(arranjo.superior, l.mbBordaAgudos)}';
   }
 
-  /// O Mute pinta de alerta quando corta a banda: é o estado que mais se
-  /// esquece ligado e deixa o grave sumido sem motivo aparente.
-  Widget _botaoMudo(WidgetRef ref, AppLocalizations l, DefinicaoParametro mudo, bool muda) {
-    void alternar() => ControleNoPainel.alterar(ref, mudo, bloco)(muda ? 0 : 1, arrastando: false);
-    return Semantics(
-      toggled: muda,
-      label: mudo.nome,
-      child: muda
-          ? FilledButton(
-              key: ValueKey('mudo-${mudo.simbolo}'),
-              onPressed: alternar,
-              style: FilledButton.styleFrom(backgroundColor: Cores.fitaAlerta, foregroundColor: Cores.sobreAlerta),
-              child: Text(l.mbMudo),
-            )
-          : OutlinedButton(key: ValueKey('mudo-${mudo.simbolo}'), onPressed: alternar, child: Text(l.mbMudo)),
-    );
+  double? _numero(String? simbolo) {
+    final p = simbolo == null ? null : definicao.parametro(simbolo);
+    return p == null ? null : _valor(p).toDouble();
+  }
+
+  /// A curva do compressor (Ignissor) ou a onda do drive (Entropia).
+  Widget? _grafico() {
+    final cor = Cores.daBanda(arranjo.banda, arranjo.paleta);
+    final limiar = _numero(arranjo.limiar);
+    final razao = _numero(arranjo.razao);
+    final drive = _numero(arranjo.drive);
+    final Widget grafico;
+    if (limiar != null && razao != null) {
+      grafico = GraficoCompressor(
+          limiarDb: limiar, razao: razao, ligado: _ligado(arranjo.chave, seAusente: true), cor: cor);
+    } else if (drive != null) {
+      grafico = GraficoDrive(drive: drive, cor: cor);
+    } else {
+      return null;
+    }
+    return Padding(padding: const EdgeInsets.only(bottom: Espacos.s), child: grafico);
   }
 
   Widget _chaveComp(BuildContext context, WidgetRef ref) {
@@ -156,7 +181,9 @@ class ColunaBanda extends ConsumerWidget {
             if (definicao.parametro(c.simbolo) case final p?) (c, p),
       ];
 
-  Widget _controle(ControleBanda c, DefinicaoParametro p, double tamanho) => ControleNoPainel(
+  Widget _controle(ControleBanda c, DefinicaoParametro p, double tamanho) {
+    if (c.simbolo.endsWith('_drive_typemode')) return _tipoDrive(p, tamanho);
+    return ControleNoPainel(
         parametro: p,
         rotulo: c.rotulo,
         bloco: bloco,
@@ -166,4 +193,16 @@ class ColunaBanda extends ConsumerWidget {
         seletor: c.tipo == TipoControleBanda.seletor,
         forma: c.tipo == TipoControleBanda.fader ? FormaControle.fader : FormaControle.knob,
       );
+  }
+
+  /// O tipo e o modo do drive em dois seletores, como na pedaleira.
+  Widget _tipoDrive(DefinicaoParametro p, double largura) => Consumer(
+      builder: (context, ref, _) => SeletorTipoDrive(
+            key: ValueKey('param-${p.simbolo}'),
+            parametro: p,
+            valor: _valor(p),
+            cor: Cores.daFamilia(definicao.familia),
+            largura: largura,
+            aoMudar: ControleNoPainel.alterar(ref, p, bloco),
+          ));
 }

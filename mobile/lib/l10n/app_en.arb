@@ -293,5 +293,18 @@
   "mcpSalvar": "SAVE",
   "mcpAgoraNao": "NOT NOW",
   "ttDicaMouse": "Rest the mouse on a control's name to see what it does to the sound",
-  "ttDicaToque": "Tap a control's name to see what it does to the sound"
+  "ttDicaToque": "Tap a control's name to see what it does to the sound",
+  "ppTemplates": "Templates",
+  "ppPersonalizado": "Custom",
+  "ppAplicado": "Template {nome} applied",
+  "ppEscolherTemplate": "Choose a template",
+  "ppDaDarkglass": "From Darkglass (the pedal's own)",
+  "ppDoApp": "From the app (our starting points)",
+  "ppAConfirmar": "Values not read from the pedal yet",
+  "mbTipoDrive": "Drive type",
+  "mbModoDrive": "Drive mode",
+  "mbSolo": "Solo",
+  "mbSoloLigado": "Only {banda} playing",
+  "mbSoloDesligado": "Solo off: all three bands play",
+  "mbOff": "OFF"
 }

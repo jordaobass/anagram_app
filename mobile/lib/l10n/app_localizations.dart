@@ -1863,6 +1863,84 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Toque no nome de um controle para saber o que ele faz com o som'**
   String get ttDicaToque;
+
+  /// No description provided for @ppTemplates.
+  ///
+  /// In pt, this message translates to:
+  /// **'Templates'**
+  String get ppTemplates;
+
+  /// No description provided for @ppPersonalizado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Personalizado'**
+  String get ppPersonalizado;
+
+  /// No description provided for @ppAplicado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Template {nome} aplicado'**
+  String ppAplicado(String nome);
+
+  /// No description provided for @ppEscolherTemplate.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escolher template'**
+  String get ppEscolherTemplate;
+
+  /// No description provided for @ppDaDarkglass.
+  ///
+  /// In pt, this message translates to:
+  /// **'Da Darkglass (os da pedaleira)'**
+  String get ppDaDarkglass;
+
+  /// No description provided for @ppDoApp.
+  ///
+  /// In pt, this message translates to:
+  /// **'Do app (pontos de partida nossos)'**
+  String get ppDoApp;
+
+  /// No description provided for @ppAConfirmar.
+  ///
+  /// In pt, this message translates to:
+  /// **'Valores ainda não lidos da pedaleira'**
+  String get ppAConfirmar;
+
+  /// No description provided for @mbTipoDrive.
+  ///
+  /// In pt, this message translates to:
+  /// **'Drive type'**
+  String get mbTipoDrive;
+
+  /// No description provided for @mbModoDrive.
+  ///
+  /// In pt, this message translates to:
+  /// **'Drive mode'**
+  String get mbModoDrive;
+
+  /// No description provided for @mbSolo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Solo'**
+  String get mbSolo;
+
+  /// No description provided for @mbSoloLigado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Só {banda} soando'**
+  String mbSoloLigado(String banda);
+
+  /// No description provided for @mbSoloDesligado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Solo desligado: as três bandas soam'**
+  String get mbSoloDesligado;
+
+  /// No description provided for @mbOff.
+  ///
+  /// In pt, this message translates to:
+  /// **'OFF'**
+  String get mbOff;
 }
 
 class _AppLocalizationsDelegate
