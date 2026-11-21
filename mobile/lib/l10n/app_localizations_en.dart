@@ -1169,4 +1169,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mbOff => 'OFF';
+
+  @override
+  String get pdSecao => 'Pedal';
+
+  @override
+  String get pdDica =>
+      'Global Anagram settings: they apply to every preset and are not stored in the preset. Changes are immediate.';
+
+  @override
+  String get pdSaidas => 'Outputs';
+
+  @override
+  String get pdGlobalEq => 'Global EQ';
+
+  @override
+  String get pdEqPlano => 'Flat';
+
+  @override
+  String get pdEqDica =>
+      'Drag the points: sideways changes the frequency, up and down the gain.';
+
+  @override
+  String get pdEntrada => 'Input';
+
+  @override
+  String get pdEntradaDica =>
+      'Input gain for instrument 1 (−12 to +12 dB). The Anagram stores six instruments; the other five and their names will come once the app knows their keys.';
+
+  @override
+  String get pdPlaca => 'Sound card';
+
+  @override
+  String get pdPlacaDica =>
+      'Read only: the pedal does not accept changing these over USB.';
+
+  @override
+  String get pdAtualizar => 'Refresh';
+
+  @override
+  String get pdLendo => 'Reading the pedal settings…';
+
+  @override
+  String get pdFalhaLer => 'Could not read the pedal settings.';
+
+  @override
+  String get pdTentarDeNovo => 'Try again';
+
+  @override
+  String get pdErroGravar =>
+      'The pedal did not accept the last change. The values shown are the ones it has now.';
+
+  @override
+  String get pdPendentes =>
+      'Not yet adjustable in the app: mixer Master, Mute and Link, Global EQ bands 2 to 5 and width, and instrument names.';
 }

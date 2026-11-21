@@ -327,5 +327,21 @@
   "mbSolo": "Solo",
   "mbSoloLigado": "Only {banda} playing",
   "mbSoloDesligado": "Solo off: all three bands play",
-  "mbOff": "OFF"
+  "mbOff": "OFF",
+  "pdSecao": "Pedal",
+  "pdDica": "Global Anagram settings: they apply to every preset and are not stored in the preset. Changes are immediate.",
+  "pdSaidas": "Outputs",
+  "pdGlobalEq": "Global EQ",
+  "pdEqPlano": "Flat",
+  "pdEqDica": "Drag the points: sideways changes the frequency, up and down the gain.",
+  "pdEntrada": "Input",
+  "pdEntradaDica": "Input gain for instrument 1 (−12 to +12 dB). The Anagram stores six instruments; the other five and their names will come once the app knows their keys.",
+  "pdPlaca": "Sound card",
+  "pdPlacaDica": "Read only: the pedal does not accept changing these over USB.",
+  "pdAtualizar": "Refresh",
+  "pdLendo": "Reading the pedal settings…",
+  "pdFalhaLer": "Could not read the pedal settings.",
+  "pdTentarDeNovo": "Try again",
+  "pdErroGravar": "The pedal did not accept the last change. The values shown are the ones it has now.",
+  "pdPendentes": "Not yet adjustable in the app: mixer Master, Mute and Link, Global EQ bands 2 to 5 and width, and instrument names."
 }

@@ -3,6 +3,7 @@
 // área (firmware 1.18+) de quem chama, a cada pedido: uma área guardada aqui
 // mudaria por baixo de um preset aberto (reconexão, troca de área) e o
 // "Salvar" gravaria o slot da área errada.
+import '../nucleo/ajustes/ajustes_pedaleira.dart';
 import '../nucleo/modelo/areas_presets.dart';
 import '../nucleo/modelo/documento_preset.dart';
 import '../nucleo/modelo/slot_preset.dart';
@@ -27,6 +28,12 @@ class RepositorioPedaleira {
   Future<Resultado<void>> tornarAreaAtiva(String area) =>
       _proteger('tornar $area ativa', () => _api.tornarAreaAtiva(area));
 
+  Future<Resultado<AjustesPedaleira>> lerAjustesGlobais() =>
+      _proteger('ler ajustes globais', _api.lerAjustesGlobais);
+
+  Future<Resultado<void>> gravarAjustesGlobais(Map<String, num> porChave) =>
+      _proteger('gravar ${porChave.keys.join(', ')}', () => _api.gravarAjustesGlobais(porChave));
+
   /// [area]: id da área ("user", "user-2"…); nulo = firmware sem áreas.
   Future<Resultado<List<ResumoSlot>>> listarSlots({String? area}) =>
       _proteger('listar', () => _api.listarSlots(area: area));
@@ -38,7 +45,28 @@ class RepositorioPedaleira {
       _proteger('tocar ao vivo', () => _api.tocarAoVivo(preset));
 
   Future<Resultado<void>> salvar(SlotPreset slot, DocumentoPreset preset, {String? area}) =>
-      _proteger('salvar ${slot.rotulo}', () => _api.salvar(slot, preset, area: area));
+      _proteger('salvar ${slot.rotulo}', () => _salvarConferindo(slot, preset, area));
+
+  /// A Anagram grava o preset mas pode não confirmar em 30 s (provado em
+  /// 2026-11-21 na v1.19.2.24, com 2 a 5 blocos pesados): sem confirmação,
+  /// relê o slot e só acusa a falha se o que está lá não for o que se mandou.
+  Future<void> _salvarConferindo(SlotPreset slot, DocumentoPreset preset, String? area) async {
+    try {
+      await _api.salvar(slot, preset, area: area);
+    } on ErroSemResposta {
+      final gravado = await _api.lerPreset(slot, area: area);
+      if (gravado == null || !_mesmaCadeia(gravado, preset)) rethrow;
+      registro.w('pedaleira: salvar ${slot.rotulo} sem confirmação; a releitura mostrou o preset gravado');
+    }
+  }
+
+  static bool _mesmaCadeia(DocumentoPreset a, DocumentoPreset b) {
+    String cadeia(DocumentoPreset d) => [
+          for (final linha in [1, 2])
+            for (final bloco in d.blocosDaLinha(linha)) '${bloco.posicao.linha}.${bloco.posicao.casa}=${bloco.uri}',
+        ].join(';');
+    return a.nome == b.nome && cadeia(a) == cadeia(b);
+  }
 
   /// Apaga o preset do slot (o slot fica vazio na pedaleira).
   Future<Resultado<void>> excluir(SlotPreset slot, {String? area}) =>

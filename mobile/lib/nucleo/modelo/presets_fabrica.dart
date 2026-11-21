@@ -34,12 +34,35 @@ class PresetsDeFabrica {
     final campos = mapaOuVazio(entrada);
     try {
       final slot = SlotPreset.doArquivo(textoOuNulo(campos['arquivo']) ?? '');
-      return (slot, DocumentoPreset.doJson(mapaOuVazio(campos['preset'])));
+      return (slot, DocumentoPreset.doJson(_comSimbolosDoFirmware(mapaOuVazio(campos['preset']))));
     } on FormatException {
       return null;
     } on ArgumentError {
       return null;
     }
+  }
+
+  /// Símbolos que a cópia do Suite grava diferente do firmware: no Gentle o
+  /// nível é `level` na fábrica e `output_lvl` no catálogo e nos presets que a
+  /// própria pedaleira grava (lido do 01A real em 2026-11-21, DECISOES EQ8).
+  static const _renomear = {
+    'urn:darkglass:neural-plugins:gentle': {'level': 'output_lvl'},
+  };
+
+  static Map<String, dynamic> _comSimbolosDoFirmware(Map<String, dynamic> envelope) {
+    final cadeias = mapaOuVazio(mapaOuVazio(envelope['preset'])['chains']);
+    for (final cadeia in cadeias.values) {
+      for (final bloco in mapaOuVazio(mapaOuVazio(cadeia)['blocks']).values) {
+        final trocas = _renomear[mapaOuVazio(bloco)['uri']];
+        if (trocas == null) continue;
+        for (final parametro in mapaOuVazio(mapaOuVazio(bloco)['parameters']).values) {
+          final campos = mapaOuVazio(parametro);
+          final novo = trocas[campos['symbol']];
+          if (novo != null) campos['symbol'] = novo;
+        }
+      }
+    }
+    return envelope;
   }
 
   final Map<SlotPreset, DocumentoPreset> _porSlot;

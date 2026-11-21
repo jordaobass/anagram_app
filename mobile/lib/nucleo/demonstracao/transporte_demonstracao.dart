@@ -12,6 +12,7 @@ import '../protocolo/api_anagram.dart';
 import '../protocolo/erros_anagram.dart';
 import '../protocolo/quadros_hid.dart';
 import '../protocolo/transporte_anagram.dart';
+import 'ajustes_globais_demonstracao.dart';
 import 'organizacao_demonstracao.dart';
 
 class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagram {
@@ -35,6 +36,10 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
 
   /// Área que a pedaleira simulada está usando (a do Program Change).
   String areaAtiva = 'user';
+
+  /// Mixer, Global EQ e entrada, no formato plano da pedaleira real.
+  final Map<String, Object?> ajustesGlobais = ajustesGlobaisIniciais();
+  final Map<String, Object?> placaDeSom = placaDeSomInicial();
 
   /// Falha injetada: firmware anterior aos ajustes, que recusa `export_settings`.
   bool semAjustes = false;
@@ -180,17 +185,22 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
     final nomes = _nomesAreas;
     return {
       'settings': {
+        ...ajustesGlobais,
         'user-areas': ?nomes,
         if (!semAreaAtiva) 'selected-preset-area': areaAtiva,
         'selected-preset': 0,
       },
+      'soundcard': {...placaDeSom},
+      'success': 1,
     };
   }
 
   Map<String, dynamic> _gravarAjustes(Object? ajustes) {
-    final area = ajustes is Map<String, dynamic> ? ajustes['selected-preset-area'] : null;
+    if (ajustes is! Map<String, dynamic>) return {'success': 1};
+    final area = ajustes['selected-preset-area'];
     if (area is String && !ignorarTrocaDeArea) areaAtiva = area;
-    return {'status': 'ok'};
+    gravarAjustesGlobais(ajustesGlobais, ajustes);
+    return {'success': 1, 'err_message': ''};
   }
 
   Map<String, dynamic> _lerPreset(Map<int, dynamic> slots, String? arquivo) {
