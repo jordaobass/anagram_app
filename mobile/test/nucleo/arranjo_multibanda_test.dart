@@ -1,13 +1,24 @@
 // O painel do multibanda não pode esconder parâmetro nem inventar um que a
-// pedaleira não tem, e os 37 drives do Entropia se agrupam pela família.
+// pedaleira não tem, os 37 drives do Entropia se agrupam pela família e o
+// Ignissor, compressor de 3 bandas, aparece entre os compressores.
 import 'package:anagram_app/apresentacao/componentes/painel_parametros.dart';
 import 'package:anagram_app/nucleo/catalogo/arranjo_multibanda.dart';
+import 'package:anagram_app/nucleo/catalogo/biblioteca_blocos.dart';
+import 'package:anagram_app/nucleo/catalogo/familia_bloco.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/fixtures.dart';
 
 void main() {
+  test('should_find_the_ignissor_among_the_compressors_when_the_library_is_filtered_by_family', () {
+    final grupos = blocosDaBiblioteca(lerCatalogo(), familia: FamiliaBloco.compressor);
+    final uris = [for (final g in grupos) for (final b in g.blocos) b.uri];
+
+    expect(uris, contains('urn:darkglass:ignissor'));
+    expect(uris, contains('urn:darkglass:FETComp'), reason: 'na mesma família dos outros compressores');
+  });
+
   for (final uri in ['urn:darkglass:ignissor', 'urn:darkglass:entropia']) {
     test('should_place_every_parameter_of_$uri in_the_band_panel_and_only_real_ones', () {
       final definicao = lerCatalogo().definicao(uri);
