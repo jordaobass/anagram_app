@@ -85,6 +85,14 @@ abstract final class Cores {
         ModoEq.width => const Color(0xFFF2A531),
       };
 
+  /// O nome do modo escrito na cor dele sobre o painel. O roxo da pedaleira
+  /// dá 4,47:1 como texto (abaixo dos 4,5 da WCAG AA): o texto usa um roxo
+  /// mais claro, e o chip, o ícone e a curva continuam na cor da pedaleira.
+  static Color textoDoModoEq(ModoEq modo) => switch (modo) {
+        ModoEq.freq => const Color(0xFF9B84F5),
+        _ => doModoEq(modo),
+      };
+
   /// Texto sobre o chip colorido do modo: escuro, para contraste com as três.
   static const textoSobreModoEq = Color(0xFF101114);
 }

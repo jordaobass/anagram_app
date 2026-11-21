@@ -152,7 +152,7 @@ class SeletorModoEq extends StatelessWidget {
             ),
           ),
         ),
-      Text(_nome(l, modo), style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Cores.doModoEq(modo))),
+      Text(_nome(l, modo), style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Cores.textoDoModoEq(modo))),
     ]);
   }
 }
