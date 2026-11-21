@@ -81,6 +81,10 @@ class DefinicaoParametro {
   }
 }
 
+/// Vários blocos vêm em versão mono e estéreo com o mesmo nome no catálogo
+/// da pedaleira; o canal é o que distingue os dois na tela.
+enum CanalBloco { unico, mono, estereo }
+
 class DefinicaoBloco {
   const DefinicaoBloco({
     required this.uri,
@@ -88,6 +92,7 @@ class DefinicaoBloco {
     required this.abreviacao,
     required this.categoria,
     required this.parametros,
+    this.canal = CanalBloco.unico,
   });
 
   factory DefinicaoBloco.doJson(String uri, Map<String, dynamic> json) => DefinicaoBloco(
@@ -103,12 +108,17 @@ class DefinicaoBloco {
 
   /// Bloco que não está no catálogo (comprado no Marketplace, firmware novo):
   /// mostra o fim da uri e os parâmetros que o preset guardar.
+  /// A mesma definição com o canal marcado (só o catálogo sabe se há gêmeo).
+  DefinicaoBloco comCanal(CanalBloco canal) => DefinicaoBloco(
+      uri: uri, nome: nome, abreviacao: abreviacao, categoria: categoria, parametros: parametros, canal: canal);
+
   factory DefinicaoBloco.desconhecido(String uri) {
     // o sufixo de canal não é nome: "…:Chorus#stereo" se chama Chorus
     final fim = semSufixoDeCanal(uri).split(RegExp('[:/]')).lastWhere((p) => p.isNotEmpty, orElse: () => uri);
     return DefinicaoBloco(uri: uri, nome: fim, abreviacao: '', categoria: '', parametros: const []);
   }
 
+  final CanalBloco canal;
   final String uri;
   final String nome;
   final String abreviacao;
