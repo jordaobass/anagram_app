@@ -1,6 +1,6 @@
 // Ferramentas que mudam a cadeia: pôr, mover e tirar bloco, e escolher o
-// gabinete. As regras são as da tela (split/merge ficam onde estão; a linha
-// 2 só existe entre eles).
+// gabinete. As regras são as da tela: um Split e um Merge, na linha 1, o
+// Merge depois do Split; a linha 2 só recebe sinal com Split.
 import '../../nucleo/catalogo/biblioteca_blocos.dart';
 import '../../nucleo/catalogo/catalogo_gabinetes.dart';
 import '../../nucleo/catalogo/linha_paralela.dart';
@@ -22,7 +22,8 @@ class AdicionarBloco extends FerramentaMcp {
 
   @override
   String get descricao => 'Put a new block (with default settings) in an EMPTY position. Get "type" from '
-      'list_block_types. Row 2 only exists when row 1 has a Split and a Merge.';
+      'list_block_types. A Split on row 1 sends the signal also to row 2 (from its column 1); a Merge after '
+      'it on row 1 joins row 2 (from its column 12) back. One Split and one Merge per preset.';
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto({..._posicao(), 'type': texto('Block type from list_block_types.')},
@@ -39,13 +40,23 @@ class AdicionarBloco extends FerramentaMcp {
       throw const RecusaFerramenta('That position is taken. Use remove_block first, or pick an empty column.');
     }
     if (posicao.linha == 2 && !temLinhaParalela(documento)) {
-      throw const RecusaFerramenta('Row 2 does not exist in this preset (no Split/Merge on row 1). Use row 1.');
+      throw const RecusaFerramenta('Row 2 gets no signal in this preset (no Split on row 1). Add a Split first.');
     }
+    if (recusaAoAdicionar(documento, posicao, tipo) case final recusa?) throw RecusaFerramenta(_motivo(recusa));
     await sessao.mudar('+ ${definicao.nome}', () => sessao.editor.adicionarBloco(posicao, definicao));
     final novo = sessao.estado.atual!.bloco(posicao)!;
     return ResultadoFerramenta.dados(DescricaoPreset(sessao.definicao, sessao.gabinetes()).bloco(novo, sessao.estado.atual!.cenaAtiva));
   }
 }
+
+String _motivo(RecusaAdicionar recusa) => switch (recusa) {
+      RecusaAdicionar.splitRepetido => 'This preset already has a Split (one per preset).',
+      RecusaAdicionar.mergeRepetido => 'This preset already has a Merge (one per preset).',
+      RecusaAdicionar.mergeSemSplit => 'Add a Split on row 1 before the Merge.',
+      RecusaAdicionar.foraDaLinha1 => 'Split and Merge go on row 1.',
+      RecusaAdicionar.mergeAntesDoSplit || RecusaAdicionar.splitDepoisDoMerge =>
+        'The Split must come before the Merge on row 1.',
+    };
 
 class MoverBloco extends FerramentaMcp {
   const MoverBloco(this.sessao);
@@ -56,7 +67,7 @@ class MoverBloco extends FerramentaMcp {
 
   @override
   String get descricao => 'Move a block to another position; if the target is taken, the two blocks swap. '
-      'Split and Merge cannot be moved.';
+      'Split and Merge stay on row 1, with the Split before the Merge.';
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto({..._posicao(prefixo: 'from_'), ..._posicao(prefixo: 'to_')},
@@ -67,7 +78,7 @@ class MoverBloco extends FerramentaMcp {
     final origem = sessao.bloco(argumentos, linha: 'from_row', casa: 'from_column');
     final destino = SessaoMcp.posicaoDe(argumentos, linha: 'to_row', casa: 'to_column');
     if (!podeMover(sessao.presetAberto(), origem.posicao, destino)) {
-      throw const RecusaFerramenta('This move is not allowed (same place, or Split/Merge involved).');
+      throw const RecusaFerramenta('This move is not allowed (same place, Split/Merge off row 1, or Split after Merge).');
     }
     final nome = sessao.definicao(origem.uri).nome;
     await sessao.mudar('$nome → ${destino.linha}.${destino.casa}', () => sessao.editor.moverBloco(origem.posicao, destino));
@@ -83,7 +94,8 @@ class RemoverBloco extends FerramentaMcp {
   String get nome => 'remove_block';
 
   @override
-  String get descricao => 'Remove a block from the chain. Split and Merge cannot be removed this way.';
+  String get descricao => 'Remove a block from the chain. Removing the Split also removes the Merge; it is '
+      'refused while row 2 has blocks (remove those first).';
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto(_posicao(), obrigatorias: const ['row', 'column']);
@@ -91,8 +103,9 @@ class RemoverBloco extends FerramentaMcp {
   @override
   Future<ResultadoFerramenta> executar(Map<String, dynamic> argumentos) async {
     final bloco = sessao.bloco(argumentos);
-    if (ehBlocoDeRoteamento(bloco.uri)) {
-      throw const RecusaFerramenta('Split and Merge define the parallel line; the player removes them in the app.');
+    if (bloco.uri == uriSplit && sessao.presetAberto().blocosDaLinha(2).isNotEmpty) {
+      throw const RecusaFerramenta('Row 2 still has blocks; remove them first, or let the player remove the Split '
+          'in the app (it asks before taking row 2 along).');
     }
     final nome = sessao.definicao(bloco.uri).nome;
     await sessao.mudar('− $nome', () => sessao.editor.removerBloco(bloco.posicao));

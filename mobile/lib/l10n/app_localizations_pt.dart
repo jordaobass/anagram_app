@@ -687,29 +687,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get kbAplicar => 'APLICAR';
 
   @override
-  String get lpCriar => 'CRIAR LINHA PARALELA';
-
-  @override
-  String get lpCriarDica =>
-      'Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.';
-
-  @override
-  String get lpRemover => 'REMOVER LINHA PARALELA';
-
-  @override
-  String get lpRemoverTitulo => 'Remover a linha paralela?';
+  String get lpRemoverTitulo => 'Remover o Split?';
 
   @override
   String lpRemoverTexto(int quantidade) {
-    return 'Saem o Split, o Merge e os $quantidade blocos da linha 2.';
+    return 'Sem o Split a linha 2 não recebe sinal: saem também o Merge e os $quantidade blocos da linha 2.';
   }
 
   @override
   String get lpRemoverConfirmar => 'REMOVER';
-
-  @override
-  String get lpSemEspaco =>
-      'A linha 1 precisa de duas casas livres para o Split e o Merge.';
 
   @override
   String get cbGabinete => 'Gabinete';
@@ -883,23 +869,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get mbBuscarOpcao => 'Buscar (ex.: turbo grunt)';
 
   @override
-  String get smFaixaCriar => '+ Criar linha paralela · Split, linha 2 e Merge';
-
-  @override
-  String get smItemBiblioteca => 'Split + Merge (linha paralela)';
-
-  @override
-  String get smItemBibliotecaDica =>
-      'Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.';
-
-  @override
-  String get smJaTemLinhaParalela =>
-      'Este preset já tem linha paralela (um Split e um Merge por preset).';
-
-  @override
-  String get smDividirDepois => 'Dividir o sinal depois deste bloco';
-
-  @override
   String get smOrdemInvalida =>
       'O Split precisa ficar antes do Merge na linha 1.';
 
@@ -1057,4 +1026,18 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get ttDicaToque =>
       'Toque no nome de um controle para saber o que ele faz com o som';
+
+  @override
+  String get smUmSplit => 'Este preset já tem um Split (um por preset).';
+
+  @override
+  String get smUmMerge => 'Este preset já tem um Merge (um por preset).';
+
+  @override
+  String get smMergeSemSplit =>
+      'Coloque o Split antes: o Merge junta a linha 2, que só existe com o Split.';
+
+  @override
+  String get smLinha2SemSplit =>
+      'Sem Split na linha 1, esta linha ainda não recebe sinal.';
 }

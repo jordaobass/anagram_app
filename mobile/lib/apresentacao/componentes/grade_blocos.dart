@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
-import '../../nucleo/catalogo/linha_paralela.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../tema/tokens.dart';
 import 'biblioteca_efeitos.dart';
 import 'casa_arrastavel.dart';
 import 'casa_bloco.dart';
-import 'faixa_linha_paralela.dart';
 import 'menu_bloco.dart';
 import 'pintor_linha_sinal.dart';
 
@@ -39,10 +37,7 @@ class GradeBlocos extends ConsumerWidget {
               child: Column(children: [
                 _linha(context, ref, documento, 1, largura),
                 const SizedBox(height: Espacos.s),
-                if (mostraFaixaLinhaParalela(documento))
-                  FaixaLinhaParalela(altura: geometria.alturaLinha)
-                else
-                  _linha(context, ref, documento, 2, largura),
+                _linha(context, ref, documento, 2, largura),
               ]),
             ),
           ),
@@ -94,11 +89,6 @@ class GradeBlocos extends ConsumerWidget {
         ]),
       );
 }
-
-/// Sem Split e com a linha 2 vazia, a linha 2 vira a faixa de criar a linha
-/// paralela (as duas grades): ali os encaixes não receberiam sinal.
-bool mostraFaixaLinhaParalela(DocumentoPreset documento) =>
-    !temLinhaParalela(documento) && documento.blocosDaLinha(2).isEmpty;
 
 /// Uma casa ligada ao editor (selecionar, bypass, menu, adicionar efeito na
 /// vazia, arrastar para mudar de lugar). Usada nas duas grades.

@@ -1,12 +1,13 @@
 // O caminho do sinal na cadeia, como num pedalboard: sai do jaque IN, passa
 // pelos pedais na ordem e chega ao OUT. Depois do último pedal o fio segue
 // tracejado até o OUT (o sinal passa, mas não há nada ali). Com split, a
-// derivação faz o que a pedaleira faz: o Split manda o sinal para o COMEÇO da
-// linha 2 (a primeira casa ocupada dela, em qualquer coluna), o sinal passa
-// pelos blocos da linha 2 e o fim dela volta no Merge — a ida em amarelo,
-// a volta em verde-água, como a fita do Split e a do Merge. Entre as linhas o fio
-// corre num corredor e desce/sobe pelos vãos entre as casas, para não cruzar
-// pedal nem nome. As caixas dos pedais e os encaixes vazios cobrem o fio.
+// derivação faz o que a pedaleira faz: o Split liga SEMPRE na casa 1 da
+// linha 2, o sinal corre a linha 2 inteira e o Merge recebe SEMPRE da casa 12
+// — a ida em amarelo, a volta em verde-água, como a fita do Split e a do
+// Merge; na linha 2 o fio é o da cadeia (cheio até o último bloco, tracejado
+// depois). Entre as linhas o fio corre num corredor e desce/sobe pelos vãos
+// entre as casas, para não cruzar pedal nem nome. As caixas dos pedais e os
+// encaixes vazios cobrem o fio.
 import 'package:flutter/rendering.dart';
 
 import '../../nucleo/modelo/bloco_preset.dart';
@@ -95,15 +96,20 @@ class PintorLinhaSinal extends CustomPainter {
     final fimDoSinal = ocupadas.isEmpty ? entrada : geometria.xDaCasa(ocupadas.last);
     canvas.drawLine(Offset(entrada, y1), Offset(fimDoSinal, y1), _fio);
     _tracejado(canvas, Offset(fimDoSinal, y1), Offset(saida, y1));
-    if (casaSplit != null) {
-      final pontos = pontosDaDerivacao(geometria,
-          casaSplit: casaSplit!, casaMerge: casaMerge, ocupadas2: ocupadas2, saida: saida);
-      final (ida, volta) = trechosDaDerivacao(pontos, comLinha2: ocupadas2.isNotEmpty);
-      canvas.drawPath(Path()..addPolygon(ida, false), _fioDoSplit);
-      canvas.drawPath(Path()..addPolygon(volta, false), _fioDoMerge);
-    }
+    if (casaSplit != null) _derivacao(canvas, saida);
     _jaque(canvas, Offset(entrada, y1), 'IN');
     _jaque(canvas, Offset(saida, y1), 'OUT');
+  }
+
+  void _derivacao(Canvas canvas, double saida) {
+    final (ida, volta) = trechosDaDerivacao(geometria, casaSplit: casaSplit!, casaMerge: casaMerge, saida: saida);
+    final inicio2 = ida.last;
+    final fim2 = volta.first;
+    final ultimo = ocupadas2.isEmpty ? inicio2.dx : geometria.xDaCasa(ocupadas2.last);
+    canvas.drawLine(inicio2, Offset(ultimo, inicio2.dy), _fio);
+    _tracejado(canvas, Offset(ultimo, inicio2.dy), fim2);
+    canvas.drawPath(Path()..addPolygon(ida, false), _fioDoSplit);
+    canvas.drawPath(Path()..addPolygon(volta, false), _fioDoMerge);
   }
 
   void _tracejado(Canvas canvas, Offset de, Offset ate) {
@@ -144,43 +150,38 @@ class PintorLinhaSinal extends CustomPainter {
   }
 }
 
-/// O caminho da derivação: do Split, pelo vão à direita dele, desce ao
-/// corredor entre as linhas; vai até o vão antes do PRIMEIRO bloco da linha 2,
-/// desce, atravessa os blocos dela até o ÚLTIMO, sobe pelo vão depois dele e
-/// volta pelo corredor até o vão antes do Merge (sem Merge, o OUT), subindo
-/// até ele. Sem bloco na linha 2, vai direto pelo corredor.
-List<Offset> pontosDaDerivacao(GeometriaGrade g,
-    {required int casaSplit, int? casaMerge, required List<int> ocupadas2, required double saida}) {
+/// A derivação em dois trechos, como a pedaleira roteia: a ida sai do Split,
+/// desce pelo vão à direita dele ao corredor entre as linhas, corre até antes
+/// da casa 1 e entra na linha 2 por ela; a volta sai depois da casa 12, sobe
+/// ao corredor e corre até o vão antes do Merge (sem Merge, o OUT), subindo
+/// até ele. Entre os dois trechos fica a linha 2 inteira. Com o Merge colado
+/// no Split os dois usam o mesmo vão; então cada fio se afasta para um lado
+/// dele, para a ida e a volta não se sobreporem.
+(List<Offset>, List<Offset>) trechosDaDerivacao(GeometriaGrade g,
+    {required int casaSplit, int? casaMerge, required double saida}) {
   final y1 = g.yDaLinha(1);
   final y2 = g.yDaLinha(2);
   final corredor = g.yCorredor;
-  final descida = g.vaoDepois(casaSplit);
-  final chegada = casaMerge == null ? saida : g.vaoAntes(casaMerge);
+  final colados = casaMerge == casaSplit + 1;
+  final afastamento = colados ? g.vao / 4 : 0.0;
+  final descida = g.vaoDepois(casaSplit) - afastamento;
+  final entrada2 = g.vaoAntes(1);
+  final saida2 = g.vaoDepois(PosicaoBloco.casasPorLinha);
+  final chegada = casaMerge == null ? saida : g.vaoAntes(casaMerge) + afastamento;
   final destino = casaMerge == null ? saida : g.xDaCasa(casaMerge);
-  final pontos = [Offset(g.xDaCasa(casaSplit), y1), Offset(descida, y1), Offset(descida, corredor)];
-  if (ocupadas2.isNotEmpty) {
-    final primeiro = ocupadas2.reduce((a, b) => a < b ? a : b);
-    final ultimo = ocupadas2.reduce((a, b) => a > b ? a : b);
-    pontos.addAll([
-      Offset(g.vaoAntes(primeiro), corredor),
-      Offset(g.vaoAntes(primeiro), y2),
-      Offset(g.xDaCasa(ultimo), y2),
-      Offset(g.vaoDepois(ultimo), y2),
-      Offset(g.vaoDepois(ultimo), corredor),
-    ]);
-  }
-  pontos.addAll([Offset(chegada, corredor), Offset(chegada, y1), Offset(destino, y1)]);
-  return pontos;
-}
-
-
-/// Corta a derivação em ida (do Split até o último bloco da linha 2) e volta
-/// (de lá até o Merge). Sem bloco na linha 2, o corte é no meio do corredor.
-/// O ponto do corte entra nos dois trechos, para o fio não ter falha.
-(List<Offset>, List<Offset>) trechosDaDerivacao(List<Offset> pontos, {required bool comLinha2}) {
-  // com linha 2: [split, vão, corredor, antes do 1º, desce, ÚLTIMO, ...volta]
-  if (comLinha2) return (pontos.sublist(0, 6), pontos.sublist(5));
-  // sem: [split, vão, corredor, chegada no corredor, sobe, merge]
-  final meio = Offset((pontos[2].dx + pontos[3].dx) / 2, pontos[2].dy);
-  return ([...pontos.sublist(0, 3), meio], [meio, ...pontos.sublist(3)]);
+  final ida = [
+    Offset(g.xDaCasa(casaSplit), y1),
+    Offset(descida, y1),
+    Offset(descida, corredor),
+    Offset(entrada2, corredor),
+    Offset(entrada2, y2),
+  ];
+  final volta = [
+    Offset(saida2, y2),
+    Offset(saida2, corredor),
+    Offset(chegada, corredor),
+    Offset(chegada, y1),
+    Offset(destino, y1),
+  ];
+  return (ida, volta);
 }
