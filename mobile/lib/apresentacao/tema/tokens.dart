@@ -249,6 +249,10 @@ abstract final class Opacidades {
   /// A casa de onde o bloco saiu fica em sombra enquanto ele é arrastado.
   static const origemDoArrasto = 0.3;
 
+  /// Item da biblioteca que não pode entrar na casa tocada (Split repetido,
+  /// Merge sem Split): à vista, mas claramente fora de alcance.
+  static const itemIndisponivel = 0.38;
+
   /// O bloco "na mão" deixa ver a grade embaixo, para mirar a casa.
   static const blocoArrastado = 0.85;
 

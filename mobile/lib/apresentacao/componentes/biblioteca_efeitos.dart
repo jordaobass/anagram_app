@@ -168,7 +168,10 @@ class _ItemEfeito extends StatelessWidget {
       key: ValueKey('efeito-${definicao.uri}'),
       enabled: motivo == null,
       contentPadding: EdgeInsets.zero,
-      leading: ArteBlocoWidget(definicao: definicao, tamanho: Medidas.arteBiblioteca, ligado: motivo == null),
+      // sem a arte de bypass: o selo OFF diria "desligado", não "não cabe aqui"
+      leading: Opacity(
+          opacity: motivo == null ? 1 : Opacidades.itemIndisponivel,
+          child: ArteBlocoWidget(definicao: definicao, tamanho: Medidas.arteBiblioteca)),
       title: Text(l.nomeDoBloco(definicao)),
       subtitle: Text(motivo == null ? l.familia(definicao.familia) : textoDaRecusa(l, motivo)),
       trailing: Container(width: Medidas.fitaCategoria, height: Medidas.alvoMinimo, color: Cores.daFita(definicao.uri, definicao.familia)),
