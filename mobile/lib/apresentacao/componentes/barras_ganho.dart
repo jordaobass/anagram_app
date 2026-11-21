@@ -13,7 +13,7 @@ import '../textos.dart';
 import 'botao_giratorio.dart' show AoMudarValor;
 import 'dialogo_valor.dart';
 import 'passo_controle.dart';
-import 'pintor_faixa_frequencias.dart' show EscalaGanho;
+import 'escalas_grafico.dart';
 
 /// Um traço: o parâmetro, a cor e de onde até onde vai (fração da faixa).
 class TracoGanho {

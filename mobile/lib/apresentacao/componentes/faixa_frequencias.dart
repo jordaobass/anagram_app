@@ -15,6 +15,7 @@ import '../textos.dart';
 import 'barras_ganho.dart';
 import 'botao_giratorio.dart' show AoMudarValor;
 import 'dialogo_valor.dart';
+import 'escalas_grafico.dart';
 import 'pintor_faixa_frequencias.dart';
 
 export '../../nucleo/catalogo/curvas_multibanda.dart' show fracaoDaFrequencia, frequenciaDaFracao, minimoFaixa, maximoFaixa;
@@ -144,11 +145,8 @@ class _EstadoFaixaFrequencias extends State<FaixaFrequencias> {
   /// Perto do fim da faixa o valor da alça vai para a esquerda do traço.
   static const _rotuloVira = 0.8;
 
-  /// Marcas da régua: as décadas e o meio de cada uma.
-  static const _marcas = [50, 100, 200, 500, 1000, 2000, 5000, 10000];
-
   Map<double, String> _rotulosDaRegua() => {
-        for (final hz in _marcas) fracaoDaFrequencia(hz): hz >= 1000 ? '${hz ~/ 1000}k' : '$hz',
+        for (final hz in marcasDeFrequencia) fracaoDaFrequencia(hz): rotuloDaFrequencia(hz),
       };
 
   Widget _alca(BuildContext context, DefinicaoParametro p, List<BandaMultibanda> bandas, double largura) {

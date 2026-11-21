@@ -2,14 +2,11 @@
 // banda é a curva de resposta dela (passa-baixas, passa-banda ou passa-altas)
 // sobreposta às outras, preenchida na cor da banda e com a altura do Level
 // dela, como os analisadores de EQ desenham.
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
-
-import '../../nucleo/catalogo/definicao_bloco.dart';
 
 import '../../nucleo/catalogo/curvas_multibanda.dart';
 import '../tema/tokens.dart';
+import 'escalas_grafico.dart';
 
 /// Uma banda na faixa: os cortes (nulo = borda do áudio), o nível e se está mutada.
 class RaiaBanda {
@@ -27,51 +24,6 @@ class RaiaBanda {
 
   @override
   int get hashCode => Object.hash(cor, inferior, superior, nivelDb, muda);
-}
-
-/// Escala vertical da faixa, em dB: por padrão a da tela da pedaleira
-/// (+12 no topo, o maior Level; −36 embaixo). Ela se abre em degraus de 12 dB
-/// para caber a faixa dos traços — o Threshold do Ignissor vai a −60, e com a
-/// escala fixa o traço ficava preso na borda, longe do ponteiro (DECISOES K3).
-class EscalaGanho {
-  const EscalaGanho({this.topo = _topoPadrao, this.base = _basePadrao});
-
-  /// A menor escala da pedaleira que cobre todos os [parametros].
-  factory EscalaGanho.paraCobrir(Iterable<DefinicaoParametro> parametros) {
-    var (topo, base) = (_topoPadrao, _basePadrao);
-    for (final p in parametros) {
-      topo = math.max(topo, (p.maximo / passoDb).ceil() * passoDb);
-      base = math.min(base, (p.minimo / passoDb).floor() * passoDb);
-    }
-    return EscalaGanho(topo: topo, base: base);
-  }
-
-  static const _topoPadrao = 12.0;
-  static const _basePadrao = -36.0;
-
-  /// Distância entre as linhas da escala (+12, 0, −12, …).
-  static const passoDb = 12.0;
-
-  final double topo;
-  final double base;
-
-  double get faixaDb => topo - base;
-
-  /// Altura (0 em cima, 1 embaixo) de um ganho em dB; o que passa da base some na borda.
-  double altura(double db) => ((topo - db) / faixaDb).clamp(0.0, 1.0);
-
-  /// As linhas da escala, do topo à base.
-  Iterable<double> get marcas sync* {
-    for (var db = topo; db >= base; db -= passoDb) {
-      yield db;
-    }
-  }
-
-  @override
-  bool operator ==(Object other) => other is EscalaGanho && other.topo == topo && other.base == base;
-
-  @override
-  int get hashCode => Object.hash(topo, base);
 }
 
 class PintorFaixaFrequencias extends CustomPainter {
@@ -133,17 +85,10 @@ class PintorFaixaFrequencias extends CustomPainter {
     for (final db in escala.marcas) {
       final y = escala.altura(db) * altura;
       canvas.drawLine(Offset(0, y), Offset(size.width, y), Paint()
-        ..color = Cores.filete.withValues(alpha: db == 0 ? 1 : 0.5)
+        ..color = Cores.filete.withValues(alpha: db == 0 ? 1 : Opacidades.gradeSecundaria)
         ..strokeWidth = Medidas.filete);
-      final pintor = TextPainter(
-        text: TextSpan(
-            text: db > 0 ? '+${db.round()}' : '${db.round()}',
-            style: const TextStyle(color: Cores.textoSecundario, fontSize: _fonteRegua, fontFamily: Fontes.rotulo)),
-        textDirection: TextDirection.ltr,
-      )..layout();
-      final topo = (y - pintor.height / 2).clamp(0.0, altura - pintor.height);
-      pintor.paint(canvas, Offset(Espacos.xs, topo));
-      pintor.dispose();
+      pintarRotuloDoEixo(canvas, rotuloDoDb(db), Medidas.fonteReguaFrequencias,
+          (texto) => Offset(Espacos.xs, (y - texto.height / 2).clamp(0.0, altura - texto.height)));
     }
   }
 
@@ -154,16 +99,10 @@ class PintorFaixaFrequencias extends CustomPainter {
     for (final MapEntry(key: fracao, value: texto) in rotulos.entries) {
       final x = fracao * size.width;
       canvas.drawLine(Offset(x, fundo.top), Offset(x, fundo.bottom), linha);
-      final pintor = TextPainter(
-        text: TextSpan(text: texto, style: const TextStyle(color: Cores.textoSecundario, fontSize: _fonteRegua, fontFamily: Fontes.rotulo)),
-        textDirection: TextDirection.ltr,
-      )..layout();
-      pintor.paint(canvas, Offset(x - pintor.width / 2, fundo.bottom + Espacos.xxs));
-      pintor.dispose();
+      pintarRotuloDoEixo(canvas, texto, Medidas.fonteReguaFrequencias,
+          (tamanho) => Offset(x - tamanho.width / 2, fundo.bottom + Espacos.xxs));
     }
   }
-
-  static const _fonteRegua = 11.0;
 
   @override
   bool shouldRepaint(PintorFaixaFrequencias antigo) =>

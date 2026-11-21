@@ -178,6 +178,9 @@ abstract final class Medidas {
   static const double alvoTracoGanho = alvoMinimo;
   static const double larguraDialogoTemplates = 440;
   static const double alturaReguaFrequencias = 18;
+
+  /// Números da régua de frequência e da escala de dB da faixa.
+  static const double fonteReguaFrequencias = 11;
   /// Alvo de toque da alça do corte: o traço e o puxador ficam no meio dele.
   static const double larguraAlcaFrequencia = alvoMinimo;
   static const double tracoAlcaFrequencia = 3;
@@ -268,6 +271,9 @@ abstract final class Medidas {
   static const double dbVisivelGlobalEq = 15;
   static const double larguraEqEmLinha = 560;
   static const double fonteEixoEq = 10;
+
+  /// De quantos em quantos pixels a resposta do EQ é calculada para a curva.
+  static const double passoAmostraCurvaEq = 2;
   static const double larguraChipEq = 72;
 
   /// Um item da placa de som (nome: valor), duas colunas no notebook.
@@ -340,4 +346,10 @@ abstract final class Opacidades {
 
   /// Realce de foco do teclado sobre o tally: visível sem competir com a seleção.
   static const foco = 0.24;
+
+  /// Linhas da escala de dB que não são a do 0 dB: guia, não divisão.
+  static const gradeSecundaria = 0.5;
+
+  /// Sombra do corpo do pedal desenhado pelo app (sem a arte da pedaleira).
+  static const sombraArteFamilia = 0.18;
 }
