@@ -696,5 +696,32 @@
       }
     }
   },
-  "eqShelfAgudos": "Shelf de agudos"
+  "eqShelfAgudos": "Shelf de agudos",
+  "mbGraves": "Graves",
+  "@mbGraves": {
+    "description": "Banda de graves do multibanda (Ignissor, Entropia)"
+  },
+  "mbMedios": "Médios",
+  "mbAgudos": "Agudos",
+  "mbBordaGraves": "20 Hz",
+  "@mbBordaGraves": {
+    "description": "Borda de baixo da faixa de áudio, que nenhum corte move"
+  },
+  "mbBordaAgudos": "20 kHz",
+  "mbMudo": "Mudo",
+  "@mbMudo": {
+    "description": "Botão que silencia uma banda do multibanda"
+  },
+  "mbCompLigada": "Comp ligado",
+  "mbCompDesligada": "Comp desligado",
+  "mbSaida": "Saída",
+  "mbOutros": "Outros",
+  "mbExplicaMisturaLimpa": "Comp Level é o volume das três bandas comprimidas. Clean Level mistura em paralelo o sinal seco, sem compressão: no mínimo (−24 dB) quase só se ouve o comprimido; subindo, volta o ataque natural da corda.",
+  "@mbExplicaMisturaLimpa": {
+    "description": "Explica os níveis de saída do Ignissor"
+  },
+  "mbBuscarOpcao": "Buscar (ex.: turbo grunt)",
+  "@mbBuscarOpcao": {
+    "description": "Dica do campo de busca na lista de opções longas (tipos de drive)"
+  }
 }

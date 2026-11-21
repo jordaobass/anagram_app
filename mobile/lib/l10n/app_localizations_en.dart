@@ -848,4 +848,41 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eqShelfAgudos => 'High shelf';
+
+  @override
+  String get mbGraves => 'Low';
+
+  @override
+  String get mbMedios => 'Mid';
+
+  @override
+  String get mbAgudos => 'High';
+
+  @override
+  String get mbBordaGraves => '20 Hz';
+
+  @override
+  String get mbBordaAgudos => '20 kHz';
+
+  @override
+  String get mbMudo => 'Mute';
+
+  @override
+  String get mbCompLigada => 'Comp on';
+
+  @override
+  String get mbCompDesligada => 'Comp off';
+
+  @override
+  String get mbSaida => 'Output';
+
+  @override
+  String get mbOutros => 'Others';
+
+  @override
+  String get mbExplicaMisturaLimpa =>
+      'Comp Level is the volume of the three compressed bands. Clean Level blends the dry, uncompressed signal in parallel: at the minimum (−24 dB) you hear almost only the compressed sound; turning it up brings back the natural attack of the string.';
+
+  @override
+  String get mbBuscarOpcao => 'Search (e.g. turbo grunt)';
 }

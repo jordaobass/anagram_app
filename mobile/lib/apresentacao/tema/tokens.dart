@@ -3,6 +3,7 @@
 // roadie codificando a família do bloco. Nenhuma cor ou medida fora daqui.
 import 'package:flutter/painting.dart';
 
+import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/familia_bloco.dart';
 
 abstract final class Cores {
@@ -38,6 +39,14 @@ abstract final class Cores {
         FamiliaBloco.amplificador => const Color(0xFFE0563F),
         FamiliaBloco.gabinete => const Color(0xFFB9A37C),
         FamiliaBloco.utilitario => const Color(0xFF8D949C),
+      };
+
+  /// As três bandas do Ignissor e do Entropia, na faixa de frequência e no
+  /// topo da coluna: matizes distantes entre si e do âmbar de ação.
+  static Color daBanda(BandaMultibanda banda) => switch (banda) {
+        BandaMultibanda.graves => const Color(0xFF5585EE),
+        BandaMultibanda.medios => const Color(0xFF34C3A0),
+        BandaMultibanda.agudos => const Color(0xFFD46BB3),
       };
 }
 
@@ -111,6 +120,27 @@ abstract final class Medidas {
 
   /// Banda desligada do paramétrico: ainda editável, mas apagada.
   static const double opacidadeBandaDesligada = 0.45;
+
+  /// Faixa de frequência do multibanda: uma raia por banda, a régua embaixo
+  /// e a alça do corte larga o bastante para o dedo, com o traço fino no meio.
+  static const double alturaRaiaBanda = 32;
+  static const double alturaReguaFrequencias = 18;
+  static const double larguraAlcaFrequencia = 32;
+  static const double tracoAlcaFrequencia = 3;
+  static const double puxadorAlcaFrequencia = 10;
+
+  /// Preenchimento da banda na faixa: tocando e mutada.
+  static const double opacidadeRaiaBanda = 0.55;
+  static const double opacidadeRaiaMuda = 0.12;
+
+  /// Coluna de uma banda do multibanda: abaixo de três delas lado a lado,
+  /// as bandas viram abas.
+  static const double larguraColunaBanda = 264;
+  static const double knobBanda = 72;
+
+  /// Acima disto as opções de um seletor ganham busca e grupos (os 37 drives).
+  static const int opcoesSemBusca = 12;
+  static const double alturaListaOpcoes = 480;
 
   /// Knob em proporções do próprio desenho: o corpo fica a 1,6 arco para
   /// dentro do anel, e o ponteiro vai de 25% a 82% do raio do corpo.

@@ -234,5 +234,17 @@
   "eqPassaBaixas": "Pasa bajos",
   "eqShelfGraves": "Shelf de graves",
   "eqBanda": "Banda {numero}",
-  "eqShelfAgudos": "Shelf de agudos"
+  "eqShelfAgudos": "Shelf de agudos",
+  "mbGraves": "Graves",
+  "mbMedios": "Medios",
+  "mbAgudos": "Agudos",
+  "mbBordaGraves": "20 Hz",
+  "mbBordaAgudos": "20 kHz",
+  "mbMudo": "Silencio",
+  "mbCompLigada": "Comp activado",
+  "mbCompDesligada": "Comp desactivado",
+  "mbSaida": "Salida",
+  "mbOutros": "Otros",
+  "mbExplicaMisturaLimpa": "Comp Level es el volumen de las tres bandas comprimidas. Clean Level mezcla en paralelo la señal seca, sin compresión: en el mínimo (−24 dB) casi solo se oye lo comprimido; al subirlo vuelve el ataque natural de la cuerda.",
+  "mbBuscarOpcao": "Buscar (ej.: turbo grunt)"
 }

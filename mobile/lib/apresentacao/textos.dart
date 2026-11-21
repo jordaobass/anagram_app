@@ -11,6 +11,7 @@ import '../aplicacao/avisos.dart';
 import '../aplicacao/casos_de_uso/salvar_no_slot.dart';
 import '../aplicacao/casos_de_uso/transferir_preset.dart';
 import '../l10n/app_localizations.dart';
+import '../nucleo/catalogo/arranjo_multibanda.dart';
 import '../nucleo/catalogo/arranjo_parametros.dart';
 import '../nucleo/catalogo/definicao_bloco.dart';
 import '../nucleo/catalogo/familia_bloco.dart';
@@ -21,6 +22,13 @@ import '../nucleo/protocolo/erros_anagram.dart';
 import '../nucleo/suporte_aparelho.dart';
 
 extension TextosDoApp on AppLocalizations {
+  /// Título de uma banda do Ignissor e do Entropia.
+  String mbNomeDaBanda(BandaMultibanda banda) => switch (banda) {
+        BandaMultibanda.graves => mbGraves,
+        BandaMultibanda.medios => mbMedios,
+        BandaMultibanda.agudos => mbAgudos,
+      };
+
   /// Título de uma banda do paramétrico.
   String nomeDaBanda(BandaEq banda) => switch (banda) {
         BandaEq.geral => eqBandaGeral,

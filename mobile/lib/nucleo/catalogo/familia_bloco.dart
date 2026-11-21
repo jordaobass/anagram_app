@@ -19,8 +19,10 @@ enum FamiliaBloco {
     if (tem(['cabinet', 'cab '])) return gabinete;
     if (tem(['reverb'])) return reverb;
     if (tem(['delay'])) return delay;
-    if (tem(['comp', 'suppressor', 'noisegate', 'gate', 'gravitron'])) return compressor;
-    if (tem(['hpf', 'lpf', 'pass filter', 'wah', 'wauwa', 'moerfer', 'ignissor'])) return filtro;
+    // o Ignissor é compressor de 3 bandas: fica com os compressores, não
+    // com os filtros, embora o firmware o ponha em "EQs, Filters & Dynamics"
+    if (tem(['comp', 'suppressor', 'noisegate', 'gate', 'gravitron', 'ignissor'])) return compressor;
+    if (tem(['hpf', 'lpf', 'pass filter', 'wah', 'wauwa', 'moerfer'])) return filtro;
     if (tem(['eq', 'geq', 'fil4'])) return equalizador;
     return _porCategoria(categoria);
   }
