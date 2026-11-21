@@ -7,7 +7,7 @@ import '../apoio/fixtures.dart';
 void main() {
   test('should_read_real_ranges_units_and_options_when_loading_the_factory_catalog', () {
     final catalogo = lerCatalogo();
-    expect(catalogo.quantidade, 99);
+    expect(catalogo.quantidade, 109, reason: 'firmware v1.19.2.24, lido da pedaleira');
 
     final supressor = catalogo.definicao('urn:darkglass:Suppressor');
     final limiar = supressor.parametro('Threshold')!;
