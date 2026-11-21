@@ -32,7 +32,7 @@ jobs:
           cp docs/imagens/previa-social.png site/imagens/
           cp docs/imagens/icone-64.png site/imagens/icone.png
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: site
       - id: publicacao
