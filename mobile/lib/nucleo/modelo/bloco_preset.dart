@@ -33,6 +33,15 @@ class BlocoPreset {
   String get uri => textoOuNulo(bruto['uri']) ?? '';
   bool get habilitado => bruto['enabled'] != false;
 
+  /// O arquivo escolhido nos blocos que carregam um (IR do gabinete, modelo
+  /// neural): a pedaleira grava o caminho em `properties`, na entrada "1".
+  /// Decide a foto do gabinete, como no Darkglass Suite.
+  String? get arquivoDeIr {
+    final propriedade = mapaOuVazio(bruto['properties'])['1'];
+    final valor = propriedade is Map<String, dynamic> ? textoOuNulo(propriedade['value']) : null;
+    return valor == null || valor.isEmpty ? null : valor;
+  }
+
   Map<String, dynamic> get _parametros => mapaOuVazio(bruto['parameters']);
   Map<String, dynamic> get _cenas => mapaOuVazio(bruto['scenes']);
 
