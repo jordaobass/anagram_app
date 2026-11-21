@@ -26,6 +26,7 @@
   "avisoFalhaInesperada": "No se pudo abrir {meio}. Inténtalo de nuevo; el detalle quedó en el log.",
   "avisoPedaleiraDesconectada": "La pedalera se desconectó. Conéctala de nuevo para seguir donde lo dejaste.",
   "avisoFormatoMaisNovo": "Preset con un formato más nuevo que esta app: los campos desconocidos se conservan.",
+  "avisoPresetAtualizado": "{slot} cambió fuera de la app; se recargó la lista y se abrió la versión actual.",
   "avisoPresetTrocado": "La pedalera devolvió otro preset para {slot} (id distinto del de la lista). La lista se recargó; ábrelo de nuevo.",
   "avisoAreaNaoTrocou": "La pedalera no cambió de área.",
   "naoSalvou": "No se guardó: {motivo}",

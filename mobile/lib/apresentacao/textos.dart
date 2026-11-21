@@ -69,6 +69,7 @@ extension TextosDoApp on AppLocalizations {
         AvisoPlataformaIndisponivel(:final motivo) => indisponivel(motivo),
         AvisoFormatoMaisNovo() => avisoFormatoMaisNovo,
         AvisoPresetTrocado(:final slot) => avisoPresetTrocado(slot),
+        AvisoPresetAtualizado(:final slot) => avisoPresetAtualizado(slot),
         AvisoAreaNaoTrocou() => avisoAreaNaoTrocou,
       };
 

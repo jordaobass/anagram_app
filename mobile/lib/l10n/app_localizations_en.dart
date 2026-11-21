@@ -106,6 +106,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'This preset uses a newer format than this app: unknown fields are kept.';
 
   @override
+  String avisoPresetAtualizado(String slot) {
+    return '$slot changed outside the app; the list was reloaded and the current version was opened.';
+  }
+
+  @override
   String avisoPresetTrocado(String slot) {
     return 'The pedal returned a different preset for $slot (id differs from the list). The list was reloaded; open it again.';
   }

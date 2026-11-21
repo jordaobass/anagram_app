@@ -27,17 +27,19 @@ void main() {
     expect(container.read(editorProvider).atual!.nome, 'Sujo de Ensaio');
   });
 
-  test('should_refuse_the_preset_when_its_uuid_differs_from_the_slot_list', () async {
+  test('should_reload_the_list_and_open_the_current_preset_when_the_slot_changed_outside_the_app', () async {
     final (container, pedaleira) = await conectarDemonstracao();
     container.read(bibliotecaProvider); // nasce e agenda a leitura da lista
     await Future<void>.delayed(const Duration(milliseconds: 100));
     expect(container.read(bibliotecaProvider).resumo(SlotPreset(3))?.id, isNotEmpty);
-    pedaleira.substituirSlot(3, lerExemplo('13'));
+    final novo = lerExemplo('13');
+    pedaleira.substituirSlot(3, novo);
 
     await container.read(editorProvider.notifier).abrirSlot(SlotPreset(3));
 
     final estado = container.read(editorProvider);
-    expect(estado.atual, isNull);
-    expect(textosPt.aviso(estado.aviso!), contains('outro preset'));
+    expect(estado.atual?.uuid, (novo['preset'] as Map<String, dynamic>)['uuid'], reason: 'abre a versão que está na pedaleira');
+    expect(container.read(bibliotecaProvider).resumo(SlotPreset(3))?.id, estado.atual?.uuid, reason: 'a lista foi relida');
+    expect(textosPt.aviso(estado.aviso!), contains('mudou fora do app'));
   });
 }

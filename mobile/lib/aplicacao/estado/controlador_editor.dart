@@ -80,7 +80,7 @@ class ControladorEditor extends Notifier<EstadoEditor>
     if (abertura != _abertura) return;
     switch (leitura) {
       case Sucesso(valor: final DocumentoPreset lido) when !_bateComALista(slot, lido):
-        _recusarPresetTrocado(slot);
+        await _conferirMudancaExterna(slot, lido, abertura);
       case Sucesso(:final valor):
         await _mostrar(slot, valor, abertura);
       case Falha(:final erro):
@@ -108,6 +108,17 @@ class ControladorEditor extends Notifier<EstadoEditor>
     // salvo; mandar também o "temporário" (try) fazia a tela dela mostrar
     // outro slot. Sem MIDI (ou em área não ativa), o temporário é a audição.
     if (!trocou) await enviarAoVivo(preset);
+  }
+
+  /// O slot pode ter mudado fora do app (outro programa gravou nele): relê a
+  /// lista e, se ela agora anuncia o preset lido, abre a versão atual. Se a
+  /// lista continuar com outro id, a pedaleira devolveu o preset errado.
+  Future<void> _conferirMudancaExterna(SlotPreset slot, DocumentoPreset lido, int abertura) async {
+    await ref.read(bibliotecaProvider.notifier).recarregar(relerAreas: false);
+    if (abertura != _abertura) return;
+    if (!_bateComALista(slot, lido)) return _recusarPresetTrocado(slot);
+    await _mostrar(slot, lido, abertura);
+    if (abertura == _abertura) state = state.copiar(aviso: AvisoPresetAtualizado(slot.rotulo));
   }
 
   void _recusarPresetTrocado(SlotPreset slot) {
