@@ -1132,4 +1132,47 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get axOutros => 'Outros';
+
+  @override
+  String get ppTemplates => 'Templates';
+
+  @override
+  String get ppPersonalizado => 'Personalizado';
+
+  @override
+  String ppAplicado(String nome) {
+    return 'Template $nome aplicado';
+  }
+
+  @override
+  String get ppEscolherTemplate => 'Escolher template';
+
+  @override
+  String get ppDaDarkglass => 'Da Darkglass (os da pedaleira)';
+
+  @override
+  String get ppDoApp => 'Do app (pontos de partida nossos)';
+
+  @override
+  String get ppAConfirmar => 'Valores ainda não lidos da pedaleira';
+
+  @override
+  String get mbTipoDrive => 'Drive type';
+
+  @override
+  String get mbModoDrive => 'Drive mode';
+
+  @override
+  String get mbSolo => 'Solo';
+
+  @override
+  String mbSoloLigado(String banda) {
+    return 'Só $banda soando';
+  }
+
+  @override
+  String get mbSoloDesligado => 'Solo desligado: as três bandas soam';
+
+  @override
+  String get mbOff => 'OFF';
 }
