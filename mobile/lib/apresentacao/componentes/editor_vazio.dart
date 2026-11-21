@@ -42,7 +42,7 @@ class EditorVazio extends ConsumerWidget {
         if (slotVazio)
           FilledButton(
             key: const ValueKey('botao-novo-preset'),
-            onPressed: ref.read(editorProvider.notifier).novoPresetNoSlot,
+            onPressed: () => ref.read(editorProvider.notifier).novoPresetNoSlot(l.cdNovoPreset),
             child: Text(l.criarPresetAqui),
           ),
         if (aoAbrirLista != null) OutlinedButton(onPressed: aoAbrirLista, child: Text(l.verPresets)),

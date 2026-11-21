@@ -169,5 +169,8 @@
   "txEntendi": "ENTENDIDO",
   "txAtiva": "ACTIVA",
   "txAtivaNaPedaleiraDica": "Área activa en la pedalera",
-  "txEstadoAbrindoDemonstracao": "Abriendo la demostración…"
+  "txEstadoAbrindoDemonstracao": "Abriendo la demostración…",
+  "viaMeio": "Vía {meio}.",
+  "areaAtivaNaPedaleira": "{nome} · activa en la pedalera",
+  "cdNovoPreset": "Preset nuevo"
 }

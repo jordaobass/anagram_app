@@ -78,10 +78,11 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
     state = state.copiar(selecionado: para);
   }
 
-  /// Slot vazio aberto: começa um preset novo ali (com uuid próprio).
-  Future<void> novoPresetNoSlot() async {
+  /// Slot vazio aberto: começa um preset novo ali (com uuid próprio). O
+  /// [nome] vem da tela, no idioma em uso: ele é gravado na pedaleira.
+  Future<void> novoPresetNoSlot(String nome) async {
     if (state.slot == null || state.atual != null) return;
-    await carregarDocumento(DocumentoPreset.vazio('Novo preset').comUuid(novoUuidPreset()));
+    await carregarDocumento(DocumentoPreset.vazio(nome).comUuid(novoUuidPreset()));
   }
 }
 

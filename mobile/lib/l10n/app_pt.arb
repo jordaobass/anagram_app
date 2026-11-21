@@ -463,5 +463,74 @@
   "txEntendi": "ENTENDI",
   "txAtiva": "ATIVA",
   "txAtivaNaPedaleiraDica": "Área ativa na pedaleira",
-  "txEstadoAbrindoDemonstracao": "Abrindo a demonstração…"
+  "txEstadoAbrindoDemonstracao": "Abrindo a demonstração…",
+  "@conexaoRespostaInvalida": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "@erroOcupada": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "@erroDesconectado": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "@erroSemResposta": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "@erroRespostaInvalida": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "@erroSemSuporte": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "@avisoAreaNaoTrocou": {
+    "placeholders": {
+      "detalhe": {
+        "type": "String"
+      }
+    }
+  },
+  "viaMeio": "Via {meio}.",
+  "@viaMeio": {
+    "placeholders": {
+      "meio": {
+        "type": "String"
+      }
+    }
+  },
+  "areaAtivaNaPedaleira": "{nome} · ativa na pedaleira",
+  "@areaAtivaNaPedaleira": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "cdNovoPreset": "Novo preset",
+  "@cdNovoPreset": {
+    "description": "Nome do preset criado num slot vazio; vai gravado na pedaleira."
+  }
 }

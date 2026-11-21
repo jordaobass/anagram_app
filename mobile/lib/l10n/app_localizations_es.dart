@@ -66,20 +66,29 @@ class AppLocalizationsEs extends AppLocalizations {
       'La Anagram no respondió. Desconecta y vuelve a conectar el cable e inténtalo de nuevo.';
 
   @override
-  String get conexaoRespostaInvalida => 'Respuesta inesperada de la pedalera.';
+  String conexaoRespostaInvalida(String detalhe) {
+    return 'Respuesta inesperada de la pedalera.';
+  }
 
   @override
-  String get erroOcupada => 'Otro programa retiene la pedalera.';
+  String erroOcupada(String detalhe) {
+    return 'Otro programa retiene la pedalera.';
+  }
 
   @override
-  String get erroDesconectado => 'La pedalera está desconectada.';
+  String erroDesconectado(String detalhe) {
+    return 'La pedalera está desconectada.';
+  }
 
   @override
-  String get erroSemResposta => 'La pedalera no respondió a tiempo.';
+  String erroSemResposta(String detalhe) {
+    return 'La pedalera no respondió a tiempo.';
+  }
 
   @override
-  String get erroRespostaInvalida =>
-      'La pedalera rechazó o envió una respuesta inesperada.';
+  String erroRespostaInvalida(String detalhe) {
+    return 'La pedalera rechazó o envió una respuesta inesperada.';
+  }
 
   @override
   String erroOperacaoEmCurso(String detalhe) {
@@ -87,8 +96,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get erroSemSuporte =>
-      'Esta plataforma no puede comunicarse con la pedalera.';
+  String erroSemSuporte(String detalhe) {
+    return 'Esta plataforma no puede comunicarse con la pedalera.';
+  }
 
   @override
   String get avisoDemonstracaoFalhou => 'No se pudo abrir la demostración.';
@@ -112,7 +122,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get avisoAreaNaoTrocou => 'La pedalera no cambió de área.';
+  String avisoAreaNaoTrocou(String detalhe) {
+    return 'La pedalera no cambió de área.';
+  }
 
   @override
   String naoSalvou(String motivo) {
@@ -625,4 +637,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get txEstadoAbrindoDemonstracao => 'Abriendo la demostración…';
+
+  @override
+  String viaMeio(String meio) {
+    return 'Vía $meio.';
+  }
+
+  @override
+  String areaAtivaNaPedaleira(String nome) {
+    return '$nome · activa en la pedalera';
+  }
+
+  @override
+  String get cdNovoPreset => 'Preset nuevo';
 }

@@ -66,20 +66,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'The Anagram didn\'t answer. Unplug and replug the cable and try again.';
 
   @override
-  String get conexaoRespostaInvalida => 'Unexpected reply from the pedal.';
+  String conexaoRespostaInvalida(String detalhe) {
+    return 'Unexpected reply from the pedal.';
+  }
 
   @override
-  String get erroOcupada => 'Another program is holding the pedal.';
+  String erroOcupada(String detalhe) {
+    return 'Another program is holding the pedal.';
+  }
 
   @override
-  String get erroDesconectado => 'The pedal is disconnected.';
+  String erroDesconectado(String detalhe) {
+    return 'The pedal is disconnected.';
+  }
 
   @override
-  String get erroSemResposta => 'The pedal didn\'t answer in time.';
+  String erroSemResposta(String detalhe) {
+    return 'The pedal didn\'t answer in time.';
+  }
 
   @override
-  String get erroRespostaInvalida =>
-      'The pedal refused or sent an unexpected reply.';
+  String erroRespostaInvalida(String detalhe) {
+    return 'The pedal refused or sent an unexpected reply.';
+  }
 
   @override
   String erroOperacaoEmCurso(String detalhe) {
@@ -87,7 +96,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get erroSemSuporte => 'This platform can\'t talk to the pedal.';
+  String erroSemSuporte(String detalhe) {
+    return 'This platform can\'t talk to the pedal.';
+  }
 
   @override
   String get avisoDemonstracaoFalhou => 'Couldn\'t open the demo.';
@@ -111,7 +122,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get avisoAreaNaoTrocou => 'The pedal didn\'t switch area.';
+  String avisoAreaNaoTrocou(String detalhe) {
+    return 'The pedal didn\'t switch area.';
+  }
 
   @override
   String naoSalvou(String motivo) {
@@ -621,4 +634,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get txEstadoAbrindoDemonstracao => 'Opening the demo…';
+
+  @override
+  String viaMeio(String meio) {
+    return 'Via $meio.';
+  }
+
+  @override
+  String areaAtivaNaPedaleira(String nome) {
+    return '$nome · active on the pedal';
+  }
+
+  @override
+  String get cdNovoPreset => 'New preset';
 }
