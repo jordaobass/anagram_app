@@ -666,4 +666,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cdBlocoEstereoCurto => 'ST';
+
+  @override
+  String get kbDigitarDica => 'Click the number to type a value';
+
+  @override
+  String kbFaixa(String minimo, String maximo) {
+    return 'From $minimo to $maximo';
+  }
+
+  @override
+  String get kbNaoEhNumero => 'Type a number, like -12.5 or 1.5k.';
+
+  @override
+  String get kbAplicar => 'APPLY';
 }

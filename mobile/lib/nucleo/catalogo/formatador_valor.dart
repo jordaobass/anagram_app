@@ -20,6 +20,24 @@ abstract final class FormatadorValor {
     };
   }
 
+  /// O que a pessoa digitou no lugar do knob, na unidade que ela vê: aceita
+  /// vírgula ou ponto, a unidade escrita junto e "k" de quilo ("1,5k" = 1500
+  /// Hz). Fora da faixa vira o limite mais perto; inteiro é arredondado.
+  /// Texto que não é número volta nulo.
+  static num? lerDigitado(DefinicaoParametro parametro, String texto) {
+    final achado = _numeroDigitado.firstMatch(texto.trim().toLowerCase());
+    if (achado == null) return null;
+    final numero = double.tryParse(achado.group(1)!.replaceAll(',', '.'));
+    if (numero == null) return null;
+    final valor = achado.group(2) == 'k' ? numero * 1000 : numero;
+    final dentro = valor.clamp(parametro.minimo, parametro.maximo);
+    return parametro.inteiro ? dentro.round() : dentro;
+  }
+
+  /// Número com sinal e no máximo um separador decimal, um "k" opcional e,
+  /// depois, só a unidade (letras, % ou espaço): "1,2,3" não passa.
+  static final _numeroDigitado = RegExp(r'^([+-]?\d+(?:[.,]\d+)?|[+-]?[.,]\d+)\s*(k)?[a-z%\s]*$');
+
   static String _opcao(DefinicaoParametro parametro, num valor) =>
       parametro.opcoes[parametro.indiceOpcao(valor)];
 

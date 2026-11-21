@@ -184,5 +184,9 @@
   "cdBlocoMono": "Mono",
   "cdBlocoEstereo": "Stereo",
   "cdBlocoMonoCurto": "M",
-  "cdBlocoEstereoCurto": "ST"
+  "cdBlocoEstereoCurto": "ST",
+  "kbDigitarDica": "Click the number to type a value",
+  "kbFaixa": "From {minimo} to {maximo}",
+  "kbNaoEhNumero": "Type a number, like -12.5 or 1.5k.",
+  "kbAplicar": "APPLY"
 }

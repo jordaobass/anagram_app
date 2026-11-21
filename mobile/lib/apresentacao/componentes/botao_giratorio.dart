@@ -1,6 +1,6 @@
 // Knob grande: arraste (vertical ou horizontal), rodinha, setas do teclado;
-// segurar volta ao padrão. Durante o arraste avisa "arrastando"; ao soltar,
-// o valor final.
+// segurar volta ao padrão; clicar no número embaixo dele abre o campo para
+// digitar o valor. Durante o arraste avisa "arrastando"; ao soltar, o valor final.
 import 'package:flutter/gestures.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/escala_parametro.dart';
 import '../tema/tokens.dart';
+import 'dialogo_valor.dart';
 import 'pintor_knob.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
@@ -70,6 +71,11 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
       content: Text(l.voltouAoPadrao(widget.parametro.nome)),
       action: SnackBarAction(label: l.desfazer, onPressed: () => aoMudar(anterior, arrastando: false)),
     ));
+  }
+
+  Future<void> _digitar() async {
+    final valor = await digitarValor(context, widget.parametro, widget.valor);
+    if (valor != null) widget.aoMudar(valor, arrastando: false);
   }
 
   /// Um passo da rodinha, da seta ou do leitor de tela: 1% do curso do knob.
@@ -138,6 +144,27 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
         child: filho,
       );
 
+  /// O número é um alvo próprio: o toque nele não vira foco nem arraste do knob.
+  Widget _valorClicavel(BuildContext context, String texto, TextTheme tema) => Tooltip(
+        message: AppLocalizations.of(context).kbDigitarDica,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.text,
+          child: GestureDetector(
+            key: ValueKey('valor-${widget.parametro.simbolo}'),
+            behavior: HitTestBehavior.opaque,
+            onTap: _digitar,
+            child: Text(texto,
+                maxLines: 1,
+                style: tema.titleMedium?.copyWith(
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                  decoration: TextDecoration.underline,
+                  decorationStyle: TextDecorationStyle.dotted,
+                  decorationColor: Cores.textoSecundario,
+                )),
+          ),
+        ),
+      );
+
   Widget _corpo(BuildContext context, String texto) {
     final tema = Theme.of(context).textTheme;
     return SizedBox(
@@ -150,7 +177,7 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
           dimension: widget.tamanho,
           child: CustomPaint(painter: PintorKnob(fracao: _fracao, cor: widget.cor, focado: _foco.hasFocus)),
         ),
-        Text(texto, maxLines: 1, style: tema.titleMedium?.copyWith(fontFeatures: const [FontFeature.tabularFigures()])),
+        _valorClicavel(context, texto, tema),
       ]),
     );
   }

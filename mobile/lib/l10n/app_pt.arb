@@ -493,5 +493,20 @@
   },
   "@cdBlocoEstereoCurto": {
     "description": "Canal estéreo abreviado na casa da cadeia"
+  },
+  "kbDigitarDica": "Clique no número para digitar o valor",
+  "kbFaixa": "De {minimo} a {maximo}",
+  "kbNaoEhNumero": "Digite um número, como -12,5 ou 1,5k.",
+  "kbAplicar": "APLICAR",
+  "@kbFaixa": {
+    "description": "Faixa do parâmetro no diálogo de digitar o valor",
+    "placeholders": {
+      "minimo": {
+        "type": "String"
+      },
+      "maximo": {
+        "type": "String"
+      }
+    }
   }
 }

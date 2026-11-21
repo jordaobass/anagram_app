@@ -670,4 +670,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cdBlocoEstereoCurto => 'ST';
+
+  @override
+  String get kbDigitarDica => 'Haz clic en el número para escribir el valor';
+
+  @override
+  String kbFaixa(String minimo, String maximo) {
+    return 'De $minimo a $maximo';
+  }
+
+  @override
+  String get kbNaoEhNumero => 'Escribe un número, como -12,5 o 1,5k.';
+
+  @override
+  String get kbAplicar => 'APLICAR';
 }
