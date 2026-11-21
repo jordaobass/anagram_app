@@ -508,5 +508,20 @@
         "type": "String"
       }
     }
+  },
+  "lpCriar": "CRIAR LINHA PARALELA",
+  "lpCriarDica": "Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.",
+  "lpRemover": "REMOVER LINHA PARALELA",
+  "lpRemoverTitulo": "Remover a linha paralela?",
+  "lpRemoverTexto": "Saem o Split, o Merge e os {quantidade} blocos da linha 2.",
+  "lpRemoverConfirmar": "REMOVER",
+  "lpSemEspaco": "A linha 1 precisa de duas casas livres para o Split e o Merge.",
+  "@lpRemoverTexto": {
+    "description": "Confirmação ao remover a linha paralela com blocos na linha 2",
+    "placeholders": {
+      "quantidade": {
+        "type": "int"
+      }
+    }
   }
 }

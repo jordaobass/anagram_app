@@ -188,5 +188,12 @@
   "kbDigitarDica": "Click the number to type a value",
   "kbFaixa": "From {minimo} to {maximo}",
   "kbNaoEhNumero": "Type a number, like -12.5 or 1.5k.",
-  "kbAplicar": "APPLY"
+  "kbAplicar": "APPLY",
+  "lpCriar": "ADD PARALLEL ROW",
+  "lpCriarDica": "Splits the signal after the selected row 1 block: row 2 plays in parallel and the Merge joins both before the output.",
+  "lpRemover": "REMOVE PARALLEL ROW",
+  "lpRemoverTitulo": "Remove the parallel row?",
+  "lpRemoverTexto": "The Split, the Merge and the {quantidade} row 2 blocks will be removed.",
+  "lpRemoverConfirmar": "REMOVE",
+  "lpSemEspaco": "Row 1 needs two free positions for the Split and the Merge."
 }

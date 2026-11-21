@@ -684,4 +684,29 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get kbAplicar => 'APLICAR';
+
+  @override
+  String get lpCriar => 'CREAR FILA PARALELA';
+
+  @override
+  String get lpCriarDica =>
+      'Divide la señal después del bloque seleccionado en la fila 1: la fila 2 suena en paralelo y el Merge une las dos antes de la salida.';
+
+  @override
+  String get lpRemover => 'QUITAR FILA PARALELA';
+
+  @override
+  String get lpRemoverTitulo => '¿Quitar la fila paralela?';
+
+  @override
+  String lpRemoverTexto(int quantidade) {
+    return 'Se quitan el Split, el Merge y los $quantidade bloques de la fila 2.';
+  }
+
+  @override
+  String get lpRemoverConfirmar => 'QUITAR';
+
+  @override
+  String get lpSemEspaco =>
+      'La fila 1 necesita dos casillas libres para el Split y el Merge.';
 }

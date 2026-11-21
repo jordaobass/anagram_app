@@ -685,4 +685,29 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get kbAplicar => 'APLICAR';
+
+  @override
+  String get lpCriar => 'CRIAR LINHA PARALELA';
+
+  @override
+  String get lpCriarDica =>
+      'Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.';
+
+  @override
+  String get lpRemover => 'REMOVER LINHA PARALELA';
+
+  @override
+  String get lpRemoverTitulo => 'Remover a linha paralela?';
+
+  @override
+  String lpRemoverTexto(int quantidade) {
+    return 'Saem o Split, o Merge e os $quantidade blocos da linha 2.';
+  }
+
+  @override
+  String get lpRemoverConfirmar => 'REMOVER';
+
+  @override
+  String get lpSemEspaco =>
+      'A linha 1 precisa de duas casas livres para o Split e o Merge.';
 }

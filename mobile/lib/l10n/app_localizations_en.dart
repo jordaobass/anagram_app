@@ -680,4 +680,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get kbAplicar => 'APPLY';
+
+  @override
+  String get lpCriar => 'ADD PARALLEL ROW';
+
+  @override
+  String get lpCriarDica =>
+      'Splits the signal after the selected row 1 block: row 2 plays in parallel and the Merge joins both before the output.';
+
+  @override
+  String get lpRemover => 'REMOVE PARALLEL ROW';
+
+  @override
+  String get lpRemoverTitulo => 'Remove the parallel row?';
+
+  @override
+  String lpRemoverTexto(int quantidade) {
+    return 'The Split, the Merge and the $quantidade row 2 blocks will be removed.';
+  }
+
+  @override
+  String get lpRemoverConfirmar => 'REMOVE';
+
+  @override
+  String get lpSemEspaco =>
+      'Row 1 needs two free positions for the Split and the Merge.';
 }

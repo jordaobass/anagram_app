@@ -1233,6 +1233,48 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'APLICAR'**
   String get kbAplicar;
+
+  /// No description provided for @lpCriar.
+  ///
+  /// In pt, this message translates to:
+  /// **'CRIAR LINHA PARALELA'**
+  String get lpCriar;
+
+  /// No description provided for @lpCriarDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.'**
+  String get lpCriarDica;
+
+  /// No description provided for @lpRemover.
+  ///
+  /// In pt, this message translates to:
+  /// **'REMOVER LINHA PARALELA'**
+  String get lpRemover;
+
+  /// No description provided for @lpRemoverTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Remover a linha paralela?'**
+  String get lpRemoverTitulo;
+
+  /// Confirmação ao remover a linha paralela com blocos na linha 2
+  ///
+  /// In pt, this message translates to:
+  /// **'Saem o Split, o Merge e os {quantidade} blocos da linha 2.'**
+  String lpRemoverTexto(int quantidade);
+
+  /// No description provided for @lpRemoverConfirmar.
+  ///
+  /// In pt, this message translates to:
+  /// **'REMOVER'**
+  String get lpRemoverConfirmar;
+
+  /// No description provided for @lpSemEspaco.
+  ///
+  /// In pt, this message translates to:
+  /// **'A linha 1 precisa de duas casas livres para o Split e o Merge.'**
+  String get lpSemEspaco;
 }
 
 class _AppLocalizationsDelegate
