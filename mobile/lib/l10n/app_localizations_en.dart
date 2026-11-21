@@ -1355,4 +1355,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ctlFechar => 'CLOSE';
+
+  @override
+  String get ctlDicaPedaleira => 'On the pedal, assigned pots only respond on the one-row preset screen; with the preset expanded, the knobs edit the selected block.';
 }

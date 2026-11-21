@@ -2484,6 +2484,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'FECHAR'**
   String get ctlFechar;
+
+  /// Comportamento da Anagram conferido na bancada (BD8): pot atribuído só vale na visualização compacta do preset
+  ///
+  /// In pt, this message translates to:
+  /// **'Na pedaleira, os pots atribuídos só respondem na tela do preset em uma linha; com o preset expandido, os knobs mexem no bloco selecionado.'**
+  String get ctlDicaPedaleira;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

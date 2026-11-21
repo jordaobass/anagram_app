@@ -1189,5 +1189,9 @@
   "ctlFechar": "FECHAR",
   "@ctlFechar": {
     "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlDicaPedaleira": "Na pedaleira, os pots atribuídos só respondem na tela do preset em uma linha; com o preset expandido, os knobs mexem no bloco selecionado.",
+  "@ctlDicaPedaleira": {
+    "description": "Comportamento da Anagram conferido na bancada (BD8): pot atribuído só vale na visualização compacta do preset"
   }
 }

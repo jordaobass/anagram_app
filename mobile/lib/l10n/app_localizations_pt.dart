@@ -1355,4 +1355,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get ctlFechar => 'FECHAR';
+
+  @override
+  String get ctlDicaPedaleira => 'Na pedaleira, os pots atribuídos só respondem na tela do preset em uma linha; com o preset expandido, os knobs mexem no bloco selecionado.';
 }

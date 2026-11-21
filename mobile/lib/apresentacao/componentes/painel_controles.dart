@@ -30,6 +30,8 @@ class PainelControles extends ConsumerWidget {
       Text(l.ctlTitulo.toUpperCase(), style: tema.labelLarge),
       const SizedBox(height: Espacos.xs),
       Text(l.ctlDicaPara(mouse: arrastoComMouse), style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
+      const SizedBox(height: Espacos.xs),
+      Text(l.ctlDicaPedaleira, style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
       const SizedBox(height: Espacos.m),
       LayoutBuilder(builder: (context, restricoes) => _grupos(documento, _largura(restricoes.maxWidth))),
     ]);

@@ -1355,4 +1355,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ctlFechar => 'CERRAR';
+
+  @override
+  String get ctlDicaPedaleira => 'En la pedalera, los pots asignados solo responden en la pantalla del preset en una fila; con el preset expandido, las perillas editan el bloque seleccionado.';
 }

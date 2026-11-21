@@ -397,5 +397,6 @@
   "ctlCasaVazia": "empty slot {linha}·{casa}",
   "ctlAtribuidoA": "Assigned to {controle}",
   "ctlAcaoAtribuir": "Assign to a pedal control",
-  "ctlFechar": "CLOSE"
+  "ctlFechar": "CLOSE",
+  "ctlDicaPedaleira": "On the pedal, assigned pots only respond on the one-row preset screen; with the preset expanded, the knobs edit the selected block."
 }
