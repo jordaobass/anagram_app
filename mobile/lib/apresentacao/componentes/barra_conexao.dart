@@ -1,6 +1,7 @@
 // Estado da conexão sempre à vista, interruptor "Ao vivo" e a latência do
 // último envio. A versão do app fica na tela Sobre: aqui só o essencial.
-// Com o MCP escutando, um selo "IA" lembra que outro programa pode mexer.
+// Com o MCP escutando, um selo "IA" lembra que outro programa pode mexer;
+// com versão nova publicada, um aviso discreto oferece baixar.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,6 +15,7 @@ import '../rotas.dart';
 import '../tema/tokens.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
+import 'aviso_versao_nova.dart';
 
 class BarraConexao extends ConsumerWidget {
   const BarraConexao({super.key, required this.compacta});
@@ -39,6 +41,7 @@ class BarraConexao extends ConsumerWidget {
         if (!compacta && MediaQuery.sizeOf(context).width >= Quebras.barraComVersao) const _VersaoNaBarra(),
         const SizedBox(width: Espacos.s),
         if (conexao is Conectada) ..._conectada(context, ref),
+        AvisoVersaoNova(compacta: compacta || MediaQuery.sizeOf(context).width < Quebras.barraComAvisoVersao),
         const SeloMcp(),
         ..._navegacao(context),
       ]),

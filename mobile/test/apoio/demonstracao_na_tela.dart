@@ -4,12 +4,14 @@ import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
 import 'package:anagram_app/plataforma/servidor_mcp.dart';
+import 'package:anagram_app/dados/preferencias_versao.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 
 import 'app_de_teste.dart';
+import 'versao_falsa.dart';
 
 /// Tamanho lógico de um notebook comum, o padrão dos testes de interface.
 const telaDesktop = Size(1440, 900);
@@ -26,7 +28,9 @@ Future<void> montarApp(WidgetTester tester,
     IndiceMiniaturas? indice,
     PresetsDeFabrica? fabrica,
     ServidorMcp? servidorMcp,
-    bool mcpDisponivel = true}) async {
+    bool mcpDisponivel = true,
+    GithubFalso? github,
+    PreferenciasVersao? preferenciasVersao}) async {
   tester.view.physicalSize = tamanho * densidade;
   tester.view.devicePixelRatio = densidade;
   addTearDown(tester.view.reset);
@@ -36,7 +40,9 @@ Future<void> montarApp(WidgetTester tester,
       indice: indice,
       fabrica: fabrica,
       servidorMcp: servidorMcp,
-      mcpDisponivel: mcpDisponivel));
+      mcpDisponivel: mcpDisponivel,
+      github: github,
+      preferenciasVersao: preferenciasVersao));
   await tester.pumpAndSettle();
 }
 
@@ -62,6 +68,30 @@ Future<ProviderContainer> entrarNaDemonstracao(WidgetTester tester) async {
 /// Container dos provedores da árvore que está na tela.
 ProviderContainer containerDaTela(WidgetTester tester) =>
     ProviderScope.containerOf(tester.element(find.byType(Scaffold).first));
+
+/// Rola o editor de volta ao topo (fita do preset e Salvar): depois de
+/// rolar até um knob, a fita sai da lista, que só monta o que está à vista.
+Future<void> voltarAoTopoDoEditor(WidgetTester tester) async {
+  _rolagemDoEditor(tester).jumpTo(0);
+  await tester.pumpAndSettle();
+}
+
+/// Rola o editor para baixo até [alvo] estar montado (o painel dos controles
+/// da pedaleira fica no fim, fora da tela).
+Future<void> rolarEditorAte(WidgetTester tester, Finder alvo) async {
+  final posicao = _rolagemDoEditor(tester);
+  while (alvo.evaluate().isEmpty && posicao.pixels < posicao.maxScrollExtent) {
+    posicao.jumpTo((posicao.pixels + posicao.viewportDimension / 2).clamp(0, posicao.maxScrollExtent));
+    await tester.pumpAndSettle();
+  }
+  await tester.ensureVisible(alvo);
+  await tester.pumpAndSettle();
+}
+
+ScrollPosition _rolagemDoEditor(WidgetTester tester) => tester
+    .state<ScrollableState>(
+        find.descendant(of: find.byKey(const ValueKey('rolagem-editor')), matching: find.byType(Scrollable)).first)
+    .position;
 
 /// Toca na linha do slot (ex. '02A') na lista de presets.
 Future<void> tocarNoSlot(WidgetTester tester, String rotulo) async {

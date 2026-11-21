@@ -1,7 +1,7 @@
 // Configurações do app: idioma, os ajustes globais da pedaleira conectada e,
-// no computador, a IA local pelo MCP e o registro para suporte. Abre
-// pela engrenagem da barra de cima, conectado ou não; no celular, onde a
-// barra não tem lugar para o "i", é por aqui que se chega ao Sobre.
+// no computador, a IA local pelo MCP, as atualizações e o registro para
+// suporte. Abre pela engrenagem da barra de cima, conectado ou não; no
+// celular, onde a barra não tem lugar para o "i", é por aqui que se chega ao Sobre.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,10 +9,12 @@ import '../../aplicacao/diagnostico.dart';
 import '../../aplicacao/estado/controlador_conexao.dart';
 import '../../aplicacao/estado/estado_conexao.dart';
 import '../../aplicacao/mcp/controlador_mcp.dart';
+import '../../aplicacao/versao_nova.dart';
 import '../../l10n/app_localizations.dart';
 import '../componentes/painel_mcp.dart';
 import '../componentes/secao_pedaleira.dart';
 import '../componentes/secao_registro.dart';
+import '../componentes/secao_versao_nova.dart';
 import '../componentes/seletor_idioma.dart';
 import '../rotas.dart';
 import '../tema/tokens.dart';
@@ -41,6 +43,7 @@ class TelaConfiguracoes extends ConsumerWidget {
       // os ajustes globais só existem com uma pedaleira (ou a demonstração) do outro lado
       if (ref.watch(conexaoProvider) is Conectada) ..._secao(l.pdSecao, const SecaoPedaleira()),
       if (ref.watch(mcpDisponivelProvider)) ..._secao(l.mcpSecao, const PainelMcp()),
+      if (ref.watch(verificacaoVersaoDisponivelProvider)) ..._secao(l.versaoNovaSecao, const SecaoVersaoNova()),
       if (ref.watch(registroEmArquivoProvider) case final arquivo?) ..._secao(l.registroSecao, SecaoRegistro(arquivo)),
       const SizedBox(height: Espacos.xxl),
       ListTile(

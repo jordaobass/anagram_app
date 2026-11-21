@@ -291,7 +291,7 @@ Pedal numa caixa fixa (`painel`, filete de 1px, canto de 6px) para as fotos de p
 Nome do parâmetro em caixa alta acima, valor tabular abaixo. Trilho em filete, arco na cor da família, corpo `painel-elevado` com aro de alumínio (âmbar 2px quando focado), ponteiro em fita gaffer. Arraste vertical/horizontal, rodinha, setas (Shift = passo de 10%), toque duplo volta ao padrão. Parâmetros com poucas opções viram coluna de botões: marcado em cor da família, demais em contorno.
 
 ### Navigation
-- **Barra de conexão:** 64px, `painel`, filete inferior. LED de 10px + estado em title-small, "AO VIVO" + interruptor âmbar, latência "ida e volta N ms" (só na ampla), ícones de desconectar e créditos.
+- **Barra de conexão:** 64px, `painel`, filete inferior. LED de 10px + estado em title-small, "AO VIVO" + interruptor âmbar, latência "ida e volta N ms" (só na ampla), ícones de desconectar e créditos. Com versão nova publicada, aviso discreto: ícone em `aluminio-claro` + "vX.Y.Z disponível" em label-medium + BAIXAR (texto em âmbar, é ação) + fechar ("Lembrar depois"); abaixo de 1200px de janela, só o ícone, com as duas ações num menu.
 - **Lista de presets:** linhas de 48px, slot em title-small (`aluminio-claro`, âmbar quando aberto), nome em body-large ou "vazio" em body-small; linha aberta ganha `painel-elevado` e filete esquerdo âmbar de 2px. A marca "a pedaleira está neste slot" usa a cor do LED da barra (azul na demonstração) e não aparece em slot vazio.
 
 ### Avisos

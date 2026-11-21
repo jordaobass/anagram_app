@@ -15,6 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/demonstracao_na_tela.dart';
 import '../apoio/fixtures.dart';
+import '../apoio/versao_falsa.dart';
 
 const _casa = PosicaoBloco(1, 4);
 
@@ -65,5 +66,17 @@ void main() {
   for (final largura in [Quebras.amplo, Quebras.amplo + 40]) {
     testWidgets('should_fit_the_connection_bar_when_the_wide_window_is_just_above_the_breakpoint_$largura',
         (tester) => _noWindows(() => _editorComEq(tester, Size(largura, 900), IdiomaApp.espanhol)));
+  }
+
+  for (final largura in [Quebras.amplo, Quebras.barraComAvisoVersao]) {
+    testWidgets('should_fit_the_connection_bar_with_the_new_version_notice_at_$largura',
+        (tester) => _noWindows(() async {
+              await montarApp(tester,
+                  tamanho: Size(largura, 900), idioma: IdiomaApp.espanhol, github: GithubFalso(tag: 'v10.10.10'));
+              await entrarNaDemonstracao(tester);
+
+              final emMenu = largura < Quebras.barraComAvisoVersao;
+              expect(find.byKey(const ValueKey('versao-nova-menu')), emMenu ? findsOneWidget : findsNothing);
+            }));
   }
 }

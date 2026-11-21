@@ -135,4 +135,4 @@ block" layouts; ready-made profiles; LED feedback.
 4. Pickup or jump as the default?
 5. Willing to test a beta build on Windows or macOS?
 
-Akai MIDImix and M-VAVE Chocolate are our first test devices. The app has no network access and no telemetry.
+Akai MIDImix and M-VAVE Chocolate are our first test devices. The app has no telemetry; its only network call is an optional check for a new release on GitHub, which can be turned off.

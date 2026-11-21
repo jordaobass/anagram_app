@@ -1231,4 +1231,131 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get registroCopiado => 'Registro copiado. Cole na issue do GitHub junto com o que aconteceu.';
+
+  @override
+  String versaoNovaNaBarra(String versao) {
+    return 'v$versao disponível';
+  }
+
+  @override
+  String get versaoNovaBaixar => 'BAIXAR';
+
+  @override
+  String get versaoNovaLembrarDepois => 'Lembrar depois';
+
+  @override
+  String get versaoNovaSecao => 'Atualizações';
+
+  @override
+  String get versaoNovaVerificar => 'Verificar versão nova ao abrir';
+
+  @override
+  String get versaoNovaVerificarTexto => 'Ao abrir, o app consulta só o GitHub para saber qual é a última versão publicada. Nenhum dado seu é enviado. Desligado, o app não acessa a internet.';
+
+  @override
+  String get versaoNovaEmDia => 'Você está na versão mais recente.';
+
+  @override
+  String versaoNovaDisponivel(String versao) {
+    return 'Versão $versao disponível.';
+  }
+
+  @override
+  String get versaoNovaSemResposta => 'Não deu para verificar agora; o app tenta de novo na próxima abertura.';
+
+  @override
+  String get ctlTitulo => 'Controles da pedaleira';
+
+  @override
+  String get ctlDicaMouse => 'Clique num controle para editar. Botão direito num knob atribui o parâmetro a um pot ou ao pedal; o menu do bloco põe um footswitch nele.';
+
+  @override
+  String get ctlDicaToque => 'Toque num controle para editar ou atribuir um parâmetro do bloco aberto; o menu do bloco põe um footswitch nele.';
+
+  @override
+  String get ctlSiglaFoot => 'FOOT';
+
+  @override
+  String get ctlSiglaPot => 'POT';
+
+  @override
+  String get ctlSiglaExp => 'EXP';
+
+  @override
+  String get ctlLivre => 'livre';
+
+  @override
+  String get ctlLigaDesliga => 'Liga/desliga';
+
+  @override
+  String ctlAtribuirA(String controle) {
+    return 'Atribuir a $controle';
+  }
+
+  @override
+  String get ctlJaAqui => 'já está aqui';
+
+  @override
+  String ctlFootswitchLigaBloco(int numero) {
+    return 'Footswitch $numero liga/desliga este bloco';
+  }
+
+  @override
+  String get ctlNome => 'Nome no visor';
+
+  @override
+  String ctlNomeLongo(int maximo) {
+    return 'Os presets de fábrica usam até $maximo letras; um nome maior pode ser cortado no visor.';
+  }
+
+  @override
+  String get ctlMinimo => 'MÍN';
+
+  @override
+  String get ctlMaximo => 'MÁX';
+
+  @override
+  String get ctlRemoverAlvo => 'Tirar este parâmetro';
+
+  @override
+  String get ctlRemoverControle => 'SOLTAR CONTROLE';
+
+  @override
+  String get ctlAtribuirDoBloco => 'ATRIBUIR PARÂMETRO';
+
+  @override
+  String ctlEscolherParametro(String bloco) {
+    return 'Parâmetro de $bloco';
+  }
+
+  @override
+  String get ctlSemBlocoAberto => 'Abra um bloco na cadeia para atribuir um parâmetro dele.';
+
+  @override
+  String get ctlSemAlvos => 'Nenhum parâmetro neste controle.';
+
+  @override
+  String get ctlFaixaIguais => 'Mínimo e máximo iguais deixam o controle sem curso.';
+
+  @override
+  String get ctlFaixaFora => 'Fora da faixa do parâmetro.';
+
+  @override
+  String ctlCasaVazia(int linha, int casa) {
+    return 'casa $linha·$casa vazia';
+  }
+
+  @override
+  String ctlAtribuidoA(String controle) {
+    return 'Atribuído a $controle';
+  }
+
+  @override
+  String get ctlAcaoAtribuir => 'Atribuir a um controle da pedaleira';
+
+  @override
+  String get ctlFechar => 'FECHAR';
+
+  @override
+  String get ctlDicaPedaleira => 'Na pedaleira, os pots atribuídos só respondem na tela do preset em uma linha; com o preset expandido, os knobs mexem no bloco selecionado.';
 }

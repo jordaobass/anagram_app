@@ -9,17 +9,31 @@ lista de presets por banco, cadeia de blocos com a arte da pedaleira, knobs gran
 <p align="center">
   <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Baixar para Windows" src="https://img.shields.io/badge/Baixar-Windows%2010%2F11-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
   <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Baixar para macOS" src="https://img.shields.io/badge/Baixar-macOS%20(Apple%20Silicon)-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
-  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Última versão no GitHub" src="https://img.shields.io/github/v/release/jordaobass/anagram_app?style=for-the-badge&label=vers%C3%A3o"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Editor com a cadeia de blocos e a linha paralela" src="docs/imagens/editor.webp" width="900"></a>
+  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Última versão" src="https://img.shields.io/github/v/release/jordaobass/anagram_app?label=vers%C3%A3o&color=F0B429"></a>
+  <a href="https://github.com/jordaobass/anagram_app/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/jordaobass/anagram_app/total?label=downloads&color=41D68A"></a>
+  <a href="LICENSE"><img alt="Licença MIT" src="https://img.shields.io/github/license/jordaobass/anagram_app?color=8E949B"></a>
+  <a href="https://github.com/jordaobass/anagram_app/stargazers"><img alt="Estrelas no GitHub" src="https://img.shields.io/github/stars/jordaobass/anagram_app?style=flat&color=E8E1CD"></a>
+</p>
+
+<p align="center">
+  <a href="https://jordaobass.github.io/anagram_app/"><strong>Site</strong></a> ·
+  <a href="https://github.com/jordaobass/anagram_app/discussions">Discussions</a> ·
+  <a href="https://github.com/jordaobass/anagram_app/issues/new">Sugerir uma funcionalidade</a>
+</p>
+
+<p align="center">
+  <a href="https://jordaobass.github.io/anagram_app/"><img alt="Tour pelo app: editor, compressor e drive multibanda, templates, sintetizador Axioma, gabinetes e explicação dos controles" src="docs/imagens/en/tour.gif" width="900"></a>
 </p>
 
 > **App não oficial, sem vínculo com a Darkglass Electronics.** Anagram é marca do fabricante; a arte
 > dos blocos é usada com autorização da Darkglass.
 
-Sem anúncios, sem telemetria e sem chamadas de rede: o app só conversa com a pedaleira pelo USB.
+Sem anúncios e sem telemetria. O app conversa com a pedaleira pelo USB; a única chamada de rede é
+uma verificação opcional ao abrir (Windows, macOS e Linux) que pergunta ao GitHub qual é a última
+versão, não envia nenhum dado seu e pode ser desligada em **Configurações › Atualizações**.
 
 Interface em **português, inglês e espanhol** (segue o idioma do sistema; dá para trocar em
 **Configurações**, na engrenagem).

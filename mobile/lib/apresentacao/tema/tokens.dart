@@ -243,6 +243,9 @@ abstract final class Medidas {
   static const double fonteRotuloCasaPadrao = 14;
   static const double arrasteFaixaInteira = 200;
   static const double barraConexaoAltura = 64;
+
+  /// Ícone do aviso de versão nova ao lado do texto da barra.
+  static const double iconeAvisoVersao = 18;
   static const double larguraDialogo = 440;
 
   /// Biblioteca de efeitos: cabe uma lista confortável no notebook, e no
@@ -293,6 +296,12 @@ abstract final class Medidas {
   static const double opacidadePreenchimentoSynth = 0.18;
   static const double knobSynth = 64;
 
+  /// Cartão de um controle da pedaleira (FOOT, POT, EXP) e os knobs de
+  /// mínimo e máximo de cada alvo no diálogo do controle.
+  static const double larguraCartaoControle = 136;
+  static const double larguraMinimaCartaoControle = 96;
+  static const double knobFaixaControle = 72;
+
   /// Menor janela do computador (Windows: WM_GETMINMAXINFO em
   /// `win32_window.cpp`; macOS: `contentMinSize` em `MainFlutterWindow.swift`).
   /// Medido: a 440 px tudo cabe nos três idiomas, a 400 px a fita do preset
@@ -305,6 +314,11 @@ abstract final class Quebras {
   /// Abaixo disto a versão do app sai da barra de conexão larga (fica no
   /// Sobre): em espanhol, entre 780 e 840 px, ela empurrava a barra para fora.
   static const double barraComVersao = 880;
+
+  /// Abaixo disto o aviso de versão nova vira só um ícone com menu: por
+  /// extenso (texto, BAIXAR e fechar) ele estourava a barra em 159 px a
+  /// 780 px, conectada e em espanhol.
+  static const double barraComAvisoVersao = 1200;
 
   /// A partir daqui a lista de presets fica ao lado (iPad em retrato já entra).
   static const double amplo = 780;
