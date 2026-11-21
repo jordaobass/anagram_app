@@ -40,6 +40,10 @@ class RepositorioPedaleira {
   Future<Resultado<void>> salvar(SlotPreset slot, DocumentoPreset preset, {String? area}) =>
       _proteger('salvar ${slot.rotulo}', () => _api.salvar(slot, preset, area: area));
 
+  /// Apaga o preset do slot (o slot fica vazio na pedaleira).
+  Future<Resultado<void>> excluir(SlotPreset slot, {String? area}) =>
+      _proteger('limpar ${slot.rotulo}', () => _api.excluir(slot, area: area));
+
   Future<Resultado<void>> trocarPresets(SlotPreset de, SlotPreset para, {String? area}) =>
       _proteger('trocar ${de.rotulo} e ${para.rotulo}', () => _api.trocarPresets(de, para, area: area));
 

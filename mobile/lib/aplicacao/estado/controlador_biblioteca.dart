@@ -186,4 +186,9 @@ class ControladorBiblioteca extends Notifier<EstadoBiblioteca> {
   void registrarSalvo(SlotPreset slot, String nome, {String? id}) {
     state = state.copiar(ocupados: {...state.ocupados, slot: ResumoSlot(slot: slot, nome: nome, id: id)});
   }
+
+  /// O slot foi limpo na pedaleira: a linha passa a "vazio" sem reler a lista.
+  void registrarVazio(SlotPreset slot) {
+    state = state.copiar(ocupados: {...state.ocupados}..remove(slot));
+  }
 }
