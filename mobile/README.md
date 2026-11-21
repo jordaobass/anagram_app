@@ -87,28 +87,28 @@ flutter test integration_test/bancada_test.dart -d macos
 
 ## Publicar (release)
 
-Só existe a versão **com a arte da pedaleira** (DECISOES A12). Publique **sempre de um clone limpo**
-(`git clone`), nunca da pasta de trabalho: o Flutter embarca tudo o que estiver em
-`assets/blocos_terceiros/`, e a pasta de trabalho pode ter miniaturas de anagramanswers.com, que não
-vão para o público.
+Só existe a versão **com a arte da pedaleira** (DECISOES A12), e a arte já está no repositório
+(DECISOES A16). Publique de um clone limpo, para o build levar só o que está versionado:
 
 ```bash
 git clone git@github.com:jordaobass/anagram_app.git && cd anagram_app/mobile
-# gabinetes (foto do modelo de cada IR) e blocos neurais vêm do Darkglass Suite instalado:
-#   <Suite> = …\WindowsApps\DarkglassElectronics.DarkglassSuite_<versão>\app\resources (Windows)
-npx @electron/asar extract "<Suite>/app.asar" /tmp/suite-extraido
-python3 ferramentas/baixar_arte_pedaleira.py --suite "<Suite>/assets" \
-    --renderer /tmp/suite-extraido/dist/renderer.prod.js
 ferramentas/verificar_release.sh && flutter build <plataforma> --release
 ```
 
-Sem `--suite`, a ferramenta traz só a arte dos efeitos (101 blocos, 202 imagens) e os gabinetes
-ficam com a arte própria do app.
+**Atualizar a arte** (Suite ou firmware novo): os gabinetes e os blocos neurais vêm do Darkglass Suite
+instalado (`<Suite>` = …\WindowsApps\DarkglassElectronics.DarkglassSuite_<versão>\app\resources no
+Windows).
 
-Com `--suite` e `--renderer`, ela grava também `fabrica.json`: os 36 presets de fábrica (01A a 12C)
-que o Suite traz embutidos no `renderer.prod.js` (Suite 6.11.4). Com esse arquivo no build, o seletor
-de área ganha a opção **Fábrica**, só leitura: abrir um preset dela só toca (temporário, sem Program
-Change) e o botão de gravar vira "Copiar para a minha área…" (DECISOES U18). Sem ele, a opção não aparece.
+```bash
+npx @electron/asar extract "<Suite>/app.asar" /tmp/suite-extraido
+python3 ferramentas/baixar_arte_pedaleira.py --suite "<Suite>/assets" \
+    --renderer /tmp/suite-extraido/dist/renderer.prod.js
+pngquant --quality=80-95 --strip --skip-if-larger --force --ext .png assets/blocos_terceiros/*.png
+```
+
+Com `--suite` e `--renderer`, a ferramenta grava também `fabrica.json`: os 36 presets de fábrica (01A a
+12C) que o Suite traz embutidos (Suite 6.11.4). Com esse arquivo, o seletor de área ganha a opção
+**Fábrica**, só leitura (DECISOES U18).
 
 O script falha (código 1) sem a arte da pedaleira, com menos de 100 imagens dela ou com qualquer outro
 arquivo na pasta. No macOS com Xcode 27, o release só compila para arm64: acrescente `ARCHS = arm64` ao
@@ -145,7 +145,7 @@ Decisões e pendências: `../docs/DECISOES.md`.
   `ferramentas/gerar_miniaturas.py`); elas **não** vão para o repositório nem para as lojas até
   haver autorização. O app compila e funciona sem elas.
 - Arte da própria pedaleira (Darkglass Electronics, a que o Darkglass Suite mostra, com versão
-  ligada e desligada): mesmo regime, na mesma pasta, gerada por
-  `python3 ferramentas/baixar_arte_pedaleira.py [pasta-effects-do-Suite]`. Quando existe, vence a
-  miniatura de terceiros e o bloco em bypass mostra a imagem "desligado" da pedaleira.
+  ligada e desligada, mais as fotos dos gabinetes e os presets de fábrica): **versionada** em
+  `assets/blocos_terceiros/`, com autorização da Darkglass (DECISOES A16), regerada por
+  `python3 ferramentas/baixar_arte_pedaleira.py`. O bloco em bypass mostra a imagem "desligado".
 - Fontes: Barlow e Saira Stencil (OFL), Permanent Marker (Apache 2.0) — licenças em `assets/fontes/`.

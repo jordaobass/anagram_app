@@ -61,9 +61,8 @@ Ainda não há build pronto; compile pelo [README do app](mobile/README.md#desen
 
 Sem pedaleira, **Abrir demonstração** simula uma Anagram em memória para você conhecer o app.
 
-> Os builds publicados trazem a arte dos blocos da Darkglass Electronics, a mesma da tela da pedaleira
-> (na barra de cima aparece "· arte da pedaleira"). O código-fonte não traz essa arte: ela entra no
-> build de release (veja [Arte de terceiros](#arte-de-terceiros)).
+> O app traz a arte dos blocos da Darkglass Electronics, a mesma da tela da pedaleira, publicada com
+> autorização da Darkglass (veja [Arte de terceiros](#arte-de-terceiros)).
 
 ## IA local via MCP (opcional, só no computador)
 
@@ -118,12 +117,12 @@ Sem pedaleira, o botão **Abrir demonstração** simula uma Anagram em memória.
 
 ## Arte de terceiros
 
-A arte dos blocos é da **Darkglass Electronics** (a mesma que a pedaleira mostra na tela) e **não fica no
-repositório**: a pasta `mobile/assets/blocos_terceiros/` está fora do git. Os builds publicados são feitos
-num clone limpo, com a arte baixada por `mobile/ferramentas/baixar_arte_pedaleira.py`, e
-`mobile/ferramentas/verificar_release.sh` recusa o build sem ela ou com qualquer arquivo que não seja
-dela. Rodando do código-fonte sem a pasta, o app usa a arte própria por categoria. Decisões A9 a A12 em
-[`docs/DECISOES.md`](docs/DECISOES.md).
+A arte dos blocos, as fotos dos gabinetes e os presets de fábrica são da **Darkglass Electronics** (os
+mesmos que a pedaleira mostra na tela) e ficam em `mobile/assets/blocos_terceiros/`, **publicados com
+autorização da Darkglass**. As imagens são reduzidas (no máximo 256 px, PNG comprimido) e são regeradas
+do Darkglass Suite por `mobile/ferramentas/baixar_arte_pedaleira.py`;
+`mobile/ferramentas/verificar_release.sh` recusa qualquer arquivo na pasta que não seja dessa arte.
+Decisões A9 a A16 em [`docs/DECISOES.md`](docs/DECISOES.md).
 
 ## Créditos e licença
 

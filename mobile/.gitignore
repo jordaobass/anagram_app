@@ -51,10 +51,8 @@ app.*.map.json
 .env.*
 !.env.example
 
-# Miniaturas de terceiros (anagramanswers.com): fora do repositório até haver autorização.
-# Gere localmente com ferramentas/gerar_miniaturas.py; sem elas o app usa a arte própria.
-/assets/blocos_terceiros/*
-!/assets/blocos_terceiros/LEIAME.txt
+# A arte da pedaleira (Darkglass) é versionada em assets/blocos_terceiros/ (DECISOES A16).
+# As capturas com essa arte continuam locais.
 /test/capturas/goldens_terceiros/
 /.impeccable/build/
 
