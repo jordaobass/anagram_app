@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anagram App · free live editor for the Darkglass Anagram</title>
+  <meta name="description" content="Free, open-source editor for the Darkglass Anagram bass multi-effects. Live editing over USB, multiband and EQ panels, preset organizing and AI tone building. Windows and macOS.">
+  <meta name="theme-color" content="#1b1c1f">
+  <link rel="canonical" href="https://jordaobass.github.io/anagram_app/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Anagram App · free live editor for the Darkglass Anagram">
+  <meta property="og:description" content="Turn a knob on screen, hear it on the pedal. Free and open source, Windows and macOS.">
+  <meta property="og:url" content="https://jordaobass.github.io/anagram_app/">
+  <meta property="og:image" content="https://jordaobass.github.io/anagram_app/imagens/previa-social.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="imagens/icone.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;600&family=Permanent+Marker&family=Saira+Stencil+One&display=swap">
+  <link rel="stylesheet" href="estilo.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-baixar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></symbol>
+    <symbol id="i-estrela" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8Z"/></symbol>
+    <symbol id="i-ao-vivo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><path d="M12 12 8.5 7.5"/><path d="M3 12h2m14 0h2M12 3v2"/></symbol>
+    <symbol id="i-multibanda" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 20v-6M5 10V4M12 20v-9M12 7V4M19 20v-3M19 13V4"/><path d="M3 14h4M10 7h4M17 13h4"/></symbol>
+    <symbol id="i-eq" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 15c3 0 3-5 6-5s3 7 6 7 3-9 8-9"/><circle cx="8" cy="10" r="1.6"/><circle cx="14" cy="17" r="1.6"/></symbol>
+    <symbol id="i-explica" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"/><path d="M12 8.5v3M12 13.6v.1"/></symbol>
+    <symbol id="i-presets" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/><path d="m17 16 3 2-3 2"/></symbol>
+    <symbol id="i-ia" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8Z"/><path d="M8 9h8M8 12h5"/></symbol>
+  </svg>
+
+  <header class="barra">
+    <div class="conteudo">
+      <span class="barra-led"><span class="led" aria-hidden="true"></span><span data-versao-barra>Latest release</span></span>
+      <nav aria-label="Main">
+        <a class="so-largo" href="#features">Features</a>
+        <a class="so-largo" href="#ai">AI</a>
+        <a class="so-largo" href="#faq">FAQ</a>
+        <a href="https://github.com/jordaobass/anagram_app"><svg width="20" height="20" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="abertura">
+      <div class="conteudo">
+        <div>
+          <p class="slot" aria-hidden="true">01<span>A</span></p>
+          <h1><span class="fita fita-desenrola">Anagram App</span></h1>
+          <p class="chamada">A free, open-source editor for the <strong>Darkglass Anagram</strong>.
+            Turn a knob on screen and <strong>hear it on the pedal right away</strong>, then save when you like it.
+            Shape multiband blocks and EQs with real curves, organize your presets, or just describe the tone to an AI.</p>
+          <div class="acoes">
+            <a class="botao botao-primario" data-baixar="windows" href="https://github.com/jordaobass/anagram_app/releases/latest">
+              <svg aria-hidden="true"><use href="#i-baixar"/></svg>Download for Windows</a>
+            <a class="botao botao-contorno" data-baixar="macos" href="https://github.com/jordaobass/anagram_app/releases/latest">
+              <svg aria-hidden="true"><use href="#i-baixar"/></svg>Download for macOS</a>
+          </div>
+          <p class="miudo"><span class="versao" data-versao>Latest version</span> · Windows 10/11 · macOS on Apple Silicon · no installer, no account</p>
+        </div>
+        <figure class="case">
+          <span class="quinas" aria-hidden="true"></span>
+          <img src="imagens/en/editor.webp" width="1440" height="900"
+               alt="The Anagram App editor: preset list by bank, the signal chain with a parallel row, and the Mint Chocolate Chorus knobs">
+        </figure>
+      </div>
+    </section>
+
+    <section class="secao" id="features" aria-labelledby="t-cadeia">
+      <div class="conteudo">
+        <h2 id="t-cadeia">Everything in one chain</h2>
+        <p class="intro">The app talks to the Anagram over USB, the same way the pedal's own screen does.
+          Blocks you bought on the marketplace show up too, because the list comes straight from your pedal.</p>
+        <ol class="cadeia">
+          <li class="pedal familia-amplificador">
+            <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-ao-vivo"/></svg></span>
+            <span class="pedal-fita" aria-hidden="true"></span>
+            <h3>Live over USB</h3>
+            <p>Every change is heard at once. "Not saved" stays visible until you save.</p>
+          </li>
+          <li class="pedal familia-compressor">
+            <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-multibanda"/></svg></span>
+            <span class="pedal-fita" aria-hidden="true"></span>
+            <h3>Multiband panels</h3>
+            <p>Ignissor and Entropia by band, with draggable crossovers and thresholds.</p>
+          </li>
+          <li class="pedal familia-equalizador">
+            <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-eq"/></svg></span>
+            <span class="pedal-fita" aria-hidden="true"></span>
+            <h3>EQ curves</h3>
+            <p>Global EQ and Parametric EQ: drag the points, switch Gain, Frequency and Width.</p>
+          </li>
+          <li class="pedal familia-filtro">
+            <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-explica"/></svg></span>
+            <span class="pedal-fita" aria-hidden="true"></span>
+            <h3>Every control explained</h3>
+            <p>Big knobs with typed values, and what each one does to the sound.</p>
+          </li>
+          <li class="pedal familia-gabinete">
+            <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-presets"/></svg></span>
+            <span class="pedal-fita" aria-hidden="true"></span>
+            <h3>Presets in order</h3>
+            <p>Move, clone and swap presets and banks. Export and import JSON.</p>
+          </li>
+          <li class="pedal familia-modulacao">
+            <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-ia"/></svg></span>
+            <span class="pedal-fita" aria-hidden="true"></span>
+            <h3>AI tone building</h3>
+            <p>Describe the tone; your AI assistant builds and tweaks the chain.</p>
+          </li>
+        </ol>
+
+        <div class="passagem">
+          <div>
+            <h3>Multiband, the way the pedal draws it</h3>
+            <p>Instead of 26 loose knobs, the Ignissor compressor is laid out by band: a frequency strip with a handle on
+              each crossover, Threshold and Level you can drag, Solo and Mute, and the compression curve of each band.</p>
+            <ul>
+              <li>Entropia drive with Drive Type and Drive Mode, and a waveform that saturates as you push it.</li>
+              <li>Axioma synth with the oscillators, filter and envelope drawn live.</li>
+            </ul>
+          </div>
+          <div class="case"><span class="quinas" aria-hidden="true"></span>
+            <img src="imagens/en/ignissor.webp" width="1440" height="1500" loading="lazy"
+                 alt="Ignissor multiband compressor: three bands with crossovers, thresholds and a compression curve per band"></div>
+        </div>
+
+        <div class="passagem invertida">
+          <div>
+            <h3>Know what a knob does before you turn it</h3>
+            <p>Rest the mouse on a control's name to read what it does to the sound on that specific block.
+              Type an exact value when you know it, or drag, scroll and use the arrow keys when you don't.</p>
+          </div>
+          <div class="case"><span class="quinas" aria-hidden="true"></span>
+            <img src="imagens/en/explicacao.webp" width="1440" height="900" loading="lazy"
+                 alt="A control's explanation shown next to its knob"></div>
+        </div>
+
+        <div class="passagem">
+          <div>
+            <h3>Cabinets you can see</h3>
+            <p>Pick the cab by its photo, then the microphone and its position. A searchable gallery keeps the list short.</p>
+          </div>
+          <div class="case"><span class="quinas" aria-hidden="true"></span>
+            <img src="imagens/en/gabinete.webp" width="1440" height="900" loading="lazy"
+                 alt="Cabinet picker with the model photo, microphone and position"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="secao" id="ai" aria-labelledby="t-ia">
+      <div class="conteudo">
+        <h2 id="t-ia">Describe the tone. Hear the chain.</h2>
+        <p class="intro">Connect an AI assistant running on your computer (Claude Desktop, LM Studio or any MCP client).
+          It reads the open preset and changes it through the app, so every step is heard on the pedal and shows on screen.
+          It never writes to a slot unless you confirm in the app.</p>
+        <div class="conversa">
+          <div>
+            <p class="pedido"><span class="fita">"Make it sound like Steve Harris, punchy and bright."</span></p>
+            <ul class="acoes-ia" aria-label="What the AI does in the app (example)">
+              <li><code>add_block</code><span>adds a compressor before the amp</span></li>
+              <li><code>set_parameter</code><span>pushes the upper mids, trims the lows</span></li>
+              <li><code>choose_cabinet</code><span>picks a 4x10 cab, mic close to the cone</span></li>
+              <li><span class="selo-nao-salvo">Not saved</span><span>you listen, ask for changes, then save</span></li>
+            </ul>
+            <p class="nota">Example of a session. The AI can't hear the sound: you tell it what to change.</p>
+          </div>
+          <ol class="passos">
+            <li><div><strong>Allow AI in Settings.</strong> The app listens only on your own computer and asks for a token.</div></li>
+            <li><div><strong>Copy the configuration</strong> for your client and paste it into its MCP settings. For LM Studio:
+<pre><code>{
+  "mcpServers": {
+    "anagram": {
+      "url": "http://127.0.0.1:8765/mcp",
+      "headers": { "Authorization": "Bearer &lt;token&gt;" }
+    }
+  }
+}</code></pre></div></li>
+            <li><div><strong>Open a preset and talk.</strong> "Tighter low end", "split the drive at 250 Hz", "a slap tone for funk".</div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="secao" id="faq" aria-labelledby="t-faq">
+      <div class="conteudo">
+        <h2 id="t-faq">Questions</h2>
+        <div class="perguntas">
+          <details>
+            <summary>Do I still need the Darkglass Suite?</summary>
+            <p>Yes, keep it: firmware updates and uploading IRs or NAM captures are done in the Suite. Just don't run both at the same time, because only one program can talk to the pedal.</p>
+          </details>
+          <details>
+            <summary>Does it work with blocks bought on the marketplace?</summary>
+            <p>Yes. The block list comes from your pedal, so installed blocks appear in the chain and can be edited live. A block the app hasn't seen yet may show a generic picture; open an issue and it gets added.</p>
+          </details>
+          <details>
+            <summary>Windows says "Windows protected your PC". Is it safe?</summary>
+            <p>The app isn't code-signed yet. Click <em>More info</em> and <em>Run anyway</em>; it only shows once. On macOS, open System Settings › Privacy &amp; Security and click <em>Open Anyway</em>. The source code is public on GitHub.</p>
+          </details>
+          <details>
+            <summary>Which firmware does it support?</summary>
+            <p>It's tested on Anagram firmware 1.19.2.24. Presets are read and written as the pedal stores them, keeping fields the app doesn't know.</p>
+          </details>
+          <details>
+            <summary>Does it collect any data?</summary>
+            <p>No ads, no account, no telemetry. The app talks to the pedal over USB; the AI bridge only listens on your own computer.</p>
+          </details>
+          <details>
+            <summary>No pedal with me. Can I try it?</summary>
+            <p>Yes: <em>Open demo</em> simulates an Anagram in memory, with presets and blocks, so you can explore every screen.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="fecho">
+      <div class="conteudo">
+        <span class="fita">Plug in. Turn a knob.</span>
+        <p>Download the latest version, and if it makes your Anagram more fun, a star on GitHub helps other bassists find it.
+          Ideas and bugs go to the issues.</p>
+        <div class="acoes">
+          <a class="botao botao-primario" data-baixar="windows" href="https://github.com/jordaobass/anagram_app/releases/latest">
+            <svg aria-hidden="true"><use href="#i-baixar"/></svg>Windows</a>
+          <a class="botao botao-primario" data-baixar="macos" href="https://github.com/jordaobass/anagram_app/releases/latest">
+            <svg aria-hidden="true"><use href="#i-baixar"/></svg>macOS</a>
+          <a class="botao botao-contorno" href="https://github.com/jordaobass/anagram_app">
+            <svg aria-hidden="true"><use href="#i-estrela"/></svg>Star on GitHub</a>
+          <a class="botao botao-contorno" href="https://github.com/jordaobass/anagram_app/issues/new">Suggest a feature</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="conteudo">
+      <p><strong>Unofficial app, not affiliated with Darkglass Electronics.</strong> Anagram is a trademark of its manufacturer.</p>
+      <p>Free and open source under the MIT license · <a href="https://github.com/jordaobass/anagram_app">Source code</a> ·
+        <a href="https://github.com/jordaobass/anagram_app/releases">All releases</a> ·
+        <a href="https://github.com/jordaobass/anagram_app/issues">Issues</a></p>
+    </div>
+  </footer>
+
+  <script src="baixar.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+# Publica a landing (site/) no GitHub Pages. As imagens vêm de docs/imagens,
+# as mesmas do README, para não haver duas cópias no repositório.
+name: Landing no GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths: ['site/**', 'docs/imagens/**', '.github/workflows/pages.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.publicacao.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Juntar as imagens
+        run: |
+          mkdir -p site/imagens
+          cp -r docs/imagens/en site/imagens/
+          cp docs/imagens/previa-social.png site/imagens/
+          cp docs/imagens/icone-64.png site/imagens/icone.png
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+      - id: publicacao
+        uses: actions/deploy-pages@v5
