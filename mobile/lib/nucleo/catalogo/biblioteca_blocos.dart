@@ -33,8 +33,9 @@ const _blocosDeSistema = {
   'urn:darkglass-anagram:sine-gen',
 };
 
-/// Split e merge marcam onde a linha 2 sai e volta: movê-los (ou trocá-los
-/// com outro bloco) mudaria o roteamento sem a pessoa perceber.
+/// Split e merge marcam onde a linha 2 sai e volta: copiar, colar por cima
+/// ou remover um deles sozinho quebraria o roteamento. Mudar de lugar pode,
+/// com as regras de [recusaAoMover].
 bool ehBlocoDeRoteamento(String uri) =>
     uri == 'urn:darkglass-anagram:split' || uri == 'urn:darkglass-anagram:merge';
 
@@ -120,11 +121,31 @@ Iterable<DefinicaoBloco> _efeitos(CatalogoBlocos catalogo) =>
 bool _casaComBusca(DefinicaoBloco bloco, String termo) =>
     termo.isEmpty || bloco.nome.toLowerCase().contains(termo) || bloco.abreviacao.toLowerCase().contains(termo);
 
-/// Mover [de] para [para] só vale se há bloco na origem e nenhum dos dois
-/// lados é split/merge.
-bool podeMover(DocumentoPreset documento, PosicaoBloco de, PosicaoBloco para) {
+/// Por que um "mover" (arrastar ou menu) não vale. Split e Merge andam pela
+/// linha 1 e trocam com bloco comum, mas nunca vão para a linha 2 e o Split
+/// fica sempre antes do Merge (nos presets reais eles não precisam estar
+/// juntos nem alinhados com a linha 2: exemplos 1 e 2, DECISOES M10).
+enum RecusaMover { semOrigem, mesmaCasa, roteamentoForaDaLinha1, splitDepoisDoMerge }
+
+/// Nulo quando mover [de] para [para] vale; casa vazia recebe, ocupada troca.
+RecusaMover? recusaAoMover(DocumentoPreset documento, PosicaoBloco de, PosicaoBloco para) {
   final origem = documento.bloco(de);
-  if (origem == null || de == para || ehBlocoDeRoteamento(origem.uri)) return false;
-  final destino = documento.bloco(para);
-  return destino == null || !ehBlocoDeRoteamento(destino.uri);
+  if (origem == null) return RecusaMover.semOrigem;
+  if (de == para) return RecusaMover.mesmaCasa;
+  PosicaoBloco depois(PosicaoBloco p) => p == de ? para : (p == para ? de : p);
+  final split = _posicaoDe(documento, ':split');
+  final merge = _posicaoDe(documento, ':merge');
+  final novoSplit = split == null ? null : depois(split);
+  final novoMerge = merge == null ? null : depois(merge);
+  if ((novoSplit != null && novoSplit.linha != 1) || (novoMerge != null && novoMerge.linha != 1)) {
+    return RecusaMover.roteamentoForaDaLinha1;
+  }
+  if (novoSplit != null && novoMerge != null && novoSplit.casa > novoMerge.casa) return RecusaMover.splitDepoisDoMerge;
+  return null;
 }
+
+bool podeMover(DocumentoPreset documento, PosicaoBloco de, PosicaoBloco para) =>
+    recusaAoMover(documento, de, para) == null;
+
+PosicaoBloco? _posicaoDe(DocumentoPreset documento, String fimDaUri) =>
+    documento.blocosDaLinha(1).where((b) => b.uri.endsWith(fimDaUri)).firstOrNull?.posicao;

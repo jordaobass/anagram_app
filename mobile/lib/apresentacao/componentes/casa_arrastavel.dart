@@ -1,6 +1,8 @@
 // Mudar a ordem da cadeia arrastando: a casa ocupada é a alça e qualquer casa
 // é um alvo (vazia recebe, ocupada troca). Com mouse o arrasto começa na hora;
-// no toque, segurando, para não brigar com a rolagem da grade.
+// no toque, segurando, para não brigar com a rolagem da grade. Split e Merge
+// também se arrastam; soltar onde a regra recusa (linha 2, Split depois do
+// Merge) acende o alvo em vermelho e explica, em vez de não fazer nada calado.
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../nucleo/catalogo/biblioteca_blocos.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
+import '../../l10n/app_localizations.dart';
 import '../tema/tokens.dart';
 
 /// Computador (mouse/trackpad): arrasto imediato. Celular e tablet: segurar.
@@ -27,15 +30,31 @@ class CasaArrastavel extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final documento = ref.watch(editorProvider.select((e) => e.atual));
     final bloco = documento?.bloco(posicao);
+    RecusaMover? recusa(PosicaoBloco de) => documento == null ? RecusaMover.semOrigem : recusaAoMover(documento, de, posicao);
     return DragTarget<PosicaoBloco>(
-      onWillAcceptWithDetails: (d) => documento != null && podeMover(documento, d.data, posicao),
-      onAcceptWithDetails: (d) => ref.read(editorProvider.notifier).moverBloco(d.data, posicao),
+      onWillAcceptWithDetails: (d) => _explicavel(recusa(d.data)),
+      onAcceptWithDetails: (d) => _soltar(context, ref, d.data, recusa(d.data)),
       builder: (context, candidatos, _) {
-        final alvo = _realcar(child, ativo: candidatos.isNotEmpty);
-        // split e merge não saem do lugar: não viram alça
-        return bloco == null || ehBlocoDeRoteamento(bloco.uri) ? alvo : _alca(alvo);
+        final recusado = candidatos.any((de) => de != null && recusa(de) != null);
+        final alvo = _realcar(child, ativo: candidatos.isNotEmpty, recusado: recusado);
+        return bloco == null ? alvo : _alca(alvo);
       },
     );
+  }
+
+  /// O alvo aceita o que pode mover e também o que a regra do roteamento
+  /// recusa (para explicar); a própria casa e a origem vazia, não.
+  static bool _explicavel(RecusaMover? recusa) =>
+      recusa == null || recusa == RecusaMover.roteamentoForaDaLinha1 || recusa == RecusaMover.splitDepoisDoMerge;
+
+  void _soltar(BuildContext context, WidgetRef ref, PosicaoBloco de, RecusaMover? recusa) {
+    if (recusa == null) {
+      ref.read(editorProvider.notifier).moverBloco(de, posicao);
+      return;
+    }
+    final l = AppLocalizations.of(context);
+    final texto = recusa == RecusaMover.splitDepoisDoMerge ? l.smOrdemInvalida : l.smSoNaLinha1;
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(texto)));
   }
 
   Widget _alca(Widget alvo) {
@@ -49,12 +68,14 @@ class CasaArrastavel extends ConsumerWidget {
         : LongPressDraggable<PosicaoBloco>(data: posicao, feedback: naMao, childWhenDragging: sombra, child: alvo);
   }
 
-  /// Contorno no tally sobre a casa que vai receber o bloco.
-  static Widget _realcar(Widget casa, {required bool ativo}) => DecoratedBox(
+  /// Contorno no tally sobre a casa que vai receber o bloco; no vermelho de
+  /// erro quando soltar ali seria recusado.
+  static Widget _realcar(Widget casa, {required bool ativo, required bool recusado}) => DecoratedBox(
         position: DecorationPosition.foreground,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Raios.controle),
-          border: Border.all(color: ativo ? Cores.tally : Colors.transparent, width: Medidas.contornoSelecao),
+          border: Border.all(
+              color: !ativo ? Colors.transparent : (recusado ? Cores.erro : Cores.tally), width: Medidas.contornoSelecao),
         ),
         child: casa,
       );

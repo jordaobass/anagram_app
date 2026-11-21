@@ -95,12 +95,19 @@ void main() {
     expect([for (final g in busca) for (final b in g.blocos) b.nome], ['Suppressor']);
   });
 
-  test('should_refuse_to_move_split_or_merge_when_asked', () {
+  test('should_refuse_moves_that_take_split_or_merge_off_row_one_or_put_the_split_after_the_merge', () {
+    // exemplo 1: split na casa 5, merge na 11 (não precisam estar juntos)
     final documento = DocumentoPreset.doJson(lerExemplo('1'));
-    final split = documento.blocosDaLinha(1).firstWhere((b) => b.uri.endsWith(':split')).posicao;
+    const split = PosicaoBloco(1, 5);
+    const merge = PosicaoBloco(1, 11);
 
-    expect(podeMover(documento, split, const PosicaoBloco(1, 4)), isFalse);
-    expect(podeMover(documento, const PosicaoBloco(1, 1), split), isFalse, reason: 'trocar também tiraria o split do lugar');
+    expect(recusaAoMover(documento, split, const PosicaoBloco(1, 4)), isNull, reason: 'o split anda pela linha 1');
+    expect(recusaAoMover(documento, const PosicaoBloco(1, 1), split), isNull, reason: 'trocar com bloco comum vale');
+    expect(recusaAoMover(documento, split, const PosicaoBloco(2, 5)), RecusaMover.roteamentoForaDaLinha1);
+    expect(recusaAoMover(documento, const PosicaoBloco(2, 1), merge), RecusaMover.roteamentoForaDaLinha1,
+        reason: 'a troca levaria o merge para a linha 2');
+    expect(recusaAoMover(documento, split, const PosicaoBloco(1, 12)), RecusaMover.splitDepoisDoMerge);
+    expect(recusaAoMover(documento, split, merge), RecusaMover.splitDepoisDoMerge, reason: 'trocar os dois inverte');
     expect(podeMover(documento, const PosicaoBloco(1, 1), const PosicaoBloco(1, 4)), isTrue);
   });
 
