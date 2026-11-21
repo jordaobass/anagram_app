@@ -1,11 +1,13 @@
 // Estado da conexão sempre à vista, interruptor "Ao vivo" e a latência do
 // último envio. A versão do app fica na tela Sobre: aqui só o essencial.
+// Com o MCP escutando, um selo "IA" lembra que outro programa pode mexer.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_conexao.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/estado/estado_conexao.dart';
+import '../../aplicacao/mcp/controlador_mcp.dart';
 import '../rotas.dart';
 import '../tema/tokens.dart';
 import '../../l10n/app_localizations.dart';
@@ -39,11 +41,20 @@ class BarraConexao extends ConsumerWidget {
               icon: const Icon(Icons.link_off),
               onPressed: ref.read(conexaoProvider.notifier).desconectar,
             ),
+          const SeloMcp(),
           IconButton(
-            tooltip: l.creditos,
-            icon: const Icon(Icons.info_outline),
-            onPressed: () => const RotaCreditos().push<void>(context),
+            key: const ValueKey('botao-configuracoes'),
+            tooltip: l.mcpConfiguracoes,
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () => const RotaConfiguracoes().push<void>(context),
           ),
+          // no celular não cabem os dois: o Sobre fica dentro das Configurações
+          if (!compacta)
+            IconButton(
+              tooltip: l.creditos,
+              icon: const Icon(Icons.info_outline),
+              onPressed: () => const RotaCreditos().push<void>(context),
+            ),
         ],
       ),
     );
@@ -122,6 +133,29 @@ class _AoVivo extends ConsumerWidget {
           onChanged: ref.read(editorProvider.notifier).definirAoVivo,
         ),
       ],
+    );
+  }
+}
+
+/// Selo discreto enquanto o MCP escuta: o som pode mudar sem a pessoa tocar.
+class SeloMcp extends ConsumerWidget {
+  const SeloMcp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (ref.watch(controladorMcpProvider.select((e) => e.situacao)) is! McpEscutando) return const SizedBox.shrink();
+    final l = AppLocalizations.of(context);
+    return Tooltip(
+      message: l.mcpAtivoDica,
+      child: Container(
+        key: const ValueKey('selo-mcp'),
+        padding: const EdgeInsets.symmetric(horizontal: Espacos.s, vertical: Espacos.xxs),
+        decoration: BoxDecoration(
+          border: Border.all(color: Cores.ledLigado),
+          borderRadius: BorderRadius.circular(Raios.canto),
+        ),
+        child: Text(l.mcpAtivoNaBarra, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Cores.ledLigado)),
+      ),
     );
   }
 }

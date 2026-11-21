@@ -833,4 +833,118 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get fbCopiarPara => 'Copiar para a minha área…';
+
+  @override
+  String get mcpConfiguracoes => 'Configurações';
+
+  @override
+  String get mcpSecao => 'IA local (MCP)';
+
+  @override
+  String get mcpPermitir => 'Permitir IA via MCP';
+
+  @override
+  String get mcpPermitirTexto =>
+      'Um assistente de IA no seu computador (LM Studio, Claude Desktop…) pode ler o preset aberto e ajustar o timbre. As mudanças soam na hora e só vão para a pedaleira se você salvar.';
+
+  @override
+  String get mcpEstadoDesligado =>
+      'Desligado: nenhum programa consegue falar com o app.';
+
+  @override
+  String get mcpEstadoIniciando => 'Iniciando…';
+
+  @override
+  String mcpEstadoEscutando(String endereco) {
+    return 'Escutando em $endereco';
+  }
+
+  @override
+  String mcpEstadoPortaOcupada(int porta) {
+    return 'A porta $porta já está em uso por outro programa (ou outra janela do app). Escolha outra porta.';
+  }
+
+  @override
+  String get mcpPorta => 'Porta';
+
+  @override
+  String get mcpPortaInvalida => 'Use um número de 1024 a 65535.';
+
+  @override
+  String get mcpAplicarPorta => 'APLICAR';
+
+  @override
+  String get mcpToken => 'Token de acesso';
+
+  @override
+  String get mcpTokenTexto =>
+      'O cliente de IA manda este token em cada pedido. Sem ele, o app não obedece.';
+
+  @override
+  String get mcpMostrarToken => 'Mostrar token';
+
+  @override
+  String get mcpOcultarToken => 'Ocultar token';
+
+  @override
+  String get mcpCopiarToken => 'Copiar token';
+
+  @override
+  String get mcpGerarNovoToken => 'GERAR NOVO';
+
+  @override
+  String get mcpGerarNovoTitulo => 'Gerar um token novo?';
+
+  @override
+  String get mcpGerarNovoTexto =>
+      'O token atual deixa de valer na hora: o cliente de IA vai precisar do novo.';
+
+  @override
+  String get mcpCopiarConfiguracao => 'Copiar configuração para';
+
+  @override
+  String get mcpClienteLmStudio => 'LM Studio';
+
+  @override
+  String get mcpClienteClaudeDesktop => 'Claude Desktop';
+
+  @override
+  String get mcpClienteGenerico => 'Outro cliente';
+
+  @override
+  String get mcpCopiado => 'Copiado para a área de transferência.';
+
+  @override
+  String get mcpLimitacoes =>
+      'A IA não ouve o som: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a ferramentas.';
+
+  @override
+  String get mcpAtivoNaBarra => 'IA';
+
+  @override
+  String get mcpAtivoDica => 'IA local pode ajustar o timbre (MCP ligado)';
+
+  @override
+  String mcpMudancaDaIa(String resumo) {
+    return 'IA: $resumo';
+  }
+
+  @override
+  String get mcpPedidoSalvarTitulo => 'Salvar o que a IA ajustou?';
+
+  @override
+  String mcpPedidoSalvarTexto(String nome, String slot) {
+    return 'A IA pediu para gravar \"$nome\" no slot $slot da pedaleira.';
+  }
+
+  @override
+  String mcpPedidoSalvarSemSlot(String nome) {
+    return 'A IA pediu para gravar \"$nome\" na pedaleira. Você vai escolher o slot.';
+  }
+
+  @override
+  String get mcpSalvar => 'SALVAR';
+
+  @override
+  String get mcpAgoraNao => 'AGORA NÃO';
 }

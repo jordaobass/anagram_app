@@ -146,6 +146,10 @@ abstract final class Medidas {
 
   /// Abaixo disto os botões de salvar descem para baixo da fita do preset.
   static const double larguraFaixaEmLinha = 880;
+
+  /// Configurações: coluna de leitura, não a tela inteira do notebook.
+  static const double larguraConfiguracoes = 640;
+  static const double larguraCampoPorta = 120;
 }
 
 abstract final class Quebras {
