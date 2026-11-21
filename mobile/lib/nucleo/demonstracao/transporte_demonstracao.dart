@@ -8,6 +8,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import '../modelo/slot_preset.dart';
 import '../protocolo/api_anagram.dart';
 import '../protocolo/erros_anagram.dart';
 import '../protocolo/quadros_hid.dart';
@@ -231,5 +232,5 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
   static Map<int, dynamic> _copia(Map<int, Map<String, dynamic>> presets) =>
       {for (final e in presets.entries) e.key: jsonDecode(jsonEncode(e.value))};
 
-  static int _numero(String? arquivo) => int.tryParse('$arquivo'.split('.').first) ?? -1;
+  static int _numero(String? arquivo) => SlotPreset.numeroDoArquivo('$arquivo') ?? -1;
 }
