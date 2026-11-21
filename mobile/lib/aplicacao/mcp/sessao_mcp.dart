@@ -66,13 +66,22 @@ class SessaoMcp {
   }
 
   static PosicaoBloco posicaoDe(Map<String, dynamic> argumentos, {String linha = 'row', String casa = 'column'}) {
-    final l = argumentos.inteiroObrigatorio(linha);
-    final c = argumentos.inteiroObrigatorio(casa);
-    if (l < 1 || l > PosicaoBloco.linhas || c < 1 || c > PosicaoBloco.casasPorLinha) {
+    final numeroLinha = argumentos.inteiroObrigatorio(linha);
+    final numeroCasa = argumentos.inteiroObrigatorio(casa);
+    final foraDaGrade = numeroLinha < 1 || numeroLinha > PosicaoBloco.linhas ||
+        numeroCasa < 1 || numeroCasa > PosicaoBloco.casasPorLinha;
+    if (foraDaGrade) {
       throw const RecusaFerramenta('Position must be row 1-${PosicaoBloco.linhas}, column 1-${PosicaoBloco.casasPorLinha}.');
     }
-    return PosicaoBloco(l, c);
+    return PosicaoBloco(numeroLinha, numeroCasa);
   }
+
+  /// O esquema da posição que [posicaoDe] lê (`row`, `column`, com [prefixo]).
+  static Map<String, Map<String, dynamic>> esquemaPosicao({String prefixo = ''}) => {
+        '${prefixo}row': inteiro('Row (1 = main line, 2 = parallel line).', minimo: 1, maximo: PosicaoBloco.linhas),
+        '${prefixo}column':
+            inteiro('Column, 1-${PosicaoBloco.casasPorLinha}.', minimo: 1, maximo: PosicaoBloco.casasPorLinha),
+      };
 
   /// Faz a mudança pelo editor e, se o preset mudou, guarda o anterior para
   /// o `undo` e avisa a tela de que a mudança veio da IA.
