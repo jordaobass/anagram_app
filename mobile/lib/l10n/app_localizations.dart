@@ -331,8 +331,8 @@ abstract class AppLocalizations {
   /// No description provided for @importacaoNaoEhPreset.
   ///
   /// In pt, this message translates to:
-  /// **'Arquivo não é um preset da Anagram: {detalhe}'**
-  String importacaoNaoEhPreset(String detalhe);
+  /// **'Este arquivo não é um preset da Anagram.'**
+  String get importacaoNaoEhPreset;
 
   /// No description provided for @exportacaoFalhou.
   ///
@@ -2073,6 +2073,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Solo desligado: as três bandas soam'**
   String get mbSoloDesligado;
+
+  /// No description provided for @mbCurvaCompressor.
+  ///
+  /// In pt, this message translates to:
+  /// **'Curva do compressor: Threshold {limiar} dB, Ratio {razao}:1'**
+  String mbCurvaCompressor(String limiar, String razao);
 
   /// No description provided for @mbOff.
   ///

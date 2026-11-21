@@ -20,7 +20,7 @@ class PintorArteFamilia extends CustomPainter {
     canvas.drawRRect(
       corpo.deflate(size.width * 0.06),
       Paint()
-        ..color = Cores.tintaMarcador.withValues(alpha: 0.18)
+        ..color = Cores.tintaMarcador.withValues(alpha: Opacidades.sombraArteFamilia)
         ..style = PaintingStyle.stroke
         ..strokeWidth = size.width * 0.02,
     );

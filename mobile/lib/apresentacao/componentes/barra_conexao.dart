@@ -23,8 +23,7 @@ class BarraConexao extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final conexao = ref.watch(conexaoProvider);
-    final l = AppLocalizations.of(context);
-    final (cor, texto) = _resumo(l, conexao);
+    final (cor, texto) = _resumo(AppLocalizations.of(context), conexao);
     return Container(
       constraints: const BoxConstraints(minHeight: Medidas.barraConexaoAltura),
       padding: const EdgeInsets.symmetric(horizontal: Espacos.l),
@@ -32,37 +31,47 @@ class BarraConexao extends ConsumerWidget {
         color: Cores.painel,
         border: Border(bottom: BorderSide(color: Cores.filete)),
       ),
-      child: Row(
-        children: [
-          Flexible(child: _Estado(cor: cor, texto: texto, linhas: compacta ? 2 : 1)),
-          // a versão do app ao lado do firmware: ao relatar um problema, as duas
-          // estão à vista (no celular a barra não comporta, fica no Sobre)
-          if (!compacta) const _VersaoNaBarra(),
-          const SizedBox(width: Espacos.s),
-          if (conexao is Conectada) _AoVivo(compacta: compacta),
-          if (conexao is Conectada)
-            IconButton(
-              tooltip: l.desconectar,
-              icon: const Icon(Icons.link_off),
-              onPressed: ref.read(conexaoProvider.notifier).desconectar,
-            ),
-          const SeloMcp(),
-          IconButton(
-            key: const ValueKey('botao-configuracoes'),
-            tooltip: l.mcpConfiguracoes,
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () => const RotaConfiguracoes().push<void>(context),
-          ),
-          // no celular não cabem os dois: o Sobre fica dentro das Configurações
-          if (!compacta)
-            IconButton(
-              tooltip: l.creditos,
-              icon: const Icon(Icons.info_outline),
-              onPressed: () => const RotaCreditos().push<void>(context),
-            ),
-        ],
-      ),
+      child: Row(children: [
+        Flexible(child: _Estado(cor: cor, texto: texto, linhas: compacta ? 2 : 1)),
+        // a versão do app ao lado do firmware: ao relatar um problema, as duas
+        // estão à vista (no celular e logo acima da quebra larga a barra não
+        // comporta: fica no Sobre)
+        if (!compacta && MediaQuery.sizeOf(context).width >= Quebras.barraComVersao) const _VersaoNaBarra(),
+        const SizedBox(width: Espacos.s),
+        if (conexao is Conectada) ..._conectada(context, ref),
+        const SeloMcp(),
+        ..._navegacao(context),
+      ]),
     );
+  }
+
+  /// Só com a pedaleira (ou a demonstração) do outro lado: ao vivo e desconectar.
+  List<Widget> _conectada(BuildContext context, WidgetRef ref) => [
+        _AoVivo(compacta: compacta),
+        IconButton(
+          tooltip: AppLocalizations.of(context).desconectar,
+          icon: const Icon(Icons.link_off),
+          onPressed: ref.read(conexaoProvider.notifier).desconectar,
+        ),
+      ];
+
+  /// Configurações e, fora do celular, o Sobre (lá ele fica dentro das Configurações).
+  List<Widget> _navegacao(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return [
+      IconButton(
+        key: const ValueKey('botao-configuracoes'),
+        tooltip: l.mcpConfiguracoes,
+        icon: const Icon(Icons.settings_outlined),
+        onPressed: () => const RotaConfiguracoes().push<void>(context),
+      ),
+      if (!compacta)
+        IconButton(
+          tooltip: l.creditos,
+          icon: const Icon(Icons.info_outline),
+          onPressed: () => const RotaCreditos().push<void>(context),
+        ),
+    ];
   }
 
   static (Color, String) _resumo(AppLocalizations l, EstadoConexao estado) => switch (estado) {

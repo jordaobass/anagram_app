@@ -39,6 +39,13 @@ void main() {
     expect(textosPt.importacaoRecusada(resultado as ImportacaoRecusada), contains('não é um preset'));
   });
 
+  test('should_keep_the_technical_detail_out_of_the_message_when_the_import_is_refused', () async {
+    final resultado = await TransferirPreset(_ArquivosFalsos(texto: '[1, 2, 3]')).importar() as ImportacaoRecusada;
+
+    expect(resultado.detalhe, isNotEmpty, reason: 'o detalhe existe e vai para o log');
+    expect(textosPt.importacaoRecusada(resultado), 'Este arquivo não é um preset da Anagram.');
+  });
+
   test('should_refuse_the_import_when_the_file_cannot_be_read', () async {
     final arquivos = _ArquivosFalsos(erro: const FileSystemException('sem permissão'));
 

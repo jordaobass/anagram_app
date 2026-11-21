@@ -68,8 +68,14 @@ class SeletorArea extends ConsumerWidget {
         if (comFabrica)
           Align(alignment: Alignment.centerLeft, child: Text(l.fbAreaFabrica, maxLines: 1, overflow: TextOverflow.ellipsis)),
       ],
-      items: [
-        for (final area in areas)
+      items: _itens(l, biblioteca, comFabrica: comFabrica),
+      onChanged: habilitado ? (id) => _trocar(context, ref, id) : null,
+    );
+  }
+
+  /// No menu aberto: cada área com a etiqueta da ativa e, por último, a fábrica.
+  List<DropdownMenuItem<String>> _itens(AppLocalizations l, EstadoBiblioteca biblioteca, {required bool comFabrica}) => [
+        for (final area in biblioteca.areas.areas)
           DropdownMenuItem(
             key: ValueKey('area-${area.id}'),
             value: area.id,
@@ -84,10 +90,7 @@ class SeletorArea extends ConsumerWidget {
             value: PresetsDeFabrica.idArea,
             child: _fabrica(l),
           ),
-      ],
-      onChanged: habilitado ? (id) => _trocar(context, ref, id) : null,
-    );
-  }
+      ];
 
   static Widget _nome(AppLocalizations l, AreaPresets area) =>
       Text(l.nomeDaArea(area), maxLines: 1, overflow: TextOverflow.ellipsis);

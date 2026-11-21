@@ -329,6 +329,7 @@
   "mbSolo": "Solo",
   "mbSoloLigado": "Only {banda} playing",
   "mbSoloDesligado": "Solo off: all three bands play",
+  "mbCurvaCompressor": "Compressor curve: Threshold {limiar} dB, Ratio {razao}:1",
   "mbOff": "OFF",
   "pdSecao": "Pedal",
   "pdDica": "Global Anagram settings: they apply to every preset and are not stored in the preset. Changes are immediate.",

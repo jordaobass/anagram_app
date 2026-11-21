@@ -5,10 +5,13 @@ import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
+import 'package:anagram_app/apresentacao/tema/tokens.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -172,4 +175,71 @@ void main() {
     expect(_valor(c, 'lo_threshold'), greaterThan(-30));
     expect(_valor(c, 'mid_threshold'), -30);
   });
+
+  testWidgets('should_keep_the_threshold_line_on_its_value_down_to_minus_60_db_on_the_frequency_view', (tester) async {
+    final c = await _comBloco(tester, 'urn:darkglass:ignissor');
+    final linha = find.byKey(const ValueKey('traco-lo_threshold'));
+    final faixa = find.byKey(const ValueKey('faixa-frequencias'));
+    await _rolarAte(tester, linha);
+    final alturas = <double>[];
+    for (final db in [-40, -50, -60]) {
+      c.read(editorProvider.notifier).alterarParametro('lo_threshold', db, arrastando: false, posicao: _casa);
+      await tester.pumpAndSettle();
+      alturas.add(tester.getCenter(linha).dy);
+    }
+
+    expect(alturas[1], greaterThan(alturas[0]), reason: 'abaixo de −36 dB o traço não pode ficar preso na borda');
+    expect(alturas[2], greaterThan(alturas[1]));
+    final fundoDasRaias = tester.getRect(faixa).bottom - Medidas.alturaReguaFrequencias;
+    expect(alturas[2], closeTo(fundoDasRaias, 1), reason: 'o mínimo do Threshold fica no fundo da faixa');
+  });
+
+  testWidgets('should_follow_the_finger_one_to_one_when_the_threshold_line_is_dragged_low', (tester) async {
+    final c = await _comBloco(tester, 'urn:darkglass:ignissor');
+    final linha = find.byKey(const ValueKey('traco-lo_threshold'));
+    await _rolarAte(tester, linha);
+
+    final gesto = await tester.startGesture(tester.getCenter(linha));
+    await gesto.moveBy(const Offset(0, 30));
+    await tester.pump();
+    final antes = tester.getCenter(linha).dy;
+    await gesto.moveBy(const Offset(0, 20));
+    await tester.pump();
+    final depois = tester.getCenter(linha).dy;
+    await gesto.up();
+    await tester.pumpAndSettle();
+
+    expect(_valor(c, 'lo_threshold'), lessThan(-36));
+    expect(depois - antes, closeTo(20, 1), reason: 'o traço acompanha o ponteiro');
+  });
+
+  testWidgets('should_offer_a_48_dp_touch_target_when_the_line_and_the_crossover_handle_are_drawn_thin', (tester) async {
+    await _comBloco(tester, 'urn:darkglass:ignissor');
+    final linha = find.byKey(const ValueKey('traco-lo_threshold'));
+    await _rolarAte(tester, linha);
+
+    expect(tester.getSize(linha).height, greaterThanOrEqualTo(Medidas.alvoMinimo));
+    expect(tester.getSize(find.byKey(const ValueKey('alca-lomid_xo_freq'))).width, greaterThanOrEqualTo(Medidas.alvoMinimo));
+  });
+
+  testWidgets('should_step_the_threshold_line_with_the_screen_reader_and_the_arrow_keys', (tester) async {
+    final semantica = tester.ensureSemantics();
+    final c = await _comBloco(tester, 'urn:darkglass:ignissor');
+    final linha = find.byKey(const ValueKey('traco-lo_threshold'));
+    await _rolarAte(tester, linha);
+
+    final no = tester.getSemantics(find.descendant(of: linha, matching: find.byType(Semantics)).first);
+    tester.binding.pipelineOwner.semanticsOwner!.performAction(no.id, SemanticsAction.increase);
+    await tester.pumpAndSettle();
+    final depoisDoLeitor = _valor(c, 'lo_threshold')!;
+    expect(depoisDoLeitor, greaterThan(-30));
+
+    tester.widget<Focus>(find.descendant(of: linha, matching: find.byType(Focus)).first).focusNode!.requestFocus();
+    await tester.pump();
+    await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
+    await tester.pumpAndSettle();
+    expect(_valor(c, 'lo_threshold'), lessThan(depoisDoLeitor));
+    semantica.dispose();
+  });
 }
+

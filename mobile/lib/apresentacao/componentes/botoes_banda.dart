@@ -68,12 +68,7 @@ class BotoesBanda extends ConsumerWidget {
         texto: l.mbSolo,
         ligado: solo,
         cor: cor,
-        aoTocar: () => alterarEmGrupo(context, ref,
-            bloco: bloco,
-            definicao: definicao,
-            cena: cena,
-            valores: mutesDoSolo(banda, mutes, mutadas),
-            aviso: solo ? l.mbSoloDesligado : l.mbSoloLigado(l.mbNomeDaBanda(banda))),
+        aoTocar: () => _alternarSolo(context, ref, mutadas, emSolo: solo),
       ),
       // o Mute pinta de alerta quando corta a banda: é o estado que mais se
       // esquece ligado e deixa o grave sumido sem motivo aparente
@@ -85,6 +80,17 @@ class BotoesBanda extends ConsumerWidget {
         aoTocar: () => ControleNoPainel.alterar(ref, mudo, bloco)(muda ? 0 : 1, arrastando: false),
       ),
     ]);
+  }
+
+  /// Solo liga só esta banda (ou devolve as três), num passo só de desfazer.
+  void _alternarSolo(BuildContext context, WidgetRef ref, Map<BandaMultibanda, bool> mutadas, {required bool emSolo}) {
+    final l = AppLocalizations.of(context);
+    alterarEmGrupo(context, ref,
+        bloco: bloco,
+        definicao: definicao,
+        cena: cena,
+        valores: mutesDoSolo(banda, mutes, mutadas),
+        aviso: emSolo ? l.mbSoloDesligado : l.mbSoloLigado(l.mbNomeDaBanda(banda)));
   }
 
   Widget _alternar(

@@ -156,9 +156,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get importacaoIlegivel => 'Não foi possível ler o arquivo.';
 
   @override
-  String importacaoNaoEhPreset(String detalhe) {
-    return 'Arquivo não é um preset da Anagram: $detalhe';
-  }
+  String get importacaoNaoEhPreset =>
+      'Este arquivo não é um preset da Anagram.';
 
   @override
   String get exportacaoFalhou => 'Não foi possível gravar o arquivo.';
@@ -1182,6 +1181,11 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get mbSoloDesligado => 'Solo desligado: as três bandas soam';
+
+  @override
+  String mbCurvaCompressor(String limiar, String razao) {
+    return 'Curva do compressor: Threshold $limiar dB, Ratio $razao:1';
+  }
 
   @override
   String get mbOff => 'OFF';

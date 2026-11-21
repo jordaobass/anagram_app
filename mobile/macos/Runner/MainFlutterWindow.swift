@@ -11,6 +11,9 @@ class MainFlutterWindow: NSWindow {
     let windowFrame = self.frame
     self.contentViewController = flutterViewController
     self.setFrame(windowFrame, display: true)
+    // menor área útil: a mesma de Medidas.larguraMinimaJanela/alturaMinimaJanela
+    // (lib/apresentacao/tema/tokens.dart); abaixo disto a barra e o EQ estouram
+    self.contentMinSize = NSSize(width: 480, height: 480)
 
     RegisterGeneratedPlugins(registry: flutterViewController)
     canalHid = CanalHidAnagram(mensageiro: flutterViewController.engine.binaryMessenger)

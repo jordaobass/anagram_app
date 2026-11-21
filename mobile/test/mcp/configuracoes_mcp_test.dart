@@ -43,6 +43,30 @@ void main() {
     expect(servidor.tokenEmUso, hasLength(greaterThan(30)));
   });
 
+  testWidgets('should_restart_the_server_with_a_new_token_only_when_the_new_token_is_confirmed', (tester) async {
+    final servidor = ServidorMcpFalso();
+    await montarApp(tester, servidorMcp: servidor);
+    await abrirConfiguracoes(tester);
+    await tester.tap(find.byKey(const ValueKey('mcp-permitir')));
+    await tester.pumpAndSettle();
+    final primeiro = servidor.tokenEmUso;
+    final gerarNovo = find.byKey(const ValueKey('mcp-novo-token'));
+    await tester.ensureVisible(gerarNovo);
+
+    await tester.tap(gerarNovo);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('CANCELAR'));
+    await tester.pumpAndSettle();
+    expect(servidor.tokenEmUso, primeiro, reason: 'cancelar não troca o token que os clientes já usam');
+
+    await tester.tap(gerarNovo);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('confirmar-novo-token')));
+    await tester.pumpAndSettle();
+    expect(servidor.tokenEmUso, isNot(primeiro));
+    expect(servidor.tokenEmUso, hasLength(greaterThan(30)));
+  });
+
   testWidgets('should_explain_the_port_is_taken_when_the_server_cannot_listen', (tester) async {
     await montarApp(tester, servidorMcp: ServidorMcpFalso(ocupada: true));
     await abrirConfiguracoes(tester);

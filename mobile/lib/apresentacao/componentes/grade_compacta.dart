@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
+import '../../nucleo/catalogo/linha_paralela.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../tema/tokens.dart';
@@ -32,7 +33,7 @@ class GradeCompacta extends ConsumerWidget {
     return LayoutBuilder(builder: (context, restricoes) {
       final porFileira = casasPorFileira(restricoes.maxWidth);
       final largura = (restricoes.maxWidth - (porFileira - 1) * Espacos.s) / porFileira;
-      final comSplit = documento.blocosDaLinha(1).any((b) => b.uri.endsWith(':split'));
+      final comSplit = temLinhaParalela(documento);
       return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         for (final linha in const [1, 2])
           ..._linha(context, ref, documento, linha, _Fileiras(porFileira, largura,

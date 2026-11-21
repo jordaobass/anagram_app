@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
+import '../../nucleo/catalogo/linha_paralela.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../tema/tokens.dart';
@@ -61,9 +62,9 @@ class GradeBlocos extends ConsumerWidget {
   }
 
   static PintorLinhaSinal _pintor(DocumentoPreset documento, GeometriaGrade geometria) {
-    int? casaCom(String trecho) {
+    int? casaCom(String uri) {
       for (final bloco in documento.blocosDaLinha(1)) {
-        if (bloco.uri.endsWith(trecho)) return bloco.posicao.casa;
+        if (bloco.uri == uri) return bloco.posicao.casa;
       }
       return null;
     }
@@ -72,8 +73,8 @@ class GradeBlocos extends ConsumerWidget {
       geometria: geometria,
       ocupadas: [for (final bloco in documento.blocosDaLinha(1)) bloco.posicao.casa]..sort(),
       ocupadas2: [for (final bloco in documento.blocosDaLinha(2)) bloco.posicao.casa]..sort(),
-      casaSplit: casaCom(':split'),
-      casaMerge: casaCom(':merge'),
+      casaSplit: casaCom(uriSplit),
+      casaMerge: casaCom(uriMerge),
     );
   }
 

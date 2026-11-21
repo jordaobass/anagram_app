@@ -29,7 +29,12 @@ class CartaoBanda extends StatelessWidget {
         child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
           if (titulo != null || chave != null)
             Row(mainAxisSize: MainAxisSize.min, children: [
-              if (titulo != null) Text(titulo!.toUpperCase(), style: Theme.of(context).textTheme.titleSmall),
+              // janela estreita: o título encolhe antes de empurrar a chave para fora
+              if (titulo != null)
+                Flexible(
+                  child: Text(titulo!.toUpperCase(),
+                      maxLines: 1, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleSmall),
+                ),
               if (chave != null) ...[const SizedBox(width: Espacos.m), chave!],
             ]),
           const SizedBox(height: Espacos.s),

@@ -39,16 +39,12 @@ class EditorPrincipal extends ConsumerWidget {
           child: compacto ? const GradeCompacta() : const GradeBlocos(),
         ),
         SizedBox(height: espaco),
-        if (ref.watch(editorProvider.select((e) => e.blocoSelecionado != null)))
-          MolduraCase(
-            child: PainelParametros(
-              tamanhoKnob: compacto ? Medidas.knobCompacto : Medidas.knobAmplo,
-              compacto: compacto,
-            ),
-          )
-        else
-          const DicaMontarCadeia(),
+        if (ref.watch(editorProvider.select((e) => e.blocoSelecionado != null))) _painel() else const DicaMontarCadeia(),
       ],
     );
   }
+
+  Widget _painel() => MolduraCase(
+        child: PainelParametros(tamanhoKnob: compacto ? Medidas.knobCompacto : Medidas.knobAmplo, compacto: compacto),
+      );
 }
