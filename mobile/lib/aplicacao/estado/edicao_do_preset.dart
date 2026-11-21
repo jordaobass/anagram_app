@@ -87,15 +87,17 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
     state = state.copiar(selecionado: para);
   }
 
-  /// Manda o sinal também para a linha 2: Split depois do bloco selecionado
-  /// na linha 1 (sem seleção, depois do último) e Merge na casa livre
-  /// seguinte. Falso quando a linha 1 não tem duas casas livres.
-  Future<bool> criarLinhaParalela() async {
+  /// Manda o sinal também para a linha 2: Split na primeira casa livre
+  /// depois da casa [depoisDe] da linha 1 (sem ela, depois do bloco
+  /// selecionado na linha 1; sem seleção, depois do último) e Merge na casa
+  /// livre seguinte. Falso quando a linha 1 não tem duas casas livres.
+  Future<bool> criarLinhaParalela({int? depoisDe}) async {
     final atual = state.atual;
     final catalogo = ref.read(catalogoProvider).value;
     if (atual == null || catalogo == null) return false;
     final selecionado = state.selecionado;
-    final novo = comLinhaParalela(atual, catalogo, depoisDe: selecionado?.linha == 1 ? selecionado!.casa : null);
+    final referencia = depoisDe ?? (selecionado?.linha == 1 ? selecionado!.casa : null);
+    final novo = comLinhaParalela(atual, catalogo, depoisDe: referencia);
     if (novo == null) return false;
     await aplicarDocumento(novo);
     return true;

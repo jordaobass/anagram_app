@@ -848,4 +848,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eqShelfAgudos => 'High shelf';
+
+  @override
+  String get smFaixaCriar => '+ Add parallel row · Split, row 2 and Merge';
+
+  @override
+  String get smItemBiblioteca => 'Split + Merge (parallel row)';
+
+  @override
+  String get smItemBibliotecaDica =>
+      'Splits the signal at this position: row 2 plays in parallel and the Merge joins both.';
+
+  @override
+  String get smJaTemLinhaParalela =>
+      'This preset already has a parallel row (one Split and one Merge per preset).';
+
+  @override
+  String get smDividirDepois => 'Split the signal after this block';
+
+  @override
+  String get smOrdemInvalida =>
+      'The Split has to stay before the Merge on row 1.';
+
+  @override
+  String get smSoNaLinha1 => 'Split and Merge stay on row 1.';
 }

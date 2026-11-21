@@ -11,6 +11,7 @@ import '../../aplicacao/estado/controlador_editor.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../tema/tokens.dart';
+import 'faixa_linha_paralela.dart';
 import 'grade_blocos.dart';
 import 'pintor_linha_sinal.dart';
 import '../../l10n/app_localizations.dart';
@@ -45,6 +46,9 @@ class GradeCompacta extends ConsumerWidget {
     final tema = Theme.of(context).textTheme;
     final casas = casasVisiveis([for (final b in documento.blocosDaLinha(linha)) b.posicao.casa]);
     final geometria = GradeBlocos.geometriaDaCasa(fileiras.largura);
+    if (linha == 2 && mostraFaixaLinhaParalela(documento)) {
+      return [const SizedBox(height: Espacos.s), FaixaLinhaParalela(altura: geometria.alturaLinha)];
+    }
     return [
       Padding(
         padding: const EdgeInsets.only(top: Espacos.xs, bottom: Espacos.xs),

@@ -1509,6 +1509,48 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Shelf de agudos'**
   String get eqShelfAgudos;
+
+  /// No description provided for @smFaixaCriar.
+  ///
+  /// In pt, this message translates to:
+  /// **'+ Criar linha paralela · Split, linha 2 e Merge'**
+  String get smFaixaCriar;
+
+  /// No description provided for @smItemBiblioteca.
+  ///
+  /// In pt, this message translates to:
+  /// **'Split + Merge (linha paralela)'**
+  String get smItemBiblioteca;
+
+  /// No description provided for @smItemBibliotecaDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.'**
+  String get smItemBibliotecaDica;
+
+  /// No description provided for @smJaTemLinhaParalela.
+  ///
+  /// In pt, this message translates to:
+  /// **'Este preset já tem linha paralela (um Split e um Merge por preset).'**
+  String get smJaTemLinhaParalela;
+
+  /// No description provided for @smDividirDepois.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dividir o sinal depois deste bloco'**
+  String get smDividirDepois;
+
+  /// No description provided for @smOrdemInvalida.
+  ///
+  /// In pt, this message translates to:
+  /// **'O Split precisa ficar antes do Merge na linha 1.'**
+  String get smOrdemInvalida;
+
+  /// No description provided for @smSoNaLinha1.
+  ///
+  /// In pt, this message translates to:
+  /// **'Split e Merge ficam na linha 1.'**
+  String get smSoNaLinha1;
 }
 
 class _AppLocalizationsDelegate

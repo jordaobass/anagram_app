@@ -1,5 +1,6 @@
-// Mandar o sinal para a linha de baixo e juntar de volta antes da saída: o
-// botão embaixo da cadeia cria (ou remove) o Split e o Merge, ao vivo.
+// Mandar o sinal para a linha de baixo e juntar de volta antes da saída: a
+// faixa no lugar da linha 2 vazia cria o Split e o Merge, ao vivo; o botão
+// embaixo da cadeia remove.
 import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
@@ -19,12 +20,12 @@ int _tocadosAoVivo(ProviderContainer c) => (c.read(conexaoProvider.notifier).tra
     .length;
 
 void main() {
-  testWidgets('should_create_the_parallel_row_and_play_it_live_when_the_button_is_clicked', (tester) async {
+  testWidgets('should_create_the_parallel_row_and_play_it_live_when_the_row_two_strip_is_clicked', (tester) async {
     final container = await abrirDemonstracao(tester);
     await tocarNoSlot(tester, '02A');
     final antes = _tocadosAoVivo(container);
 
-    await tester.tap(find.byKey(const ValueKey('criar-linha-paralela')));
+    await tester.tap(find.byKey(const ValueKey('faixa-criar-linha-paralela')));
     await tester.pumpAndSettle();
 
     expect(_temNaLinha1(container, ':split'), isTrue);

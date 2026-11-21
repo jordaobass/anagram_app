@@ -234,5 +234,12 @@
   "eqPassaBaixas": "Low-pass",
   "eqShelfGraves": "Low shelf",
   "eqBanda": "Band {numero}",
-  "eqShelfAgudos": "High shelf"
+  "eqShelfAgudos": "High shelf",
+  "smFaixaCriar": "+ Add parallel row · Split, row 2 and Merge",
+  "smItemBiblioteca": "Split + Merge (parallel row)",
+  "smItemBibliotecaDica": "Splits the signal at this position: row 2 plays in parallel and the Merge joins both.",
+  "smJaTemLinhaParalela": "This preset already has a parallel row (one Split and one Merge per preset).",
+  "smDividirDepois": "Split the signal after this block",
+  "smOrdemInvalida": "The Split has to stay before the Merge on row 1.",
+  "smSoNaLinha1": "Split and Merge stay on row 1."
 }

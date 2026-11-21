@@ -853,4 +853,28 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eqShelfAgudos => 'Shelf de agudos';
+
+  @override
+  String get smFaixaCriar => '+ Crear fila paralela · Split, fila 2 y Merge';
+
+  @override
+  String get smItemBiblioteca => 'Split + Merge (fila paralela)';
+
+  @override
+  String get smItemBibliotecaDica =>
+      'Divide la señal en esta casilla: la fila 2 suena en paralelo y el Merge une las dos.';
+
+  @override
+  String get smJaTemLinhaParalela =>
+      'Este preset ya tiene fila paralela (un Split y un Merge por preset).';
+
+  @override
+  String get smDividirDepois => 'Dividir la señal después de este bloque';
+
+  @override
+  String get smOrdemInvalida =>
+      'El Split tiene que quedar antes del Merge en la fila 1.';
+
+  @override
+  String get smSoNaLinha1 => 'Split y Merge quedan en la fila 1.';
 }

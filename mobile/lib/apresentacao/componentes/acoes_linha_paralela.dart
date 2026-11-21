@@ -1,6 +1,8 @@
-// Embaixo da cadeia: mandar o sinal também para a linha 2 (Split e Merge na
-// linha 1) ou desfazer isso. À vista, e não num menu, porque é o jeito de
-// montar um caminho paralelo e a pessoa não acharia o Split na biblioteca.
+// Embaixo da cadeia: desfazer a linha paralela (Split, Merge e linha 2). Criar
+// tem três portas à vista (DECISOES M8): a faixa tracejada no lugar da linha 2
+// vazia, o par Split + Merge na biblioteca e o "Dividir o sinal depois deste
+// bloco" no menu. O botão de criar daqui só sobra quando a linha 2 tem blocos
+// sem Split (a faixa não aparece) — preset raro, que a pedaleira não toca.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,6 +22,7 @@ class AcoesLinhaParalela extends ConsumerWidget {
     if (documento == null) return const SizedBox.shrink();
     final l = AppLocalizations.of(context);
     final paralela = temLinhaParalela(documento);
+    if (!paralela && documento.blocosDaLinha(2).isEmpty) return const SizedBox.shrink();
     return Align(
       alignment: Alignment.centerRight,
       child: Tooltip(
@@ -29,18 +32,10 @@ class AcoesLinhaParalela extends ConsumerWidget {
           style: TextButton.styleFrom(foregroundColor: Cores.aluminioClaro),
           icon: Icon(paralela ? Icons.call_merge : Icons.call_split),
           label: Text(paralela ? l.lpRemover : l.lpCriar),
-          onPressed: ocupado ? null : () => paralela ? _remover(context, ref) : _criar(context, ref),
+          onPressed: ocupado ? null : () => paralela ? _remover(context, ref) : criarLinhaParalelaComAviso(context, ref),
         ),
       ),
     );
-  }
-
-  Future<void> _criar(BuildContext context, WidgetRef ref) async {
-    final mensageiro = ScaffoldMessenger.of(context);
-    final texto = AppLocalizations.of(context).lpSemEspaco;
-    if (!await ref.read(editorProvider.notifier).criarLinhaParalela()) {
-      mensageiro.showSnackBar(SnackBar(content: Text(texto)));
-    }
   }
 
   /// Com blocos na linha 2, pergunta: eles saem junto (sem a divisão, não
@@ -61,5 +56,16 @@ class AcoesLinhaParalela extends ConsumerWidget {
       if (!sim) return;
     }
     await controlador.removerLinhaParalela();
+  }
+}
+
+/// Cria a linha paralela (Split depois da casa [depoisDe] da linha 1, ou do
+/// bloco selecionado) e avisa quando a linha 1 não tem duas casas livres.
+/// Usada pela faixa da linha 2, pela biblioteca e pelo menu do bloco.
+Future<void> criarLinhaParalelaComAviso(BuildContext context, WidgetRef ref, {int? depoisDe}) async {
+  final mensageiro = ScaffoldMessenger.of(context);
+  final texto = AppLocalizations.of(context).lpSemEspaco;
+  if (!await ref.read(editorProvider.notifier).criarLinhaParalela(depoisDe: depoisDe)) {
+    mensageiro.showSnackBar(SnackBar(content: Text(texto)));
   }
 }
