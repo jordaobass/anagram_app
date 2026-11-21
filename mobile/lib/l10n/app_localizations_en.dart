@@ -848,4 +848,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eqShelfAgudos => 'High shelf';
+
+  @override
+  String get ttDicaMouse =>
+      'Rest the mouse on a control\'s name to see what it does to the sound';
+
+  @override
+  String get ttDicaToque =>
+      'Tap a control\'s name to see what it does to the sound';
 }

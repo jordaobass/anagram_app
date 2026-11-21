@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../dados/arquivos_preset.dart';
 import '../nucleo/catalogo/catalogo_blocos.dart';
 import '../nucleo/catalogo/definicao_bloco.dart';
+import '../nucleo/catalogo/explicacoes_parametros.dart';
 import '../nucleo/demonstracao/transporte_demonstracao.dart';
 import '../nucleo/midi/saida_midi.dart';
 import '../nucleo/modelo/presets_fabrica.dart';
@@ -23,6 +24,7 @@ abstract final class CaminhosAssets {
   /// Opcional, gerado do Darkglass Suite junto com a arte (DECISOES U18).
   static const fabrica = 'assets/blocos_terceiros/fabrica.json';
   static const demonstracao = 'assets/demonstracao/presets.json';
+  static const explicacoes = 'assets/explicacoes/parametros.json';
   static const exemplos = [1, 2, 13, 41];
   static String exemplo(int n) => 'assets/referencia/exemplos/$n.json';
 }
@@ -52,6 +54,17 @@ final presetsFabricaProvider = FutureProvider<PresetsDeFabrica>((ref) async {
   } on FlutterError catch (erro) {
     registro.i('presets de fábrica ausentes; sem área Fábrica (${erro.message})');
     return const PresetsDeFabrica.vazio();
+  }
+});
+
+/// O que cada parâmetro faz com o som (DECISOES TT1). Sem o arquivo, os
+/// controles só ficam sem a explicação — nada deixa de funcionar.
+final explicacoesProvider = FutureProvider<ExplicacoesParametros>((ref) async {
+  try {
+    return ExplicacoesParametros.doTexto(await ref.watch(pacoteAssetsProvider).loadString(CaminhosAssets.explicacoes));
+  } on FlutterError catch (erro) {
+    registro.w('explicações dos parâmetros ausentes (${erro.message})');
+    return ExplicacoesParametros.vazio;
   }
 });
 

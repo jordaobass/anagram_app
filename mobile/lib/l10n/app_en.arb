@@ -234,5 +234,7 @@
   "eqPassaBaixas": "Low-pass",
   "eqShelfGraves": "Low shelf",
   "eqBanda": "Band {numero}",
-  "eqShelfAgudos": "High shelf"
+  "eqShelfAgudos": "High shelf",
+  "ttDicaMouse": "Rest the mouse on a control's name to see what it does to the sound",
+  "ttDicaToque": "Tap a control's name to see what it does to the sound"
 }

@@ -696,5 +696,7 @@
       }
     }
   },
-  "eqShelfAgudos": "Shelf de agudos"
+  "eqShelfAgudos": "Shelf de agudos",
+  "ttDicaMouse": "Pare o mouse sobre o nome de um controle para saber o que ele faz com o som",
+  "ttDicaToque": "Toque no nome de um controle para saber o que ele faz com o som"
 }

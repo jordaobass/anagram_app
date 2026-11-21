@@ -157,6 +157,9 @@ abstract final class Medidas {
 
   /// Abaixo disto os botões de salvar descem para baixo da fita do preset.
   static const double larguraFaixaEmLinha = 880;
+
+  /// Balão da explicação do parâmetro: uma frase curta por linha legível.
+  static const double larguraExplicacao = 320;
 }
 
 abstract final class Quebras {
@@ -173,6 +176,9 @@ abstract final class Quebras {
 
 abstract final class Duracoes {
   static const curta = Duration(milliseconds: 150);
+
+  /// O mouse passa pelo rótulo a caminho do knob: só explica se parar nele.
+  static const esperaExplicacao = Duration(milliseconds: 500);
 }
 
 abstract final class Fontes {

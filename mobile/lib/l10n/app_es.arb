@@ -234,5 +234,7 @@
   "eqPassaBaixas": "Pasa bajos",
   "eqShelfGraves": "Shelf de graves",
   "eqBanda": "Banda {numero}",
-  "eqShelfAgudos": "Shelf de agudos"
+  "eqShelfAgudos": "Shelf de agudos",
+  "ttDicaMouse": "Deja el ratón sobre el nombre de un control para ver qué hace con el sonido",
+  "ttDicaToque": "Toca el nombre de un control para ver qué hace con el sonido"
 }

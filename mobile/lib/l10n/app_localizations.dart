@@ -1509,6 +1509,18 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Shelf de agudos'**
   String get eqShelfAgudos;
+
+  /// No description provided for @ttDicaMouse.
+  ///
+  /// In pt, this message translates to:
+  /// **'Pare o mouse sobre o nome de um controle para saber o que ele faz com o som'**
+  String get ttDicaMouse;
+
+  /// No description provided for @ttDicaToque.
+  ///
+  /// In pt, this message translates to:
+  /// **'Toque no nome de um controle para saber o que ele faz com o som'**
+  String get ttDicaToque;
 }
 
 class _AppLocalizationsDelegate

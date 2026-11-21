@@ -8,12 +8,14 @@ import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/provedores.dart';
 import '../../nucleo/catalogo/arranjo_parametros.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
+import '../../nucleo/catalogo/explicacoes_parametros.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'botao_giratorio.dart' show AoMudarValor;
 import 'cabecalho_bloco.dart';
 import 'cartao_banda.dart';
 import 'controle_parametro.dart';
+import 'explicacao_parametro.dart';
 import 'seletor_gabinete.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
@@ -38,30 +40,41 @@ class PainelParametros extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     final parametros = parametrosVisiveis(definicao, bloco, nomeEstimado: l.faixaEstimada);
     final cena = estado.atual!.cenaAtiva;
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      CabecalhoBloco(bloco: bloco, definicao: definicao, cena: cena),
-      const SizedBox(height: Espacos.m),
-      SeletorGabinete(bloco: bloco, definicao: definicao),
-      LayoutBuilder(builder: (context, restricoes) {
-        final grupos = agruparParametros(definicao, parametros);
-        if (grupos.length > 1) {
-          return Wrap(alignment: WrapAlignment.center, spacing: Espacos.m, runSpacing: Espacos.m, children: [
-            for (final g in grupos) _grupo(context, ref, g, bloco, definicao, cena),
-          ]);
-        }
-        final tamanho = _tamanhoQueCabe(restricoes.maxWidth, parametros.length);
-        return Wrap(
-          alignment: compacto ? WrapAlignment.spaceEvenly : WrapAlignment.center,
-          spacing: _vao,
-          runSpacing: Espacos.l,
-          children: [
-            if (parametros.isEmpty)
-              Text(l.semParametros, style: Theme.of(context).textTheme.bodyMedium),
-            for (final p in grupos.single.parametros) _controle(context, ref, p, bloco, definicao, cena, tamanho),
-          ],
-        );
-      }),
-    ]);
+    final explicacoes = ref.watch(explicacoesProvider).value ?? ExplicacoesParametros.vazio;
+    // o bloco aberto, para cada controle explicar o parâmetro DESTE pedal
+    return ContextoExplicacao(
+      uri: definicao.uri,
+      explicacoes: explicacoes,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        CabecalhoBloco(bloco: bloco, definicao: definicao, cena: cena),
+        const SizedBox(height: Espacos.m),
+        SeletorGabinete(bloco: bloco, definicao: definicao),
+        LayoutBuilder(
+            builder: (context, restricoes) =>
+                _controles(context, ref, restricoes.maxWidth, parametros, bloco, definicao, cena)),
+      ]),
+    );
+  }
+
+  Widget _controles(BuildContext context, WidgetRef ref, double largura, List<DefinicaoParametro> parametros,
+      BlocoPreset bloco, DefinicaoBloco definicao, int cena) {
+    final grupos = agruparParametros(definicao, parametros);
+    if (grupos.length > 1) {
+      return Wrap(alignment: WrapAlignment.center, spacing: Espacos.m, runSpacing: Espacos.m, children: [
+        for (final g in grupos) _grupo(context, ref, g, bloco, definicao, cena),
+      ]);
+    }
+    final tamanho = _tamanhoQueCabe(largura, parametros.length);
+    return Wrap(
+      alignment: compacto ? WrapAlignment.spaceEvenly : WrapAlignment.center,
+      spacing: _vao,
+      runSpacing: Espacos.l,
+      children: [
+        if (parametros.isEmpty)
+          Text(AppLocalizations.of(context).semParametros, style: Theme.of(context).textTheme.bodyMedium),
+        for (final p in grupos.single.parametros) _controle(context, ref, p, bloco, definicao, cena, tamanho),
+      ],
+    );
   }
 
   /// Uma banda do paramétrico: título com a chave dela e os knobs de nome
@@ -88,6 +101,7 @@ class PainelParametros extends ConsumerWidget {
     return ChaveParametro(
       chave: ValueKey('chave-${chave.simbolo}'),
       nome: chave.nome,
+      parametro: chave,
       ligado: ligada,
       cor: Cores.daFamilia(definicao.familia),
       texto: ligada ? l.valorLigado : l.valorDesligado,
