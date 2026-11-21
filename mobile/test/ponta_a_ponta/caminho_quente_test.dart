@@ -5,6 +5,7 @@ import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
 import 'package:anagram_app/nucleo/catalogo/formatador_valor.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:anagram_app/nucleo/protocolo/api_anagram.dart';
+import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -26,7 +27,8 @@ void main() {
         reason: 'a lista mostra o que cada slot guarda');
     await tester.tap(linha01C);
     await tester.pumpAndSettle();
-    expect(limiarEnviado(pedaleira.presetTocando), -30, reason: 'abrir o preset já o toca');
+    expect(container.read(editorProvider).slotNaPedaleira, isTrue,
+        reason: 'abrir o preset troca o slot da pedaleira por Program Change, que já o toca');
 
     final knob = find.byKey(const ValueKey('param-Threshold'));
     await tester.ensureVisible(knob);

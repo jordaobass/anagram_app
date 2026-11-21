@@ -97,7 +97,10 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
     if (preset.versaoMaisNova) {
       state = state.copiar(aviso: const AvisoFormatoMaisNovo());
     }
-    await enviarAoVivo(preset);
+    // com o slot trocado por Program Change, a pedaleira já tocou o preset
+    // salvo; mandar também o "temporário" (try) fazia a tela dela mostrar
+    // outro slot. Sem MIDI (ou em área não ativa), o temporário é a audição.
+    if (!trocou) await enviarAoVivo(preset);
   }
 
   void _recusarPresetTrocado(SlotPreset slot) {

@@ -23,6 +23,9 @@ void main() {
     final (container, pedaleira) = await conectarDemonstracao();
     final editor = container.read(editorProvider.notifier);
     await editor.abrirSlot(SlotPreset(3));
+    // a lista é relida em segundo plano depois da troca de slot; o ouvinte
+    // dela é legítimo enquanto a resposta não chega
+    await Future<void>.delayed(const Duration(milliseconds: 100));
     pedaleira.falharEnvio = true;
 
     final resultado = await editor.salvarComo(SlotPreset(3), confirmado: true);
