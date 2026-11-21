@@ -22,6 +22,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('tornar-area-ativa')), findsNothing);
-    expect(find.text('Estudo · ativa na pedaleira'), findsOneWidget);
+    expect(find.byKey(const ValueKey('etiqueta-area-ativa')), findsOneWidget, reason: 'a escolhida agora é a ativa');
   });
 }

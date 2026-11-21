@@ -88,7 +88,7 @@ class ControladorConexao extends Notifier<EstadoConexao> {
   Future<void> _conectar(TransporteAnagram transporte, {required bool demonstracao, SaidaMidiAnagram? midi}) async {
     await _soltar();
     final tentativa = ++_tentativa;
-    state = Conectando(transporte.descricao);
+    state = Conectando(transporte.descricao, demonstracao: demonstracao);
     try {
       await transporte.abrir();
     } on ErroAnagram catch (erro) {

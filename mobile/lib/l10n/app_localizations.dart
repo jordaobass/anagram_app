@@ -193,34 +193,34 @@ abstract class AppLocalizations {
   /// No description provided for @conexaoRespostaInvalida.
   ///
   /// In pt, this message translates to:
-  /// **'Resposta inesperada da pedaleira: {detalhe}'**
-  String conexaoRespostaInvalida(String detalhe);
+  /// **'Resposta inesperada da pedaleira.'**
+  String get conexaoRespostaInvalida;
 
   /// No description provided for @erroOcupada.
   ///
   /// In pt, this message translates to:
-  /// **'{detalhe}'**
-  String erroOcupada(String detalhe);
+  /// **'Outro programa está segurando a pedaleira.'**
+  String get erroOcupada;
 
   /// No description provided for @erroDesconectado.
   ///
   /// In pt, this message translates to:
-  /// **'{detalhe}'**
-  String erroDesconectado(String detalhe);
+  /// **'A pedaleira está desconectada.'**
+  String get erroDesconectado;
 
   /// No description provided for @erroSemResposta.
   ///
   /// In pt, this message translates to:
-  /// **'{detalhe}'**
-  String erroSemResposta(String detalhe);
+  /// **'A pedaleira não respondeu a tempo.'**
+  String get erroSemResposta;
 
   /// No description provided for @erroRespostaInvalida.
   ///
   /// In pt, this message translates to:
-  /// **'{detalhe}'**
-  String erroRespostaInvalida(String detalhe);
+  /// **'A pedaleira recusou ou mandou uma resposta inesperada.'**
+  String get erroRespostaInvalida;
 
-  /// No description provided for @erroOperacaoEmCurso.
+  /// Recusa do próprio app (ex. "Espere a gravação em curso terminar."): já é uma frase para a pessoa, não detalhe do protocolo.
   ///
   /// In pt, this message translates to:
   /// **'{detalhe}'**
@@ -229,8 +229,8 @@ abstract class AppLocalizations {
   /// No description provided for @erroSemSuporte.
   ///
   /// In pt, this message translates to:
-  /// **'{detalhe}'**
-  String erroSemSuporte(String detalhe);
+  /// **'Esta plataforma não consegue falar com a pedaleira.'**
+  String get erroSemSuporte;
 
   /// No description provided for @avisoDemonstracaoFalhou.
   ///
@@ -247,7 +247,7 @@ abstract class AppLocalizations {
   /// No description provided for @avisoPedaleiraDesconectada.
   ///
   /// In pt, this message translates to:
-  /// **'A pedaleira foi desconectada. Edições não salvas continuam no app.'**
+  /// **'A pedaleira foi desconectada. Conecte de novo para continuar de onde parou.'**
   String get avisoPedaleiraDesconectada;
 
   /// No description provided for @avisoFormatoMaisNovo.
@@ -265,8 +265,8 @@ abstract class AppLocalizations {
   /// No description provided for @avisoAreaNaoTrocou.
   ///
   /// In pt, this message translates to:
-  /// **'A pedaleira não trocou de área: {detalhe}'**
-  String avisoAreaNaoTrocou(String detalhe);
+  /// **'A pedaleira não trocou de área.'**
+  String get avisoAreaNaoTrocou;
 
   /// No description provided for @naoSalvou.
   ///
@@ -436,12 +436,6 @@ abstract class AppLocalizations {
   /// **'CONECTAR PELO USB'**
   String get conectarPeloUsb;
 
-  /// No description provided for @viaMeio.
-  ///
-  /// In pt, this message translates to:
-  /// **'Via {meio}.'**
-  String viaMeio(String meio);
-
   /// No description provided for @cancelar.
   ///
   /// In pt, this message translates to:
@@ -469,7 +463,7 @@ abstract class AppLocalizations {
   /// No description provided for @largarEdicoesTitulo.
   ///
   /// In pt, this message translates to:
-  /// **'Largar edições?'**
+  /// **'Descartar edições?'**
   String get largarEdicoesTitulo;
 
   /// No description provided for @largarEdicoesTexto.
@@ -487,7 +481,7 @@ abstract class AppLocalizations {
   /// No description provided for @largar.
   ///
   /// In pt, this message translates to:
-  /// **'LARGAR'**
+  /// **'DESCARTAR'**
   String get largar;
 
   /// No description provided for @origem.
@@ -519,12 +513,6 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'ÁREA'**
   String get area;
-
-  /// No description provided for @areaAtivaNaPedaleira.
-  ///
-  /// In pt, this message translates to:
-  /// **'{nome} · ativa na pedaleira'**
-  String areaAtivaNaPedaleira(String nome);
 
   /// No description provided for @largarAoTrocarArea.
   ///
@@ -691,7 +679,7 @@ abstract class AppLocalizations {
   /// No description provided for @slotVazioTexto.
   ///
   /// In pt, this message translates to:
-  /// **'Crie um preset aqui e cole blocos copiados de outro preset (toque longo numa casa).'**
+  /// **'Crie um preset aqui. Para trazer blocos de outro preset, use o ícone de copiar no painel do bloco e depois segure uma casa vazia para colar.'**
   String get slotVazioTexto;
 
   /// No description provided for @criarPresetAqui.
@@ -841,7 +829,7 @@ abstract class AppLocalizations {
   /// No description provided for @dicaMontarCadeia.
   ///
   /// In pt, this message translates to:
-  /// **'Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar, e arraste para mudar de lugar.'**
+  /// **'Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar; segure e arraste para mudar de lugar.'**
   String get dicaMontarCadeia;
 
   /// No description provided for @faixaEstimada.
@@ -1077,6 +1065,60 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Presets'**
   String get presets;
+
+  /// No description provided for @txDicaMontarCadeiaMouse.
+  ///
+  /// In pt, this message translates to:
+  /// **'Clique num + da grade para adicionar um efeito. Clique num bloco para ajustar e arraste para mudar de lugar.'**
+  String get txDicaMontarCadeiaMouse;
+
+  /// No description provided for @txSlotVazioMouse.
+  ///
+  /// In pt, this message translates to:
+  /// **'Crie um preset aqui. Para trazer blocos de outro preset, use o ícone de copiar no painel do bloco e depois clique com o botão direito numa casa vazia para colar.'**
+  String get txSlotVazioMouse;
+
+  /// No description provided for @txModoDemonstracaoTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Modo demonstração'**
+  String get txModoDemonstracaoTitulo;
+
+  /// No description provided for @txSemUsbAquiCurto.
+  ///
+  /// In pt, this message translates to:
+  /// **'Aqui o app não alcança a pedaleira pelo USB. Explore tudo no modo demonstração.'**
+  String get txSemUsbAquiCurto;
+
+  /// No description provided for @txPorQue.
+  ///
+  /// In pt, this message translates to:
+  /// **'POR QUÊ?'**
+  String get txPorQue;
+
+  /// No description provided for @txEntendi.
+  ///
+  /// In pt, this message translates to:
+  /// **'ENTENDI'**
+  String get txEntendi;
+
+  /// No description provided for @txAtiva.
+  ///
+  /// In pt, this message translates to:
+  /// **'ATIVA'**
+  String get txAtiva;
+
+  /// No description provided for @txAtivaNaPedaleiraDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Área ativa na pedaleira'**
+  String get txAtivaNaPedaleiraDica;
+
+  /// No description provided for @txEstadoAbrindoDemonstracao.
+  ///
+  /// In pt, this message translates to:
+  /// **'Abrindo a demonstração…'**
+  String get txEstadoAbrindoDemonstracao;
 }
 
 class _AppLocalizationsDelegate

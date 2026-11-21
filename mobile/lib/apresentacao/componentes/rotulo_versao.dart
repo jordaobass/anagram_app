@@ -1,5 +1,5 @@
-// Versão do app (e se o build traz a arte da pedaleira), discreta e sempre à
-// vista: na barra de cima e na tela Sobre.
+// Versão do app (e se o build traz a arte da pedaleira), na tela Sobre: é lá
+// que a pessoa confere qual build abriu.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

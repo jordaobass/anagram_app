@@ -11,6 +11,8 @@ import '../tema/tokens.dart';
 import 'cabecalho_bloco.dart';
 import 'controle_parametro.dart';
 import '../../l10n/app_localizations.dart';
+import '../textos.dart';
+import 'casa_arrastavel.dart' show arrastoComMouse;
 
 class PainelParametros extends ConsumerWidget {
   const PainelParametros({super.key, required this.tamanhoKnob, this.compacto = false});
@@ -97,7 +99,7 @@ class DicaMontarCadeia extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.all(Espacos.l),
         child: Text(
-          AppLocalizations.of(context).dicaMontarCadeia,
+          AppLocalizations.of(context).dicaMontarCadeiaPara(mouse: arrastoComMouse),
           key: const ValueKey('dica-montar-cadeia'),
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Cores.textoSecundario),
@@ -109,7 +111,9 @@ class DicaMontarCadeia extends StatelessWidget {
 /// com faixa estimada (marcada no nome por [nomeEstimado], no idioma da tela).
 List<DefinicaoParametro> parametrosVisiveis(DefinicaoBloco definicao, BlocoPreset bloco,
     {String Function(String simbolo) nomeEstimado = _nomeEstimadoPadrao}) {
-  if (definicao.parametros.isNotEmpty) return definicao.parametros;
+  // o parâmetro de papel "bypass" é o próprio liga/desliga do bloco (o botão
+  // LIGADO do cabeçalho); mostrado como controle, seria o mesmo botão duas vezes
+  if (definicao.parametros.isNotEmpty) return [for (final p in definicao.parametros) if (p.papel != 'bypass') p];
   return [
     for (final simbolo in bloco.simbolosGuardados)
       DefinicaoParametro(

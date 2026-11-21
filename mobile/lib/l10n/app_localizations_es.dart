@@ -66,29 +66,20 @@ class AppLocalizationsEs extends AppLocalizations {
       'La Anagram no respondió. Desconecta y vuelve a conectar el cable e inténtalo de nuevo.';
 
   @override
-  String conexaoRespostaInvalida(String detalhe) {
-    return 'Respuesta inesperada de la pedalera.';
-  }
+  String get conexaoRespostaInvalida => 'Respuesta inesperada de la pedalera.';
 
   @override
-  String erroOcupada(String detalhe) {
-    return 'Otro programa retiene la pedalera.';
-  }
+  String get erroOcupada => 'Otro programa retiene la pedalera.';
 
   @override
-  String erroDesconectado(String detalhe) {
-    return 'La pedalera está desconectada.';
-  }
+  String get erroDesconectado => 'La pedalera está desconectada.';
 
   @override
-  String erroSemResposta(String detalhe) {
-    return 'La pedalera no respondió a tiempo.';
-  }
+  String get erroSemResposta => 'La pedalera no respondió a tiempo.';
 
   @override
-  String erroRespostaInvalida(String detalhe) {
-    return 'La pedalera rechazó o envió una respuesta inesperada.';
-  }
+  String get erroRespostaInvalida =>
+      'La pedalera rechazó o envió una respuesta inesperada.';
 
   @override
   String erroOperacaoEmCurso(String detalhe) {
@@ -96,9 +87,8 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String erroSemSuporte(String detalhe) {
-    return 'Esta plataforma no puede comunicarse con la pedalera.';
-  }
+  String get erroSemSuporte =>
+      'Esta plataforma no puede comunicarse con la pedalera.';
 
   @override
   String get avisoDemonstracaoFalhou => 'No se pudo abrir la demostración.';
@@ -110,7 +100,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get avisoPedaleiraDesconectada =>
-      'La pedalera se desconectó. Los cambios sin guardar siguen en la app.';
+      'La pedalera se desconectó. Conéctala de nuevo para seguir donde lo dejaste.';
 
   @override
   String get avisoFormatoMaisNovo =>
@@ -122,9 +112,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String avisoAreaNaoTrocou(String detalhe) {
-    return 'La pedalera no cambió de área.';
-  }
+  String get avisoAreaNaoTrocou => 'La pedalera no cambió de área.';
 
   @override
   String naoSalvou(String motivo) {
@@ -226,11 +214,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get conectarPeloUsb => 'CONECTAR POR USB';
 
   @override
-  String viaMeio(String meio) {
-    return 'Vía $meio.';
-  }
-
-  @override
   String get cancelar => 'CANCELAR';
 
   @override
@@ -274,11 +257,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get area => 'ÁREA';
-
-  @override
-  String areaAtivaNaPedaleira(String nome) {
-    return '$nome · activa en la pedalera';
-  }
 
   @override
   String largarAoTrocarArea(String nome) {
@@ -384,7 +362,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get slotVazioTexto =>
-      'Crea un preset aquí y pega bloques copiados de otro preset (mantén pulsada una casilla).';
+      'Crea un preset aquí. Para traer bloques de otro preset, usa el ícono de copiar en el panel del bloque y luego mantén pulsada una casilla vacía para pegar.';
 
   @override
   String get criarPresetAqui => 'CREAR PRESET AQUÍ';
@@ -471,7 +449,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get dicaMontarCadeia =>
-      'Toca un + de la cuadrícula para agregar un efecto. Toca un bloque para ajustarlo y arrástralo para moverlo.';
+      'Toca un + de la cuadrícula para agregar un efecto. Toca un bloque para ajustarlo; mantenlo pulsado y arrástralo para moverlo.';
 
   @override
   String faixaEstimada(String simbolo) {
@@ -617,4 +595,34 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get presets => 'Presets';
+
+  @override
+  String get txDicaMontarCadeiaMouse =>
+      'Haz clic en un + de la cuadrícula para agregar un efecto. Haz clic en un bloque para ajustarlo y arrástralo para moverlo.';
+
+  @override
+  String get txSlotVazioMouse =>
+      'Crea un preset aquí. Para traer bloques de otro preset, usa el ícono de copiar en el panel del bloque y luego haz clic derecho en una casilla vacía para pegar.';
+
+  @override
+  String get txModoDemonstracaoTitulo => 'Modo demostración';
+
+  @override
+  String get txSemUsbAquiCurto =>
+      'Aquí la app no llega a la pedalera por USB. Explora todo en el modo demostración.';
+
+  @override
+  String get txPorQue => '¿POR QUÉ?';
+
+  @override
+  String get txEntendi => 'ENTENDIDO';
+
+  @override
+  String get txAtiva => 'ACTIVA';
+
+  @override
+  String get txAtivaNaPedaleiraDica => 'Área activa en la pedalera';
+
+  @override
+  String get txEstadoAbrindoDemonstracao => 'Abriendo la demostración…';
 }

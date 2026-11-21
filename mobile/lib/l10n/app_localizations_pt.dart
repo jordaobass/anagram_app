@@ -66,29 +66,20 @@ class AppLocalizationsPt extends AppLocalizations {
       'A Anagram não respondeu. Desligue e ligue o cabo e tente de novo.';
 
   @override
-  String conexaoRespostaInvalida(String detalhe) {
-    return 'Resposta inesperada da pedaleira: $detalhe';
-  }
+  String get conexaoRespostaInvalida => 'Resposta inesperada da pedaleira.';
 
   @override
-  String erroOcupada(String detalhe) {
-    return '$detalhe';
-  }
+  String get erroOcupada => 'Outro programa está segurando a pedaleira.';
 
   @override
-  String erroDesconectado(String detalhe) {
-    return '$detalhe';
-  }
+  String get erroDesconectado => 'A pedaleira está desconectada.';
 
   @override
-  String erroSemResposta(String detalhe) {
-    return '$detalhe';
-  }
+  String get erroSemResposta => 'A pedaleira não respondeu a tempo.';
 
   @override
-  String erroRespostaInvalida(String detalhe) {
-    return '$detalhe';
-  }
+  String get erroRespostaInvalida =>
+      'A pedaleira recusou ou mandou uma resposta inesperada.';
 
   @override
   String erroOperacaoEmCurso(String detalhe) {
@@ -96,9 +87,8 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String erroSemSuporte(String detalhe) {
-    return '$detalhe';
-  }
+  String get erroSemSuporte =>
+      'Esta plataforma não consegue falar com a pedaleira.';
 
   @override
   String get avisoDemonstracaoFalhou =>
@@ -111,7 +101,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get avisoPedaleiraDesconectada =>
-      'A pedaleira foi desconectada. Edições não salvas continuam no app.';
+      'A pedaleira foi desconectada. Conecte de novo para continuar de onde parou.';
 
   @override
   String get avisoFormatoMaisNovo =>
@@ -123,9 +113,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String avisoAreaNaoTrocou(String detalhe) {
-    return 'A pedaleira não trocou de área: $detalhe';
-  }
+  String get avisoAreaNaoTrocou => 'A pedaleira não trocou de área.';
 
   @override
   String naoSalvou(String motivo) {
@@ -227,11 +215,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get conectarPeloUsb => 'CONECTAR PELO USB';
 
   @override
-  String viaMeio(String meio) {
-    return 'Via $meio.';
-  }
-
-  @override
   String get cancelar => 'CANCELAR';
 
   @override
@@ -248,7 +231,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get fecharAviso => 'Fechar aviso';
 
   @override
-  String get largarEdicoesTitulo => 'Largar edições?';
+  String get largarEdicoesTitulo => 'Descartar edições?';
 
   @override
   String largarEdicoesTexto(String nome) {
@@ -259,7 +242,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get continuarEditando => 'CONTINUAR EDITANDO';
 
   @override
-  String get largar => 'LARGAR';
+  String get largar => 'DESCARTAR';
 
   @override
   String get origem => 'ORIGEM';
@@ -275,11 +258,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get area => 'ÁREA';
-
-  @override
-  String areaAtivaNaPedaleira(String nome) {
-    return '$nome · ativa na pedaleira';
-  }
 
   @override
   String largarAoTrocarArea(String nome) {
@@ -386,7 +364,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get slotVazioTexto =>
-      'Crie um preset aqui e cole blocos copiados de outro preset (toque longo numa casa).';
+      'Crie um preset aqui. Para trazer blocos de outro preset, use o ícone de copiar no painel do bloco e depois segure uma casa vazia para colar.';
 
   @override
   String get criarPresetAqui => 'CRIAR PRESET AQUI';
@@ -472,7 +450,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get dicaMontarCadeia =>
-      'Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar, e arraste para mudar de lugar.';
+      'Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar; segure e arraste para mudar de lugar.';
 
   @override
   String faixaEstimada(String simbolo) {
@@ -618,4 +596,34 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get presets => 'Presets';
+
+  @override
+  String get txDicaMontarCadeiaMouse =>
+      'Clique num + da grade para adicionar um efeito. Clique num bloco para ajustar e arraste para mudar de lugar.';
+
+  @override
+  String get txSlotVazioMouse =>
+      'Crie um preset aqui. Para trazer blocos de outro preset, use o ícone de copiar no painel do bloco e depois clique com o botão direito numa casa vazia para colar.';
+
+  @override
+  String get txModoDemonstracaoTitulo => 'Modo demonstração';
+
+  @override
+  String get txSemUsbAquiCurto =>
+      'Aqui o app não alcança a pedaleira pelo USB. Explore tudo no modo demonstração.';
+
+  @override
+  String get txPorQue => 'POR QUÊ?';
+
+  @override
+  String get txEntendi => 'ENTENDI';
+
+  @override
+  String get txAtiva => 'ATIVA';
+
+  @override
+  String get txAtivaNaPedaleiraDica => 'Área ativa na pedaleira';
+
+  @override
+  String get txEstadoAbrindoDemonstracao => 'Abrindo a demonstração…';
 }

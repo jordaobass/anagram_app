@@ -1,6 +1,7 @@
-// Escolha do idioma na tela Sobre: "Sistema" segue o idioma do aparelho; os
-// outros fixam um. Cada nome aparece no próprio idioma, para quem caiu num
-// idioma que não lê conseguir voltar.
+// Escolha do idioma: as pílulas na tela Sobre e um menu compacto (globo) na
+// tela de conectar, para dar para trocar antes mesmo de entrar. "Sistema"
+// segue o idioma do aparelho; os outros fixam um. Cada nome aparece no próprio
+// idioma, para quem caiu num idioma que não lê conseguir voltar.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,14 +9,14 @@ import '../../aplicacao/idioma.dart';
 import '../../l10n/app_localizations.dart';
 import '../tema/tokens.dart';
 
+const _nomes = {
+  IdiomaApp.portugues: 'Português',
+  IdiomaApp.ingles: 'English',
+  IdiomaApp.espanhol: 'Español',
+};
+
 class SeletorIdioma extends ConsumerWidget {
   const SeletorIdioma({super.key});
-
-  static const _nomes = {
-    IdiomaApp.portugues: 'Português',
-    IdiomaApp.ingles: 'English',
-    IdiomaApp.espanhol: 'Español',
-  };
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,4 +36,30 @@ class SeletorIdioma extends ConsumerWidget {
         selected: selecionado,
         onSelected: (_) => aoTocar(),
       );
+}
+
+/// Globo com o idioma atual; abre a mesma lista das pílulas.
+class MenuIdioma extends ConsumerWidget {
+  const MenuIdioma({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final escolhido = ref.watch(idiomaProvider);
+    final l = AppLocalizations.of(context);
+    final atual = escolhido == null ? l.idiomaDoSistema : _nomes[escolhido]!;
+    return PopupMenuButton<IdiomaApp?>(
+      key: const ValueKey('menu-idioma'),
+      tooltip: l.idioma,
+      onSelected: ref.read(idiomaProvider.notifier).escolher,
+      itemBuilder: (_) => [
+        PopupMenuItem(value: null, child: Text(l.idiomaDoSistema)),
+        for (final MapEntry(key: idioma, value: nome) in _nomes.entries) PopupMenuItem(value: idioma, child: Text(nome)),
+      ],
+      child: Row(mainAxisSize: MainAxisSize.min, children: [
+        const Icon(Icons.language, color: Cores.textoSecundario),
+        const SizedBox(width: Espacos.xs),
+        Text(atual, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Cores.textoSecundario)),
+      ]),
+    );
+  }
 }

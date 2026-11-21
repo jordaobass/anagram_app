@@ -13,8 +13,12 @@ final class SemConexao extends EstadoConexao {
 }
 
 final class Conectando extends EstadoConexao {
-  const Conectando(this.meio);
+  const Conectando(this.meio, {this.demonstracao = false});
   final String meio;
+
+  /// Abrindo a pedaleira simulada: a tela diz "abrindo a demonstração", não
+  /// "conectando" a um USB que não existe.
+  final bool demonstracao;
 }
 
 final class Conectada extends EstadoConexao {
