@@ -2,8 +2,9 @@
 
 Registro único de decisões (aberta / decidida). Formato: **estado · data · onde aterrissou**.
 Fatos sobre o protocolo vêm do código do [anagram-tone-maker](https://github.com/basster6/anagram-tone-maker)
-(MIT, conferido em 2026-11-05) e de `pesquisa-hx-stomp.md` (com fontes). **Nada foi testado com a pedaleira real
-ainda**: o que depende do aparelho está marcado como hipótese.
+(MIT, conferido em 2026-11-05) e de `pesquisa-hx-stomp.md` (com fontes). **Primeiro teste com a pedaleira real em
+2026-11-21, pelo usuário, no Windows: "está funcionando corretamente"** (ver P7). O que ainda não foi
+conferido no aparelho continua marcado como hipótese.
 
 ## Produto e escopo
 
@@ -50,6 +51,7 @@ ainda**: o que depende do aparelho está marcado como hipótese.
 | P4 | Bloco fora do catálogo de fábrica (Marketplace): mostra o fim da uri e os parâmetros guardados com faixa **estimada** (marcada no nome). `get_plugin_info` já está na API, mas ainda não é chamado | aberta | 2026-11-05 | `parametrosVisiveis` |
 | P5 | Enquanto o catálogo não carregou, o painel de parâmetros espera (não mostra faixa chutada) | decidida | 2026-11-05 | `PainelParametros` |
 
+| P7 | **Teste com a pedaleira real (Windows, 2026-11-21):** o usuário conectou a Anagram no PC dele com a 0.1.5 e relatou que o app "está funcionando corretamente". Ainda sem confirmação item a item de: Program Change 1-based (D4), "Tornar ativa" (U11), áreas Factory (U12), blocos adicionados e movidos (M4) e controles soltos ao remover (M5) | decidida (usuário) | 2026-11-21 | — |
 ## Plataformas
 
 | # | Decisão | Estado | Data | Onde |
