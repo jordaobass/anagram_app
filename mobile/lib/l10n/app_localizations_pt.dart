@@ -223,6 +223,11 @@ class AppLocalizationsPt extends AppLocalizations {
   String get cancelar => 'CANCELAR';
 
   @override
+  String versaoAppNaBarra(String versao) {
+    return 'App v$versao';
+  }
+
+  @override
   String versaoApp(String versao) {
     return 'v$versao';
   }

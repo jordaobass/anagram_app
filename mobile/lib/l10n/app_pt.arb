@@ -143,6 +143,11 @@
   "abrirDemonstracao": "ABRIR DEMONSTRAÇÃO",
   "conectarPeloUsb": "CONECTAR PELO USB",
   "cancelar": "CANCELAR",
+  "versaoAppNaBarra": "App v{versao}",
+  "@versaoAppNaBarra": {
+    "description": "Versão do app na barra de cima, ao lado do firmware",
+    "placeholders": { "versao": { "type": "String" } }
+  },
   "versaoApp": "v{versao}",
   "@versaoApp": {
     "placeholders": {

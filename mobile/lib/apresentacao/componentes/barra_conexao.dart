@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../aplicacao/versao_app.dart';
+
 import '../../aplicacao/estado/controlador_conexao.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/estado/estado_conexao.dart';
@@ -33,6 +35,9 @@ class BarraConexao extends ConsumerWidget {
       child: Row(
         children: [
           Flexible(child: _Estado(cor: cor, texto: texto, linhas: compacta ? 2 : 1)),
+          // a versão do app ao lado do firmware: ao relatar um problema, as duas
+          // estão à vista (no celular a barra não comporta, fica no Sobre)
+          if (!compacta) const _VersaoNaBarra(),
           const SizedBox(width: Espacos.s),
           if (conexao is Conectada) _AoVivo(compacta: compacta),
           if (conexao is Conectada)
@@ -69,6 +74,25 @@ class BarraConexao extends ConsumerWidget {
       (Cores.ledLigado, l.estadoConectada(TextosDoApp.meioVisivel(meio), firmware)),
     FalhaDeConexao() => (Cores.erro, l.estadoFalha),
   };
+}
+
+class _VersaoNaBarra extends ConsumerWidget {
+  const _VersaoNaBarra();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final (:versao, comArte: _) = ref.watch(rotuloVersaoProvider);
+    if (versao.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(left: Espacos.m),
+      child: Text(
+        AppLocalizations.of(context).versaoAppNaBarra(versao),
+        key: const ValueKey('versao-app-barra'),
+        maxLines: 1,
+        style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.textoSecundario),
+      ),
+    );
+  }
 }
 
 /// LED + frase do estado, anunciada a leitores de tela quando muda.

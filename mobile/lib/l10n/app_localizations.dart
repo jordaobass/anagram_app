@@ -448,6 +448,12 @@ abstract class AppLocalizations {
   /// **'CANCELAR'**
   String get cancelar;
 
+  /// Versão do app na barra de cima, ao lado do firmware
+  ///
+  /// In pt, this message translates to:
+  /// **'App v{versao}'**
+  String versaoAppNaBarra(String versao);
+
   /// No description provided for @versaoApp.
   ///
   /// In pt, this message translates to:

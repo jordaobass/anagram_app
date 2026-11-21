@@ -1,7 +1,8 @@
 // Coerência da interface: o que a pessoa vê tem de ser o mesmo em qualquer
 // tela e idioma — erro perto da ação, sem nome de biblioteca USB, idioma ao
-// alcance antes de conectar, área ativa sem frase cortada, versão só no Sobre
-// e nenhum detalhe técnico do protocolo nos avisos.
+// alcance antes de conectar, área ativa sem frase cortada, versão do app na barra
+// e nenhum detalhe técnico do protocolo nos avisos. A versão do app fica na
+// barra, ao lado do firmware (pedido do dono), e também no Sobre.
 import 'dart:typed_data';
 
 import 'package:anagram_app/aplicacao/provedores.dart';
@@ -96,14 +97,14 @@ void main() {
     expect(find.textContaining('ativa na pedaleira'), findsNothing, reason: 'o nome não pode carregar a frase e cortar');
   });
 
-  testWidgets('should_show_the_version_only_in_about_when_connected', (tester) async {
+  testWidgets('should_show_the_app_version_next_to_the_connection_state_on_the_main_screen', (tester) async {
+    // pedido do dono: firmware e versão do app lado a lado na tela principal
     await abrirDemonstracao(tester);
-    expect(find.byKey(const ValueKey('versao-app')), findsNothing, reason: 'a barra de cima já tem informação demais');
 
-    await tester.tap(find.byIcon(Icons.info_outline));
-    await tester.pumpAndSettle();
-
-    expect(find.byKey(const ValueKey('versao-app')), findsOneWidget);
+    final versao = find.byKey(const ValueKey('versao-app-barra'));
+    expect(versao, findsOneWidget);
+    expect(tester.widget<Text>(versao).data, startsWith('App v'));
+    expect(tester.getTopLeft(versao).dx, greaterThan(tester.getTopLeft(find.byKey(const ValueKey('led-conexao'))).dx));
   });
 
   test('should_keep_protocol_details_out_of_portuguese_messages_when_an_operation_fails', () {
