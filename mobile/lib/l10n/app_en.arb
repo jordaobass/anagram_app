@@ -357,5 +357,9 @@
   "pdFalhaLer": "Could not read the pedal settings.",
   "pdTentarDeNovo": "Try again",
   "pdErroGravar": "The pedal did not accept the last change. The values shown are the ones it has now.",
-  "pdPendentes": "Not yet adjustable from the app: mixer Master, Mute and Link, and the instrument names."
+  "pdPendentes": "Not yet adjustable from the app: mixer Master, Mute and Link, and the instrument names.",
+  "registroSecao": "Log for support",
+  "registroOnde": "The app keeps a log of what happens in this file:",
+  "registroCopiar": "Copy log",
+  "registroCopiado": "Log copied. Paste it in the GitHub issue along with what happened."
 }
