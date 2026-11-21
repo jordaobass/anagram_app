@@ -2098,16 +2098,64 @@ abstract class AppLocalizations {
   /// **'Global EQ'**
   String get pdGlobalEq;
 
-  /// No description provided for @pdEqPlano.
+  /// No description provided for @pdEqModoGanho.
   ///
   /// In pt, this message translates to:
-  /// **'Plano'**
-  String get pdEqPlano;
+  /// **'Ganho'**
+  String get pdEqModoGanho;
+
+  /// No description provided for @pdEqModoFrequencia.
+  ///
+  /// In pt, this message translates to:
+  /// **'Frequência'**
+  String get pdEqModoFrequencia;
+
+  /// No description provided for @pdEqModoLargura.
+  ///
+  /// In pt, this message translates to:
+  /// **'Largura'**
+  String get pdEqModoLargura;
+
+  /// No description provided for @pdEqInputGain.
+  ///
+  /// In pt, this message translates to:
+  /// **'Input Gain'**
+  String get pdEqInputGain;
+
+  /// No description provided for @pdEqReset.
+  ///
+  /// In pt, this message translates to:
+  /// **'Reset'**
+  String get pdEqReset;
+
+  /// No description provided for @pdEqResetTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Voltar o Global EQ ao padrão?'**
+  String get pdEqResetTitulo;
+
+  /// No description provided for @pdEqResetTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'As 6 bandas voltam a 35 Hz, 160 Hz, 397 Hz, 1,25 kHz, 2,5 kHz e 9,63 kHz, com ganho 0 e a largura de fábrica. Dá para desfazer logo depois.'**
+  String get pdEqResetTexto;
+
+  /// No description provided for @pdEqResetConfirmar.
+  ///
+  /// In pt, this message translates to:
+  /// **'VOLTAR AO PADRÃO'**
+  String get pdEqResetConfirmar;
+
+  /// No description provided for @pdEqResetFeito.
+  ///
+  /// In pt, this message translates to:
+  /// **'Global EQ de volta ao padrão.'**
+  String get pdEqResetFeito;
 
   /// No description provided for @pdEqDica.
   ///
   /// In pt, this message translates to:
-  /// **'Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho.'**
+  /// **'Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho. Os knobs mexem no que o modo escolhido mostra.'**
   String get pdEqDica;
 
   /// No description provided for @pdEntrada.
@@ -2167,7 +2215,7 @@ abstract class AppLocalizations {
   /// No description provided for @pdPendentes.
   ///
   /// In pt, this message translates to:
-  /// **'Ainda não dá para mudar pelo app: Master, Mute e Link do mixer, as bandas 2 a 5 e a largura do Global EQ e os nomes dos instrumentos.'**
+  /// **'Ainda não dá para mudar pelo app: Master, Mute e Link do mixer e os nomes dos instrumentos.'**
   String get pdPendentes;
 }
 
