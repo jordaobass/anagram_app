@@ -36,6 +36,8 @@ monta um timbre ouvindo cada ajuste e grava sem medo de sobrescrever o slot erra
 ## Positioning
 
 Gratuito e open source (MIT, autor jordao_bass), sem anúncios, compras no app nem coleta de dados.
+A única chamada de rede é a verificação opcional de versão nova no GitHub, que não envia dado
+nenhum e pode ser desligada.
 
 Editor nativo multiplataforma (desktop, Android, web) que fala o protocolo HID da própria
 pedaleira; não é um site preso a um navegador nem o app oficial.

@@ -10,8 +10,9 @@ multiplataforma.
 Interface em **português, inglês e espanhol**: segue o idioma do sistema e pode ser trocada na tela
 Sobre (ícone ⓘ). Os textos ficam em `lib/l10n/app_*.arb`; o português é o modelo.
 
-Sem anúncios, sem compras no app, sem telemetria e sem coleta de dados: o app só conversa com a
-pedaleira pelo USB e não faz nenhuma chamada de rede.
+Sem anúncios, sem compras no app, sem telemetria e sem coleta de dados: o app conversa com a
+pedaleira pelo USB, e a única chamada de rede é a verificação opcional de versão nova no GitHub
+(só no computador, desligável nas Configurações; ver DECISOES AV1).
 
 Autor: **jordao_bass** · Licença: [MIT](../LICENSE) · Publicado nas lojas por Nexttag.
 

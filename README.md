@@ -19,7 +19,9 @@ One Flutter codebase for macOS, Windows, Linux, Android and the browser (Chrome/
 > **Unofficial app, not affiliated with Darkglass Electronics.** Anagram is a trademark of its
 > manufacturer; the block art is used with Darkglass's permission.
 
-No ads, no telemetry and no network calls: the app only talks to the pedal over USB.
+No ads and no telemetry. The app talks to the pedal over USB; its only network call is an optional
+check on launch (Windows, macOS and Linux) that asks GitHub for the latest release, sends none of
+your data and can be turned off in **Settings › Updates**.
 
 The interface is in **English, Portuguese and Spanish** (it follows your system language; you can
 change it in **Settings**, the gear icon).

@@ -19,7 +19,9 @@ lista de presets por banco, cadeia de blocos com a arte da pedaleira, knobs gran
 > **App não oficial, sem vínculo com a Darkglass Electronics.** Anagram é marca do fabricante; a arte
 > dos blocos é usada com autorização da Darkglass.
 
-Sem anúncios, sem telemetria e sem chamadas de rede: o app só conversa com a pedaleira pelo USB.
+Sem anúncios e sem telemetria. O app conversa com a pedaleira pelo USB; a única chamada de rede é
+uma verificação opcional ao abrir (Windows, macOS e Linux) que pergunta ao GitHub qual é a última
+versão, não envia nenhum dado seu e pode ser desligada em **Configurações › Atualizações**.
 
 Interface em **português, inglês e espanhol** (segue o idioma do sistema; dá para trocar em
 **Configurações**, na engrenagem).
