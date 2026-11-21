@@ -64,9 +64,20 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
   Widget _cabecalho(BuildContext context) {
     final tema = Theme.of(context).textTheme;
     final l = AppLocalizations.of(context);
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(l.adicionarEfeito, style: tema.titleLarge),
-      Text(l.linhaCasa(widget.posicao.linha, widget.posicao.casa), style: tema.bodySmall),
+    // o X fecha sem escolher: tocar fora e o Esc não se descobrem
+    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Expanded(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(l.adicionarEfeito, style: tema.titleLarge),
+          Text(l.linhaCasa(widget.posicao.linha, widget.posicao.casa), style: tema.bodySmall),
+        ]),
+      ),
+      IconButton(
+        key: const ValueKey('fechar-biblioteca'),
+        tooltip: l.uiFecharBiblioteca,
+        icon: const Icon(Icons.close),
+        onPressed: () => Navigator.pop(context),
+      ),
     ]);
   }
 

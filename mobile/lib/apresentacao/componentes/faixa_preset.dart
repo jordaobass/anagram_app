@@ -47,22 +47,39 @@ class FaixaPreset extends ConsumerWidget {
     });
   }
 
-  /// Slot em estêncil; no layout de uma coluna, abre a lista.
+  /// Slot em estêncil; no layout de uma coluna, abre a lista. Ali ele leva
+  /// "PRESETS ▾" embaixo: trocar de preset é a tarefa do palco, e um número
+  /// sozinho não diz que é tocável.
   Widget _slot(BuildContext context, EstadoEditor estado) {
     final l = AppLocalizations.of(context);
+    final tema = Theme.of(context).textTheme;
+    final rotulo = Text(estado.slot?.rotulo ?? '--', style: tema.displaySmall);
     return Semantics(
         button: aoTocarSlot != null,
         label: '${l.slotSemantica(estado.slot?.rotulo ?? l.slotNovo)}${aoTocarSlot != null ? l.abrirListaSemantica : ''}',
         child: InkWell(
           key: const ValueKey('abrir-lista'),
           onTap: aoTocarSlot,
+          borderRadius: BorderRadius.circular(Raios.controle),
           child: Padding(
             padding: const EdgeInsets.all(Espacos.xs),
-            child: Text(estado.slot?.rotulo ?? '--', style: Theme.of(context).textTheme.displaySmall),
+            child: aoTocarSlot == null
+                ? rotulo
+                : Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+                    rotulo,
+                    _abrirPresets(l, tema),
+                  ]),
           ),
         ),
       );
   }
+
+  static Widget _abrirPresets(AppLocalizations l, TextTheme tema) => ExcludeSemantics(
+        child: Row(key: const ValueKey('rotulo-abrir-presets'), mainAxisSize: MainAxisSize.min, children: [
+          Text(l.uiPresets, style: tema.labelMedium?.copyWith(color: Cores.aluminioClaro)),
+          const Icon(Icons.arrow_drop_down, color: Cores.aluminioClaro),
+        ]),
+      );
 
   /// A fita com o nome: tocar renomeia.
   Widget _fitaTocavel(BuildContext context, WidgetRef ref, EstadoEditor estado) => Semantics(
@@ -76,7 +93,8 @@ class FaixaPreset extends ConsumerWidget {
       );
 }
 
-/// Ao vivo desligado e audição (sem USB MIDI), em letra de alerta.
+/// Ao vivo desligado e audição (sem USB MIDI), em letra de alerta: o âmbar
+/// é da ação e da seleção, não de aviso.
 class _Avisos extends StatelessWidget {
   const _Avisos({required this.estado});
 
@@ -84,7 +102,7 @@ class _Avisos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.tally);
+    final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.erro);
     final l = AppLocalizations.of(context);
     final avisos = [
       if (!estado.aoVivo) l.avisoAoVivoDesligado,
@@ -116,6 +134,11 @@ class _Fita extends StatelessWidget {
       ),
       child: Row(children: [
         Expanded(child: Text(nome, maxLines: linhas, overflow: TextOverflow.ellipsis, style: tema.headlineSmall)),
+        // tocar a fita renomeia: o lápis diz isso sem competir com o nome
+        Tooltip(
+          message: AppLocalizations.of(context).uiRenomear,
+          child: const Icon(Icons.edit_outlined, size: Medidas.iconeLapis, color: Cores.aluminio),
+        ),
         if (naoSalvo) ...[
           const SizedBox(width: Espacos.s),
           Container(

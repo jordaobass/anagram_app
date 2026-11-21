@@ -22,7 +22,7 @@ class SeletorCenas extends ConsumerWidget {
         Expanded(
           child: _BotaoCena(
             numero: cena,
-            nome: documento.nomeDaCena(cena) ?? AppLocalizations.of(context).cenaPadrao(cena),
+            nome: documento.nomeDaCena(cena),
             ativa: documento.cenaAtiva == cena,
             aoTocar: () => controlador.escolherCena(cena),
           ),
@@ -36,7 +36,10 @@ class _BotaoCena extends StatelessWidget {
   const _BotaoCena({required this.numero, required this.nome, required this.ativa, required this.aoTocar});
 
   final int numero;
-  final String nome;
+
+  /// Nome que o preset deu à cena; sem nome, o botão mostra "1 CENA" em vez
+  /// de "1 CENA 1".
+  final String? nome;
   final bool ativa;
   final VoidCallback aoTocar;
 
@@ -47,7 +50,7 @@ class _BotaoCena extends StatelessWidget {
     return Semantics(
       selected: ativa,
       button: true,
-      label: AppLocalizations.of(context).cenaSemantica(numero, nome),
+      label: AppLocalizations.of(context).cenaSemantica(numero, nome ?? AppLocalizations.of(context).cenaPadrao(numero)),
       child: Material(
         color: ativa ? Cores.tally : Cores.painelElevado,
         shape: RoundedRectangleBorder(
@@ -58,13 +61,13 @@ class _BotaoCena extends StatelessWidget {
           key: ValueKey('cena-$numero'),
           borderRadius: BorderRadius.circular(Raios.controle),
           onTap: aoTocar,
-          child: _rotulo(tema, corTexto),
+          child: _rotulo(tema, corTexto, nome ?? AppLocalizations.of(context).uiCena),
         ),
       ),
     );
   }
 
-  Widget _rotulo(TextTheme tema, Color corTexto) => ConstrainedBox(
+  Widget _rotulo(TextTheme tema, Color corTexto, String texto) => ConstrainedBox(
         constraints: const BoxConstraints(minHeight: Medidas.alvoMinimo + Espacos.s),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: Espacos.m, vertical: Espacos.xs),
@@ -72,7 +75,7 @@ class _BotaoCena extends StatelessWidget {
             Text('$numero', style: tema.displaySmall?.copyWith(color: corTexto, fontSize: tema.titleLarge?.fontSize)),
             const SizedBox(width: Espacos.s),
             Expanded(
-              child: Text(nome.toUpperCase(),
+              child: Text(texto.toUpperCase(),
                   maxLines: 1, overflow: TextOverflow.ellipsis, style: tema.labelLarge?.copyWith(color: corTexto)),
             ),
           ]),
