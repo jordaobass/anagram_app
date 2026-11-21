@@ -1213,6 +1213,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pdEqInputGain => 'Input Gain';
 
   @override
+  String get eqbResetTitulo => '¿Volver el Parametric EQ al estándar?';
+
+  @override
+  String get eqbResetTexto =>
+      'Todas las bandas, los cortes y la ganancia vuelven al estándar del bloque. Se puede deshacer justo después.';
+
+  @override
+  String get eqbResetFeito => 'Parametric EQ de vuelta al estándar.';
+
+  @override
   String get pdEqReset => 'Reset';
 
   @override
