@@ -77,22 +77,11 @@ class ListaPresets extends ConsumerWidget {
       return;
     }
     if (estado.naoSalvo) {
-      final largar = await _confirmarDescarte(context, estado.atual?.nome ?? '');
+      final largar = await confirmarLargarEdicoes(context, estado.atual?.nome ?? '');
       if (!largar) return;
     }
     await ref.read(editorProvider.notifier).abrirSlot(slot);
     aoAbrir?.call();
-  }
-
-  Future<bool> _confirmarDescarte(BuildContext context, String nome) {
-    final l = AppLocalizations.of(context);
-    return confirmar(
-      context,
-      titulo: l.largarEdicoesTitulo,
-      texto: l.largarEdicoesTexto(nome),
-      rotuloCancelar: l.continuarEditando,
-      rotuloConfirmar: l.largar,
-    );
   }
 }
 
