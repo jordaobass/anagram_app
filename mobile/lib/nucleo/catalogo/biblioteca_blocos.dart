@@ -8,10 +8,14 @@ import 'definicao_bloco.dart';
 import 'familia_bloco.dart';
 
 class GrupoBiblioteca {
-  const GrupoBiblioteca(this.familia, this.blocos);
+  const GrupoBiblioteca(this.familia, this.blocos, {this.linhaParalela});
 
   final FamiliaBloco familia;
   final List<DefinicaoBloco> blocos;
+
+  /// O Split que representa o par Split + Merge (a linha paralela), no topo
+  /// dos utilitários: os dois entram juntos, nunca um solto.
+  final DefinicaoBloco? linhaParalela;
 }
 
 /// Blocos que definem o caminho do sinal (abrem e fecham a linha paralela,
@@ -29,8 +33,9 @@ const _blocosDeSistema = {
   'urn:darkglass-anagram:sine-gen',
 };
 
-/// Split e merge marcam onde a linha 2 sai e volta: movê-los (ou trocá-los
-/// com outro bloco) mudaria o roteamento sem a pessoa perceber.
+/// Split e merge marcam onde a linha 2 sai e volta: copiar, colar por cima
+/// ou remover um deles sozinho quebraria o roteamento. Mudar de lugar pode,
+/// com as regras de [recusaAoMover].
 bool ehBlocoDeRoteamento(String uri) =>
     uri == 'urn:darkglass-anagram:split' || uri == 'urn:darkglass-anagram:merge';
 
@@ -83,17 +88,64 @@ List<FamiliaBloco> familiasDaBiblioteca(CatalogoBlocos catalogo) {
   return [for (final f in FamiliaBloco.values) if (presentes.contains(f)) f];
 }
 
+/// Palavras que levam ao par Split + Merge na busca, nos três idiomas, além
+/// do nome e da abreviação do Split e do Merge no catálogo.
+const _termosDaLinhaParalela = ['split', 'merge', 'spl', 'mrg', 'paralel', 'parallel', 'dividir', 'linha 2', 'fila 2', 'row 2'];
+
+/// A biblioteca com o par Split + Merge no topo dos utilitários quando a
+/// busca e a família deixam: é o jeito de abrir a linha paralela (DECISOES M8).
+List<GrupoBiblioteca> bibliotecaComLinhaParalela(CatalogoBlocos catalogo, {String busca = '', FamiliaBloco? familia}) {
+  final grupos = blocosDaBiblioteca(catalogo, busca: busca, familia: familia);
+  final split = catalogo.todos.where((b) => b.uri == _uriSplit).firstOrNull;
+  if (split == null || !_mostraLinhaParalela(busca, familia)) return grupos;
+  const utilitario = FamiliaBloco.utilitario;
+  final semUtilitario = [for (final g in grupos) if (g.familia != utilitario) g];
+  final blocos = grupos.where((g) => g.familia == utilitario).firstOrNull?.blocos ?? const <DefinicaoBloco>[];
+  return [...semUtilitario, GrupoBiblioteca(utilitario, blocos, linhaParalela: split)]
+    ..sort((a, b) => a.familia.index.compareTo(b.familia.index));
+}
+
+bool _mostraLinhaParalela(String busca, FamiliaBloco? familia) {
+  if (familia != null && familia != FamiliaBloco.utilitario) return false;
+  final termo = busca.trim().toLowerCase();
+  // começo de palavra com 3 letras ou mais: "a" sozinho não traz o par
+  return termo.isEmpty ||
+      _termosDaLinhaParalela.any((t) => (termo.length >= 3 && t.startsWith(termo)) || termo.contains(t));
+}
+
+const _uriSplit = 'urn:darkglass-anagram:split';
+
 Iterable<DefinicaoBloco> _efeitos(CatalogoBlocos catalogo) =>
     catalogo.todos.where((bloco) => !_blocosDeSistema.contains(bloco.uri));
 
 bool _casaComBusca(DefinicaoBloco bloco, String termo) =>
     termo.isEmpty || bloco.nome.toLowerCase().contains(termo) || bloco.abreviacao.toLowerCase().contains(termo);
 
-/// Mover [de] para [para] só vale se há bloco na origem e nenhum dos dois
-/// lados é split/merge.
-bool podeMover(DocumentoPreset documento, PosicaoBloco de, PosicaoBloco para) {
+/// Por que um "mover" (arrastar ou menu) não vale. Split e Merge andam pela
+/// linha 1 e trocam com bloco comum, mas nunca vão para a linha 2 e o Split
+/// fica sempre antes do Merge (nos presets reais eles não precisam estar
+/// juntos nem alinhados com a linha 2: exemplos 1 e 2, DECISOES M10).
+enum RecusaMover { semOrigem, mesmaCasa, roteamentoForaDaLinha1, splitDepoisDoMerge }
+
+/// Nulo quando mover [de] para [para] vale; casa vazia recebe, ocupada troca.
+RecusaMover? recusaAoMover(DocumentoPreset documento, PosicaoBloco de, PosicaoBloco para) {
   final origem = documento.bloco(de);
-  if (origem == null || de == para || ehBlocoDeRoteamento(origem.uri)) return false;
-  final destino = documento.bloco(para);
-  return destino == null || !ehBlocoDeRoteamento(destino.uri);
+  if (origem == null) return RecusaMover.semOrigem;
+  if (de == para) return RecusaMover.mesmaCasa;
+  PosicaoBloco depois(PosicaoBloco p) => p == de ? para : (p == para ? de : p);
+  final split = _posicaoDe(documento, ':split');
+  final merge = _posicaoDe(documento, ':merge');
+  final novoSplit = split == null ? null : depois(split);
+  final novoMerge = merge == null ? null : depois(merge);
+  if ((novoSplit != null && novoSplit.linha != 1) || (novoMerge != null && novoMerge.linha != 1)) {
+    return RecusaMover.roteamentoForaDaLinha1;
+  }
+  if (novoSplit != null && novoMerge != null && novoSplit.casa > novoMerge.casa) return RecusaMover.splitDepoisDoMerge;
+  return null;
 }
+
+bool podeMover(DocumentoPreset documento, PosicaoBloco de, PosicaoBloco para) =>
+    recusaAoMover(documento, de, para) == null;
+
+PosicaoBloco? _posicaoDe(DocumentoPreset documento, String fimDaUri) =>
+    documento.blocosDaLinha(1).where((b) => b.uri.endsWith(fimDaUri)).firstOrNull?.posicao;

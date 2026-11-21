@@ -10,6 +10,7 @@ import '../componentes/atalhos_editor.dart';
 import '../componentes/barra_conexao.dart';
 import '../componentes/editor_principal.dart';
 import '../componentes/lista_presets.dart';
+import '../componentes/ouvinte_mcp.dart';
 import '../componentes/painel_conectar.dart';
 import '../rotas.dart';
 import '../tema/tokens.dart';
@@ -22,7 +23,8 @@ class TelaEditor extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final conectada = ref.watch(conexaoProvider) is Conectada;
-    return Scaffold(
+    return OuvinteMcp(
+        child: Scaffold(
       body: SafeArea(
         child: LayoutBuilder(builder: (context, restricoes) {
           final amplo = restricoes.maxWidth >= Quebras.amplo && restricoes.maxHeight >= Quebras.alturaAmpla;
@@ -37,7 +39,7 @@ class TelaEditor extends ConsumerWidget {
           ]);
         }),
       ),
-    );
+    ));
   }
 
   Widget _conteudo(BuildContext context, bool amplo, double larguraLista) {

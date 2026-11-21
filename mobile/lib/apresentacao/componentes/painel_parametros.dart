@@ -1,15 +1,24 @@
 // Parâmetros do bloco selecionado em knobs grandes, todos à vista: a tela
-// rola, então esconder parâmetro atrás de página só custava toques.
+// rola, então esconder parâmetro atrás de página só custava toques. O
+// paramétrico vem em bandas (ver arranjo_parametros.dart) e os blocos de 3
+// bandas, no painel próprio (ver painel_multibanda.dart).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/provedores.dart';
+import '../../nucleo/catalogo/arranjo_multibanda.dart';
+import '../../nucleo/catalogo/arranjo_parametros.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
+import '../../nucleo/catalogo/explicacoes_parametros.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'cabecalho_bloco.dart';
+import 'cartao_banda.dart';
+import 'controle_no_painel.dart';
 import 'controle_parametro.dart';
+import 'explicacao_parametro.dart';
+import 'painel_multibanda.dart';
 import 'seletor_gabinete.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
@@ -34,25 +43,79 @@ class PainelParametros extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     final parametros = parametrosVisiveis(definicao, bloco, nomeEstimado: l.faixaEstimada);
     final cena = estado.atual!.cenaAtiva;
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      CabecalhoBloco(bloco: bloco, definicao: definicao, cena: cena),
-      const SizedBox(height: Espacos.m),
-      SeletorGabinete(bloco: bloco, definicao: definicao),
-      LayoutBuilder(builder: (context, restricoes) {
-        final tamanho = _tamanhoQueCabe(restricoes.maxWidth, parametros.length);
-        return Wrap(
-          alignment: compacto ? WrapAlignment.spaceEvenly : WrapAlignment.center,
-          spacing: _vao,
-          runSpacing: Espacos.l,
-          children: [
-            if (parametros.isEmpty)
-              Text(l.semParametros, style: Theme.of(context).textTheme.bodyMedium),
-            for (final p in parametros) _controle(context, ref, p, bloco, definicao, cena, tamanho),
-          ],
-        );
-      }),
-    ]);
+    final explicacoes = ref.watch(explicacoesProvider).value ?? ExplicacoesParametros.vazio;
+    // o bloco aberto, para cada controle explicar o parâmetro DESTE pedal
+    return ContextoExplicacao(
+      uri: definicao.uri,
+      explicacoes: explicacoes,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        CabecalhoBloco(bloco: bloco, definicao: definicao, cena: cena),
+        const SizedBox(height: Espacos.m),
+        SeletorGabinete(bloco: bloco, definicao: definicao),
+        if (arranjoMultibanda(definicao.uri) case final arranjo?)
+          PainelMultibanda(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros)
+        else
+          LayoutBuilder(
+              builder: (context, restricoes) =>
+                  _controles(context, ref, restricoes.maxWidth, parametros, bloco, definicao, cena)),
+      ]),
+    );
   }
+
+  Widget _controles(BuildContext context, WidgetRef ref, double largura, List<DefinicaoParametro> parametros,
+      BlocoPreset bloco, DefinicaoBloco definicao, int cena) {
+    final grupos = agruparParametros(definicao, parametros);
+    if (grupos.length > 1) {
+      return Wrap(alignment: WrapAlignment.center, spacing: Espacos.m, runSpacing: Espacos.m, children: [
+        for (final g in grupos) _grupo(context, ref, g, bloco, definicao, cena),
+      ]);
+    }
+    final tamanho = _tamanhoQueCabe(largura, parametros.length);
+    return Wrap(
+      alignment: compacto ? WrapAlignment.spaceEvenly : WrapAlignment.center,
+      spacing: _vao,
+      runSpacing: Espacos.l,
+      children: [
+        if (parametros.isEmpty)
+          Text(AppLocalizations.of(context).semParametros, style: Theme.of(context).textTheme.bodyMedium),
+        for (final p in grupos.single.parametros) _controle(context, ref, p, bloco, definicao, cena, tamanho),
+      ],
+    );
+  }
+
+  /// Uma banda do paramétrico: título com a chave dela e os knobs de nome
+  /// curto; desligada, os knobs ficam apagados mas ainda se ajustam.
+  Widget _grupo(BuildContext context, WidgetRef ref, GrupoParametros grupo, BlocoPreset bloco,
+      DefinicaoBloco definicao, int cena) {
+    final chave = grupo.chave;
+    final ligada = chave == null || DefinicaoParametro.estaLigado(_valor(bloco, chave, cena));
+    return CartaoBanda(
+      key: ValueKey('banda-${grupo.banda?.name ?? 'outros'}'),
+      titulo: grupo.banda == null ? null : AppLocalizations.of(context).nomeDaBanda(grupo.banda!),
+      chave: chave == null ? null : _chaveDaBanda(context, ref, chave, bloco, definicao, cena),
+      ligada: ligada,
+      controles: [
+        for (final p in grupo.parametros) _controle(context, ref, p, bloco, definicao, cena, Medidas.knobCompacto),
+      ],
+    );
+  }
+
+  Widget _chaveDaBanda(BuildContext context, WidgetRef ref, DefinicaoParametro chave, BlocoPreset bloco,
+      DefinicaoBloco definicao, int cena) {
+    final ligada = DefinicaoParametro.estaLigado(_valor(bloco, chave, cena));
+    final l = AppLocalizations.of(context);
+    return ChaveParametro(
+      chave: ValueKey('chave-${chave.simbolo}'),
+      nome: chave.nome,
+      parametro: chave,
+      ligado: ligada,
+      cor: Cores.daFamilia(definicao.familia),
+      texto: ligada ? l.valorLigado : l.valorDesligado,
+      aoMudar: (novo) => ControleNoPainel.alterar(ref, chave, bloco)(novo ? 1 : 0, arrastando: false),
+    );
+  }
+
+  static num _valor(BlocoPreset bloco, DefinicaoParametro p, int cena) => ControleNoPainel.valorNaCena(bloco, p, cena);
 
   double get _vao => compacto ? Espacos.m : Espacos.xl;
 
@@ -64,33 +127,16 @@ class PainelParametros extends ConsumerWidget {
     return porControle.clamp(Medidas.knobCompacto, tamanhoKnob);
   }
 
-  Widget _controle(
-    BuildContext context,
-    WidgetRef ref,
-    DefinicaoParametro p,
-    BlocoPreset bloco,
-    DefinicaoBloco definicao,
-    int cena,
-    double tamanho,
-  ) {
-    final controlador = ref.read(editorProvider.notifier);
-    return Column(mainAxisSize: MainAxisSize.min, children: [
-      ControleParametro(
-        key: ValueKey('param-${p.simbolo}'),
-        parametro: p,
-        valor: bloco.valorNaCena(p.simbolo, cena) ?? p.padrao,
-        cor: Cores.daFamilia(definicao.familia),
+  Widget _controle(BuildContext context, WidgetRef ref, ParametroNoPainel noPainel, BlocoPreset bloco,
+          DefinicaoBloco definicao, int cena, double tamanho) =>
+      ControleNoPainel(
+        parametro: noPainel.parametro,
+        rotulo: noPainel.rotulo,
+        bloco: bloco,
+        definicao: definicao,
+        cena: cena,
         tamanho: tamanho,
-        aoMudar: (valor, {required arrastando}) =>
-            controlador.alterarParametro(p.simbolo, valor, arrastando: arrastando, nome: p.nome, posicao: bloco.posicao),
-      ),
-      // como o valor "atribuído ao snapshot" do HX: esta cena sobrepõe
-      if (bloco.sobreposicaoDaCena(p.simbolo, cena) != null)
-        // neutro: o âmbar é da ação e da seleção, não de marca informativa
-        Text(AppLocalizations.of(context).soNaCena(cena),
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.aluminioClaro)),
-    ]);
-  }
+      );
 }
 
 /// No lugar do painel quando nenhum bloco está selecionado (preset novo,
@@ -115,13 +161,17 @@ class DicaMontarCadeia extends StatelessWidget {
 /// com faixa estimada (marcada no nome por [nomeEstimado], no idioma da tela).
 const _papeisSemControle = {'bypass', 'reset', 'hostTempo'};
 
+/// Sem papel no catálogo, mas também ação e não ajuste: o "Reset Peak Hold"
+/// do paramétrico zera o medidor de pico, que pelo USB não chega ao app.
+const _simbolosSemControle = {'peakreset'};
+
 List<DefinicaoParametro> parametrosVisiveis(DefinicaoBloco definicao, BlocoPreset bloco,
     {String Function(String simbolo) nomeEstimado = _nomeEstimadoPadrao}) {
   // "bypass" é o próprio liga/desliga do bloco (o botão LIGADO do cabeçalho);
   // "reset" e "hostTempo" são ações do aparelho, que o preset nem guarda.
   // Mostrados como controle, seriam botões que não fazem o que dizem
   if (definicao.parametros.isNotEmpty) {
-    return [for (final p in definicao.parametros) if (!_papeisSemControle.contains(p.papel)) p];
+    return [for (final p in definicao.parametros) if (!_papeisSemControle.contains(p.papel) && !_simbolosSemControle.contains(p.simbolo)) p];
   }
   return [
     for (final simbolo in bloco.simbolosGuardados)

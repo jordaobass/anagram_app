@@ -6,10 +6,13 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../nucleo/catalogo/arranjo_parametros.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/escala_parametro.dart';
 import '../tema/tokens.dart';
 import 'dialogo_valor.dart';
+import 'explicacao_parametro.dart';
+import 'pintor_fader.dart';
 import 'pintor_knob.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
@@ -24,9 +27,16 @@ class BotaoGiratorio extends StatefulWidget {
     required this.cor,
     required this.tamanho,
     required this.aoMudar,
+    this.rotulo,
+    this.forma = FormaControle.knob,
   });
 
   final DefinicaoParametro parametro;
+
+  /// Nome mostrado em cima, quando o grupo já diz o resto ("Gain" na banda 1);
+  /// o aviso de voltar ao padrão continua com o nome inteiro.
+  final String? rotulo;
+  final FormaControle forma;
   final num valor;
   final Color cor;
   final double tamanho;
@@ -116,6 +126,7 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
       slider: true,
       label: p.nome,
       value: texto,
+      hint: ContextoExplicacao.de(context, p),
       increasedValue: l.valorDe(p, p.valorDe(_fracaoMais(_passoFino))),
       decreasedValue: l.valorDe(p, p.valorDe(_fracaoMais(-_passoFino))),
       onIncrease: () => _passo(_passoFino),
@@ -165,18 +176,33 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
         ),
       );
 
+  Widget _desenho() {
+    final origem = widget.parametro.fracaoDaOrigem;
+    if (widget.forma == FormaControle.fader) {
+      return SizedBox(
+        width: Medidas.larguraFader,
+        height: widget.tamanho * Medidas.alturaFaderPorKnob,
+        child: CustomPaint(
+            painter: PintorFader(fracao: _fracao, origem: origem, cor: widget.cor, focado: _foco.hasFocus)),
+      );
+    }
+    return SizedBox.square(
+      dimension: widget.tamanho,
+      child: CustomPaint(painter: PintorKnob(fracao: _fracao, origem: origem, cor: widget.cor, focado: _foco.hasFocus)),
+    );
+  }
+
+  /// O fader é estreito: a coluna só alarga para o número caber.
+  double get _largura => widget.forma == FormaControle.fader ? Medidas.larguraFader + Espacos.l : widget.tamanho + Espacos.l;
+
   Widget _corpo(BuildContext context, String texto) {
     final tema = Theme.of(context).textTheme;
     return SizedBox(
-      width: widget.tamanho + Espacos.l,
+      width: _largura,
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        Text(widget.parametro.nome.toUpperCase(),
-            maxLines: 1, overflow: TextOverflow.ellipsis, style: tema.labelMedium),
+        RotuloParametro(parametro: widget.parametro, texto: widget.rotulo ?? widget.parametro.nome),
         const SizedBox(height: Espacos.xs),
-        SizedBox.square(
-          dimension: widget.tamanho,
-          child: CustomPaint(painter: PintorKnob(fracao: _fracao, cor: widget.cor, focado: _foco.hasFocus)),
-        ),
+        _desenho(),
         _valorClicavel(context, texto, tema),
       ]),
     );

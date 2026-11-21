@@ -58,6 +58,10 @@ class CabecalhoBloco extends ConsumerWidget {
               style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
           Text(arrastoComMouse ? l.uiDicaDuploClique : l.uiDicaToqueDuplo,
               style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
+          // o balão dos parâmetros não se descobre olhando: a dica fica aqui,
+          // não num "?" em cada rótulo (cortava nomes que cabiam)
+          Text(arrastoComMouse ? l.ttDicaMouse : l.ttDicaToque,
+              key: const ValueKey('dica-explicacao'), style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
           if (bloco.bypassSoNaCena(cena))
             Text(ligado ? l.ligadoSoNaCena(cena) : l.desligadoSoNaCena(cena),
                 style: tema.labelSmall?.copyWith(color: Cores.aluminioClaro)),

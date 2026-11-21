@@ -3,6 +3,7 @@
 import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
+import 'package:anagram_app/plataforma/servidor_mcp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -23,11 +24,19 @@ Future<void> montarApp(WidgetTester tester,
     List<Override> overrides = const [],
     IdiomaApp? idioma = IdiomaApp.portugues,
     IndiceMiniaturas? indice,
-    PresetsDeFabrica? fabrica}) async {
+    PresetsDeFabrica? fabrica,
+    ServidorMcp? servidorMcp,
+    bool mcpDisponivel = true}) async {
   tester.view.physicalSize = tamanho * densidade;
   tester.view.devicePixelRatio = densidade;
   addTearDown(tester.view.reset);
-  await tester.pumpWidget(appDeTeste(overrides: overrides, idioma: idioma, indice: indice, fabrica: fabrica));
+  await tester.pumpWidget(appDeTeste(
+      overrides: overrides,
+      idioma: idioma,
+      indice: indice,
+      fabrica: fabrica,
+      servidorMcp: servidorMcp,
+      mcpDisponivel: mcpDisponivel));
   await tester.pumpAndSettle();
 }
 

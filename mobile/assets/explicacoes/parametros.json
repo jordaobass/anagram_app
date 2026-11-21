@@ -1,0 +1,1695 @@
+{
+ "versao": 1,
+ "tipos": [
+  {
+   "id": "secao_eq",
+   "casa": "(^| )(sec\\d|lssec|hssec|highpass|lowpass)( |$)",
+   "alternavel": true,
+   "texto": {
+    "pt": "Liga ou desliga esta seção do EQ. Desligada, ela não mexe no som, mas guarda o ajuste.",
+    "en": "Turns this EQ section on or off. When off it leaves the sound alone but keeps its setting.",
+    "es": "Activa o desactiva esta sección del EQ. Apagada no toca el sonido, pero guarda el ajuste."
+   }
+  },
+  {
+   "id": "mudo",
+   "casa": "mute",
+   "alternavel": true,
+   "texto": {
+    "pt": "Silencia esta parte do sinal sem perder os ajustes.",
+    "en": "Silences this part of the signal without losing its settings.",
+    "es": "Silencia esta parte de la señal sin perder los ajustes."
+   }
+  },
+  {
+   "id": "link_master",
+   "casa": "master ?vol ?link|mastervollink",
+   "alternavel": true,
+   "texto": {
+    "pt": "Ligado, esta saída acompanha o volume master; desligado, ela fica no volume próprio.",
+    "en": "On, this output follows the master volume; off, it keeps its own volume.",
+    "es": "Activado, esta salida sigue el volumen master; desactivado, mantiene su propio volumen."
+   }
+  },
+  {
+   "id": "trails",
+   "casa": "trails",
+   "texto": {
+    "pt": "Ligado, a cauda (repetições ou reverberação) continua soando quando o bloco é desligado, em vez de cortar seco.",
+    "en": "On, the tail (repeats or reverb) keeps ringing when the block is switched off instead of cutting dead.",
+    "es": "Activado, la cola (repeticiones o reverb) sigue sonando al apagar el bloque, en vez de cortarse en seco."
+   }
+  },
+  {
+   "id": "crossover",
+   "casa": "crossover|_xo_",
+   "texto": {
+    "pt": "Frequência que divide o sinal entre as bandas: o que está abaixo vai para a banda de baixo, o que está acima para a de cima.",
+    "en": "Frequency that splits the signal between bands: everything below goes to the lower band, everything above to the upper one.",
+    "es": "Frecuencia que divide la señal entre bandas: lo de abajo va a la banda inferior y lo de arriba a la superior."
+   }
+  },
+  {
+   "id": "threshold",
+   "casa": "threshold",
+   "texto": {
+    "pt": "Volume a partir do qual o efeito começa a agir. Mais baixo = age em mais notas e o efeito fica mais forte.",
+    "en": "Level at which the effect starts to act. Lower = it acts on more notes and the effect gets stronger.",
+    "es": "Nivel a partir del cual el efecto empieza a actuar. Más bajo = actúa en más notas y el efecto es más fuerte."
+   }
+  },
+  {
+   "id": "ratio",
+   "casa": "ratio",
+   "texto": {
+    "pt": "Quanto o volume acima do threshold é segurado. 2:1 a 4:1 é compressão suave; 20:1 ou mais já age como limitador.",
+    "en": "How hard the level above the threshold is held back. 2:1 to 4:1 is gentle compression; 20:1 and up acts like a limiter.",
+    "es": "Cuánto se frena el volumen por encima del threshold. 2:1 a 4:1 es compresión suave; 20:1 o más actúa como limitador."
+   }
+  },
+  {
+   "id": "knee",
+   "casa": "knee",
+   "texto": {
+    "pt": "Suavidade da entrada da compressão em volta do threshold. Mais alto = a compressão chega aos poucos e soa mais natural.",
+    "en": "How gradually compression kicks in around the threshold. Higher = it eases in and sounds more natural.",
+    "es": "Suavidad con que entra la compresión alrededor del threshold. Más alto = entra poco a poco y suena más natural."
+   }
+  },
+  {
+   "id": "attack",
+   "casa": "attack",
+   "texto": {
+    "pt": "Quão rápido o efeito reage quando a nota começa. Rápido = segura o ataque da nota; lento = deixa o ataque passar e soa mais percussivo.",
+    "en": "How fast the effect reacts when a note starts. Fast = clamps the pick attack; slow = lets the attack through for more punch.",
+    "es": "Qué tan rápido reacciona el efecto al empezar la nota. Rápido = frena el ataque; lento = deja pasar el ataque y suena más percusivo."
+   }
+  },
+  {
+   "id": "release",
+   "casa": "release",
+   "texto": {
+    "pt": "Quão rápido o efeito solta depois que a nota cai. Curto = volta logo ao normal; longo = segura mais e soa mais uniforme.",
+    "en": "How fast the effect lets go after the note drops. Short = recovers quickly; long = holds on longer and sounds more even.",
+    "es": "Qué tan rápido suelta el efecto cuando la nota baja. Corto = vuelve pronto a lo normal; largo = sostiene más y suena más parejo."
+   }
+  },
+  {
+   "id": "decaimento_envelope",
+   "casa": "env ?decay|envdecay",
+   "texto": {
+    "pt": "Velocidade com que o filtro volta depois de cada nota: Smooth fecha devagar, Fast fecha rápido e soa mais 'quack'.",
+    "en": "How fast the filter returns after each note: Smooth closes slowly, Fast closes quickly for a snappier 'quack'.",
+    "es": "Velocidad con que vuelve el filtro tras cada nota: Smooth cierra despacio, Fast cierra rápido y suena más 'quack'."
+   }
+  },
+  {
+   "id": "nivel_oitava",
+   "casa": "octave ?level|octavelevel",
+   "texto": {
+    "pt": "Volume da oitava abaixo gerada pelo pedal. Mais = mais peso de sub-grave somado ao seu som.",
+    "en": "Level of the octave-down voice the pedal generates. More = more sub-bass weight added to your tone.",
+    "es": "Volumen de la octava inferior que genera el pedal. Más = más peso de subgrave sumado a tu sonido."
+   }
+  },
+  {
+   "id": "nivel_limpo",
+   "casa": "clean ?level|cleanlevel",
+   "texto": {
+    "pt": "Volume do seu sinal original, sem efeito, somado ao processado. Mais = mais da definição natural do baixo.",
+    "en": "Level of your original, unprocessed signal mixed with the effect. More = more of the bass's natural definition.",
+    "es": "Volumen de tu señal original, sin efecto, sumada a la procesada. Más = más definición natural del bajo."
+   }
+  },
+  {
+   "id": "envelope",
+   "casa": "env ?amount|envamount|(^| )env( |$)|envelope|env ?mix|envmix",
+   "texto": {
+    "pt": "Quanto a dinâmica da nota move o filtro. Mais = o filtro abre mais a cada nota e o efeito fica mais 'falado'.",
+    "en": "How much the note's dynamics move the filter. More = the filter opens further on each note for a more vocal effect.",
+    "es": "Cuánto la dinámica de la nota mueve el filtro. Más = el filtro se abre más en cada nota y el efecto suena más 'vocal'."
+   }
+  },
+  {
+   "id": "mistura",
+   "casa": "dry/wet|blend|(^| )mix( |$)",
+   "texto": {
+    "pt": "Mistura entre o sinal original e o processado. No mínimo só passa o original; no máximo, só o efeito. No meio, o original mantém os graves e a definição.",
+    "en": "Mix between the original and the processed signal. At minimum only the original passes; at maximum, only the effect. In between, the original keeps lows and definition.",
+    "es": "Mezcla entre la señal original y la procesada. Al mínimo pasa solo la original; al máximo, solo el efecto. En medio, la original conserva graves y definición."
+   }
+  },
+  {
+   "id": "seco",
+   "casa": "(^| )dry( |$)|drylevel",
+   "texto": {
+    "pt": "Volume do sinal original, sem efeito. Abaixar deixa só o efeito.",
+    "en": "Level of the original signal, without the effect. Turning it down leaves only the effect.",
+    "es": "Volumen de la señal original, sin efecto. Bajarlo deja solo el efecto."
+   }
+  },
+  {
+   "id": "molhado",
+   "casa": "(^| )wet( |$)|wetlevel",
+   "texto": {
+    "pt": "Volume do efeito somado ao sinal original. Mais = efeito mais presente e mais 'longe' na mixagem.",
+    "en": "Level of the effect added to the original signal. More = a more present effect that sits further back in the mix.",
+    "es": "Volumen del efecto sumado a la señal original. Más = efecto más presente y más 'lejano' en la mezcla."
+   }
+  },
+  {
+   "id": "envio",
+   "casa": "send ?level|sendlevel",
+   "texto": {
+    "pt": "Volume enviado para o equipamento ligado no loop de efeitos.",
+    "en": "Level sent to the gear connected to the effects loop.",
+    "es": "Volumen enviado al equipo conectado en el loop de efectos."
+   }
+  },
+  {
+   "id": "passagem",
+   "casa": "through ?level|throughlevel",
+   "texto": {
+    "pt": "Volume do sinal que segue direto pela cadeia, além do que vai para o loop.",
+    "en": "Level of the signal that carries on down the chain, besides what goes to the loop.",
+    "es": "Volumen de la señal que sigue directo por la cadena, además de la que va al loop."
+   }
+  },
+  {
+   "id": "polaridade",
+   "casa": "polar|polinv",
+   "texto": {
+    "pt": "Inverte a fase do sinal. Útil quando, somado a outro caminho, o som fica fino ou perde grave: inverta e compare.",
+    "en": "Flips the signal's phase. Useful when, combined with another path, the tone gets thin or loses low end: flip it and compare.",
+    "es": "Invierte la fase de la señal. Útil cuando, sumada a otro camino, el sonido queda fino o pierde graves: inviértela y compara."
+   }
+  },
+  {
+   "id": "config_loop",
+   "casa": "fxloopioconfig",
+   "texto": {
+    "pt": "Como as tomadas do loop de efeitos são usadas: mono ou estéreo na ida e na volta, ou como insert/expressão.",
+    "en": "How the effects loop jacks are used: mono or stereo on send and return, or as insert/expression.",
+    "es": "Cómo se usan las tomas del loop de efectos: mono o estéreo en envío y retorno, o como insert/expresión."
+   }
+  },
+  {
+   "id": "ganho_banda_eq",
+   "casa": "gain\\d|lsgain|hsgain|shelf gain",
+   "texto": {
+    "pt": "Quanto esta banda reforça (positivo) ou tira (negativo) em volta da frequência dela.",
+    "en": "How much this band boosts (positive) or cuts (negative) around its frequency.",
+    "es": "Cuánto refuerza (positivo) o quita (negativo) esta banda alrededor de su frecuencia."
+   }
+  },
+  {
+   "id": "banda_geq",
+   "casa": "(^| )s\\d+k?hz|k?hz( |$)",
+   "texto": {
+    "pt": "Reforça ou corta o som em volta desta frequência. Graves (até ~250 Hz) dão peso; médios (500 Hz–1,5 kHz) dão corpo e presença; acima de 3 kHz, ataque e brilho.",
+    "en": "Boosts or cuts around this frequency. Lows (up to ~250 Hz) add weight; mids (500 Hz–1.5 kHz) add body and presence; above 3 kHz, attack and sparkle.",
+    "es": "Refuerza o corta alrededor de esta frecuencia. Graves (hasta ~250 Hz) dan peso; medios (500 Hz–1,5 kHz) dan cuerpo y presencia; sobre 3 kHz, ataque y brillo."
+   }
+  },
+  {
+   "id": "prateleira",
+   "casa": "^(lowshelf|highshelf) ",
+   "texto": {
+    "pt": "Reforça ou corta tudo abaixo (Low Shelf) ou acima (High Shelf) do ponto da prateleira, de uma vez.",
+    "en": "Boosts or cuts everything below (Low Shelf) or above (High Shelf) the shelf point at once.",
+    "es": "Refuerza o corta todo lo que está por debajo (Low Shelf) o por encima (High Shelf) del punto del shelf."
+   }
+  },
+  {
+   "id": "freq_banda_eq",
+   "casa": "freq\\d|lsfreq|hsfreq|shelf freq",
+   "texto": {
+    "pt": "Frequência em que esta banda atua. Mova ouvindo: graves dão peso, médios dão corpo, agudos dão ataque.",
+    "en": "Frequency this band works on. Sweep it while listening: lows add weight, mids add body, highs add attack.",
+    "es": "Frecuencia en la que actúa esta banda. Muévela escuchando: graves dan peso, medios cuerpo, agudos ataque."
+   }
+  },
+  {
+   "id": "freq_medios",
+   "casa": "mid.?freq|mid ?shift|mid_freq|middlefreq|lowmid ?freq|hi.?w?mid ?freq|high ?mid ?freq|himidfreq",
+   "texto": {
+    "pt": "Escolhe em que frequência o controle de médios atua. Mais baixo = corpo e 'grunt'; mais alto = ataque, rosnado e definição.",
+    "en": "Chooses which frequency the mid control works on. Lower = body and 'grunt'; higher = attack, growl and definition.",
+    "es": "Elige en qué frecuencia actúa el control de medios. Más bajo = cuerpo y 'grunt'; más alto = ataque, gruñido y definición."
+   }
+  },
+  {
+   "id": "freq_graves",
+   "casa": "bass.?shift",
+   "texto": {
+    "pt": "Escolhe em que frequência o controle de graves atua: mais baixo = sub e peso, mais alto = soco no grave.",
+    "en": "Chooses which frequency the bass control works on: lower = sub and weight, higher = low-end punch.",
+    "es": "Elige en qué frecuencia actúa el control de graves: más bajo = sub y peso, más alto = pegada en el grave."
+   }
+  },
+  {
+   "id": "ressonancia",
+   "casa": "reso|(^| )q( |$)|hpq|lpq",
+   "texto": {
+    "pt": "Ênfase no ponto de corte do filtro. Mais = um pico marcado na frequência, som mais 'nasal' e chamativo.",
+    "en": "Emphasis at the filter's cutoff point. More = a pronounced peak at that frequency, a more nasal, vocal sound.",
+    "es": "Énfasis en el punto de corte del filtro. Más = un pico marcado en esa frecuencia, sonido más 'nasal' y llamativo."
+   }
+  },
+  {
+   "id": "largura",
+   "casa": "width|(^| )w( |$)",
+   "texto": {
+    "pt": "Largura da banda. Menor = ajuste cirúrgico numa faixa estreita; maior = mudança ampla e musical.",
+    "en": "Bandwidth. Narrower = a surgical change in a tight range; wider = a broad, musical change.",
+    "es": "Ancho de la banda. Más estrecho = ajuste quirúrgico en un rango corto; más ancho = cambio amplio y musical."
+   }
+  },
+  {
+   "id": "corte_graves",
+   "casa": "locut|low ?cut|hp ?freq|hpfreq|highpass freq|hi-pass|high ?pass|hpcutoff|(^| )hpf",
+   "texto": {
+    "pt": "Corta os graves abaixo dessa frequência. Mais alto = som mais firme e limpo no grave; alto demais tira o peso.",
+    "en": "Cuts the lows below this frequency. Higher = a tighter, cleaner low end; too high takes the weight away.",
+    "es": "Corta los graves por debajo de esta frecuencia. Más alto = grave más firme y limpio; demasiado alto quita el peso."
+   }
+  },
+  {
+   "id": "corte_agudos",
+   "casa": "cutoff|hicut|high cut|lp ?freq|lpfreq|lowpass freq|lo-pass|low ?pass|lpf",
+   "texto": {
+    "pt": "Frequência de corte do filtro: acima dela o som é atenuado. Mais alto = mais brilho passa; mais baixo = mais escuro e macio.",
+    "en": "Filter cutoff: above it the sound is attenuated. Higher = more brightness gets through; lower = darker and smoother.",
+    "es": "Frecuencia de corte del filtro: por encima se atenúa el sonido. Más alto = pasa más brillo; más bajo = más oscuro y suave."
+   }
+  },
+  {
+   "id": "inclinacao",
+   "casa": "slope",
+   "texto": {
+    "pt": "Quão abrupto é o corte do filtro. -6 dB é suave e natural; -24 dB corta seco o que passa do ponto.",
+    "en": "How steep the filter cut is. -6 dB is gentle and natural; -24 dB cuts sharply past the point.",
+    "es": "Qué tan abrupto es el corte del filtro. -6 dB es suave y natural; -24 dB corta en seco lo que pasa del punto."
+   }
+  },
+  {
+   "id": "polos",
+   "casa": "poles",
+   "texto": {
+    "pt": "Inclinação do filtro: 4-Pole corta mais forte e soa mais marcado; 2-Pole é mais suave.",
+    "en": "Filter steepness: 4-Pole cuts harder and sounds more pronounced; 2-Pole is gentler.",
+    "es": "Pendiente del filtro: 4-Pole corta más fuerte y suena más marcado; 2-Pole es más suave."
+   }
+  },
+  {
+   "id": "nivel_saida_db",
+   "casa": "(^| )gain( |$)",
+   "unidade": "dB",
+   "texto": {
+    "pt": "Volume do bloco em dB. Não muda o caráter do som, só o quanto sai.",
+    "en": "The block's level in dB. It doesn't change the character, only how much comes out.",
+    "es": "Volumen del bloque en dB. No cambia el carácter, solo cuánto sale."
+   }
+  },
+  {
+   "id": "nivel",
+   "casa": "output ?gain|level|volume|(^| )vol( |$)|output|outlvl|master",
+   "texto": {
+    "pt": "Volume de saída deste bloco. Use para igualar o volume com o bloco desligado.",
+    "en": "This block's output level. Use it to match the volume with the block off.",
+    "es": "Volumen de salida de este bloque. Úsalo para igualar el volumen con el bloque apagado."
+   }
+  },
+  {
+   "id": "ganho_chave",
+   "casa": "overdrive|boost|drive",
+   "alternavel": true,
+   "texto": {
+    "pt": "Liga o circuito de saturação. Ligado, o som fica mais quente e distorcido.",
+    "en": "Turns on the saturation circuit. On, the tone gets warmer and more distorted.",
+    "es": "Activa el circuito de saturación. Activado, el sonido se vuelve más cálido y distorsionado."
+   }
+  },
+  {
+   "id": "ganho",
+   "casa": "drive|distortion|(^| )dist( |$)|overdrive|gain|input|boost",
+   "texto": {
+    "pt": "Quanto o sinal é empurrado para a saturação. Mais = mais distorção, sustain e compressão natural; menos = mais limpo e dinâmico.",
+    "en": "How hard the signal is pushed into saturation. More = more distortion, sustain and natural compression; less = cleaner and more dynamic.",
+    "es": "Cuánto se empuja la señal hacia la saturación. Más = más distorsión, sustain y compresión natural; menos = más limpio y dinámico."
+   }
+  },
+  {
+   "id": "presenca",
+   "casa": "(^| )pres",
+   "texto": {
+    "pt": "Realça os agudos altos, onde estão o estalo da corda e o ruído dos dedos. Mais = mais definição e brilho.",
+    "en": "Lifts the upper highs, where string click and finger noise live. More = more definition and sparkle.",
+    "es": "Realza los agudos altos, donde están el chasquido de la cuerda y el ruido de los dedos. Más = más definición y brillo."
+   }
+  },
+  {
+   "id": "medio_grave",
+   "casa": "low ?mid|lo_mid|midlow|lo-mid",
+   "texto": {
+    "pt": "Médios graves (por volta de 250–500 Hz): corpo e calor. Demais embola; de menos, o som fica oco.",
+    "en": "Low mids (around 250–500 Hz): body and warmth. Too much gets muddy; too little sounds hollow.",
+    "es": "Medios graves (alrededor de 250–500 Hz): cuerpo y calidez. De más embarra; de menos suena hueco."
+   }
+  },
+  {
+   "id": "medio_agudo",
+   "casa": "hi(gh)? ?mid|himid|hi_mid|midhigh|hi-mid",
+   "texto": {
+    "pt": "Médios agudos (por volta de 1–3 kHz): ataque e rosnado. Mais = o baixo corta melhor na banda; demais fica áspero.",
+    "en": "High mids (around 1–3 kHz): attack and growl. More = the bass cuts through the band better; too much gets harsh.",
+    "es": "Medios agudos (alrededor de 1–3 kHz): ataque y gruñido. Más = el bajo se oye mejor en la banda; de más suena áspero."
+   }
+  },
+  {
+   "id": "medios",
+   "casa": "mid|middle",
+   "texto": {
+    "pt": "Médios: onde o baixo é ouvido na mixagem. Mais = mais presença e corpo; menos = som 'escavado', moderno.",
+    "en": "Mids: where the bass is heard in the mix. More = more presence and body; less = a scooped, modern sound.",
+    "es": "Medios: donde se oye el bajo en la mezcla. Más = más presencia y cuerpo; menos = sonido 'escavado', moderno."
+   }
+  },
+  {
+   "id": "graves",
+   "casa": "bass|(^| )low( |$)",
+   "texto": {
+    "pt": "Graves: peso e fundamento. Mais = som mais cheio; demais embola e pode sobrecarregar o falante.",
+    "en": "Lows: weight and foundation. More = a fuller tone; too much gets boomy and can overload the speaker.",
+    "es": "Graves: peso y fundamento. Más = sonido más lleno; de más retumba y puede saturar el altavoz."
+   }
+  },
+  {
+   "id": "agudos",
+   "casa": "treb|treble|(^| )high( |$)",
+   "texto": {
+    "pt": "Agudos: brilho e ataque. Mais = mais estalo e definição; menos = som mais escuro e redondo.",
+    "en": "Highs: brightness and attack. More = more click and definition; less = a darker, rounder tone.",
+    "es": "Agudos: brillo y ataque. Más = más chasquido y definición; menos = sonido más oscuro y redondo."
+   }
+  },
+  {
+   "id": "timbre",
+   "casa": "(^| )tone( |$)",
+   "texto": {
+    "pt": "Brilho geral do som. Mais = mais agudos e ataque; menos = mais escuro e macio.",
+    "en": "Overall brightness. More = more highs and attack; less = darker and smoother.",
+    "es": "Brillo general del sonido. Más = más agudos y ataque; menos = más oscuro y suave."
+   }
+  },
+  {
+   "id": "profundidade",
+   "casa": "depth",
+   "texto": {
+    "pt": "Intensidade da modulação. Mais = efeito mais evidente e ondulado; menos = sutil.",
+    "en": "Intensity of the modulation. More = a more obvious, wobbly effect; less = subtle.",
+    "es": "Intensidad de la modulación. Más = efecto más evidente y ondulado; menos = sutil."
+   }
+  },
+  {
+   "id": "velocidade",
+   "casa": "rate",
+   "texto": {
+    "pt": "Velocidade da modulação. Lento = movimento amplo e suave; rápido = efeito tremido, mais agitado.",
+    "en": "Speed of the modulation. Slow = a wide, smooth movement; fast = a shimmering, busier effect.",
+    "es": "Velocidad de la modulación. Lento = movimiento amplio y suave; rápido = efecto tembloroso, más agitado."
+   }
+  },
+  {
+   "id": "realimentacao",
+   "casa": "feedback",
+   "texto": {
+    "pt": "Quanto do efeito volta para dentro dele. No delay = mais repetições; no flanger e no phaser = som mais metálico e ressonante.",
+    "en": "How much of the effect is fed back into itself. On delays = more repeats; on flangers and phasers = a more metallic, resonant sound.",
+    "es": "Cuánto del efecto vuelve a entrar en él. En el delay = más repeticiones; en flanger y phaser = sonido más metálico y resonante."
+   }
+  },
+  {
+   "id": "tempo",
+   "casa": "(^| )time( |$)",
+   "texto": {
+    "pt": "Tempo entre as repetições, dentro da faixa escolhida em Range. Mais = ecos mais espaçados.",
+    "en": "Time between repeats, within the span chosen in Range. More = more widely spaced echoes.",
+    "es": "Tiempo entre repeticiones, dentro del rango elegido en Range. Más = ecos más espaciados."
+   }
+  },
+  {
+   "id": "subdivisao",
+   "casa": "subdivision",
+   "texto": {
+    "pt": "Amarra o tempo das repetições ao andamento (BPM) em figuras musicais. 'Tempo ctl off' volta a usar o controle Time.",
+    "en": "Locks the repeat time to the tempo (BPM) as a note value. 'Tempo ctl off' goes back to the Time control.",
+    "es": "Ata el tiempo de las repeticiones al tempo (BPM) en figuras musicales. 'Tempo ctl off' vuelve al control Time."
+   }
+  },
+  {
+   "id": "faixa_delay",
+   "casa": "(^| )range( |$)",
+   "unidade": "",
+   "texto": {
+    "pt": "Faixa de tempo que o controle Time percorre: de ecos curtíssimos (slapback) até repetições longas.",
+    "en": "Span of time the Time control covers: from very short echoes (slapback) to long repeats.",
+    "es": "Rango de tiempo que recorre el control Time: desde ecos cortísimos (slapback) hasta repeticiones largas."
+   }
+  },
+  {
+   "id": "modulacao",
+   "casa": "modulation|(^| )mod( |$)",
+   "texto": {
+    "pt": "Leve ondulação na cauda. Mais = som mais largo e animado; menos = mais estático e fiel.",
+    "en": "Gentle movement in the tail. More = a wider, livelier sound; less = steadier and more faithful.",
+    "es": "Leve ondulación en la cola. Más = sonido más amplio y animado; menos = más estático y fiel."
+   }
+  },
+  {
+   "id": "amortecimento",
+   "casa": "damping",
+   "texto": {
+    "pt": "Quanto os agudos da reverberação somem com o tempo. Mais = cauda mais escura e quente, que atrapalha menos.",
+    "en": "How quickly the reverb's highs fade over time. More = a darker, warmer tail that gets in the way less.",
+    "es": "Cuánto se apagan los agudos de la reverb con el tiempo. Más = cola más oscura y cálida, que molesta menos."
+   }
+  },
+  {
+   "id": "decaimento",
+   "casa": "decay|length|lenght",
+   "texto": {
+    "pt": "Duração da cauda. Mais = ambiente maior e reverberação mais longa.",
+    "en": "Length of the tail. More = a bigger space and a longer reverb.",
+    "es": "Duración de la cola. Más = espacio más grande y reverb más larga."
+   }
+  },
+  {
+   "id": "tensao",
+   "casa": "tension",
+   "texto": {
+    "pt": "Tensão das molas simuladas. Mais = som mais firme e metálico; menos = mais frouxo e 'boing'.",
+    "en": "Tension of the simulated springs. More = a tighter, more metallic sound; less = looser and more 'boing'.",
+    "es": "Tensión de los muelles simulados. Más = sonido más firme y metálico; menos = más flojo y 'boing'."
+   }
+  },
+  {
+   "id": "fase_estereo",
+   "casa": "stphase|stereo phase",
+   "texto": {
+    "pt": "Defasagem da modulação entre os lados esquerdo e direito. Mais = efeito mais largo, que se move entre as caixas.",
+    "en": "Offset of the modulation between left and right. More = a wider effect that moves between the speakers.",
+    "es": "Desfase de la modulación entre izquierda y derecha. Más = efecto más amplio, que se mueve entre los altavoces."
+   }
+  },
+  {
+   "id": "forma",
+   "casa": "shape",
+   "texto": {
+    "pt": "Formato da onda da modulação: suave e arredondada ou mais marcada e pulsante.",
+    "en": "Shape of the modulation wave: smooth and rounded, or choppier and more pulsing.",
+    "es": "Forma de la onda de modulación: suave y redondeada o más marcada y pulsante."
+   }
+  },
+  {
+   "id": "estagios",
+   "casa": "stages",
+   "texto": {
+    "pt": "Número de estágios do phaser. Mais estágios = mais vales no som e efeito mais intenso.",
+    "en": "Number of phaser stages. More stages = more notches in the sound and a stronger effect.",
+    "es": "Número de etapas del phaser. Más etapas = más valles en el sonido y efecto más intenso."
+   }
+  },
+  {
+   "id": "cor",
+   "casa": "color",
+   "texto": {
+    "pt": "Região de frequência em que o efeito se concentra. Mais baixa = mais grave e escuro; mais alta = mais aguda e evidente.",
+    "en": "Frequency region the effect focuses on. Lower = deeper and darker; higher = brighter and more obvious.",
+    "es": "Región de frecuencia en la que se concentra el efecto. Más baja = más grave y oscuro; más alta = más agudo y evidente."
+   }
+  },
+  {
+   "id": "sensibilidade",
+   "casa": "sensitivity",
+   "texto": {
+    "pt": "Quanto a força da sua mão aciona o efeito. Mais = toque leve já abre; menos = só a palhetada forte.",
+    "en": "How much your picking strength triggers the effect. More = a light touch already opens it; less = only hard picking does.",
+    "es": "Cuánto la fuerza de tu mano activa el efecto. Más = un toque suave ya lo abre; menos = solo el ataque fuerte."
+   }
+  },
+  {
+   "id": "afinacao",
+   "casa": "semitone|pitch|shift ?amount|max ?shift",
+   "texto": {
+    "pt": "Intervalo da transposição do som, em semitons ou intervalos musicais.",
+    "en": "Interval the sound is transposed by, in semitones or musical intervals.",
+    "es": "Intervalo de la transposición del sonido, en semitonos o intervalos musicales."
+   }
+  },
+  {
+   "id": "ajuste_fino",
+   "casa": "detune|fine|cents",
+   "texto": {
+    "pt": "Ajuste fino da afinação, em cents. Um pouco fora do centro engrossa o som, como dois instrumentos juntos.",
+    "en": "Fine pitch adjustment, in cents. A little off center thickens the sound, like two instruments together.",
+    "es": "Ajuste fino de la afinación, en cents. Un poco fuera del centro engorda el sonido, como dos instrumentos juntos."
+   }
+  },
+  {
+   "id": "andamento",
+   "casa": "tempo",
+   "texto": {
+    "pt": "Andamento em BPM que o bloco segue quando está sincronizado.",
+    "en": "Tempo in BPM the block follows when it is synced.",
+    "es": "Tempo en BPM que sigue el bloque cuando está sincronizado."
+   }
+  },
+  {
+   "id": "tamanho_modelo",
+   "casa": "slim",
+   "texto": {
+    "pt": "Tamanho do modelo neural: Lite usa menos processamento e deixa espaço para mais blocos; Full é o modelo completo.",
+    "en": "Size of the neural model: Lite uses less processing and leaves room for more blocks; Full is the complete model.",
+    "es": "Tamaño del modelo neural: Lite usa menos procesamiento y deja lugar para más bloques; Full es el modelo completo."
+   }
+  },
+  {
+   "id": "posicao_eq",
+   "casa": "eqpos",
+   "texto": {
+    "pt": "Onde fica o EQ do bloco: PRE equaliza antes do modelo (muda como ele satura); POST equaliza depois (só o timbre final); Off desliga.",
+    "en": "Where the block's EQ sits: PRE shapes the signal before the model (changes how it saturates); POST after it (final tone only); Off disables it.",
+    "es": "Dónde va el EQ del bloque: PRE ecualiza antes del modelo (cambia cómo satura); POST después (solo el timbre final); Off lo apaga."
+   }
+  },
+  {
+   "id": "frequencia",
+   "casa": "freq",
+   "texto": {
+    "pt": "Frequência em que este controle atua.",
+    "en": "Frequency this control works on.",
+    "es": "Frecuencia en la que actúa este control."
+   }
+  }
+ ],
+ "blocos": [
+  {
+   "uris": [
+    "urn:darkglass:B3K"
+   ],
+   "parametros": {
+    "Drive": {
+     "pt": "Quantidade de distorção do circuito B3K, inspirado nos clássicos de saturação de transistor: mais = mais agressivo e comprimido.",
+     "en": "Amount of distortion from the B3K circuit: more = more aggressive and compressed.",
+     "es": "Cantidad de distorsión del circuito B3K: más = más agresivo y comprimido."
+    },
+    "Grunt": {
+     "pt": "Reforça os graves que entram na distorção: mais peso e saturação embaixo.",
+     "en": "Boosts the lows going into the distortion: more weight and saturation down low.",
+     "es": "Refuerza los graves que entran en la distorsión: más peso y saturación abajo."
+    },
+    "MidBoost": {
+     "pt": "Realça os médios do sinal distorcido, para o baixo cortar melhor na mixagem.",
+     "en": "Lifts the mids of the distorted signal so the bass cuts through the mix better.",
+     "es": "Realza los medios de la señal distorsionada para que el bajo se oiga mejor en la mezcla."
+    },
+    "Blend": {
+     "pt": "Mistura do sinal limpo com o distorcido, como nos pedais Darkglass: o limpo mantém o grave firme e a definição; no máximo, só a distorção.",
+     "en": "Mix of clean and distorted signal, as on Darkglass pedals: the clean keeps the low end tight and defined; at maximum, distortion only.",
+     "es": "Mezcla de la señal limpia con la distorsionada, como en los pedales Darkglass: la limpia mantiene el grave firme y definido; al máximo, solo distorsión."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:VMT"
+   ],
+   "parametros": {
+    "Era": {
+     "pt": "Caráter da distorção: para um lado soa vintage, mais quente e escuro; para o outro, moderno, mais aberto e brilhante.",
+     "en": "Character of the distortion: one way sounds vintage, warmer and darker; the other way modern, more open and brighter.",
+     "es": "Carácter de la distorsión: hacia un lado suena vintage, más cálido y oscuro; hacia el otro, moderno, más abierto y brillante."
+    },
+    "Blend": {
+     "pt": "Mistura do sinal limpo com o distorcido, como nos pedais Darkglass: o limpo mantém o grave firme e a definição; no máximo, só a distorção.",
+     "en": "Mix of clean and distorted signal, as on Darkglass pedals: the clean keeps the low end tight and defined; at maximum, distortion only.",
+     "es": "Mezcla de la señal limpia con la distorsionada, como en los pedales Darkglass: la limpia mantiene el grave firme y definido; al máximo, solo distorsión."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:AlphaOmicron"
+   ],
+   "parametros": {
+    "Mod": {
+     "pt": "Passa de um caráter de distorção a outro: de um lado o Alpha, mais redondo e controlado; do outro o Omega, mais cru e agressivo.",
+     "en": "Morphs between two distortion characters: Alpha, rounder and more controlled, and Omega, rawer and more aggressive.",
+     "es": "Pasa de un carácter de distorsión a otro: Alpha, más redondo y controlado, y Omega, más crudo y agresivo."
+    },
+    "Growl": {
+     "pt": "Reforça graves e médios graves na distorção: som mais gordo e rosnado.",
+     "en": "Boosts lows and low mids in the distortion: a fatter, growlier tone.",
+     "es": "Refuerza graves y medios graves en la distorsión: sonido más gordo y gruñón."
+    },
+    "Bite": {
+     "pt": "Reforça os médios agudos na distorção: mais ataque e mordida, o baixo aparece mais.",
+     "en": "Boosts the high mids in the distortion: more attack and bite, the bass stands out more.",
+     "es": "Refuerza los medios agudos en la distorsión: más ataque y mordida, el bajo se destaca más."
+    },
+    "Blend": {
+     "pt": "Mistura do sinal limpo com o distorcido, como nos pedais Darkglass: o limpo mantém o grave firme e a definição; no máximo, só a distorção.",
+     "en": "Mix of clean and distorted signal, as on Darkglass pedals: the clean keeps the low end tight and defined; at maximum, distortion only.",
+     "es": "Mezcla de la señal limpia con la distorsionada, como en los pedales Darkglass: la limpia mantiene el grave firme y definido; al máximo, solo distorsión."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:Chinchilla"
+   ],
+   "parametros": {
+    "Blend": {
+     "pt": "Mistura do sinal limpo com o distorcido, como nos pedais Darkglass: o limpo mantém o grave firme e a definição; no máximo, só a distorção.",
+     "en": "Mix of clean and distorted signal, as on Darkglass pedals: the clean keeps the low end tight and defined; at maximum, distortion only.",
+     "es": "Mezcla de la señal limpia con la distorsionada, como en los pedales Darkglass: la limpia mantiene el grave firme y definido; al máximo, solo distorsión."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural-plugins:microtubes-x"
+   ],
+   "parametros": {
+    "low_pass": {
+     "pt": "Até onde vai a banda grave, que fica limpa e só comprimida. Mais alto = mais do som fica limpo e firme.",
+     "en": "How high the low band reaches; it stays clean and only compressed. Higher = more of the tone stays clean and tight.",
+     "es": "Hasta dónde llega la banda grave, que queda limpia y solo comprimida. Más alto = más del sonido queda limpio y firme."
+    },
+    "low_comp": {
+     "pt": "Compressão da banda grave limpa. Mais = grave mais uniforme e encorpado, sem picos.",
+     "en": "Compression of the clean low band. More = a more even, solid low end with no peaks.",
+     "es": "Compresión de la banda grave limpia. Más = grave más parejo y sólido, sin picos."
+    },
+    "low_level": {
+     "pt": "Volume da banda grave limpa. Mais = mais fundamento por baixo da distorção.",
+     "en": "Level of the clean low band. More = more foundation under the distortion.",
+     "es": "Volumen de la banda grave limpia. Más = más fundamento debajo de la distorsión."
+    },
+    "high_level": {
+     "pt": "Volume da banda aguda distorcida. Mais = mais rosnado sobre o grave limpo.",
+     "en": "Level of the distorted high band. More = more growl over the clean low end.",
+     "es": "Volumen de la banda aguda distorsionada. Más = más gruñido sobre el grave limpio."
+    },
+    "high_drive": {
+     "pt": "Distorção da banda aguda. Como o grave fica limpo, dá para usar bastante sem perder o peso.",
+     "en": "Distortion of the high band. Since the lows stay clean, you can use a lot without losing weight.",
+     "es": "Distorsión de la banda aguda. Como el grave queda limpio, se puede usar bastante sin perder peso."
+    },
+    "high_pass": {
+     "pt": "A partir de onde o sinal vai para a distorção. Mais alto = só os agudos distorcem e o grave fica mais limpo.",
+     "en": "Where the signal starts going into the distortion. Higher = only the highs distort and the lows stay cleaner.",
+     "es": "Desde dónde la señal va a la distorsión. Más alto = solo los agudos distorsionan y el grave queda más limpio."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:ignissor"
+   ],
+   "parametros": {
+    "comp_level": {
+     "pt": "Volume do sinal comprimido das três bandas. Junto com o Clean Level, define a mistura da compressão paralela.",
+     "en": "Level of the compressed signal from all three bands. With Clean Level it sets the parallel compression mix.",
+     "es": "Volumen de la señal comprimida de las tres bandas. Con Clean Level define la mezcla de compresión paralela."
+    },
+    "clean_level": {
+     "pt": "Volume do sinal sem compressão, somado ao comprimido (compressão paralela). Mais = volta o ataque natural das notas.",
+     "en": "Level of the uncompressed signal added to the compressed one (parallel compression). More = brings back the notes' natural attack.",
+     "es": "Volumen de la señal sin comprimir sumada a la comprimida (compresión paralela). Más = vuelve el ataque natural de las notas."
+    },
+    "lomid_xo_freq": {
+     "pt": "Divisa entre a banda grave e a média: abaixo dela é a banda grave.",
+     "en": "Split point between the low and mid bands: below it is the low band.",
+     "es": "División entre la banda grave y la media: por debajo es la banda grave."
+    },
+    "midhi_xo_freq": {
+     "pt": "Divisa entre a banda média e a aguda: acima dela é a banda aguda.",
+     "en": "Split point between the mid and high bands: above it is the high band.",
+     "es": "División entre la banda media y la aguda: por encima es la banda aguda."
+    },
+    "lo_comp_enabled": {
+     "pt": "Liga a compressão da banda grave. Desligada, a banda passa sem compressão.",
+     "en": "Turns on compression for the low band. Off, the band passes uncompressed.",
+     "es": "Activa la compresión de la banda grave. Apagada, la banda pasa sin comprimir."
+    },
+    "lo_threshold": {
+     "pt": "Volume a partir do qual a banda grave é comprimida. Mais baixo = mais compressão só nessa faixa, sem mexer nas outras.",
+     "en": "Level at which the low band starts compressing. Lower = more compression in that range only, leaving the others alone.",
+     "es": "Nivel a partir del cual se comprime la banda grave. Más bajo = más compresión solo en ese rango, sin tocar los otros."
+    },
+    "lo_ratio": {
+     "pt": "Quanto a banda grave é segurada acima do threshold. Mais = mais controle; 20:1 e 100:1 limitam.",
+     "en": "How hard the low band is held above the threshold. Higher = more control; 20:1 and 100:1 limit.",
+     "es": "Cuánto se frena la banda grave por encima del threshold. Más = más control; 20:1 y 100:1 limitan."
+    },
+    "lo_attack": {
+     "pt": "Rapidez com que a banda grave começa a comprimir. Lento deixa passar o ataque da nota nessa faixa.",
+     "en": "How fast the low band starts compressing. Slow lets the note's attack through in that range.",
+     "es": "Rapidez con que la banda grave empieza a comprimir. Lento deja pasar el ataque de la nota en ese rango."
+    },
+    "lo_release": {
+     "pt": "Rapidez com que a banda grave solta a compressão. Longo = mais uniforme; curto = mais vivo.",
+     "en": "How fast the low band lets go of compression. Long = more even; short = livelier.",
+     "es": "Rapidez con que la banda grave suelta la compresión. Largo = más parejo; corto = más vivo."
+    },
+    "lo_level": {
+     "pt": "Volume da banda grave depois da compressão. Funciona também como um EQ de três bandas.",
+     "en": "Level of the low band after compression. It also works as a three-band EQ.",
+     "es": "Volumen de la banda grave tras la compresión. También funciona como un EQ de tres bandas."
+    },
+    "lo_mute": {
+     "pt": "Silencia a banda grave, para ouvir só as outras enquanto ajusta.",
+     "en": "Mutes the low band, so you can hear only the others while adjusting.",
+     "es": "Silencia la banda grave, para oír solo las otras mientras ajustas."
+    },
+    "mid_comp_enabled": {
+     "pt": "Liga a compressão da banda média. Desligada, a banda passa sem compressão.",
+     "en": "Turns on compression for the mid band. Off, the band passes uncompressed.",
+     "es": "Activa la compresión de la banda media. Apagada, la banda pasa sin comprimir."
+    },
+    "mid_threshold": {
+     "pt": "Volume a partir do qual a banda média é comprimida. Mais baixo = mais compressão só nessa faixa, sem mexer nas outras.",
+     "en": "Level at which the mid band starts compressing. Lower = more compression in that range only, leaving the others alone.",
+     "es": "Nivel a partir del cual se comprime la banda media. Más bajo = más compresión solo en ese rango, sin tocar los otros."
+    },
+    "mid_ratio": {
+     "pt": "Quanto a banda média é segurada acima do threshold. Mais = mais controle; 20:1 e 100:1 limitam.",
+     "en": "How hard the mid band is held above the threshold. Higher = more control; 20:1 and 100:1 limit.",
+     "es": "Cuánto se frena la banda media por encima del threshold. Más = más control; 20:1 y 100:1 limitan."
+    },
+    "mid_attack": {
+     "pt": "Rapidez com que a banda média começa a comprimir. Lento deixa passar o ataque da nota nessa faixa.",
+     "en": "How fast the mid band starts compressing. Slow lets the note's attack through in that range.",
+     "es": "Rapidez con que la banda media empieza a comprimir. Lento deja pasar el ataque de la nota en ese rango."
+    },
+    "mid_release": {
+     "pt": "Rapidez com que a banda média solta a compressão. Longo = mais uniforme; curto = mais vivo.",
+     "en": "How fast the mid band lets go of compression. Long = more even; short = livelier.",
+     "es": "Rapidez con que la banda media suelta la compresión. Largo = más parejo; corto = más vivo."
+    },
+    "mid_level": {
+     "pt": "Volume da banda média depois da compressão. Funciona também como um EQ de três bandas.",
+     "en": "Level of the mid band after compression. It also works as a three-band EQ.",
+     "es": "Volumen de la banda media tras la compresión. También funciona como un EQ de tres bandas."
+    },
+    "mid_mute": {
+     "pt": "Silencia a banda média, para ouvir só as outras enquanto ajusta.",
+     "en": "Mutes the mid band, so you can hear only the others while adjusting.",
+     "es": "Silencia la banda media, para oír solo las otras mientras ajustas."
+    },
+    "hi_comp_enabled": {
+     "pt": "Liga a compressão da banda aguda. Desligada, a banda passa sem compressão.",
+     "en": "Turns on compression for the high band. Off, the band passes uncompressed.",
+     "es": "Activa la compresión de la banda aguda. Apagada, la banda pasa sin comprimir."
+    },
+    "hi_threshold": {
+     "pt": "Volume a partir do qual a banda aguda é comprimida. Mais baixo = mais compressão só nessa faixa, sem mexer nas outras.",
+     "en": "Level at which the high band starts compressing. Lower = more compression in that range only, leaving the others alone.",
+     "es": "Nivel a partir del cual se comprime la banda aguda. Más bajo = más compresión solo en ese rango, sin tocar los otros."
+    },
+    "hi_ratio": {
+     "pt": "Quanto a banda aguda é segurada acima do threshold. Mais = mais controle; 20:1 e 100:1 limitam.",
+     "en": "How hard the high band is held above the threshold. Higher = more control; 20:1 and 100:1 limit.",
+     "es": "Cuánto se frena la banda aguda por encima del threshold. Más = más control; 20:1 y 100:1 limitan."
+    },
+    "hi_attack": {
+     "pt": "Rapidez com que a banda aguda começa a comprimir. Lento deixa passar o ataque da nota nessa faixa.",
+     "en": "How fast the high band starts compressing. Slow lets the note's attack through in that range.",
+     "es": "Rapidez con que la banda aguda empieza a comprimir. Lento deja pasar el ataque de la nota en ese rango."
+    },
+    "hi_release": {
+     "pt": "Rapidez com que a banda aguda solta a compressão. Longo = mais uniforme; curto = mais vivo.",
+     "en": "How fast the high band lets go of compression. Long = more even; short = livelier.",
+     "es": "Rapidez con que la banda aguda suelta la compresión. Largo = más parejo; corto = más vivo."
+    },
+    "hi_level": {
+     "pt": "Volume da banda aguda depois da compressão. Funciona também como um EQ de três bandas.",
+     "en": "Level of the high band after compression. It also works as a three-band EQ.",
+     "es": "Volumen de la banda aguda tras la compresión. También funciona como un EQ de tres bandas."
+    },
+    "hi_mute": {
+     "pt": "Silencia a banda aguda, para ouvir só as outras enquanto ajusta.",
+     "en": "Mutes the high band, so you can hear only the others while adjusting.",
+     "es": "Silencia la banda aguda, para oír solo las otras mientras ajustas."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:entropia"
+   ],
+   "parametros": {
+    "lo_comp_type": {
+     "pt": "Tipo de compressor da banda grave: FET reage rápido e marca o ataque; SCI é mais suave. Bypass deixa a banda sem compressão.",
+     "en": "Compressor type for the low band: FET reacts fast and adds punch; SCI is smoother. Bypass leaves the band uncompressed.",
+     "es": "Tipo de compresor de la banda grave: FET reacciona rápido y marca el ataque; SCI es más suave. Bypass deja la banda sin compresión."
+    },
+    "lo_comp_mode": {
+     "pt": "Ataque e soltura do compressor da banda grave. FAST no ataque segura os picos; SLOW deixa o soco passar.",
+     "en": "Attack and release of the low band's compressor. FAST attack catches peaks; SLOW lets the punch through.",
+     "es": "Ataque y liberación del compresor de la banda grave. FAST en el ataque frena los picos; SLOW deja pasar la pegada."
+    },
+    "lo_comp_amount": {
+     "pt": "Quanto a banda grave é comprimida. Mais = grave mais uniforme e firme por baixo da distorção.",
+     "en": "How much the low band is compressed. More = a more even, firm low end under the distortion.",
+     "es": "Cuánto se comprime la banda grave. Más = grave más parejo y firme debajo de la distorsión."
+    },
+    "lo_comp_ratio": {
+     "pt": "Quanto a banda grave é segurada acima do threshold do compressor. Mais = mais controle.",
+     "en": "How hard the low band is held back above the compressor threshold. Higher = more control.",
+     "es": "Cuánto se frena la banda grave por encima del threshold del compresor. Más = más control."
+    },
+    "lo_lp_freq": {
+     "pt": "Até onde vai a banda grave, que fica limpa (só comprimida).",
+     "en": "How high the low band reaches; it stays clean (compressed only).",
+     "es": "Hasta dónde llega la banda grave, que queda limpia (solo comprimida)."
+    },
+    "lo_level": {
+     "pt": "Volume da banda grave limpa.",
+     "en": "Level of the clean low band.",
+     "es": "Volumen de la banda grave limpia."
+    },
+    "mid_drive_typemode": {
+     "pt": "Circuito de distorção da banda média, entre os pedais Darkglass (B3K, VMT, Alpha, Omega, Chinchilla) e suas variações.",
+     "en": "Distortion circuit for the mid band, chosen from the Darkglass pedals (B3K, VMT, Alpha, Omega, Chinchilla) and their variations.",
+     "es": "Circuito de distorsión de la banda media, entre los pedales Darkglass (B3K, VMT, Alpha, Omega, Chinchilla) y sus variaciones."
+    },
+    "hi_drive_typemode": {
+     "pt": "Circuito de distorção da banda aguda. Usar um diferente da média soma dois caracteres de saturação.",
+     "en": "Distortion circuit for the high band. Picking a different one from the mid band layers two saturation characters.",
+     "es": "Circuito de distorsión de la banda aguda. Usar uno distinto del de la media suma dos caracteres de saturación."
+    },
+    "mid_drive_amount": {
+     "pt": "Distorção da banda média: é onde mora o rosnado do baixo.",
+     "en": "Distortion of the mid band: this is where the bass growl lives.",
+     "es": "Distorsión de la banda media: ahí vive el gruñido del bajo."
+    },
+    "hi_drive_amount": {
+     "pt": "Distorção da banda aguda: chiado e ataque. Demais fica áspero.",
+     "en": "Distortion of the high band: fizz and attack. Too much gets harsh.",
+     "es": "Distorsión de la banda aguda: chispa y ataque. De más suena áspero."
+    },
+    "mid_hp_freq": {
+     "pt": "Início da banda média: abaixo daqui o sinal não entra na distorção da média.",
+     "en": "Start of the mid band: below this point the signal doesn't go into the mid distortion.",
+     "es": "Inicio de la banda media: por debajo la señal no entra en la distorsión de la media."
+    },
+    "mid_lp_freq": {
+     "pt": "Fim da banda média: acima daqui o sinal não entra na distorção da média.",
+     "en": "End of the mid band: above this point the signal doesn't go into the mid distortion.",
+     "es": "Fin de la banda media: por encima la señal no entra en la distorsión de la media."
+    },
+    "hi_hp_freq": {
+     "pt": "Início da banda aguda distorcida.",
+     "en": "Start of the distorted high band.",
+     "es": "Inicio de la banda aguda distorsionada."
+    },
+    "hi_lp_freq": {
+     "pt": "Fim da banda aguda: abaixar tira o chiado do topo da distorção.",
+     "en": "End of the high band: lowering it removes fizz from the top of the distortion.",
+     "es": "Fin de la banda aguda: bajarlo quita la chispa de arriba de la distorsión."
+    },
+    "mid_level": {
+     "pt": "Volume da banda média distorcida.",
+     "en": "Level of the distorted mid band.",
+     "es": "Volumen de la banda media distorsionada."
+    },
+    "hi_level": {
+     "pt": "Volume da banda aguda distorcida.",
+     "en": "Level of the distorted high band.",
+     "es": "Volumen de la banda aguda distorsionada."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:FETComp"
+   ],
+   "parametros": {
+    "Input": {
+     "pt": "Quanto sinal entra no compressor. Como ele não tem threshold, mais Input = mais compressão.",
+     "en": "How much signal goes into the compressor. With no threshold control, more Input = more compression.",
+     "es": "Cuánta señal entra en el compresor. Como no tiene threshold, más Input = más compresión."
+    },
+    "Output": {
+     "pt": "Volume de saída, para recuperar o que a compressão tirou.",
+     "en": "Output level, to make up what the compression took away.",
+     "es": "Volumen de salida, para recuperar lo que quitó la compresión."
+    },
+    "Ratio": {
+     "pt": "Quanto o volume é segurado. 'All' aperta todas as relações juntas: compressão muito agressiva e cheia de caráter.",
+     "en": "How hard the level is held. 'All' engages every ratio at once: very aggressive, characterful compression.",
+     "es": "Cuánto se frena el volumen. 'All' aprieta todas las relaciones juntas: compresión muy agresiva y con carácter."
+    },
+    "Blend": {
+     "pt": "Mistura do sinal comprimido com o original (compressão paralela): mantém o ataque natural e soma o peso comprimido.",
+     "en": "Mix of compressed and original signal (parallel compression): keeps the natural attack and adds compressed weight.",
+     "es": "Mezcla de la señal comprimida con la original (compresión paralela): mantiene el ataque natural y suma peso comprimido."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:BUSComp"
+   ],
+   "parametros": {
+    "Blend": {
+     "pt": "Mistura do sinal comprimido com o original (compressão paralela). Compressor de 'cola': deixa o som coeso sem esmagar.",
+     "en": "Mix of compressed and original signal (parallel compression). A 'glue' compressor: makes the tone cohesive without squashing it.",
+     "es": "Mezcla de la señal comprimida con la original (compresión paralela). Compresor de 'pegamento': une el sonido sin aplastarlo."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:CompLim"
+   ],
+   "parametros": {
+    "Threshold": {
+     "pt": "Volume a partir do qual o Compressor/Limiter age. Com ratio alto (20:1 ou 100:1) vira limitador e impede que qualquer nota passe desse ponto.",
+     "en": "Level at which the Compressor/Limiter acts. With a high ratio (20:1 or 100:1) it becomes a limiter and stops any note going past that point.",
+     "es": "Nivel a partir del cual actúa el Compressor/Limiter. Con ratio alto (20:1 o 100:1) se vuelve limitador e impide que cualquier nota pase de ese punto."
+    },
+    "Blend": {
+     "pt": "Mistura do sinal comprimido com o original (compressão paralela).",
+     "en": "Mix of compressed and original signal (parallel compression).",
+     "es": "Mezcla de la señal comprimida con la original (compresión paralela)."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:Suppressor"
+   ],
+   "parametros": {
+    "Threshold": {
+     "pt": "Abaixo deste volume o som é abafado (porta de ruído). Mais alto = corta mais chiado entre as notas, mas pode comer o fim das notas.",
+     "en": "Below this level the sound is cut (noise gate). Higher = removes more hiss between notes but may eat the note tails.",
+     "es": "Por debajo de este volumen se corta el sonido (puerta de ruido). Más alto = quita más ruido entre notas, pero puede comerse el final de las notas."
+    },
+    "Amount": {
+     "pt": "Quanto o ruído é reduzido quando a porta fecha: Less atenua, More corta quase tudo.",
+     "en": "How much noise is reduced when the gate closes: Less attenuates, More cuts almost everything.",
+     "es": "Cuánto se reduce el ruido cuando la puerta cierra: Less atenúa, More corta casi todo."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:HBO"
+   ],
+   "parametros": {
+    "Boost": {
+     "pt": "Quanto o pedal aumenta o volume. Empurrar o amp ou o drive seguinte faz eles saturarem mais.",
+     "en": "How much the pedal raises the level. Pushing the next amp or drive makes it saturate more.",
+     "es": "Cuánto sube el volumen el pedal. Empujar el ampli o el drive siguiente hace que saturen más."
+    },
+    "Character": {
+     "pt": "Quanto de harmônicos o booster acrescenta. Mais = mais saturação suave e calor; menos = boost limpo e transparente.",
+     "en": "How many harmonics the booster adds. More = more gentle saturation and warmth; less = a clean, transparent boost.",
+     "es": "Cuántos armónicos añade el booster. Más = más saturación suave y calidez; menos = boost limpio y transparente."
+    },
+    "MidGain": {
+     "pt": "Reforço ou corte dos médios na frequência escolhida em Mid Freq.",
+     "en": "Boost or cut of the mids at the frequency chosen with Mid Freq.",
+     "es": "Refuerzo o corte de medios en la frecuencia elegida con Mid Freq."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:Gravitron"
+   ],
+   "parametros": {
+    "Sensitivity": {
+     "pt": "Quanto a força da sua mão abre o filtro. Mais = abre com toque leve; menos = só com a palhetada forte.",
+     "en": "How much your picking strength opens the filter. More = opens with a light touch; less = only with hard picking.",
+     "es": "Cuánto abre el filtro la fuerza de tu mano. Más = abre con toque suave; menos = solo con ataque fuerte."
+    },
+    "CutoffFreq": {
+     "pt": "Ponto de partida do filtro, de onde ele abre a cada nota. Mais alto = som mais brilhante já em repouso.",
+     "en": "Starting point of the filter, from where it opens on each note. Higher = a brighter sound even at rest.",
+     "es": "Punto de partida del filtro, desde donde abre en cada nota. Más alto = sonido más brillante en reposo."
+    },
+    "Mode": {
+     "pt": "Tipo de filtro: LP (passa-baixas) é gordo e 'wah' grave; BP (passa-banda) é o 'quack' clássico; HP (passa-altas) é fino e agudo.",
+     "en": "Filter type: LP (low-pass) is fat with a low wah; BP (band-pass) is the classic 'quack'; HP (high-pass) is thin and bright.",
+     "es": "Tipo de filtro: LP (paso bajo) es gordo y 'wah' grave; BP (paso banda) es el 'quack' clásico; HP (paso alto) es fino y agudo."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:Chorus",
+    "urn:darkglass:ChorusStereo",
+    "urn:darkglass:Flanger",
+    "urn:darkglass:FlangerStereo"
+   ],
+   "parametros": {
+    "HPF": {
+     "pt": "Só o que está acima dessa frequência recebe o efeito; os graves passam limpos e firmes. High deixa mais grave sem efeito.",
+     "en": "Only what's above this frequency gets the effect; the lows pass clean and tight. High keeps more low end dry.",
+     "es": "Solo lo que está por encima de esta frecuencia recibe el efecto; los graves pasan limpios y firmes. High deja más grave sin efecto."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:Subcitri",
+    "urn:darkglass:Sublemon",
+    "urn:darkglass:Sublime"
+   ],
+   "parametros": {
+    "FilterCutoff": {
+     "pt": "Brilho da oitava gerada. Mais baixo = sub mais escuro e redondo, que soma peso sem embolar.",
+     "en": "Brightness of the generated octave. Lower = a darker, rounder sub that adds weight without mud.",
+     "es": "Brillo de la octava generada. Más bajo = sub más oscuro y redondo, que suma peso sin embarrar."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:ShimmerReverb",
+    "urn:darkglass:ShimmerReverbStereo"
+   ],
+   "parametros": {
+    "Pitch": {
+     "pt": "Caráter do brilho que o shimmer soma à cauda: Dark mais suave, Bright mais aberto e etéreo.",
+     "en": "Character of the sparkle the shimmer adds to the tail: Dark is softer, Bright is more open and ethereal.",
+     "es": "Carácter del brillo que el shimmer suma a la cola: Dark más suave, Bright más abierto y etéreo."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:HPF"
+   ],
+   "parametros": {
+    "Frequency": {
+     "pt": "Corta os graves abaixo dessa frequência. Bom para tirar o embolado antes da distorção ou abrir espaço para o bumbo.",
+     "en": "Cuts the lows below this frequency. Good for removing mud before distortion or making room for the kick drum.",
+     "es": "Corta los graves por debajo de esta frecuencia. Útil para quitar barro antes de la distorsión o dejar espacio al bombo."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:LPF"
+   ],
+   "parametros": {
+    "Frequency": {
+     "pt": "Corta os agudos acima dessa frequência. Mais baixo = som mais escuro e sem chiado.",
+     "en": "Cuts the highs above this frequency. Lower = a darker sound without fizz.",
+     "es": "Corta los agudos por encima de esta frecuencia. Más bajo = sonido más oscuro y sin chispa."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:Gain"
+   ],
+   "parametros": {
+    "Gain": {
+     "pt": "Aumenta ou diminui o volume neste ponto da cadeia, sem mudar o timbre. Útil para empurrar o bloco seguinte.",
+     "en": "Raises or lowers the level at this point of the chain without changing the tone. Handy for pushing the next block.",
+     "es": "Sube o baja el volumen en este punto de la cadena sin cambiar el timbre. Útil para empujar el bloque siguiente."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:wah"
+   ],
+   "parametros": {
+    "Position": {
+     "pt": "Posição do pedal do wah: no mínimo realça os graves, no máximo os agudos. Ligue a um pedal de expressão para tocar com o pé.",
+     "en": "Wah pedal position: at minimum it emphasizes lows, at maximum highs. Assign it to an expression pedal to play it with your foot.",
+     "es": "Posición del pedal wah: al mínimo realza los graves, al máximo los agudos. Asígnalo a un pedal de expresión para tocarlo con el pie."
+    },
+    "BypassAt0": {
+     "pt": "Ligado, o wah se desliga sozinho quando o pedal volta ao zero.",
+     "en": "On, the wah switches itself off when the pedal returns to zero.",
+     "es": "Activado, el wah se apaga solo cuando el pedal vuelve a cero."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural-plugins:gentle"
+   ],
+   "parametros": {
+    "low_cut": {
+     "pt": "Liga um corte de graves: som mais firme e menos embolado, bom para tocar com palheta ou em volume alto.",
+     "en": "Engages a low cut: a tighter, less muddy sound, good for pick playing or high volumes.",
+     "es": "Activa un corte de graves: sonido más firme y menos embarrado, bueno para púa o volumen alto."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural-plugins:markku"
+   ],
+   "parametros": {
+    "vintagefilter": {
+     "pt": "Filtro vintage: corta os agudos aos poucos, como um falante antigo. Mais = som mais escuro, redondo e 'old school'.",
+     "en": "Vintage filter: rolls off the highs gradually, like an old speaker. More = darker, rounder, old-school tone.",
+     "es": "Filtro vintage: corta los agudos poco a poco, como un altavoz antiguo. Más = sonido más oscuro, redondo y 'old school'."
+    },
+    "modernfilter": {
+     "pt": "Filtro moderno: escava os médios e realça graves e agudos. Mais = som moderno, com mais grave e estalo.",
+     "en": "Modern filter: scoops the mids and lifts lows and highs. More = a modern tone with more low end and click.",
+     "es": "Filtro moderno: escava los medios y realza graves y agudos. Más = sonido moderno, con más grave y chasquido."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural-plugins:peggycl"
+   ],
+   "parametros": {
+    "ultra_lo": {
+     "pt": "Ultra Lo: reforça os graves extremos e escava os médios. Som cheio e moderno; pode sumir na mixagem.",
+     "en": "Ultra Lo: boosts the deep lows and scoops the mids. A full, modern sound that can get lost in the mix.",
+     "es": "Ultra Lo: refuerza los graves extremos y escava los medios. Sonido lleno y moderno; puede perderse en la mezcla."
+    },
+    "ultra_hi": {
+     "pt": "Ultra Hi: reforça os agudos altos. Mais estalo e brilho, bom para slap.",
+     "en": "Ultra Hi: boosts the upper highs. More click and sparkle, good for slap.",
+     "es": "Ultra Hi: refuerza los agudos altos. Más chasquido y brillo, bueno para slap."
+    },
+    "input": {
+     "pt": "Entrada do amp: 0dB para baixos passivos; -15dB para baixos ativos ou de sinal forte, para não saturar a entrada.",
+     "en": "Amp input: 0dB for passive basses; -15dB for active or hot basses, so the input doesn't overload.",
+     "es": "Entrada del ampli: 0dB para bajos pasivos; -15dB para bajos activos o de señal fuerte, para no saturar la entrada."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural-plugins:peggy-bass"
+   ],
+   "parametros": {
+    "ultra_lo": {
+     "pt": "Ultra Lo: reforça os graves extremos e escava os médios. Som cheio e moderno; pode sumir na mixagem.",
+     "en": "Ultra Lo: boosts the deep lows and scoops the mids. A full, modern sound that can get lost in the mix.",
+     "es": "Ultra Lo: refuerza los graves extremos y escava los medios. Sonido lleno y moderno; puede perderse en la mezcla."
+    },
+    "ultra_hi": {
+     "pt": "Ultra Hi: reforça os agudos altos. Mais estalo e brilho, bom para slap.",
+     "en": "Ultra Hi: boosts the upper highs. More click and sparkle, good for slap.",
+     "es": "Ultra Hi: refuerza los agudos altos. Más chasquido y brillo, bueno para slap."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:JimBass",
+    "urn:darkglass:LeoBass"
+   ],
+   "parametros": {
+    "Volume": {
+     "pt": "Volume do pré-amplificador. Mais = o amp começa a saturar e comprimir; o volume final fica no Master.",
+     "en": "Preamp volume. More = the amp starts to break up and compress; the overall level is set with Master.",
+     "es": "Volumen del preamplificador. Más = el ampli empieza a saturar y comprimir; el volumen final va en Master."
+    },
+    "Master": {
+     "pt": "Volume final do amp, depois do pré. Ajuste o caráter no Volume e o quanto sai aqui.",
+     "en": "The amp's final level, after the preamp. Set the character with Volume and the output here.",
+     "es": "Volumen final del ampli, después del previo. Ajusta el carácter con Volume y cuánto sale aquí."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural-plugins:fliptop"
+   ],
+   "parametros": {
+    "vol": {
+     "pt": "Volume do amp: mais = mais saturação valvulada; o volume final fica em Level.",
+     "en": "The amp's volume: more = more tube breakup; the overall level is set with Level.",
+     "es": "Volumen del ampli: más = más saturación valvular; el volumen final va en Level."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural-plugins:super-california"
+   ],
+   "parametros": {
+    "volume": {
+     "pt": "Volume do pré-amplificador. Mais = o amp começa a saturar e comprimir; o volume final fica no Master.",
+     "en": "Preamp volume. More = the amp starts to break up and compress; the overall level is set with Master.",
+     "es": "Volumen del preamplificador. Más = el ampli empieza a saturar y comprimir; el volumen final va en Master."
+    },
+    "master": {
+     "pt": "Volume final do amp, depois do pré. Ajuste o caráter no Volume e o quanto sai aqui.",
+     "en": "The amp's final level, after the preamp. Set the character with Volume and the output here.",
+     "es": "Volumen final del ampli, después del previo. Ajusta el carácter con Volume y cuánto sale aquí."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural-plugins:gallen-kallinen"
+   ],
+   "parametros": {
+    "mid_contour": {
+     "pt": "Liga o contorno de médios: escava os médios para um som mais 'sorriso', com graves e agudos à frente.",
+     "en": "Engages the mid contour: scoops the mids for a 'smiley' tone with lows and highs up front.",
+     "es": "Activa el contorno de medios: escava los medios para un sonido 'sonrisa', con graves y agudos al frente."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural-plugins:swe"
+   ],
+   "parametros": {
+    "character": {
+     "pt": "Muda o caráter geral de equalização do amp. Compare as duas posições ouvindo.",
+     "en": "Changes the amp's overall voicing. Compare both positions by ear.",
+     "es": "Cambia el carácter general de ecualización del ampli. Compara las dos posiciones de oído."
+    },
+    "bright": {
+     "pt": "Realça os agudos altos: mais brilho e estalo nas cordas.",
+     "en": "Lifts the upper highs: more sparkle and string click.",
+     "es": "Realza los agudos altos: más brillo y chasquido en las cuerdas."
+    },
+    "tubemode": {
+     "pt": "Modo válvula: deixa a resposta mais quente e comprimida, como um pré valvulado.",
+     "en": "Tube mode: makes the response warmer and more compressed, like a tube preamp.",
+     "es": "Modo válvula: hace la respuesta más cálida y comprimida, como un previo a válvulas."
+    },
+    "boostdrive": {
+     "pt": "Liga o circuito de drive do amp; a quantidade fica no controle Drive.",
+     "en": "Turns on the amp's drive circuit; the amount is set with the Drive control.",
+     "es": "Activa el circuito de drive del ampli; la cantidad se ajusta con Drive."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural-plugins:swirl"
+   ],
+   "parametros": {
+    "aurashaper": {
+     "pt": "Controle de voicing próprio deste amp, que molda o caráter geral do som. Ajuste ouvindo junto com o EQ.",
+     "en": "This amp's own voicing control, shaping the overall character. Adjust it by ear along with the EQ.",
+     "es": "Control de voicing propio de este ampli, que moldea el carácter general. Ajústalo de oído junto con el EQ."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural-plugins:pirate"
+   ],
+   "parametros": {
+    "tone_enabled": {
+     "pt": "Liga o controle de timbre do fuzz. Desligado, o fuzz soa sem filtro, mais cru e cheio.",
+     "en": "Turns on the fuzz tone control. Off, the fuzz is unfiltered, rawer and fuller.",
+     "es": "Activa el control de tono del fuzz. Apagado, el fuzz suena sin filtro, más crudo y lleno."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural-plugins:duality-fuzz"
+   ],
+   "parametros": {
+    "duality": {
+     "pt": "Equilibra os dois circuitos de fuzz do pedal, que têm caracteres diferentes. Ajuste ouvindo.",
+     "en": "Balances the pedal's two fuzz circuits, which have different characters. Adjust by ear.",
+     "es": "Equilibra los dos circuitos de fuzz del pedal, que tienen caracteres distintos. Ajústalo de oído."
+    },
+    "filter": {
+     "pt": "Filtro de timbre do fuzz: mais = mais brilho e chiado; menos = mais escuro e gordo.",
+     "en": "The fuzz's tone filter: more = brighter and fizzier; less = darker and fatter.",
+     "es": "Filtro de tono del fuzz: más = más brillo y chispa; menos = más oscuro y gordo."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural:amp",
+    "urn:darkglass:neural:misc",
+    "urn:darkglass:neural:tone3000"
+   ],
+   "parametros": {
+    "INPUT": {
+     "pt": "Quanto sinal entra no modelo neural. Mais = o modelo satura mais, como aumentar o ganho do amp original.",
+     "en": "How much signal goes into the neural model. More = the model saturates more, like turning up the original amp's gain.",
+     "es": "Cuánta señal entra en el modelo neural. Más = el modelo satura más, como subir la ganancia del ampli original."
+    },
+    "OUTPUT": {
+     "pt": "Volume de saída do modelo, para igualar o volume com os outros presets.",
+     "en": "Output level of the model, to match volume with other presets.",
+     "es": "Volumen de salida del modelo, para igualarlo con los otros presets."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:neural:pedal"
+   ],
+   "parametros": {
+    "Input": {
+     "pt": "Quanto sinal entra no modelo do pedal. Mais = mais saturação.",
+     "en": "How much signal goes into the pedal model. More = more saturation.",
+     "es": "Cuánta señal entra en el modelo del pedal. Más = más saturación."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass-anagram:cabinet-artists",
+    "urn:darkglass-anagram:cabinet-bass",
+    "urn:darkglass-anagram:cabinet-guitar",
+    "urn:darkglass-anagram:cabinet-tone3000#stereo",
+    "urn:darkglass-anagram:cabinet-user"
+   ],
+   "parametros": {
+    "Blend": {
+     "pt": "Mistura do som com a simulação de caixa e o som direto (sem caixa). Menos = mais do direto, com mais grave e ataque cru.",
+     "en": "Mix between the cabinet-simulated sound and the direct sound (no cabinet). Less = more direct, with rawer lows and attack.",
+     "es": "Mezcla entre el sonido con simulación de caja y el directo (sin caja). Menos = más directo, con graves y ataque más crudos."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass-anagram:split"
+   ],
+   "parametros": {
+    "Crossover": {
+     "pt": "Divide o sinal por frequência entre as duas linhas: '1 Lo, 2 Hi' manda os graves para a linha 1 e os agudos para a 2. Off manda o sinal inteiro para as duas.",
+     "en": "Splits the signal by frequency between the two rows: '1 Lo, 2 Hi' sends the lows to row 1 and the highs to row 2. Off sends the full signal to both.",
+     "es": "Divide la señal por frecuencia entre las dos filas: '1 Lo, 2 Hi' manda los graves a la fila 1 y los agudos a la 2. Off manda la señal completa a ambas."
+    },
+    "CrossoverFreq": {
+     "pt": "Frequência da divisão entre as linhas quando o Crossover está ligado.",
+     "en": "Split frequency between the rows when Crossover is on.",
+     "es": "Frecuencia de la división entre filas cuando el Crossover está activo."
+    },
+    "LevelRow1": {
+     "pt": "Volume que entra na linha de cima.",
+     "en": "Level going into the top row.",
+     "es": "Volumen que entra en la fila de arriba."
+    },
+    "LevelRow2": {
+     "pt": "Volume que entra na linha de baixo.",
+     "en": "Level going into the bottom row.",
+     "es": "Volumen que entra en la fila de abajo."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass-anagram:merge"
+   ],
+   "parametros": {
+    "Blend": {
+     "pt": "Equilíbrio entre as duas linhas na junção: para um lado mais da linha de cima, para o outro mais da de baixo.",
+     "en": "Balance between the two rows where they merge: one way more of the top row, the other more of the bottom row.",
+     "es": "Equilibrio entre las dos filas al unirse: hacia un lado más de la fila de arriba, hacia el otro más de la de abajo."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:Tuner"
+   ],
+   "parametros": {
+    "Mute": {
+     "pt": "Silencia a saída enquanto você afina.",
+     "en": "Mutes the output while you tune.",
+     "es": "Silencia la salida mientras afinas."
+    },
+    "Reference": {
+     "pt": "Frequência de referência do Lá (normalmente 440 Hz). Mude só para tocar junto com algo afinado fora do padrão.",
+     "en": "Reference frequency for A (usually 440 Hz). Change it only to play along with something tuned off standard.",
+     "es": "Frecuencia de referencia del La (normalmente 440 Hz). Cámbiala solo para tocar con algo afinado fuera del estándar."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass-anagram:exp-pedal"
+   ],
+   "parametros": {
+    "min": {
+     "pt": "Valor quando o pedal de expressão está todo para trás.",
+     "en": "Value with the expression pedal all the way back.",
+     "es": "Valor con el pedal de expresión totalmente atrás."
+    },
+    "max": {
+     "pt": "Valor quando o pedal de expressão está todo para frente.",
+     "en": "Value with the expression pedal all the way forward.",
+     "es": "Valor con el pedal de expresión totalmente adelante."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass-anagram:midi-cc-helper"
+   ],
+   "parametros": {
+    "in0": {
+     "pt": "Entrada 0 do conversor de MIDI CC: um valor que um controlador MIDI pode mover e que pode ser ligado a parâmetros. Não mexe no som sozinho.",
+     "en": "Input 0 of the MIDI CC helper: a value a MIDI controller can move and that can be linked to parameters. It doesn't change the sound by itself.",
+     "es": "Entrada 0 del conversor de MIDI CC: un valor que un controlador MIDI puede mover y que puede enlazarse a parámetros. No cambia el sonido por sí solo."
+    },
+    "in1": {
+     "pt": "Entrada 1 do conversor de MIDI CC: um valor que um controlador MIDI pode mover e que pode ser ligado a parâmetros. Não mexe no som sozinho.",
+     "en": "Input 1 of the MIDI CC helper: a value a MIDI controller can move and that can be linked to parameters. It doesn't change the sound by itself.",
+     "es": "Entrada 1 del conversor de MIDI CC: un valor que un controlador MIDI puede mover y que puede enlazarse a parámetros. No cambia el sonido por sí solo."
+    },
+    "in2": {
+     "pt": "Entrada 2 do conversor de MIDI CC: um valor que um controlador MIDI pode mover e que pode ser ligado a parâmetros. Não mexe no som sozinho.",
+     "en": "Input 2 of the MIDI CC helper: a value a MIDI controller can move and that can be linked to parameters. It doesn't change the sound by itself.",
+     "es": "Entrada 2 del conversor de MIDI CC: un valor que un controlador MIDI puede mover y que puede enlazarse a parámetros. No cambia el sonido por sí solo."
+    },
+    "in3": {
+     "pt": "Entrada 3 do conversor de MIDI CC: um valor que um controlador MIDI pode mover e que pode ser ligado a parâmetros. Não mexe no som sozinho.",
+     "en": "Input 3 of the MIDI CC helper: a value a MIDI controller can move and that can be linked to parameters. It doesn't change the sound by itself.",
+     "es": "Entrada 3 del conversor de MIDI CC: un valor que un controlador MIDI puede mover y que puede enlazarse a parámetros. No cambia el sonido por sí solo."
+    },
+    "in4": {
+     "pt": "Entrada 4 do conversor de MIDI CC: um valor que um controlador MIDI pode mover e que pode ser ligado a parâmetros. Não mexe no som sozinho.",
+     "en": "Input 4 of the MIDI CC helper: a value a MIDI controller can move and that can be linked to parameters. It doesn't change the sound by itself.",
+     "es": "Entrada 4 del conversor de MIDI CC: un valor que un controlador MIDI puede mover y que puede enlazarse a parámetros. No cambia el sonido por sí solo."
+    },
+    "in5": {
+     "pt": "Entrada 5 do conversor de MIDI CC: um valor que um controlador MIDI pode mover e que pode ser ligado a parâmetros. Não mexe no som sozinho.",
+     "en": "Input 5 of the MIDI CC helper: a value a MIDI controller can move and that can be linked to parameters. It doesn't change the sound by itself.",
+     "es": "Entrada 5 del conversor de MIDI CC: un valor que un controlador MIDI puede mover y que puede enlazarse a parámetros. No cambia el sonido por sí solo."
+    },
+    "in6": {
+     "pt": "Entrada 6 do conversor de MIDI CC: um valor que um controlador MIDI pode mover e que pode ser ligado a parâmetros. Não mexe no som sozinho.",
+     "en": "Input 6 of the MIDI CC helper: a value a MIDI controller can move and that can be linked to parameters. It doesn't change the sound by itself.",
+     "es": "Entrada 6 del conversor de MIDI CC: un valor que un controlador MIDI puede mover y que puede enlazarse a parámetros. No cambia el sonido por sí solo."
+    },
+    "in7": {
+     "pt": "Entrada 7 do conversor de MIDI CC: um valor que um controlador MIDI pode mover e que pode ser ligado a parâmetros. Não mexe no som sozinho.",
+     "en": "Input 7 of the MIDI CC helper: a value a MIDI controller can move and that can be linked to parameters. It doesn't change the sound by itself.",
+     "es": "Entrada 7 del conversor de MIDI CC: un valor que un controlador MIDI puede mover y que puede enlazarse a parámetros. No cambia el sonido por sí solo."
+    },
+    "in8": {
+     "pt": "Entrada 8 do conversor de MIDI CC: um valor que um controlador MIDI pode mover e que pode ser ligado a parâmetros. Não mexe no som sozinho.",
+     "en": "Input 8 of the MIDI CC helper: a value a MIDI controller can move and that can be linked to parameters. It doesn't change the sound by itself.",
+     "es": "Entrada 8 del conversor de MIDI CC: un valor que un controlador MIDI puede mover y que puede enlazarse a parámetros. No cambia el sonido por sí solo."
+    },
+    "in9": {
+     "pt": "Entrada 9 do conversor de MIDI CC: um valor que um controlador MIDI pode mover e que pode ser ligado a parâmetros. Não mexe no som sozinho.",
+     "en": "Input 9 of the MIDI CC helper: a value a MIDI controller can move and that can be linked to parameters. It doesn't change the sound by itself.",
+     "es": "Entrada 9 del conversor de MIDI CC: un valor que un controlador MIDI puede mover y que puede enlazarse a parámetros. No cambia el sonido por sí solo."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass-anagram:midi-pc-gen"
+   ],
+   "parametros": {
+    "trigger": {
+     "pt": "Envia a mensagem de Program Change configurada para outros aparelhos MIDI. Não mexe no som.",
+     "en": "Sends the configured Program Change message to other MIDI gear. It doesn't change the sound.",
+     "es": "Envía el mensaje de Program Change configurado a otros equipos MIDI. No cambia el sonido."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass-anagram:sine-gen"
+   ],
+   "parametros": {
+    "freq": {
+     "pt": "Frequência do tom de teste gerado. Útil para conferir saídas e níveis.",
+     "en": "Frequency of the generated test tone. Handy for checking outputs and levels.",
+     "es": "Frecuencia del tono de prueba generado. Útil para comprobar salidas y niveles."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass-anagram:meters"
+   ],
+   "parametros": {
+    "InputClipLvl": {
+     "pt": "Nível em que o medidor de entrada acusa saturação. Não mexe no som.",
+     "en": "Level at which the input meter reports clipping. It doesn't change the sound.",
+     "es": "Nivel en que el medidor de entrada marca saturación. No cambia el sonido."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass-anagram:output"
+   ],
+   "parametros": {
+    "xlrL": {
+     "pt": "Liga ou desliga o envio para a saída 1 (XLR).",
+     "en": "Turns sending to output 1 (XLR) on or off.",
+     "es": "Activa o desactiva el envío a la salida 1 (XLR)."
+    },
+    "xlrR": {
+     "pt": "Liga ou desliga o envio para a saída 2 (XLR).",
+     "en": "Turns sending to output 2 (XLR) on or off.",
+     "es": "Activa o desactiva el envío a la salida 2 (XLR)."
+    },
+    "jackL": {
+     "pt": "Liga ou desliga o envio para a saída 3 (P10).",
+     "en": "Turns sending to output 3 (P10) on or off.",
+     "es": "Activa o desactiva el envío a la salida 3 (P10)."
+    },
+    "jackR": {
+     "pt": "Liga ou desliga o envio para a saída 4 (P10).",
+     "en": "Turns sending to output 4 (P10) on or off.",
+     "es": "Activa o desactiva el envío a la salida 4 (P10)."
+    },
+    "headphones": {
+     "pt": "Liga ou desliga o envio para a saída de fone.",
+     "en": "Turns sending to output de fone on or off.",
+     "es": "Activa o desactiva el envío a la salida de fone."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass-anagram:mixer"
+   ],
+   "parametros": {
+    "BTRouting": {
+     "pt": "Para quais saídas vai o áudio que chega pelo Bluetooth.",
+     "en": "Which outputs receive the audio coming in over Bluetooth.",
+     "es": "A qué salidas va el audio que llega por Bluetooth."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:axioma_synth"
+   ],
+   "parametros": {
+    "osc1_wave": {
+     "pt": "Forma de onda do oscilador 1: Saw é rica e brilhante, Square é oca e encorpada, Triangle é suave.",
+     "en": "Oscillator 1 waveform: Saw is rich and bright, Square is hollow and full, Triangle is soft.",
+     "es": "Forma de onda del oscilador 1: Saw es rica y brillante, Square es hueca y llena, Triangle es suave."
+    },
+    "osc2_wave": {
+     "pt": "Forma de onda do oscilador 2: Saw é rica e brilhante, Square é oca e encorpada, Triangle é suave.",
+     "en": "Oscillator 2 waveform: Saw is rich and bright, Square is hollow and full, Triangle is soft.",
+     "es": "Forma de onda del oscilador 2: Saw es rica y brillante, Square es hueca y llena, Triangle es suave."
+    },
+    "osc1_vol": {
+     "pt": "Volume do oscilador 1.",
+     "en": "Level of oscillator 1.",
+     "es": "Volumen del oscilador 1."
+    },
+    "osc2_vol": {
+     "pt": "Volume do oscilador 2.",
+     "en": "Level of oscillator 2.",
+     "es": "Volumen del oscilador 2."
+    },
+    "sub_vol": {
+     "pt": "Volume do sub-oscilador, uma oitava abaixo: mais peso no grave.",
+     "en": "Level of the sub-oscillator, an octave below: more low-end weight.",
+     "es": "Volumen del suboscilador, una octava abajo: más peso en el grave."
+    },
+    "osc2_semitone": {
+     "pt": "Afinação do oscilador 2 em semitons: +12 ou -12 soma uma oitava; +7 soma uma quinta.",
+     "en": "Oscillator 2 tuning in semitones: +12 or -12 adds an octave; +7 adds a fifth.",
+     "es": "Afinación del oscilador 2 en semitonos: +12 o -12 suma una octava; +7 suma una quinta."
+    },
+    "attack": {
+     "pt": "Tempo para o som do synth chegar ao volume cheio. Longo = entrada lenta, tipo 'pad'.",
+     "en": "Time for the synth to reach full level. Long = a slow, pad-like swell.",
+     "es": "Tiempo para que el synth llegue al volumen pleno. Largo = entrada lenta, tipo 'pad'."
+    },
+    "decay": {
+     "pt": "Quanto tempo o filtro do synth leva para fechar depois do ataque.",
+     "en": "How long the synth's filter takes to close after the attack.",
+     "es": "Cuánto tarda el filtro del synth en cerrarse tras el ataque."
+    },
+    "release": {
+     "pt": "Quanto o synth continua soando depois que a nota para.",
+     "en": "How long the synth keeps sounding after the note stops.",
+     "es": "Cuánto sigue sonando el synth después de que la nota para."
+    },
+    "instrument": {
+     "pt": "Instrumento ligado ao pedal, para o synth ler as notas na faixa certa.",
+     "en": "The instrument plugged into the pedal, so the synth tracks notes in the right range.",
+     "es": "Instrumento conectado al pedal, para que el synth lea las notas en el rango correcto."
+    },
+    "arp_enable": {
+     "pt": "Liga o arpejador: a nota tocada vira uma sequência de notas no andamento.",
+     "en": "Turns on the arpeggiator: the played note becomes a sequence of notes in time.",
+     "es": "Activa el arpegiador: la nota tocada se vuelve una secuencia de notas a tempo."
+    },
+    "arp_key": {
+     "pt": "Tom em que o arpejador monta as notas.",
+     "en": "Key the arpeggiator builds its notes in.",
+     "es": "Tonalidad en la que el arpegiador arma las notas."
+    },
+    "arp_scale": {
+     "pt": "Escala ou acorde que o arpejador usa.",
+     "en": "Scale or chord the arpeggiator uses.",
+     "es": "Escala o acorde que usa el arpegiador."
+    },
+    "arp_pattern": {
+     "pt": "Ordem em que o arpejador toca as notas: subindo, descendo, os dois ou aleatório.",
+     "en": "Order the arpeggiator plays the notes in: up, down, both or random.",
+     "es": "Orden en que el arpegiador toca las notas: subiendo, bajando, ambos o aleatorio."
+    },
+    "arp_octaves": {
+     "pt": "Quantas oitavas o arpejo percorre.",
+     "en": "How many octaves the arpeggio spans.",
+     "es": "Cuántas octavas recorre el arpegio."
+    }
+   }
+  },
+  {
+   "uris": [
+    "urn:darkglass:PitchBender"
+   ],
+   "parametros": {
+    "ShiftAmount": {
+     "pt": "Quanto do intervalo de Max Shift está aplicado agora. Ligue a um pedal de expressão para dobrar a nota com o pé.",
+     "en": "How much of the Max Shift interval is applied right now. Assign it to an expression pedal to bend with your foot.",
+     "es": "Cuánto del intervalo de Max Shift se aplica ahora. Asígnalo a un pedal de expresión para doblar la nota con el pie."
+    }
+   }
+  }
+ ]
+}

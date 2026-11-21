@@ -3,6 +3,7 @@
 // roadie codificando a família do bloco. Nenhuma cor ou medida fora daqui.
 import 'package:flutter/painting.dart';
 
+import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/familia_bloco.dart';
 
 abstract final class Cores {
@@ -26,6 +27,22 @@ abstract final class Cores {
   static const ledDesligado = Color(0xFF6B7077);
   static const erro = Color(0xFFFF7A66);
 
+  /// O caminho da linha paralela: amarelo do Split até o fim da linha 2 e
+  /// verde-água claro na volta ao Merge (pedido do usuário). O amarelo é mais
+  /// claro e frio que o âmbar de ação ([tally]) para não parecer seleção; o
+  /// verde-água é mais claro que a família de modulação. Os dois passam de
+  /// 10:1 sobre [fundoCase].
+  static const sinalSplit = Color(0xFFF5E05A);
+  static const sinalMerge = Color(0xFF8FEADB);
+
+  /// A fita da casa: Split e Merge levam a cor do trecho que abrem e fecham,
+  /// para ligar o bloco ao fio; os demais, a da família.
+  static Color daFita(String uri, FamiliaBloco familia) {
+    if (uri.endsWith(':split')) return sinalSplit;
+    if (uri.endsWith(':merge')) return sinalMerge;
+    return daFamilia(familia);
+  }
+
   static Color daFamilia(FamiliaBloco familia) => switch (familia) {
         FamiliaBloco.drive => const Color(0xFFE8772E),
         // verde-limão: o amarelo antigo (E2C23A) se confundia com o âmbar de ação
@@ -38,6 +55,14 @@ abstract final class Cores {
         FamiliaBloco.amplificador => const Color(0xFFE0563F),
         FamiliaBloco.gabinete => const Color(0xFFB9A37C),
         FamiliaBloco.utilitario => const Color(0xFF8D949C),
+      };
+
+  /// As três bandas do Ignissor e do Entropia, na faixa de frequência e no
+  /// topo da coluna: matizes distantes entre si e do âmbar de ação.
+  static Color daBanda(BandaMultibanda banda) => switch (banda) {
+        BandaMultibanda.graves => const Color(0xFF5585EE),
+        BandaMultibanda.medios => const Color(0xFF34C3A0),
+        BandaMultibanda.agudos => const Color(0xFFD46BB3),
       };
 }
 
@@ -101,6 +126,38 @@ abstract final class Medidas {
   static const double knobCompacto = 84;
   static const double espessuraArco = 6;
 
+  /// Fader do GEQ: mais alto que o knob (o curso é o que se lê) e estreito,
+  /// para as bandas ficarem juntas e desenharem a curva.
+  static const double alturaFaderPorKnob = 1.5;
+  static const double larguraFader = 56;
+  static const double larguraCursorFader = 34;
+  static const double alturaCursorFader = 14;
+  static const double marcaZeroFader = 12;
+
+  /// Banda desligada do paramétrico: ainda editável, mas apagada.
+  static const double opacidadeBandaDesligada = 0.45;
+
+  /// Faixa de frequência do multibanda: uma raia por banda, a régua embaixo
+  /// e a alça do corte larga o bastante para o dedo, com o traço fino no meio.
+  static const double alturaRaiaBanda = 32;
+  static const double alturaReguaFrequencias = 18;
+  static const double larguraAlcaFrequencia = 32;
+  static const double tracoAlcaFrequencia = 3;
+  static const double puxadorAlcaFrequencia = 10;
+
+  /// Preenchimento da banda na faixa: tocando e mutada.
+  static const double opacidadeRaiaBanda = 0.55;
+  static const double opacidadeRaiaMuda = 0.12;
+
+  /// Coluna de uma banda do multibanda: abaixo de três delas lado a lado,
+  /// as bandas viram abas.
+  static const double larguraColunaBanda = 264;
+  static const double knobBanda = 72;
+
+  /// Acima disto as opções de um seletor ganham busca e grupos (os 37 drives).
+  static const int opcoesSemBusca = 12;
+  static const double alturaListaOpcoes = 480;
+
   /// Knob em proporções do próprio desenho: o corpo fica a 1,6 arco para
   /// dentro do anel, e o ponteiro vai de 25% a 82% do raio do corpo.
   static const double folgaCorpoKnob = 1.6;
@@ -120,13 +177,18 @@ abstract final class Medidas {
   static const double alturaRotuloCasa = 34;
   static const double entrelinhaRotuloCasa = 1.15;
 
-  /// Foto do modelo no menu de escolha do gabinete.
-  static const double fotoNaEscolhaDeGabinete = 32;
-  /// Foto do gabinete escolhido no painel do bloco, como a pedaleira mostra.
-  static const double fotoGabineteGrande = 144;
-  /// A partir desta largura a foto fica ao lado dos controles do gabinete.
+  /// Os três cartões do gabinete (modelo, microfone, posição) têm esta altura.
+  static const double alturaCartaoGabinete = 208;
+  /// Duas linhas do nome embaixo da foto/ícone do cartão.
+  static const double alturaNomeCartaoGabinete = 40;
+  static const double fotoNoCartaoGabinete = 112;
+  static const double iconeNoCartaoGabinete = 56;
+  /// A partir desta largura os três cartões ficam lado a lado.
   static const double larguraGabineteLadoALado = 560;
-  static const double larguraCampoGabinete = 320;
+  /// Galeria dos modelos: foto e largura máxima de cada item da grade.
+  static const double fotoNaGaleria = 96;
+  static const double larguraItemGaleria = 150;
+  static const double proporcaoItemGaleria = 0.9;
   static const double iconeMicrofone = 20;
   /// Traço do ícone de microfone, em fração do lado do ícone.
   static const double tracoMicrofone = 0.08;
@@ -146,6 +208,13 @@ abstract final class Medidas {
 
   /// Abaixo disto os botões de salvar descem para baixo da fita do preset.
   static const double larguraFaixaEmLinha = 880;
+
+  /// Configurações: coluna de leitura, não a tela inteira do notebook.
+  static const double larguraConfiguracoes = 640;
+  static const double larguraCampoPorta = 120;
+
+  /// Balão da explicação do parâmetro: uma frase curta por linha legível.
+  static const double larguraExplicacao = 320;
 }
 
 abstract final class Quebras {
@@ -162,6 +231,9 @@ abstract final class Quebras {
 
 abstract final class Duracoes {
   static const curta = Duration(milliseconds: 150);
+
+  /// O mouse passa pelo rótulo a caminho do knob: só explica se parar nele.
+  static const esperaExplicacao = Duration(milliseconds: 500);
 }
 
 abstract final class Fontes {

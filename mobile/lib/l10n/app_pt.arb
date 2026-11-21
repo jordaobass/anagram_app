@@ -646,12 +646,6 @@
       }
     }
   },
-  "gxModeloAnterior": "Gabinete anterior",
-  "gxProximoModelo": "Próximo gabinete",
-  "gxBuscarGabinete": "Escreva para buscar",
-  "@gxBuscarGabinete": {
-    "description": "Dica do campo de busca do modelo de gabinete"
-  },
   "fbAreaFabrica": "Fábrica",
   "@fbAreaFabrica": {
     "description": "Nome da área dos presets de fábrica no seletor de área"
@@ -679,5 +673,164 @@
   "fbCopiarPara": "Copiar para a minha área…",
   "@fbCopiarPara": {
     "description": "Item do menu de um preset da fábrica"
-  }
+  },
+  "eqBandaGeral": "Geral",
+  "@eqBandaGeral": {
+    "description": "Título do grupo com o ganho geral do equalizador paramétrico"
+  },
+  "eqPassaAltas": "Passa-altas",
+  "eqPassaBaixas": "Passa-baixas",
+  "eqShelfGraves": "Shelf de graves",
+  "eqBanda": "Banda {numero}",
+  "@eqBanda": {
+    "description": "Título de uma banda do equalizador paramétrico",
+    "placeholders": {
+      "numero": {
+        "type": "int"
+      }
+    }
+  },
+  "eqShelfAgudos": "Shelf de agudos",
+  "mbGraves": "Graves",
+  "@mbGraves": {
+    "description": "Banda de graves do multibanda (Ignissor, Entropia)"
+  },
+  "mbMedios": "Médios",
+  "mbAgudos": "Agudos",
+  "mbBordaGraves": "20 Hz",
+  "@mbBordaGraves": {
+    "description": "Borda de baixo da faixa de áudio, que nenhum corte move"
+  },
+  "mbBordaAgudos": "20 kHz",
+  "mbMudo": "Mudo",
+  "@mbMudo": {
+    "description": "Botão que silencia uma banda do multibanda"
+  },
+  "mbCompLigada": "Comp ligado",
+  "mbCompDesligada": "Comp desligado",
+  "mbSaida": "Saída",
+  "mbOutros": "Outros",
+  "mbExplicaMisturaLimpa": "Comp Level é o volume das três bandas comprimidas. Clean Level mistura em paralelo o sinal seco, sem compressão: no mínimo (−24 dB) quase só se ouve o comprimido; subindo, volta o ataque natural da corda.",
+  "@mbExplicaMisturaLimpa": {
+    "description": "Explica os níveis de saída do Ignissor"
+  },
+  "mbBuscarOpcao": "Buscar (ex.: turbo grunt)",
+  "@mbBuscarOpcao": {
+    "description": "Dica do campo de busca na lista de opções longas (tipos de drive)"
+  },
+  "smFaixaCriar": "+ Criar linha paralela · Split, linha 2 e Merge",
+  "smItemBiblioteca": "Split + Merge (linha paralela)",
+  "smItemBibliotecaDica": "Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.",
+  "smJaTemLinhaParalela": "Este preset já tem linha paralela (um Split e um Merge por preset).",
+  "smDividirDepois": "Dividir o sinal depois deste bloco",
+  "smOrdemInvalida": "O Split precisa ficar antes do Merge na linha 1.",
+  "smSoNaLinha1": "Split e Merge ficam na linha 1.",
+  "gvAnterior": "{rotulo}: opção anterior",
+  "@gvAnterior": {
+    "placeholders": {
+      "rotulo": {
+        "type": "String"
+      }
+    }
+  },
+  "gvProximo": "{rotulo}: próxima opção",
+  "@gvProximo": {
+    "placeholders": {
+      "rotulo": {
+        "type": "String"
+      }
+    }
+  },
+  "gvAbrirLista": "{rotulo}: {nome}. Toque para ver todos",
+  "@gvAbrirLista": {
+    "placeholders": {
+      "rotulo": {
+        "type": "String"
+      },
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "gvBuscar": "Escreva para buscar",
+  "gvNadaEncontrado": "Nada encontrado",
+  "gxModeloAnterior": "Gabinete anterior",
+  "gxProximoModelo": "Próximo gabinete",
+  "gxBuscarGabinete": "Escreva para buscar",
+  "@gxBuscarGabinete": {
+    "description": "Dica do campo de busca do modelo de gabinete"
+  },
+  "mcpConfiguracoes": "Configurações",
+  "mcpSecao": "IA local (MCP)",
+  "mcpPermitir": "Permitir IA via MCP",
+  "mcpPermitirTexto": "Um assistente de IA no seu computador (LM Studio, Claude Desktop…) pode ler o preset aberto e ajustar o timbre. As mudanças soam na hora e só vão para a pedaleira se você salvar.",
+  "mcpEstadoDesligado": "Desligado: nenhum programa consegue falar com o app.",
+  "mcpEstadoIniciando": "Iniciando…",
+  "mcpEstadoEscutando": "Escutando em {endereco}",
+  "@mcpEstadoEscutando": {
+    "placeholders": {
+      "endereco": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpEstadoPortaOcupada": "A porta {porta} já está em uso por outro programa (ou outra janela do app). Escolha outra porta.",
+  "@mcpEstadoPortaOcupada": {
+    "placeholders": {
+      "porta": {
+        "type": "int"
+      }
+    }
+  },
+  "mcpPorta": "Porta",
+  "mcpPortaInvalida": "Use um número de 1024 a 65535.",
+  "mcpAplicarPorta": "APLICAR",
+  "mcpToken": "Token de acesso",
+  "mcpTokenTexto": "O cliente de IA manda este token em cada pedido. Sem ele, o app não obedece.",
+  "mcpMostrarToken": "Mostrar token",
+  "mcpOcultarToken": "Ocultar token",
+  "mcpCopiarToken": "Copiar token",
+  "mcpGerarNovoToken": "GERAR NOVO",
+  "mcpGerarNovoTitulo": "Gerar um token novo?",
+  "mcpGerarNovoTexto": "O token atual deixa de valer na hora: o cliente de IA vai precisar do novo.",
+  "mcpCopiarConfiguracao": "Copiar configuração para",
+  "mcpClienteLmStudio": "LM Studio",
+  "mcpClienteClaudeDesktop": "Claude Desktop",
+  "mcpClienteGenerico": "Outro cliente",
+  "mcpCopiado": "Copiado para a área de transferência.",
+  "mcpLimitacoes": "A IA não ouve o som: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a ferramentas.",
+  "mcpAtivoNaBarra": "IA",
+  "mcpAtivoDica": "IA local pode ajustar o timbre (MCP ligado)",
+  "mcpMudancaDaIa": "IA: {resumo}",
+  "@mcpMudancaDaIa": {
+    "placeholders": {
+      "resumo": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpPedidoSalvarTitulo": "Salvar o que a IA ajustou?",
+  "mcpPedidoSalvarTexto": "A IA pediu para gravar \"{nome}\" no slot {slot} da pedaleira.",
+  "@mcpPedidoSalvarTexto": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      },
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpPedidoSalvarSemSlot": "A IA pediu para gravar \"{nome}\" na pedaleira. Você vai escolher o slot.",
+  "@mcpPedidoSalvarSemSlot": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpSalvar": "SALVAR",
+  "mcpAgoraNao": "AGORA NÃO",
+  "ttDicaMouse": "Pare o mouse sobre o nome de um controle para saber o que ele faz com o som",
+  "ttDicaToque": "Toque no nome de um controle para saber o que ele faz com o som"
 }

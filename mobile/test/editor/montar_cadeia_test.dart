@@ -56,14 +56,15 @@ void main() {
     expect(estado.naoSalvo, isTrue);
   });
 
-  test('should_keep_the_chain_when_asked_to_move_split_or_merge', () async {
+  test('should_keep_the_chain_when_asked_to_move_the_split_past_the_merge_or_to_row_two', () async {
     final (container, _) = await conectarDemonstracao();
     final editor = container.read(editorProvider.notifier);
-    await editor.abrirSlot(SlotPreset(1));
+    await editor.abrirSlot(SlotPreset(1)); // exemplo 1: split na 5, merge na 11
     final antes = container.read(editorProvider).atual!;
     final split = antes.blocosDaLinha(1).firstWhere((b) => b.uri.endsWith(':split')).posicao;
 
-    await editor.moverBloco(split, const PosicaoBloco(1, 4));
+    await editor.moverBloco(split, const PosicaoBloco(1, 12));
+    await editor.moverBloco(split, const PosicaoBloco(2, 5));
 
     expect(container.read(editorProvider).atual!.assinaturaSemCena, antes.assinaturaSemCena);
   });

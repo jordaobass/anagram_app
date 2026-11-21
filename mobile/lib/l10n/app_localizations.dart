@@ -1414,24 +1414,6 @@ abstract class AppLocalizations {
   /// **'Bancos {a} e {b} trocados.'**
   String opBancosTrocados(String a, String b);
 
-  /// No description provided for @gxModeloAnterior.
-  ///
-  /// In pt, this message translates to:
-  /// **'Gabinete anterior'**
-  String get gxModeloAnterior;
-
-  /// No description provided for @gxProximoModelo.
-  ///
-  /// In pt, this message translates to:
-  /// **'Próximo gabinete'**
-  String get gxProximoModelo;
-
-  /// Dica do campo de busca do modelo de gabinete
-  ///
-  /// In pt, this message translates to:
-  /// **'Escreva para buscar'**
-  String get gxBuscarGabinete;
-
   /// Nome da área dos presets de fábrica no seletor de área
   ///
   /// In pt, this message translates to:
@@ -1473,6 +1455,414 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Copiar para a minha área…'**
   String get fbCopiarPara;
+
+  /// Título do grupo com o ganho geral do equalizador paramétrico
+  ///
+  /// In pt, this message translates to:
+  /// **'Geral'**
+  String get eqBandaGeral;
+
+  /// No description provided for @eqPassaAltas.
+  ///
+  /// In pt, this message translates to:
+  /// **'Passa-altas'**
+  String get eqPassaAltas;
+
+  /// No description provided for @eqPassaBaixas.
+  ///
+  /// In pt, this message translates to:
+  /// **'Passa-baixas'**
+  String get eqPassaBaixas;
+
+  /// No description provided for @eqShelfGraves.
+  ///
+  /// In pt, this message translates to:
+  /// **'Shelf de graves'**
+  String get eqShelfGraves;
+
+  /// Título de uma banda do equalizador paramétrico
+  ///
+  /// In pt, this message translates to:
+  /// **'Banda {numero}'**
+  String eqBanda(int numero);
+
+  /// No description provided for @eqShelfAgudos.
+  ///
+  /// In pt, this message translates to:
+  /// **'Shelf de agudos'**
+  String get eqShelfAgudos;
+
+  /// Banda de graves do multibanda (Ignissor, Entropia)
+  ///
+  /// In pt, this message translates to:
+  /// **'Graves'**
+  String get mbGraves;
+
+  /// No description provided for @mbMedios.
+  ///
+  /// In pt, this message translates to:
+  /// **'Médios'**
+  String get mbMedios;
+
+  /// No description provided for @mbAgudos.
+  ///
+  /// In pt, this message translates to:
+  /// **'Agudos'**
+  String get mbAgudos;
+
+  /// Borda de baixo da faixa de áudio, que nenhum corte move
+  ///
+  /// In pt, this message translates to:
+  /// **'20 Hz'**
+  String get mbBordaGraves;
+
+  /// No description provided for @mbBordaAgudos.
+  ///
+  /// In pt, this message translates to:
+  /// **'20 kHz'**
+  String get mbBordaAgudos;
+
+  /// Botão que silencia uma banda do multibanda
+  ///
+  /// In pt, this message translates to:
+  /// **'Mudo'**
+  String get mbMudo;
+
+  /// No description provided for @mbCompLigada.
+  ///
+  /// In pt, this message translates to:
+  /// **'Comp ligado'**
+  String get mbCompLigada;
+
+  /// No description provided for @mbCompDesligada.
+  ///
+  /// In pt, this message translates to:
+  /// **'Comp desligado'**
+  String get mbCompDesligada;
+
+  /// No description provided for @mbSaida.
+  ///
+  /// In pt, this message translates to:
+  /// **'Saída'**
+  String get mbSaida;
+
+  /// No description provided for @mbOutros.
+  ///
+  /// In pt, this message translates to:
+  /// **'Outros'**
+  String get mbOutros;
+
+  /// Explica os níveis de saída do Ignissor
+  ///
+  /// In pt, this message translates to:
+  /// **'Comp Level é o volume das três bandas comprimidas. Clean Level mistura em paralelo o sinal seco, sem compressão: no mínimo (−24 dB) quase só se ouve o comprimido; subindo, volta o ataque natural da corda.'**
+  String get mbExplicaMisturaLimpa;
+
+  /// Dica do campo de busca na lista de opções longas (tipos de drive)
+  ///
+  /// In pt, this message translates to:
+  /// **'Buscar (ex.: turbo grunt)'**
+  String get mbBuscarOpcao;
+
+  /// No description provided for @smFaixaCriar.
+  ///
+  /// In pt, this message translates to:
+  /// **'+ Criar linha paralela · Split, linha 2 e Merge'**
+  String get smFaixaCriar;
+
+  /// No description provided for @smItemBiblioteca.
+  ///
+  /// In pt, this message translates to:
+  /// **'Split + Merge (linha paralela)'**
+  String get smItemBiblioteca;
+
+  /// No description provided for @smItemBibliotecaDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.'**
+  String get smItemBibliotecaDica;
+
+  /// No description provided for @smJaTemLinhaParalela.
+  ///
+  /// In pt, this message translates to:
+  /// **'Este preset já tem linha paralela (um Split e um Merge por preset).'**
+  String get smJaTemLinhaParalela;
+
+  /// No description provided for @smDividirDepois.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dividir o sinal depois deste bloco'**
+  String get smDividirDepois;
+
+  /// No description provided for @smOrdemInvalida.
+  ///
+  /// In pt, this message translates to:
+  /// **'O Split precisa ficar antes do Merge na linha 1.'**
+  String get smOrdemInvalida;
+
+  /// No description provided for @smSoNaLinha1.
+  ///
+  /// In pt, this message translates to:
+  /// **'Split e Merge ficam na linha 1.'**
+  String get smSoNaLinha1;
+
+  /// No description provided for @gvAnterior.
+  ///
+  /// In pt, this message translates to:
+  /// **'{rotulo}: opção anterior'**
+  String gvAnterior(String rotulo);
+
+  /// No description provided for @gvProximo.
+  ///
+  /// In pt, this message translates to:
+  /// **'{rotulo}: próxima opção'**
+  String gvProximo(String rotulo);
+
+  /// No description provided for @gvAbrirLista.
+  ///
+  /// In pt, this message translates to:
+  /// **'{rotulo}: {nome}. Toque para ver todos'**
+  String gvAbrirLista(String rotulo, String nome);
+
+  /// No description provided for @gvBuscar.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escreva para buscar'**
+  String get gvBuscar;
+
+  /// No description provided for @gvNadaEncontrado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nada encontrado'**
+  String get gvNadaEncontrado;
+
+  /// No description provided for @gxModeloAnterior.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gabinete anterior'**
+  String get gxModeloAnterior;
+
+  /// No description provided for @gxProximoModelo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Próximo gabinete'**
+  String get gxProximoModelo;
+
+  /// Dica do campo de busca do modelo de gabinete
+  ///
+  /// In pt, this message translates to:
+  /// **'Escreva para buscar'**
+  String get gxBuscarGabinete;
+
+  /// No description provided for @mcpConfiguracoes.
+  ///
+  /// In pt, this message translates to:
+  /// **'Configurações'**
+  String get mcpConfiguracoes;
+
+  /// No description provided for @mcpSecao.
+  ///
+  /// In pt, this message translates to:
+  /// **'IA local (MCP)'**
+  String get mcpSecao;
+
+  /// No description provided for @mcpPermitir.
+  ///
+  /// In pt, this message translates to:
+  /// **'Permitir IA via MCP'**
+  String get mcpPermitir;
+
+  /// No description provided for @mcpPermitirTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'Um assistente de IA no seu computador (LM Studio, Claude Desktop…) pode ler o preset aberto e ajustar o timbre. As mudanças soam na hora e só vão para a pedaleira se você salvar.'**
+  String get mcpPermitirTexto;
+
+  /// No description provided for @mcpEstadoDesligado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Desligado: nenhum programa consegue falar com o app.'**
+  String get mcpEstadoDesligado;
+
+  /// No description provided for @mcpEstadoIniciando.
+  ///
+  /// In pt, this message translates to:
+  /// **'Iniciando…'**
+  String get mcpEstadoIniciando;
+
+  /// No description provided for @mcpEstadoEscutando.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escutando em {endereco}'**
+  String mcpEstadoEscutando(String endereco);
+
+  /// No description provided for @mcpEstadoPortaOcupada.
+  ///
+  /// In pt, this message translates to:
+  /// **'A porta {porta} já está em uso por outro programa (ou outra janela do app). Escolha outra porta.'**
+  String mcpEstadoPortaOcupada(int porta);
+
+  /// No description provided for @mcpPorta.
+  ///
+  /// In pt, this message translates to:
+  /// **'Porta'**
+  String get mcpPorta;
+
+  /// No description provided for @mcpPortaInvalida.
+  ///
+  /// In pt, this message translates to:
+  /// **'Use um número de 1024 a 65535.'**
+  String get mcpPortaInvalida;
+
+  /// No description provided for @mcpAplicarPorta.
+  ///
+  /// In pt, this message translates to:
+  /// **'APLICAR'**
+  String get mcpAplicarPorta;
+
+  /// No description provided for @mcpToken.
+  ///
+  /// In pt, this message translates to:
+  /// **'Token de acesso'**
+  String get mcpToken;
+
+  /// No description provided for @mcpTokenTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'O cliente de IA manda este token em cada pedido. Sem ele, o app não obedece.'**
+  String get mcpTokenTexto;
+
+  /// No description provided for @mcpMostrarToken.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mostrar token'**
+  String get mcpMostrarToken;
+
+  /// No description provided for @mcpOcultarToken.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ocultar token'**
+  String get mcpOcultarToken;
+
+  /// No description provided for @mcpCopiarToken.
+  ///
+  /// In pt, this message translates to:
+  /// **'Copiar token'**
+  String get mcpCopiarToken;
+
+  /// No description provided for @mcpGerarNovoToken.
+  ///
+  /// In pt, this message translates to:
+  /// **'GERAR NOVO'**
+  String get mcpGerarNovoToken;
+
+  /// No description provided for @mcpGerarNovoTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gerar um token novo?'**
+  String get mcpGerarNovoTitulo;
+
+  /// No description provided for @mcpGerarNovoTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'O token atual deixa de valer na hora: o cliente de IA vai precisar do novo.'**
+  String get mcpGerarNovoTexto;
+
+  /// No description provided for @mcpCopiarConfiguracao.
+  ///
+  /// In pt, this message translates to:
+  /// **'Copiar configuração para'**
+  String get mcpCopiarConfiguracao;
+
+  /// No description provided for @mcpClienteLmStudio.
+  ///
+  /// In pt, this message translates to:
+  /// **'LM Studio'**
+  String get mcpClienteLmStudio;
+
+  /// No description provided for @mcpClienteClaudeDesktop.
+  ///
+  /// In pt, this message translates to:
+  /// **'Claude Desktop'**
+  String get mcpClienteClaudeDesktop;
+
+  /// No description provided for @mcpClienteGenerico.
+  ///
+  /// In pt, this message translates to:
+  /// **'Outro cliente'**
+  String get mcpClienteGenerico;
+
+  /// No description provided for @mcpCopiado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Copiado para a área de transferência.'**
+  String get mcpCopiado;
+
+  /// No description provided for @mcpLimitacoes.
+  ///
+  /// In pt, this message translates to:
+  /// **'A IA não ouve o som: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a ferramentas.'**
+  String get mcpLimitacoes;
+
+  /// No description provided for @mcpAtivoNaBarra.
+  ///
+  /// In pt, this message translates to:
+  /// **'IA'**
+  String get mcpAtivoNaBarra;
+
+  /// No description provided for @mcpAtivoDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'IA local pode ajustar o timbre (MCP ligado)'**
+  String get mcpAtivoDica;
+
+  /// No description provided for @mcpMudancaDaIa.
+  ///
+  /// In pt, this message translates to:
+  /// **'IA: {resumo}'**
+  String mcpMudancaDaIa(String resumo);
+
+  /// No description provided for @mcpPedidoSalvarTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Salvar o que a IA ajustou?'**
+  String get mcpPedidoSalvarTitulo;
+
+  /// No description provided for @mcpPedidoSalvarTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'A IA pediu para gravar \"{nome}\" no slot {slot} da pedaleira.'**
+  String mcpPedidoSalvarTexto(String nome, String slot);
+
+  /// No description provided for @mcpPedidoSalvarSemSlot.
+  ///
+  /// In pt, this message translates to:
+  /// **'A IA pediu para gravar \"{nome}\" na pedaleira. Você vai escolher o slot.'**
+  String mcpPedidoSalvarSemSlot(String nome);
+
+  /// No description provided for @mcpSalvar.
+  ///
+  /// In pt, this message translates to:
+  /// **'SALVAR'**
+  String get mcpSalvar;
+
+  /// No description provided for @mcpAgoraNao.
+  ///
+  /// In pt, this message translates to:
+  /// **'AGORA NÃO'**
+  String get mcpAgoraNao;
+
+  /// No description provided for @ttDicaMouse.
+  ///
+  /// In pt, this message translates to:
+  /// **'Pare o mouse sobre o nome de um controle para saber o que ele faz com o som'**
+  String get ttDicaMouse;
+
+  /// No description provided for @ttDicaToque.
+  ///
+  /// In pt, this message translates to:
+  /// **'Toque no nome de um controle para saber o que ele faz com o som'**
+  String get ttDicaToque;
 }
 
 class _AppLocalizationsDelegate

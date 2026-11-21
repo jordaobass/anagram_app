@@ -803,15 +803,6 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get gxModeloAnterior => 'Gabinete anterior';
-
-  @override
-  String get gxProximoModelo => 'Próximo gabinete';
-
-  @override
-  String get gxBuscarGabinete => 'Escreva para buscar';
-
-  @override
   String get fbAreaFabrica => 'Fábrica';
 
   @override
@@ -833,4 +824,237 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get fbCopiarPara => 'Copiar para a minha área…';
+
+  @override
+  String get eqBandaGeral => 'Geral';
+
+  @override
+  String get eqPassaAltas => 'Passa-altas';
+
+  @override
+  String get eqPassaBaixas => 'Passa-baixas';
+
+  @override
+  String get eqShelfGraves => 'Shelf de graves';
+
+  @override
+  String eqBanda(int numero) {
+    return 'Banda $numero';
+  }
+
+  @override
+  String get eqShelfAgudos => 'Shelf de agudos';
+
+  @override
+  String get mbGraves => 'Graves';
+
+  @override
+  String get mbMedios => 'Médios';
+
+  @override
+  String get mbAgudos => 'Agudos';
+
+  @override
+  String get mbBordaGraves => '20 Hz';
+
+  @override
+  String get mbBordaAgudos => '20 kHz';
+
+  @override
+  String get mbMudo => 'Mudo';
+
+  @override
+  String get mbCompLigada => 'Comp ligado';
+
+  @override
+  String get mbCompDesligada => 'Comp desligado';
+
+  @override
+  String get mbSaida => 'Saída';
+
+  @override
+  String get mbOutros => 'Outros';
+
+  @override
+  String get mbExplicaMisturaLimpa =>
+      'Comp Level é o volume das três bandas comprimidas. Clean Level mistura em paralelo o sinal seco, sem compressão: no mínimo (−24 dB) quase só se ouve o comprimido; subindo, volta o ataque natural da corda.';
+
+  @override
+  String get mbBuscarOpcao => 'Buscar (ex.: turbo grunt)';
+
+  @override
+  String get smFaixaCriar => '+ Criar linha paralela · Split, linha 2 e Merge';
+
+  @override
+  String get smItemBiblioteca => 'Split + Merge (linha paralela)';
+
+  @override
+  String get smItemBibliotecaDica =>
+      'Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.';
+
+  @override
+  String get smJaTemLinhaParalela =>
+      'Este preset já tem linha paralela (um Split e um Merge por preset).';
+
+  @override
+  String get smDividirDepois => 'Dividir o sinal depois deste bloco';
+
+  @override
+  String get smOrdemInvalida =>
+      'O Split precisa ficar antes do Merge na linha 1.';
+
+  @override
+  String get smSoNaLinha1 => 'Split e Merge ficam na linha 1.';
+
+  @override
+  String gvAnterior(String rotulo) {
+    return '$rotulo: opção anterior';
+  }
+
+  @override
+  String gvProximo(String rotulo) {
+    return '$rotulo: próxima opção';
+  }
+
+  @override
+  String gvAbrirLista(String rotulo, String nome) {
+    return '$rotulo: $nome. Toque para ver todos';
+  }
+
+  @override
+  String get gvBuscar => 'Escreva para buscar';
+
+  @override
+  String get gvNadaEncontrado => 'Nada encontrado';
+
+  @override
+  String get gxModeloAnterior => 'Gabinete anterior';
+
+  @override
+  String get gxProximoModelo => 'Próximo gabinete';
+
+  @override
+  String get gxBuscarGabinete => 'Escreva para buscar';
+
+  @override
+  String get mcpConfiguracoes => 'Configurações';
+
+  @override
+  String get mcpSecao => 'IA local (MCP)';
+
+  @override
+  String get mcpPermitir => 'Permitir IA via MCP';
+
+  @override
+  String get mcpPermitirTexto =>
+      'Um assistente de IA no seu computador (LM Studio, Claude Desktop…) pode ler o preset aberto e ajustar o timbre. As mudanças soam na hora e só vão para a pedaleira se você salvar.';
+
+  @override
+  String get mcpEstadoDesligado =>
+      'Desligado: nenhum programa consegue falar com o app.';
+
+  @override
+  String get mcpEstadoIniciando => 'Iniciando…';
+
+  @override
+  String mcpEstadoEscutando(String endereco) {
+    return 'Escutando em $endereco';
+  }
+
+  @override
+  String mcpEstadoPortaOcupada(int porta) {
+    return 'A porta $porta já está em uso por outro programa (ou outra janela do app). Escolha outra porta.';
+  }
+
+  @override
+  String get mcpPorta => 'Porta';
+
+  @override
+  String get mcpPortaInvalida => 'Use um número de 1024 a 65535.';
+
+  @override
+  String get mcpAplicarPorta => 'APLICAR';
+
+  @override
+  String get mcpToken => 'Token de acesso';
+
+  @override
+  String get mcpTokenTexto =>
+      'O cliente de IA manda este token em cada pedido. Sem ele, o app não obedece.';
+
+  @override
+  String get mcpMostrarToken => 'Mostrar token';
+
+  @override
+  String get mcpOcultarToken => 'Ocultar token';
+
+  @override
+  String get mcpCopiarToken => 'Copiar token';
+
+  @override
+  String get mcpGerarNovoToken => 'GERAR NOVO';
+
+  @override
+  String get mcpGerarNovoTitulo => 'Gerar um token novo?';
+
+  @override
+  String get mcpGerarNovoTexto =>
+      'O token atual deixa de valer na hora: o cliente de IA vai precisar do novo.';
+
+  @override
+  String get mcpCopiarConfiguracao => 'Copiar configuração para';
+
+  @override
+  String get mcpClienteLmStudio => 'LM Studio';
+
+  @override
+  String get mcpClienteClaudeDesktop => 'Claude Desktop';
+
+  @override
+  String get mcpClienteGenerico => 'Outro cliente';
+
+  @override
+  String get mcpCopiado => 'Copiado para a área de transferência.';
+
+  @override
+  String get mcpLimitacoes =>
+      'A IA não ouve o som: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a ferramentas.';
+
+  @override
+  String get mcpAtivoNaBarra => 'IA';
+
+  @override
+  String get mcpAtivoDica => 'IA local pode ajustar o timbre (MCP ligado)';
+
+  @override
+  String mcpMudancaDaIa(String resumo) {
+    return 'IA: $resumo';
+  }
+
+  @override
+  String get mcpPedidoSalvarTitulo => 'Salvar o que a IA ajustou?';
+
+  @override
+  String mcpPedidoSalvarTexto(String nome, String slot) {
+    return 'A IA pediu para gravar \"$nome\" no slot $slot da pedaleira.';
+  }
+
+  @override
+  String mcpPedidoSalvarSemSlot(String nome) {
+    return 'A IA pediu para gravar \"$nome\" na pedaleira. Você vai escolher o slot.';
+  }
+
+  @override
+  String get mcpSalvar => 'SALVAR';
+
+  @override
+  String get mcpAgoraNao => 'AGORA NÃO';
+
+  @override
+  String get ttDicaMouse =>
+      'Pare o mouse sobre o nome de um controle para saber o que ele faz com o som';
+
+  @override
+  String get ttDicaToque =>
+      'Toque no nome de um controle para saber o que ele faz com o som';
 }

@@ -16,8 +16,21 @@ abstract final class FormatadorValor {
       '%' => '${_decimal(valor, 0, sep)} %',
       'ms' => '${_decimal(valor, 0, sep)} ms',
       'ct' => '${_decimal(valor, 0, sep)} ct',
-      _ => parametro.inteiro ? '${valor.round()}' : _decimal(valor, 1, sep),
+      _ => parametro.inteiro ? '${valor.round()}' : _decimal(valor, _casasSemUnidade(parametro), sep),
     };
+  }
+
+  /// A escala 0–10 dos pedais pede uma casa; largura e ressonância (0–1,4)
+  /// pedem duas, senão 0,33 e 0,30 aparecem iguais.
+  static int _casasSemUnidade(DefinicaoParametro parametro) =>
+      parametro.maximo - parametro.minimo <= _faixaCurta ? 2 : 1;
+
+  static const _faixaCurta = 2;
+
+  /// "8 kHz", "2,5 kHz", "1,25 kHz": duas casas só quando fazem diferença.
+  static String _quilo(num valor, String sep) {
+    final texto = _decimal(valor / 1000, 2, sep);
+    return texto.contains(sep) ? texto.replaceFirst(RegExp('0+\$'), '').replaceFirst(RegExp('[$sep]\$'), '') : texto;
   }
 
   /// O que a pessoa digitou no lugar do knob, na unidade que ela vê: aceita
@@ -42,7 +55,7 @@ abstract final class FormatadorValor {
       parametro.opcoes[parametro.indiceOpcao(valor)];
 
   static String _hertz(num valor, String sep) =>
-      valor >= 1000 ? '${_decimal(valor / 1000, 2, sep)} kHz' : '${_decimal(valor, valor < 10 ? 2 : 0, sep)} Hz';
+      valor >= 1000 ? '${_quilo(valor, sep)} kHz' : '${_decimal(valor, valor < 10 ? 2 : 0, sep)} Hz';
 
   static String _decimal(num valor, int casas, String separador) {
     var texto = valor.toStringAsFixed(casas);
