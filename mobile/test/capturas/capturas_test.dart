@@ -93,19 +93,23 @@ void main() {
     await capturar(tester, '$pasta/desktop-7-gabinete.png');
   });
 
-  // a escolha do gabinete como na pedaleira: foto grande da caixa e, ao lado,
-  // modelo (busca, ‹ ›) → microfone → posição; sem a arte, a tabela de teste
+  // a escolha do gabinete em três cartões iguais (modelo com a foto, microfone,
+  // posição), cada um com ‹ ›; sem a arte, a tabela de teste
   testWidgets('captura desktop: escolher o gabinete', (tester) async {
     await _abrirGabinete(tester, desktopWindows);
+    await tester.ensureVisible(find.byKey(const ValueKey('cartao-gabinete')));
+    await tester.pumpAndSettle();
     await assentarImagens(tester);
     await capturar(tester, '$pasta/desktop-10-escolher-gabinete.png');
   });
 
-  testWidgets('captura desktop: buscar o gabinete escrevendo', (tester) async {
+  // tocar na foto abre a galeria dos modelos, com a busca por texto
+  testWidgets('captura desktop: buscar o gabinete na galeria', (tester) async {
     await _abrirGabinete(tester, desktopWindows);
-    final campo = find.descendant(of: find.byKey(const ValueKey('gabinete-modelo')), matching: find.byType(TextField));
-    await tester.tap(campo);
-    await tester.enterText(campo, comMiniaturas ? 'peg' : 'neo');
+    await tester.ensureVisible(find.byKey(const ValueKey('gabinete-abrir')));
+    await tester.tap(find.byKey(const ValueKey('gabinete-abrir')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('galeria-busca')), comMiniaturas ? 'peg' : 'neo');
     await tester.pumpAndSettle();
     await assentarImagens(tester);
     await capturar(tester, '$pasta/desktop-11-buscar-gabinete.png');
@@ -113,12 +117,26 @@ void main() {
 
   testWidgets('captura celular: escolher o gabinete', (tester) async {
     await _abrirGabinete(tester, const Tamanho('celular-retrato', 390, 844, 2));
-    // no celular o painel fica abaixo da cadeia: rola até o gabinete aparecer
-    await tester.scrollUntilVisible(find.byKey(const ValueKey('gabinete-modelo')), 300,
+    // no celular o painel fica abaixo da cadeia: rola até os cartões aparecerem
+    await tester.scrollUntilVisible(find.byKey(const ValueKey('cartao-microfone')), 300,
         scrollable: find.byType(Scrollable).first);
     await tester.pumpAndSettle();
     await assentarImagens(tester);
     await capturar(tester, '$pasta/celular-retrato-6-gabinete.png');
+  });
+
+  testWidgets('captura celular: galeria dos gabinetes com busca', (tester) async {
+    await _abrirGabinete(tester, const Tamanho('celular-retrato', 390, 844, 2));
+    // rola até o cartão de baixo, para a foto do gabinete ficar inteira na tela
+    await tester.scrollUntilVisible(find.byKey(const ValueKey('cartao-microfone')), 300,
+        scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('gabinete-abrir')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('galeria-busca')), comMiniaturas ? '4x10' : 'neo');
+    await tester.pumpAndSettle();
+    await assentarImagens(tester);
+    await capturar(tester, '$pasta/celular-retrato-7-galeria-gabinete.png');
   });
 }
 
