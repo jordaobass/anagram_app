@@ -219,9 +219,6 @@
   "opMovido": "{origem} moved to {destino}.",
   "opClonado": "Copy of {origem} saved to {destino}.",
   "opBancosTrocados": "Banks {a} and {b} swapped.",
-  "gxModeloAnterior": "Previous cabinet",
-  "gxProximoModelo": "Next cabinet",
-  "gxBuscarGabinete": "Type to search",
   "fbAreaFabrica": "Factory",
   "fbSoLeitura": "READ ONLY",
   "fbAreaSoLeitura": "Darkglass factory presets: opening one only plays it. To keep one, copy it to one of your areas.",
@@ -253,5 +250,10 @@
   "smJaTemLinhaParalela": "This preset already has a parallel row (one Split and one Merge per preset).",
   "smDividirDepois": "Split the signal after this block",
   "smOrdemInvalida": "The Split has to stay before the Merge on row 1.",
-  "smSoNaLinha1": "Split and Merge stay on row 1."
+  "smSoNaLinha1": "Split and Merge stay on row 1.",
+  "gvAnterior": "{rotulo}: previous option",
+  "gvProximo": "{rotulo}: next option",
+  "gvAbrirLista": "{rotulo}: {nome}. Tap to see all",
+  "gvBuscar": "Type to search",
+  "gvNadaEncontrado": "Nothing found"
 }

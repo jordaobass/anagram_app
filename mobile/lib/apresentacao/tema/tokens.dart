@@ -177,13 +177,18 @@ abstract final class Medidas {
   static const double alturaRotuloCasa = 34;
   static const double entrelinhaRotuloCasa = 1.15;
 
-  /// Foto do modelo no menu de escolha do gabinete.
-  static const double fotoNaEscolhaDeGabinete = 32;
-  /// Foto do gabinete escolhido no painel do bloco, como a pedaleira mostra.
-  static const double fotoGabineteGrande = 144;
-  /// A partir desta largura a foto fica ao lado dos controles do gabinete.
+  /// Os três cartões do gabinete (modelo, microfone, posição) têm esta altura.
+  static const double alturaCartaoGabinete = 208;
+  /// Duas linhas do nome embaixo da foto/ícone do cartão.
+  static const double alturaNomeCartaoGabinete = 40;
+  static const double fotoNoCartaoGabinete = 112;
+  static const double iconeNoCartaoGabinete = 56;
+  /// A partir desta largura os três cartões ficam lado a lado.
   static const double larguraGabineteLadoALado = 560;
-  static const double larguraCampoGabinete = 320;
+  /// Galeria dos modelos: foto e largura máxima de cada item da grade.
+  static const double fotoNaGaleria = 96;
+  static const double larguraItemGaleria = 150;
+  static const double proporcaoItemGaleria = 0.9;
   static const double iconeMicrofone = 20;
   /// Traço do ícone de microfone, em fração do lado do ícone.
   static const double tracoMicrofone = 0.08;

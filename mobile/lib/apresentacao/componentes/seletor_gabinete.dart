@@ -1,8 +1,9 @@
-// Escolha do gabinete no painel do bloco, como a pedaleira mostra: a foto
-// grande da caixa escolhida e, ao lado, GABINETE (busca escrevendo, setas
-// ‹ ›) → MICROFONE → POSIÇÃO em botões, no estilo das opções dos parâmetros.
-// A escolha vira o arquivo de IR do bloco. Só aparece no build com a tabela
-// do Darkglass Suite.
+// Escolha do gabinete no painel do bloco, em três cartões do mesmo tamanho:
+// GABINETE (a foto da caixa), MICROFONE (o ícone do tipo) e POSIÇÃO, cada um
+// com setas ‹ › para passar opção a opção ouvindo cada uma, e a lista
+// completa ao tocar no meio (a dos modelos em galeria com busca). Lado a lado
+// no computador, empilhados no celular. A escolha vira o arquivo de IR do
+// bloco. Só aparece no build com a tabela do Darkglass Suite.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,9 +15,12 @@ import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'arte_bloco.dart';
-import 'campo_modelo_gabinete.dart';
-import 'escolha_em_botoes.dart';
+import 'cartao_escolha.dart';
+import 'galeria_escolha.dart';
 import 'pintor_microfone.dart';
+
+/// Quantos cartões cabem na linha: com menos escolhas, os que há não esticam.
+const _cartoesNaLinha = 3;
 
 class SeletorGabinete extends ConsumerWidget {
   const SeletorGabinete({super.key, required this.bloco, required this.definicao});
@@ -29,82 +33,141 @@ class SeletorGabinete extends ConsumerWidget {
     final tipo = TipoGabinete.daUri(bloco.uri);
     final catalogo = ref.watch(indiceMiniaturasProvider).value?.escolhasDeGabinete;
     if (tipo == null || catalogo == null || !catalogo.temEscolhas(tipo)) return const SizedBox.shrink();
-    final foto = _foto(bloco.arquivoDeIr, Medidas.fotoGabineteGrande);
-    final controles = _controles(context, ref, tipo, catalogo);
+    final cartoes = _Escolhas(context, ref, this, tipo, catalogo).cartoes();
     return Padding(
       padding: const EdgeInsets.only(bottom: Espacos.l),
-      child: LayoutBuilder(
-        builder: (context, restricoes) => restricoes.maxWidth >= Medidas.larguraGabineteLadoALado
-            ? Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                foto,
-                const SizedBox(width: Espacos.xl),
-                Expanded(child: controles),
-              ])
-            : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Center(child: foto),
-                const SizedBox(height: Espacos.m),
-                controles,
-              ]),
-      ),
-    );
-  }
-
-  Widget _controles(BuildContext context, WidgetRef ref, TipoGabinete tipo, CatalogoGabinetes catalogo) {
-    final l = AppLocalizations.of(context);
-    final atual = catalogo.doArquivo(tipo, bloco.arquivoDeIr);
-    void escolher(OpcaoGabinete? opcao) {
-      if (opcao != null) ref.read(editorProvider.notifier).escolherIrDoGabinete(bloco.posicao, opcao.caminho);
-    }
-
-    final modelo = CampoModeloGabinete(
-      rotulo: l.cbGabinete,
-      modelos: catalogo.modelos(tipo),
-      atual: atual?.modelo,
-      foto: (m) => _foto(catalogo.escolher(tipo, m)?.caminho, Medidas.fotoNaEscolhaDeGabinete),
-      aoEscolher: (m) => escolher(catalogo.escolher(tipo, m, microfone: atual?.microfone, posicao: atual?.posicao)),
-    );
-    // IR que não está na tabela (do usuário): mostra o arquivo; o modelo ainda pode ser escolhido
-    if (atual == null) {
-      return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        if (bloco.arquivoDeIr != null) _irProprio(context, l),
-        modelo,
-      ]);
-    }
-    final posicoes = catalogo.posicoes(tipo, atual.modelo, atual.microfone);
-    final cor = Cores.daFamilia(definicao.familia);
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      modelo,
-      const SizedBox(height: Espacos.m),
-      EscolhaEmBotoes(
-        rotulo: l.cbMicrofone,
-        prefixoChave: 'microfone',
-        opcoes: catalogo.microfones(tipo, atual.modelo),
-        atual: atual.microfone,
-        cor: cor,
-        icone: (mic, marcada) =>
-            IconeMicrofone(tipo: TipoMicrofone.doNome(mic), cor: marcada ? Cores.tintaMarcador : Cores.aluminioClaro),
-        aoEscolher: (mic) => escolher(catalogo.escolher(tipo, atual.modelo, microfone: mic, posicao: atual.posicao)),
-      ),
-      if (posicoes.any((p) => p.isNotEmpty)) ...[
-        const SizedBox(height: Espacos.m),
-        EscolhaEmBotoes(
-          rotulo: l.cbPosicao,
-          prefixoChave: 'posicao',
-          opcoes: posicoes,
-          atual: atual.posicao,
-          cor: cor,
-          aoEscolher: (pos) => escolher(catalogo.escolher(tipo, atual.modelo, microfone: atual.microfone, posicao: pos)),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        if (catalogo.doArquivo(tipo, bloco.arquivoDeIr) == null && bloco.arquivoDeIr != null) _irProprio(context),
+        LayoutBuilder(
+          builder: (context, restricoes) =>
+              restricoes.maxWidth >= Medidas.larguraGabineteLadoALado ? _lado(cartoes) : _empilhados(cartoes),
         ),
-      ],
-    ]);
+      ]),
+    );
   }
 
-  Widget _irProprio(BuildContext context, AppLocalizations l) => Padding(
+  Widget _lado(List<Widget> cartoes) => Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        for (var i = 0; i < _cartoesNaLinha; i++) ...[
+          if (i > 0) const SizedBox(width: Espacos.m),
+          Expanded(child: i < cartoes.length ? cartoes[i] : const SizedBox.shrink()),
+        ],
+      ]);
+
+  Widget _empilhados(List<Widget> cartoes) => Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        for (var i = 0; i < cartoes.length; i++) ...[
+          if (i > 0) const SizedBox(height: Espacos.s),
+          cartoes[i],
+        ],
+      ]);
+
+  /// IR que não está na tabela (do usuário): mostra o arquivo; o modelo ainda pode ser escolhido.
+  Widget _irProprio(BuildContext context) => Padding(
         padding: const EdgeInsets.only(bottom: Espacos.s),
-        child: Text(l.cbIrDoUsuario(bloco.arquivoDeIr!.split('/').last), style: Theme.of(context).textTheme.bodySmall),
+        child: Text(AppLocalizations.of(context).cbIrDoUsuario(bloco.arquivoDeIr!.split('/').last),
+            style: Theme.of(context).textTheme.bodySmall),
       );
+}
+
+/// Monta os cartões do gabinete atual; cada escolha grava o IR na hora.
+class _Escolhas {
+  _Escolhas(this.context, this.ref, this.seletor, this.tipo, this.catalogo)
+      : atual = catalogo.doArquivo(tipo, seletor.bloco.arquivoDeIr),
+        l = AppLocalizations.of(context);
+
+  final BuildContext context;
+  final WidgetRef ref;
+  final SeletorGabinete seletor;
+  final TipoGabinete tipo;
+  final CatalogoGabinetes catalogo;
+  final OpcaoGabinete? atual;
+  final AppLocalizations l;
+
+  List<Widget> cartoes() {
+    final escolhido = atual;
+    if (escolhido == null) return [_modelo(null)];
+    final posicoes = catalogo.posicoes(tipo, escolhido.modelo, escolhido.microfone);
+    return [_modelo(escolhido), _microfone(escolhido), if (posicoes.isNotEmpty) _posicao(escolhido, posicoes)];
+  }
+
+  void _gravar(OpcaoGabinete? opcao) {
+    if (opcao != null) ref.read(editorProvider.notifier).escolherIrDoGabinete(seletor.bloco.posicao, opcao.caminho);
+  }
 
   /// Foto da caixa pelo IR (todos os IRs de um modelo têm a mesma foto).
-  Widget _foto(String? arquivoIr, double tamanho) =>
-      ArteBlocoWidget(definicao: definicao, tamanho: tamanho, arquivoIr: arquivoIr, ligado: bloco.habilitado);
+  Widget _foto(String? arquivoIr, double tamanho) => ArteBlocoWidget(
+      definicao: seletor.definicao, tamanho: tamanho, arquivoIr: arquivoIr, ligado: seletor.bloco.habilitado);
+
+  Widget _fotoDoModelo(String modelo, double tamanho) => _foto(catalogo.escolher(tipo, modelo)?.caminho, tamanho);
+
+  Widget _modelo(OpcaoGabinete? escolhido) {
+    void escolher(String modelo) => _gravar(
+        catalogo.escolher(tipo, modelo, microfone: escolhido?.microfone, posicao: escolhido?.posicao));
+    return _cartao(
+      chave: 'gabinete',
+      rotulo: l.cbGabinete,
+      opcoes: catalogo.modelos(tipo),
+      atual: escolhido?.modelo,
+      visual: (m) => _fotoDoModelo(m, Medidas.fotoNaGaleria),
+      noCartao: escolhido == null
+          ? _foto(seletor.bloco.arquivoDeIr, Medidas.fotoNoCartaoGabinete)
+          : _fotoDoModelo(escolhido.modelo, Medidas.fotoNoCartaoGabinete),
+      emGrade: true,
+      aoEscolher: escolher,
+    );
+  }
+
+  Widget _microfone(OpcaoGabinete escolhido) {
+    Widget icone(String mic, double tamanho) =>
+        IconeMicrofone(tipo: TipoMicrofone.doNome(mic), cor: Cores.aluminioClaro, tamanho: tamanho);
+    return _cartao(
+      chave: 'microfone',
+      rotulo: l.cbMicrofone,
+      opcoes: catalogo.microfones(tipo, escolhido.modelo),
+      atual: escolhido.microfone,
+      visual: (mic) => icone(mic, Medidas.iconeMicrofone),
+      noCartao: icone(escolhido.microfone, Medidas.iconeNoCartaoGabinete),
+      aoEscolher: (mic) =>
+          _gravar(catalogo.escolher(tipo, escolhido.modelo, microfone: mic, posicao: escolhido.posicao)),
+    );
+  }
+
+  Widget _posicao(OpcaoGabinete escolhido, List<String> posicoes) => _cartao(
+        chave: 'posicao',
+        rotulo: l.cbPosicao,
+        opcoes: posicoes,
+        atual: escolhido.posicao,
+        noCartao: const Icon(Icons.track_changes, size: Medidas.iconeNoCartaoGabinete, color: Cores.aluminioClaro),
+        aoEscolher: (pos) =>
+            _gravar(catalogo.escolher(tipo, escolhido.modelo, microfone: escolhido.microfone, posicao: pos)),
+      );
+
+  Widget _cartao({
+    required String chave,
+    required String rotulo,
+    required List<String> opcoes,
+    required String? atual,
+    required Widget noCartao,
+    required void Function(String) aoEscolher,
+    Widget Function(String)? visual,
+    bool emGrade = false,
+  }) {
+    final i = opcoes.indexOf(atual ?? '');
+    VoidCallback? passo(int destino) =>
+        destino >= 0 && destino < opcoes.length && destino != i ? () => aoEscolher(opcoes[destino]) : null;
+    Future<void> abrir() async {
+      final escolhida = await abrirGaleriaDeEscolha(context,
+          titulo: rotulo, opcoes: opcoes, atual: atual, visual: visual, emGrade: emGrade);
+      if (escolhida != null && escolhida != atual) aoEscolher(escolhida);
+    }
+
+    return CartaoEscolha(
+      chave: chave,
+      rotulo: rotulo,
+      nome: atual ?? l.cbEscolher,
+      visual: noCartao,
+      aoAbrir: abrir,
+      aoAnterior: i < 0 ? null : passo(i - 1),
+      aoProximo: i < 0 ? passo(0) : passo(i + 1),
+    );
+  }
 }

@@ -646,12 +646,6 @@
       }
     }
   },
-  "gxModeloAnterior": "Gabinete anterior",
-  "gxProximoModelo": "Próximo gabinete",
-  "gxBuscarGabinete": "Escreva para buscar",
-  "@gxBuscarGabinete": {
-    "description": "Dica do campo de busca do modelo de gabinete"
-  },
   "fbAreaFabrica": "Fábrica",
   "@fbAreaFabrica": {
     "description": "Nome da área dos presets de fábrica no seletor de área"
@@ -730,5 +724,34 @@
   "smJaTemLinhaParalela": "Este preset já tem linha paralela (um Split e um Merge por preset).",
   "smDividirDepois": "Dividir o sinal depois deste bloco",
   "smOrdemInvalida": "O Split precisa ficar antes do Merge na linha 1.",
-  "smSoNaLinha1": "Split e Merge ficam na linha 1."
+  "smSoNaLinha1": "Split e Merge ficam na linha 1.",
+  "gvAnterior": "{rotulo}: opção anterior",
+  "@gvAnterior": {
+    "placeholders": {
+      "rotulo": {
+        "type": "String"
+      }
+    }
+  },
+  "gvProximo": "{rotulo}: próxima opção",
+  "@gvProximo": {
+    "placeholders": {
+      "rotulo": {
+        "type": "String"
+      }
+    }
+  },
+  "gvAbrirLista": "{rotulo}: {nome}. Toque para ver todos",
+  "@gvAbrirLista": {
+    "placeholders": {
+      "rotulo": {
+        "type": "String"
+      },
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "gvBuscar": "Escreva para buscar",
+  "gvNadaEncontrado": "Nada encontrado"
 }
