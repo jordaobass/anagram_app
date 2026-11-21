@@ -1,6 +1,7 @@
 // Biblioteca de efeitos: abre ao tocar no "+" de uma casa vazia. Os blocos do
 // catálogo vêm por família (drive, modulação, delay…), com a arte de cada um,
-// busca por nome e filtro por família.
+// busca por nome e filtro por família. No topo dos utilitários fica o par
+// Split + Merge: escolhê-lo abre a linha paralela a partir desta casa.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,8 +10,10 @@ import '../../aplicacao/provedores.dart';
 import '../../nucleo/catalogo/biblioteca_blocos.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/familia_bloco.dart';
+import '../../nucleo/catalogo/linha_paralela.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
+import 'acoes_linha_paralela.dart';
 import 'arte_bloco.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
@@ -21,7 +24,13 @@ Future<void> adicionarEfeitoNaCasa(BuildContext context, WidgetRef ref, PosicaoB
     context: context,
     builder: (_) => _BibliotecaEfeitos(posicao: posicao),
   );
-  if (escolhido != null) await ref.read(editorProvider.notifier).adicionarBloco(posicao, escolhido);
+  if (escolhido == null || !context.mounted) return;
+  if (escolhido.uri == uriSplit) {
+    // o Split vai nesta casa (se for da linha 1) e o Merge na livre seguinte
+    await criarLinhaParalelaComAviso(context, ref, depoisDe: posicao.linha == 1 ? posicao.casa - 1 : null);
+    return;
+  }
+  await ref.read(editorProvider.notifier).adicionarBloco(posicao, escolhido);
 }
 
 class _BibliotecaEfeitos extends ConsumerStatefulWidget {
@@ -41,7 +50,7 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
   Widget build(BuildContext context) {
     final catalogo = ref.watch(catalogoProvider).value;
     final grupos =
-        catalogo == null ? const <GrupoBiblioteca>[] : blocosDaBiblioteca(catalogo, busca: _busca, familia: _familia);
+        catalogo == null ? const <GrupoBiblioteca>[] : bibliotecaComLinhaParalela(catalogo, busca: _busca, familia: _familia);
     return Dialog(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: Medidas.larguraBiblioteca, maxHeight: Medidas.alturaBiblioteca),
@@ -115,9 +124,11 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
       final texto = familia == null ? l.nenhumEfeito(_busca) : l.nenhumEfeitoNaFamilia(_busca, l.familia(familia));
       return Center(child: Text(texto, style: Theme.of(context).textTheme.bodyMedium));
     }
+    final jaTem = ref.watch(editorProvider.select((e) => e.atual != null && temLinhaParalela(e.atual!)));
     return ListView(children: [
       for (final grupo in grupos) ...[
         _tituloCategoria(context, l.familia(grupo.familia)),
+        if (grupo.linhaParalela case final split?) _ItemLinhaParalela(split: split, jaTem: jaTem),
         for (final bloco in grupo.blocos) _ItemEfeito(definicao: bloco),
       ],
     ]);
@@ -145,4 +156,28 @@ class _ItemEfeito extends StatelessWidget {
         trailing: Container(width: Medidas.fitaCategoria, height: Medidas.alvoMinimo, color: Cores.daFamilia(definicao.familia)),
         onTap: () => Navigator.pop(context, definicao),
       );
+}
+
+/// O par Split + Merge: um item só, porque um sem o outro quebra o roteamento.
+/// Com a linha paralela já aberta, fica apagado e diz por quê.
+class _ItemLinhaParalela extends StatelessWidget {
+  const _ItemLinhaParalela({required this.split, required this.jaTem});
+
+  final DefinicaoBloco split;
+  final bool jaTem;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return ListTile(
+      key: const ValueKey('efeito-linha-paralela'),
+      enabled: !jaTem,
+      contentPadding: EdgeInsets.zero,
+      leading: ArteBlocoWidget(definicao: split, tamanho: Medidas.arteBiblioteca),
+      title: Text(l.smItemBiblioteca),
+      subtitle: Text(jaTem ? l.smJaTemLinhaParalela : l.smItemBibliotecaDica),
+      trailing: Container(width: Medidas.fitaCategoria, height: Medidas.alvoMinimo, color: Cores.sinalSplit),
+      onTap: () => Navigator.pop(context, split),
+    );
+  }
 }

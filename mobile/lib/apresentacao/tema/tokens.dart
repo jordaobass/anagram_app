@@ -27,6 +27,22 @@ abstract final class Cores {
   static const ledDesligado = Color(0xFF6B7077);
   static const erro = Color(0xFFFF7A66);
 
+  /// O caminho da linha paralela: amarelo do Split até o fim da linha 2 e
+  /// verde-água claro na volta ao Merge (pedido do usuário). O amarelo é mais
+  /// claro e frio que o âmbar de ação ([tally]) para não parecer seleção; o
+  /// verde-água é mais claro que a família de modulação. Os dois passam de
+  /// 10:1 sobre [fundoCase].
+  static const sinalSplit = Color(0xFFF5E05A);
+  static const sinalMerge = Color(0xFF8FEADB);
+
+  /// A fita da casa: Split e Merge levam a cor do trecho que abrem e fecham,
+  /// para ligar o bloco ao fio; os demais, a da família.
+  static Color daFita(String uri, FamiliaBloco familia) {
+    if (uri.endsWith(':split')) return sinalSplit;
+    if (uri.endsWith(':merge')) return sinalMerge;
+    return daFamilia(familia);
+  }
+
   static Color daFamilia(FamiliaBloco familia) => switch (familia) {
         FamiliaBloco.drive => const Color(0xFFE8772E),
         // verde-limão: o amarelo antigo (E2C23A) se confundia com o âmbar de ação

@@ -3,7 +3,8 @@
 // tracejado até o OUT (o sinal passa, mas não há nada ali). Com split, a
 // derivação faz o que a pedaleira faz: o Split manda o sinal para o COMEÇO da
 // linha 2 (a primeira casa ocupada dela, em qualquer coluna), o sinal passa
-// pelos blocos da linha 2 e o fim dela volta no Merge. Entre as linhas o fio
+// pelos blocos da linha 2 e o fim dela volta no Merge — a ida em amarelo,
+// a volta em verde-água, como a fita do Split e a do Merge. Entre as linhas o fio
 // corre num corredor e desce/sobe pelos vãos entre as casas, para não cruzar
 // pedal nem nome. As caixas dos pedais e os encaixes vazios cobrem o fio.
 import 'package:flutter/rendering.dart';
@@ -69,6 +70,18 @@ class PintorLinhaSinal extends CustomPainter {
     ..strokeWidth = Medidas.linhaSinal
     ..strokeJoin = StrokeJoin.round;
 
+  static final _fioDoSplit = Paint()
+    ..color = Cores.sinalSplit
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = Medidas.linhaSinal
+    ..strokeJoin = StrokeJoin.round;
+
+  static final _fioDoMerge = Paint()
+    ..color = Cores.sinalMerge
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = Medidas.linhaSinal
+    ..strokeJoin = StrokeJoin.round;
+
   static final _fioVazio = Paint()
     ..color = Cores.filete
     ..style = PaintingStyle.stroke
@@ -85,7 +98,9 @@ class PintorLinhaSinal extends CustomPainter {
     if (casaSplit != null) {
       final pontos = pontosDaDerivacao(geometria,
           casaSplit: casaSplit!, casaMerge: casaMerge, ocupadas2: ocupadas2, saida: saida);
-      canvas.drawPath(Path()..addPolygon(pontos, false), _fio);
+      final (ida, volta) = trechosDaDerivacao(pontos, comLinha2: ocupadas2.isNotEmpty);
+      canvas.drawPath(Path()..addPolygon(ida, false), _fioDoSplit);
+      canvas.drawPath(Path()..addPolygon(volta, false), _fioDoMerge);
     }
     _jaque(canvas, Offset(entrada, y1), 'IN');
     _jaque(canvas, Offset(saida, y1), 'OUT');
@@ -158,3 +173,14 @@ List<Offset> pontosDaDerivacao(GeometriaGrade g,
   return pontos;
 }
 
+
+/// Corta a derivação em ida (do Split até o último bloco da linha 2) e volta
+/// (de lá até o Merge). Sem bloco na linha 2, o corte é no meio do corredor.
+/// O ponto do corte entra nos dois trechos, para o fio não ter falha.
+(List<Offset>, List<Offset>) trechosDaDerivacao(List<Offset> pontos, {required bool comLinha2}) {
+  // com linha 2: [split, vão, corredor, antes do 1º, desce, ÚLTIMO, ...volta]
+  if (comLinha2) return (pontos.sublist(0, 6), pontos.sublist(5));
+  // sem: [split, vão, corredor, chegada no corredor, sobe, merge]
+  final meio = Offset((pontos[2].dx + pontos[3].dx) / 2, pontos[2].dy);
+  return ([...pontos.sublist(0, 3), meio], [meio, ...pontos.sublist(3)]);
+}

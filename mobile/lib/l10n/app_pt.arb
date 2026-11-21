@@ -723,5 +723,12 @@
   "mbBuscarOpcao": "Buscar (ex.: turbo grunt)",
   "@mbBuscarOpcao": {
     "description": "Dica do campo de busca na lista de opções longas (tipos de drive)"
-  }
+  },
+  "smFaixaCriar": "+ Criar linha paralela · Split, linha 2 e Merge",
+  "smItemBiblioteca": "Split + Merge (linha paralela)",
+  "smItemBibliotecaDica": "Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.",
+  "smJaTemLinhaParalela": "Este preset já tem linha paralela (um Split e um Merge por preset).",
+  "smDividirDepois": "Dividir o sinal depois deste bloco",
+  "smOrdemInvalida": "O Split precisa ficar antes do Merge na linha 1.",
+  "smSoNaLinha1": "Split e Merge ficam na linha 1."
 }

@@ -246,5 +246,12 @@
   "mbSaida": "Salida",
   "mbOutros": "Otros",
   "mbExplicaMisturaLimpa": "Comp Level es el volumen de las tres bandas comprimidas. Clean Level mezcla en paralelo la señal seca, sin compresión: en el mínimo (−24 dB) casi solo se oye lo comprimido; al subirlo vuelve el ataque natural de la cuerda.",
-  "mbBuscarOpcao": "Buscar (ej.: turbo grunt)"
+  "mbBuscarOpcao": "Buscar (ej.: turbo grunt)",
+  "smFaixaCriar": "+ Crear fila paralela · Split, fila 2 y Merge",
+  "smItemBiblioteca": "Split + Merge (fila paralela)",
+  "smItemBibliotecaDica": "Divide la señal en esta casilla: la fila 2 suena en paralelo y el Merge une las dos.",
+  "smJaTemLinhaParalela": "Este preset ya tiene fila paralela (un Split y un Merge por preset).",
+  "smDividirDepois": "Dividir la señal después de este bloque",
+  "smOrdemInvalida": "El Split tiene que quedar antes del Merge en la fila 1.",
+  "smSoNaLinha1": "Split y Merge quedan en la fila 1."
 }

@@ -113,7 +113,7 @@ class CasaBloco extends ConsumerWidget {
                 ligado: ligado,
                 arquivoIr: atual.arquivoDeIr)),
         const SizedBox(height: Espacos.xs),
-        Container(height: Medidas.fitaCategoria, color: Cores.daFamilia(definicao.familia)),
+        Container(height: Medidas.fitaCategoria, color: Cores.daFita(definicao.uri, definicao.familia)),
         const SizedBox(height: Espacos.xxs),
         SizedBox(
           height: Medidas.alturaRotuloCasa,

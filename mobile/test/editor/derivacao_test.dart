@@ -42,4 +42,25 @@ void main() {
   test('should_place_row_two_one_row_height_plus_the_row_gap_below_row_one', () {
     expect(y2 - y1, _geo.alturaLinha + _geo.vaoEntreLinhas, reason: 'a grade separa as linhas por esse vão');
   });
+
+  test('should_color_the_way_out_until_the_last_row_two_block_and_the_way_back_from_there_to_the_merge', () {
+    final pontos = pontosDaDerivacao(_geo, casaSplit: 3, casaMerge: 6, ocupadas2: [1, 2], saida: 1000);
+
+    final (ida, volta) = trechosDaDerivacao(pontos, comLinha2: true);
+
+    expect(ida.first, Offset(_geo.xDaCasa(3), y1), reason: 'o amarelo sai do Split');
+    expect(ida.last, Offset(_geo.xDaCasa(2), y2), reason: 'e vai até o último bloco da linha 2');
+    expect(volta.first, ida.last, reason: 'o verde-água começa onde o amarelo acaba, sem falha');
+    expect(volta.last, Offset(_geo.xDaCasa(6), y1), reason: 'e chega ao Merge');
+  });
+
+  test('should_cut_the_colors_in_the_middle_of_the_corridor_when_row_two_is_empty', () {
+    final pontos = pontosDaDerivacao(_geo, casaSplit: 2, casaMerge: 5, ocupadas2: const [], saida: 1000);
+
+    final (ida, volta) = trechosDaDerivacao(pontos, comLinha2: false);
+
+    expect(ida.last, volta.first);
+    expect(ida.last.dy, _geo.yCorredor);
+    expect(volta.last, Offset(_geo.xDaCasa(5), y1));
+  });
 }
