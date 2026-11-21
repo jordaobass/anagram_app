@@ -1,104 +1,108 @@
 # Anagram App
 
-Editor de presets **gratuito e open source** para a pedaleira de baixo **Darkglass Anagram**:
-lista de presets por banco, cadeia de blocos com a arte da pedaleira, knobs grandes, cenas e edição
-**ao vivo** pelo USB. Um código Flutter só para macOS, Windows, Linux, Android e navegador (Chrome/Edge).
+**English** · [Português](README.pt-BR.md)
+
+A **free and open-source** preset editor for the **Darkglass Anagram** bass multi-effects: presets by
+bank, a signal chain with the pedal's own block art, big knobs, scenes and **live editing** over USB.
+One Flutter codebase for macOS, Windows, Linux, Android and the browser (Chrome/Edge).
 
 <p align="center">
-  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Baixar para Windows" src="https://img.shields.io/badge/Baixar-Windows%2010%2F11-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
-  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Baixar para macOS" src="https://img.shields.io/badge/Baixar-macOS%20(Apple%20Silicon)-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
-  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Última versão no GitHub" src="https://img.shields.io/github/v/release/jordaobass/anagram_app?style=for-the-badge&label=vers%C3%A3o"></a>
+  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Download for Windows" src="https://img.shields.io/badge/Download-Windows%2010%2F11-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
+  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Download for macOS" src="https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
+  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Latest release on GitHub" src="https://img.shields.io/github/v/release/jordaobass/anagram_app?style=for-the-badge&label=version"></a>
 </p>
 
 <p align="center">
-  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Editor com a cadeia de blocos e a linha paralela" src="docs/imagens/editor.webp" width="900"></a>
+  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Editor with the block chain and the parallel row" src="docs/imagens/en/editor.webp" width="900"></a>
 </p>
 
-> **App não oficial, sem vínculo com a Darkglass Electronics.** Anagram é marca do fabricante; a arte
-> dos blocos é usada com autorização da Darkglass.
+> **Unofficial app, not affiliated with Darkglass Electronics.** Anagram is a trademark of its
+> manufacturer; the block art is used with Darkglass's permission.
 
-Sem anúncios, sem telemetria e sem chamadas de rede: o app só conversa com a pedaleira pelo USB.
+No ads, no telemetry and no network calls: the app only talks to the pedal over USB.
 
-Interface em **português, inglês e espanhol** (segue o idioma do sistema; dá para trocar em
-**Configurações**, na engrenagem).
+The interface is in **English, Portuguese and Spanish** (it follows your system language; you can
+change it in **Settings**, the gear icon).
 
-## O que dá para fazer
+## What you can do
 
 | | |
 |---|---|
-| <img src="docs/imagens/ignissor.webp" width="420" alt="Ignissor"><br>**Compressor multibanda (Ignissor)** — curvas das três bandas, Threshold e Level arrastáveis, Solo e Mudo, curva de compressão por banda | <img src="docs/imagens/entropia.webp" width="420" alt="Entropia"><br>**Drive multibanda (Entropia)** — Drive Type e Drive Mode como na pedaleira, onda que satura com o drive |
-| <img src="docs/imagens/templates.webp" width="420" alt="Templates"><br>**Templates** — os da Darkglass e pontos de partida do app, aplicados ao vivo com desfazer | <img src="docs/imagens/axioma.webp" width="420" alt="Axioma"><br>**Axioma Mono Synth** — osciladores, filtro e envelope desenhados ao vivo |
-| <img src="docs/imagens/gabinete.webp" width="420" alt="Gabinete"><br>**Gabinetes** — foto do modelo, microfone e posição, com galeria e busca | <img src="docs/imagens/explicacao.webp" width="420" alt="Explicação do parâmetro"><br>**Explicação de cada controle** — pare o mouse no nome e veja o que ele faz com o som naquele pedal |
+| <img src="docs/imagens/en/ignissor.webp" width="420" alt="Ignissor"><br>**Multiband compressor (Ignissor)**: band curves, draggable Threshold and Level, Solo and Mute, a compression curve per band | <img src="docs/imagens/en/entropia.webp" width="420" alt="Entropia"><br>**Multiband drive (Entropia)**: Drive Type and Drive Mode like on the pedal, a waveform that saturates with the drive |
+| <img src="docs/imagens/en/templates.webp" width="420" alt="Templates"><br>**Templates**: Darkglass's own plus starting points from the app, applied live with undo | <img src="docs/imagens/en/axioma.webp" width="420" alt="Axioma"><br>**Axioma Mono Synth**: oscillators, filter and envelope drawn live |
+| <img src="docs/imagens/en/gabinete.webp" width="420" alt="Cabinet"><br>**Cabinets**: model photo, microphone and position, with a searchable gallery | <img src="docs/imagens/en/explicacao.webp" width="420" alt="Parameter explanation"><br>**Every control explained**: rest the mouse on its name to see what it does to the sound on that pedal |
 
-<p align="center"><img src="docs/imagens/celular.webp" width="260" alt="No celular"><br><em>No celular (Android) a cadeia vira uma grade compacta.</em></p>
+<p align="center"><img src="docs/imagens/en/celular.webp" width="260" alt="On a phone"><br><em>On a phone (Android) the chain becomes a compact grid.</em></p>
 
-Também: linha paralela com Split e Merge, mover/clonar/trocar presets e bancos, limpar preset,
-exportar e importar JSON, área Fábrica (36 presets da Darkglass, só leitura) e IA local via MCP.
+Also: a parallel row with Split and Merge, move/clone/swap presets and banks, clear a preset, export
+and import JSON, the Factory area (36 Darkglass presets, read-only) and local AI via MCP.
 
-## Como instalar
+## How to install
 
-O app não tem instalador: é uma pasta que você extrai e abre. Todas as versões ficam em
-**[Releases › última versão](https://github.com/jordaobass/anagram_app/releases/latest)**.
+There's no installer: it's a folder you extract and open. Every version is in
+**[Releases › latest](https://github.com/jordaobass/anagram_app/releases/latest)**, and the
+[download page](https://s3.nexttag.app/apps/desktop/anagram-app/index.html) always has the newest one.
 
-### Windows 10 ou 11 (64 bits)
+### Windows 10 or 11 (64-bit)
 
-1. Abra a [última versão](https://github.com/jordaobass/anagram_app/releases/latest) e, em **Assets**,
-   baixe `anagram-app-windows-<versão>….zip`.
-2. Na pasta Downloads, clique com o botão direito no zip e escolha **Extrair Tudo…**. Não abra o app de
-   dentro do zip: ele precisa dos outros arquivos da pasta.
-3. Mova a pasta **Anagram App** para onde quiser (ex. `Documentos`) e abra **Anagram App.exe**.
-4. Na primeira vez, o Windows pode mostrar **"O Windows protegeu o computador"**, porque o app ainda não
-   é assinado. Clique em **Mais informações › Executar assim mesmo**. Isso só aparece uma vez.
-5. Para achar fácil depois: botão direito em `Anagram App.exe` › **Mostrar mais opções › Enviar para ›
-   Área de trabalho (criar atalho)**, ou **Fixar em Iniciar**.
+1. Download `anagram-app-windows-<version>.zip` from the
+   [download page](https://s3.nexttag.app/apps/desktop/anagram-app/index.html) or from **Assets** in the
+   [latest release](https://github.com/jordaobass/anagram_app/releases/latest).
+2. In your Downloads folder, right-click the zip and choose **Extract All…**. Don't run the app from
+   inside the zip: it needs the other files in the folder.
+3. Move the **Anagram App** folder wherever you like (e.g. `Documents`) and open **Anagram App.exe**.
+4. The first time, Windows may show **"Windows protected your PC"**, because the app isn't signed yet.
+   Click **More info › Run anyway**. This only shows up once.
+5. To find it easily later: right-click `Anagram App.exe` › **Show more options › Send to › Desktop
+   (create shortcut)**, or **Pin to Start**.
 
-Mantenha todos os arquivos juntos na pasta: a `hidapi.dll` é quem fala com a pedaleira pelo USB, e as
-`vcruntime`/`msvcp` fazem o app abrir em PCs sem o runtime do Visual C++.
+Keep all the files together in the folder: `hidapi.dll` talks to the pedal over USB, and the
+`vcruntime`/`msvcp` files let the app open on PCs without the Visual C++ runtime.
 
-- **Atualizar:** feche o app, apague a pasta antiga e extraia a nova no lugar. Os presets ficam na
-  pedaleira, não no app, então nada se perde.
-- **Desinstalar:** apague a pasta (e o atalho, se criou). O app não grava nada no registro.
+- **Update:** close the app, delete the old folder and extract the new one in its place. Presets live on
+  the pedal, not in the app, so nothing is lost.
+- **Uninstall:** delete the folder (and the shortcut, if you made one). The app writes nothing to the
+  registry.
 
-### macOS (Apple Silicon, M1 ou mais novo)
+### macOS (Apple Silicon, M1 or newer)
 
-1. Baixe o zip do macOS na [última versão](https://github.com/jordaobass/anagram_app/releases/latest)
-   (quando houver build para a versão) e dê dois cliques para extrair.
-2. Arraste **Anagram App** para **Aplicativos**.
-3. Na primeira vez, o macOS bloqueia porque o app ainda não é notarizado: abra **Ajustes do Sistema ›
-   Privacidade e Segurança** e clique em **Abrir Mesmo Assim**. Ou, no Terminal:
+1. Download the macOS zip from the
+   [download page](https://s3.nexttag.app/apps/desktop/anagram-app/index.html) and double-click it to
+   extract.
+2. Drag **Anagram App** to **Applications**.
+3. The first time, macOS blocks it because the app isn't notarized yet: open **System Settings ›
+   Privacy & Security** and click **Open Anyway**. Or, in Terminal:
    `xattr -dr com.apple.quarantine "/Applications/Anagram App.app"`.
 
 ### Linux
 
-Ainda não há build pronto; compile pelo [README do app](mobile/README.md#desenvolvimento). Instale a
-`libhidapi-hidraw0` e uma regra udev que dê acesso ao USB da Anagram ao seu usuário.
+There's no ready-made build yet; build it from source (see [the app README](mobile/README.md)). Install
+`libhidapi-hidraw0` and a udev rule that gives your user access to the Anagram's USB device.
 
-### Primeira conexão com a pedaleira
+### Connecting to the pedal for the first time
 
-1. **Feche o Darkglass Suite** (e qualquer aba do navegador conectada à Anagram): só um programa por vez
-   fala com ela.
-2. Na pedaleira, abra os ajustes de **MIDI** e ligue o **USB MIDI**. É por ele que o app troca de slot
-   quando você toca num preset; sem ele, o app só deixa ouvir o preset sem a pedaleira mudar de slot.
-3. Ligue a Anagram no computador pelo cabo USB, abra o app e clique em **Conectar pelo USB**. A barra de
-   cima mostra o firmware quando conecta.
-4. Toque num preset da lista para abrir. Para montar a cadeia, use o **+** de uma casa vazia (abre a
-   biblioteca de efeitos) e arraste os blocos para mudar a ordem. **Salvar** grava no slot.
+1. **Close the Darkglass Suite** (and any browser tab connected to the Anagram): only one program at a
+   time can talk to it.
+2. On the pedal, open the **MIDI** settings and turn on **USB MIDI**. That's how the app switches slots
+   when you click a preset; without it the app can only preview a preset while the pedal stays on its
+   own slot.
+3. Connect the Anagram to your computer with the USB cable, open the app and click **Connect over USB**.
+   The top bar shows the firmware version once connected.
+4. Click a preset in the list to open it. To build the chain, use the **+** in an empty slot (it opens
+   the effects library) and drag blocks to change their order. **Save** writes it to the slot.
 
-Sem pedaleira, **Abrir demonstração** simula uma Anagram em memória para você conhecer o app.
+No pedal? **Open demo** simulates an Anagram in memory so you can explore the app.
 
-> O app traz a arte dos blocos da Darkglass Electronics, a mesma da tela da pedaleira, publicada com
-> autorização da Darkglass (veja [Arte de terceiros](#arte-de-terceiros)).
+## Local AI via MCP (optional, desktop only)
 
-## IA local via MCP (opcional, só no computador)
+The app can take requests from an AI assistant running on your own computer (LM Studio, Claude Desktop
+or any other MCP client): *"make the low end fuller"*, *"build me a slap tone"*. The AI reads the open
+preset and adjusts the blocks; every change is **heard immediately**, shows up on screen and stays
+**unsaved**. Nothing is written to the pedal unless you confirm it in the app.
 
-O app pode receber pedidos de um assistente de IA que roda no seu computador (LM Studio, Claude Desktop ou
-outro cliente com suporte a MCP): *"deixa o grave mais encorpado"*, *"monta um timbre de slap"*. A IA lê o
-preset aberto e mexe nos blocos; cada mudança **soa na hora**, aparece na tela e fica **não salva**. Gravar
-na pedaleira só acontece se você confirmar no app.
-
-1. Abra **Configurações** (engrenagem na barra de cima) e ligue **Permitir IA via MCP**. O app passa a
-   escutar só no próprio computador, em `http://127.0.0.1:8765/mcp`, e exige o token mostrado ali.
-2. Clique em **Copiar configuração para** o seu cliente e cole no arquivo de MCP dele. No LM Studio
+1. Open **Settings** (gear icon in the top bar) and turn on **Allow AI via MCP**. The app then listens
+   only on your own computer, at `http://127.0.0.1:8765/mcp`, and requires the token shown there.
+2. Click **Copy configuration for** your client and paste it into its MCP file. In LM Studio
    (`mcp.json`):
 
    ```json
@@ -106,56 +110,58 @@ na pedaleira só acontece se você confirmar no app.
      "mcpServers": {
        "anagram": {
          "url": "http://127.0.0.1:8765/mcp",
-         "headers": { "Authorization": "Bearer <token das Configurações>" }
+         "headers": { "Authorization": "Bearer <token from Settings>" }
        }
      }
    }
    ```
 
-   No Claude Desktop, que só fala stdio, a configuração copiada usa a ponte
+   Claude Desktop only speaks stdio, so the copied configuration uses the bridge
    `npx -y mcp-remote <url> --transport http-only --header "Authorization: Bearer <token>"`.
-3. Abra um preset no app e converse com a IA.
+3. Open a preset in the app and talk to the AI.
 
-> **A IA não ouve o som**: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos
-> costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a
-> ferramentas (*tool calling*). Ferramentas: `get_current_preset`, `list_block_types`, `set_parameter`,
+> **The AI can't hear the sound**: it adjusts based on what you describe, and you tell it whether it
+> got better. Small models tend to describe what they would do instead of calling the tools; prefer a
+> model with good tool calling. Tools: `get_current_preset`, `list_block_types`, `set_parameter`,
 > `set_block_enabled`, `select_scene`, `add_block`, `move_block`, `remove_block`, `choose_cabinet`,
-> `undo` e `save_preset` (decisões IA1–IA6 em `docs/DECISOES.md`).
+> `undo` and `save_preset`.
 
-## Organização do repositório
+## Repository layout
 
-| Pasta | O que tem |
+| Folder | What's in it |
 |---|---|
-| [`mobile/`](mobile/) | O app Flutter (todas as plataformas): código, testes, capturas de referência e ferramentas. Comece pelo [README do app](mobile/README.md). |
-| [`docs/`](docs/) | [`DECISOES.md`](docs/DECISOES.md), o registro único das decisões de produto e técnicas (abertas e fechadas, com data e onde aterrissaram), e a pesquisa de referência de interface. |
+| [`mobile/`](mobile/) | The Flutter app (all platforms): code, tests, reference screenshots and tools. Start with [the app README](mobile/README.md). |
+| [`docs/`](docs/) | [`DECISOES.md`](docs/DECISOES.md), the single log of product and technical decisions (open and closed, with dates and where they landed). |
 
-## Começo rápido
+The code, comments and internal docs are written in Portuguese (pt-BR), where the project started.
+
+## Quick start
 
 ```bash
 cd mobile
 flutter pub get
-flutter test          # núcleo, modos de falha, caminho ponta a ponta e capturas
-flutter run -d macos  # ou windows, linux, chrome, um Android conectado
+flutter test          # protocol, failure modes, end-to-end paths and screenshots
+flutter run -d macos  # or windows, linux, chrome, a connected Android device
 ```
 
-Sem pedaleira, o botão **Abrir demonstração** simula uma Anagram em memória.
+No pedal? **Open demo** simulates an Anagram in memory.
 
-## Arte de terceiros
+## Third-party art
 
-A arte dos blocos, as fotos dos gabinetes e os presets de fábrica são da **Darkglass Electronics** (os
-mesmos que a pedaleira mostra na tela) e ficam em `mobile/assets/blocos_terceiros/`, **publicados com
-autorização da Darkglass**. As imagens são reduzidas (no máximo 256 px, PNG comprimido) e são regeradas
-do Darkglass Suite por `mobile/ferramentas/baixar_arte_pedaleira.py`;
-`mobile/ferramentas/verificar_release.sh` recusa qualquer arquivo na pasta que não seja dessa arte.
-Decisões A9 a A16 em [`docs/DECISOES.md`](docs/DECISOES.md).
+The block art, cabinet photos and factory presets belong to **Darkglass Electronics** (the same ones
+the pedal shows on its screen). They live in `mobile/assets/blocos_terceiros/` and are **published with
+Darkglass's permission**. Images are downsized (max 256 px, compressed PNG) and regenerated from the
+Darkglass Suite by `mobile/ferramentas/baixar_arte_pedaleira.py`;
+`mobile/ferramentas/verificar_release.sh` rejects any file in that folder that isn't this art.
 
-## Contribuir
+## Contributing
 
-Issues, ideias e pull requests são bem-vindos, em português, inglês ou espanhol. Veja
-[`CONTRIBUTING.md`](CONTRIBUTING.md) (em inglês) para rodar o projeto, reportar bugs e mandar PRs.
+Issues, ideas and pull requests are welcome, in English, Portuguese or Spanish. See
+[`CONTRIBUTING.md`](CONTRIBUTING.md) to run the project, report bugs and send PRs.
 
-## Créditos e licença
+## Credits and license
 
-Protocolo USB, catálogo de blocos e presets de exemplo portados do
-[anagram-tone-maker](https://github.com/basster6/anagram-tone-maker) (MIT). Licença do projeto:
-[MIT](LICENSE).
+USB protocol, block catalog and example presets ported from
+[anagram-tone-maker](https://github.com/basster6/anagram-tone-maker) (MIT). Project license:
+[MIT](LICENSE). The block art is © Darkglass Electronics, used with permission, and is not covered by
+the MIT license.
