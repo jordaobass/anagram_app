@@ -2,7 +2,8 @@
 // ocupada, quebrando em fileiras. Os buracos entre blocos aparecem como
 // encaixe com "+" (como na grade ampla), para o bloco não parecer colado no
 // vizinho e para dar para pôr efeito no meio. Nada fica escondido à direita.
-// O fio do sinal liga as caixas de cada fileira; a linha 2 só tem fio com split.
+// O fio do sinal liga as caixas de cada fileira; a linha 2 só tem fio com
+// split, e em amarelo, a cor da derivação na grade ampla.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -34,7 +35,8 @@ class GradeCompacta extends ConsumerWidget {
       final comSplit = documento.blocosDaLinha(1).any((b) => b.uri.endsWith(':split'));
       return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         for (final linha in const [1, 2])
-          ..._linha(context, ref, documento, linha, _Fileiras(porFileira, largura, comFio: linha == 1 || comSplit)),
+          ..._linha(context, ref, documento, linha, _Fileiras(porFileira, largura,
+              comFio: linha == 1 || comSplit, cor: linha == 1 ? Cores.aluminio : Cores.sinalSplit)),
       ]);
     });
   }
@@ -79,11 +81,12 @@ class GradeCompacta extends ConsumerWidget {
 
 /// Como as casas se arrumam: quantas por fileira, de que largura e se a linha tem fio.
 class _Fileiras {
-  const _Fileiras(this.porFileira, this.largura, {required this.comFio});
+  const _Fileiras(this.porFileira, this.largura, {required this.comFio, required this.cor});
 
   final int porFileira;
   final double largura;
   final bool comFio;
+  final Color cor;
 }
 
 /// O fio de cada fileira, do centro da primeira caixa ao da última: entre as
@@ -98,7 +101,7 @@ class _PintorFileiras extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final fio = Paint()
-      ..color = Cores.aluminio
+      ..color = fileiras.cor
       ..strokeWidth = Medidas.linhaSinal;
     final passo = fileiras.largura + Espacos.s;
     for (var inicio = 0; inicio < quantidade; inicio += fileiras.porFileira) {
@@ -111,5 +114,5 @@ class _PintorFileiras extends CustomPainter {
 
   @override
   bool shouldRepaint(_PintorFileiras antigo) =>
-      antigo.quantidade != quantidade || antigo.fileiras.largura != fileiras.largura;
+      antigo.quantidade != quantidade || antigo.fileiras.largura != fileiras.largura || antigo.fileiras.cor != fileiras.cor;
 }
