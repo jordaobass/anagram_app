@@ -85,6 +85,18 @@ void main() {
     expect(uuid(slot15b), isNot(uuid(slot01a)), reason: 'dois presets com o mesmo id confundem a pedaleira');
   });
 
+  test('should_ask_then_overwrite_the_occupied_slot_when_cloning_onto_it_is_confirmed', () async {
+    final (container, pedaleira) = await _conectarComLista();
+    final nomeDaOrigem = _nome(container, slot01a);
+
+    final pergunta = await _fazer(container, OperacaoPreset.clonar, slot01a, slot01b);
+    final resultado = await container.read(organizarProvider.notifier).concluir(slot01b, confirmado: true);
+
+    expect(pergunta, isA<DestinoOcupado>());
+    expect(resultado, isA<Organizado>(), reason: 'confirmado, o clone substitui o preset do destino');
+    expect(pedaleira.conteudoDoSlot(slot01b.numero)!['preset']['name'], nomeDaOrigem);
+  });
+
   test('should_swap_whole_banks_when_trading_a_bank', () async {
     final (container, pedaleira) = await _conectarComLista();
     final banco1 = [for (final r in ['01A', '01B', '01C']) _nome(container, SlotPreset.doRotulo(r))];
@@ -121,4 +133,5 @@ void main() {
     expect(container.read(editorProvider).slot, slot15b);
     expect(container.read(editorProvider).naoSalvo, isFalse);
   });
+
 }
