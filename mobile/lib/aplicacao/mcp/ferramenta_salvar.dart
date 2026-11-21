@@ -1,0 +1,46 @@
+// Gravar no slot é a única coisa que a IA não faz sozinha: ela pede, o app
+// mostra a pergunta e só a pessoa confirma. O que acontece depois é o mesmo
+// "Salvar" do botão (inclusive cair no "Salvar como" quando não há slot).
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../nucleo/mcp/ferramenta_mcp.dart';
+import '../casos_de_uso/salvar_no_slot.dart';
+import 'avisos_mcp.dart';
+import 'sessao_mcp.dart';
+
+class SalvarPreset extends FerramentaMcp {
+  const SalvarPreset(this.sessao, this._ref);
+  final SessaoMcp sessao;
+  final Ref _ref;
+
+  @override
+  String get nome => 'save_preset';
+
+  @override
+  String get descricao => 'Ask the player to save the preset to its slot on the pedal. The app shows a '
+      'confirmation dialog; nothing is written unless the player confirms. Returns status '
+      '"confirmed", "declined", "timeout" or "needs_destination".';
+
+  @override
+  Map<String, dynamic> get esquema => esquemaObjeto(const {});
+
+  @override
+  Future<ResultadoFerramenta> executar(Map<String, dynamic> argumentos) async {
+    final documento = sessao.presetAberto();
+    final pedido = _ref.read(pedidoSalvarProvider.notifier);
+    final confirmado = await pedido.pedir(documento.nome, sessao.estado.slot?.rotulo, _ref.read(prazoConfirmarSalvarProvider));
+    if (confirmado == null) return ResultadoFerramenta.dados({'status': 'timeout'});
+    if (!confirmado) return ResultadoFerramenta.dados({'status': 'declined'});
+    return _gravado(await sessao.editor.salvar());
+  }
+
+  static ResultadoFerramenta _gravado(ResultadoSalvar? resultado) => switch (resultado) {
+        PresetSalvo(:final slot) => ResultadoFerramenta.dados({'status': 'confirmed', 'saved_to': slot.rotulo}),
+        null => ResultadoFerramenta.dados({
+            'status': 'needs_destination',
+            'message': 'This preset has no slot of its own here; the player must pick one in the app.',
+          }),
+        SlotOcupado(:final slot) => ResultadoFerramenta.recusa('Slot ${slot.rotulo} is taken; the player must confirm in the app.'),
+        FalhaAoSalvar(:final erro) => ResultadoFerramenta.recusa('Saving failed: ${erro.mensagem}'),
+      };
+}

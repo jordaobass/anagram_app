@@ -10,7 +10,11 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import 'fixtures.dart';
 import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
+import 'package:anagram_app/aplicacao/mcp/controlador_mcp.dart';
 import 'package:anagram_app/dados/preferencias_idioma.dart';
+import 'package:anagram_app/dados/preferencias_mcp.dart';
+import 'package:anagram_app/nucleo/mcp/protocolo_mcp.dart';
+import 'package:anagram_app/plataforma/servidor_mcp.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
 
 /// Latência fixa: a real varia de execução para execução e sujaria as capturas.
@@ -36,10 +40,16 @@ Widget appDeTeste(
         {List<Override> overrides = const [],
         IdiomaApp? idioma = IdiomaApp.portugues,
         IndiceMiniaturas? indice,
-        PresetsDeFabrica? fabrica}) =>
+        PresetsDeFabrica? fabrica,
+        ServidorMcp? servidorMcp,
+        bool mcpDisponivel = true}) =>
     ProviderScope(
       overrides: [
         ...overrides,
+        // o MCP nunca abre porta de verdade nos testes de tela (relógio falso)
+        servidorMcpProvider.overrideWithValue(servidorMcp ?? ServidorMcpFalso()),
+        preferenciasMcpProvider.overrideWithValue(PreferenciasMcpEmMemoria()),
+        mcpDisponivelProvider.overrideWithValue(mcpDisponivel),
         cronometroProvider.overrideWithValue(CronometroFixo.new),
         catalogoProvider.overrideWith((ref) async => lerCatalogo()),
         presetsDemonstracaoProvider.overrideWith((ref) async => lerPresetsDemonstracao()),
@@ -63,4 +73,32 @@ class PreferenciasIdiomaEmMemoria implements PreferenciasIdioma {
 
   @override
   Future<void> gravar(String? codigo) async => salvo = codigo;
+}
+
+class PreferenciasMcpEmMemoria implements PreferenciasMcp {
+  ConfiguracaoMcp salvo = const ConfiguracaoMcp();
+
+  @override
+  Future<ConfiguracaoMcp> ler() async => salvo;
+
+  @override
+  Future<void> gravar(ConfiguracaoMcp configuracao) async => salvo = configuracao;
+}
+
+/// Servidor que só finge escutar; com [ocupada], a porta já tem dono.
+class ServidorMcpFalso implements ServidorMcp {
+  ServidorMcpFalso({this.ocupada = false});
+
+  final bool ocupada;
+  String? tokenEmUso;
+
+  @override
+  Future<int> iniciar({required int porta, required String token, required ProtocoloMcp protocolo}) async {
+    if (ocupada) throw ErroPortaOcupada(porta, 'em uso');
+    tokenEmUso = token;
+    return porta;
+  }
+
+  @override
+  Future<void> parar() async => tokenEmUso = null;
 }
