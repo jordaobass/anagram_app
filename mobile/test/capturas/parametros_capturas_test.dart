@@ -5,7 +5,8 @@ import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/capturas_apoio.dart';
@@ -52,6 +53,17 @@ void main() {
   testWidgets('captura eq: painel do paramétrico no celular', (tester) async {
     await _painelDo(tester, _celular, 'urn:darkglass:fil4#mono');
     await capturar(tester, '$pasta/eq-90-celular-parametrico.png');
+  });
+
+  testWidgets('captura tt: balão do Threshold do Compressor/Limiter no computador', (tester) async {
+    final mouse = await tester.createGesture(kind: PointerDeviceKind.mouse);
+    await mouse.addPointer(location: Offset.zero);
+    addTearDown(mouse.removePointer);
+    await _painelDo(tester, desktopWindows, 'urn:darkglass:CompLim');
+    await mouse.moveTo(tester.getCenter(find.byKey(const ValueKey('explicacao-Threshold'))));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+    await capturar(tester, '$pasta/tt-01-desktop-balao-threshold.png');
   });
 
   testWidgets('captura eq: painel do GEQ no celular', (tester) async {
