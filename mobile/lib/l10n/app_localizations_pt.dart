@@ -803,15 +803,6 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get gxModeloAnterior => 'Gabinete anterior';
-
-  @override
-  String get gxProximoModelo => 'Próximo gabinete';
-
-  @override
-  String get gxBuscarGabinete => 'Escreva para buscar';
-
-  @override
   String get fbAreaFabrica => 'Fábrica';
 
   @override
@@ -833,4 +824,25 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get fbCopiarPara => 'Copiar para a minha área…';
+
+  @override
+  String gvAnterior(String rotulo) {
+    return '$rotulo: opção anterior';
+  }
+
+  @override
+  String gvProximo(String rotulo) {
+    return '$rotulo: próxima opção';
+  }
+
+  @override
+  String gvAbrirLista(String rotulo, String nome) {
+    return '$rotulo: $nome. Toque para ver todos';
+  }
+
+  @override
+  String get gvBuscar => 'Escreva para buscar';
+
+  @override
+  String get gvNadaEncontrado => 'Nada encontrado';
 }

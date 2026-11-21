@@ -646,12 +646,6 @@
       }
     }
   },
-  "gxModeloAnterior": "Gabinete anterior",
-  "gxProximoModelo": "Próximo gabinete",
-  "gxBuscarGabinete": "Escreva para buscar",
-  "@gxBuscarGabinete": {
-    "description": "Dica do campo de busca do modelo de gabinete"
-  },
   "fbAreaFabrica": "Fábrica",
   "@fbAreaFabrica": {
     "description": "Nome da área dos presets de fábrica no seletor de área"
@@ -679,5 +673,19 @@
   "fbCopiarPara": "Copiar para a minha área…",
   "@fbCopiarPara": {
     "description": "Item do menu de um preset da fábrica"
-  }
+  },
+  "gvAnterior": "{rotulo}: opção anterior",
+  "@gvAnterior": {
+    "placeholders": { "rotulo": { "type": "String" } }
+  },
+  "gvProximo": "{rotulo}: próxima opção",
+  "@gvProximo": {
+    "placeholders": { "rotulo": { "type": "String" } }
+  },
+  "gvAbrirLista": "{rotulo}: {nome}. Toque para ver todos",
+  "@gvAbrirLista": {
+    "placeholders": { "rotulo": { "type": "String" }, "nome": { "type": "String" } }
+  },
+  "gvBuscar": "Escreva para buscar",
+  "gvNadaEncontrado": "Nada encontrado"
 }

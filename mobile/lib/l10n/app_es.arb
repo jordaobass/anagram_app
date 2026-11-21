@@ -219,14 +219,16 @@
   "opMovido": "{origem} pasó a {destino}.",
   "opClonado": "Copia de {origem} guardada en {destino}.",
   "opBancosTrocados": "Bancos {a} y {b} intercambiados.",
-  "gxModeloAnterior": "Gabinete anterior",
-  "gxProximoModelo": "Gabinete siguiente",
-  "gxBuscarGabinete": "Escribe para buscar",
   "fbAreaFabrica": "Fábrica",
   "fbSoLeitura": "SOLO LECTURA",
   "fbAreaSoLeitura": "Presets de fábrica de Darkglass: abrir uno solo lo hace sonar. Para guardarlo, cópialo a una de tus áreas.",
   "fbAvisoPresetDeFabrica": "PRESET DE FÁBRICA — solo suena. Cópialo a una de tus áreas para guardarlo.",
   "fbCopiarParaMinhaArea": "COPIAR A MI ÁREA…",
   "fbCopiarTitulo": "¿Copiar a qué área?",
-  "fbCopiarPara": "Copiar a mi área…"
+  "fbCopiarPara": "Copiar a mi área…",
+  "gvAnterior": "{rotulo}: opción anterior",
+  "gvProximo": "{rotulo}: opción siguiente",
+  "gvAbrirLista": "{rotulo}: {nome}. Toca para ver todos",
+  "gvBuscar": "Escribe para buscar",
+  "gvNadaEncontrado": "Nada encontrado"
 }

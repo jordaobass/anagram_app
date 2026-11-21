@@ -1414,24 +1414,6 @@ abstract class AppLocalizations {
   /// **'Bancos {a} e {b} trocados.'**
   String opBancosTrocados(String a, String b);
 
-  /// No description provided for @gxModeloAnterior.
-  ///
-  /// In pt, this message translates to:
-  /// **'Gabinete anterior'**
-  String get gxModeloAnterior;
-
-  /// No description provided for @gxProximoModelo.
-  ///
-  /// In pt, this message translates to:
-  /// **'Próximo gabinete'**
-  String get gxProximoModelo;
-
-  /// Dica do campo de busca do modelo de gabinete
-  ///
-  /// In pt, this message translates to:
-  /// **'Escreva para buscar'**
-  String get gxBuscarGabinete;
-
   /// Nome da área dos presets de fábrica no seletor de área
   ///
   /// In pt, this message translates to:
@@ -1473,6 +1455,36 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Copiar para a minha área…'**
   String get fbCopiarPara;
+
+  /// No description provided for @gvAnterior.
+  ///
+  /// In pt, this message translates to:
+  /// **'{rotulo}: opção anterior'**
+  String gvAnterior(String rotulo);
+
+  /// No description provided for @gvProximo.
+  ///
+  /// In pt, this message translates to:
+  /// **'{rotulo}: próxima opção'**
+  String gvProximo(String rotulo);
+
+  /// No description provided for @gvAbrirLista.
+  ///
+  /// In pt, this message translates to:
+  /// **'{rotulo}: {nome}. Toque para ver todos'**
+  String gvAbrirLista(String rotulo, String nome);
+
+  /// No description provided for @gvBuscar.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escreva para buscar'**
+  String get gvBuscar;
+
+  /// No description provided for @gvNadaEncontrado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nada encontrado'**
+  String get gvNadaEncontrado;
 }
 
 class _AppLocalizationsDelegate
