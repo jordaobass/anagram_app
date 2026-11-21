@@ -18,7 +18,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('slot-01A')));
     await tester.pumpAndSettle();
-    expect(find.text('Largar edições?'), findsOneWidget);
+    expect(find.text('Descartar edições?'), findsOneWidget);
 
     await tester.tap(find.text('CONTINUAR EDITANDO'));
     await tester.pumpAndSettle();

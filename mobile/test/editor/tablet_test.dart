@@ -38,8 +38,10 @@ void main() {
   testWidgets('should_fit_more_blocks_per_row_than_a_phone_when_on_an_ipad_in_portrait', (tester) async {
     await abrirNoTablet(tester, ipadMiniRetrato, '02A');
     final primeira = tester.getRect(find.byKey(const ValueKey('casa-1-1')));
-    final quinta = tester.getRect(find.byKey(const ValueKey('casa-1-7'))); // 5º bloco: as casas ocupadas são 1, 2, 3, 5 e 7
-    expect(quinta.top, primeira.top, reason: 'cinco blocos na mesma fileira');
+    // a grade compacta mostra as casas na posição real (os buracos com "+"):
+    // no celular cabem 4 por fileira; no iPad, a 5ª ainda está na primeira
+    final quinta = tester.getRect(find.byKey(const ValueKey('casa-1-5')));
+    expect(quinta.top, primeira.top, reason: 'cinco casas na mesma fileira');
   });
 
   testWidgets('should_show_list_and_editor_when_on_an_ipad_in_portrait', (tester) async {

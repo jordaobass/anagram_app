@@ -3,8 +3,8 @@
 assets/blocos_terceiros/ e acrescenta essas entradas ao indice.json.
 
 A arte é da Darkglass Electronics e vem no Darkglass Suite
-(assets/devices/anagram/effects). Como as miniaturas de anagramanswers.com, ela
-NÃO vai para o repositório nem para as lojas sem autorização (docs/DECISOES.md, A9).
+(assets/devices/anagram/effects). Ela não vai para o repositório; os builds
+publicados são feitos com ela, num clone limpo (docs/DECISOES.md, A9 a A12).
 
 A tabela uri -> [ligado, desligado] é a publicada pelo anagramcontrol.online.
 As imagens vêm da pasta do Suite, se informada; senão, da cópia daquele site.
@@ -25,7 +25,8 @@ CATALOGO = RAIZ / 'assets' / 'referencia' / 'blocks-factory.json'
 SITE = 'https://anagramcontrol.online/'
 TABELA = SITE + 'src/block-images.js'
 PREFIXO = 'dg_'
-CREDITO = 'Imagens: Darkglass Electronics (arte da pedaleira) e anagramanswers.com'
+CREDITO_PEDALEIRA = 'Imagens: Darkglass Electronics (arte da pedaleira)'
+CREDITO_MISTO = CREDITO_PEDALEIRA + ' e anagramanswers.com'
 
 
 def baixar(url):
@@ -63,8 +64,12 @@ def main(pasta_suite):
                          'arquivo': trazer_imagem(ligado, pasta_suite),
                          'arquivoDesligado': trazer_imagem(desligado, pasta_suite),
                          'uris': [uri], 'origem': 'pedaleira'}
-    indice.update({'origem': 'Arte da pedaleira (Darkglass Suite) e fichas de anagramanswers.com; '
-                             'autorização pendente antes de publicar.', 'credito': CREDITO, 'blocos': blocos})
+    # o crédito diz o que está de fato na pasta: num clone limpo (release, A12)
+    # só há a arte da pedaleira; na pasta de trabalho pode haver também as
+    # miniaturas de anagramanswers.com (A2)
+    misto = any(not chave.startswith(PREFIXO) for chave in blocos)
+    indice.update({'origem': 'Arte da pedaleira (Darkglass Suite)' + (' e fichas de anagramanswers.com' if misto else '') + '.',
+                   'credito': CREDITO_MISTO if misto else CREDITO_PEDALEIRA, 'blocos': blocos})
     INDICE.write_text(json.dumps(indice, ensure_ascii=False, indent=1))
     total = sum(1 for chave in blocos if chave.startswith(PREFIXO))
     print(f'{total} blocos com arte da pedaleira em {DESTINO}')

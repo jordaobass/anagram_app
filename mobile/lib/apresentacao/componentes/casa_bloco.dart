@@ -1,8 +1,10 @@
-// Uma casa da grade: o pedal, o nome que a pedaleira informa e a fita de
-// cor da família. Toque seleciona (na vazia, abre a biblioteca de efeitos);
-// toque duplo liga/desliga; botão direito abre o menu do bloco. No toque, o
-// toque longo da casa ocupada é o arrasto, então o menu dela fica no botão
-// visível do painel; na vazia, o toque longo ainda abre o menu (colar).
+// Uma casa da grade: o pedal numa caixa de tamanho fixo (as fotos da
+// pedaleira têm proporções diferentes e na caixa ficam alinhadas), o nome que
+// a pedaleira informa e a fita de cor da família. A casa vazia é um encaixe
+// tracejado com "+". Toque seleciona na hora (na vazia, abre a biblioteca de
+// efeitos); toque duplo liga/desliga; botão direito abre o menu do bloco. No
+// toque, o toque longo da casa ocupada é o arrasto, então o menu dela fica no
+// botão visível do painel; na vazia, o toque longo ainda abre o menu (colar).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,7 +12,10 @@ import '../../aplicacao/provedores.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'arte_bloco.dart';
+import 'pintor_encaixe.dart';
+import 'toque_duplo.dart';
 import '../../l10n/app_localizations.dart';
+import '../textos.dart';
 
 class CasaBloco extends ConsumerWidget {
   const CasaBloco({
@@ -41,17 +46,19 @@ class CasaBloco extends ConsumerWidget {
       button: true,
       selected: selecionado,
       label: _rotulo(AppLocalizations.of(context), ref, atual),
-      child: GestureDetector(
-        onTap: aoTocar,
-        onDoubleTap: atual == null ? null : aoTocarDuas,
-        onLongPressStart: atual == null ? (d) => aoPedirMenu(d.globalPosition) : null,
-        onSecondaryTapUp: (d) => aoPedirMenu(d.globalPosition),
-        child: AnimatedContainer(
-          duration: Duracoes.curta,
-          width: largura,
-          padding: const EdgeInsets.all(Espacos.xs),
-          decoration: _moldura(),
-          child: atual == null ? _vazia() : _ocupada(context, ref, atual),
+      child: ToqueDuplo(
+        aoTocar: aoTocar,
+        aoTocarDuas: atual == null ? null : aoTocarDuas,
+        child: GestureDetector(
+          onLongPressStart: atual == null ? (d) => aoPedirMenu(d.globalPosition) : null,
+          onSecondaryTapUp: (d) => aoPedirMenu(d.globalPosition),
+          child: AnimatedContainer(
+            duration: Duracoes.curta,
+            width: largura,
+            padding: const EdgeInsets.all(Espacos.xs),
+            decoration: _moldura(),
+            child: atual == null ? _vazia() : _ocupada(context, ref, atual),
+          ),
         ),
       ),
     );
@@ -60,7 +67,7 @@ class CasaBloco extends ConsumerWidget {
   /// O que o leitor de tela diz: a casa vazia pela posição, a ocupada pelo bloco.
   String _rotulo(AppLocalizations l, WidgetRef ref, BlocoPreset? atual) {
     if (atual == null) return l.adicionarEfeitoNaCasa(posicao.casa, posicao.linha);
-    final nome = ref.watch(definicaoBlocoProvider(atual.uri)).nome;
+    final nome = l.nomeDoBloco(ref.watch(definicaoBlocoProvider(atual.uri)));
     return ligado ? l.blocoLigado(nome) : l.blocoDesligado(nome);
   }
 
@@ -73,52 +80,101 @@ class CasaBloco extends ConsumerWidget {
         ),
       );
 
-  Widget _vazia() => AspectRatio(
-        aspectRatio: 1,
-        child: Center(
-          child: Container(
-            width: largura * Medidas.marcaCasaVazia,
-            height: largura * Medidas.marcaCasaVazia,
-            decoration: BoxDecoration(
-              color: Cores.fundoCase,
-              shape: BoxShape.circle,
-              border: Border.all(color: Cores.filete, width: Medidas.contornoSelecao),
-            ),
-            child: Icon(
-              Icons.add,
-              size: largura * Medidas.marcaCasaVazia * Medidas.maisNaCasaVazia,
-              color: Cores.textoSecundario,
-            ),
-          ),
+  double get _caixa => _interno * Medidas.arteNaCasa;
+
+  /// Encaixe tracejado do tamanho da caixa do pedal, no mesmo lugar dela.
+  Widget _vazia() => SizedBox.square(
+        dimension: _caixa,
+        child: CustomPaint(
+          painter: const PintorEncaixe(),
+          child: Center(child: Icon(Icons.add, size: _caixa * Medidas.marcaCasaVazia, color: Cores.textoSecundario)),
         ),
       );
 
+  double get _interno => largura - Espacos.xs * 2 - Medidas.contornoSelecao * 2;
+
   Widget _ocupada(BuildContext context, WidgetRef ref, BlocoPreset atual) {
     final definicao = ref.watch(definicaoBlocoProvider(atual.uri));
-    final interno = largura - Espacos.xs * 2 - Medidas.contornoSelecao * 2;
+    final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(
+          color: ligado ? Cores.texto : Cores.textoSecundario,
+          height: Medidas.entrelinhaRotuloCasa,
+        );
+    final l = AppLocalizations.of(context);
+    final (rotulo, estiloRotulo) = rotuloQueCabe(l.nomeCurtoDoBloco(definicao),
+        l.nomeCurtoDoBloco(definicao, abreviado: true), estilo, _interno, Directionality.of(context));
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ArteBlocoWidget(definicao: definicao, tamanho: interno * Medidas.arteNaCasa, ligado: ligado),
+        CaixaPedal(tamanho: _caixa, child: ArteBlocoWidget(definicao: definicao, tamanho: _caixa - Espacos.xs * 2, ligado: ligado)),
         const SizedBox(height: Espacos.xs),
         Container(height: Medidas.fitaCategoria, color: Cores.daFamilia(definicao.familia)),
         const SizedBox(height: Espacos.xxs),
-        // o nome inteiro, como na tela da pedaleira: a abreviação ("SUP") não
-        // diz qual bloco é; duas linhas cabem "Black & Yellow TLIII"
         SizedBox(
           height: Medidas.alturaRotuloCasa,
           child: Text(
-            definicao.nome,
+            rotulo,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: ligado ? Cores.texto : Cores.textoSecundario,
-                  height: Medidas.entrelinhaRotuloCasa,
-                ),
+            style: estiloRotulo,
           ),
         ),
       ],
     );
   }
+}
+
+/// O nome inteiro, como na tela da pedaleira ("SUP" não diz qual bloco é),
+/// desde que nenhuma palavra precise ser partida: numa casa estreita
+/// "Suppress/or" lê pior que a abreviação. Sem abreviação, fica o nome.
+(String, TextStyle?) rotuloQueCabe(String nome, String abreviacao, TextStyle? estilo, double largura, TextDirection direcao) {
+  // o nome inteiro vem primeiro (como na tela da pedaleira): a letra diminui
+  // em passos antes de desistir; a abreviação só sobra em casa muito estreita
+  for (final escala in Medidas.reducoesRotuloCasa) {
+    final tamanho = (estilo?.fontSize ?? Medidas.fonteRotuloCasaPadrao) * escala;
+    final reduzido = estilo?.copyWith(fontSize: tamanho) ?? TextStyle(fontSize: tamanho);
+    if (_cabeEmDuasLinhas(nome, reduzido, largura, direcao)) return (nome, reduzido);
+  }
+  return abreviacao.isEmpty ? (nome, estilo) : (abreviacao, estilo);
+}
+
+/// Cada palavra cabe numa linha (nada de "Suppress/or") e o todo, em duas.
+bool _cabeEmDuasLinhas(String texto, TextStyle estilo, double largura, TextDirection direcao) {
+  final pintor = TextPainter(textDirection: direcao, maxLines: 1);
+  try {
+    for (final palavra in texto.split(' ')) {
+      pintor.text = TextSpan(text: palavra, style: estilo);
+      pintor.layout();
+      if (pintor.width > largura) return false;
+    }
+    pintor
+      ..maxLines = 2
+      ..text = TextSpan(text: texto, style: estilo)
+      ..layout(maxWidth: largura);
+    return !pintor.didExceedMaxLines;
+  } finally {
+    pintor.dispose();
+  }
+}
+
+/// Caixa fixa do pedal na cadeia: fundo de painel opaco (a linha do sinal
+/// passa por trás) e a foto, de qualquer proporção, centrada dentro dela.
+class CaixaPedal extends StatelessWidget {
+  const CaixaPedal({super.key, required this.tamanho, required this.child});
+
+  final double tamanho;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        width: tamanho,
+        height: tamanho,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Cores.painel,
+          borderRadius: BorderRadius.circular(Raios.controle),
+          border: Border.all(color: Cores.filete),
+        ),
+        child: child,
+      );
 }

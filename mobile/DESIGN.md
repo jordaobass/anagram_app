@@ -22,7 +22,7 @@ colors:
   led-desligado: "#6B7077"
   erro: "#FF7A66"
   familia-drive: "#E8772E"
-  familia-compressor: "#E2C23A"
+  familia-compressor: "#B5D334"
   familia-equalizador: "#3BB7D6"
   familia-filtro: "#9B78E3"
   familia-modulacao: "#34C3A0"
@@ -190,7 +190,7 @@ Casco preto neutro com alumínio frio, um único acento âmbar de ação e uma f
 - **Âmbar Tally** (`tally`): botão primário (SALVAR NO SLOT, LIGADO, CONECTAR), cena ativa, contorno de 2px da casa selecionada, filete esquerdo e rótulo do slot aberto na lista, anel de foco do knob, "AO VIVO" ligado e o interruptor. Texto sobre ele é sempre `sobre-tally`.
 
 ### Secondary
-- **Fita Gaffer** (`fita-gaffer`, borda inferior `fita-gaffer-sombra`): o fundo do nome do preset e do snackbar; também o ponteiro do knob. Texto sobre ela é sempre `tinta-marcador`.
+- **Fita Gaffer** (`fita-gaffer`, borda inferior `fita-gaffer-sombra`): o fundo do nome do preset e do snackbar; também o ponteiro do knob. Nunca em chip, segmento ou seleção: o tema deixa `secondary` em alumínio e a seleção de chip/segmento em `painel-elevado` com contorno âmbar. Texto sobre ela é sempre `tinta-marcador`.
 - **Fita de Alerta** (`fita-alerta`): só o selo "NÃO SALVO", com texto branco.
 
 ### Tertiary
@@ -246,7 +246,7 @@ Duas composições, decididas por largura ≥ 780 e altura ≥ 600 (o iPad em re
 - **Ampla** (tablet paisagem, desktop): barra de conexão de 64px no topo; lista de presets fixa à esquerda (304px a partir de 1300px de tela, 256px abaixo disso; linhas de 48px agrupadas por banco com divisor de filete); à direita, em coluna: faixa do preset (slot + fita + ações alinhadas à direita; abaixo de 880px de editor as ações descem para baixo da fita), cenas 1–3 em três colunas iguais, moldura da grade, moldura dos parâmetros com todos os knobs à vista, sem páginas, de 104px (encolhem até 84px para caber numa fileira). Editor ao lado da lista com menos de 700px usa a grade e os parâmetros da compacta.
 - **Compacta** (celular retrato): mesma ordem empilhada; a fita do nome quebra em até 2 linhas, ações vão para a linha de baixo alinhadas à esquerda, a lista de presets abre ao tocar no slot, knob de 84px e a grade mostra só as casas ocupadas, em fileiras de 4 no celular e até 6 no iPad em retrato (casa de até 112px).
 
-Casas da grade entre 56 e 112px de largura, para as 12 caberem sem rolagem lateral do iPad mini em paisagem para cima; abaixo de 76px a casa mostra a abreviação do bloco; a arte ocupa 86% da casa. Diálogos com 440px; telas vazias (conectar) limitadas a 520px e centralizadas.
+Casas da grade entre 56 e 112px de largura, para as 12 caberem sem rolagem lateral do iPad mini em paisagem para cima; o nome do bloco vai inteiro em até 2 linhas de 14px e, se alguma palavra não couber na largura da casa, entra a abreviação da pedaleira (nunca se parte uma palavra); a caixa do pedal ocupa 86% da casa. A grade ampla reserva 28px antes da casa 1 e depois da 12 para os jaques IN e OUT. Diálogos com 440px; telas vazias (conectar) limitadas a 520px e centralizadas.
 
 ## Elevation & Depth
 
@@ -264,30 +264,35 @@ Cantos quase retos: 3px em molduras de case, 6px em controles (botões, cenas, c
 ### Buttons
 Táteis e diretos, sempre ≥ 48dp, texto em Barlow Condensed caixa alta.
 - **Shape:** cantos de controle (6px).
-- **Primário:** âmbar tally, texto `sobre-tally`, 16px de lateral. Ex.: SALVAR NO SLOT, CONECTAR, LIGADO.
-- **Contorno:** transparente, borda de 1px `aluminio`, texto `texto`. Ex.: DESCARTAR, LARGAR, DESLIGADO, ABRIR DEMONSTRAÇÃO.
+- **Primário:** âmbar tally, texto `sobre-tally`, 16px de lateral. Ex.: SALVAR (só com edição não salva, junto do selo NÃO SALVO; sem edição ele é contorno), CONECTAR, LIGADO.
+- **Contorno:** transparente, borda de 1px `aluminio`, texto `texto`. Ex.: SALVAR sem edição, SALVAR COMO, DESCARTAR, DESLIGADO, ABRIR DEMONSTRAÇÃO.
 - **Foco:** cor de foco é âmbar a 24% de opacidade.
-- **Ações destrutivas** (descartar, largar) ficam isoladas e só em contorno; DESCARTAR só aparece quando há edição não salva.
-- **Ícone:** Material Icons via IconButton com tooltip (desconectar, créditos, copiar bloco, menu de arquivo).
+- **Descartar:** no computador fica à vista, desabilitado sem edição; no celular SALVAR, SALVAR COMO e um menu ⋯ (Descartar, Importar, Exportar) cabem numa linha.
+- **Enquanto o Salvar como espera o destino**, os botões de cima ficam desabilitados: a ação está na lista.
+- **Diálogo de confirmação:** cancelar em texto neutro (`texto`) à esquerda; confirmar à direita, sempre preenchido em `fita-alerta` com texto `sobre-alerta`, porque todo confirmar ali apaga ou sobrescreve algo.
+- **Ícone:** Material Icons via IconButton com tooltip (desconectar, créditos, copiar bloco). O menu do arquivo do preset tem ícone próprio (⇅ no computador, ⋯ no celular), para não se confundir com o ⋮ do bloco.
 
 ### Cenas
-Três botões de largura igual, altura 56px. Inativo: `painel-elevado` com borda de filete. Ativo: preenchido em âmbar. Número em estêncil + nome em caixa alta.
+Três botões de largura igual, altura 56px. Inativo: `painel-elevado` com borda de filete. Ativo: preenchido em âmbar. Número em estêncil + nome em caixa alta; cena sem nome mostra só o número e "CENA" (nunca "1 CENA 1").
 
 ### Fita do Preset (assinatura)
-Slot em estêncil de 40px à esquerda (toque abre a lista no celular), seguido da fita gaffer creme com o nome a marcador e, se houver edição não salva, o selo vermelho "NÃO SALVO" no fim da fita.
+Slot em estêncil de 40px à esquerda (no celular, com "PRESETS ▾" embaixo: tocar abre a lista), seguido da fita gaffer creme com o nome a marcador, um lápis discreto em alumínio (tocar a fita renomeia) e, se houver edição não salva, o selo vermelho "NÃO SALVO" no fim da fita. Os avisos sob a fita (ao vivo desligado, audição sem USB MIDI) usam `erro`, não âmbar.
 
 ### Moldura de Case
 Painel `painel` com filete de 1px, canto de 3px e cantoneiras de alumínio pintadas por cima. Envolve a grade de blocos e o painel de parâmetros.
 
+### Cadeia (fluxo do sinal)
+Lida como um pedalboard: o fio (`aluminio`, 2px) sai do jaque IN à esquerda, passa pelos pedais na ordem e chega ao jaque OUT à direita; depois do último pedal o fio segue tracejado em `filete` até o OUT. Caixas de pedal e encaixes vazios são opacos e cobrem o fio. A linha 2 só tem fio quando há split: desce em 45° no split e sobe no merge (sem merge, no OUT). No celular as casas vão na posição real (buracos com encaixe), e o fio liga as caixas de cada fileira.
+
 ### Casa de Bloco
-Arte do pedal (miniatura ou arte própria da família), fita de família de 4px, nome curto em label-medium. Selecionada: fundo `painel-elevado` + contorno âmbar de 2px. Desligada: arte a 38% de opacidade e nome em `texto-secundario`. Transição de 150ms. Toque seleciona, toque duplo liga/desliga, toque longo/botão direito abre menu.
+Pedal numa caixa fixa (`painel`, filete de 1px, canto de 6px) para as fotos de proporções diferentes ficarem alinhadas; fita de família de 4px; nome em label-medium (14px). Casa vazia: encaixe tracejado do tamanho da caixa com "+" a 32% dela. Selecionada: fundo `painel-elevado` + contorno âmbar de 2px. Desligada: a imagem de bypass da pedaleira (ou a arte a 38% em cinza) com o mesmo selo "OFF" por cima, e nome em `texto-secundario`. Transição de 150ms. Toque seleciona na hora; o segundo toque dentro do prazo do duplo liga/desliga; toque longo/botão direito abre menu. No painel do bloco, toque duplo no pedal também liga/desliga, e "só na cena N" fica em `aluminio-claro`.
 
 ### Knob
 Nome do parâmetro em caixa alta acima, valor tabular abaixo. Trilho em filete, arco na cor da família, corpo `painel-elevado` com aro de alumínio (âmbar 2px quando focado), ponteiro em fita gaffer. Arraste vertical/horizontal, rodinha, setas (Shift = passo de 10%), toque duplo volta ao padrão. Parâmetros com poucas opções viram coluna de botões: marcado em cor da família, demais em contorno.
 
 ### Navigation
 - **Barra de conexão:** 64px, `painel`, filete inferior. LED de 10px + estado em title-small, "AO VIVO" + interruptor âmbar, latência "ida e volta N ms" (só na ampla), ícones de desconectar e créditos.
-- **Lista de presets:** linhas de 48px, slot em title-small (`aluminio-claro`, âmbar quando aberto), nome em body-large ou "vazio" em body-small; linha aberta ganha `painel-elevado` e filete esquerdo âmbar de 2px.
+- **Lista de presets:** linhas de 48px, slot em title-small (`aluminio-claro`, âmbar quando aberto), nome em body-large ou "vazio" em body-small; linha aberta ganha `painel-elevado` e filete esquerdo âmbar de 2px. A marca "a pedaleira está neste slot" usa a cor do LED da barra (azul na demonstração) e não aparece em slot vazio.
 
 ### Avisos
 Snackbar flutuante em fita gaffer com texto `tinta-marcador`, 15px. Diálogo em `painel-elevado`, canto 8px, ações separadas nas pontas.
@@ -305,8 +310,35 @@ Snackbar flutuante em fita gaffer com texto `tinta-marcador`, 15px. Diálogo em 
 
 ### Don't:
 - **Don't** usar Permanent Marker fora da fita gaffer, nem fita gaffer sem nome escrito.
-- **Don't** usar âmbar como cor de família ou decoração.
-- **Don't** pintar ação destrutiva em cor cheia; descartar/largar é contorno.
+- **Don't** usar âmbar como cor de família, decoração ou aviso; a família compressor é verde-limão justamente para não competir com o âmbar.
+- **Don't** pintar ação destrutiva em cor cheia na barra; descartar é contorno. Só o confirmar do diálogo destrutivo é cheio, em `fita-alerta`.
 - **Don't** usar sombra projetada nem cantos acima de 8px.
-- **Don't** usar logo, foto ou marca da Darkglass na arte de bloco.
+- **Don't** usar logo ou marca da Darkglass fora da arte dos blocos (ícone, nome, telas).
 - **Don't** criar tela de cards cinza com sliders genéricos; parâmetro contínuo é knob.
+
+<!-- produto-arte-acoes: bloco mantido junto com PRODUCT.md e docs/DECISOES.md (A9 a A12, U13 a U15) -->
+## Arte dos blocos, nomes de ação e textos (2026-11-21)
+
+Este bloco vale por cima de qualquer frase anterior deste arquivo que diga o contrário.
+
+- **Arte dos blocos:** a mesma imagem que a pedaleira mostra na tela (Darkglass Electronics), ligada e
+  desligada, é a única versão publicada. A arte própria por família continua como reserva para os blocos
+  sem imagem na pedaleira e para o app rodando do código-fonte sem a arte.
+- **Nomes de ação** (os mesmos em todas as telas e tamanhos):
+  - **SALVAR** grava no slot aberto; **SALVAR COMO…** escolhe o destino.
+  - **DESCARTAR** desfaz as edições não salvas. A pergunta de confirmação diz "Descartar edições?" e o
+    botão de confirmar diz DESCARTAR: não existe "largar" na interface.
+- **Textos que acompanham o aparelho:** com mouse, "clique" e "botão direito"; no toque, "toque" e
+  "segure". Copiar um bloco é pelo ícone de copiar do painel do bloco; colar é pelo menu da casa vazia.
+- **Sem jargão técnico na tela:** nada de nome de biblioteca ("hidapi", "IOKit") nem de ação do protocolo
+  ("edit_anagram_presets"). O detalhe vai para o log; a tela diz o que aconteceu e o que fazer.
+- **Avisos:** erro em `erro` com ícone de alerta, logo acima das ações; informação (a pedaleira saiu) em
+  texto normal com ícone de informação.
+- **Área de presets:** o campo mostra só o nome que a pessoa deu; a área ativa na pedaleira é marcada ao
+  lado com o LED `led-ligado` e o rótulo ATIVA, nunca colada no nome.
+- **Versão do app:** só na tela Sobre, com "· arte da pedaleira" quando o build traz a arte.
+- **Idioma:** pílulas no topo da tela Sobre e um menu compacto (globo + idioma atual) na tela de conectar.
+- **Sem USB na plataforma** (iPhone/iPad, navegador sem WebHID): título "Modo demonstração", uma frase,
+  ABRIR DEMONSTRAÇÃO como botão primário e "POR QUÊ?" com a explicação inteira.
+<!-- /produto-arte-acoes -->
+

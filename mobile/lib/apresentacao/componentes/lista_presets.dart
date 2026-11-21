@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_biblioteca.dart';
+import '../../aplicacao/estado/controlador_conexao.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
+import '../../aplicacao/estado/estado_conexao.dart';
 import '../../nucleo/modelo/slot_preset.dart';
+import '../textos.dart';
 import '../tema/tokens.dart';
 import 'dialogo_confirmar.dart';
 import 'faixa_escolher_destino.dart';
@@ -26,6 +29,8 @@ class ListaPresets extends ConsumerWidget {
     final aberto = ref.watch(editorProvider.select((e) => e.slot));
     final escolhendo = ref.watch(editorProvider.select((e) => e.escolhendoDestino));
     final naPedaleira = ref.watch(editorProvider.select((e) => e.slotNaPedaleira ? e.slot : null));
+    // a marca de "pedaleira aqui" usa a cor do LED da barra (azul na demonstração)
+    final demonstracao = ref.watch(conexaoProvider.select((c) => c is Conectada && c.demonstracao));
     // gravando: o resultado da gravação ainda vai escrever o slot salvo
     final salvando = ref.watch(editorProvider.select((e) => e.salvando));
     final lista = ListView.builder(
@@ -37,6 +42,7 @@ class ListaPresets extends ConsumerWidget {
         aberto: aberto,
         escolhendo: escolhendo,
         naPedaleira: naPedaleira,
+        corLed: demonstracao ? Cores.ledDemonstracao : Cores.ledLigado,
         aoEscolher: salvando ? null : (slot) => _abrir(context, ref, slot),
       ),
     );
@@ -45,6 +51,9 @@ class ListaPresets extends ConsumerWidget {
     return Column(children: [
       if (escolhendo) const FaixaEscolherDestino(),
       const SeletorArea(),
+      // falhas da lista (listar, tornar a área ativa) não podem ficar mudas:
+      // a lista vazia pareceria uma área sem presets
+      if (biblioteca.erro case final erro?) _FaixaErro(AppLocalizations.of(context).aviso(erro)),
       Expanded(child: carregandoLista ? const Center(child: CircularProgressIndicator()) : lista),
     ]);
   }
@@ -76,6 +85,21 @@ class ListaPresets extends ConsumerWidget {
   }
 }
 
+class _FaixaErro extends StatelessWidget {
+  const _FaixaErro(this.texto);
+
+  final String texto;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        key: const ValueKey('erro-lista'),
+        width: double.infinity,
+        color: Cores.painelElevado,
+        padding: const EdgeInsets.symmetric(horizontal: Espacos.m, vertical: Espacos.s),
+        child: Text(texto, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.erro)),
+      );
+}
+
 class _Banco extends StatelessWidget {
   const _Banco({
     required this.banco,
@@ -83,8 +107,11 @@ class _Banco extends StatelessWidget {
     required this.aberto,
     required this.escolhendo,
     required this.naPedaleira,
+    required this.corLed,
     required this.aoEscolher,
   });
+
+  final Color corLed;
 
   final bool escolhendo;
 
@@ -117,9 +144,9 @@ class _Banco extends StatelessWidget {
           ? Text(l.origem, style: tema.labelSmall?.copyWith(color: Cores.tally))
           : Icon(Icons.save_alt, color: Cores.aluminio, semanticLabel: l.gravarAqui);
     }
-    if (slot != naPedaleira) return null;
-    return Icon(Icons.graphic_eq,
-        key: const ValueKey('na-pedaleira'), color: Cores.ledLigado, semanticLabel: l.pedaleiraNesteSlot);
+    // slot vazio (preset novo ainda não gravado) não tem o que tocar
+    if (slot != naPedaleira || biblioteca.resumo(slot) == null) return null;
+    return Icon(Icons.graphic_eq, key: const ValueKey('na-pedaleira'), color: corLed, semanticLabel: l.pedaleiraNesteSlot);
   }
 
   Widget _linha(BuildContext context, SlotPreset slot) {

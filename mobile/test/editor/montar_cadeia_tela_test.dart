@@ -2,6 +2,7 @@
 // biblioteca, o bloco muda de lugar arrastando (mouse ou segurando no toque)
 // e, para quem não arrasta, pelo menu visível do painel.
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
+import 'package:anagram_app/apresentacao/componentes/casa_bloco.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../apoio/capturas_apoio.dart' show carregarFontes;
 import '../apoio/demonstracao_na_tela.dart';
 
 Finder _casa(int linha, int casa) => find.byKey(ValueKey('casa-$linha-$casa'));
@@ -54,6 +56,17 @@ void main() {
     expect(find.text('NÃO SALVO'), findsOneWidget);
   });
 
+  testWidgets('should_show_mono_and_stereo_in_the_library_when_two_effects_share_the_same_name', (tester) async {
+    await _abrirPresetComBuracos(tester);
+    await tester.tap(_casa(1, 4));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('busca-efeito')), 'parametric');
+    await tester.pumpAndSettle();
+
+    expect(find.text('Parametric EQ · Mono'), findsOneWidget);
+    expect(find.text('Parametric EQ · Estéreo'), findsOneWidget);
+  });
+
   testWidgets('should_show_only_modulation_effects_when_the_modulation_filter_is_tapped', (tester) async {
     await _abrirPresetComBuracos(tester);
     await tester.tap(_casa(1, 4));
@@ -66,7 +79,31 @@ void main() {
     expect(subtitulos, {'Modulação'});
   });
 
-  testWidgets('should_show_the_full_block_name_in_the_chain_when_the_slot_is_narrow', (tester) async {
+  testWidgets('should_keep_the_stereo_mark_in_the_chain_when_the_long_name_needs_to_shrink', (tester) async {
+    await tester.runAsync(carregarFontes);
+    await abrirDemonstracao(tester);
+    await tocarNoSlot(tester, '03A');
+
+    // o Mint Chocolate Chorus estéreo do 03A: o canal não some na casa
+    final nomes = tester.widgetList<Text>(find.descendant(of: _casa(2, 4), matching: find.byType(Text))).map((t) => t.data ?? '');
+    expect(nomes.any((n) => n.endsWith('· ST')), isTrue, reason: 'achou: $nomes');
+  });
+
+  testWidgets('should_shrink_the_font_instead_of_abbreviating_when_a_long_word_misses_the_desktop_slot', (tester) async {
+    await tester.runAsync(carregarFontes);
+    await abrirDemonstracao(tester);
+    await tocarNoSlot(tester, '02A');
+
+    // "Compressor" não cabe na casa com a letra cheia; a pessoa pediu o nome
+    // inteiro, então a letra diminui antes de virar "CMP"
+    final nomes = tester.widgetList<Text>(find.descendant(of: _casa(1, 2), matching: find.byType(Text))).map((t) => t.data);
+    expect(nomes, contains('Compressor / Limiter'));
+  });
+
+  testWidgets('should_show_the_full_block_name_in_the_chain_when_every_word_fits_the_slot', (tester) async {
+    // com as fontes de verdade: a fonte de teste (Ahem) mede cada letra do
+    // tamanho da fonte e faria "Suppressor" parecer largo demais
+    await tester.runAsync(carregarFontes);
     await abrirDemonstracao(tester);
     await tocarNoSlot(tester, '02A');
 
@@ -74,6 +111,17 @@ void main() {
     final nomes = tester.widgetList<Text>(find.descendant(of: _casa(1, 1), matching: find.byType(Text))).map((t) => t.data);
     expect(nomes, contains('Suppressor'));
     expect(nomes, isNot(contains('SUP')));
+  });
+
+  test('should_use_the_abbreviation_instead_of_breaking_a_word_when_the_slot_is_too_narrow', () {
+    const estilo = TextStyle(fontSize: 14);
+
+    expect(rotuloQueCabe('Suppressor', 'SUP', estilo, 60, TextDirection.ltr).$1, 'SUP',
+        reason: '"Suppress/or" partido lê pior que a abreviação');
+    expect(rotuloQueCabe('Suppressor', 'SUP', estilo, 200, TextDirection.ltr).$1, 'Suppressor');
+    expect(rotuloQueCabe('Darkglass GEQ', 'DGQ', estilo, 200, TextDirection.ltr).$1, 'Darkglass GEQ',
+        reason: 'quebrar entre palavras é permitido');
+    expect(rotuloQueCabe('Tuner', '', estilo, 10, TextDirection.ltr).$1, 'Tuner', reason: 'sem abreviação, fica o nome');
   });
 
   testWidgets('should_explain_how_to_add_an_effect_when_a_new_preset_has_no_blocks', (tester) async {
@@ -121,5 +169,22 @@ void main() {
 
     expect(_uriEm(container, 1, 2), 'urn:darkglass:Suppressor');
     expect(_uriEm(container, 1, 1), 'urn:darkglass:wah');
+  });
+
+  testWidgets('should_not_offer_to_remove_copy_or_paste_over_a_split_when_its_menu_is_opened', (tester) async {
+    final container = await abrirDemonstracao(tester);
+    await tocarNoSlot(tester, '03A');
+    // copiado antes: colar por cima do split também tem de estar fechado
+    container.read(editorProvider.notifier).copiarBloco(const PosicaoBloco(1, 1));
+    // botão direito na própria casa do split abre o menu dela
+    await tester.tap(_casa(1, 2), buttons: kSecondaryMouseButton, kind: PointerDeviceKind.mouse);
+    await tester.pumpAndSettle();
+
+    PopupMenuItem<Object?> item(String rotulo) =>
+        tester.widget<PopupMenuItem<Object?>>(find.ancestor(of: find.text(rotulo), matching: find.byWidgetPredicate((w) => w is PopupMenuItem)));
+    expect(item('Remover bloco').enabled, isFalse, reason: 'sem o split, a linha paralela perde a saída');
+    expect(item('Copiar bloco').enabled, isFalse, reason: 'um segundo split quebraria o roteamento');
+    expect(item('Colar aqui').enabled, isFalse);
+    expect(_uriEm(container, 1, 2), 'urn:darkglass-anagram:split');
   });
 }

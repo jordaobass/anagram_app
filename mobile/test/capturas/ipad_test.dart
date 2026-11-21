@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/capturas_apoio.dart';
@@ -28,7 +27,7 @@ void main() {
       c.read(editorProvider.notifier).selecionarBloco(const PosicaoBloco(1, 3));
       await tester.pumpAndSettle();
       await assentarImagens(tester);
-      await expectLater(find.byType(MaterialApp), matchesGoldenFile('$pasta/ipad/${t.nome}.png'));
+      await capturar(tester, '$pasta/ipad/${t.nome}.png');
     });
   }
 }

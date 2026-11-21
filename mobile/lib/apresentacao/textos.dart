@@ -2,9 +2,11 @@
 // erros, motivos, famílias de bloco). Ficam aqui, e não lá, para o estado
 // não depender de BuildContext e os logs continuarem em português.
 //
-// Os erros do protocolo trazem em `mensagem` o detalhe técnico, escrito em
-// português: o português mostra esse detalhe como sempre mostrou; inglês e
-// espanhol trocam por uma frase geral do tipo de erro (o detalhe vai ao log).
+// Os erros do protocolo trazem em `mensagem` o detalhe técnico (nome da ação,
+// exceção de origem). Ele vai só para o log, onde foi registrado ao acontecer;
+// a tela mostra, nos três idiomas, uma frase do tipo de erro. A exceção é a
+// recusa do próprio app (ErroOperacaoEmCurso): a mensagem dela já é uma frase
+// para a pessoa, e o português a mostra como está.
 import '../aplicacao/avisos.dart';
 import '../aplicacao/casos_de_uso/salvar_no_slot.dart';
 import '../aplicacao/casos_de_uso/transferir_preset.dart';
@@ -18,16 +20,34 @@ import '../nucleo/protocolo/erros_anagram.dart';
 import '../nucleo/suporte_aparelho.dart';
 
 extension TextosDoApp on AppLocalizations {
+  /// Nome do bloco na tela; versões mono e estéreo com o mesmo nome ganham o
+  /// canal junto ("Parametric EQ · Estéreo"). O nome gravado no preset não muda.
+  String nomeDoBloco(DefinicaoBloco bloco) => switch (bloco.canal) {
+        CanalBloco.unico => bloco.nome,
+        CanalBloco.mono => '${bloco.nome} · $cdBlocoMono',
+        CanalBloco.estereo => '${bloco.nome} · $cdBlocoEstereo',
+      };
+
+  /// Na casa da cadeia o canal vai abreviado ("· ST"), para caber o nome.
+  String nomeCurtoDoBloco(DefinicaoBloco bloco, {bool abreviado = false}) {
+    final base = abreviado && bloco.abreviacao.isNotEmpty ? bloco.abreviacao : bloco.nome;
+    return switch (bloco.canal) {
+      CanalBloco.unico => base,
+      CanalBloco.mono => '$base · $cdBlocoMonoCurto',
+      CanalBloco.estereo => '$base · $cdBlocoEstereoCurto',
+    };
+  }
+
   String aviso(Aviso aviso) => switch (aviso) {
         AvisoConexao(:final erro) => erroDeConexao(erro),
         AvisoErro(:final erro) => erroDeOperacao(erro),
         AvisoDemonstracaoFalhou() => avisoDemonstracaoFalhou,
-        AvisoFalhaInesperada(:final meio) => avisoFalhaInesperada(meio),
+        AvisoFalhaInesperada(:final meio) => avisoFalhaInesperada(meioVisivel(meio)),
         AvisoPedaleiraDesconectada() => avisoPedaleiraDesconectada,
         AvisoPlataformaIndisponivel(:final motivo) => indisponivel(motivo),
         AvisoFormatoMaisNovo() => avisoFormatoMaisNovo,
         AvisoPresetTrocado(:final slot) => avisoPresetTrocado(slot),
-        AvisoAreaNaoTrocou(:final erro) => avisoAreaNaoTrocou(erro.mensagem),
+        AvisoAreaNaoTrocou() => avisoAreaNaoTrocou,
       };
 
   /// Ao conectar, a frase diz o que fazer (fechar o Suite, conferir o cabo).
@@ -37,19 +57,19 @@ extension TextosDoApp on AppLocalizations {
         ErroInterfaceOcupada() => conexaoOcupada,
         ErroDesconectado() => conexaoSemAnagram,
         ErroSemResposta() => conexaoSemResposta,
-        ErroPlataformaSemSuporte(:final mensagem) => erroSemSuporte(mensagem),
+        ErroPlataformaSemSuporte() => erroSemSuporte,
         ErroOperacaoEmCurso(:final mensagem) => erroOperacaoEmCurso(mensagem),
-        ErroRespostaInvalida(:final mensagem) => conexaoRespostaInvalida(mensagem),
+        ErroRespostaInvalida() => conexaoRespostaInvalida,
       };
 
   /// Erro de uma operação já conectada (ler, tocar, listar).
   String erroDeOperacao(ErroAnagram erro) => switch (erro) {
-        ErroInterfaceOcupada() => erroOcupada(erro.mensagem),
-        ErroDesconectado() => erroDesconectado(erro.mensagem),
-        ErroSemResposta() => erroSemResposta(erro.mensagem),
-        ErroRespostaInvalida() => erroRespostaInvalida(erro.mensagem),
-        ErroOperacaoEmCurso() => erroOperacaoEmCurso(erro.mensagem),
-        ErroPlataformaSemSuporte() => erroSemSuporte(erro.mensagem),
+        ErroInterfaceOcupada() => erroOcupada,
+        ErroDesconectado() => erroDesconectado,
+        ErroSemResposta() => erroSemResposta,
+        ErroRespostaInvalida() => erroRespostaInvalida,
+        ErroOperacaoEmCurso(:final mensagem) => erroOperacaoEmCurso(mensagem),
+        ErroPlataformaSemSuporte() => erroSemSuporte,
       };
 
   /// "Não salvou: …", sem nome de ação do protocolo nem tipo de exceção.
@@ -59,7 +79,7 @@ extension TextosDoApp on AppLocalizations {
         ErroRespostaInvalida() => salvarRespostaInvalida,
         ErroInterfaceOcupada() => salvarOcupada,
         ErroOperacaoEmCurso(:final mensagem) => erroOperacaoEmCurso(mensagem),
-        ErroPlataformaSemSuporte(:final mensagem) => erroSemSuporte(mensagem),
+        ErroPlataformaSemSuporte() => erroSemSuporte,
       });
 
   String indisponivel(MotivoIndisponivel motivo) => switch (motivo) {
@@ -97,4 +117,13 @@ extension TextosDoApp on AppLocalizations {
 
   /// O nome dado na pedaleira; sem nome, "Área N".
   String nomeDaArea(AreaPresets area) => area.nome.isEmpty ? areaSemNome(area.numero) : area.nome;
+
+  /// Com mouse a pessoa clica e usa o botão direito; no toque, toca e segura.
+  String dicaMontarCadeiaPara({required bool mouse}) => mouse ? txDicaMontarCadeiaMouse : dicaMontarCadeia;
+
+  String slotVazioTextoPara({required bool mouse}) => mouse ? txSlotVazioMouse : slotVazioTexto;
+
+  /// O meio sem o nome da biblioteca entre parênteses ("USB (hidapi)" vira
+  /// "USB"): o nome técnico serve ao log, não a quem vai tocar.
+  static String meioVisivel(String meio) => meio.replaceAll(RegExp(r'\s*\(.*?\)'), '').trim();
 }

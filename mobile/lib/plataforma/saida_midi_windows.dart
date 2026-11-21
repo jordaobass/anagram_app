@@ -26,6 +26,9 @@ class SaidaMidiWindows implements SaidaMidiAnagram {
 
   @override
   Future<void> abrir() async {
+    // abrir de novo sem fechar deixaria o handle anterior preso no driver,
+    // e a porta passaria a recusar quem tentasse abri-la depois
+    await fechar();
     final winmm = _winmm ??= _carregar();
     if (winmm == null) throw const ErroPlataformaSemSuporte('MIDI do Windows (winmm.dll) indisponível.');
     final nomes = winmm.nomesDasSaidas();

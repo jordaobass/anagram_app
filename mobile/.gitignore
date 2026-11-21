@@ -57,3 +57,6 @@ app.*.map.json
 !/assets/blocos_terceiros/LEIAME.txt
 /test/capturas/goldens_terceiros/
 /.impeccable/build/
+
+# Diferenças geradas quando uma captura falha: resultado local, não referência
+/test/capturas/failures/

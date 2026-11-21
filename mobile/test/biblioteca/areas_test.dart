@@ -106,7 +106,7 @@ void main() {
 
     final editor = container.read(editorProvider);
     expect(editor.slot, isNull, reason: 'o slot 1 aberto era da área anterior');
-    expect(editor.atual, isNull);
+    expect(editor.original, isNull, reason: 'o que está na tela não é o gravado em slot desta área');
   });
 
   test('should_work_as_before_without_area_fields_when_the_firmware_has_no_settings', () async {

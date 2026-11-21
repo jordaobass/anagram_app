@@ -141,4 +141,16 @@ void main() {
       expect(blocosDaBiblioteca(catalogo, familia: familia), isNotEmpty, reason: '$familia não pode ser filtro vazio');
     }
   });
+
+  test('should_release_the_controls_of_the_replaced_block_when_another_block_is_pasted_over_it', () {
+    final preset = DocumentoPreset.doJson(lerExemplo('1'));
+    const wah = PosicaoBloco(1, 2);
+    final outro = preset.blocosDaLinha(1).firstWhere((b) => b.posicao != wah);
+    final copia = outro.bruto;
+
+    final colado = preset.comBlocoColado(wah, copia);
+
+    expect(_alvosDosControles(colado).containsKey('exp.pedal'), isFalse,
+        reason: 'o pedal mexia no wah; não pode passar a mexer no bloco colado por cima');
+  });
 }

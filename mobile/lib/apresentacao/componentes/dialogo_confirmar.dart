@@ -1,9 +1,11 @@
-// Pergunta de sim ou não antes de um ato que perde algo (largar edições,
-// substituir o preset de um slot). Fechar o diálogo sem escolher vale "não".
+// Pergunta de sim ou não antes de um ato que perde algo (descartar edições,
+// substituir o preset de um slot, trocar de área com edição aberta). Fechar o
+// diálogo sem escolher vale "não". Todos têm a mesma cara: cancelar neutro,
+// confirmar no vermelho de alerta, porque confirmar sempre apaga algo.
 import 'package:flutter/material.dart';
 
-/// [enfatizar]: o confirmar sai preenchido, para quando ele é o passo esperado
-/// (substituir no Salvar como); sem ele, sai só contornado, como o cancelar.
+import '../tema/tokens.dart';
+
 Future<bool> confirmar(
   BuildContext context, {
   required String titulo,
@@ -11,7 +13,6 @@ Future<bool> confirmar(
   required String rotuloCancelar,
   required String rotuloConfirmar,
   Key? chaveConfirmar,
-  bool enfatizar = false,
 }) async {
   final resposta = await showDialog<bool>(
     context: context,
@@ -22,10 +23,17 @@ Future<bool> confirmar(
         content: Text(texto),
         actionsAlignment: MainAxisAlignment.spaceBetween,
         actions: [
-          TextButton(onPressed: () => responder(false), child: Text(rotuloCancelar)),
-          enfatizar
-              ? FilledButton(key: chaveConfirmar, onPressed: () => responder(true), child: Text(rotuloConfirmar))
-              : OutlinedButton(key: chaveConfirmar, onPressed: () => responder(true), child: Text(rotuloConfirmar)),
+          TextButton(
+            style: TextButton.styleFrom(foregroundColor: Cores.texto),
+            onPressed: () => responder(false),
+            child: Text(rotuloCancelar),
+          ),
+          FilledButton(
+            key: chaveConfirmar,
+            style: FilledButton.styleFrom(backgroundColor: Cores.fitaAlerta, foregroundColor: Cores.sobreAlerta),
+            onPressed: () => responder(true),
+            child: Text(rotuloConfirmar),
+          ),
         ],
       );
     },

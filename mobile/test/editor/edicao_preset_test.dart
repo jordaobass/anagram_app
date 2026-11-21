@@ -28,7 +28,7 @@ void main() {
     await editor.abrirSlot(SlotPreset.doRotulo('03C'));
     expect(container.read(editorProvider).atual, isNull);
 
-    await editor.novoPresetNoSlot();
+    await editor.novoPresetNoSlot('Novo preset');
     final resultado = await editor.salvar();
 
     expect(resultado, isA<PresetSalvo>());

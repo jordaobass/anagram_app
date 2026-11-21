@@ -46,62 +46,21 @@
   "conexaoOcupada": "A Anagram está plugada, mas outro programa a segura. Feche o Darkglass Suite e qualquer aba do navegador conectada à pedaleira.",
   "conexaoSemAnagram": "Nenhuma Anagram encontrada no USB. Confira o cabo e se ela está ligada.",
   "conexaoSemResposta": "A Anagram não respondeu. Desligue e ligue o cabo e tente de novo.",
-  "conexaoRespostaInvalida": "Resposta inesperada da pedaleira: {detalhe}",
-  "@conexaoRespostaInvalida": {
-    "placeholders": {
-      "detalhe": {
-        "type": "String"
-      }
-    }
-  },
-  "erroOcupada": "{detalhe}",
-  "@erroOcupada": {
-    "placeholders": {
-      "detalhe": {
-        "type": "String"
-      }
-    }
-  },
-  "erroDesconectado": "{detalhe}",
-  "@erroDesconectado": {
-    "placeholders": {
-      "detalhe": {
-        "type": "String"
-      }
-    }
-  },
-  "erroSemResposta": "{detalhe}",
-  "@erroSemResposta": {
-    "placeholders": {
-      "detalhe": {
-        "type": "String"
-      }
-    }
-  },
-  "erroRespostaInvalida": "{detalhe}",
-  "@erroRespostaInvalida": {
-    "placeholders": {
-      "detalhe": {
-        "type": "String"
-      }
-    }
-  },
+  "conexaoRespostaInvalida": "Resposta inesperada da pedaleira.",
+  "erroOcupada": "Outro programa está segurando a pedaleira.",
+  "erroDesconectado": "A pedaleira está desconectada.",
+  "erroSemResposta": "A pedaleira não respondeu a tempo.",
+  "erroRespostaInvalida": "A pedaleira recusou ou mandou uma resposta inesperada.",
   "erroOperacaoEmCurso": "{detalhe}",
   "@erroOperacaoEmCurso": {
+    "description": "Recusa do próprio app (ex. \"Espere a gravação em curso terminar.\"): já é uma frase para a pessoa, não detalhe do protocolo.",
     "placeholders": {
       "detalhe": {
         "type": "String"
       }
     }
   },
-  "erroSemSuporte": "{detalhe}",
-  "@erroSemSuporte": {
-    "placeholders": {
-      "detalhe": {
-        "type": "String"
-      }
-    }
-  },
+  "erroSemSuporte": "Esta plataforma não consegue falar com a pedaleira.",
   "avisoDemonstracaoFalhou": "Não foi possível abrir a demonstração.",
   "avisoFalhaInesperada": "Não foi possível abrir {meio}. Tente de novo; o detalhe ficou no log.",
   "@avisoFalhaInesperada": {
@@ -111,7 +70,7 @@
       }
     }
   },
-  "avisoPedaleiraDesconectada": "A pedaleira foi desconectada. Edições não salvas continuam no app.",
+  "avisoPedaleiraDesconectada": "A pedaleira foi desconectada. Conecte de novo para continuar de onde parou.",
   "avisoFormatoMaisNovo": "Preset de formato mais novo que o deste app: campos desconhecidos são preservados.",
   "avisoPresetTrocado": "A pedaleira devolveu outro preset para {slot} (id diferente da lista). A lista foi relida; abra de novo.",
   "@avisoPresetTrocado": {
@@ -121,14 +80,7 @@
       }
     }
   },
-  "avisoAreaNaoTrocou": "A pedaleira não trocou de área: {detalhe}",
-  "@avisoAreaNaoTrocou": {
-    "placeholders": {
-      "detalhe": {
-        "type": "String"
-      }
-    }
-  },
+  "avisoAreaNaoTrocou": "A pedaleira não trocou de área.",
   "naoSalvou": "Não salvou: {motivo}",
   "@naoSalvou": {
     "placeholders": {
@@ -185,14 +137,6 @@
   "conecteFecheSuite": "Feche o Darkglass Suite antes: só um programa por vez controla a pedaleira.",
   "abrirDemonstracao": "ABRIR DEMONSTRAÇÃO",
   "conectarPeloUsb": "CONECTAR PELO USB",
-  "viaMeio": "Via {meio}.",
-  "@viaMeio": {
-    "placeholders": {
-      "meio": {
-        "type": "String"
-      }
-    }
-  },
   "cancelar": "CANCELAR",
   "versaoApp": "v{versao}",
   "@versaoApp": {
@@ -211,7 +155,7 @@
     }
   },
   "fecharAviso": "Fechar aviso",
-  "largarEdicoesTitulo": "Largar edições?",
+  "largarEdicoesTitulo": "Descartar edições?",
   "largarEdicoesTexto": "\"{nome}\" tem mudanças que não foram salvas no slot.",
   "@largarEdicoesTexto": {
     "placeholders": {
@@ -221,20 +165,12 @@
     }
   },
   "continuarEditando": "CONTINUAR EDITANDO",
-  "largar": "LARGAR",
+  "largar": "DESCARTAR",
   "origem": "ORIGEM",
   "gravarAqui": "Gravar aqui",
   "pedaleiraNesteSlot": "A pedaleira está neste slot",
   "slotVazio": "vazio",
   "area": "ÁREA",
-  "areaAtivaNaPedaleira": "{nome} · ativa na pedaleira",
-  "@areaAtivaNaPedaleira": {
-    "placeholders": {
-      "nome": {
-        "type": "String"
-      }
-    }
-  },
   "largarAoTrocarArea": "\"{nome}\" tem mudanças que não foram salvas e será fechado ao trocar de área.",
   "@largarAoTrocarArea": {
     "placeholders": {
@@ -324,7 +260,7 @@
     }
   },
   "escolhaUmPresetTexto": "Ao abrir, ele passa a tocar na pedaleira. As mudanças soam na hora e só ficam gravadas quando você salva.",
-  "slotVazioTexto": "Crie um preset aqui e cole blocos copiados de outro preset (toque longo numa casa).",
+  "slotVazioTexto": "Crie um preset aqui. Para trazer blocos de outro preset, use o ícone de copiar no painel do bloco e depois segure uma casa vazia para colar.",
   "criarPresetAqui": "CRIAR PRESET AQUI",
   "verPresets": "VER PRESETS",
   "nomeDoPreset": "Nome do preset",
@@ -390,7 +326,7 @@
       }
     }
   },
-  "dicaMontarCadeia": "Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar, e arraste para mudar de lugar.",
+  "dicaMontarCadeia": "Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar; segure e arraste para mudar de lugar.",
   "faixaEstimada": "{simbolo} (faixa estimada)",
   "@faixaEstimada": {
     "placeholders": {
@@ -518,5 +454,44 @@
       }
     }
   },
-  "presets": "Presets"
+  "presets": "Presets",
+  "txDicaMontarCadeiaMouse": "Clique num + da grade para adicionar um efeito. Clique num bloco para ajustar e arraste para mudar de lugar.",
+  "txSlotVazioMouse": "Crie um preset aqui. Para trazer blocos de outro preset, use o ícone de copiar no painel do bloco e depois clique com o botão direito numa casa vazia para colar.",
+  "txModoDemonstracaoTitulo": "Modo demonstração",
+  "txSemUsbAquiCurto": "Aqui o app não alcança a pedaleira pelo USB. Explore tudo no modo demonstração.",
+  "txPorQue": "POR QUÊ?",
+  "txEntendi": "ENTENDI",
+  "txAtiva": "ATIVA",
+  "txAtivaNaPedaleiraDica": "Área ativa na pedaleira",
+  "txEstadoAbrindoDemonstracao": "Abrindo a demonstração…",
+  "cdNovoPreset": "Novo preset",
+  "@cdNovoPreset": {
+    "description": "Nome do preset criado num slot vazio; vai gravado na pedaleira."
+  },
+  "uiPresets": "PRESETS",
+  "uiMaisAcoesPreset": "Mais ações do preset",
+  "uiMenuArquivo": "Importar ou exportar o preset",
+  "uiDescartarEdicoes": "Descartar edições",
+  "uiFecharBiblioteca": "Fechar",
+  "uiCena": "CENA",
+  "uiSeloDesligado": "OFF",
+  "uiRenomear": "Renomear",
+  "uiDicaDuploClique": "Duplo clique no pedal liga e desliga",
+  "uiDicaToqueDuplo": "Toque duplo no pedal liga e desliga",
+  "cdBlocoMono": "Mono",
+  "cdBlocoEstereo": "Estéreo",
+  "@cdBlocoMono": {
+    "description": "Sufixo do nome de um bloco que tem versão estéreo com o mesmo nome"
+  },
+  "@cdBlocoEstereo": {
+    "description": "Sufixo do nome de um bloco que tem versão mono com o mesmo nome"
+  },
+  "cdBlocoMonoCurto": "M",
+  "cdBlocoEstereoCurto": "ST",
+  "@cdBlocoMonoCurto": {
+    "description": "Canal mono abreviado na casa da cadeia"
+  },
+  "@cdBlocoEstereoCurto": {
+    "description": "Canal estéreo abreviado na casa da cadeia"
+  }
 }

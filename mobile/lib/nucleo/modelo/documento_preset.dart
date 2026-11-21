@@ -114,8 +114,12 @@ class DocumentoPreset {
 
   /// Coloca uma cópia do bloco (colar, efeito novo da biblioteca) na posição,
   /// substituindo o que houver.
-  DocumentoPreset comBlocoColado(PosicaoBloco posicao, Map<String, dynamic> bloco) =>
-      _editar((p) => _colocar(p, posicao, copiaProfunda(bloco)));
+  /// Colar por cima de um bloco o substitui: os controles que mexiam nele
+  /// são soltos, como ao remover, senão passariam a mexer no bloco colado.
+  DocumentoPreset comBlocoColado(PosicaoBloco posicao, Map<String, dynamic> bloco) => _editar((p) {
+        if (_blocosBrutos(p, posicao.linha).containsKey('${posicao.casa}')) soltarVinculos(p, posicao);
+        _colocar(p, posicao, copiaProfunda(bloco));
+      });
 
   /// Muda o bloco de casa; com a casa ocupada, os dois trocam de lugar.
   /// Parâmetros e cenas moram dentro do bloco e vão junto; os controles

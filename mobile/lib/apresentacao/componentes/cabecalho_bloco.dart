@@ -9,6 +9,7 @@ import '../tema/tokens.dart';
 import 'arte_bloco.dart';
 import 'casa_arrastavel.dart';
 import 'menu_bloco.dart';
+import 'toque_duplo.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
 
@@ -21,7 +22,7 @@ class CabecalhoBloco extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final identidade = _identidade(context);
+    final identidade = _identidade(context, ref);
     final acoes = _acoes(context, ref);
     // estreito (celular): ações embaixo, para o nome não ser espremido
     return LayoutBuilder(
@@ -35,23 +36,30 @@ class CabecalhoBloco extends ConsumerWidget {
     );
   }
 
-  Widget _identidade(BuildContext context) {
+  Widget _identidade(BuildContext context, WidgetRef ref) {
     final ligado = bloco.habilitadoNaCena(cena);
     final tema = Theme.of(context).textTheme;
     final l = AppLocalizations.of(context);
     return Row(children: [
-      ArteBlocoWidget(definicao: definicao, tamanho: Medidas.alvoMinimo, ligado: ligado),
+      // duplo clique no pedal = o botão LIGADO, como pisar no footswitch
+      ToqueDuplo(
+        key: const ValueKey('icone-pedal-painel'),
+        aoTocarDuas: () => ref.read(editorProvider.notifier).alternarBypass(bloco.posicao),
+        child: ArteBlocoWidget(definicao: definicao, tamanho: Medidas.alvoMinimo, ligado: ligado),
+      ),
       const SizedBox(width: Espacos.m),
       Expanded(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(definicao.nome, style: tema.titleLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
+          Text(l.nomeDoBloco(definicao), style: tema.titleLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
           Text(l.blocoPosicao(l.familia(definicao.familia), bloco.posicao.linha, bloco.posicao.casa),
               style: tema.bodySmall),
           Text(arrastoComMouse ? l.arrasteComMouse : l.arrasteNoToque,
               style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
+          Text(arrastoComMouse ? l.uiDicaDuploClique : l.uiDicaToqueDuplo,
+              style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
           if (bloco.bypassSoNaCena(cena))
             Text(ligado ? l.ligadoSoNaCena(cena) : l.desligadoSoNaCena(cena),
-                style: tema.labelSmall?.copyWith(color: Cores.tally)),
+                style: tema.labelSmall?.copyWith(color: Cores.aluminioClaro)),
         ]),
       ),
     ]);

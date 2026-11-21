@@ -28,14 +28,18 @@ Future<void> abrirMenuBloco(BuildContext context, WidgetRef ref, PosicaoBloco po
 
 List<PopupMenuEntry<_AcaoMenu>> _itens(AppLocalizations l, DocumentoPreset documento, PosicaoBloco posicao,
     {required bool temCopia}) {
-  final temBloco = documento.bloco(posicao) != null;
+  final bloco = documento.bloco(posicao);
+  final temBloco = bloco != null;
+  // split e merge marcam onde a linha paralela sai e volta: removê-los, colar
+  // por cima ou duplicá-los quebraria o roteamento sem a pessoa perceber
+  final roteamento = bloco != null && ehBlocoDeRoteamento(bloco.uri);
   PopupMenuItem<_AcaoMenu> item(_AcaoMenu acao, String rotulo, {bool ativo = true}) =>
       PopupMenuItem(value: acao, enabled: ativo, child: Text(rotulo));
   bool podeIr(_AcaoMenu acao) => podeMover(documento, posicao, _destino(posicao, acao));
   return [
     if (!temBloco) item(_AcaoMenu.adicionar, l.adicionarEfeitoMenu),
-    item(_AcaoMenu.copiar, l.copiarBloco, ativo: temBloco),
-    item(_AcaoMenu.colar, l.colarAqui, ativo: temCopia),
+    item(_AcaoMenu.copiar, l.copiarBloco, ativo: temBloco && !roteamento),
+    item(_AcaoMenu.colar, l.colarAqui, ativo: temCopia && !roteamento),
     item(_AcaoMenu.bypass, l.ligarDesligar, ativo: temBloco),
     if (temBloco) ...[
       const PopupMenuDivider(),
@@ -44,7 +48,7 @@ List<PopupMenuEntry<_AcaoMenu>> _itens(AppLocalizations l, DocumentoPreset docum
       item(_AcaoMenu.outraLinha, l.moverParaLinha(posicao.linha == 1 ? 2 : 1), ativo: podeIr(_AcaoMenu.outraLinha)),
       const PopupMenuDivider(),
     ],
-    item(_AcaoMenu.remover, l.removerBloco, ativo: temBloco),
+    item(_AcaoMenu.remover, l.removerBloco, ativo: temBloco && !roteamento),
   ];
 }
 

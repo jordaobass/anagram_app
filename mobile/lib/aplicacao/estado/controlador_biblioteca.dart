@@ -1,13 +1,18 @@
 // Lista de presets do aparelho (126 slots), recarregada a cada conexão.
 // Com firmware 1.18+ a pedaleira tem várias áreas de presets: a lista é a da
-// área escolhida aqui, que começa sendo a ativa na pedaleira.
+// área escolhida aqui, que começa sendo a ativa na pedaleira. A ativa pode
+// mudar na própria pedaleira, então é relida antes de cada lista e de cada
+// Program Change. Toda resposta que chega depois de uma espera só vale se a
+// conexão ainda for a mesma: o cabo pode ter saído no meio.
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../avisos.dart';
+import '../../dados/repositorio_pedaleira.dart';
 import '../../nucleo/modelo/areas_presets.dart';
 import '../../nucleo/modelo/slot_preset.dart';
+import '../../nucleo/protocolo/erros_anagram.dart';
 import '../../nucleo/resultado.dart';
 import 'controlador_conexao.dart';
 import 'estado_conexao.dart';
@@ -31,9 +36,10 @@ class EstadoBiblioteca {
 
   ResumoSlot? resumo(SlotPreset slot) => ocupados[slot];
 
-  /// A lista na tela é de uma área que a pedaleira não está usando: o Program
-  /// Change trocaria o slot da OUTRA área, então abrir um preset só o toca.
-  bool get areaForaDaPedaleira => areas.temAreas && areaSelecionada != areas.ativa;
+  /// A lista na tela é de uma área que a pedaleira não está usando (ou não se
+  /// sabe qual ela usa): o Program Change trocaria o slot de OUTRA área, então
+  /// abrir um preset só o toca.
+  bool get areaForaDaPedaleira => areas.temAreas && (areas.ativa == null || areaSelecionada != areas.ativa);
 
   EstadoBiblioteca copiar({
     Map<SlotPreset, ResumoSlot>? ocupados,
@@ -67,29 +73,49 @@ class ControladorBiblioteca extends Notifier<EstadoBiblioteca> {
     return EstadoBiblioteca(carregando: conectada);
   }
 
+  RepositorioPedaleira? get _repositorio => ref.read(conexaoProvider.notifier).repositorio;
+
+  /// A conexão de [repositorio] ainda é a de agora (o cabo não saiu nem
+  /// reconectou durante a espera).
+  bool _mesmaConexao(RepositorioPedaleira repositorio) => identical(_repositorio, repositorio);
+
   /// Descobre as áreas (e a ativa) antes da primeira lista. Se os ajustes não
   /// vierem, segue como firmware de área única: a lista ainda carrega.
   Future<void> _aoConectar() async {
-    final repositorio = ref.read(conexaoProvider.notifier).repositorio;
+    final repositorio = _repositorio;
     if (repositorio == null) return;
     state = state.copiar(carregando: true);
-    final areas = switch (await repositorio.lerAreas()) {
-      Sucesso(:final valor) => valor,
-      Falha() => const AreasDaPedaleira.unica(),
-    };
-    repositorio.areaEmUso = areas.ativa;
-    state = EstadoBiblioteca(carregando: true, areas: areas, areaSelecionada: areas.ativa);
-    await recarregar();
+    final areas = await _lerAreas(repositorio, padrao: const AreasDaPedaleira.unica());
+    if (!_mesmaConexao(repositorio)) return;
+    // ativa desconhecida: a lista começa pela primeira área, sem Program Change
+    final inicial = areas.ativa ?? areas.areas.firstOrNull?.id;
+    state = EstadoBiblioteca(carregando: true, areas: areas, areaSelecionada: inicial);
+    await recarregar(relerAreas: false);
   }
 
-  Future<void> recarregar() async {
-    final repositorio = ref.read(conexaoProvider.notifier).repositorio;
+  Future<AreasDaPedaleira> _lerAreas(RepositorioPedaleira repositorio, {required AreasDaPedaleira padrao}) async =>
+      switch (await repositorio.lerAreas()) {
+        Sucesso(:final valor) => valor,
+        Falha() => padrao,
+      };
+
+  /// Relê os ajustes para saber a área ativa de agora. Sem áreas (firmware
+  /// antigo) não pergunta: o pedido levaria o prazo inteiro sem resposta.
+  Future<void> _atualizarAtiva(RepositorioPedaleira repositorio) async {
+    if (!state.areas.temAreas) return;
+    final relidas = await _lerAreas(repositorio, padrao: state.areas);
+    if (_mesmaConexao(repositorio) && relidas.temAreas) state = state.copiar(areas: relidas);
+  }
+
+  Future<void> recarregar({bool relerAreas = true}) async {
+    final repositorio = _repositorio;
     if (repositorio == null) return;
     final area = state.areaSelecionada;
     state = state.copiar(carregando: true);
-    final resultado = await repositorio.listarSlots();
-    // trocou de área enquanto a lista vinha: esta resposta é da área anterior
-    if (state.areaSelecionada != area) return;
+    if (relerAreas) await _atualizarAtiva(repositorio);
+    final resultado = await repositorio.listarSlots(area: area);
+    // o cabo saiu, ou trocou de área enquanto a lista vinha: a resposta não vale
+    if (!_mesmaConexao(repositorio) || state.areaSelecionada != area) return;
     state = switch (resultado) {
       Sucesso(:final valor) => state.copiar(ocupados: {for (final r in valor) r.slot: r}, carregando: false),
       Falha(:final erro) => state.copiar(carregando: false, erro: AvisoErro(erro)),
@@ -98,23 +124,37 @@ class ControladorBiblioteca extends Notifier<EstadoBiblioteca> {
 
   /// Mostra os presets de outra área. Não muda a área da pedaleira.
   Future<void> selecionarArea(String id) async {
-    final repositorio = ref.read(conexaoProvider.notifier).repositorio;
-    if (repositorio == null || id == state.areaSelecionada || state.areas.area(id) == null) return;
-    repositorio.areaEmUso = id;
+    if (_repositorio == null || id == state.areaSelecionada || state.areas.area(id) == null) return;
     state = EstadoBiblioteca(carregando: true, areas: state.areas, areaSelecionada: id);
     await recarregar();
   }
 
+  /// A área na tela é a que a pedaleira está usando agora, relida da própria
+  /// pedaleira: só então um Program Change cai no slot que a pessoa vê.
+  Future<bool> areaDaTelaEstaAtiva() async {
+    final repositorio = _repositorio;
+    if (repositorio == null) return false;
+    await _atualizarAtiva(repositorio);
+    return _mesmaConexao(repositorio) && !state.areaForaDaPedaleira;
+  }
+
   /// Passa a pedaleira para a área da tela, para o Program Change valer nela.
-  /// Hipótese a conferir na bancada (DECISOES, U11).
+  /// O "ok" do `edit_settings` não basta (DECISOES, U11): só conta como ativa
+  /// se os ajustes relidos disserem que a pedaleira de fato trocou.
   Future<void> tornarSelecionadaAtiva() async {
-    final repositorio = ref.read(conexaoProvider.notifier).repositorio;
+    final repositorio = _repositorio;
     final id = state.areaSelecionada;
     if (repositorio == null || id == null) return;
-    state = switch (await repositorio.tornarAreaAtiva(id)) {
-      Sucesso() => state.copiar(areas: AreasDaPedaleira(state.areas.areas, ativa: id)),
-      Falha(:final erro) => state.copiar(erro: AvisoAreaNaoTrocou(erro)),
-    };
+    final pedido = await repositorio.tornarAreaAtiva(id);
+    if (!_mesmaConexao(repositorio)) return;
+    if (pedido case Falha(:final erro)) {
+      state = state.copiar(erro: AvisoAreaNaoTrocou(erro));
+      return;
+    }
+    await _atualizarAtiva(repositorio);
+    if (!_mesmaConexao(repositorio) || state.areas.ativa == id) return;
+    final continuou = state.areas.ativa ?? '?';
+    state = state.copiar(erro: AvisoAreaNaoTrocou(ErroRespostaInvalida('A pedaleira continuou na área $continuou.')));
   }
 
   /// Atualiza uma linha depois de salvar, sem reler a lista inteira.

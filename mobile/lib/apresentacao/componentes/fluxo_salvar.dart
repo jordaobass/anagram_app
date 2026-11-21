@@ -68,6 +68,5 @@ Future<bool> _confirmarSubstituicao(BuildContext context, SlotPreset slot, Strin
     rotuloCancelar: l.cancelar,
     rotuloConfirmar: l.substituir,
     chaveConfirmar: const ValueKey('confirmar-substituicao'),
-    enfatizar: true,
   );
 }

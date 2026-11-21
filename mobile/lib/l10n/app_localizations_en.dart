@@ -66,29 +66,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'The Anagram didn\'t answer. Unplug and replug the cable and try again.';
 
   @override
-  String conexaoRespostaInvalida(String detalhe) {
-    return 'Unexpected reply from the pedal.';
-  }
+  String get conexaoRespostaInvalida => 'Unexpected reply from the pedal.';
 
   @override
-  String erroOcupada(String detalhe) {
-    return 'Another program is holding the pedal.';
-  }
+  String get erroOcupada => 'Another program is holding the pedal.';
 
   @override
-  String erroDesconectado(String detalhe) {
-    return 'The pedal is disconnected.';
-  }
+  String get erroDesconectado => 'The pedal is disconnected.';
 
   @override
-  String erroSemResposta(String detalhe) {
-    return 'The pedal didn\'t answer in time.';
-  }
+  String get erroSemResposta => 'The pedal didn\'t answer in time.';
 
   @override
-  String erroRespostaInvalida(String detalhe) {
-    return 'The pedal refused or sent an unexpected reply.';
-  }
+  String get erroRespostaInvalida =>
+      'The pedal refused or sent an unexpected reply.';
 
   @override
   String erroOperacaoEmCurso(String detalhe) {
@@ -96,9 +87,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String erroSemSuporte(String detalhe) {
-    return 'This platform can\'t talk to the pedal.';
-  }
+  String get erroSemSuporte => 'This platform can\'t talk to the pedal.';
 
   @override
   String get avisoDemonstracaoFalhou => 'Couldn\'t open the demo.';
@@ -110,7 +99,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get avisoPedaleiraDesconectada =>
-      'The pedal was disconnected. Unsaved edits are still in the app.';
+      'The pedal was disconnected. Connect again to pick up where you left off.';
 
   @override
   String get avisoFormatoMaisNovo =>
@@ -122,9 +111,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String avisoAreaNaoTrocou(String detalhe) {
-    return 'The pedal didn\'t switch area.';
-  }
+  String get avisoAreaNaoTrocou => 'The pedal didn\'t switch area.';
 
   @override
   String naoSalvou(String motivo) {
@@ -226,11 +213,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get conectarPeloUsb => 'CONNECT OVER USB';
 
   @override
-  String viaMeio(String meio) {
-    return 'Via $meio.';
-  }
-
-  @override
   String get cancelar => 'CANCEL';
 
   @override
@@ -274,11 +256,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get area => 'AREA';
-
-  @override
-  String areaAtivaNaPedaleira(String nome) {
-    return '$nome · active on the pedal';
-  }
 
   @override
   String largarAoTrocarArea(String nome) {
@@ -383,7 +360,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get slotVazioTexto =>
-      'Create a preset here and paste blocks copied from another preset (long-press a slot in the grid).';
+      'Create a preset here. To bring blocks from another preset, use the copy icon in the block panel, then hold an empty position in the grid to paste.';
 
   @override
   String get criarPresetAqui => 'CREATE PRESET HERE';
@@ -402,7 +379,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String blocoPosicao(String familia, int linha, int casa) {
-    return '$familia · row $linha, slot $casa';
+    return '$familia · row $linha, position $casa';
   }
 
   @override
@@ -469,7 +446,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dicaMontarCadeia =>
-      'Tap a + in the grid to add an effect. Tap a block to adjust it, and drag it to move it.';
+      'Tap a + in the grid to add an effect. Tap a block to adjust it; hold and drag it to move it.';
 
   @override
   String faixaEstimada(String simbolo) {
@@ -481,7 +458,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String linhaCasa(int linha, int casa) {
-    return 'Row $linha, slot $casa';
+    return 'Row $linha, position $casa';
   }
 
   @override
@@ -599,7 +576,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String adicionarEfeitoNaCasa(int casa, int linha) {
-    return 'Add effect at slot $casa, row $linha';
+    return 'Add effect at position $casa, row $linha';
   }
 
   @override
@@ -614,4 +591,79 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get presets => 'Presets';
+
+  @override
+  String get txDicaMontarCadeiaMouse =>
+      'Click a + in the grid to add an effect. Click a block to adjust it and drag it to move it.';
+
+  @override
+  String get txSlotVazioMouse =>
+      'Create a preset here. To bring blocks from another preset, use the copy icon in the block panel, then right-click an empty position in the grid to paste.';
+
+  @override
+  String get txModoDemonstracaoTitulo => 'Demo mode';
+
+  @override
+  String get txSemUsbAquiCurto =>
+      'Here the app can\'t reach the pedal over USB. Explore everything in demo mode.';
+
+  @override
+  String get txPorQue => 'WHY?';
+
+  @override
+  String get txEntendi => 'GOT IT';
+
+  @override
+  String get txAtiva => 'ACTIVE';
+
+  @override
+  String get txAtivaNaPedaleiraDica => 'Area active on the pedal';
+
+  @override
+  String get txEstadoAbrindoDemonstracao => 'Opening the demo…';
+
+  @override
+  String get cdNovoPreset => 'New preset';
+
+  @override
+  String get uiPresets => 'PRESETS';
+
+  @override
+  String get uiMaisAcoesPreset => 'More preset actions';
+
+  @override
+  String get uiMenuArquivo => 'Import or export the preset';
+
+  @override
+  String get uiDescartarEdicoes => 'Discard edits';
+
+  @override
+  String get uiFecharBiblioteca => 'Close';
+
+  @override
+  String get uiCena => 'SCENE';
+
+  @override
+  String get uiSeloDesligado => 'OFF';
+
+  @override
+  String get uiRenomear => 'Rename';
+
+  @override
+  String get uiDicaDuploClique => 'Double-click the pedal to turn it on or off';
+
+  @override
+  String get uiDicaToqueDuplo => 'Double-tap the pedal to turn it on or off';
+
+  @override
+  String get cdBlocoMono => 'Mono';
+
+  @override
+  String get cdBlocoEstereo => 'Stereo';
+
+  @override
+  String get cdBlocoMonoCurto => 'M';
+
+  @override
+  String get cdBlocoEstereoCurto => 'ST';
 }

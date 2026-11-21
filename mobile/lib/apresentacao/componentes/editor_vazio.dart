@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../tema/tokens.dart';
 import '../../l10n/app_localizations.dart';
+import '../textos.dart';
+import 'casa_arrastavel.dart' show arrastoComMouse;
 
 class EditorVazio extends ConsumerWidget {
   const EditorVazio({super.key, this.aoAbrirLista});
@@ -18,7 +20,7 @@ class EditorVazio extends ConsumerWidget {
     final slot = ref.watch(editorProvider.select((e) => e.slot));
     final l = AppLocalizations.of(context);
     final titulo = slot == null ? l.escolhaUmPreset : l.slotEstaVazio(slot.rotulo);
-    final texto = slot == null ? l.escolhaUmPresetTexto : l.slotVazioTexto;
+    final texto = slot == null ? l.escolhaUmPresetTexto : l.slotVazioTextoPara(mouse: arrastoComMouse);
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: Medidas.larguraConteudoVazio),
@@ -40,7 +42,7 @@ class EditorVazio extends ConsumerWidget {
         if (slotVazio)
           FilledButton(
             key: const ValueKey('botao-novo-preset'),
-            onPressed: ref.read(editorProvider.notifier).novoPresetNoSlot,
+            onPressed: () => ref.read(editorProvider.notifier).novoPresetNoSlot(l.cdNovoPreset),
             child: Text(l.criarPresetAqui),
           ),
         if (aoAbrirLista != null) OutlinedButton(onPressed: aoAbrirLista, child: Text(l.verPresets)),
