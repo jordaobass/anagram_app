@@ -2122,6 +2122,24 @@ abstract class AppLocalizations {
   /// **'Input Gain'**
   String get pdEqInputGain;
 
+  /// No description provided for @eqbResetTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Voltar o Parametric EQ ao padrão?'**
+  String get eqbResetTitulo;
+
+  /// No description provided for @eqbResetTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'Todas as bandas, os cortes e o ganho voltam ao padrão do bloco. Dá para desfazer logo depois.'**
+  String get eqbResetTexto;
+
+  /// No description provided for @eqbResetFeito.
+  ///
+  /// In pt, this message translates to:
+  /// **'Parametric EQ de volta ao padrão.'**
+  String get eqbResetFeito;
+
   /// No description provided for @pdEqReset.
   ///
   /// In pt, this message translates to:
