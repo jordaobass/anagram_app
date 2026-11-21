@@ -1058,4 +1058,25 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get ttDicaToque =>
       'Toca el nombre de un control para ver qué hace con el sonido';
+
+  @override
+  String get axEntrada => 'Entrada';
+
+  @override
+  String get axOsciladores => 'Osciladores';
+
+  @override
+  String get axFiltro => 'Filtro';
+
+  @override
+  String get axEnvelope => 'Envolvente';
+
+  @override
+  String get axArpejador => 'Arpegiador';
+
+  @override
+  String get axSaida => 'Salida';
+
+  @override
+  String get axOutros => 'Otros';
 }

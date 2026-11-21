@@ -293,5 +293,12 @@
   "mcpSalvar": "SAVE",
   "mcpAgoraNao": "NOT NOW",
   "ttDicaMouse": "Rest the mouse on a control's name to see what it does to the sound",
-  "ttDicaToque": "Tap a control's name to see what it does to the sound"
+  "ttDicaToque": "Tap a control's name to see what it does to the sound",
+  "axEntrada": "Input",
+  "axOsciladores": "Oscillators",
+  "axFiltro": "Filter",
+  "axEnvelope": "Envelope",
+  "axArpejador": "Arpeggiator",
+  "axSaida": "Output",
+  "axOutros": "Other"
 }

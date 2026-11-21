@@ -9,6 +9,7 @@ import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/provedores.dart';
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/arranjo_parametros.dart';
+import '../../nucleo/catalogo/arranjo_sintetizador.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/explicacoes_parametros.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
@@ -19,6 +20,7 @@ import 'controle_no_painel.dart';
 import 'controle_parametro.dart';
 import 'explicacao_parametro.dart';
 import 'painel_multibanda.dart';
+import 'painel_sintetizador.dart';
 import 'seletor_gabinete.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
@@ -54,6 +56,8 @@ class PainelParametros extends ConsumerWidget {
         SeletorGabinete(bloco: bloco, definicao: definicao),
         if (arranjoMultibanda(definicao.uri) case final arranjo?)
           PainelMultibanda(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros)
+        else if (arranjoSintetizador(definicao.uri) case final arranjo?)
+          PainelSintetizador(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros)
         else
           LayoutBuilder(
               builder: (context, restricoes) =>

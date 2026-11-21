@@ -1863,6 +1863,48 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Toque no nome de um controle para saber o que ele faz com o som'**
   String get ttDicaToque;
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Entrada'**
+  String get axEntrada;
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Osciladores'**
+  String get axOsciladores;
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Filtro'**
+  String get axFiltro;
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Envelope'**
+  String get axEnvelope;
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Arpejador'**
+  String get axArpejador;
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Saída'**
+  String get axSaida;
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Outros'**
+  String get axOutros;
 }
 
 class _AppLocalizationsDelegate

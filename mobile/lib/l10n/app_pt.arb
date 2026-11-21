@@ -832,5 +832,33 @@
   "mcpSalvar": "SALVAR",
   "mcpAgoraNao": "AGORA NÃO",
   "ttDicaMouse": "Pare o mouse sobre o nome de um controle para saber o que ele faz com o som",
-  "ttDicaToque": "Toque no nome de um controle para saber o que ele faz com o som"
+  "ttDicaToque": "Toque no nome de um controle para saber o que ele faz com o som",
+  "axEntrada": "Entrada",
+  "@axEntrada": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axOsciladores": "Osciladores",
+  "@axOsciladores": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axFiltro": "Filtro",
+  "@axFiltro": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axEnvelope": "Envelope",
+  "@axEnvelope": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axArpejador": "Arpejador",
+  "@axArpejador": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axSaida": "Saída",
+  "@axSaida": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axOutros": "Outros",
+  "@axOutros": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  }
 }

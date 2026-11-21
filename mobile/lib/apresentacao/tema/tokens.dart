@@ -215,6 +215,17 @@ abstract final class Medidas {
 
   /// Balão da explicação do parâmetro: uma frase curta por linha legível.
   static const double larguraExplicacao = 320;
+
+  /// Painel do synth (Axioma): cartão de seção, a caixa dos desenhos (onda,
+  /// filtro, envelope) e o traço deles. Abaixo de duas colunas de cartão as
+  /// seções empilham na largura toda.
+  static const double larguraCartaoSynth = 420;
+  static const double larguraOsciladorSynth = 260;
+  static const double larguraSeletorSynth = 180;
+  static const double alturaDesenhoSynth = 72;
+  static const double tracoDesenhoSynth = 2;
+  static const double opacidadePreenchimentoSynth = 0.18;
+  static const double knobSynth = 64;
 }
 
 abstract final class Quebras {

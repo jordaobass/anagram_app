@@ -1057,4 +1057,25 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get ttDicaToque =>
       'Toque no nome de um controle para saber o que ele faz com o som';
+
+  @override
+  String get axEntrada => 'Entrada';
+
+  @override
+  String get axOsciladores => 'Osciladores';
+
+  @override
+  String get axFiltro => 'Filtro';
+
+  @override
+  String get axEnvelope => 'Envelope';
+
+  @override
+  String get axArpejador => 'Arpejador';
+
+  @override
+  String get axSaida => 'Saída';
+
+  @override
+  String get axOutros => 'Outros';
 }
