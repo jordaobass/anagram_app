@@ -796,4 +796,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String opBancosTrocados(String a, String b) {
     return 'Banks $a and $b swapped.';
   }
+
+  @override
+  String get gxModeloAnterior => 'Previous cabinet';
+
+  @override
+  String get gxProximoModelo => 'Next cabinet';
+
+  @override
+  String get gxBuscarGabinete => 'Type to search';
 }
