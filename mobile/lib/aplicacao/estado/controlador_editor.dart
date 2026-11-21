@@ -179,6 +179,16 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
     state = state.copiar(slot: null, area: null, original: null, carregando: false, slotNaPedaleira: false);
   }
 
+  /// Presets mudaram de lugar na pedaleira (mover, trocar, trocar bancos): o
+  /// aberto acompanha o preset, não o slot. A pedaleira pode continuar tocando
+  /// o slot antigo, então a marca "na pedaleira" sai até o próximo Program Change.
+  void acompanharTroca(Map<SlotPreset, SlotPreset> novoLugar, {required String? area}) {
+    final slot = state.slot;
+    final destino = slot == null ? null : novoLugar[slot];
+    if (destino == null || state.area != area) return;
+    state = state.copiar(slot: destino, slotNaPedaleira: false);
+  }
+
   void _aoMudarConexao(EstadoConexao estado) {
     if (estado is Conectada) return;
     largarEnvioAoVivo();
