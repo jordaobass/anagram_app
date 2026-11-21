@@ -78,8 +78,9 @@ class _CartaoGlobalEqState extends ConsumerState<CartaoGlobalEq> {
     ));
   }
 
-  /// Arrastar o ponto da banda [i] muda frequência e ganho dela.
-  void _arrastar(int i, double frequencia, double ganho) {
+  /// Arrastar o ponto da banda [i] muda frequência e ganho dela. Os ajustes
+  /// globais vão a cada mudança (sem janela de arraste), então o soltar repete o último.
+  void _arrastar(int i, double frequencia, double ganho, {required bool arrastando}) {
     final controlador = ref.read(controladorAjustesProvider.notifier);
     final banda = bandasEqGlobal[i];
     controlador.alterar(ajustePorIdOuChave(banda.id(ModoEq.freq))!, frequencia);

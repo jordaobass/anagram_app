@@ -111,4 +111,29 @@ void main() {
     await tester.pumpAndSettle();
     expect(_valor(c, 'sec3'), 0);
   });
+
+  testWidgets('should_send_the_final_value_right_away_when_the_curve_point_is_released', (tester) async {
+    final c = await _comBloco(tester);
+    final curva = find.byKey(const ValueKey('curva-eq-bloco'));
+    await tester.ensureVisible(curva);
+    await tester.pumpAndSettle();
+    final caixa = tester.getRect(curva);
+    final banda2 = _curva(tester).firstWhere((b) => b.frequencia == 397);
+    final ponto = caixa.topLeft + GeometriaGlobalEq(caixa.size).ponto(banda2);
+
+    final gesto = await tester.startGesture(ponto);
+    for (var i = 0; i < 4; i++) {
+      await gesto.moveBy(const Offset(0, -10));
+      await tester.pump();
+    }
+    await gesto.up();
+    // menos que a janela de 100 ms do arraste: só o envio do soltar chega
+    await tester.pump(const Duration(milliseconds: 30));
+
+    final ganho = _valor(c, 'gain2')!;
+    expect(ganho, greaterThan(0));
+    expect(_tocando(c, 'gain2'), ganho, reason: 'ao soltar vai o valor final na hora (L1)');
+    await tester.pumpAndSettle();
+  });
 }
+

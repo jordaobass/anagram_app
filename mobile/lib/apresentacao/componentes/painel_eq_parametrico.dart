@@ -58,7 +58,8 @@ class _PainelEqParametricoState extends ConsumerState<PainelEqParametrico> {
         bandas: [for (final (_, banda) in curva) banda],
         cor: Cores.doModoEq(_modo),
         ganhoGeral: ganhoGeralDoBloco(grupos, _valor),
-        aoArrastar: (i, frequencia, ganho) => _arrastar(curva[i], frequencia, ganho),
+        aoArrastar: (i, frequencia, ganho, {required arrastando}) =>
+            _arrastar(curva[i], frequencia, ganho, arrastando: arrastando),
       ),
       const SizedBox(height: Espacos.m),
       LinhaDeBandas(filhos: [
@@ -75,14 +76,15 @@ class _PainelEqParametricoState extends ConsumerState<PainelEqParametrico> {
   }
 
   /// Arrastar o ponto muda frequência e ganho da banda; no corte, só a frequência.
-  void _arrastar(BandaDaCurva alvo, double frequencia, double ganho) {
+  /// Ao soltar ([arrastando] falso) o valor final vai ao vivo na hora, como no knob.
+  void _arrastar(BandaDaCurva alvo, double frequencia, double ganho, {required bool arrastando}) {
     final (grupo, banda) = alvo;
     final editor = ref.read(editorProvider.notifier);
     void mudar(ModoEq modo, double valor) {
       final p = parametroDoModo(grupo, modo)?.parametro;
       if (p == null) return;
       editor.alterarParametro(p.simbolo, p.limitar(valor),
-          arrastando: true, nome: p.nome, posicao: widget.bloco.posicao);
+          arrastando: arrastando, nome: p.nome, posicao: widget.bloco.posicao);
     }
 
     mudar(ModoEq.freq, frequencia);
