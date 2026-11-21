@@ -4,9 +4,11 @@
 // uri; nenhuma das duas vai para o repositório nem para as lojas (DECISOES A2, A9).
 import 'dart:convert';
 
+import '../../nucleo/catalogo/catalogo_gabinetes.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/familia_bloco.dart';
 import '../../nucleo/catalogo/variantes_uri.dart';
+import '../../nucleo/modelo/json_util.dart';
 
 sealed class ArteBloco {
   const ArteBloco();
@@ -28,7 +30,9 @@ final class ArteDaFamilia extends ArteBloco {
 
 class IndiceMiniaturas {
   IndiceMiniaturas(this._porUri, this._porNome, this.credito,
-      {this.temArteDaPedaleira = false, Map<String, (String, String?)> gabinetes = const {}})
+      {this.temArteDaPedaleira = false,
+      Map<String, (String, String?)> gabinetes = const {},
+      this.escolhasDeGabinete = const CatalogoGabinetes.vazio()})
       : _gabinetes = gabinetes;
 
   factory IndiceMiniaturas.doTexto(String texto) {
@@ -46,7 +50,9 @@ class IndiceMiniaturas {
       }
     }
     return IndiceMiniaturas(porUri, porNome, json['credito'] as String? ?? '',
-        temArteDaPedaleira: entradas.any((bloco) => _prioridade(bloco) == 1), gabinetes: _lerGabinetes(json));
+        temArteDaPedaleira: entradas.any((bloco) => _prioridade(bloco) == 1),
+        gabinetes: _lerGabinetes(json),
+        escolhasDeGabinete: CatalogoGabinetes.doJson(mapaOuVazio(json['gabinetes'])['escolhas']));
   }
 
   /// "gabinetes.porArquivo": nome do arquivo de IR sem extensão -> [ligada, desligada].
@@ -66,6 +72,10 @@ class IndiceMiniaturas {
   final Map<String, _Arquivos> _porUri;
   final Map<String, _Arquivos> _porNome;
   final Map<String, _Arquivos> _gabinetes;
+
+  /// Modelo, microfone e posição de cada IR de gabinete (build com o Suite);
+  /// vazio sem ele, e aí o bloco não oferece a escolha.
+  final CatalogoGabinetes escolhasDeGabinete;
 
   /// Arte da pedaleira por último, para sobrescrever a de terceiros na mesma chave.
   static int _prioridade(Map<String, dynamic> bloco) => bloco['origem'] == 'pedaleira' ? 1 : 0;

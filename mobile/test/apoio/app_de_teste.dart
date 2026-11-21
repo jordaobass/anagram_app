@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import 'fixtures.dart';
+import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:anagram_app/dados/preferencias_idioma.dart';
 
@@ -28,13 +29,16 @@ class CronometroFixo implements Stopwatch {
 
 const versaoNasCapturas = '0.1.3';
 
-Widget appDeTeste({List<Override> overrides = const [], IdiomaApp? idioma = IdiomaApp.portugues}) => ProviderScope(
+/// [indice]: o índice de arte (o padrão é o das capturas, sem a arte de terceiros).
+Widget appDeTeste(
+        {List<Override> overrides = const [], IdiomaApp? idioma = IdiomaApp.portugues, IndiceMiniaturas? indice}) =>
+    ProviderScope(
       overrides: [
         ...overrides,
         cronometroProvider.overrideWithValue(CronometroFixo.new),
         catalogoProvider.overrideWith((ref) async => lerCatalogo()),
         presetsDemonstracaoProvider.overrideWith((ref) async => lerPresetsDemonstracao()),
-        indiceMiniaturasProvider.overrideWith((ref) async => lerIndiceMiniaturas()),
+        indiceMiniaturasProvider.overrideWith((ref) async => indice ?? lerIndiceMiniaturas()),
         // versão fixa: com a do pubspec, toda release mudaria todas as capturas
         versaoAppProvider.overrideWith((ref) async => versaoNasCapturas),
         // o ambiente de teste é en-US: as capturas de referência são em português

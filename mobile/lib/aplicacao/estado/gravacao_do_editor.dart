@@ -89,8 +89,9 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
   /// tela, já com o uuid do que foi salvo, e o preset volta a "não salvo".
   Future<void> _aplicarSalvo(SlotPreset slot, String? area, DocumentoPreset relido,
       {required DocumentoPreset gravado}) async {
-    // gravou em outro slot (ou outra área): a pedaleira vai junto para ele
-    final mudou = slot != state.slot || area != state.area;
+    // a pedaleira vai para o slot salvo mesmo quando é o mesmo: a edição ao
+    // vivo a deixou tocando o "temporário", fora do slot, e sem isto a tela
+    // dela fica num slot vazio até a próxima troca
     final editadoDurante = state.atual;
     final uuidSalvo = relido.uuid;
     final atual = switch (editadoDurante) {
@@ -99,7 +100,7 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
       _ => uuidSalvo == null ? editadoDurante : editadoDurante.comUuid(uuidSalvo),
     };
     state = state.copiar(slot: slot, area: area, original: relido, atual: atual);
-    if (mudou) state = state.copiar(slotNaPedaleira: await trocarSlotNaPedaleira(slot));
+    state = state.copiar(slotNaPedaleira: await trocarSlotNaPedaleira(slot));
     ref.read(bibliotecaProvider.notifier).registrarSalvo(slot, relido.nome, id: relido.uuid);
   }
 }

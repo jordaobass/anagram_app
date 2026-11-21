@@ -2,6 +2,7 @@
 // em três tamanhos. Gerar/atualizar: flutter test test/capturas --update-goldens
 import 'dart:async';
 
+import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_biblioteca.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
@@ -9,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/capturas_apoio.dart';
+import '../apoio/fixtures.dart' show comMiniaturas;
+import '../nucleo/catalogo_gabinetes_test.dart' show catalogoDeTeste;
 
 void main() {
   setUpAll(carregarFontes);
@@ -88,5 +91,19 @@ void main() {
     await tester.pumpAndSettle();
     await assentarImagens(tester);
     await capturar(tester, '$pasta/desktop-7-gabinete.png');
+  });
+
+  // a escolha do gabinete como na pedaleira (modelo → microfone → posição),
+  // com o menu de modelos aberto; sem a arte, a tabela de teste do Suite
+  testWidgets('captura desktop: escolher o gabinete', (tester) async {
+    await preparar(tester, desktopWindows,
+        indice: comMiniaturas ? null : IndiceMiniaturas(const {}, const {}, '', escolhasDeGabinete: catalogoDeTeste));
+    final container = await abrirSlot(tester, '01B');
+    container.read(editorProvider.notifier).selecionarBloco(const PosicaoBloco(1, 9));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('gabinete-modelo')));
+    await tester.pumpAndSettle();
+    await assentarImagens(tester);
+    await capturar(tester, '$pasta/desktop-10-escolher-gabinete.png');
   });
 }

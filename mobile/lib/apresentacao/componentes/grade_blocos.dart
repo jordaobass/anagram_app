@@ -71,6 +71,7 @@ class GradeBlocos extends ConsumerWidget {
     return PintorLinhaSinal(
       geometria: geometria,
       ocupadas: [for (final bloco in documento.blocosDaLinha(1)) bloco.posicao.casa]..sort(),
+      ocupadas2: [for (final bloco in documento.blocosDaLinha(2)) bloco.posicao.casa]..sort(),
       casaSplit: casaCom(':split'),
       casaMerge: casaCom(':merge'),
     );

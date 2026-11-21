@@ -8,6 +8,7 @@ import '../protocolo/quadros_hid.dart';
 import 'bloco_preset.dart';
 import 'json_util.dart';
 import 'cenas_do_bloco.dart';
+import 'ir_do_gabinete.dart';
 import 'vinculos_preset.dart';
 
 class DocumentoPreset {
@@ -113,6 +114,10 @@ class DocumentoPreset {
       });
 
   DocumentoPreset comUuid(String uuid) => _editar((p) => p['uuid'] = uuid);
+
+  /// Troca o arquivo de IR do gabinete (modelo, microfone e posição escolhidos).
+  DocumentoPreset comArquivoDeIr(PosicaoBloco posicao, String caminho) =>
+      _editarBloco(posicao, (bloco) => gravarArquivoDeIr(bloco, caminho));
 
   /// Liga/desliga o bloco na cena ativa: no próprio bloco (é o que a pedaleira
   /// toca ao vivo) e na foto da cena; as outras cenas não mudam.

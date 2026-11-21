@@ -684,4 +684,121 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get kbAplicar => 'APLICAR';
+
+  @override
+  String get lpCriar => 'CREAR FILA PARALELA';
+
+  @override
+  String get lpCriarDica =>
+      'Divide la señal después del bloque seleccionado en la fila 1: la fila 2 suena en paralelo y el Merge une las dos antes de la salida.';
+
+  @override
+  String get lpRemover => 'QUITAR FILA PARALELA';
+
+  @override
+  String get lpRemoverTitulo => '¿Quitar la fila paralela?';
+
+  @override
+  String lpRemoverTexto(int quantidade) {
+    return 'Se quitan el Split, el Merge y los $quantidade bloques de la fila 2.';
+  }
+
+  @override
+  String get lpRemoverConfirmar => 'QUITAR';
+
+  @override
+  String get lpSemEspaco =>
+      'La fila 1 necesita dos casillas libres para el Split y el Merge.';
+
+  @override
+  String get cbGabinete => 'Gabinete';
+
+  @override
+  String get cbMicrofone => 'Micrófono';
+
+  @override
+  String get cbPosicao => 'Posición';
+
+  @override
+  String get cbEscolher => 'Elegir';
+
+  @override
+  String cbIrDoUsuario(String arquivo) {
+    return 'IR propio: $arquivo';
+  }
+
+  @override
+  String get opMoverPara => 'Mover a…';
+
+  @override
+  String get opClonarPara => 'Clonar a…';
+
+  @override
+  String get opTrocarBanco => 'Intercambiar banco con…';
+
+  @override
+  String get opAcoesPreset => 'Mover, clonar o intercambiar banco';
+
+  @override
+  String opDestinoMover(String origem) {
+    return 'Mover $origem: toca el slot de destino';
+  }
+
+  @override
+  String opDestinoClonar(String origem) {
+    return 'Clonar $origem: toca el slot de destino';
+  }
+
+  @override
+  String opDestinoBanco(String banco) {
+    return 'Intercambiar el banco $banco: toca un slot del otro banco';
+  }
+
+  @override
+  String get opTrocarTitulo => '¿Intercambiar los dos?';
+
+  @override
+  String opTrocarTexto(String destino, String nome, String origem) {
+    return '$destino tiene \"$nome\". Pasa a $origem.';
+  }
+
+  @override
+  String get opTrocar => 'INTERCAMBIAR';
+
+  @override
+  String opSubstituirTitulo(String destino) {
+    return '¿Reemplazar $destino?';
+  }
+
+  @override
+  String opSubstituirTexto(String nome, String origem) {
+    return '\"$nome\" se borrará y se cambiará por la copia de $origem.';
+  }
+
+  @override
+  String get opSubstituir => 'REEMPLAZAR';
+
+  @override
+  String opBancosTitulo(String a, String b) {
+    return '¿Intercambiar los bancos $a y $b?';
+  }
+
+  @override
+  String get opBancosTexto =>
+      'Los tres presets de cada banco cambian de lugar.';
+
+  @override
+  String opMovido(String origem, String destino) {
+    return '$origem pasó a $destino.';
+  }
+
+  @override
+  String opClonado(String origem, String destino) {
+    return 'Copia de $origem guardada en $destino.';
+  }
+
+  @override
+  String opBancosTrocados(String a, String b) {
+    return 'Bancos $a y $b intercambiados.';
+  }
 }

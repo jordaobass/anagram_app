@@ -76,7 +76,8 @@ def completar_com_suite(blocos, fabrica, assets, renderer):
             'arquivoDesligado': arte_suite.copiar(efeitos / desligada, DESTINO, PREFIXO + desligada)
             if (efeitos / desligada).exists() else None,
             'uris': [uri], 'origem': 'pedaleira'}
-    return {'porArquivo': arte_suite.montar_gabinetes(tabelas, modelos, assets / 'cabs', DESTINO)}
+    return {'porArquivo': arte_suite.montar_gabinetes(tabelas, modelos, assets / 'cabs', DESTINO),
+            'escolhas': arte_suite.escolhas_de_gabinete(tabelas)}
 
 
 def main(pasta_suite, assets=None, renderer=None):

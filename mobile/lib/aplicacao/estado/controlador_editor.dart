@@ -97,7 +97,10 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
     if (preset.versaoMaisNova) {
       state = state.copiar(aviso: const AvisoFormatoMaisNovo());
     }
-    await enviarAoVivo(preset);
+    // com o slot trocado por Program Change, a pedaleira já tocou o preset
+    // salvo; mandar também o "temporário" (try) fazia a tela dela mostrar
+    // outro slot. Sem MIDI (ou em área não ativa), o temporário é a audição.
+    if (!trocou) await enviarAoVivo(preset);
   }
 
   void _recusarPresetTrocado(SlotPreset slot) {
@@ -174,6 +177,16 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
   void _soltarDoSlot() {
     _abertura++;
     state = state.copiar(slot: null, area: null, original: null, carregando: false, slotNaPedaleira: false);
+  }
+
+  /// Presets mudaram de lugar na pedaleira (mover, trocar, trocar bancos): o
+  /// aberto acompanha o preset, não o slot. A pedaleira pode continuar tocando
+  /// o slot antigo, então a marca "na pedaleira" sai até o próximo Program Change.
+  void acompanharTroca(Map<SlotPreset, SlotPreset> novoLugar, {required String? area}) {
+    final slot = state.slot;
+    final destino = slot == null ? null : novoLugar[slot];
+    if (destino == null || state.area != area) return;
+    state = state.copiar(slot: destino, slotNaPedaleira: false);
   }
 
   void _aoMudarConexao(EstadoConexao estado) {

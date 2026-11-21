@@ -119,6 +119,9 @@ abstract final class Medidas {
   /// Duas linhas do nome do bloco (14 px) embaixo da arte da casa.
   static const double alturaRotuloCasa = 34;
   static const double entrelinhaRotuloCasa = 1.15;
+
+  /// Foto do modelo no menu de escolha do gabinete.
+  static const double fotoNaEscolhaDeGabinete = 32;
   /// Passos da letra do nome do bloco na casa antes de cair na abreviação.
   static const reducoesRotuloCasa = [1.0, 0.86, 0.74];
   static const double fonteRotuloCasaPadrao = 14;

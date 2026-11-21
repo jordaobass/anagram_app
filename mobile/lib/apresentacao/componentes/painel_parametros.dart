@@ -10,6 +10,7 @@ import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'cabecalho_bloco.dart';
 import 'controle_parametro.dart';
+import 'seletor_gabinete.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
 import 'casa_arrastavel.dart' show arrastoComMouse;
@@ -36,6 +37,7 @@ class PainelParametros extends ConsumerWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       CabecalhoBloco(bloco: bloco, definicao: definicao, cena: cena),
       const SizedBox(height: Espacos.m),
+      SeletorGabinete(bloco: bloco, definicao: definicao),
       LayoutBuilder(builder: (context, restricoes) {
         final tamanho = _tamanhoQueCabe(restricoes.maxWidth, parametros.length);
         return Wrap(

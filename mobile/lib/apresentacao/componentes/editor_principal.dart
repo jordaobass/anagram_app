@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../tema/tokens.dart';
+import 'acoes_linha_paralela.dart';
 import 'editor_vazio.dart';
 import 'faixa_preset.dart';
 import 'grade_blocos.dart';
@@ -36,7 +37,10 @@ class EditorPrincipal extends ConsumerWidget {
         SizedBox(height: espaco),
         MolduraCase(
           preenchimento: const EdgeInsets.all(Espacos.m),
-          child: compacto ? const GradeCompacta() : const GradeBlocos(),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            compacto ? const GradeCompacta() : const GradeBlocos(),
+            const AcoesLinhaParalela(),
+          ]),
         ),
         SizedBox(height: espaco),
         if (ref.watch(editorProvider.select((e) => e.blocoSelecionado != null)))

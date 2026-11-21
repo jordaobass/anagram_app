@@ -508,5 +508,142 @@
         "type": "String"
       }
     }
+  },
+  "lpCriar": "CRIAR LINHA PARALELA",
+  "lpCriarDica": "Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.",
+  "lpRemover": "REMOVER LINHA PARALELA",
+  "lpRemoverTitulo": "Remover a linha paralela?",
+  "lpRemoverTexto": "Saem o Split, o Merge e os {quantidade} blocos da linha 2.",
+  "lpRemoverConfirmar": "REMOVER",
+  "lpSemEspaco": "A linha 1 precisa de duas casas livres para o Split e o Merge.",
+  "@lpRemoverTexto": {
+    "description": "Confirmação ao remover a linha paralela com blocos na linha 2",
+    "placeholders": {
+      "quantidade": {
+        "type": "int"
+      }
+    }
+  },
+  "cbGabinete": "Gabinete",
+  "cbMicrofone": "Microfone",
+  "cbPosicao": "Posição",
+  "cbEscolher": "Escolher",
+  "cbIrDoUsuario": "IR próprio: {arquivo}",
+  "@cbIrDoUsuario": {
+    "description": "IR de gabinete que não está na tabela da Darkglass (do usuário)",
+    "placeholders": {
+      "arquivo": {
+        "type": "String"
+      }
+    }
+  },
+  "opMoverPara": "Mover para…",
+  "opClonarPara": "Clonar para…",
+  "opTrocarBanco": "Trocar de banco com…",
+  "opAcoesPreset": "Mover, clonar ou trocar de banco",
+  "opDestinoMover": "Mover {origem}: toque no slot de destino",
+  "@opDestinoMover": {
+    "placeholders": {
+      "origem": {
+        "type": "String"
+      }
+    }
+  },
+  "opDestinoClonar": "Clonar {origem}: toque no slot de destino",
+  "@opDestinoClonar": {
+    "placeholders": {
+      "origem": {
+        "type": "String"
+      }
+    }
+  },
+  "opDestinoBanco": "Trocar o banco {banco}: toque num slot do outro banco",
+  "@opDestinoBanco": {
+    "placeholders": {
+      "banco": {
+        "type": "String"
+      }
+    }
+  },
+  "opTrocarTitulo": "Trocar os dois de lugar?",
+  "opTrocarTexto": "{destino} tem \"{nome}\". Ele vai para {origem}.",
+  "@opTrocarTexto": {
+    "placeholders": {
+      "destino": {
+        "type": "String"
+      },
+      "nome": {
+        "type": "String"
+      },
+      "origem": {
+        "type": "String"
+      }
+    }
+  },
+  "opTrocar": "TROCAR",
+  "opSubstituirTitulo": "Substituir {destino}?",
+  "@opSubstituirTitulo": {
+    "placeholders": {
+      "destino": {
+        "type": "String"
+      }
+    }
+  },
+  "opSubstituirTexto": "\"{nome}\" vai ser apagado e trocado pela cópia de {origem}.",
+  "@opSubstituirTexto": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      },
+      "origem": {
+        "type": "String"
+      }
+    }
+  },
+  "opSubstituir": "SUBSTITUIR",
+  "opBancosTitulo": "Trocar os bancos {a} e {b}?",
+  "@opBancosTitulo": {
+    "placeholders": {
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
+  },
+  "opBancosTexto": "Os três presets de cada banco trocam de lugar.",
+  "opMovido": "{origem} foi para {destino}.",
+  "@opMovido": {
+    "placeholders": {
+      "origem": {
+        "type": "String"
+      },
+      "destino": {
+        "type": "String"
+      }
+    }
+  },
+  "opClonado": "Cópia de {origem} gravada em {destino}.",
+  "@opClonado": {
+    "placeholders": {
+      "origem": {
+        "type": "String"
+      },
+      "destino": {
+        "type": "String"
+      }
+    }
+  },
+  "opBancosTrocados": "Bancos {a} e {b} trocados.",
+  "@opBancosTrocados": {
+    "placeholders": {
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
   }
 }

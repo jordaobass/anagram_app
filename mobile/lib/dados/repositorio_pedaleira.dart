@@ -40,6 +40,12 @@ class RepositorioPedaleira {
   Future<Resultado<void>> salvar(SlotPreset slot, DocumentoPreset preset, {String? area}) =>
       _proteger('salvar ${slot.rotulo}', () => _api.salvar(slot, preset, area: area));
 
+  Future<Resultado<void>> trocarPresets(SlotPreset de, SlotPreset para, {String? area}) =>
+      _proteger('trocar ${de.rotulo} e ${para.rotulo}', () => _api.trocarPresets(de, para, area: area));
+
+  Future<Resultado<void>> trocarBancos(int de, int para, {String? area}) =>
+      _proteger('trocar os bancos $de e $para', () => _api.trocarBancos(de, para, area: area));
+
   Future<Resultado<T>> _proteger<T>(String operacao, Future<T> Function() acao) async {
     try {
       return Sucesso(await acao());

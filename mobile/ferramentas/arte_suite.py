@@ -81,6 +81,25 @@ def gabinetes_por_arquivo(tabelas, modelos):
     return porArquivo
 
 
+def escolhas_de_gabinete(tabelas):
+    """O que se escolhe no bloco de gabinete, como na pedaleira: por tipo,
+    [modelo, microfone, posição, arquivo de IR]. Os Artists não têm posição: a
+    descrição é "Modelo - Microfone"."""
+    bass = [[linha['Cab listing name'], linha.get('Mic name in Suite', ''), linha.get('Mic position', ''),
+             linha['Original file name']]
+            for linha in tabelas.get('qv', []) if linha.get('Original file name') and linha.get('Cab listing name')]
+    guitar = [[linha['Cab'], linha.get('Mic', ''), linha.get('Position', ''), linha['Filename']]
+              for linha in tabelas.get('hP', []) if linha.get('Filename') and linha.get('Cab')]
+    artists = [[*_modelo_e_microfone(linha['Description']), '', linha['Filename']]
+               for linha in tabelas.get('Rh', []) if linha.get('Filename') and linha.get('Description')]
+    return {'bass': bass, 'guitar': guitar, 'artists': artists}
+
+
+def _modelo_e_microfone(descricao):
+    modelo, _, microfone = descricao.partition(' - ')
+    return [modelo.strip(), microfone.strip()]
+
+
 # O app mostra a arte como ícone (cerca de 70 px na cadeia, 64 no painel);
 # 256 px cobre telas de densidade 3x com folga. As fotos de gabinete do Suite
 # chegam a 1700 px e, copiadas inteiras, triplicavam o download do app.

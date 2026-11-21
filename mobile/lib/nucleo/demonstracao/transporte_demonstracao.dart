@@ -12,6 +12,7 @@ import '../protocolo/api_anagram.dart';
 import '../protocolo/erros_anagram.dart';
 import '../protocolo/quadros_hid.dart';
 import '../protocolo/transporte_anagram.dart';
+import 'organizacao_demonstracao.dart';
 
 class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagram {
   TransporteDemonstracao({
@@ -152,6 +153,8 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
         AcoesAnagram.lerAjustes => _ajustes(),
         AcoesAnagram.gravarAjustes => _gravarAjustes(m.carga['settings']),
         AcoesAnagram.tocarAoVivo => _tocar(m.carga['presetData']),
+        AcoesAnagram.trocarPresets => trocarSlots(_daArea(m), m.carga['fromIndex'], m.carga['toIndex']),
+        AcoesAnagram.trocarBancos => trocarBancosDeSlots(_daArea(m), m.carga['positions']),
         AcoesAnagram.infoBloco => {'data': {'name': '${m.carga['uri']}'.split(':').last}},
         _ => {'error': 'Ação desconhecida: ${m.acao}'},
       };

@@ -23,10 +23,15 @@ abstract final class AcoesAnagram {
   static const tocarAoVivo = 'try_anagram_preset';
   static const lerAjustes = 'export_settings';
   static const gravarAjustes = 'edit_settings';
+  static const trocarPresets = 'swap_anagram_presets';
+  static const trocarBancos = 'swap_anagram_banks';
   /// O app não pede mais; fica porque a pedaleira de demonstração responde a ela.
   static const infoBloco = 'get_plugin_info';
 
-  static const todas = {firmware, posicoes, lerPreset, salvar, excluir, tocarAoVivo, lerAjustes, gravarAjustes, infoBloco};
+  static const todas = {
+    firmware, posicoes, lerPreset, salvar, excluir, tocarAoVivo, lerAjustes, gravarAjustes, trocarPresets,
+    trocarBancos, infoBloco,
+  };
 }
 
 class ApiAnagram {
@@ -118,6 +123,29 @@ class ApiAnagram {
   Future<void> excluir(SlotPreset slot, {String? area}) => cliente.chamar(
         AcoesAnagram.excluir,
         _comArea({'filename': slot.arquivo}, area),
+        const Duration(seconds: 25),
+      );
+
+  /// Troca dois presets de lugar; com o destino vazio, é mover. Os índices são
+  /// o número do slot (1–126), como o Darkglass Suite manda (`fromIndex + 1`).
+  Future<void> trocarPresets(SlotPreset de, SlotPreset para, {String? area}) => cliente.chamar(
+        AcoesAnagram.trocarPresets,
+        _comArea({'fromIndex': de.numero, 'toIndex': para.numero}, area),
+        const Duration(seconds: 25),
+      );
+
+  /// Troca dois bancos inteiros (1–42): um par por letra, como no Suite.
+  Future<void> trocarBancos(int de, int para, {String? area}) => cliente.chamar(
+        AcoesAnagram.trocarBancos,
+        _comArea({
+          'positions': [
+            for (var letra = 1; letra <= SlotPreset.porBanco; letra++)
+              {
+                'fromIndex': (de - 1) * SlotPreset.porBanco + letra,
+                'toIndex': (para - 1) * SlotPreset.porBanco + letra,
+              },
+          ],
+        }, area),
         const Duration(seconds: 25),
       );
 

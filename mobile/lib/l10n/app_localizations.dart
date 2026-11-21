@@ -1233,6 +1233,186 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'APLICAR'**
   String get kbAplicar;
+
+  /// No description provided for @lpCriar.
+  ///
+  /// In pt, this message translates to:
+  /// **'CRIAR LINHA PARALELA'**
+  String get lpCriar;
+
+  /// No description provided for @lpCriarDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.'**
+  String get lpCriarDica;
+
+  /// No description provided for @lpRemover.
+  ///
+  /// In pt, this message translates to:
+  /// **'REMOVER LINHA PARALELA'**
+  String get lpRemover;
+
+  /// No description provided for @lpRemoverTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Remover a linha paralela?'**
+  String get lpRemoverTitulo;
+
+  /// Confirmação ao remover a linha paralela com blocos na linha 2
+  ///
+  /// In pt, this message translates to:
+  /// **'Saem o Split, o Merge e os {quantidade} blocos da linha 2.'**
+  String lpRemoverTexto(int quantidade);
+
+  /// No description provided for @lpRemoverConfirmar.
+  ///
+  /// In pt, this message translates to:
+  /// **'REMOVER'**
+  String get lpRemoverConfirmar;
+
+  /// No description provided for @lpSemEspaco.
+  ///
+  /// In pt, this message translates to:
+  /// **'A linha 1 precisa de duas casas livres para o Split e o Merge.'**
+  String get lpSemEspaco;
+
+  /// No description provided for @cbGabinete.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gabinete'**
+  String get cbGabinete;
+
+  /// No description provided for @cbMicrofone.
+  ///
+  /// In pt, this message translates to:
+  /// **'Microfone'**
+  String get cbMicrofone;
+
+  /// No description provided for @cbPosicao.
+  ///
+  /// In pt, this message translates to:
+  /// **'Posição'**
+  String get cbPosicao;
+
+  /// No description provided for @cbEscolher.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escolher'**
+  String get cbEscolher;
+
+  /// IR de gabinete que não está na tabela da Darkglass (do usuário)
+  ///
+  /// In pt, this message translates to:
+  /// **'IR próprio: {arquivo}'**
+  String cbIrDoUsuario(String arquivo);
+
+  /// No description provided for @opMoverPara.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mover para…'**
+  String get opMoverPara;
+
+  /// No description provided for @opClonarPara.
+  ///
+  /// In pt, this message translates to:
+  /// **'Clonar para…'**
+  String get opClonarPara;
+
+  /// No description provided for @opTrocarBanco.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trocar de banco com…'**
+  String get opTrocarBanco;
+
+  /// No description provided for @opAcoesPreset.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mover, clonar ou trocar de banco'**
+  String get opAcoesPreset;
+
+  /// No description provided for @opDestinoMover.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mover {origem}: toque no slot de destino'**
+  String opDestinoMover(String origem);
+
+  /// No description provided for @opDestinoClonar.
+  ///
+  /// In pt, this message translates to:
+  /// **'Clonar {origem}: toque no slot de destino'**
+  String opDestinoClonar(String origem);
+
+  /// No description provided for @opDestinoBanco.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trocar o banco {banco}: toque num slot do outro banco'**
+  String opDestinoBanco(String banco);
+
+  /// No description provided for @opTrocarTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trocar os dois de lugar?'**
+  String get opTrocarTitulo;
+
+  /// No description provided for @opTrocarTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'{destino} tem \"{nome}\". Ele vai para {origem}.'**
+  String opTrocarTexto(String destino, String nome, String origem);
+
+  /// No description provided for @opTrocar.
+  ///
+  /// In pt, this message translates to:
+  /// **'TROCAR'**
+  String get opTrocar;
+
+  /// No description provided for @opSubstituirTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Substituir {destino}?'**
+  String opSubstituirTitulo(String destino);
+
+  /// No description provided for @opSubstituirTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'\"{nome}\" vai ser apagado e trocado pela cópia de {origem}.'**
+  String opSubstituirTexto(String nome, String origem);
+
+  /// No description provided for @opSubstituir.
+  ///
+  /// In pt, this message translates to:
+  /// **'SUBSTITUIR'**
+  String get opSubstituir;
+
+  /// No description provided for @opBancosTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trocar os bancos {a} e {b}?'**
+  String opBancosTitulo(String a, String b);
+
+  /// No description provided for @opBancosTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'Os três presets de cada banco trocam de lugar.'**
+  String get opBancosTexto;
+
+  /// No description provided for @opMovido.
+  ///
+  /// In pt, this message translates to:
+  /// **'{origem} foi para {destino}.'**
+  String opMovido(String origem, String destino);
+
+  /// No description provided for @opClonado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cópia de {origem} gravada em {destino}.'**
+  String opClonado(String origem, String destino);
+
+  /// No description provided for @opBancosTrocados.
+  ///
+  /// In pt, this message translates to:
+  /// **'Bancos {a} e {b} trocados.'**
+  String opBancosTrocados(String a, String b);
 }
 
 class _AppLocalizationsDelegate

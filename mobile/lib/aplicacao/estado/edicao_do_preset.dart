@@ -3,9 +3,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../nucleo/catalogo/biblioteca_blocos.dart';
+import '../../nucleo/catalogo/linha_paralela.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
+import '../provedores.dart';
 import 'estado_editor.dart';
 
 mixin EdicaoDoPreset on Notifier<EstadoEditor> {
@@ -53,6 +55,13 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
     if (atual != null && motivoNomeInvalido(nome) == null) await aplicarDocumento(atual.comNome(nome.trim()));
   }
 
+  /// Gabinete: o IR do modelo/microfone/posição escolhido (ao vivo, desfazer).
+  Future<void> escolherIrDoGabinete(PosicaoBloco posicao, String caminho) async {
+    final atual = state.atual;
+    if (atual == null || atual.bloco(posicao) == null) return;
+    await aplicarDocumento(atual.comArquivoDeIr(posicao, caminho));
+  }
+
   Future<void> removerBloco(PosicaoBloco posicao) async {
     final atual = state.atual;
     if (atual == null || atual.bloco(posicao) == null) return;
@@ -76,6 +85,28 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
     if (atual == null || !podeMover(atual, de, para)) return;
     await aplicarDocumento(atual.comBlocoMovido(de, para));
     state = state.copiar(selecionado: para);
+  }
+
+  /// Manda o sinal também para a linha 2: Split depois do bloco selecionado
+  /// na linha 1 (sem seleção, depois do último) e Merge na casa livre
+  /// seguinte. Falso quando a linha 1 não tem duas casas livres.
+  Future<bool> criarLinhaParalela() async {
+    final atual = state.atual;
+    final catalogo = ref.read(catalogoProvider).value;
+    if (atual == null || catalogo == null) return false;
+    final selecionado = state.selecionado;
+    final novo = comLinhaParalela(atual, catalogo, depoisDe: selecionado?.linha == 1 ? selecionado!.casa : null);
+    if (novo == null) return false;
+    await aplicarDocumento(novo);
+    return true;
+  }
+
+  /// Tira Split, Merge e os blocos da linha 2 (a tela pergunta antes se há blocos).
+  Future<void> removerLinhaParalela() async {
+    final atual = state.atual;
+    if (atual == null || !temLinhaParalela(atual)) return;
+    await aplicarDocumento(semLinhaParalela(atual));
+    state = state.copiar(selecionado: primeiraPosicao(state.atual!));
   }
 
   /// Slot vazio aberto: começa um preset novo ali (com uuid próprio). O
