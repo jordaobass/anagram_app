@@ -95,15 +95,15 @@ class SeletorArea extends ConsumerWidget {
 class _AvisoAreaInativa extends ConsumerWidget {
   const _AvisoAreaInativa();
 
+  // o botão embaixo do texto: lado a lado, no painel estreito da lista, o
+  // texto virava uma coluna de palavras e a lista ficava com dois slots à vista
   @override
   Widget build(BuildContext context, WidgetRef ref) => Padding(
         padding: const EdgeInsets.only(top: Espacos.xs),
-        child: Row(children: [
-          Expanded(
-            child: Text(
-              AppLocalizations.of(context).areaInativa,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario),
-            ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+          Text(
+            AppLocalizations.of(context).areaInativa,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario),
           ),
           TextButton(
             key: const ValueKey('tornar-area-ativa'),
