@@ -7,6 +7,7 @@ import '../registro.dart';
 import 'api_anagram.dart' show AcoesAnagram;
 import 'erros_anagram.dart';
 import 'quadros_hid.dart';
+import 'respostas_anagram.dart';
 import 'transporte_anagram.dart';
 
 /// Ida e volta de uma ação, para o log e para a tela.
@@ -149,10 +150,8 @@ class ClienteAnagram {
   Map<String, dynamic> _extrairCarga(String acao, Map<String, dynamic> quadro) {
     final carga = quadro['payload'];
     if (carga is! Map<String, dynamic>) return const {};
-    final erro = carga['error'] ?? (carga['status'] == 'error' ? carga['message'] : null);
-    if (erro != null) {
-      throw ErroRespostaInvalida('A pedaleira recusou "$acao": $erro');
-    }
+    final erro = motivoDaRecusa(carga);
+    if (erro != null) throw ErroRespostaInvalida('A pedaleira recusou "$acao": $erro');
     return carga;
   }
 
