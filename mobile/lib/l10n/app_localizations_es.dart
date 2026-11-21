@@ -801,4 +801,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String opBancosTrocados(String a, String b) {
     return 'Bancos $a y $b intercambiados.';
   }
+
+  @override
+  String get gxModeloAnterior => 'Gabinete anterior';
+
+  @override
+  String get gxProximoModelo => 'Gabinete siguiente';
+
+  @override
+  String get gxBuscarGabinete => 'Escribe para buscar';
 }

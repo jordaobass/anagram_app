@@ -645,5 +645,11 @@
         "type": "String"
       }
     }
+  },
+  "gxModeloAnterior": "Gabinete anterior",
+  "gxProximoModelo": "Próximo gabinete",
+  "gxBuscarGabinete": "Escreva para buscar",
+  "@gxBuscarGabinete": {
+    "description": "Dica do campo de busca do modelo de gabinete"
   }
 }

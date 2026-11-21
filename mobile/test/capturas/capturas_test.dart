@@ -93,17 +93,40 @@ void main() {
     await capturar(tester, '$pasta/desktop-7-gabinete.png');
   });
 
-  // a escolha do gabinete como na pedaleira (modelo → microfone → posição),
-  // com o menu de modelos aberto; sem a arte, a tabela de teste do Suite
+  // a escolha do gabinete como na pedaleira: foto grande da caixa e, ao lado,
+  // modelo (busca, ‹ ›) → microfone → posição; sem a arte, a tabela de teste
   testWidgets('captura desktop: escolher o gabinete', (tester) async {
-    await preparar(tester, desktopWindows,
-        indice: comMiniaturas ? null : IndiceMiniaturas(const {}, const {}, '', escolhasDeGabinete: catalogoDeTeste));
-    final container = await abrirSlot(tester, '01B');
-    container.read(editorProvider.notifier).selecionarBloco(const PosicaoBloco(1, 9));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('gabinete-modelo')));
-    await tester.pumpAndSettle();
+    await _abrirGabinete(tester, desktopWindows);
     await assentarImagens(tester);
     await capturar(tester, '$pasta/desktop-10-escolher-gabinete.png');
   });
+
+  testWidgets('captura desktop: buscar o gabinete escrevendo', (tester) async {
+    await _abrirGabinete(tester, desktopWindows);
+    final campo = find.descendant(of: find.byKey(const ValueKey('gabinete-modelo')), matching: find.byType(TextField));
+    await tester.tap(campo);
+    await tester.enterText(campo, comMiniaturas ? 'peg' : 'neo');
+    await tester.pumpAndSettle();
+    await assentarImagens(tester);
+    await capturar(tester, '$pasta/desktop-11-buscar-gabinete.png');
+  });
+
+  testWidgets('captura celular: escolher o gabinete', (tester) async {
+    await _abrirGabinete(tester, const Tamanho('celular-retrato', 390, 844, 2));
+    // no celular o painel fica abaixo da cadeia: rola até o gabinete aparecer
+    await tester.scrollUntilVisible(find.byKey(const ValueKey('gabinete-modelo')), 300,
+        scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    await assentarImagens(tester);
+    await capturar(tester, '$pasta/celular-retrato-6-gabinete.png');
+  });
+}
+
+/// 01B (exemplo real 2) com o Bass Cabinet selecionado e as escolhas do Suite.
+Future<void> _abrirGabinete(WidgetTester tester, Tamanho tamanho) async {
+  await preparar(tester, tamanho,
+      indice: comMiniaturas ? null : IndiceMiniaturas(const {}, const {}, '', escolhasDeGabinete: catalogoDeTeste));
+  final container = await abrirSlot(tester, '01B');
+  container.read(editorProvider.notifier).selecionarBloco(const PosicaoBloco(1, 9));
+  await tester.pumpAndSettle();
 }

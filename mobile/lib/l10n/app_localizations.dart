@@ -1413,6 +1413,24 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Bancos {a} e {b} trocados.'**
   String opBancosTrocados(String a, String b);
+
+  /// No description provided for @gxModeloAnterior.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gabinete anterior'**
+  String get gxModeloAnterior;
+
+  /// No description provided for @gxProximoModelo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Próximo gabinete'**
+  String get gxProximoModelo;
+
+  /// Dica do campo de busca do modelo de gabinete
+  ///
+  /// In pt, this message translates to:
+  /// **'Escreva para buscar'**
+  String get gxBuscarGabinete;
 }
 
 class _AppLocalizationsDelegate

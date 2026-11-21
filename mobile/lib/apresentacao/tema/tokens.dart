@@ -122,6 +122,14 @@ abstract final class Medidas {
 
   /// Foto do modelo no menu de escolha do gabinete.
   static const double fotoNaEscolhaDeGabinete = 32;
+  /// Foto do gabinete escolhido no painel do bloco, como a pedaleira mostra.
+  static const double fotoGabineteGrande = 144;
+  /// A partir desta largura a foto fica ao lado dos controles do gabinete.
+  static const double larguraGabineteLadoALado = 560;
+  static const double larguraCampoGabinete = 320;
+  static const double iconeMicrofone = 20;
+  /// Traço do ícone de microfone, em fração do lado do ícone.
+  static const double tracoMicrofone = 0.08;
   /// Passos da letra do nome do bloco na casa antes de cair na abreviação.
   static const reducoesRotuloCasa = [1.0, 0.86, 0.74];
   static const double fonteRotuloCasaPadrao = 14;

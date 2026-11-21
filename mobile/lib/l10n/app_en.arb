@@ -218,5 +218,8 @@
   "opBancosTexto": "The three presets of each bank swap places.",
   "opMovido": "{origem} moved to {destino}.",
   "opClonado": "Copy of {origem} saved to {destino}.",
-  "opBancosTrocados": "Banks {a} and {b} swapped."
+  "opBancosTrocados": "Banks {a} and {b} swapped.",
+  "gxModeloAnterior": "Previous cabinet",
+  "gxProximoModelo": "Next cabinet",
+  "gxBuscarGabinete": "Type to search"
 }

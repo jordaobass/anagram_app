@@ -218,5 +218,8 @@
   "opBancosTexto": "Los tres presets de cada banco cambian de lugar.",
   "opMovido": "{origem} pasó a {destino}.",
   "opClonado": "Copia de {origem} guardada en {destino}.",
-  "opBancosTrocados": "Bancos {a} y {b} intercambiados."
+  "opBancosTrocados": "Bancos {a} y {b} intercambiados.",
+  "gxModeloAnterior": "Gabinete anterior",
+  "gxProximoModelo": "Gabinete siguiente",
+  "gxBuscarGabinete": "Escribe para buscar"
 }
