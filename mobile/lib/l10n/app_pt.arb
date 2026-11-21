@@ -832,5 +832,53 @@
   "mcpSalvar": "SALVAR",
   "mcpAgoraNao": "AGORA NÃO",
   "ttDicaMouse": "Pare o mouse sobre o nome de um controle para saber o que ele faz com o som",
-  "ttDicaToque": "Toque no nome de um controle para saber o que ele faz com o som"
+  "ttDicaToque": "Toque no nome de um controle para saber o que ele faz com o som",
+  "mpExportarJson": "Exportar JSON…",
+  "mpLimpar": "Limpar preset…",
+  "mpLimparFabrica": "Limpar preset (a Fábrica é só leitura)",
+  "mpLimparTitulo": "Limpar o {slot}?",
+  "@mpLimparTitulo": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mpLimparTexto": "O preset \"{nome}\" sai do slot {slot} na pedaleira e o slot fica vazio. Não dá para desfazer. Para guardar uma cópia, exporte o JSON antes.",
+  "@mpLimparTexto": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      },
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mpExportarAntes": "Exportar JSON",
+  "mpLimparConfirmar": "Limpar",
+  "mpLimpo": "{slot} limpo: o slot ficou vazio.",
+  "@mpLimpo": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mpExportadoGravado": "Exportado o preset gravado no {slot}; as edições não salvas ficaram de fora.",
+  "@mpExportadoGravado": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mpSlotVazio": "O {slot} já está vazio na pedaleira.",
+  "@mpSlotVazio": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  }
 }

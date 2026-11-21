@@ -1863,6 +1863,66 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Toque no nome de um controle para saber o que ele faz com o som'**
   String get ttDicaToque;
+
+  /// No description provided for @mpExportarJson.
+  ///
+  /// In pt, this message translates to:
+  /// **'Exportar JSON…'**
+  String get mpExportarJson;
+
+  /// No description provided for @mpLimpar.
+  ///
+  /// In pt, this message translates to:
+  /// **'Limpar preset…'**
+  String get mpLimpar;
+
+  /// No description provided for @mpLimparFabrica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Limpar preset (a Fábrica é só leitura)'**
+  String get mpLimparFabrica;
+
+  /// No description provided for @mpLimparTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Limpar o {slot}?'**
+  String mpLimparTitulo(String slot);
+
+  /// No description provided for @mpLimparTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'O preset \"{nome}\" sai do slot {slot} na pedaleira e o slot fica vazio. Não dá para desfazer. Para guardar uma cópia, exporte o JSON antes.'**
+  String mpLimparTexto(String nome, String slot);
+
+  /// No description provided for @mpExportarAntes.
+  ///
+  /// In pt, this message translates to:
+  /// **'Exportar JSON'**
+  String get mpExportarAntes;
+
+  /// No description provided for @mpLimparConfirmar.
+  ///
+  /// In pt, this message translates to:
+  /// **'Limpar'**
+  String get mpLimparConfirmar;
+
+  /// No description provided for @mpLimpo.
+  ///
+  /// In pt, this message translates to:
+  /// **'{slot} limpo: o slot ficou vazio.'**
+  String mpLimpo(String slot);
+
+  /// No description provided for @mpExportadoGravado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Exportado o preset gravado no {slot}; as edições não salvas ficaram de fora.'**
+  String mpExportadoGravado(String slot);
+
+  /// No description provided for @mpSlotVazio.
+  ///
+  /// In pt, this message translates to:
+  /// **'O {slot} já está vazio na pedaleira.'**
+  String mpSlotVazio(String slot);
 }
 
 class _AppLocalizationsDelegate

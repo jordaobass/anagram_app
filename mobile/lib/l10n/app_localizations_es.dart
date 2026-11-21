@@ -1058,4 +1058,44 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get ttDicaToque =>
       'Toca el nombre de un control para ver qué hace con el sonido';
+
+  @override
+  String get mpExportarJson => 'Exportar JSON…';
+
+  @override
+  String get mpLimpar => 'Borrar preset…';
+
+  @override
+  String get mpLimparFabrica => 'Borrar preset (Fábrica es solo lectura)';
+
+  @override
+  String mpLimparTitulo(String slot) {
+    return '¿Borrar el $slot?';
+  }
+
+  @override
+  String mpLimparTexto(String nome, String slot) {
+    return 'El preset \"$nome\" sale del slot $slot en la pedalera y el slot queda vacío. No se puede deshacer. Para guardar una copia, exporta el JSON antes.';
+  }
+
+  @override
+  String get mpExportarAntes => 'Exportar JSON';
+
+  @override
+  String get mpLimparConfirmar => 'Borrar';
+
+  @override
+  String mpLimpo(String slot) {
+    return '$slot borrado: el slot quedó vacío.';
+  }
+
+  @override
+  String mpExportadoGravado(String slot) {
+    return 'Se exportó el preset guardado en $slot; las ediciones sin guardar quedaron fuera.';
+  }
+
+  @override
+  String mpSlotVazio(String slot) {
+    return 'El $slot ya está vacío en la pedalera.';
+  }
 }

@@ -293,5 +293,15 @@
   "mcpSalvar": "SAVE",
   "mcpAgoraNao": "NOT NOW",
   "ttDicaMouse": "Rest the mouse on a control's name to see what it does to the sound",
-  "ttDicaToque": "Tap a control's name to see what it does to the sound"
+  "ttDicaToque": "Tap a control's name to see what it does to the sound",
+  "mpExportarJson": "Export JSON…",
+  "mpLimpar": "Clear preset…",
+  "mpLimparFabrica": "Clear preset (Factory is read-only)",
+  "mpLimparTitulo": "Clear {slot}?",
+  "mpLimparTexto": "The preset \"{nome}\" is removed from slot {slot} on the pedal and the slot becomes empty. This can't be undone. To keep a copy, export the JSON first.",
+  "mpExportarAntes": "Export JSON",
+  "mpLimparConfirmar": "Clear",
+  "mpLimpo": "{slot} cleared: the slot is now empty.",
+  "mpExportadoGravado": "Exported the preset saved in {slot}; unsaved edits were left out.",
+  "mpSlotVazio": "{slot} is already empty on the pedal."
 }

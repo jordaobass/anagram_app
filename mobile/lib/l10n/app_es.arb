@@ -293,5 +293,15 @@
   "mcpSalvar": "GUARDAR",
   "mcpAgoraNao": "AHORA NO",
   "ttDicaMouse": "Deja el ratón sobre el nombre de un control para ver qué hace con el sonido",
-  "ttDicaToque": "Toca el nombre de un control para ver qué hace con el sonido"
+  "ttDicaToque": "Toca el nombre de un control para ver qué hace con el sonido",
+  "mpExportarJson": "Exportar JSON…",
+  "mpLimpar": "Borrar preset…",
+  "mpLimparFabrica": "Borrar preset (Fábrica es solo lectura)",
+  "mpLimparTitulo": "¿Borrar el {slot}?",
+  "mpLimparTexto": "El preset \"{nome}\" sale del slot {slot} en la pedalera y el slot queda vacío. No se puede deshacer. Para guardar una copia, exporta el JSON antes.",
+  "mpExportarAntes": "Exportar JSON",
+  "mpLimparConfirmar": "Borrar",
+  "mpLimpo": "{slot} borrado: el slot quedó vacío.",
+  "mpExportadoGravado": "Se exportó el preset guardado en {slot}; las ediciones sin guardar quedaron fuera.",
+  "mpSlotVazio": "El {slot} ya está vacío en la pedalera."
 }
