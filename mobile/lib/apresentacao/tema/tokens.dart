@@ -6,6 +6,7 @@ import 'package:flutter/painting.dart';
 import '../../nucleo/ajustes/mapa_ajustes.dart';
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/familia_bloco.dart';
+import '../../nucleo/catalogo/linha_paralela.dart';
 
 abstract final class Cores {
   static const fundoCase = Color(0xFF131416);
@@ -39,8 +40,8 @@ abstract final class Cores {
   /// A fita da casa: Split e Merge levam a cor do trecho que abrem e fecham,
   /// para ligar o bloco ao fio; os demais, a da família.
   static Color daFita(String uri, FamiliaBloco familia) {
-    if (uri.endsWith(':split')) return sinalSplit;
-    if (uri.endsWith(':merge')) return sinalMerge;
+    if (uri == uriSplit) return sinalSplit;
+    if (uri == uriMerge) return sinalMerge;
     return daFamilia(familia);
   }
 
