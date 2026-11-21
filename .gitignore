@@ -1,3 +1,6 @@
 # Worktrees e estado local de ferramentas de desenvolvimento
 .claude/
 .DS_Store
+
+# imagens da landing: o workflow do Pages copia de docs/imagens
+site/imagens/
