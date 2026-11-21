@@ -13,6 +13,7 @@ import '../tema/tokens.dart';
 import 'dialogo_valor.dart';
 import 'explicacao_parametro.dart';
 import 'pintor_fader.dart';
+import 'passo_controle.dart';
 import 'pintor_knob.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
@@ -93,23 +94,18 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
     if (valor != null) widget.aoMudar(valor, arrastando: false);
   }
 
-  /// Um passo da rodinha, da seta ou do leitor de tela: 1% do curso do knob.
-  static const _passoFino = 0.01;
-
-  /// Com Shift: 10% do curso, para atravessar a faixa sem segurar a tecla.
-  static const _passoGrosso = 0.1;
-
   void _rodinha(PointerSignalEvent evento) {
-    if (evento is PointerScrollEvent) _passo(evento.scrollDelta.dy < 0 ? _passoFino : -_passoFino);
+    if (evento is PointerScrollEvent) _passo(evento.scrollDelta.dy < 0 ? fracaoPassoFino : -fracaoPassoFino);
   }
 
-  double _fracaoMais(double quanto) => (_fracao + quanto).clamp(0.0, 1.0);
+  /// O valor depois de um passo: nos discretos, sempre ao menos uma posição.
+  num _valorMais(double quanto) => widget.parametro.valorDepoisDoPasso(widget.parametro.valorDe(_fracao), quanto);
 
-  void _passo(double quanto) => widget.aoMudar(widget.parametro.valorDe(_fracaoMais(quanto)), arrastando: false);
+  void _passo(double quanto) => widget.aoMudar(_valorMais(quanto), arrastando: false);
 
   KeyEventResult _tecla(FocusNode _, KeyEvent evento) {
     if (evento is! KeyDownEvent && evento is! KeyRepeatEvent) return KeyEventResult.ignored;
-    final grande = HardwareKeyboard.instance.isShiftPressed ? _passoGrosso : _passoFino;
+    final grande = HardwareKeyboard.instance.isShiftPressed ? fracaoPassoGrosso : fracaoPassoFino;
     final teclas = {
       LogicalKeyboardKey.arrowUp: grande,
       LogicalKeyboardKey.arrowRight: grande,
@@ -132,10 +128,10 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
       label: p.nome,
       value: texto,
       hint: ContextoExplicacao.de(context, p),
-      increasedValue: l.valorDe(p, p.valorDe(_fracaoMais(_passoFino))),
-      decreasedValue: l.valorDe(p, p.valorDe(_fracaoMais(-_passoFino))),
-      onIncrease: () => _passo(_passoFino),
-      onDecrease: () => _passo(-_passoFino),
+      increasedValue: l.valorDe(p, _valorMais(fracaoPassoFino)),
+      decreasedValue: l.valorDe(p, _valorMais(-fracaoPassoFino)),
+      onIncrease: () => _passo(fracaoPassoFino),
+      onDecrease: () => _passo(-fracaoPassoFino),
       customSemanticsActions: {CustomSemanticsAction(label: l.voltarAoPadrao): _voltarAoPadrao},
       child: Focus(
         focusNode: _foco,
