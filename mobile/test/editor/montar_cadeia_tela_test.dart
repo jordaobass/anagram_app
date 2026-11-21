@@ -122,4 +122,21 @@ void main() {
     expect(_uriEm(container, 1, 2), 'urn:darkglass:Suppressor');
     expect(_uriEm(container, 1, 1), 'urn:darkglass:wah');
   });
+
+  testWidgets('should_not_offer_to_remove_copy_or_paste_over_a_split_when_its_menu_is_opened', (tester) async {
+    final container = await abrirDemonstracao(tester);
+    await tocarNoSlot(tester, '03A');
+    // copiado antes: colar por cima do split também tem de estar fechado
+    container.read(editorProvider.notifier).copiarBloco(const PosicaoBloco(1, 1));
+    // botão direito na própria casa do split abre o menu dela
+    await tester.tap(_casa(1, 2), buttons: kSecondaryMouseButton, kind: PointerDeviceKind.mouse);
+    await tester.pumpAndSettle();
+
+    PopupMenuItem<Object?> item(String rotulo) =>
+        tester.widget<PopupMenuItem<Object?>>(find.ancestor(of: find.text(rotulo), matching: find.byWidgetPredicate((w) => w is PopupMenuItem)));
+    expect(item('Remover bloco').enabled, isFalse, reason: 'sem o split, a linha paralela perde a saída');
+    expect(item('Copiar bloco').enabled, isFalse, reason: 'um segundo split quebraria o roteamento');
+    expect(item('Colar aqui').enabled, isFalse);
+    expect(_uriEm(container, 1, 2), 'urn:darkglass-anagram:split');
+  });
 }
