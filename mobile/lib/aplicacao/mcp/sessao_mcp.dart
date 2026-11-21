@@ -18,6 +18,14 @@ import '../estado/estado_editor.dart';
 import '../provedores.dart';
 import 'avisos_mcp.dart';
 
+/// Recusa que a IA consegue explicar à pessoa, a mesma em toda ferramenta.
+void exigirPedaleiraConectada(Ref ref) {
+  if (ref.read(conexaoProvider) is! Conectada) {
+    throw const RecusaFerramenta('The pedal is not connected. Ask the player to connect it '
+        '(or open the demo) in the Anagram App.');
+  }
+}
+
 class SessaoMcp {
   SessaoMcp(this._ref);
 
@@ -34,10 +42,7 @@ class SessaoMcp {
 
   /// O preset aberto, ou a recusa que explica à IA o que falta.
   DocumentoPreset presetAberto() {
-    if (_ref.read(conexaoProvider) is! Conectada) {
-      throw const RecusaFerramenta('The pedal is not connected. Ask the player to connect it '
-          '(or open the demo) in the Anagram App.');
-    }
+    exigirPedaleiraConectada(_ref);
     final atual = estado.atual;
     if (estado.ocupado) throw const RecusaFerramenta('The app is loading or saving a preset; try again in a moment.');
     if (atual == null) throw const RecusaFerramenta('No preset is open. Ask the player to open one in the app.');
