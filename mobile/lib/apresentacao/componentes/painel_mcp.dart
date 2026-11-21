@@ -125,7 +125,7 @@ class _EstadoToken extends ConsumerState<_Token> {
         texto: l.mcpGerarNovoTexto,
         rotuloCancelar: l.cancelar,
         rotuloConfirmar: l.mcpGerarNovoToken);
-    if (sim) await ref.read(controladorMcpProvider.notifier).gerarNovoToken();
+    if (sim && mounted) await ref.read(controladorMcpProvider.notifier).gerarNovoToken();
   }
 }
 

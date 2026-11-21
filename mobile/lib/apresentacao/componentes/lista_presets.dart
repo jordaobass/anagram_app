@@ -68,20 +68,20 @@ class ListaPresets extends ConsumerWidget {
     ]);
   }
 
+  /// Toda espera pode terminar com a lista já fechada (o "voltar" do celular
+  /// durante a leitura): depois dela, nada de ref nem de voltar de novo.
   Future<void> _abrir(BuildContext context, WidgetRef ref, SlotPreset slot) async {
     if (ref.read(organizarProvider) != null) return concluirOrganizacao(context, ref, slot);
     final estado = ref.read(editorProvider);
     if (estado.escolhendoDestino) {
       final gravou = await salvarComoNoDestino(context, ref, slot);
-      if (gravou) aoAbrir?.call();
+      if (gravou && context.mounted) aoAbrir?.call();
       return;
     }
-    if (estado.naoSalvo) {
-      final largar = await confirmarLargarEdicoes(context, estado.atual?.nome ?? '');
-      if (!largar) return;
-    }
+    if (estado.naoSalvo && !await confirmarLargarEdicoes(context, estado.atual?.nome ?? '')) return;
+    if (!context.mounted) return;
     await ref.read(editorProvider.notifier).abrirSlot(slot);
-    aoAbrir?.call();
+    if (context.mounted) aoAbrir?.call();
   }
 }
 

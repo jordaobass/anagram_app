@@ -67,7 +67,7 @@ class _CartaoGlobalEqState extends ConsumerState<CartaoGlobalEq> {
         rotuloCancelar: l.cancelar,
         rotuloConfirmar: l.pdEqResetConfirmar,
         chaveConfirmar: const ValueKey('confirmar-reset-eq'));
-    if (!sim) return;
+    if (!sim || !mounted) return;
     final controlador = ref.read(controladorAjustesProvider.notifier);
     final estado = ref.read(controladorAjustesProvider);
     final antes = {for (final a in ajustesConfirmados(GrupoAjuste.globalEq)) a: estado.valor(a) ?? a.padrao};
