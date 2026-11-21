@@ -135,5 +135,29 @@ void main() {
     expect(_tocando(c, 'gain2'), ganho, reason: 'ao soltar vai o valor final na hora (L1)');
     await tester.pumpAndSettle();
   });
+
+  testWidgets('should_keep_the_points_on_the_curve_and_drag_the_band_gain_when_the_overall_gain_is_raised',
+      (tester) async {
+    final c = await _comBloco(tester);
+    c.read(editorProvider.notifier).alterarParametro('gain', 6, arrastando: false, posicao: _casa);
+    await tester.pumpAndSettle();
+    final curva = find.byKey(const ValueKey('curva-eq-bloco'));
+    await tester.ensureVisible(curva);
+    await tester.pumpAndSettle();
+    final caixa = tester.getRect(curva);
+    final banda2 = _curva(tester).firstWhere((b) => b.frequencia == 397);
+    final geometria = GeometriaGlobalEq(caixa.size);
+    final esperado = Offset(geometria.x(397), geometria.y(6));
+
+    expect(GeometriaGlobalEq(caixa.size, ganhoGeral: 6).ponto(banda2), esperado,
+        reason: 'banda em 0 dB com o ganho geral em +6: o ponto fica na curva, em +6');
+    final gesto = await tester.startGesture(caixa.topLeft + esperado);
+    await gesto.moveBy(const Offset(0, -30));
+    await gesto.moveTo(caixa.topLeft + Offset(geometria.x(397), geometria.y(9)));
+    await gesto.up();
+    await tester.pumpAndSettle();
+
+    expect(_valor(c, 'gain2'), closeTo(3, 0.1), reason: 'o ponto em +9 na tela, com +6 de geral, é a banda em +3');
+  });
 }
 

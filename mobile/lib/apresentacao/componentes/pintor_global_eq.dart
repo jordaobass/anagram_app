@@ -2,7 +2,8 @@
 // mesmo DSP): grade de frequência (log, 20 Hz–20 kHz), eixo de +15 a −15 dB,
 // a soma das bandas preenchida na cor do modo (ganho verde, frequência roxa,
 // largura laranja) e um ponto por banda, que o dedo arrasta em frequência ×
-// ganho. Banda desligada tem o ponto apagado; o corte fica na linha do 0 dB.
+// ganho. Banda desligada tem o ponto apagado; o corte fica na linha do 0 dB
+// (ou do ganho geral do bloco, que desloca a curva e os pontos juntos).
 import 'dart:math' as math;
 
 import 'package:flutter/rendering.dart';
@@ -11,9 +12,12 @@ import '../../nucleo/ajustes/curva_global_eq.dart';
 import '../tema/tokens.dart';
 
 class GeometriaGlobalEq {
-  const GeometriaGlobalEq(this.tamanho);
+  const GeometriaGlobalEq(this.tamanho, {this.ganhoGeral = 0});
 
   final Size tamanho;
+
+  /// O "gain" do bloco Parametric EQ: desloca a curva e, junto, os pontos.
+  final double ganhoGeral;
   static const fMin = 20.0;
   static const fMax = 20000.0;
 
@@ -24,8 +28,14 @@ class GeometriaGlobalEq {
   double y(double db) => tamanho.height / 2 * (1 - db / dbVisivel);
   double frequencia(double x) => fMin * math.pow(fMax / fMin, (x / tamanho.width).clamp(0.0, 1.0));
   double ganho(double y) => (1 - y / (tamanho.height / 2)) * dbVisivel;
+
+  /// O ganho da banda para um ponto na altura [y]: o da tela menos o geral.
+  double ganhoDaBanda(double y) => ganho(y) - ganhoGeral;
+
+  /// O ponto fica sobre a curva: o ganho da banda somado ao geral (o corte,
+  /// na altura do geral). Fora do eixo, para na borda.
   Offset ponto(BandaGlobalEq b) =>
-      Offset(x(b.frequencia), y(b.ehCorte ? 0 : b.ganho.clamp(-dbVisivel, dbVisivel)));
+      Offset(x(b.frequencia), y(((b.ehCorte ? 0 : b.ganho) + ganhoGeral).clamp(-dbVisivel, dbVisivel)));
 }
 
 class PintorGlobalEq extends CustomPainter {
@@ -42,7 +52,7 @@ class PintorGlobalEq extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final g = GeometriaGlobalEq(size);
+    final g = GeometriaGlobalEq(size, ganhoGeral: ganhoGeral);
     _grade(canvas, size, g);
     final curva = Path();
     for (var px = 0.0; px <= size.width; px += 2) {

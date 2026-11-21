@@ -39,11 +39,11 @@ class _CurvaEqArrastavelState extends State<CurvaEqArrastavel> {
   (double, double)? _ultimo;
 
   void _arrastar(Offset local, Size tamanho, {bool comecando = false}) {
-    final g = GeometriaGlobalEq(tamanho);
+    final g = GeometriaGlobalEq(tamanho, ganhoGeral: widget.ganhoGeral);
     if (comecando) _ativa = maisPerto(widget.bandas.map(g.ponto).toList(), local);
     final i = _ativa;
     if (i == null) return;
-    final ultimo = (g.frequencia(local.dx), g.ganho(local.dy));
+    final ultimo = (g.frequencia(local.dx), g.ganhoDaBanda(local.dy));
     _ultimo = ultimo;
     widget.aoArrastar(i, ultimo.$1, ultimo.$2, arrastando: true);
     setState(() {});
