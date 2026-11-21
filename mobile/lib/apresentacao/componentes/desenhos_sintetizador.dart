@@ -37,7 +37,7 @@ Paint _preenchimento(Color cor) => Paint()..color = cor.withValues(alpha: Medida
 
 final _guia = Paint()
   ..color = Cores.filete
-  ..strokeWidth = 1;
+  ..strokeWidth = Medidas.filete;
 
 /// A onda escolhida, dois ciclos, em volta da linha de centro.
 class PintorOnda extends CustomPainter {
