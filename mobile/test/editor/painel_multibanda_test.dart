@@ -10,6 +10,8 @@ import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -210,4 +212,34 @@ void main() {
     expect(_valor(c, 'lo_threshold'), lessThan(-36));
     expect(depois - antes, closeTo(20, 1), reason: 'o traço acompanha o ponteiro');
   });
+
+  testWidgets('should_offer_a_48_dp_touch_target_when_the_line_and_the_crossover_handle_are_drawn_thin', (tester) async {
+    await _comBloco(tester, 'urn:darkglass:ignissor');
+    final linha = find.byKey(const ValueKey('traco-lo_threshold'));
+    await _rolarAte(tester, linha);
+
+    expect(tester.getSize(linha).height, greaterThanOrEqualTo(Medidas.alvoMinimo));
+    expect(tester.getSize(find.byKey(const ValueKey('alca-lomid_xo_freq'))).width, greaterThanOrEqualTo(Medidas.alvoMinimo));
+  });
+
+  testWidgets('should_step_the_threshold_line_with_the_screen_reader_and_the_arrow_keys', (tester) async {
+    final semantica = tester.ensureSemantics();
+    final c = await _comBloco(tester, 'urn:darkglass:ignissor');
+    final linha = find.byKey(const ValueKey('traco-lo_threshold'));
+    await _rolarAte(tester, linha);
+
+    final no = tester.getSemantics(find.descendant(of: linha, matching: find.byType(Semantics)).first);
+    tester.binding.pipelineOwner.semanticsOwner!.performAction(no.id, SemanticsAction.increase);
+    await tester.pumpAndSettle();
+    final depoisDoLeitor = _valor(c, 'lo_threshold')!;
+    expect(depoisDoLeitor, greaterThan(-30));
+
+    tester.widget<Focus>(find.descendant(of: linha, matching: find.byType(Focus)).first).focusNode!.requestFocus();
+    await tester.pump();
+    await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
+    await tester.pumpAndSettle();
+    expect(_valor(c, 'lo_threshold'), lessThan(depoisDoLeitor));
+    semantica.dispose();
+  });
 }
+

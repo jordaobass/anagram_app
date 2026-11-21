@@ -172,11 +172,13 @@ abstract final class Medidas {
   /// e a alça do corte larga o bastante para o dedo, com o traço fino no meio.
   static const double alturaRaiaBanda = 44;
 
-  /// Alvo de toque do traço de Threshold/Level na faixa (o traço tem 2 px).
-  static const double alvoTracoGanho = 16;
+  /// Alvo de toque do traço de Threshold/Level na faixa: o traço tem 2 px,
+  /// o alvo tem a altura mínima de toque, centrado nele (DECISOES K5).
+  static const double alvoTracoGanho = alvoMinimo;
   static const double larguraDialogoTemplates = 440;
   static const double alturaReguaFrequencias = 18;
-  static const double larguraAlcaFrequencia = 32;
+  /// Alvo de toque da alça do corte: o traço e o puxador ficam no meio dele.
+  static const double larguraAlcaFrequencia = alvoMinimo;
   static const double tracoAlcaFrequencia = 3;
   static const double puxadorAlcaFrequencia = 10;
 
@@ -254,7 +256,8 @@ abstract final class Medidas {
   static const double larguraCampoPorta = 120;
 
   /// Global EQ nas Configurações: altura da curva, raio do ponto arrastável
-  /// e a distância em que o dedo ainda pega o ponto.
+  /// e a distância em que o dedo ainda pega o ponto. O alcance é um raio:
+  /// o alvo de cada ponto já é um círculo de 64 px, acima dos 48 mínimos.
   static const double alturaCurvaGlobalEq = 160;
   static const double raioPontoEq = 7;
   static const double alcancePontoEq = 32;
