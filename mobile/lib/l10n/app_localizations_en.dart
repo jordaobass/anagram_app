@@ -828,4 +828,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fbCopiarPara => 'Copy to my area…';
+
+  @override
+  String get eqBandaGeral => 'Overall';
+
+  @override
+  String get eqPassaAltas => 'High-pass';
+
+  @override
+  String get eqPassaBaixas => 'Low-pass';
+
+  @override
+  String get eqShelfGraves => 'Low shelf';
+
+  @override
+  String eqBanda(int numero) {
+    return 'Band $numero';
+  }
+
+  @override
+  String get eqShelfAgudos => 'High shelf';
 }

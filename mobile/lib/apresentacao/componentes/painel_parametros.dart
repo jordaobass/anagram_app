@@ -1,14 +1,18 @@
 // Parâmetros do bloco selecionado em knobs grandes, todos à vista: a tela
-// rola, então esconder parâmetro atrás de página só custava toques.
+// rola, então esconder parâmetro atrás de página só custava toques. O
+// paramétrico vem em bandas (ver arranjo_parametros.dart).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/provedores.dart';
+import '../../nucleo/catalogo/arranjo_parametros.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
+import 'botao_giratorio.dart' show AoMudarValor;
 import 'cabecalho_bloco.dart';
+import 'cartao_banda.dart';
 import 'controle_parametro.dart';
 import 'seletor_gabinete.dart';
 import '../../l10n/app_localizations.dart';
@@ -39,6 +43,12 @@ class PainelParametros extends ConsumerWidget {
       const SizedBox(height: Espacos.m),
       SeletorGabinete(bloco: bloco, definicao: definicao),
       LayoutBuilder(builder: (context, restricoes) {
+        final grupos = agruparParametros(definicao, parametros);
+        if (grupos.length > 1) {
+          return Wrap(alignment: WrapAlignment.center, spacing: Espacos.m, runSpacing: Espacos.m, children: [
+            for (final g in grupos) _grupo(context, ref, g, bloco, definicao, cena),
+          ]);
+        }
         final tamanho = _tamanhoQueCabe(restricoes.maxWidth, parametros.length);
         return Wrap(
           alignment: compacto ? WrapAlignment.spaceEvenly : WrapAlignment.center,
@@ -47,12 +57,50 @@ class PainelParametros extends ConsumerWidget {
           children: [
             if (parametros.isEmpty)
               Text(l.semParametros, style: Theme.of(context).textTheme.bodyMedium),
-            for (final p in parametros) _controle(context, ref, p, bloco, definicao, cena, tamanho),
+            for (final p in grupos.single.parametros) _controle(context, ref, p, bloco, definicao, cena, tamanho),
           ],
         );
       }),
     ]);
   }
+
+  /// Uma banda do paramétrico: título com a chave dela e os knobs de nome
+  /// curto; desligada, os knobs ficam apagados mas ainda se ajustam.
+  Widget _grupo(BuildContext context, WidgetRef ref, GrupoParametros grupo, BlocoPreset bloco,
+      DefinicaoBloco definicao, int cena) {
+    final chave = grupo.chave;
+    final ligada = chave == null || DefinicaoParametro.estaLigado(_valor(bloco, chave, cena));
+    return CartaoBanda(
+      key: ValueKey('banda-${grupo.banda?.name ?? 'outros'}'),
+      titulo: grupo.banda == null ? null : AppLocalizations.of(context).nomeDaBanda(grupo.banda!),
+      chave: chave == null ? null : _chaveDaBanda(context, ref, chave, bloco, definicao, cena),
+      ligada: ligada,
+      controles: [
+        for (final p in grupo.parametros) _controle(context, ref, p, bloco, definicao, cena, Medidas.knobCompacto),
+      ],
+    );
+  }
+
+  Widget _chaveDaBanda(BuildContext context, WidgetRef ref, DefinicaoParametro chave, BlocoPreset bloco,
+      DefinicaoBloco definicao, int cena) {
+    final ligada = DefinicaoParametro.estaLigado(_valor(bloco, chave, cena));
+    final l = AppLocalizations.of(context);
+    return ChaveParametro(
+      chave: ValueKey('chave-${chave.simbolo}'),
+      nome: chave.nome,
+      ligado: ligada,
+      cor: Cores.daFamilia(definicao.familia),
+      texto: ligada ? l.valorLigado : l.valorDesligado,
+      aoMudar: (novo) => _alterar(ref, chave, bloco)(novo ? 1 : 0, arrastando: false),
+    );
+  }
+
+  static num _valor(BlocoPreset bloco, DefinicaoParametro p, int cena) => bloco.valorNaCena(p.simbolo, cena) ?? p.padrao;
+
+  static AoMudarValor _alterar(WidgetRef ref, DefinicaoParametro p, BlocoPreset bloco) =>
+      (valor, {required arrastando}) => ref
+          .read(editorProvider.notifier)
+          .alterarParametro(p.simbolo, valor, arrastando: arrastando, nome: p.nome, posicao: bloco.posicao);
 
   double get _vao => compacto ? Espacos.m : Espacos.xl;
 
@@ -67,22 +115,23 @@ class PainelParametros extends ConsumerWidget {
   Widget _controle(
     BuildContext context,
     WidgetRef ref,
-    DefinicaoParametro p,
+    ParametroNoPainel noPainel,
     BlocoPreset bloco,
     DefinicaoBloco definicao,
     int cena,
     double tamanho,
   ) {
-    final controlador = ref.read(editorProvider.notifier);
+    final p = noPainel.parametro;
     return Column(mainAxisSize: MainAxisSize.min, children: [
       ControleParametro(
         key: ValueKey('param-${p.simbolo}'),
         parametro: p,
-        valor: bloco.valorNaCena(p.simbolo, cena) ?? p.padrao,
+        rotulo: noPainel.rotulo,
+        forma: formaDoControle(definicao, p),
+        valor: _valor(bloco, p, cena),
         cor: Cores.daFamilia(definicao.familia),
         tamanho: tamanho,
-        aoMudar: (valor, {required arrastando}) =>
-            controlador.alterarParametro(p.simbolo, valor, arrastando: arrastando, nome: p.nome, posicao: bloco.posicao),
+        aoMudar: _alterar(ref, p, bloco),
       ),
       // como o valor "atribuído ao snapshot" do HX: esta cena sobrepõe
       if (bloco.sobreposicaoDaCena(p.simbolo, cena) != null)

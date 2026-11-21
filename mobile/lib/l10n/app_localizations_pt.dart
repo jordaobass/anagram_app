@@ -833,4 +833,24 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get fbCopiarPara => 'Copiar para a minha área…';
+
+  @override
+  String get eqBandaGeral => 'Geral';
+
+  @override
+  String get eqPassaAltas => 'Passa-altas';
+
+  @override
+  String get eqPassaBaixas => 'Passa-baixas';
+
+  @override
+  String get eqShelfGraves => 'Shelf de graves';
+
+  @override
+  String eqBanda(int numero) {
+    return 'Banda $numero';
+  }
+
+  @override
+  String get eqShelfAgudos => 'Shelf de agudos';
 }

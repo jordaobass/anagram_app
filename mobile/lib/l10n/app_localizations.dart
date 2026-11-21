@@ -1473,6 +1473,42 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Copiar para a minha área…'**
   String get fbCopiarPara;
+
+  /// Título do grupo com o ganho geral do equalizador paramétrico
+  ///
+  /// In pt, this message translates to:
+  /// **'Geral'**
+  String get eqBandaGeral;
+
+  /// No description provided for @eqPassaAltas.
+  ///
+  /// In pt, this message translates to:
+  /// **'Passa-altas'**
+  String get eqPassaAltas;
+
+  /// No description provided for @eqPassaBaixas.
+  ///
+  /// In pt, this message translates to:
+  /// **'Passa-baixas'**
+  String get eqPassaBaixas;
+
+  /// No description provided for @eqShelfGraves.
+  ///
+  /// In pt, this message translates to:
+  /// **'Shelf de graves'**
+  String get eqShelfGraves;
+
+  /// Título de uma banda do equalizador paramétrico
+  ///
+  /// In pt, this message translates to:
+  /// **'Banda {numero}'**
+  String eqBanda(int numero);
+
+  /// No description provided for @eqShelfAgudos.
+  ///
+  /// In pt, this message translates to:
+  /// **'Shelf de agudos'**
+  String get eqShelfAgudos;
 }
 
 class _AppLocalizationsDelegate

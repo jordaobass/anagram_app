@@ -228,5 +228,11 @@
   "fbAvisoPresetDeFabrica": "FACTORY PRESET — plays only. Copy it to one of your areas to keep it.",
   "fbCopiarParaMinhaArea": "COPY TO MY AREA…",
   "fbCopiarTitulo": "Copy to which area?",
-  "fbCopiarPara": "Copy to my area…"
+  "fbCopiarPara": "Copy to my area…",
+  "eqBandaGeral": "Overall",
+  "eqPassaAltas": "High-pass",
+  "eqPassaBaixas": "Low-pass",
+  "eqShelfGraves": "Low shelf",
+  "eqBanda": "Band {numero}",
+  "eqShelfAgudos": "High shelf"
 }
