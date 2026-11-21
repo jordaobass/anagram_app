@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../dados/preferencias_mcp.dart';
 import '../../nucleo/mcp/ferramenta_mcp.dart';
 import '../../nucleo/mcp/protocolo_mcp.dart';
+import '../../nucleo/registro.dart';
 import '../../plataforma/servidor_mcp.dart';
 import '../versao_app.dart';
 import 'ferramenta_salvar.dart';
@@ -72,15 +73,17 @@ String? motivoPortaInvalida(String texto) {
 class ControladorMcp extends Notifier<EstadoMcp> {
   late final SessaoMcp _sessao = SessaoMcp(ref);
 
-  /// A configuração salva; toda mudança espera por ela, senão a leitura que
-  /// chega depois apagaria a escolha que a pessoa acabou de fazer.
-  late Future<void> _carregamento;
+  /// Fila das mudanças: cada uma começa quando a anterior termina, a leitura
+  /// da configuração salva primeiro. Sem ela, a leitura que chega depois
+  /// apagaria a escolha que a pessoa acabou de fazer, e um "desligar" tocado
+  /// enquanto a porta abre deixaria o servidor escutando com a opção desligada.
+  late Future<void> _fila;
 
   @override
   EstadoMcp build() {
     final servidor = ref.read(servidorMcpProvider);
     ref.onDispose(() => unawaited(servidor.parar()));
-    _carregamento = ref.read(mcpDisponivelProvider) ? _carregar() : Future.value();
+    _fila = ref.read(mcpDisponivelProvider) ? _carregar() : Future.value();
     return const EstadoMcp();
   }
 
@@ -90,27 +93,31 @@ class ControladorMcp extends Notifier<EstadoMcp> {
     if (salvo.ativo) await _iniciar();
   }
 
-  Future<void> ativar(bool ligado) async {
-    await _carregamento;
-    if (!ref.read(mcpDisponivelProvider)) return;
-    final token = state.configuracao.token ?? novoTokenMcp();
-    await _guardar(state.configuracao.copiar(ativo: ligado, token: token));
-    ligado ? await _iniciar() : await _parar();
+  /// Põe [tarefa] no fim da fila; a falha de uma não trava as seguintes.
+  Future<void> _emSerie(Future<void> Function() tarefa) {
+    final vez = _fila.then((_) => tarefa());
+    _fila = vez.then<void>((_) {}, onError: (Object _) {});
+    return vez;
   }
+
+  Future<void> ativar(bool ligado) => _emSerie(() async {
+        if (!ref.read(mcpDisponivelProvider)) return;
+        final token = state.configuracao.token ?? novoTokenMcp();
+        await _guardar(state.configuracao.copiar(ativo: ligado, token: token));
+        ligado ? await _iniciar() : await _parar();
+      });
 
   /// Porta nova; já validada pela tela ([motivoPortaInvalida]).
-  Future<void> definirPorta(int porta) async {
-    await _carregamento;
-    await _guardar(state.configuracao.copiar(porta: porta));
-    if (state.configuracao.ativo) await _iniciar();
-  }
+  Future<void> definirPorta(int porta) => _emSerie(() async {
+        await _guardar(state.configuracao.copiar(porta: porta));
+        if (state.configuracao.ativo) await _iniciar();
+      });
 
   /// Token novo: o antigo para de valer na hora (os clientes precisam do novo).
-  Future<void> gerarNovoToken() async {
-    await _carregamento;
-    await _guardar(state.configuracao.copiar(token: novoTokenMcp()));
-    if (state.configuracao.ativo) await _iniciar();
-  }
+  Future<void> gerarNovoToken() => _emSerie(() async {
+        await _guardar(state.configuracao.copiar(token: novoTokenMcp()));
+        if (state.configuracao.ativo) await _iniciar();
+      });
 
   Future<void> _guardar(ConfiguracaoMcp configuracao) async {
     state = state.copiar(configuracao: configuracao);
@@ -127,6 +134,9 @@ class ControladorMcp extends Notifier<EstadoMcp> {
           .iniciar(porta: configuracao.porta, token: configuracao.token!, protocolo: protocolo);
       state = state.copiar(situacao: McpEscutando(porta));
     } on ErroPortaOcupada catch (erro) {
+      // a tela diz "porta ocupada"; o log guarda a causa de verdade (pode ser
+      // permissão, endereço indisponível...) para quem for diagnosticar
+      registro.w('mcp: não abriu a porta ${erro.porta} em 127.0.0.1', error: erro.causa);
       state = state.copiar(situacao: McpPortaOcupada(erro.porta));
     }
   }

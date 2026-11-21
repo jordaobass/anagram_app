@@ -98,6 +98,30 @@ void main() {
     expect(biblioteca.erro, isA<AvisoAreaNaoTrocou>());
   });
 
+  test('should_keep_the_area_warning_when_a_preset_is_opened_and_the_pedal_is_still_in_another_area', () async {
+    final (container, _) = await _conectar(ajuste: (p) => p.ignorarTrocaDeArea = true);
+    await _irPara(container, 'user-2');
+    await container.read(bibliotecaProvider.notifier).tornarSelecionadaAtiva();
+
+    await container.read(editorProvider.notifier).abrirSlot(SlotPreset(2));
+
+    expect(container.read(bibliotecaProvider).erro, isA<AvisoAreaNaoTrocou>(),
+        reason: 'abrir um preset não resolve a troca de área que falhou');
+  });
+
+  test('should_clear_the_area_warning_when_a_later_switch_works', () async {
+    final (container, _) = await _conectar(ajuste: (p) => p.ignorarTrocaDeArea = true);
+    await _irPara(container, 'user-2');
+    final biblioteca = container.read(bibliotecaProvider.notifier);
+    await biblioteca.tornarSelecionadaAtiva();
+
+    _pedaleira(container).ignorarTrocaDeArea = false;
+    await biblioteca.tornarSelecionadaAtiva();
+
+    expect(container.read(bibliotecaProvider).erro, isNull);
+    expect(container.read(bibliotecaProvider).areas.ativa, 'user-2');
+  });
+
   test('should_not_send_program_change_when_the_pedal_switched_area_on_its_own', () async {
     final (container, midi) = await _conectar();
     // a pessoa trocou de área na tela da própria pedaleira

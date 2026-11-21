@@ -7,13 +7,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../nucleo/ajustes/mapa_ajustes.dart';
 import '../../nucleo/mcp/ferramenta_mcp.dart';
 import '../estado/controlador_ajustes.dart';
-import '../estado/controlador_conexao.dart';
-import '../estado/estado_conexao.dart';
+import 'sessao_mcp.dart';
 
 ControladorAjustes _controlador(Ref ref) {
-  if (ref.read(conexaoProvider) is! Conectada) {
-    throw const RecusaFerramenta('The pedal is not connected. Ask the player to connect it in the Anagram App.');
-  }
+  exigirPedaleiraConectada(ref);
   return ref.read(controladorAjustesProvider.notifier);
 }
 

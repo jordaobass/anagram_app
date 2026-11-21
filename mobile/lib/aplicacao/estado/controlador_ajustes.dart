@@ -55,6 +55,10 @@ class ControladorAjustes extends Notifier<EstadoAjustes> {
   final Map<String, num> _aEnviar = {};
   Timer? _relogio;
 
+  /// Cresce a cada troca de conexão: o que volta de um pedido feito antes
+  /// dela é da pedaleira anterior e é descartado.
+  int _geracao = 0;
+
   @override
   EstadoAjustes build() {
     ref.onDispose(() => _relogio?.cancel());
@@ -69,8 +73,10 @@ class ControladorAjustes extends Notifier<EstadoAjustes> {
   Future<void> carregar() async {
     final repositorio = _repositorio;
     if (repositorio == null) return;
+    final geracao = _geracao;
     state = state.copiar(carregando: true, falhouLeitura: false);
     final lido = await repositorio.lerAjustesGlobais();
+    if (geracao != _geracao) return;
     state = switch (lido) {
       Sucesso(:final valor) => state.copiar(lidos: valor, carregando: false),
       Falha() => state.copiar(carregando: false, falhouLeitura: true),
@@ -98,8 +104,10 @@ class ControladorAjustes extends Notifier<EstadoAjustes> {
     if (_aEnviar.isEmpty || repositorio == null) return _aEnviar.isEmpty;
     final ids = Map.of(_aEnviar);
     _aEnviar.clear();
+    final geracao = _geracao;
     final gravado = await repositorio.gravarAjustesGlobais(_porChave(ids));
     final aceito = gravado is Sucesso;
+    if (geracao != _geracao) return aceito;
     if (!aceito) state = state.copiar(comErro: {...state.comErro, ...ids.keys});
     await _reler(ids.keys);
     return aceito;
@@ -108,7 +116,9 @@ class ControladorAjustes extends Notifier<EstadoAjustes> {
   /// Relê e solta os valores locais confirmados; o que voltou a ser mexido
   /// enquanto isso continua local, para o fader não pular.
   Future<void> _reler(Iterable<String> enviados) async {
+    final geracao = _geracao;
     final lido = await _repositorio?.lerAjustesGlobais();
+    if (geracao != _geracao) return;
     final locais = Map.of(state.locais);
     for (final id in enviados) {
       if (!_aEnviar.containsKey(id)) locais.remove(id);
@@ -121,6 +131,7 @@ class ControladorAjustes extends Notifier<EstadoAjustes> {
       };
 
   void _esquecer() {
+    _geracao++;
     _relogio?.cancel();
     _aEnviar.clear();
     state = const EstadoAjustes();

@@ -6,11 +6,6 @@ import '../../nucleo/modelo/bloco_preset.dart';
 import 'descricao_preset.dart';
 import 'sessao_mcp.dart';
 
-const _posicao = {
-  'row': {'type': 'integer', 'minimum': 1, 'maximum': 2, 'description': 'Block row (1 = main line, 2 = parallel).'},
-  'column': {'type': 'integer', 'minimum': 1, 'maximum': 12, 'description': 'Block column, 1-12.'},
-};
-
 class MudarParametro extends FerramentaMcp {
   const MudarParametro(this.sessao);
   final SessaoMcp sessao;
@@ -25,7 +20,7 @@ class MudarParametro extends FerramentaMcp {
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto({
-        ..._posicao,
+        ...SessaoMcp.esquemaPosicao(),
         'parameter': texto('Parameter symbol (preferred) or name, from get_current_preset.'),
         'value': {
           'type': ['number', 'string', 'boolean'],
@@ -96,7 +91,7 @@ class LigarDesligarBloco extends FerramentaMcp {
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto({
-        ..._posicao,
+        ...SessaoMcp.esquemaPosicao(),
         'enabled': {'type': 'boolean', 'description': 'true = on, false = bypassed.'},
       }, obrigatorias: const ['row', 'column', 'enabled']);
 

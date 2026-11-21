@@ -24,13 +24,21 @@ class SalvarPreset extends FerramentaMcp {
   @override
   Map<String, dynamic> get esquema => esquemaObjeto(const {});
 
+  /// A pessoa confirma o preset que estava aberto ao perguntar (IA4): se ele
+  /// mudou durante a pergunta (outra chamada da IA, outro slot aberto), gravar
+  /// agora poria no slot algo que ninguém confirmou, então nada é gravado.
   @override
   Future<ResultadoFerramenta> executar(Map<String, dynamic> argumentos) async {
     final documento = sessao.presetAberto();
+    final slot = sessao.estado.slot;
     final pedido = _ref.read(pedidoSalvarProvider.notifier);
-    final confirmado = await pedido.pedir(documento.nome, sessao.estado.slot?.rotulo, _ref.read(prazoConfirmarSalvarProvider));
+    final confirmado = await pedido.pedir(documento.nome, slot?.rotulo, _ref.read(prazoConfirmarSalvarProvider));
     if (confirmado == null) return ResultadoFerramenta.dados({'status': 'timeout'});
     if (!confirmado) return ResultadoFerramenta.dados({'status': 'declined'});
+    if (!identical(sessao.estado.atual, documento) || sessao.estado.slot != slot) {
+      return ResultadoFerramenta.recusa('The preset changed while the player was confirming; nothing was saved. '
+          'Call save_preset again so the player confirms the current version.');
+    }
     return _gravado(await sessao.editor.salvar());
   }
 
