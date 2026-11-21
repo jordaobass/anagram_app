@@ -314,5 +314,18 @@
   "axEnvelope": "Envelope",
   "axArpejador": "Arpeggiator",
   "axSaida": "Output",
-  "axOutros": "Other"
+  "axOutros": "Other",
+  "ppTemplates": "Templates",
+  "ppPersonalizado": "Custom",
+  "ppAplicado": "Template {nome} applied",
+  "ppEscolherTemplate": "Choose a template",
+  "ppDaDarkglass": "From Darkglass (the pedal's own)",
+  "ppDoApp": "From the app (our starting points)",
+  "ppAConfirmar": "Values not read from the pedal yet",
+  "mbTipoDrive": "Drive type",
+  "mbModoDrive": "Drive mode",
+  "mbSolo": "Solo",
+  "mbSoloLigado": "Only {banda} playing",
+  "mbSoloDesligado": "Solo off: all three bands play",
+  "mbOff": "OFF"
 }

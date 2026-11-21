@@ -54,6 +54,19 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
     if (atual != null && motivoNomeInvalido(nome) == null) await aplicarDocumento(atual.comNome(nome.trim()));
   }
 
+  /// Vários parâmetros do mesmo bloco numa alteração só (template, solo da
+  /// banda): cada um vale como o knob (bloco e cena ativa), mas a pedaleira
+  /// recebe um envio só, sem passar pelos estados intermediários.
+  Future<void> alterarParametros(PosicaoBloco posicao, Map<String, num> valores,
+      {Map<String, String> nomes = const {}}) async {
+    var documento = state.atual;
+    if (documento == null || documento.bloco(posicao) == null || valores.isEmpty) return;
+    for (final MapEntry(key: simbolo, value: valor) in valores.entries) {
+      documento = documento!.comParametro(posicao, simbolo, valor, nomeExibicao: nomes[simbolo]);
+    }
+    await aplicarDocumento(documento!);
+  }
+
   /// Gabinete: o IR do modelo/microfone/posição escolhido (ao vivo, desfazer).
   Future<void> escolherIrDoGabinete(PosicaoBloco posicao, String caminho) async {
     final atual = state.atual;

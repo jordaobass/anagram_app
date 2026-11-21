@@ -51,6 +51,30 @@ void main() {
     await capturar(tester, '$pasta/mb-03-desktop-ignissor-mutado.png');
   });
 
+  testWidgets('captura pp: lista de templates do Ignissor', (tester) async {
+    await _painelDo(tester, _computadorAlto, _ignissor);
+    await tester.tap(find.byKey(const ValueKey('abrir-templates')));
+    await tester.pumpAndSettle();
+    await capturar(tester, '$pasta/pp-01-desktop-templates-ignissor.png');
+  });
+
+  testWidgets('captura pp: Ignissor com o template Grave travado e o médio em solo', (tester) async {
+    final c = await _painelDo(tester, _computadorAlto, _ignissor);
+    final templates = lerTemplates().de(_ignissor);
+    final grave = templates.firstWhere((t) => t.id == 'app-grave-travado');
+    // o envio ao vivo da demonstração anda com o relógio do teste: sem await
+    unawaited(c.read(editorProvider.notifier).alterarParametros(const PosicaoBloco(1, 4), {...grave.valores!, 'lo_mute': 1, 'hi_mute': 1}));
+    await tester.pumpAndSettle();
+    await capturar(tester, '$pasta/pp-02-desktop-ignissor-grave-travado.png');
+  });
+
+  testWidgets('captura pp: templates do Entropia no celular', (tester) async {
+    await _painelDo(tester, _celular, _entropia);
+    await tester.tap(find.byKey(const ValueKey('abrir-templates')));
+    await tester.pumpAndSettle();
+    await capturar(tester, '$pasta/pp-90-celular-templates-entropia.png');
+  });
+
   testWidgets('captura mb: Ignissor no celular', (tester) async {
     await _painelDo(tester, _celular, _ignissor);
     await capturar(tester, '$pasta/mb-90-celular-ignissor.png');

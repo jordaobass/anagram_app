@@ -314,5 +314,18 @@
   "axEnvelope": "Envolvente",
   "axArpejador": "Arpegiador",
   "axSaida": "Salida",
-  "axOutros": "Otros"
+  "axOutros": "Otros",
+  "ppTemplates": "Templates",
+  "ppPersonalizado": "Personalizado",
+  "ppAplicado": "Template {nome} aplicado",
+  "ppEscolherTemplate": "Elegir template",
+  "ppDaDarkglass": "De Darkglass (los de la pedalera)",
+  "ppDoApp": "De la app (nuestros puntos de partida)",
+  "ppAConfirmar": "Valores aún no leídos de la pedalera",
+  "mbTipoDrive": "Drive type",
+  "mbModoDrive": "Drive mode",
+  "mbSolo": "Solo",
+  "mbSoloLigado": "Solo suena {banda}",
+  "mbSoloDesligado": "Solo apagado: suenan las tres bandas",
+  "mbOff": "OFF"
 }

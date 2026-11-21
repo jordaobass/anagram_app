@@ -6,6 +6,7 @@ import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/provedores.dart' show CaminhosAssets;
 import 'package:anagram_app/nucleo/catalogo/catalogo_blocos.dart';
 import 'package:anagram_app/nucleo/catalogo/explicacoes_parametros.dart';
+import 'package:anagram_app/nucleo/catalogo/templates_bloco.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
 
 Map<String, dynamic> lerExemplo(String nome) =>
@@ -14,6 +15,8 @@ Map<String, dynamic> lerExemplo(String nome) =>
 
 CatalogoBlocos lerCatalogo() =>
     CatalogoBlocos.doTexto(File('assets/referencia/blocks-factory.json').readAsStringSync());
+
+TemplatesBlocos lerTemplates() => TemplatesBlocos.doTexto(File(CaminhosAssets.templates).readAsStringSync());
 
 ExplicacoesParametros lerExplicacoes() =>
     ExplicacoesParametros.doTexto(File(CaminhosAssets.explicacoes).readAsStringSync());

@@ -59,11 +59,18 @@ abstract final class Cores {
 
   /// As três bandas do Ignissor e do Entropia, na faixa de frequência e no
   /// topo da coluna: matizes distantes entre si e do âmbar de ação.
-  static Color daBanda(BandaMultibanda banda) => switch (banda) {
-        BandaMultibanda.graves => const Color(0xFF5585EE),
-        BandaMultibanda.medios => const Color(0xFF34C3A0),
-        BandaMultibanda.agudos => const Color(0xFFD46BB3),
+  static Color daBanda(BandaMultibanda banda, [PaletaBandas paleta = PaletaBandas.ignissor]) => switch ((paleta, banda)) {
+        (PaletaBandas.ignissor, BandaMultibanda.graves) => const Color(0xFF5585EE),
+        (PaletaBandas.ignissor, BandaMultibanda.medios) => const Color(0xFF34C3A0),
+        (PaletaBandas.ignissor, BandaMultibanda.agudos) => const Color(0xFFD46BB3),
+        (PaletaBandas.entropia, BandaMultibanda.graves) => const Color(0xFF3FC9C0),
+        (PaletaBandas.entropia, BandaMultibanda.medios) => const Color(0xFF9B7BEA),
+        (PaletaBandas.entropia, BandaMultibanda.agudos) => const Color(0xFFF0A23C),
       };
+
+  /// As linhas da tela principal da pedaleira: Threshold em rosa, Level em verde.
+  static const linhaThreshold = Color(0xFFF26FA8);
+  static const linhaLevel = Color(0xFF7BD86A);
 }
 
 abstract final class Espacos {
@@ -139,14 +146,23 @@ abstract final class Medidas {
 
   /// Faixa de frequência do multibanda: uma raia por banda, a régua embaixo
   /// e a alça do corte larga o bastante para o dedo, com o traço fino no meio.
-  static const double alturaRaiaBanda = 32;
+  static const double alturaRaiaBanda = 44;
+
+  /// Alvo de toque do traço de Threshold/Level na faixa (o traço tem 2 px).
+  static const double alvoTracoGanho = 16;
+  static const double larguraDialogoTemplates = 440;
   static const double alturaReguaFrequencias = 18;
   static const double larguraAlcaFrequencia = 32;
   static const double tracoAlcaFrequencia = 3;
   static const double puxadorAlcaFrequencia = 10;
 
   /// Preenchimento da banda na faixa: tocando e mutada.
-  static const double opacidadeRaiaBanda = 0.55;
+  static const double opacidadeCurvaBanda = 0.28;
+  static const double tracoCurvaBanda = 2;
+
+  /// Gráfico pequeno da banda (curva do compressor, onda do drive).
+  static const double alturaGraficoBanda = 88;
+  static const double tracoGraficoBanda = 2;
   static const double opacidadeRaiaMuda = 0.12;
 
   /// Coluna de uma banda do multibanda: abaixo de três delas lado a lado,

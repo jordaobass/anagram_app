@@ -96,19 +96,80 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('should_find_and_pick_an_entropia_drive_type_by_searching_its_words', (tester) async {
+  testWidgets('should_pick_the_entropia_drive_by_type_and_mode_keeping_one_parameter', (tester) async {
     final c = await _comBloco(tester, 'urn:darkglass:entropia');
-    final abrir = find.byKey(const ValueKey('abrir-mid_drive_typemode'));
-    await _rolarAte(tester, abrir);
+    final tipo = find.byKey(const ValueKey('abrir-tipo-mid_drive_typemode'));
+    await _rolarAte(tester, tipo);
+    expect(find.text('VMT'), findsWidgets, reason: 'o padrão é VMT Midboost 2');
 
-    await tester.tap(abrir);
+    await tester.tap(tipo);
     await tester.pumpAndSettle();
-    await tester.enterText(find.byKey(const ValueKey('buscar-opcao')), 'turbo grunt');
+    await tester.tap(find.byKey(const ValueKey('tipo-mid_drive_typemode-B3K Turbo')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('opcao-mid_drive_typemode-1')), findsNothing, reason: '"B3K Flat" não casa');
-    await tester.tap(find.text('B3K Turbo Grunt'));
+    expect(_valor(c, 'mid_drive_typemode'), 21, reason: 'B3K Turbo não tem Midboost 2: fica o primeiro modo (Flat)');
+
+    await tester.tap(find.byKey(const ValueKey('abrir-modo-mid_drive_typemode')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('modo-mid_drive_typemode-Grunt')));
+    await tester.pumpAndSettle();
+    expect(_valor(c, 'mid_drive_typemode'), 22, reason: 'B3K Turbo Grunt');
+  });
+
+  testWidgets('should_apply_a_template_to_every_parameter_live_show_its_name_and_undo_all_of_it', (tester) async {
+    final c = await _comBloco(tester, 'urn:darkglass:ignissor');
+    expect(find.textContaining('Neutral Ground'), findsOneWidget, reason: 'o bloco novo está nos padrões');
+
+    await tester.tap(find.byKey(const ValueKey('abrir-templates')));
+    await tester.pumpAndSettle();
+    expect(tester.widget<ListTile>(find.byKey(const ValueKey('template-dg-studio-glue'))).enabled, isFalse,
+        reason: 'template oficial sem valores lidos não se aplica');
+    await tester.tap(find.byKey(const ValueKey('template-app-grave-travado')));
     await tester.pumpAndSettle();
 
-    expect(_valor(c, 'mid_drive_typemode'), 22);
+    expect([_valor(c, 'lo_threshold'), _valor(c, 'lo_ratio'), _valor(c, 'hi_comp_enabled')], [-36, 8, 0]);
+    expect(_tocando(c, 'lo_threshold'), -36, reason: 'soou ao vivo');
+    expect(find.textContaining('Grave travado'), findsWidgets);
+    expect(c.read(editorProvider).naoSalvo, isTrue);
+
+    final mudo = find.byKey(const ValueKey('mudo-mid_mute'));
+    await _rolarAte(tester, mudo);
+    await tester.tap(mudo);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Personalizado'), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('abrir-templates')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('template-app-paralelo')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('DESFAZER'));
+    await tester.pumpAndSettle();
+    expect([_valor(c, 'lo_threshold'), _valor(c, 'clean_level'), _valor(c, 'mid_mute')], [-36, -24, 1],
+        reason: 'o desfazer volta TODOS os valores de antes do template');
+  });
+
+  testWidgets('should_solo_a_band_by_muting_the_others_and_undo_it', (tester) async {
+    final c = await _comBloco(tester, 'urn:darkglass:ignissor');
+    final solo = find.byKey(const ValueKey('solo-medios'));
+    await _rolarAte(tester, solo);
+
+    await tester.tap(solo);
+    await tester.pumpAndSettle();
+    expect([_valor(c, 'lo_mute'), _valor(c, 'mid_mute'), _valor(c, 'hi_mute')], [1, 0, 1]);
+
+    await tester.tap(find.text('DESFAZER'));
+    await tester.pumpAndSettle();
+    expect([_valor(c, 'lo_mute'), _valor(c, 'mid_mute'), _valor(c, 'hi_mute')], [0, 0, 0]);
+  });
+
+  testWidgets('should_drag_a_band_threshold_line_on_the_frequency_view', (tester) async {
+    final c = await _comBloco(tester, 'urn:darkglass:ignissor');
+    final linha = find.byKey(const ValueKey('traco-lo_threshold'));
+    await _rolarAte(tester, linha);
+
+    await tester.drag(linha, const Offset(0, -30));
+    await tester.pumpAndSettle();
+
+    expect(_valor(c, 'lo_threshold'), greaterThan(-30));
+    expect(_valor(c, 'mid_threshold'), -30);
   });
 }

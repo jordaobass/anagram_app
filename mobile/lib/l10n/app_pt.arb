@@ -915,5 +915,32 @@
   "axOutros": "Outros",
   "@axOutros": {
     "description": "Título de seção do painel do Axioma Mono Synth"
-  }
+  },
+  "ppTemplates": "Templates",
+  "ppPersonalizado": "Personalizado",
+  "ppAplicado": "Template {nome} aplicado",
+  "@ppAplicado": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "ppEscolherTemplate": "Escolher template",
+  "ppDaDarkglass": "Da Darkglass (os da pedaleira)",
+  "ppDoApp": "Do app (pontos de partida nossos)",
+  "ppAConfirmar": "Valores ainda não lidos da pedaleira",
+  "mbTipoDrive": "Drive type",
+  "mbModoDrive": "Drive mode",
+  "mbSolo": "Solo",
+  "mbSoloLigado": "Só {banda} soando",
+  "@mbSoloLigado": {
+    "placeholders": {
+      "banda": {
+        "type": "String"
+      }
+    }
+  },
+  "mbSoloDesligado": "Solo desligado: as três bandas soam",
+  "mbOff": "OFF"
 }
