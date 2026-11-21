@@ -1690,6 +1690,28 @@
      "es": "Cuánto del intervalo de Max Shift se aplica ahora. Asígnalo a un pedal de expresión para doblar la nota con el pie."
     }
    }
+  },
+  {
+   "uris": [
+    "urn:darkglass:pheral91"
+   ],
+   "parametros": {
+    "speed": {
+     "pt": "Velocidade do giro do phaser: baixo = ondulação lenta e larga; alto = vibrato rápido.",
+     "en": "How fast the phaser sweeps: low = slow, wide swirl; high = fast, vibrato-like.",
+     "es": "Velocidad del barrido del phaser: bajo = ondulación lenta y amplia; alto = rápido, casi vibrato."
+    },
+    "mode": {
+     "pt": "Escolhe entre os dois modos do phaser (45 e 90). Os nomes lembram os phasers clássicos de 2 e 4 estágios, em que o 90 soa mais profundo; confira ouvindo, porque não foi medido na pedaleira.",
+     "en": "Chooses between the phaser's two modes (45 and 90). The names recall the classic 2- and 4-stage phasers, where 90 sounds deeper; check by ear, as this was not measured on the pedal.",
+     "es": "Elige entre los dos modos del phaser (45 y 90). Los nombres recuerdan a los phasers clásicos de 2 y 4 etapas, donde el 90 suena más profundo; compruébalo de oído, porque no se midió en la pedalera."
+    },
+    "dialogue": {
+     "pt": "Chave de caráter do Pheral 91. O efeito exato no som não foi conferido; ligue e desligue ouvindo para escolher.",
+     "en": "Character switch of the Pheral 91. Its exact effect on the sound was not checked; toggle it by ear to choose.",
+     "es": "Interruptor de carácter del Pheral 91. Su efecto exacto en el sonido no se comprobó; actívalo y desactívalo de oído para elegir."
+    }
+   }
   }
  ]
 }
