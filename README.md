@@ -1,14 +1,39 @@
 # Anagram App
 
 Editor de presets **gratuito e open source** para a pedaleira de baixo **Darkglass Anagram**:
-lista de presets por banco, cadeia de blocos, knobs grandes, cenas e edição ao vivo pelo USB.
-Um código Flutter só para macOS, Windows, Linux, Android e navegador (Chrome/Edge).
+lista de presets por banco, cadeia de blocos com a arte da pedaleira, knobs grandes, cenas e edição
+**ao vivo** pelo USB. Um código Flutter só para macOS, Windows, Linux, Android e navegador (Chrome/Edge).
 
-> **App não oficial, sem vínculo com a Darkglass Electronics.** Anagram é marca do fabricante.
+<p align="center">
+  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Baixar para Windows" src="https://img.shields.io/badge/Baixar-Windows%2010%2F11-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
+  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Baixar para macOS" src="https://img.shields.io/badge/Baixar-macOS%20(Apple%20Silicon)-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
+  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Última versão no GitHub" src="https://img.shields.io/github/v/release/jordaobass/anagram_app?style=for-the-badge&label=vers%C3%A3o"></a>
+</p>
+
+<p align="center">
+  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Editor com a cadeia de blocos e a linha paralela" src="docs/imagens/editor.webp" width="900"></a>
+</p>
+
+> **App não oficial, sem vínculo com a Darkglass Electronics.** Anagram é marca do fabricante; a arte
+> dos blocos é usada com autorização da Darkglass.
 
 Sem anúncios, sem telemetria e sem chamadas de rede: o app só conversa com a pedaleira pelo USB.
 
-Interface em **português, inglês e espanhol** (segue o idioma do sistema; dá para trocar na tela Sobre).
+Interface em **português, inglês e espanhol** (segue o idioma do sistema; dá para trocar em
+**Configurações**, na engrenagem).
+
+## O que dá para fazer
+
+| | |
+|---|---|
+| <img src="docs/imagens/ignissor.webp" width="420" alt="Ignissor"><br>**Compressor multibanda (Ignissor)** — curvas das três bandas, Threshold e Level arrastáveis, Solo e Mudo, curva de compressão por banda | <img src="docs/imagens/entropia.webp" width="420" alt="Entropia"><br>**Drive multibanda (Entropia)** — Drive Type e Drive Mode como na pedaleira, onda que satura com o drive |
+| <img src="docs/imagens/templates.webp" width="420" alt="Templates"><br>**Templates** — os da Darkglass e pontos de partida do app, aplicados ao vivo com desfazer | <img src="docs/imagens/axioma.webp" width="420" alt="Axioma"><br>**Axioma Mono Synth** — osciladores, filtro e envelope desenhados ao vivo |
+| <img src="docs/imagens/gabinete.webp" width="420" alt="Gabinete"><br>**Gabinetes** — foto do modelo, microfone e posição, com galeria e busca | <img src="docs/imagens/explicacao.webp" width="420" alt="Explicação do parâmetro"><br>**Explicação de cada controle** — pare o mouse no nome e veja o que ele faz com o som naquele pedal |
+
+<p align="center"><img src="docs/imagens/celular.webp" width="260" alt="No celular"><br><em>No celular (Android) a cadeia vira uma grade compacta.</em></p>
+
+Também: linha paralela com Split e Merge, mover/clonar/trocar presets e bancos, limpar preset,
+exportar e importar JSON, área Fábrica (36 presets da Darkglass, só leitura) e IA local via MCP.
 
 ## Como instalar
 
