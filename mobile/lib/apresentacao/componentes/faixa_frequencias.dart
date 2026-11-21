@@ -78,8 +78,16 @@ class _EstadoFaixaFrequencias extends State<FaixaFrequencias> {
           ),
       ];
 
+  /// Os parâmetros dos traços (Threshold e Level de cada banda).
+  Iterable<DefinicaoParametro> get _parametrosDosTracos => [
+        for (final b in widget.arranjo.bandas)
+          for (final simbolo in [b.limiar, b.nivel])
+            if (simbolo != null) ?widget.parametro(simbolo),
+      ];
+
   @override
   Widget build(BuildContext context) {
+    final escala = EscalaGanho.paraCobrir(_parametrosDosTracos);
     final altura = widget.arranjo.bandas.length * Medidas.alturaRaiaBanda + Medidas.alturaReguaFrequencias;
     return LayoutBuilder(builder: (context, restricoes) {
       final largura = restricoes.maxWidth;
@@ -89,9 +97,10 @@ class _EstadoFaixaFrequencias extends State<FaixaFrequencias> {
         child: Stack(clipBehavior: Clip.none, children: [
           Positioned.fill(
             child: CustomPaint(
-                painter: PintorFaixaFrequencias(raias: _raias, rotulos: _rotulosDaRegua(), alturaRaia: Medidas.alturaRaiaBanda)),
+                painter: PintorFaixaFrequencias(
+                    raias: _raias, rotulos: _rotulosDaRegua(), alturaRaia: Medidas.alturaRaiaBanda, escala: escala)),
           ),
-          ..._tracos(largura),
+          ..._tracos(largura, escala),
           for (final MapEntry(key: simbolo, value: bandas) in widget.arranjo.alcas.entries)
             if (widget.parametro(simbolo) case final p?) _alca(context, p, bandas, largura),
         ]),
@@ -101,7 +110,7 @@ class _EstadoFaixaFrequencias extends State<FaixaFrequencias> {
 
   /// Threshold e Level de cada banda, de um corte ao outro (banda com corte
   /// invertido não tem largura e fica sem traço).
-  List<Widget> _tracos(double largura) {
+  List<Widget> _tracos(double largura, EscalaGanho escala) {
     final altura = widget.arranjo.bandas.length * Medidas.alturaRaiaBanda;
     return [
       for (final b in widget.arranjo.bandas)
@@ -111,13 +120,14 @@ class _EstadoFaixaFrequencias extends State<FaixaFrequencias> {
               Positioned(
                 left: t.de * largura,
                 width: (t.ate - t.de) * largura,
-                top: topoDoTraco(widget.valor(t.parametro), altura),
+                top: topoDoTraco(widget.valor(t.parametro), altura, escala),
                 height: Medidas.alvoTracoGanho,
                 child: BarraGanho(
                   key: ValueKey('traco-${t.parametro.simbolo}'),
                   traco: t,
                   valor: widget.valor(t.parametro),
                   alturaFaixa: altura,
+                  escala: escala,
                   aoMudar: widget.aoMudar(t.parametro),
                 ),
               ),

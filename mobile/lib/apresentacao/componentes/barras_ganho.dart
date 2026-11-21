@@ -10,7 +10,7 @@ import '../tema/tokens.dart';
 import '../textos.dart';
 import 'botao_giratorio.dart' show AoMudarValor;
 import 'dialogo_valor.dart';
-import 'pintor_faixa_frequencias.dart' show alturaDoGanho, topoCurvaDb, baseCurvaDb;
+import 'pintor_faixa_frequencias.dart' show EscalaGanho;
 
 /// Um traço: o parâmetro, a cor e de onde até onde vai (fração da faixa).
 class TracoGanho {
@@ -25,11 +25,20 @@ class TracoGanho {
 }
 
 class BarraGanho extends StatefulWidget {
-  const BarraGanho({super.key, required this.traco, required this.valor, required this.alturaFaixa, required this.aoMudar});
+  const BarraGanho(
+      {super.key,
+      required this.traco,
+      required this.valor,
+      required this.alturaFaixa,
+      required this.aoMudar,
+      this.escala = const EscalaGanho()});
 
   final TracoGanho traco;
   final num valor;
   final double alturaFaixa;
+
+  /// A mesma escala da faixa desenhada: o traço anda junto com o ponteiro.
+  final EscalaGanho escala;
   final AoMudarValor aoMudar;
 
   @override
@@ -42,7 +51,7 @@ class _EstadoBarraGanho extends State<BarraGanho> {
   double get _db => _arrastando ?? widget.valor.toDouble();
 
   void _arrastar(double dy) {
-    final porPixel = (topoCurvaDb - baseCurvaDb) / widget.alturaFaixa;
+    final porPixel = widget.escala.faixaDb / widget.alturaFaixa;
     final novo = widget.traco.parametro.limitar(_db - dy * porPixel).toDouble();
     setState(() => _arrastando = novo);
     widget.aoMudar(novo, arrastando: true);
@@ -85,8 +94,8 @@ class _EstadoBarraGanho extends State<BarraGanho> {
 }
 
 /// Topo do alvo de toque de um traço na faixa, centrado na altura do valor.
-double topoDoTraco(num valorDb, double alturaFaixa) =>
-    alturaDoGanho(valorDb.toDouble()) * alturaFaixa - Medidas.alvoTracoGanho / 2;
+double topoDoTraco(num valorDb, double alturaFaixa, EscalaGanho escala) =>
+    escala.altura(valorDb.toDouble()) * alturaFaixa - Medidas.alvoTracoGanho / 2;
 
 class _PintorTraco extends CustomPainter {
   const _PintorTraco(this.cor);
