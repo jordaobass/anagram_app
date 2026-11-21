@@ -1,19 +1,22 @@
 // Parâmetros do bloco selecionado em knobs grandes, todos à vista: a tela
 // rola, então esconder parâmetro atrás de página só custava toques. O
-// paramétrico vem em bandas (ver arranjo_parametros.dart).
+// paramétrico vem em bandas (ver arranjo_parametros.dart) e os blocos de 3
+// bandas, no painel próprio (ver painel_multibanda.dart).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/provedores.dart';
+import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/arranjo_parametros.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
-import 'botao_giratorio.dart' show AoMudarValor;
 import 'cabecalho_bloco.dart';
 import 'cartao_banda.dart';
+import 'controle_no_painel.dart';
 import 'controle_parametro.dart';
+import 'painel_multibanda.dart';
 import 'seletor_gabinete.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
@@ -42,7 +45,10 @@ class PainelParametros extends ConsumerWidget {
       CabecalhoBloco(bloco: bloco, definicao: definicao, cena: cena),
       const SizedBox(height: Espacos.m),
       SeletorGabinete(bloco: bloco, definicao: definicao),
-      LayoutBuilder(builder: (context, restricoes) {
+      if (arranjoMultibanda(definicao.uri) case final arranjo?)
+        PainelMultibanda(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros)
+      else
+        LayoutBuilder(builder: (context, restricoes) {
         final grupos = agruparParametros(definicao, parametros);
         if (grupos.length > 1) {
           return Wrap(alignment: WrapAlignment.center, spacing: Espacos.m, runSpacing: Espacos.m, children: [
@@ -91,16 +97,11 @@ class PainelParametros extends ConsumerWidget {
       ligado: ligada,
       cor: Cores.daFamilia(definicao.familia),
       texto: ligada ? l.valorLigado : l.valorDesligado,
-      aoMudar: (novo) => _alterar(ref, chave, bloco)(novo ? 1 : 0, arrastando: false),
+      aoMudar: (novo) => ControleNoPainel.alterar(ref, chave, bloco)(novo ? 1 : 0, arrastando: false),
     );
   }
 
-  static num _valor(BlocoPreset bloco, DefinicaoParametro p, int cena) => bloco.valorNaCena(p.simbolo, cena) ?? p.padrao;
-
-  static AoMudarValor _alterar(WidgetRef ref, DefinicaoParametro p, BlocoPreset bloco) =>
-      (valor, {required arrastando}) => ref
-          .read(editorProvider.notifier)
-          .alterarParametro(p.simbolo, valor, arrastando: arrastando, nome: p.nome, posicao: bloco.posicao);
+  static num _valor(BlocoPreset bloco, DefinicaoParametro p, int cena) => ControleNoPainel.valorNaCena(bloco, p, cena);
 
   double get _vao => compacto ? Espacos.m : Espacos.xl;
 
@@ -112,34 +113,16 @@ class PainelParametros extends ConsumerWidget {
     return porControle.clamp(Medidas.knobCompacto, tamanhoKnob);
   }
 
-  Widget _controle(
-    BuildContext context,
-    WidgetRef ref,
-    ParametroNoPainel noPainel,
-    BlocoPreset bloco,
-    DefinicaoBloco definicao,
-    int cena,
-    double tamanho,
-  ) {
-    final p = noPainel.parametro;
-    return Column(mainAxisSize: MainAxisSize.min, children: [
-      ControleParametro(
-        key: ValueKey('param-${p.simbolo}'),
-        parametro: p,
+  Widget _controle(BuildContext context, WidgetRef ref, ParametroNoPainel noPainel, BlocoPreset bloco,
+          DefinicaoBloco definicao, int cena, double tamanho) =>
+      ControleNoPainel(
+        parametro: noPainel.parametro,
         rotulo: noPainel.rotulo,
-        forma: formaDoControle(definicao, p),
-        valor: _valor(bloco, p, cena),
-        cor: Cores.daFamilia(definicao.familia),
+        bloco: bloco,
+        definicao: definicao,
+        cena: cena,
         tamanho: tamanho,
-        aoMudar: _alterar(ref, p, bloco),
-      ),
-      // como o valor "atribuído ao snapshot" do HX: esta cena sobrepõe
-      if (bloco.sobreposicaoDaCena(p.simbolo, cena) != null)
-        // neutro: o âmbar é da ação e da seleção, não de marca informativa
-        Text(AppLocalizations.of(context).soNaCena(cena),
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.aluminioClaro)),
-    ]);
-  }
+      );
 }
 
 /// No lugar do painel quando nenhum bloco está selecionado (preset novo,

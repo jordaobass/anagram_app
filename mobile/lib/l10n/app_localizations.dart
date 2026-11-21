@@ -1509,6 +1509,78 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Shelf de agudos'**
   String get eqShelfAgudos;
+
+  /// Banda de graves do multibanda (Ignissor, Entropia)
+  ///
+  /// In pt, this message translates to:
+  /// **'Graves'**
+  String get mbGraves;
+
+  /// No description provided for @mbMedios.
+  ///
+  /// In pt, this message translates to:
+  /// **'Médios'**
+  String get mbMedios;
+
+  /// No description provided for @mbAgudos.
+  ///
+  /// In pt, this message translates to:
+  /// **'Agudos'**
+  String get mbAgudos;
+
+  /// Borda de baixo da faixa de áudio, que nenhum corte move
+  ///
+  /// In pt, this message translates to:
+  /// **'20 Hz'**
+  String get mbBordaGraves;
+
+  /// No description provided for @mbBordaAgudos.
+  ///
+  /// In pt, this message translates to:
+  /// **'20 kHz'**
+  String get mbBordaAgudos;
+
+  /// Botão que silencia uma banda do multibanda
+  ///
+  /// In pt, this message translates to:
+  /// **'Mudo'**
+  String get mbMudo;
+
+  /// No description provided for @mbCompLigada.
+  ///
+  /// In pt, this message translates to:
+  /// **'Comp ligado'**
+  String get mbCompLigada;
+
+  /// No description provided for @mbCompDesligada.
+  ///
+  /// In pt, this message translates to:
+  /// **'Comp desligado'**
+  String get mbCompDesligada;
+
+  /// No description provided for @mbSaida.
+  ///
+  /// In pt, this message translates to:
+  /// **'Saída'**
+  String get mbSaida;
+
+  /// No description provided for @mbOutros.
+  ///
+  /// In pt, this message translates to:
+  /// **'Outros'**
+  String get mbOutros;
+
+  /// Explica os níveis de saída do Ignissor
+  ///
+  /// In pt, this message translates to:
+  /// **'Comp Level é o volume das três bandas comprimidas. Clean Level mistura em paralelo o sinal seco, sem compressão: no mínimo (−24 dB) quase só se ouve o comprimido; subindo, volta o ataque natural da corda.'**
+  String get mbExplicaMisturaLimpa;
+
+  /// Dica do campo de busca na lista de opções longas (tipos de drive)
+  ///
+  /// In pt, this message translates to:
+  /// **'Buscar (ex.: turbo grunt)'**
+  String get mbBuscarOpcao;
 }
 
 class _AppLocalizationsDelegate

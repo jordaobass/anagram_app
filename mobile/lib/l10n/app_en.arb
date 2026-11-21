@@ -234,5 +234,17 @@
   "eqPassaBaixas": "Low-pass",
   "eqShelfGraves": "Low shelf",
   "eqBanda": "Band {numero}",
-  "eqShelfAgudos": "High shelf"
+  "eqShelfAgudos": "High shelf",
+  "mbGraves": "Low",
+  "mbMedios": "Mid",
+  "mbAgudos": "High",
+  "mbBordaGraves": "20 Hz",
+  "mbBordaAgudos": "20 kHz",
+  "mbMudo": "Mute",
+  "mbCompLigada": "Comp on",
+  "mbCompDesligada": "Comp off",
+  "mbSaida": "Output",
+  "mbOutros": "Others",
+  "mbExplicaMisturaLimpa": "Comp Level is the volume of the three compressed bands. Clean Level blends the dry, uncompressed signal in parallel: at the minimum (−24 dB) you hear almost only the compressed sound; turning it up brings back the natural attack of the string.",
+  "mbBuscarOpcao": "Search (e.g. turbo grunt)"
 }
