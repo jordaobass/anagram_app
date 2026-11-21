@@ -19,15 +19,25 @@ class FileiraBandasEq extends ConsumerWidget {
   final ModoEq modo;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => LayoutBuilder(builder: (context, restricoes) {
-        final porLinha = restricoes.maxWidth < Medidas.larguraEqEmLinha ? 3 : bandasEqGlobal.length;
+  Widget build(BuildContext context, WidgetRef ref) =>
+      LinhaDeBandas(filhos: [for (final banda in bandasEqGlobal) _BandaEq(banda: banda, modo: modo)]);
+}
+
+/// As bandas de um equalizador lado a lado, todas da mesma largura; abaixo de
+/// [Medidas.larguraEqEmLinha] viram linhas de 3. Serve ao Global EQ e ao
+/// bloco Parametric EQ.
+class LinhaDeBandas extends StatelessWidget {
+  const LinhaDeBandas({super.key, required this.filhos});
+
+  final List<Widget> filhos;
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(builder: (context, restricoes) {
+        final porLinha = restricoes.maxWidth < Medidas.larguraEqEmLinha ? 3 : filhos.length;
         final largura = restricoes.maxWidth / porLinha;
         return Wrap(
           runSpacing: Espacos.m,
-          children: [
-            for (final banda in bandasEqGlobal)
-              SizedBox(width: largura, child: Center(child: _BandaEq(banda: banda, modo: modo))),
-          ],
+          children: [for (final f in filhos) SizedBox(width: largura, child: Center(child: f))],
         );
       });
 }

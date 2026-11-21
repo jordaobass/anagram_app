@@ -19,9 +19,13 @@ class ControleParametro extends StatelessWidget {
     required this.aoMudar,
     this.rotulo,
     this.forma = FormaControle.knob,
+    this.corChip,
   });
 
   static const maximoSegmentos = 3;
+
+  /// O valor num chip dessa cor (o modo do equalizador), como na pedaleira.
+  final Color? corChip;
 
   /// Nome curto dentro de um grupo (ver [BotaoGiratorio.rotulo]).
   final String? rotulo;
@@ -40,7 +44,14 @@ class ControleParametro extends StatelessWidget {
       return _comTitulo(context, _escolha(parametro.opcoes));
     }
     return BotaoGiratorio(
-        parametro: parametro, valor: valor, cor: cor, tamanho: tamanho, aoMudar: aoMudar, rotulo: rotulo, forma: forma);
+        parametro: parametro,
+        valor: valor,
+        cor: cor,
+        tamanho: tamanho,
+        aoMudar: aoMudar,
+        rotulo: rotulo,
+        forma: forma,
+        corChipValor: corChip);
   }
 
   Widget _comTitulo(BuildContext context, Widget controle) => SizedBox(

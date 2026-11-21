@@ -8,8 +8,9 @@ import '../catalogo/definicao_bloco.dart';
 
 enum GrupoAjuste { saidas, globalEq, entrada }
 
-/// Banda do Global EQ, para o desenho da curva (DECISOES PD4).
-enum TipoBandaEq { lowShelf, peak, highShelf }
+/// Banda do Global EQ (e do Parametric EQ, o mesmo DSP), para o desenho da
+/// curva (DECISOES PD4). Os cortes só existem no bloco Parametric EQ.
+enum TipoBandaEq { lowShelf, peak, highShelf, highPass, lowPass }
 
 /// O que os knobs mexem no Global EQ, como o seletor da tela da Anagram.
 enum ModoEq { gain, freq, width }

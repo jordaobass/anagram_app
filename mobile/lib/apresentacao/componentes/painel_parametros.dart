@@ -1,7 +1,7 @@
 // Parâmetros do bloco selecionado em knobs grandes, todos à vista: a tela
 // rola, então esconder parâmetro atrás de página só custava toques. O
-// paramétrico vem em bandas (ver arranjo_parametros.dart) e os blocos de 3
-// bandas, no painel próprio (ver painel_multibanda.dart).
+// Parametric EQ tem a tela do Global EQ (ver painel_eq_parametrico.dart) e
+// os blocos de 3 bandas, o painel próprio (ver painel_multibanda.dart).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,15 +10,15 @@ import '../../aplicacao/provedores.dart';
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/arranjo_parametros.dart';
 import '../../nucleo/catalogo/arranjo_sintetizador.dart';
+import '../../nucleo/catalogo/curva_eq_parametrico.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/explicacoes_parametros.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'cabecalho_bloco.dart';
-import 'cartao_banda.dart';
 import 'controle_no_painel.dart';
-import 'controle_parametro.dart';
 import 'explicacao_parametro.dart';
+import 'painel_eq_parametrico.dart';
 import 'painel_multibanda.dart';
 import 'painel_sintetizador.dart';
 import 'seletor_gabinete.dart';
@@ -56,6 +56,8 @@ class PainelParametros extends ConsumerWidget {
         SeletorGabinete(bloco: bloco, definicao: definicao),
         if (arranjoMultibanda(definicao.uri) case final arranjo?)
           PainelMultibanda(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros)
+        else if (ehEqParametrico(definicao.uri))
+          PainelEqParametrico(bloco: bloco, definicao: definicao, cena: cena, parametros: parametros)
         else if (arranjoSintetizador(definicao.uri) case final arranjo?)
           PainelSintetizador(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros)
         else
@@ -68,13 +70,8 @@ class PainelParametros extends ConsumerWidget {
 
   Widget _controles(BuildContext context, WidgetRef ref, double largura, List<DefinicaoParametro> parametros,
       BlocoPreset bloco, DefinicaoBloco definicao, int cena) {
-    final grupos = agruparParametros(definicao, parametros);
-    if (grupos.length > 1) {
-      return Wrap(alignment: WrapAlignment.center, spacing: Espacos.m, runSpacing: Espacos.m, children: [
-        for (final g in grupos) _grupo(context, ref, g, bloco, definicao, cena),
-      ]);
-    }
-    final tamanho = _tamanhoQueCabe(largura, parametros.length);
+    final controles = agruparParametros(definicao, parametros).expand((g) => g.parametros).toList();
+    final tamanho = _tamanhoQueCabe(largura, controles.length);
     return Wrap(
       alignment: compacto ? WrapAlignment.spaceEvenly : WrapAlignment.center,
       spacing: _vao,
@@ -82,44 +79,10 @@ class PainelParametros extends ConsumerWidget {
       children: [
         if (parametros.isEmpty)
           Text(AppLocalizations.of(context).semParametros, style: Theme.of(context).textTheme.bodyMedium),
-        for (final p in grupos.single.parametros) _controle(context, ref, p, bloco, definicao, cena, tamanho),
+        for (final p in controles) _controle(context, ref, p, bloco, definicao, cena, tamanho),
       ],
     );
   }
-
-  /// Uma banda do paramétrico: título com a chave dela e os knobs de nome
-  /// curto; desligada, os knobs ficam apagados mas ainda se ajustam.
-  Widget _grupo(BuildContext context, WidgetRef ref, GrupoParametros grupo, BlocoPreset bloco,
-      DefinicaoBloco definicao, int cena) {
-    final chave = grupo.chave;
-    final ligada = chave == null || DefinicaoParametro.estaLigado(_valor(bloco, chave, cena));
-    return CartaoBanda(
-      key: ValueKey('banda-${grupo.banda?.name ?? 'outros'}'),
-      titulo: grupo.banda == null ? null : AppLocalizations.of(context).nomeDaBanda(grupo.banda!),
-      chave: chave == null ? null : _chaveDaBanda(context, ref, chave, bloco, definicao, cena),
-      ligada: ligada,
-      controles: [
-        for (final p in grupo.parametros) _controle(context, ref, p, bloco, definicao, cena, Medidas.knobCompacto),
-      ],
-    );
-  }
-
-  Widget _chaveDaBanda(BuildContext context, WidgetRef ref, DefinicaoParametro chave, BlocoPreset bloco,
-      DefinicaoBloco definicao, int cena) {
-    final ligada = DefinicaoParametro.estaLigado(_valor(bloco, chave, cena));
-    final l = AppLocalizations.of(context);
-    return ChaveParametro(
-      chave: ValueKey('chave-${chave.simbolo}'),
-      nome: chave.nome,
-      parametro: chave,
-      ligado: ligada,
-      cor: Cores.daFamilia(definicao.familia),
-      texto: ligada ? l.valorLigado : l.valorDesligado,
-      aoMudar: (novo) => ControleNoPainel.alterar(ref, chave, bloco)(novo ? 1 : 0, arrastando: false),
-    );
-  }
-
-  static num _valor(BlocoPreset bloco, DefinicaoParametro p, int cena) => ControleNoPainel.valorNaCena(bloco, p, cena);
 
   double get _vao => compacto ? Espacos.m : Espacos.xl;
 

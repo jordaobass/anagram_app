@@ -25,7 +25,11 @@ class ControleNoPainel extends ConsumerWidget {
     this.rotulo,
     this.forma,
     this.seletor = false,
+    this.corChip,
   });
+
+  /// O valor num chip dessa cor (modo do equalizador); nulo, o número comum.
+  final Color? corChip;
 
   final DefinicaoParametro parametro;
   final BlocoPreset bloco;
@@ -71,6 +75,7 @@ class ControleNoPainel extends ConsumerWidget {
           parametro: p,
           rotulo: rotulo,
           forma: forma ?? formaDoControle(definicao, p),
+          corChip: corChip,
           valor: valor,
           cor: cor,
           tamanho: tamanho,
