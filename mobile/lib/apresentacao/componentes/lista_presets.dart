@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../aplicacao/estado/controlador_biblioteca.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../nucleo/modelo/slot_preset.dart';
+import '../textos.dart';
 import '../tema/tokens.dart';
 import 'dialogo_confirmar.dart';
 import 'faixa_escolher_destino.dart';
@@ -45,6 +46,9 @@ class ListaPresets extends ConsumerWidget {
     return Column(children: [
       if (escolhendo) const FaixaEscolherDestino(),
       const SeletorArea(),
+      // falhas da lista (listar, tornar a área ativa) não podem ficar mudas:
+      // a lista vazia pareceria uma área sem presets
+      if (biblioteca.erro case final erro?) _FaixaErro(AppLocalizations.of(context).aviso(erro)),
       Expanded(child: carregandoLista ? const Center(child: CircularProgressIndicator()) : lista),
     ]);
   }
@@ -74,6 +78,21 @@ class ListaPresets extends ConsumerWidget {
       rotuloConfirmar: l.largar,
     );
   }
+}
+
+class _FaixaErro extends StatelessWidget {
+  const _FaixaErro(this.texto);
+
+  final String texto;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        key: const ValueKey('erro-lista'),
+        width: double.infinity,
+        color: Cores.painelElevado,
+        padding: const EdgeInsets.symmetric(horizontal: Espacos.m, vertical: Espacos.s),
+        child: Text(texto, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.erro)),
+      );
 }
 
 class _Banco extends StatelessWidget {
