@@ -139,7 +139,7 @@ class _ItemEfeito extends StatelessWidget {
   Widget build(BuildContext context) => ListTile(
         key: ValueKey('efeito-${definicao.uri}'),
         contentPadding: EdgeInsets.zero,
-        leading: ArteBlocoWidget(definicao: definicao, tamanho: Medidas.alvoMinimo),
+        leading: ArteBlocoWidget(definicao: definicao, tamanho: Medidas.arteBiblioteca),
         title: Text(AppLocalizations.of(context).nomeDoBloco(definicao)),
         subtitle: Text(AppLocalizations.of(context).familia(definicao.familia)),
         trailing: Container(width: Medidas.fitaCategoria, height: Medidas.alvoMinimo, color: Cores.daFamilia(definicao.familia)),

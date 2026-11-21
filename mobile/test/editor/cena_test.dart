@@ -19,14 +19,14 @@ void main() {
     expect(container.read(editorProvider).atual!.cenaAtiva, 2, reason: 'a cena vai junto ao salvar');
   });
 
-  test('should_keep_base_and_other_scenes_when_bypassing_in_the_active_scene', () {
+  test('should_switch_the_block_off_in_the_active_scene_and_keep_the_other_scenes_when_bypassing', () {
     const posicao = PosicaoBloco(1, 1);
     final base = DocumentoPreset.doJson(lerPresetsDemonstracao()[3]!);
     final semCenas = DocumentoPreset.doJson(lerExemplo('13'));
 
     final na2 = base.comCena(2).comBlocoHabilitado(posicao, false);
     final bloco = na2.bloco(posicao)!;
-    expect(bloco.habilitado, isTrue, reason: 'base intocada');
+    expect(bloco.habilitado, isFalse, reason: 'o bloco acompanha a cena ativa: é o que a pedaleira toca');
     expect([bloco.habilitadoNaCena(1), bloco.habilitadoNaCena(2), bloco.habilitadoNaCena(3)], [true, false, true]);
     expect(bloco.bypassSoNaCena(2), isTrue);
 

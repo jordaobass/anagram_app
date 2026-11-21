@@ -13,11 +13,15 @@ import '../tema/tokens.dart';
 import 'pintor_arte_familia.dart';
 
 class ArteBlocoWidget extends ConsumerWidget {
-  const ArteBlocoWidget({super.key, required this.definicao, required this.tamanho, this.ligado = true});
+  const ArteBlocoWidget(
+      {super.key, required this.definicao, required this.tamanho, this.ligado = true, this.arquivoIr});
 
   final DefinicaoBloco definicao;
   final double tamanho;
   final bool ligado;
+
+  /// Gabinete: o IR escolhido no bloco decide a foto do modelo (Darkglass Suite).
+  final String? arquivoIr;
 
   static const _cinza = ColorFilter.matrix([
     0.33, 0.33, 0.33, 0, 0, //
@@ -29,7 +33,7 @@ class ArteBlocoWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final indice = ref.watch(indiceMiniaturasProvider).value;
-    final arte = indice?.arteDe(definicao) ?? ArteDaFamilia(definicao.familia);
+    final arte = indice?.arteDe(definicao, arquivoIr: arquivoIr) ?? ArteDaFamilia(definicao.familia);
     if (ligado) return SizedBox.square(dimension: tamanho, child: _desenho(arte));
     return SizedBox.square(
       dimension: tamanho,

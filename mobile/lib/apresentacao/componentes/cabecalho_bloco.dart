@@ -45,7 +45,8 @@ class CabecalhoBloco extends ConsumerWidget {
       ToqueDuplo(
         key: const ValueKey('icone-pedal-painel'),
         aoTocarDuas: () => ref.read(editorProvider.notifier).alternarBypass(bloco.posicao),
-        child: ArteBlocoWidget(definicao: definicao, tamanho: Medidas.alvoMinimo, ligado: ligado),
+        child: ArteBlocoWidget(
+            definicao: definicao, tamanho: Medidas.artePainelBloco, ligado: ligado, arquivoIr: bloco.arquivoDeIr),
       ),
       const SizedBox(width: Espacos.m),
       Expanded(

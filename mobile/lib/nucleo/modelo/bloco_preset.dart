@@ -33,6 +33,15 @@ class BlocoPreset {
   String get uri => textoOuNulo(bruto['uri']) ?? '';
   bool get habilitado => bruto['enabled'] != false;
 
+  /// O arquivo escolhido nos blocos que carregam um (IR do gabinete, modelo
+  /// neural): a pedaleira grava o caminho em `properties`, na entrada "1".
+  /// Decide a foto do gabinete, como no Darkglass Suite.
+  String? get arquivoDeIr {
+    final propriedade = mapaOuVazio(bruto['properties'])['1'];
+    final valor = propriedade is Map<String, dynamic> ? textoOuNulo(propriedade['value']) : null;
+    return valor == null || valor.isEmpty ? null : valor;
+  }
+
   Map<String, dynamic> get _parametros => mapaOuVazio(bruto['parameters']);
   Map<String, dynamic> get _cenas => mapaOuVazio(bruto['scenes']);
 
@@ -48,7 +57,10 @@ class BlocoPreset {
   /// Valor que soa na cena: a sobreposição da cena, senão o valor base.
   /// `null` quando o preset não guarda o parâmetro (vale o padrão do bloco).
   /// A cena liga/desliga o bloco diferente da base (selo "SÓ NA CENA").
-  bool bypassSoNaCena(int cena) => habilitadoNaCena(cena) != habilitado;
+  /// O liga/desliga desta cena difere de outra cena do preset (o bloco em si
+  /// sempre acompanha a cena ativa, então a comparação é entre as cenas).
+  bool bypassSoNaCena(int cena) =>
+      [1, 2, 3].any((outra) => outra != cena && habilitadoNaCena(outra) != habilitadoNaCena(cena));
 
   num? valorNaCena(String simbolo, int cena) =>
       sobreposicaoDaCena(simbolo, cena) ?? valorBase(simbolo);

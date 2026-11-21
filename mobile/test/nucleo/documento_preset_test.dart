@@ -24,14 +24,14 @@ void main() {
     expect(editado, original, reason: 'nada além do valor pode mudar');
   });
 
-  test('should_write_into_the_active_scene_when_it_overrides_the_parameter', () {
+  test('should_write_into_the_active_scene_and_the_block_when_the_scene_overrides_the_parameter', () {
     final demo = lerPresetsDemonstracao()[4]!;
     const posicao = PosicaoBloco(1, 3);
     final na3 = DocumentoPreset.doJson(demo).comCena(3).comParametro(posicao, 'high_drive', 2);
 
     final bloco = na3.bloco(posicao)!;
     expect(bloco.valorNaCena('high_drive', 3), 2);
-    expect(bloco.valorBase('high_drive'), 5, reason: 'base intocada');
+    expect(bloco.valorBase('high_drive'), 2, reason: 'o bloco acompanha a cena ativa: é o que a pedaleira toca');
     expect(na3.comCena(1).comParametro(posicao, 'high_drive', 7).bloco(posicao)!.valorNaCena('high_drive', 3), 2);
   });
 

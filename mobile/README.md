@@ -94,9 +94,16 @@ vão para o público.
 
 ```bash
 git clone git@github.com:jordaobass/anagram_app.git && cd anagram_app/mobile
-python3 ferramentas/baixar_arte_pedaleira.py        # 101 blocos, 202 imagens (ligado e desligado)
+# gabinetes (foto do modelo de cada IR) e blocos neurais vêm do Darkglass Suite instalado:
+#   <Suite> = …\WindowsApps\DarkglassElectronics.DarkglassSuite_<versão>\app\resources (Windows)
+npx @electron/asar extract "<Suite>/app.asar" /tmp/suite-extraido
+python3 ferramentas/baixar_arte_pedaleira.py --suite "<Suite>/assets" \
+    --renderer /tmp/suite-extraido/dist/renderer.prod.js
 ferramentas/verificar_release.sh && flutter build <plataforma> --release
 ```
+
+Sem `--suite`, a ferramenta traz só a arte dos efeitos (101 blocos, 202 imagens) e os gabinetes
+ficam com a arte própria do app.
 
 O script falha (código 1) sem a arte da pedaleira, com menos de 100 imagens dela ou com qualquer outro
 arquivo na pasta. No macOS com Xcode 27, o release só compila para arm64: acrescente `ARCHS = arm64` ao
