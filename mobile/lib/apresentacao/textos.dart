@@ -111,9 +111,11 @@ extension TextosDoApp on AppLocalizations {
         MotivoIndisponivel.semUsb => indisponivelSemUsb,
       };
 
+  /// O detalhe técnico da recusa (o erro do JSON) fica só no log, como nos
+  /// erros do protocolo: a tela diz o tipo de problema, nos três idiomas.
   String importacaoRecusada(ImportacaoRecusada recusa) => switch (recusa.motivo) {
         MotivoImportacao.arquivoIlegivel => importacaoIlegivel,
-        MotivoImportacao.naoEhPreset => importacaoNaoEhPreset(recusa.detalhe),
+        MotivoImportacao.naoEhPreset => importacaoNaoEhPreset,
       };
 
   String nomeInvalido(NomeInvalido motivo) => switch (motivo) {

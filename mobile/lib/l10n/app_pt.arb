@@ -102,14 +102,7 @@
   "indisponivelNavegador": "Este navegador não tem WebHID. Use Chrome ou Edge no computador, ou o modo demonstração.",
   "indisponivelSemUsb": "Esta plataforma não tem acesso USB à pedaleira.",
   "importacaoIlegivel": "Não foi possível ler o arquivo.",
-  "importacaoNaoEhPreset": "Arquivo não é um preset da Anagram: {detalhe}",
-  "@importacaoNaoEhPreset": {
-    "placeholders": {
-      "detalhe": {
-        "type": "String"
-      }
-    }
-  },
+  "importacaoNaoEhPreset": "Este arquivo não é um preset da Anagram.",
   "exportacaoFalhou": "Não foi possível gravar o arquivo.",
   "nomeVazio": "O nome não pode ficar vazio.",
   "nomeComMarcador": "O nome não pode conter \"{marcador}\".",

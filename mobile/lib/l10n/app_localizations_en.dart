@@ -154,9 +154,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get importacaoIlegivel => 'Couldn\'t read the file.';
 
   @override
-  String importacaoNaoEhPreset(String detalhe) {
-    return 'This file is not an Anagram preset.';
-  }
+  String get importacaoNaoEhPreset => 'This file is not an Anagram preset.';
 
   @override
   String get exportacaoFalhou => 'Couldn\'t save the file.';

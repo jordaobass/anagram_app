@@ -331,8 +331,8 @@ abstract class AppLocalizations {
   /// No description provided for @importacaoNaoEhPreset.
   ///
   /// In pt, this message translates to:
-  /// **'Arquivo não é um preset da Anagram: {detalhe}'**
-  String importacaoNaoEhPreset(String detalhe);
+  /// **'Este arquivo não é um preset da Anagram.'**
+  String get importacaoNaoEhPreset;
 
   /// No description provided for @exportacaoFalhou.
   ///
