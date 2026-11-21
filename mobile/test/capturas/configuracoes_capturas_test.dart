@@ -40,4 +40,31 @@ void main() {
     await _abrirComMcp(tester, const Tamanho('celular-retrato', 390, 844, 2), disponivel: false);
     await capturar(tester, '$pasta/mcp-03-celular-configuracoes.png');
   });
+
+  testWidgets('captura desktop: ajustes globais da pedaleira (saídas)', (tester) async {
+    await _abrirPedaleira(tester, desktopWindows);
+    await capturar(tester, '$pasta/pd-01-desktop-saidas.png');
+  });
+
+  testWidgets('captura desktop: ajustes globais da pedaleira (Global EQ e entrada)', (tester) async {
+    await _abrirPedaleira(tester, desktopWindows);
+    await tester.ensureVisible(find.byKey(const ValueKey('cartao-placa')));
+    await tester.pumpAndSettle();
+    await capturar(tester, '$pasta/pd-02-desktop-global-eq.png');
+  });
+
+  testWidgets('captura celular: ajustes globais da pedaleira', (tester) async {
+    await _abrirPedaleira(tester, const Tamanho('celular-retrato', 390, 844, 2));
+    await tester.ensureVisible(find.byKey(const ValueKey('curva-global-eq')));
+    await tester.pumpAndSettle();
+    await capturar(tester, '$pasta/pd-90-celular-pedaleira.png');
+  });
+}
+
+/// Configurações conectado à demonstração: a seção "Pedaleira" aparece.
+Future<void> _abrirPedaleira(WidgetTester tester, Tamanho t) async {
+  debugDefaultTargetPlatformOverride = t.plataforma;
+  await abrirDemonstracao(tester, tamanho: Size(t.largura, t.altura), densidade: t.densidade);
+  await tester.tap(find.byKey(const ValueKey('botao-configuracoes')));
+  await tester.pumpAndSettle();
 }
