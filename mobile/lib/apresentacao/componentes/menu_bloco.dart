@@ -1,19 +1,18 @@
 // Menu de uma casa: adicionar efeito (vazia), copiar, colar, ligar/desligar,
-// dividir o sinal depois do bloco (linha 1, sem linha paralela), mover e remover. Abre pelo botão direito e pelo botão "mais ações" do painel;
+// mover e remover. Abre pelo botão direito e pelo botão "mais ações" do painel;
 // o "mover" serve a quem não arrasta (teclado, leitor de tela, toque difícil).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../nucleo/catalogo/biblioteca_blocos.dart';
-import '../../nucleo/catalogo/linha_paralela.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
-import 'acoes_linha_paralela.dart';
+import 'acoes_roteamento.dart';
 import 'biblioteca_efeitos.dart';
 import '../../l10n/app_localizations.dart';
 
-enum _AcaoMenu { adicionar, copiar, colar, bypass, dividir, esquerda, direita, outraLinha, remover }
+enum _AcaoMenu { adicionar, copiar, colar, bypass, esquerda, direita, outraLinha, remover }
 
 Future<void> abrirMenuBloco(BuildContext context, WidgetRef ref, PosicaoBloco posicao, Offset ponto) async {
   final estado = ref.read(editorProvider);
@@ -32,8 +31,8 @@ List<PopupMenuEntry<_AcaoMenu>> _itens(AppLocalizations l, DocumentoPreset docum
     {required bool temCopia}) {
   final bloco = documento.bloco(posicao);
   final temBloco = bloco != null;
-  // split e merge marcam onde a linha paralela sai e volta: removê-los, colar
-  // por cima ou duplicá-los quebraria o roteamento sem a pessoa perceber
+  // split e merge marcam onde a linha paralela sai e volta: colar por cima
+  // ou duplicá-los quebraria o roteamento sem a pessoa perceber
   final roteamento = bloco != null && ehBlocoDeRoteamento(bloco.uri);
   PopupMenuItem<_AcaoMenu> item(_AcaoMenu acao, String rotulo, {bool ativo = true}) =>
       PopupMenuItem(value: acao, enabled: ativo, child: Text(rotulo));
@@ -43,9 +42,6 @@ List<PopupMenuEntry<_AcaoMenu>> _itens(AppLocalizations l, DocumentoPreset docum
     item(_AcaoMenu.copiar, l.copiarBloco, ativo: temBloco && !roteamento),
     item(_AcaoMenu.colar, l.colarAqui, ativo: temCopia && !roteamento),
     item(_AcaoMenu.bypass, l.ligarDesligar, ativo: temBloco),
-    if (temBloco && !roteamento && posicao.linha == 1 && !temLinhaParalela(documento))
-      PopupMenuItem(
-          key: const ValueKey('menu-dividir-sinal'), value: _AcaoMenu.dividir, child: Text(l.smDividirDepois)),
     if (temBloco) ...[
       const PopupMenuDivider(),
       item(_AcaoMenu.esquerda, l.moverEsquerda, ativo: podeIr(_AcaoMenu.esquerda)),
@@ -53,7 +49,7 @@ List<PopupMenuEntry<_AcaoMenu>> _itens(AppLocalizations l, DocumentoPreset docum
       item(_AcaoMenu.outraLinha, l.moverParaLinha(posicao.linha == 1 ? 2 : 1), ativo: podeIr(_AcaoMenu.outraLinha)),
       const PopupMenuDivider(),
     ],
-    item(_AcaoMenu.remover, l.removerBloco, ativo: temBloco && !roteamento),
+    item(_AcaoMenu.remover, l.removerBloco, ativo: temBloco),
   ];
 }
 
@@ -80,11 +76,9 @@ Future<void> _executar(BuildContext context, WidgetRef ref, _AcaoMenu acao, Posi
       await controlador.colarBloco(posicao);
     case _AcaoMenu.bypass:
       await controlador.alternarBypass(posicao);
-    case _AcaoMenu.dividir:
-      await criarLinhaParalelaComAviso(context, ref, depoisDe: posicao.casa);
     case _AcaoMenu.esquerda || _AcaoMenu.direita || _AcaoMenu.outraLinha:
       await controlador.moverBloco(posicao, _destino(posicao, acao));
     case _AcaoMenu.remover:
-      await controlador.removerBloco(posicao);
+      await removerBlocoComAviso(context, ref, posicao);
   }
 }

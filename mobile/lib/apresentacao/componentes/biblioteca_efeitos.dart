@@ -1,7 +1,8 @@
 // Biblioteca de efeitos: abre ao tocar no "+" de uma casa vazia. Os blocos do
 // catálogo vêm por família (drive, modulação, delay…), com a arte de cada um,
-// busca por nome e filtro por família. No topo dos utilitários fica o par
-// Split + Merge: escolhê-lo abre a linha paralela a partir desta casa.
+// busca por nome e filtro por família. Split e Merge estão nos utilitários
+// como qualquer efeito; o que não pode entrar nesta casa aparece apagado,
+// com o motivo, em vez de sumir.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,7 +14,7 @@ import '../../nucleo/catalogo/familia_bloco.dart';
 import '../../nucleo/catalogo/linha_paralela.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
-import 'acoes_linha_paralela.dart';
+import 'acoes_roteamento.dart';
 import 'arte_bloco.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
@@ -25,12 +26,10 @@ Future<void> adicionarEfeitoNaCasa(BuildContext context, WidgetRef ref, PosicaoB
     builder: (_) => _BibliotecaEfeitos(posicao: posicao),
   );
   if (escolhido == null || !context.mounted) return;
-  if (escolhido.uri == uriSplit) {
-    // o Split vai nesta casa (se for da linha 1) e o Merge na livre seguinte
-    await criarLinhaParalelaComAviso(context, ref, depoisDe: posicao.linha == 1 ? posicao.casa - 1 : null);
-    return;
-  }
-  await ref.read(editorProvider.notifier).adicionarBloco(posicao, escolhido);
+  final mensageiro = ScaffoldMessenger.of(context);
+  final l = AppLocalizations.of(context);
+  final recusa = await ref.read(editorProvider.notifier).adicionarBloco(posicao, escolhido);
+  if (recusa != null) mensageiro.showSnackBar(SnackBar(content: Text(textoDaRecusa(l, recusa))));
 }
 
 class _BibliotecaEfeitos extends ConsumerStatefulWidget {
@@ -50,7 +49,7 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
   Widget build(BuildContext context) {
     final catalogo = ref.watch(catalogoProvider).value;
     final grupos =
-        catalogo == null ? const <GrupoBiblioteca>[] : bibliotecaComLinhaParalela(catalogo, busca: _busca, familia: _familia);
+        catalogo == null ? const <GrupoBiblioteca>[] : blocosDaBiblioteca(catalogo, busca: _busca, familia: _familia);
     return Dialog(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: Medidas.larguraBiblioteca, maxHeight: Medidas.alturaBiblioteca),
@@ -79,6 +78,10 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(l.adicionarEfeito, style: tema.titleLarge),
           Text(l.linhaCasa(widget.posicao.linha, widget.posicao.casa), style: tema.bodySmall),
+          if (_linha2SemSplit)
+            Text(l.smLinha2SemSplit,
+                key: const ValueKey('aviso-linha2-sem-split'),
+                style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
         ]),
       ),
       IconButton(
@@ -88,6 +91,13 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
         onPressed: () => Navigator.pop(context),
       ),
     ]);
+  }
+
+  /// Na linha 2 sem Split o bloco entra, mas só toca depois que houver um
+  /// Split na linha 1: a pessoa pode montar a linha 2 antes.
+  bool get _linha2SemSplit {
+    final documento = ref.watch(editorProvider.select((e) => e.atual));
+    return widget.posicao.linha == 2 && documento != null && !temLinhaParalela(documento);
   }
 
   Widget _campoBusca() => TextField(
@@ -124,12 +134,13 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
       final texto = familia == null ? l.nenhumEfeito(_busca) : l.nenhumEfeitoNaFamilia(_busca, l.familia(familia));
       return Center(child: Text(texto, style: Theme.of(context).textTheme.bodyMedium));
     }
-    final jaTem = ref.watch(editorProvider.select((e) => e.atual != null && temLinhaParalela(e.atual!)));
+    final documento = ref.watch(editorProvider.select((e) => e.atual));
+    RecusaAdicionar? recusa(DefinicaoBloco bloco) =>
+        documento == null ? null : recusaAoAdicionar(documento, widget.posicao, bloco.uri);
     return ListView(children: [
       for (final grupo in grupos) ...[
         _tituloCategoria(context, l.familia(grupo.familia)),
-        if (grupo.linhaParalela case final split?) _ItemLinhaParalela(split: split, jaTem: jaTem),
-        for (final bloco in grupo.blocos) _ItemEfeito(definicao: bloco),
+        for (final bloco in grupo.blocos) _ItemEfeito(definicao: bloco, recusa: recusa(bloco)),
       ],
     ]);
   }
@@ -142,42 +153,26 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
 }
 
 class _ItemEfeito extends StatelessWidget {
-  const _ItemEfeito({required this.definicao});
+  const _ItemEfeito({required this.definicao, this.recusa});
 
   final DefinicaoBloco definicao;
 
-  @override
-  Widget build(BuildContext context) => ListTile(
-        key: ValueKey('efeito-${definicao.uri}'),
-        contentPadding: EdgeInsets.zero,
-        leading: ArteBlocoWidget(definicao: definicao, tamanho: Medidas.arteBiblioteca),
-        title: Text(AppLocalizations.of(context).nomeDoBloco(definicao)),
-        subtitle: Text(AppLocalizations.of(context).familia(definicao.familia)),
-        trailing: Container(width: Medidas.fitaCategoria, height: Medidas.alvoMinimo, color: Cores.daFamilia(definicao.familia)),
-        onTap: () => Navigator.pop(context, definicao),
-      );
-}
-
-/// O par Split + Merge: um item só, porque um sem o outro quebra o roteamento.
-/// Com a linha paralela já aberta, fica apagado e diz por quê.
-class _ItemLinhaParalela extends StatelessWidget {
-  const _ItemLinhaParalela({required this.split, required this.jaTem});
-
-  final DefinicaoBloco split;
-  final bool jaTem;
+  /// Por que o bloco não pode entrar nesta casa (Split e Merge); nulo, pode.
+  final RecusaAdicionar? recusa;
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    final motivo = recusa;
     return ListTile(
-      key: const ValueKey('efeito-linha-paralela'),
-      enabled: !jaTem,
+      key: ValueKey('efeito-${definicao.uri}'),
+      enabled: motivo == null,
       contentPadding: EdgeInsets.zero,
-      leading: ArteBlocoWidget(definicao: split, tamanho: Medidas.arteBiblioteca),
-      title: Text(l.smItemBiblioteca),
-      subtitle: Text(jaTem ? l.smJaTemLinhaParalela : l.smItemBibliotecaDica),
-      trailing: Container(width: Medidas.fitaCategoria, height: Medidas.alvoMinimo, color: Cores.sinalSplit),
-      onTap: () => Navigator.pop(context, split),
+      leading: ArteBlocoWidget(definicao: definicao, tamanho: Medidas.arteBiblioteca, ligado: motivo == null),
+      title: Text(l.nomeDoBloco(definicao)),
+      subtitle: Text(motivo == null ? l.familia(definicao.familia) : textoDaRecusa(l, motivo)),
+      trailing: Container(width: Medidas.fitaCategoria, height: Medidas.alvoMinimo, color: Cores.daFita(definicao.uri, definicao.familia)),
+      onTap: () => Navigator.pop(context, definicao),
     );
   }
 }

@@ -1234,34 +1234,16 @@ abstract class AppLocalizations {
   /// **'APLICAR'**
   String get kbAplicar;
 
-  /// No description provided for @lpCriar.
-  ///
-  /// In pt, this message translates to:
-  /// **'CRIAR LINHA PARALELA'**
-  String get lpCriar;
-
-  /// No description provided for @lpCriarDica.
-  ///
-  /// In pt, this message translates to:
-  /// **'Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.'**
-  String get lpCriarDica;
-
-  /// No description provided for @lpRemover.
-  ///
-  /// In pt, this message translates to:
-  /// **'REMOVER LINHA PARALELA'**
-  String get lpRemover;
-
   /// No description provided for @lpRemoverTitulo.
   ///
   /// In pt, this message translates to:
-  /// **'Remover a linha paralela?'**
+  /// **'Remover o Split?'**
   String get lpRemoverTitulo;
 
-  /// Confirmação ao remover a linha paralela com blocos na linha 2
+  /// Confirmação ao remover o Split com blocos na linha 2
   ///
   /// In pt, this message translates to:
-  /// **'Saem o Split, o Merge e os {quantidade} blocos da linha 2.'**
+  /// **'Sem o Split a linha 2 não recebe sinal: saem também o Merge e os {quantidade} blocos da linha 2.'**
   String lpRemoverTexto(int quantidade);
 
   /// No description provided for @lpRemoverConfirmar.
@@ -1269,12 +1251,6 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'REMOVER'**
   String get lpRemoverConfirmar;
-
-  /// No description provided for @lpSemEspaco.
-  ///
-  /// In pt, this message translates to:
-  /// **'A linha 1 precisa de duas casas livres para o Split e o Merge.'**
-  String get lpSemEspaco;
 
   /// No description provided for @cbGabinete.
   ///
@@ -1564,36 +1540,6 @@ abstract class AppLocalizations {
   /// **'Buscar (ex.: turbo grunt)'**
   String get mbBuscarOpcao;
 
-  /// No description provided for @smFaixaCriar.
-  ///
-  /// In pt, this message translates to:
-  /// **'+ Criar linha paralela · Split, linha 2 e Merge'**
-  String get smFaixaCriar;
-
-  /// No description provided for @smItemBiblioteca.
-  ///
-  /// In pt, this message translates to:
-  /// **'Split + Merge (linha paralela)'**
-  String get smItemBiblioteca;
-
-  /// No description provided for @smItemBibliotecaDica.
-  ///
-  /// In pt, this message translates to:
-  /// **'Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.'**
-  String get smItemBibliotecaDica;
-
-  /// No description provided for @smJaTemLinhaParalela.
-  ///
-  /// In pt, this message translates to:
-  /// **'Este preset já tem linha paralela (um Split e um Merge por preset).'**
-  String get smJaTemLinhaParalela;
-
-  /// No description provided for @smDividirDepois.
-  ///
-  /// In pt, this message translates to:
-  /// **'Dividir o sinal depois deste bloco'**
-  String get smDividirDepois;
-
   /// No description provided for @smOrdemInvalida.
   ///
   /// In pt, this message translates to:
@@ -1863,6 +1809,30 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Toque no nome de um controle para saber o que ele faz com o som'**
   String get ttDicaToque;
+
+  /// No description provided for @smUmSplit.
+  ///
+  /// In pt, this message translates to:
+  /// **'Este preset já tem um Split (um por preset).'**
+  String get smUmSplit;
+
+  /// No description provided for @smUmMerge.
+  ///
+  /// In pt, this message translates to:
+  /// **'Este preset já tem um Merge (um por preset).'**
+  String get smUmMerge;
+
+  /// No description provided for @smMergeSemSplit.
+  ///
+  /// In pt, this message translates to:
+  /// **'Coloque o Split antes: o Merge junta a linha 2, que só existe com o Split.'**
+  String get smMergeSemSplit;
+
+  /// Na biblioteca aberta numa casa da linha 2 de um preset sem Split
+  ///
+  /// In pt, this message translates to:
+  /// **'Sem Split na linha 1, esta linha ainda não recebe sinal.'**
+  String get smLinha2SemSplit;
 }
 
 class _AppLocalizationsDelegate

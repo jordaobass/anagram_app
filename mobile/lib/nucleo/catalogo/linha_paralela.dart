@@ -1,37 +1,45 @@
 // Linha paralela: o sinal se divide no Split, passa pela linha 2 e volta no
-// Merge. Nos presets reais (exemplos 1 e 2) Split e Merge ficam na linha 1
-// (casas 5 e 11; 6 e 7) e a linha 2 é uma cadeia própria, que começa na casa
-// 1 dela: não precisa ficar "entre" as casas do Split e do Merge.
+// Merge. Split e Merge são blocos comuns da biblioteca, postos um de cada vez
+// como qualquer efeito (pedido do dono, DECISOES M11): o Split "abre abaixo"
+// e o Merge "junta acima". Nos presets reais (exemplos 1 e 2) os dois ficam
+// na linha 1 (casas 5 e 11; 6 e 7) e a linha 2 é uma cadeia própria, que
+// começa na casa 1 dela: não precisa ficar "entre" o Split e o Merge.
 import '../modelo/bloco_preset.dart';
 import '../modelo/documento_preset.dart';
-import 'biblioteca_blocos.dart';
-import 'catalogo_blocos.dart';
 
 const uriSplit = 'urn:darkglass-anagram:split';
 const uriMerge = 'urn:darkglass-anagram:merge';
 
 bool temLinhaParalela(DocumentoPreset documento) => documento.blocosDaLinha(1).any((b) => b.uri == uriSplit);
 
-/// Põe o Split na primeira casa livre da linha 1 depois de [depoisDe] (sem
-/// escolha: depois do último bloco, para o sinal passar por tudo e só então
-/// dividir) e o Merge na casa livre seguinte, com os padrões do catálogo.
-/// Sem duas casas livres depois do ponto, tenta do começo; sem nenhuma, nulo.
-DocumentoPreset? comLinhaParalela(DocumentoPreset documento, CatalogoBlocos catalogo, {int? depoisDe}) {
-  if (temLinhaParalela(documento)) return documento;
-  final ocupadas = {for (final bloco in documento.blocosDaLinha(1)) bloco.posicao.casa};
-  final ultimo = ocupadas.isEmpty ? 0 : ocupadas.reduce((a, b) => a > b ? a : b);
-  final casas = _duasLivresDepois(ocupadas, depoisDe ?? ultimo) ?? _duasLivresDepois(ocupadas, 0);
-  if (casas == null) return null;
-  final (split, merge) = casas;
-  return documento
-      .comBlocoColado(PosicaoBloco(1, split), blocoNovo(catalogo.definicao(uriSplit)))
-      .comBlocoColado(PosicaoBloco(1, merge), blocoNovo(catalogo.definicao(uriMerge)));
+/// Por que um Split ou Merge não pode entrar numa casa. Os outros blocos
+/// entram em qualquer casa vazia.
+enum RecusaAdicionar { splitRepetido, mergeRepetido, mergeSemSplit, foraDaLinha1, mergeAntesDoSplit, splitDepoisDoMerge }
+
+/// Nulo quando o bloco [uri] pode entrar em [posicao]: um Split e um Merge
+/// por preset, os dois na linha 1, o Merge só com Split e sempre depois dele.
+RecusaAdicionar? recusaAoAdicionar(DocumentoPreset documento, PosicaoBloco posicao, String uri) {
+  if (uri != uriSplit && uri != uriMerge) return null;
+  final split = _casaNaLinha1(documento, uriSplit);
+  final merge = _casaNaLinha1(documento, uriMerge);
+  if (uri == uriSplit) {
+    if (split != null) return RecusaAdicionar.splitRepetido;
+    if (posicao.linha != 1) return RecusaAdicionar.foraDaLinha1;
+    if (merge != null && posicao.casa > merge) return RecusaAdicionar.splitDepoisDoMerge;
+    return null;
+  }
+  if (merge != null) return RecusaAdicionar.mergeRepetido;
+  if (split == null) return RecusaAdicionar.mergeSemSplit;
+  if (posicao.linha != 1) return RecusaAdicionar.foraDaLinha1;
+  if (posicao.casa < split) return RecusaAdicionar.mergeAntesDoSplit;
+  return null;
 }
 
-/// Tira Split e Merge e os blocos da linha 2: sem a divisão, a linha 2 não
-/// recebe sinal, e mover os blocos para a linha 1 mudaria o som sem a pessoa
-/// pedir (a tela pergunta antes quando a linha 2 tem blocos).
-DocumentoPreset semLinhaParalela(DocumentoPreset documento) {
+/// Remover o Split leva junto o Merge e os blocos da linha 2: sem a divisão
+/// a linha 2 não recebe sinal e o Merge não tem o que juntar (a tela pergunta
+/// antes quando a linha 2 tem blocos). Remover o Merge sozinho é comum: a
+/// linha 2 segue até a saída.
+DocumentoPreset semSplit(DocumentoPreset documento) {
   var resultado = documento;
   final saem = [
     for (final bloco in documento.blocosDaLinha(1))
@@ -44,10 +52,5 @@ DocumentoPreset semLinhaParalela(DocumentoPreset documento) {
   return resultado;
 }
 
-(int, int)? _duasLivresDepois(Set<int> ocupadas, int referencia) {
-  final livres = [
-    for (var casa = referencia + 1; casa <= PosicaoBloco.casasPorLinha; casa++)
-      if (!ocupadas.contains(casa)) casa,
-  ];
-  return livres.length < 2 ? null : (livres[0], livres[1]);
-}
+int? _casaNaLinha1(DocumentoPreset documento, String uri) =>
+    documento.blocosDaLinha(1).where((b) => b.uri == uri).firstOrNull?.posicao.casa;

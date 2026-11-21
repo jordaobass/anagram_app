@@ -82,12 +82,13 @@ void main() {
         reason: 'o pedal de expressão segue o wah e o pot1 segue o B3K');
   });
 
-  test('should_offer_effects_by_category_without_routing_blocks_and_filter_by_name', () {
+  test('should_offer_effects_by_category_with_split_and_merge_but_without_system_blocks_and_filter_by_name', () {
     final grupos = blocosDaBiblioteca(catalogo);
     final uris = [for (final g in grupos) for (final b in g.blocos) b.uri];
 
-    expect(uris, isNot(contains('urn:darkglass-anagram:split')));
-    expect(uris, isNot(contains('urn:darkglass-anagram:merge')));
+    // Split e Merge entram como os outros blocos (DECISOES M11); saída e mixer, não
+    expect(uris, containsAll(['urn:darkglass-anagram:split', 'urn:darkglass-anagram:merge']));
+    expect(uris, isNot(contains('urn:darkglass-anagram:output')));
     expect(uris, contains('urn:darkglass:Suppressor'));
     expect(grupos.map((g) => g.familia).toSet().length, grupos.length, reason: 'uma seção por família');
 
