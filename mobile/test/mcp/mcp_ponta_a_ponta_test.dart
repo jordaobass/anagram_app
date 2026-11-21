@@ -155,4 +155,16 @@ void main() {
     expect(recusado, isTrue);
     expect(motivo, contains('not yet supported'));
   });
+
+  test('should_change_a_mid_band_of_the_global_eq_through_mcp_with_the_pedal_key', () async {
+    final (container, endereco, token) = await appComMcp();
+    final pedaleira = container.read(conexaoProvider.notifier).transporte! as TransporteDemonstracao;
+
+    final (erro, resposta) =
+        await ferramenta(endereco, token, 'set_global_setting', {'setting': 'globaleq.3.gain', 'value': -18});
+
+    expect(erro, isFalse);
+    expect((resposta! as Map)['value'], -18, reason: 'o Global EQ vai a −18 dB, como a pedaleira aceitou');
+    expect(pedaleira.ajustesGlobais['globaleq.3.gain'], -18);
+  });
 }

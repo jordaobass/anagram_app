@@ -36,7 +36,8 @@ class LerAjustesGlobais extends FerramentaMcp {
 
   @override
   String get descricao => 'Read the pedal-wide settings that apply to every preset: output levels (mixer), '
-      'Global EQ shelves and instrument input gain, plus the read-only sound card values. '
+      'the 6-band Global EQ (low shelf "ls", peaks "1" to "4", high shelf "hs"; gain, freq and width each) and '
+      'instrument input gain, plus the read-only sound card values. '
       'Change them with set_global_setting.';
 
   @override
@@ -49,7 +50,7 @@ class LerAjustesGlobais extends FerramentaMcp {
     final estado = ref.read(controladorAjustesProvider);
     if (estado.lidos == null) throw const RecusaFerramenta('The pedal did not answer; try again in a moment.');
     return ResultadoFerramenta.dados({
-      'settings': [for (final a in ajustesConfirmados()) _descrever(a, estado.valor(a))],
+      'settings': [for (final a in ajustesConfirmados()) _descrever(estado.faixa(a), estado.valor(a))],
       'soundcardReadOnly': estado.lidos!.placa,
     });
   }
@@ -68,8 +69,8 @@ class MudarAjusteGlobal extends FerramentaMcp {
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto({
-        'setting': texto('Setting id from get_global_settings, e.g. "headphones" or "eq_low_gain".'),
-        'value': {'type': 'number', 'description': 'New value in the setting unit (dB or Hz).'},
+        'setting': texto('Setting id from get_global_settings, e.g. "headphones", "eq_ls_gain" or "eq_2_freq".'),
+        'value': {'type': 'number', 'description': 'New value in the setting unit (dB, Hz, or 0-1 for EQ width).'},
       }, obrigatorias: const ['setting', 'value']);
 
   @override
@@ -85,7 +86,8 @@ class MudarAjusteGlobal extends FerramentaMcp {
     if (valor is! num) throw const RecusaFerramenta('"value" must be a number.');
     controlador.alterar(ajuste, valor);
     if (!await controlador.enviarAgora()) throw const RecusaFerramenta('The pedal did not accept the change.');
-    final confirmado = ref.read(controladorAjustesProvider).valor(ajuste);
-    return ResultadoFerramenta.dados({..._descrever(ajuste, confirmado), 'clamped': ajuste.limitar(valor) != valor});
+    final estado = ref.read(controladorAjustesProvider);
+    final faixa = estado.faixa(ajuste);
+    return ResultadoFerramenta.dados({..._descrever(faixa, estado.valor(ajuste)), 'clamped': faixa.limitar(valor) != valor});
   }
 }
