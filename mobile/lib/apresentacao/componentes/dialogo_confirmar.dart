@@ -4,7 +4,18 @@
 // confirmar no vermelho de alerta, porque confirmar sempre apaga algo.
 import 'package:flutter/material.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../tema/tokens.dart';
+
+/// Abrir outro preset com edição não salva: as edições de [nome] se perdem.
+Future<bool> confirmarLargarEdicoes(BuildContext context, String nome) {
+  final l = AppLocalizations.of(context);
+  return confirmar(context,
+      titulo: l.largarEdicoesTitulo,
+      texto: l.largarEdicoesTexto(nome),
+      rotuloCancelar: l.continuarEditando,
+      rotuloConfirmar: l.largar);
+}
 
 Future<bool> confirmar(
   BuildContext context, {

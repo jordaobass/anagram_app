@@ -11,6 +11,7 @@ import 'fixtures.dart';
 import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:anagram_app/dados/preferencias_idioma.dart';
+import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
 
 /// Latência fixa: a real varia de execução para execução e sujaria as capturas.
 class CronometroFixo implements Stopwatch {
@@ -30,8 +31,12 @@ class CronometroFixo implements Stopwatch {
 const versaoNasCapturas = '0.1.3';
 
 /// [indice]: o índice de arte (o padrão é o das capturas, sem a arte de terceiros).
+/// [fabrica]: os presets de fábrica (o padrão é nenhum, como no build sem a arte).
 Widget appDeTeste(
-        {List<Override> overrides = const [], IdiomaApp? idioma = IdiomaApp.portugues, IndiceMiniaturas? indice}) =>
+        {List<Override> overrides = const [],
+        IdiomaApp? idioma = IdiomaApp.portugues,
+        IndiceMiniaturas? indice,
+        PresetsDeFabrica? fabrica}) =>
     ProviderScope(
       overrides: [
         ...overrides,
@@ -39,6 +44,7 @@ Widget appDeTeste(
         catalogoProvider.overrideWith((ref) async => lerCatalogo()),
         presetsDemonstracaoProvider.overrideWith((ref) async => lerPresetsDemonstracao()),
         indiceMiniaturasProvider.overrideWith((ref) async => indice ?? lerIndiceMiniaturas()),
+        presetsFabricaProvider.overrideWith((ref) async => fabrica ?? const PresetsDeFabrica.vazio()),
         // versão fixa: com a do pubspec, toda release mudaria todas as capturas
         versaoAppProvider.overrideWith((ref) async => versaoNasCapturas),
         // o ambiente de teste é en-US: as capturas de referência são em português

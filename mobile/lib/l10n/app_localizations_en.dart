@@ -805,4 +805,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get gxBuscarGabinete => 'Type to search';
+
+  @override
+  String get fbAreaFabrica => 'Factory';
+
+  @override
+  String get fbSoLeitura => 'READ ONLY';
+
+  @override
+  String get fbAreaSoLeitura =>
+      'Darkglass factory presets: opening one only plays it. To keep one, copy it to one of your areas.';
+
+  @override
+  String get fbAvisoPresetDeFabrica =>
+      'FACTORY PRESET — plays only. Copy it to one of your areas to keep it.';
+
+  @override
+  String get fbCopiarParaMinhaArea => 'COPY TO MY AREA…';
+
+  @override
+  String get fbCopiarTitulo => 'Copy to which area?';
+
+  @override
+  String get fbCopiarPara => 'Copy to my area…';
 }

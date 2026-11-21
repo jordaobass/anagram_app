@@ -1,10 +1,12 @@
 // Gravar no slot: Salvar (no slot aberto) e Salvar como (destino escolhido).
 // Enquanto grava, o estado fica "salvando" e abrir outro slot é recusado até
 // ela terminar: o resultado da gravação ainda vai escrever o slot salvo.
+// Na área Fábrica nada é gravado: guardar é copiar para uma área da pessoa.
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../nucleo/modelo/documento_preset.dart';
+import '../../nucleo/modelo/presets_fabrica.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../../nucleo/protocolo/erros_anagram.dart';
 import '../casos_de_uso/salvar_no_slot.dart';
@@ -21,8 +23,11 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
   /// Sem slot (preset importado), ou com o slot de outra área que não a da
   /// tela (a lista trocou de área, ou reconectou na ativa), cai no "Salvar
   /// como": gravar direto poria o preset no mesmo número de outra área.
+  /// Com a fábrica na tela, devolve null sem escolher destino: a cópia
+  /// pergunta primeiro a área (a tela cuida disso).
   Future<ResultadoSalvar?> salvar() async {
     if (_motivoParaNaoGravar() case final recusa?) return recusa;
+    if (ref.read(bibliotecaProvider).naFabrica) return null;
     final slot = state.slot;
     if (slot == null || !_slotNaAreaDaTela) {
       iniciarSalvarComo();
@@ -52,6 +57,8 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
     return null;
   }
 
+  static const _fabricaSoLeitura = 'Os presets de fábrica são só leitura: copie para uma área sua.';
+
   String? get _areaDaTela => ref.read(bibliotecaProvider).areaSelecionada;
 
   /// O slot aberto é da área cuja lista está na tela.
@@ -71,6 +78,7 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
     // o destino é sempre da área na tela; mesmo slot da mesma área e mesmo
     // preset mantém o uuid; outro slot, outra área ou importado ganha novo
     final area = _areaDaTela;
+    if (area == PresetsDeFabrica.idArea) return const FalhaAoSalvar(ErroOperacaoEmCurso(_fabricaSoLeitura));
     final mesmoPreset = slot == state.slot && area == state.area && state.original != null;
     final documento = mesmoPreset ? atual : atual.comUuid(novoUuidPreset());
     state = state.copiar(salvando: true);

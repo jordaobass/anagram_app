@@ -1431,6 +1431,48 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Escreva para buscar'**
   String get gxBuscarGabinete;
+
+  /// Nome da área dos presets de fábrica no seletor de área
+  ///
+  /// In pt, this message translates to:
+  /// **'Fábrica'**
+  String get fbAreaFabrica;
+
+  /// Selo ao lado da área Fábrica: dali nada é gravado
+  ///
+  /// In pt, this message translates to:
+  /// **'SÓ LEITURA'**
+  String get fbSoLeitura;
+
+  /// Explicação sob o seletor quando a área Fábrica está na tela
+  ///
+  /// In pt, this message translates to:
+  /// **'Presets de fábrica da Darkglass: abrir um só faz tocar. Para guardar, copie para uma área sua.'**
+  String get fbAreaSoLeitura;
+
+  /// Aviso na faixa do preset aberto quando ele é de fábrica
+  ///
+  /// In pt, this message translates to:
+  /// **'PRESET DE FÁBRICA — só toca. Copie para uma área sua para guardar.'**
+  String get fbAvisoPresetDeFabrica;
+
+  /// Botão que substitui SALVAR quando a fábrica está na tela
+  ///
+  /// In pt, this message translates to:
+  /// **'COPIAR PARA A MINHA ÁREA…'**
+  String get fbCopiarParaMinhaArea;
+
+  /// Título do diálogo que pergunta a área de destino da cópia
+  ///
+  /// In pt, this message translates to:
+  /// **'Copiar para qual área?'**
+  String get fbCopiarTitulo;
+
+  /// Item do menu de um preset da fábrica
+  ///
+  /// In pt, this message translates to:
+  /// **'Copiar para a minha área…'**
+  String get fbCopiarPara;
 }
 
 class _AppLocalizationsDelegate

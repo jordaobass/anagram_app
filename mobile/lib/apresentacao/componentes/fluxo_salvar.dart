@@ -1,13 +1,18 @@
 // Salvar (no slot aberto) e Salvar como (destino escolhido na lista de
 // presets). Só pergunta quando o destino está ocupado e não é a origem.
+// Com a fábrica na tela, o destino começa pela área (fluxo_copiar_fabrica).
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/casos_de_uso/salvar_no_slot.dart';
+import '../../aplicacao/estado/controlador_biblioteca.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../rotas.dart';
 import 'dialogo_confirmar.dart';
+import 'fluxo_copiar_fabrica.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
 
@@ -30,7 +35,12 @@ Future<void> executarSalvar(BuildContext context, WidgetRef ref, {bool listaEmOu
 }
 
 /// Põe a lista em modo "escolher destino"; no celular a lista é outra tela.
+/// Na fábrica não há destino: pergunta antes para qual área copiar.
 void abrirEscolhaDeDestino(BuildContext context, WidgetRef ref, {bool listaEmOutraTela = false}) {
+  if (ref.read(bibliotecaProvider).naFabrica) {
+    unawaited(copiarParaMinhaArea(context, ref, listaEmOutraTela: listaEmOutraTela));
+    return;
+  }
   ref.read(editorProvider.notifier).iniciarSalvarComo();
   if (listaEmOutraTela) const RotaPresets().push<void>(context);
 }

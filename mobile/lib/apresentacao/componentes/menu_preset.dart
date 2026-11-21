@@ -1,18 +1,22 @@
 // Menu de um preset da lista (botão direito, toque longo ou o ⋮ da linha):
 // mover, clonar ou trocar de banco. Escolhida a operação, a lista passa a
 // pedir o slot de destino (faixa âmbar no topo), como no "Salvar como".
+// Na fábrica (só leitura) o menu só copia para uma área da pessoa.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/avisos.dart';
+import '../../aplicacao/estado/controlador_biblioteca.dart';
 import '../../aplicacao/estado/controlador_organizar.dart';
 import '../../l10n/app_localizations.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../textos.dart';
 import 'dialogo_confirmar.dart';
+import 'fluxo_copiar_fabrica.dart';
 
 /// Abre o menu do preset em [slot], na posição [onde] da tela.
 Future<void> abrirMenuPreset(BuildContext context, WidgetRef ref, SlotPreset slot, Offset onde) async {
+  if (ref.read(bibliotecaProvider).naFabrica) return _menuDaFabrica(context, ref, slot, onde);
   final l = AppLocalizations.of(context);
   final escolha = await showMenu<OperacaoPreset>(
     context: context,
@@ -24,6 +28,17 @@ Future<void> abrirMenuPreset(BuildContext context, WidgetRef ref, SlotPreset slo
     ],
   );
   if (escolha != null) ref.read(organizarProvider.notifier).iniciar(escolha, slot);
+}
+
+Future<void> _menuDaFabrica(BuildContext context, WidgetRef ref, SlotPreset slot, Offset onde) async {
+  final copiar = await showMenu<bool>(
+    context: context,
+    position: RelativeRect.fromLTRB(onde.dx, onde.dy, onde.dx, onde.dy),
+    items: [
+      PopupMenuItem(value: true, key: const ValueKey('op-copiar'), child: Text(AppLocalizations.of(context).fbCopiarPara)),
+    ],
+  );
+  if (copiar == true && context.mounted) await copiarDaFabrica(context, ref, slot);
 }
 
 /// Conclui a operação pendente no slot tocado: pergunta quando o destino tem

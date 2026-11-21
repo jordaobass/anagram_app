@@ -221,5 +221,12 @@
   "opBancosTrocados": "Banks {a} and {b} swapped.",
   "gxModeloAnterior": "Previous cabinet",
   "gxProximoModelo": "Next cabinet",
-  "gxBuscarGabinete": "Type to search"
+  "gxBuscarGabinete": "Type to search",
+  "fbAreaFabrica": "Factory",
+  "fbSoLeitura": "READ ONLY",
+  "fbAreaSoLeitura": "Darkglass factory presets: opening one only plays it. To keep one, copy it to one of your areas.",
+  "fbAvisoPresetDeFabrica": "FACTORY PRESET — plays only. Copy it to one of your areas to keep it.",
+  "fbCopiarParaMinhaArea": "COPY TO MY AREA…",
+  "fbCopiarTitulo": "Copy to which area?",
+  "fbCopiarPara": "Copy to my area…"
 }

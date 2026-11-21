@@ -4,10 +4,11 @@ blocos neurais/genéricos (amp, pedal, misc, gabinetes sem IR).
 
 O Suite é um app Electron: as imagens ficam em resources/assets/ (cabs/ e
 devices/anagram/effects/) e as regras em dist/renderer.prod.js, dentro do
-app.asar. Daqui saem três coisas, conferidas no Suite 6.11.4:
+app.asar. Daqui saem quatro coisas, conferidas no Suite 6.11.4:
   - tabelas ib.qv (bass), ib.hP (guitar) e ib.Rh (artists): arquivo de IR -> modelo;
   - mve(nome, bypass): modelo -> imagem em cabs/ (ligada ou "Bypass-…");
-  - "urn:…"===e.uri ? …/effects/<imagem>: uri -> imagem do bloco.
+  - "urn:…"===e.uri ? …/effects/<imagem>: uri -> imagem do bloco;
+  - Ah=[…]: os 36 presets de fábrica da Anagram (presets_de_fabrica).
 """
 import json
 import re
@@ -140,3 +141,78 @@ def montar_gabinetes(tabelas, modelos, pasta_cabs, destino_pasta):
         return [copiar(pasta_cabs / ligada, destino_pasta, PREFIXO_GABINETE + ligada),
                 copiar(pasta_cabs / desligada, destino_pasta, PREFIXO_GABINETE + desligada)]
     return {arquivo: imagens(modelo) for arquivo, modelo in gabinetes_por_arquivo(tabelas, modelos).items()}
+
+
+# Presets de fábrica da Anagram (área Factory): a pedaleira não os entrega pelo
+# USB (DECISOES U18); o Suite traz uma cópia embutida no array `Ah` do renderer,
+# como literal JavaScript (chaves sem aspas, !0/!1, Pp.FACTORY).
+INICIO_FABRICA = 'Ah=[{name:"Harmonic Booster"'
+_NUMERO = re.compile(r'-?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?')
+_PALAVRA = re.compile(r'[A-Za-z_$][\w$]*(?:\.[\w$]+)*|!0|!1')
+
+
+def presets_de_fabrica(renderer):
+    """[{arquivo, nome, preset}] na ordem do Suite; preset é o envelope
+    {"preset": …, "type": "preset", "version": 1}, como a pedaleira grava."""
+    texto = renderer.read_text(encoding='utf-8', errors='replace')
+    inicio = texto.index(INICIO_FABRICA) + len('Ah=')
+    lista = json.loads(_literal_js_para_json(texto[inicio:_fim_do_colchete(texto, inicio)]))
+    return [{'arquivo': item['filename'], 'nome': item['name'], 'preset': item['localPreset']['data']}
+            for item in lista]
+
+
+def _fim_do_colchete(texto, inicio):
+    """Posição logo depois do ']' que fecha o '[' em [inicio], pulando strings."""
+    profundidade, i, em_texto = 0, inicio, False
+    while True:
+        c = texto[i]
+        if em_texto:
+            if c == '\\':
+                i += 1
+            elif c == '"':
+                em_texto = False
+        elif c == '"':
+            em_texto = True
+        elif c in '[{':
+            profundidade += 1
+        elif c in ']}':
+            profundidade -= 1
+            if profundidade == 0:
+                return i + 1
+        i += 1
+
+
+def _literal_js_para_json(trecho):
+    """Só o que aparece nesse array: strings com aspas duplas, chaves sem aspas
+    (nomes ou números), !0/!1, números como .5 ou 17434656e5 e referências a
+    enums (Pp.FACTORY), que viram texto ("factory")."""
+    saida, i = [], 0
+    while i < len(trecho):
+        if trecho[i] == '"':
+            fim = i + 1
+            while trecho[fim] != '"':
+                fim += 2 if trecho[fim] == '\\' else 1
+            saida.append(trecho[i:fim + 1])
+            i = fim + 1
+            continue
+        achado = _NUMERO.match(trecho, i) or _PALAVRA.match(trecho, i)
+        if not achado:
+            saida.append(trecho[i])
+            i += 1
+            continue
+        token = achado.group(0)
+        i = achado.end()
+        saida.append(_token_em_json(token, eh_chave=trecho[i:i + 1] == ':' and saida[-1:] in (['{'], [','])))
+    return ''.join(saida)
+
+
+def _token_em_json(token, eh_chave):
+    if eh_chave:
+        return json.dumps(token)
+    if token in ('!0', '!1'):
+        return 'true' if token == '!0' else 'false'
+    if _NUMERO.fullmatch(token):
+        return repr(float(token)) if ('.' in token or 'e' in token) else token
+    if token in ('true', 'false', 'null'):
+        return token
+    return json.dumps(token.split('.')[-1].lower())

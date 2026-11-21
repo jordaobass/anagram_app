@@ -12,7 +12,9 @@ As imagens vêm da pasta do Suite, se informada; senão, da cópia daquele site.
 Com a instalação do Darkglass Suite (--suite, a pasta resources/assets, e
 --renderer, o dist/renderer.prod.js extraído do app.asar), também traz a foto
 de cada gabinete pelo arquivo de IR e a arte dos blocos que a tabela do site
-não tem (amp, pedal e misc neurais, gabinetes sem IR). Ver ferramentas/arte_suite.py.
+não tem (amp, pedal e misc neurais, gabinetes sem IR), e grava os presets de
+fábrica em fabrica.json (a área Fábrica do app, DECISOES U18). Ver
+ferramentas/arte_suite.py.
 
 Uso:
   python3 ferramentas/baixar_arte_pedaleira.py [pasta-effects] [--suite ASSETS --renderer RENDERER_JS]
@@ -80,6 +82,14 @@ def completar_com_suite(blocos, fabrica, assets, renderer):
             'escolhas': arte_suite.escolhas_de_gabinete(tabelas)}
 
 
+def gravar_fabrica(renderer):
+    presets = arte_suite.presets_de_fabrica(renderer)
+    (DESTINO / 'fabrica.json').write_text(json.dumps(
+        {'origem': 'Presets de fábrica da Darkglass Electronics (Darkglass Suite).', 'presets': presets},
+        ensure_ascii=False))
+    print(f'{len(presets)} presets de fábrica em {DESTINO / "fabrica.json"}')
+
+
 def main(pasta_suite, assets=None, renderer=None):
     fabrica = json.loads(CATALOGO.read_text())['blocks']
     indice = json.loads(INDICE.read_text()) if INDICE.exists() else {'blocos': {}}
@@ -94,6 +104,7 @@ def main(pasta_suite, assets=None, renderer=None):
                          'uris': [uri], 'origem': 'pedaleira'}
     if assets and renderer:
         indice['gabinetes'] = completar_com_suite(blocos, fabrica, assets, renderer)
+        gravar_fabrica(renderer)
     # o crédito diz o que está de fato na pasta: num clone limpo (release, A12)
     # só há a arte da pedaleira; na pasta de trabalho pode haver também as
     # miniaturas de anagramanswers.com (A2)
