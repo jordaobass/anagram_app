@@ -46,19 +46,32 @@ void main() {
     await capturar(tester, '$pasta/pd-01-desktop-saidas.png');
   });
 
-  testWidgets('captura desktop: ajustes globais da pedaleira (Global EQ e entrada)', (tester) async {
-    await _abrirPedaleira(tester, desktopWindows);
-    await tester.ensureVisible(find.byKey(const ValueKey('cartao-placa')));
-    await tester.pumpAndSettle();
-    await capturar(tester, '$pasta/pd-02-desktop-global-eq.png');
-  });
+  for (final (modo, numero) in [('gain', '02'), ('freq', '03'), ('width', '04')]) {
+    testWidgets('captura desktop: Global EQ no modo $modo', (tester) async {
+      await _abrirPedaleira(tester, desktopWindows);
+      await _modoEq(tester, modo);
+      await capturar(tester, '$pasta/pd-$numero-desktop-global-eq-$modo.png');
+    });
+  }
 
-  testWidgets('captura celular: ajustes globais da pedaleira', (tester) async {
-    await _abrirPedaleira(tester, const Tamanho('celular-retrato', 390, 844, 2));
-    await tester.ensureVisible(find.byKey(const ValueKey('curva-global-eq')));
-    await tester.pumpAndSettle();
-    await capturar(tester, '$pasta/pd-90-celular-pedaleira.png');
-  });
+  for (final (modo, numero) in [('gain', '90'), ('freq', '91'), ('width', '92')]) {
+    testWidgets('captura celular: Global EQ no modo $modo', (tester) async {
+      await _abrirPedaleira(tester, const Tamanho('celular-retrato', 390, 844, 2));
+      await _modoEq(tester, modo);
+      await capturar(tester, '$pasta/pd-$numero-celular-global-eq-$modo.png');
+    });
+  }
+}
+
+/// Rola até o Global EQ e escolhe o modo (o cartão inteiro na tela).
+Future<void> _modoEq(WidgetTester tester, String modo) async {
+  await tester.ensureVisible(find.byKey(ValueKey('modo-eq-$modo')));
+  await tester.pumpAndSettle();
+  await tester.tap(find.byKey(ValueKey('modo-eq-$modo')));
+  await tester.pumpAndSettle();
+  // o cartão no topo da tela: seletor, curva e as 6 bandas juntos
+  await Scrollable.ensureVisible(tester.element(find.byKey(const ValueKey('cartao-global-eq'))));
+  await tester.pumpAndSettle();
 }
 
 /// Configurações conectado à demonstração: a seção "Pedaleira" aparece.
