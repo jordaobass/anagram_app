@@ -2,6 +2,7 @@
 # Confere a arte antes de um build de release. Desde a decisão A12 só existe a
 # versão com a arte da pedaleira (a mesma da tela da Anagram), e só ela: as
 # miniaturas de anagramanswers.com (A2) não vão para o público.
+# Entram as fotos dos gabinetes do Suite (dg_cab_*.webp, A13).
 # A pasta assets/blocos_terceiros/ é declarada no pubspec e o Flutter embarca
 # TUDO o que estiver nela, por isso ela tem de sair de um clone limpo:
 #   git clone … && cd mobile
@@ -23,7 +24,7 @@ falhar() {
 pedaleira=$(find "$pasta" -type f -name 'dg_*.png' | wc -l)
 [ "$pedaleira" -ge "$minimo" ] || falhar "só $pedaleira imagens da pedaleira (dg_*.png); esperado pelo menos $minimo."
 
-intrusos=$(find "$pasta" -type f ! -name 'dg_*.png' ! -name indice.json ! -name LEIAME.txt | sort)
+intrusos=$(find "$pasta" -type f ! -name 'dg_*.png' ! -name 'dg_*.webp' ! -name indice.json ! -name LEIAME.txt | sort)
 if [ -n "$intrusos" ]; then
   echo "$intrusos" | sed 's/^/  /' >&2
   falhar "arquivos que não são arte da pedaleira em assets/blocos_terceiros/ (acima)."

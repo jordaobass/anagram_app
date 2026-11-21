@@ -9,14 +9,23 @@ publicados são feitos com ela, num clone limpo (docs/DECISOES.md, A9 a A12).
 A tabela uri -> [ligado, desligado] é a publicada pelo anagramcontrol.online.
 As imagens vêm da pasta do Suite, se informada; senão, da cópia daquele site.
 
+Com a instalação do Darkglass Suite (--suite, a pasta resources/assets, e
+--renderer, o dist/renderer.prod.js extraído do app.asar), também traz a foto
+de cada gabinete pelo arquivo de IR e a arte dos blocos que a tabela do site
+não tem (amp, pedal e misc neurais, gabinetes sem IR). Ver ferramentas/arte_suite.py.
+
 Uso:
-  python3 ferramentas/baixar_arte_pedaleira.py [pasta-effects-do-Darkglass-Suite]
+  python3 ferramentas/baixar_arte_pedaleira.py [pasta-effects] [--suite ASSETS --renderer RENDERER_JS]
+  # app.asar -> renderer: npx @electron/asar extract app.asar extraido
 """
+import argparse
 import json
 import pathlib
 import re
 import sys
 import urllib.request
+
+import arte_suite
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 DESTINO = RAIZ / 'assets' / 'blocos_terceiros'
@@ -52,7 +61,25 @@ def trazer_imagem(relativo, pasta_suite):
     return f'assets/blocos_terceiros/{destino.name}'
 
 
-def main(pasta_suite):
+def completar_com_suite(blocos, fabrica, assets, renderer):
+    """Gabinetes por IR e os blocos que só o Suite tem arte; devolve a seção "gabinetes"."""
+    tabelas, modelos, uris = arte_suite.ler_regras(renderer)
+    efeitos = assets / 'devices' / 'anagram' / 'effects'
+    ja_tem = {uri for bloco in blocos.values() for uri in bloco.get('uris', [])}
+    for uri, (ligada, desligada) in uris.items():
+        if uri in ja_tem or not (efeitos / ligada).exists():
+            continue
+        bloco = fabrica.get(uri.split('#')[0]) or fabrica.get(uri) or {}
+        blocos[PREFIXO + re.sub(r'[^A-Za-z0-9]+', '_', uri)] = {
+            'nome': bloco.get('name', ''), 'categoria': bloco.get('category', ''),
+            'arquivo': arte_suite.copiar(efeitos / ligada, DESTINO, PREFIXO + ligada),
+            'arquivoDesligado': arte_suite.copiar(efeitos / desligada, DESTINO, PREFIXO + desligada)
+            if (efeitos / desligada).exists() else None,
+            'uris': [uri], 'origem': 'pedaleira'}
+    return {'porArquivo': arte_suite.montar_gabinetes(tabelas, modelos, assets / 'cabs', DESTINO)}
+
+
+def main(pasta_suite, assets=None, renderer=None):
     fabrica = json.loads(CATALOGO.read_text())['blocks']
     indice = json.loads(INDICE.read_text()) if INDICE.exists() else {'blocos': {}}
     blocos = {chave: valor for chave, valor in indice['blocos'].items() if not chave.startswith(PREFIXO)}
@@ -64,6 +91,8 @@ def main(pasta_suite):
                          'arquivo': trazer_imagem(ligado, pasta_suite),
                          'arquivoDesligado': trazer_imagem(desligado, pasta_suite),
                          'uris': [uri], 'origem': 'pedaleira'}
+    if assets and renderer:
+        indice['gabinetes'] = completar_com_suite(blocos, fabrica, assets, renderer)
     # o crédito diz o que está de fato na pasta: num clone limpo (release, A12)
     # só há a arte da pedaleira; na pasta de trabalho pode haver também as
     # miniaturas de anagramanswers.com (A2)
@@ -72,10 +101,16 @@ def main(pasta_suite):
                    'credito': CREDITO_MISTO if misto else CREDITO_PEDALEIRA, 'blocos': blocos})
     INDICE.write_text(json.dumps(indice, ensure_ascii=False, indent=1))
     total = sum(1 for chave in blocos if chave.startswith(PREFIXO))
-    print(f'{total} blocos com arte da pedaleira em {DESTINO}')
+    gabinetes = len(indice.get('gabinetes', {}).get('porArquivo', {}))
+    print(f'{total} blocos com arte da pedaleira e {gabinetes} arquivos de IR de gabinete em {DESTINO}')
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 2:
-        sys.exit(__doc__)
-    main(pathlib.Path(sys.argv[1]) if len(sys.argv) == 2 else None)
+    argumentos = argparse.ArgumentParser(usage=__doc__)
+    argumentos.add_argument('pasta_effects', nargs='?', type=pathlib.Path)
+    argumentos.add_argument('--suite', type=pathlib.Path, help='resources/assets do Darkglass Suite')
+    argumentos.add_argument('--renderer', type=pathlib.Path, help='dist/renderer.prod.js extraído do app.asar')
+    lido = argumentos.parse_args()
+    if bool(lido.suite) != bool(lido.renderer):
+        sys.exit('--suite e --renderer vão juntos.')
+    main(lido.pasta_effects, lido.suite, lido.renderer)
