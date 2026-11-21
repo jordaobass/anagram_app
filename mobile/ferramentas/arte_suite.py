@@ -52,12 +52,27 @@ def _modelos(texto):
     return {nome: (arquivo, desligadas.get(nome, arquivo)) for nome, arquivo in ligadas.items()}
 
 
+_COMPARACAO_URI = re.compile(r'"(urn:[^"]+)"===e\.uri(?:\|\||\?Gce\+"/devices/anagram/effects/([^"/]+)")')
+
+
+def _cadeias_de_uri(texto):
+    """Cada `"urn:a"===e.uri||"urn:b"===e.uri?Gce+"/…/arquivo"` vira (["urn:a", "urn:b"], arquivo).
+    Varredura linear: um elo só continua a cadeia se começa onde o anterior terminou."""
+    pendentes, fim_anterior = [], -1
+    for elo in _COMPARACAO_URI.finditer(texto):
+        if elo.start() != fim_anterior:
+            pendentes = []
+        pendentes.append(elo.group(1))
+        fim_anterior = elo.end()
+        if elo.group(2):
+            yield pendentes, elo.group(2)
+            pendentes = []
+
+
 def _uris(texto):
-    # um ou mais `"urn:…"===e.uri` ligados por `||`, sem quantificador aninhado
-    padrao = r'((?:"urn:[^"]+"===e\.uri\|\|)*"urn:[^"]+"===e\.uri)\?Gce\+"/devices/anagram/effects/([^"/]+)"'
     ligadas, desligadas = {}, {}
-    for grupo, arquivo in re.findall(padrao, texto):
-        for uri in re.findall(r'"(urn:[^"]+)"', grupo):
+    for uris, arquivo in _cadeias_de_uri(texto):
+        for uri in uris:
             (desligadas if _eh_desligada(arquivo) else ligadas).setdefault(uri, arquivo)
     achadas = {uri: (arquivo, desligadas.get(uri, arquivo)) for uri, arquivo in ligadas.items()}
     return {**GABINETES_GENERICOS, **achadas}
