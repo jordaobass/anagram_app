@@ -15,8 +15,8 @@ import '../../l10n/app_localizations.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../../nucleo/resultado.dart';
-import '../tema/tokens.dart';
 import '../textos.dart';
+import 'dialogo_confirmar.dart';
 
 /// Exporta o preset como está gravado em [slot] (não a edição aberta).
 /// Tudo o que vem do ref é lido antes das esperas: a lista pode fechar no meio.
@@ -87,23 +87,19 @@ Future<_EscolhaLimpar> _perguntar(BuildContext context, SlotPreset slot, String 
         title: Text(l.mpLimparTitulo(slot.rotulo)),
         content: Text(l.mpLimparTexto(nome, slot.rotulo)),
         actions: [
-          TextButton(
-            key: const ValueKey('cancelar-limpar-preset'),
-            style: TextButton.styleFrom(foregroundColor: Cores.texto),
-            onPressed: () => responder(_EscolhaLimpar.cancelar),
-            child: Text(l.cancelar),
-          ),
+          BotaoCancelarDialogo(
+              key: const ValueKey('cancelar-limpar-preset'),
+              rotulo: l.cancelar,
+              aoTocar: () => responder(_EscolhaLimpar.cancelar)),
           OutlinedButton(
             key: const ValueKey('limpar-exportar-antes'),
             onPressed: () => responder(_EscolhaLimpar.exportar),
             child: Text(l.mpExportarAntes),
           ),
-          FilledButton(
-            key: const ValueKey('confirmar-limpar-preset'),
-            style: FilledButton.styleFrom(backgroundColor: Cores.fitaAlerta, foregroundColor: Cores.sobreAlerta),
-            onPressed: () => responder(_EscolhaLimpar.limpar),
-            child: Text(l.mpLimparConfirmar),
-          ),
+          BotaoConfirmarPerda(
+              key: const ValueKey('confirmar-limpar-preset'),
+              rotulo: l.mpLimparConfirmar,
+              aoTocar: () => responder(_EscolhaLimpar.limpar)),
         ],
       );
     },
