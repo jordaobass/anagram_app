@@ -14,6 +14,7 @@ import '../../plataforma/servidor_mcp.dart';
 import '../versao_app.dart';
 import 'ferramenta_salvar.dart';
 import 'ferramentas_ajuste.dart';
+import 'ferramentas_ajustes_globais.dart';
 import 'ferramentas_cadeia.dart';
 import 'ferramentas_leitura.dart';
 import 'sessao_mcp.dart';
@@ -150,6 +151,8 @@ List<FerramentaMcp> ferramentasDoTimbre(SessaoMcp sessao, Ref ref) => [
       EscolherGabinete(sessao),
       Desfazer(sessao),
       SalvarPreset(sessao, ref),
+      LerAjustesGlobais(ref),
+      MudarAjusteGlobal(ref),
     ];
 
 /// 32 bytes aleatórios do gerador seguro, em base64 de URL (sem "=").
