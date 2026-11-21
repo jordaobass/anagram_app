@@ -1,5 +1,8 @@
-Pasta opcional de miniaturas de blocos de terceiros (anagramanswers.com).
-Não vai para o repositório: a publicação depende de autorização do autor das imagens.
-Para usar localmente: python3 ferramentas/gerar_miniaturas.py <pasta-com-os-png> <blocos.json>
-Arte da própria pedaleira (Darkglass, ligado/desligado): python3 ferramentas/baixar_arte_pedaleira.py
-Sem esta pasta preenchida, o app mostra a arte própria por categoria.
+Arte da pedaleira: imagens dos blocos (ligado/desligado) e fotos dos gabinetes da Darkglass
+Electronics, as mesmas da tela da Anagram e do Darkglass Suite, mais os presets de fábrica (fabrica.json).
+Publicadas no repositório com autorização da Darkglass (DECISOES A16).
+Imagens reduzidas: no máximo 256 px de lado, PNG comprimido com pngquant (qualidade 80-95).
+Para regerar (firmware ou Suite novo):
+  python3 ferramentas/baixar_arte_pedaleira.py --suite "<Suite>/assets" --renderer <renderer.prod.js>
+  pngquant --quality=80-95 --strip --skip-if-larger --force --ext .png assets/blocos_terceiros/*.png
+Somente arte da pedaleira entra aqui: ferramentas/verificar_release.sh recusa qualquer outro arquivo.
