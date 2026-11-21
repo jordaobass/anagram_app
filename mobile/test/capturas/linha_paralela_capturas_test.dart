@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:anagram_app/nucleo/modelo/documento_preset.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/capturas_apoio.dart';
@@ -53,5 +54,15 @@ void main() {
     await preparar(tester, const Tamanho('celular-retrato', 390, 844, 2));
     await abrirSlot(tester, '03A');
     await capturar(tester, '$pasta/celular-retrato-5-linha-paralela.png');
+  });
+
+  testWidgets('captura desktop: o par Split + Merge na biblioteca, achado pela busca', (tester) async {
+    await preparar(tester, desktop);
+    await abrirSlot(tester, '02A');
+    await tester.tap(find.byKey(const ValueKey('casa-1-4')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('busca-efeito')), 'paralela');
+    await tester.pumpAndSettle();
+    await capturar(tester, '$pasta/desktop-12-biblioteca-linha-paralela.png');
   });
 }
