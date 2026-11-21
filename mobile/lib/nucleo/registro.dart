@@ -7,6 +7,9 @@ import 'package:logger/logger.dart';
 final saidasDoRegistro = SaidasDoRegistro();
 
 final Logger registro = Logger(
+  // o filtro padrão do pacote só deixa passar com `assert` ligado: na release
+  // o registro saía mudo, no console e no arquivo (provado no Windows, 0.1.17)
+  filter: ProductionFilter(),
   printer: SimplePrinter(printTime: true, colors: false),
   output: saidasDoRegistro,
   level: Level.info,
