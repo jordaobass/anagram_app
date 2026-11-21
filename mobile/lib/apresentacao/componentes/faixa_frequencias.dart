@@ -1,6 +1,6 @@
-// Faixa de frequência do multibanda: 20 Hz a 20 kHz em escala log, uma raia
-// por banda pintada de onde ela começa até onde termina, e uma alça em cada
-// corte. Arrastar a alça move o corte (ao vivo, como o knob); tocar abre o
+// Faixa de frequência do multibanda: 20 Hz a 20 kHz em escala log, a curva
+// de resposta de cada banda (com a altura do Level dela) e uma alça em cada
+// corte, na linha da banda que ele limita. Arrastar a alça move o corte (ao vivo, como o knob); tocar abre o
 // campo para digitar. Banda mutada fica apagada na raia.
 import 'dart:math';
 
@@ -8,20 +8,21 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
+import '../../nucleo/catalogo/curvas_multibanda.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../tema/tokens.dart';
 import '../textos.dart';
+import 'barras_ganho.dart';
 import 'botao_giratorio.dart' show AoMudarValor;
 import 'dialogo_valor.dart';
 import 'pintor_faixa_frequencias.dart';
 
-/// Posição de uma frequência na faixa, de 0 (20 Hz) a 1 (20 kHz).
-double fracaoDaFrequencia(num hz) => (log(hz.clamp(minimoFaixa, maximoFaixa) / minimoFaixa) / log(maximoFaixa / minimoFaixa));
+export '../../nucleo/catalogo/curvas_multibanda.dart' show fracaoDaFrequencia, frequenciaDaFracao, minimoFaixa, maximoFaixa;
 
-num frequenciaDaFracao(double fracao) => minimoFaixa * pow(maximoFaixa / minimoFaixa, fracao.clamp(0.0, 1.0));
-
-const minimoFaixa = 20.0;
-const maximoFaixa = 20000.0;
+/// O valor de um corte como a pedaleira escreve: passa-baixas no máximo
+/// (20 kHz) não corta nada e aparece "OFF".
+String textoDoCorte(AppLocalizations l, DefinicaoParametro p, num valor) =>
+    p.nome.toLowerCase().contains('lo-pass') && valor >= p.maximo ? l.mbOff : l.valorDe(p, valor);
 
 class FaixaFrequencias extends StatefulWidget {
   const FaixaFrequencias({
@@ -54,12 +55,25 @@ class _EstadoFaixaFrequencias extends State<FaixaFrequencias> {
     return _arrastando[simbolo] ?? fracaoDaFrequencia(widget.valor(p));
   }
 
+  /// O corte em Hz (o da alça durante o arraste); nulo é a borda do áudio.
+  double? _corte(String? simbolo) {
+    final p = simbolo == null ? null : widget.parametro(simbolo);
+    if (p == null) return null;
+    return frequenciaDaFracao(_fracao(simbolo, inferior: true)).toDouble();
+  }
+
+  double _nivel(String? simbolo) {
+    final p = simbolo == null ? null : widget.parametro(simbolo);
+    return p == null ? 0 : widget.valor(p).toDouble();
+  }
+
   List<RaiaBanda> get _raias => [
         for (final b in widget.arranjo.bandas)
           RaiaBanda(
-            cor: Cores.daBanda(b.banda),
-            de: _fracao(b.inferior, inferior: true),
-            ate: _fracao(b.superior, inferior: false),
+            cor: Cores.daBanda(b.banda, b.paleta),
+            inferior: _corte(b.inferior),
+            superior: _corte(b.superior),
+            nivelDb: _nivel(b.nivel),
             muda: widget.mudas.contains(b.banda),
           ),
       ];
@@ -77,12 +91,45 @@ class _EstadoFaixaFrequencias extends State<FaixaFrequencias> {
             child: CustomPaint(
                 painter: PintorFaixaFrequencias(raias: _raias, rotulos: _rotulosDaRegua(), alturaRaia: Medidas.alturaRaiaBanda)),
           ),
+          ..._tracos(largura),
           for (final MapEntry(key: simbolo, value: bandas) in widget.arranjo.alcas.entries)
             if (widget.parametro(simbolo) case final p?) _alca(context, p, bandas, largura),
         ]),
       );
     });
   }
+
+  /// Threshold e Level de cada banda, de um corte ao outro (banda com corte
+  /// invertido não tem largura e fica sem traço).
+  List<Widget> _tracos(double largura) {
+    final altura = widget.arranjo.bandas.length * Medidas.alturaRaiaBanda;
+    return [
+      for (final b in widget.arranjo.bandas)
+        for (final (simbolo, cor) in [(b.limiar, Cores.linhaThreshold), (b.nivel, Cores.linhaLevel)])
+          if (simbolo != null && widget.parametro(simbolo) != null)
+            if (_traco(b, widget.parametro(simbolo)!, cor) case final t when t.ate > t.de)
+              Positioned(
+                left: t.de * largura,
+                width: (t.ate - t.de) * largura,
+                top: topoDoTraco(widget.valor(t.parametro), altura),
+                height: Medidas.alvoTracoGanho,
+                child: BarraGanho(
+                  key: ValueKey('traco-${t.parametro.simbolo}'),
+                  traco: t,
+                  valor: widget.valor(t.parametro),
+                  alturaFaixa: altura,
+                  aoMudar: widget.aoMudar(t.parametro),
+                ),
+              ),
+    ];
+  }
+
+  TracoGanho _traco(ArranjoBanda b, DefinicaoParametro p, Color cor) => TracoGanho(
+      parametro: p,
+      cor: cor,
+      de: _fracao(b.inferior, inferior: true),
+      ate: _fracao(b.superior, inferior: false),
+      rotulo: p.nome);
 
   /// Perto do fim da faixa o valor da alça vai para a esquerda do traço.
   static const _rotuloVira = 0.8;
@@ -97,23 +144,27 @@ class _EstadoFaixaFrequencias extends State<FaixaFrequencias> {
   Widget _alca(BuildContext context, DefinicaoParametro p, List<BandaMultibanda> bandas, double largura) {
     final linhas = [for (final b in bandas) widget.arranjo.bandas.indexWhere((a) => a.banda == b)];
     final topo = linhas.reduce(min) * Medidas.alturaRaiaBanda;
+    final altura = (linhas.reduce(max) - linhas.reduce(min) + 1) * Medidas.alturaRaiaBanda;
+    final total = widget.arranjo.bandas.length * Medidas.alturaRaiaBanda;
     final fracao = _fracao(p.simbolo, inferior: true);
     final valor = widget.valor(p);
     return Positioned(
       left: fracao * largura - Medidas.larguraAlcaFrequencia / 2,
       top: topo,
       width: Medidas.larguraAlcaFrequencia,
-      height: (linhas.reduce(max) - linhas.reduce(min) + 1) * Medidas.alturaRaiaBanda,
+      height: altura,
       child: AlcaFrequencia(
         key: ValueKey('alca-${p.simbolo}'),
         parametro: p,
-        texto: AppLocalizations.of(context).valorDe(p, _arrastando.containsKey(p.simbolo) ? _valorDaFracao(p, fracao) : valor),
+        texto: textoDoCorte(AppLocalizations.of(context), p, _arrastando.containsKey(p.simbolo) ? _valorDaFracao(p, fracao) : valor),
         aoArrastar: (dx) => _arrastar(p, dx / largura),
         aoSoltar: () => _soltar(p),
         aoTocar: () => _digitar(context, p, valor),
         aoPassar: (passo) => widget.aoMudar(p)(_valorDaFracao(p, fracao + passo), arrastando: false),
         textoDoPasso: (passo) => AppLocalizations.of(context).valorDe(p, _valorDaFracao(p, fracao + passo)),
         rotuloAEsquerda: fracao > _rotuloVira,
+        acima: topo,
+        abaixo: total - topo - altura,
       ),
     );
   }
@@ -154,6 +205,8 @@ class AlcaFrequencia extends StatelessWidget {
     required this.aoPassar,
     required this.textoDoPasso,
     this.rotuloAEsquerda = false,
+    this.acima = 0,
+    this.abaixo = 0,
   });
 
   final DefinicaoParametro parametro;
@@ -168,6 +221,10 @@ class AlcaFrequencia extends StatelessWidget {
 
   /// Perto do fim da faixa o valor vai para a esquerda do traço.
   final bool rotuloAEsquerda;
+
+  /// Quanto o traço passa do alvo, para cortar as curvas da faixa inteira.
+  final double acima;
+  final double abaixo;
 
   static const _passo = 0.01;
 
@@ -190,7 +247,8 @@ class AlcaFrequencia extends StatelessWidget {
               onHorizontalDragEnd: (_) => aoSoltar(),
               onHorizontalDragCancel: aoSoltar,
               onTap: aoTocar,
-              child: CustomPaint(painter: PintorAlcaFrequencia(texto: texto, estilo: _estilo(context), aEsquerda: rotuloAEsquerda)),
+              child: CustomPaint(painter: PintorAlcaFrequencia(
+                  texto: texto, estilo: _estilo(context), aEsquerda: rotuloAEsquerda, acima: acima, abaixo: abaixo)),
             ),
           ),
         ),

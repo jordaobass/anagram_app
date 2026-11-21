@@ -38,6 +38,16 @@ void main() {
     await _foto('02-escolher-destino');
   });
 
+  testWidgets('pergunta antes de limpar o preset, com exportar à mão', (tester) async {
+    await preparar(tester, _desktop);
+    await entrarNaDemonstracao(tester);
+    await _abrirMenuDo01A(tester);
+    await tester.tap(find.byKey(const ValueKey('op-limpar')));
+    await tester.pumpAndSettle();
+    await assentarImagens(tester);
+    await _foto('04-confirmar-limpar');
+  });
+
   testWidgets('lista do celular com o menu do preset', (tester) async {
     await preparar(tester, _celular);
     // no celular a lista é outra tela: abre um preset e vai para a lista

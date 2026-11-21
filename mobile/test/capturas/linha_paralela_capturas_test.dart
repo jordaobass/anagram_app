@@ -1,6 +1,6 @@
 // Capturas da linha paralela com o Split e a linha 2 em colunas diferentes:
-// a derivação tem de sair do Split, ir ao PRIMEIRO bloco da linha 2 e voltar
-// do ÚLTIMO para o Merge (como a pedaleira faz), qualquer que seja a coluna.
+// a derivação sai do Split para a casa 1 da linha 2 e volta da casa 12 para
+// o Merge (como a pedaleira faz), qualquer que seja a coluna.
 import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
@@ -56,7 +56,7 @@ void main() {
     await capturar(tester, '$pasta/celular-retrato-5-linha-paralela.png');
   });
 
-  testWidgets('captura desktop: o par Split + Merge na biblioteca, achado pela busca', (tester) async {
+  testWidgets('captura desktop: Split e Merge na biblioteca, achados pela busca', (tester) async {
     await preparar(tester, desktop);
     await abrirSlot(tester, '02A');
     await tester.tap(find.byKey(const ValueKey('casa-1-4')));

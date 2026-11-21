@@ -9,6 +9,10 @@
 /// As três bandas, na ordem da tela.
 enum BandaMultibanda { graves, medios, agudos }
 
+/// As cores das bandas seguem a tela de cada bloco na pedaleira: o Entropia
+/// pinta graves verde-água, médios roxo e agudos laranja.
+enum PaletaBandas { ignissor, entropia }
+
 /// Como um parâmetro aparece na coluna da banda.
 enum TipoControleBanda { seletor, fader, knob }
 
@@ -28,6 +32,8 @@ class ArranjoBanda {
     required this.mudo,
     required this.controles,
     this.chave,
+    this.nivel,
+    this.paleta = PaletaBandas.ignissor,
   });
 
   final BandaMultibanda banda;
@@ -41,6 +47,19 @@ class ArranjoBanda {
   /// Liga/desliga da compressão da banda (Ignissor), no título da coluna.
   final String? chave;
   final List<ControleBanda> controles;
+
+  /// Nível da banda em dB: a altura da curva dela na faixa de frequência.
+  final String? nivel;
+  final PaletaBandas paleta;
+
+  /// Símbolos da compressão da banda (Ignissor): o gráfico entrada × saída.
+  String? get limiar => _doSufixo('_threshold');
+  String? get razao => _doSufixo('_ratio');
+
+  /// Quantidade de drive da banda (Entropia): a onda que satura.
+  String? get drive => _doSufixo('_drive_amount');
+
+  String? _doSufixo(String sufixo) => controles.where((c) => c.simbolo.endsWith(sufixo)).firstOrNull?.simbolo;
 }
 
 class ArranjoMultibanda {
@@ -89,6 +108,7 @@ ArranjoBanda _bandaIgnissor(BandaMultibanda banda, String prefixo, String? infer
       superior: superior,
       chave: '${prefixo}_comp_enabled',
       mudo: '${prefixo}_mute',
+      nivel: '${prefixo}_level',
       controles: [
         ControleBanda('${prefixo}_ratio', 'Ratio', _seletor),
         ControleBanda('${prefixo}_threshold', 'Threshold', _fader),
@@ -116,6 +136,8 @@ ArranjoBanda _bandaDriveEntropia(BandaMultibanda banda, String prefixo, String r
       inferior: '${prefixo}_hp_freq',
       superior: '${prefixo}_lp_freq',
       mudo: '${prefixo}_mute',
+      nivel: '${prefixo}_level',
+      paleta: PaletaBandas.entropia,
       controles: [
         ControleBanda('${prefixo}_drive_typemode', 'Type', _seletor),
         ControleBanda('${prefixo}_level', 'Level', _fader),
@@ -129,6 +151,8 @@ final _entropia = ArranjoMultibanda(bandas: [
     inferior: null,
     superior: 'lo_lp_freq',
     mudo: 'lo_mute',
+    nivel: 'lo_level',
+    paleta: PaletaBandas.entropia,
     controles: [
       ControleBanda('lo_comp_type', 'Comp Type', _seletor),
       ControleBanda('lo_comp_mode', 'ATT / REL', _seletor),

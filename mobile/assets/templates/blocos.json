@@ -1,0 +1,751 @@
+{
+ "versao": 1,
+ "blocos": [
+  {
+   "uri": "urn:darkglass:ignissor",
+   "templates": [
+    {
+     "id": "dg-neutral-ground",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Neutral Ground",
+      "en": "Neutral Ground",
+      "es": "Neutral Ground"
+     },
+     "descricao": {
+      "pt": "Padrão do Ignissor — comece a ajustar daqui!",
+      "en": "Ignissor default - Start tweaking!",
+      "es": "Valores por defecto del Ignissor: ¡empieza a ajustar!"
+     },
+     "valores": {
+      "comp_level": 0,
+      "clean_level": -24,
+      "lomid_xo_freq": 250,
+      "midhi_xo_freq": 1500,
+      "lo_comp_enabled": 1,
+      "lo_threshold": -30,
+      "lo_ratio": 4,
+      "lo_attack": 1,
+      "lo_release": 200,
+      "lo_level": 0,
+      "mid_comp_enabled": 1,
+      "mid_threshold": -30,
+      "mid_ratio": 4,
+      "mid_attack": 1,
+      "mid_release": 200,
+      "mid_level": 0,
+      "hi_comp_enabled": 1,
+      "hi_threshold": -30,
+      "hi_ratio": 4,
+      "hi_attack": 1,
+      "hi_release": 200,
+      "hi_level": 0,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
+    },
+    {
+     "id": "dg-studio-glue",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Studio Glue",
+      "en": "Studio Glue",
+      "es": "Studio Glue"
+     },
+     "descricao": {
+      "pt": "Even sound with good sustain.",
+      "en": "Even sound with good sustain.",
+      "es": "Even sound with good sustain."
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-slap-n-pop",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Slap 'n' Pop",
+      "en": "Slap 'n' Pop",
+      "es": "Slap 'n' Pop"
+     },
+     "descricao": {
+      "pt": "Catch thumb and pop spikes but keep the attack",
+      "en": "Catch thumb and pop spikes but keep the attack",
+      "es": "Catch thumb and pop spikes but keep the attack"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-demudifier",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Demudifier",
+      "en": "Demudifier",
+      "es": "Demudifier"
+     },
+     "descricao": {
+      "pt": "Place in front of a drive to increase clarity",
+      "en": "Place in front of a drive to increase clarity",
+      "es": "Place in front of a drive to increase clarity"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-cordial",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Cordial",
+      "en": "Cordial",
+      "es": "Cordial"
+     },
+     "descricao": {
+      "pt": "Long sustain and overall control, a good companion for chords",
+      "en": "Long sustain and overall control, a good companion for chords",
+      "es": "Long sustain and overall control, a good companion for chords"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-pick-metal",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Pick Metal",
+      "en": "Pick Metal",
+      "es": "Pick Metal"
+     },
+     "descricao": {
+      "pt": "Punchy and controlled low end with clear pick attack. Last in the signal chain",
+      "en": "Punchy and controlled low end with clear pick attack. Last in the signal chain",
+      "es": "Punchy and controlled low end with clear pick attack. Last in the signal chain"
+     },
+     "valores": null
+    },
+    {
+     "id": "app-suave",
+     "origem": "app",
+     "nome": {
+      "pt": "Suave e transparente",
+      "en": "Gentle and transparent",
+      "es": "Suave y transparente"
+     },
+     "descricao": {
+      "pt": "Ratio baixo nas três bandas: só segura os picos, sem mudar o caráter.",
+      "en": "Low ratio on all three bands: only holds the peaks, keeps the character.",
+      "es": "Ratio bajo en las tres bandas: solo sujeta los picos, sin cambiar el carácter."
+     },
+     "valores": {
+      "lomid_xo_freq": 250,
+      "midhi_xo_freq": 1500,
+      "comp_level": 0,
+      "clean_level": -24,
+      "lo_comp_enabled": 1,
+      "lo_threshold": -18,
+      "lo_ratio": 2,
+      "lo_attack": 10,
+      "lo_release": 200,
+      "lo_level": 0,
+      "lo_mute": 0,
+      "mid_comp_enabled": 1,
+      "mid_threshold": -18,
+      "mid_ratio": 2,
+      "mid_attack": 10,
+      "mid_release": 200,
+      "mid_level": 0,
+      "mid_mute": 0,
+      "hi_comp_enabled": 1,
+      "hi_threshold": -18,
+      "hi_ratio": 2,
+      "hi_attack": 10,
+      "hi_release": 200,
+      "hi_level": 0,
+      "hi_mute": 0
+     }
+    },
+    {
+     "id": "app-slap",
+     "origem": "app",
+     "nome": {
+      "pt": "Slap e pop",
+      "en": "Slap and pop",
+      "es": "Slap y pop"
+     },
+     "descricao": {
+      "pt": "Agudos com ataque rápido e mais compressão para domar o pop; graves quase soltos.",
+      "en": "Fast, heavier compression on the highs to tame the pop; lows nearly free.",
+      "es": "Agudos con ataque rápido y más compresión para domar el pop; graves casi libres."
+     },
+     "valores": {
+      "lomid_xo_freq": 200,
+      "midhi_xo_freq": 1800,
+      "comp_level": 0,
+      "clean_level": -24,
+      "lo_comp_enabled": 1,
+      "lo_threshold": -12,
+      "lo_ratio": 2,
+      "lo_attack": 20,
+      "lo_release": 150,
+      "lo_level": 0,
+      "lo_mute": 0,
+      "mid_comp_enabled": 1,
+      "mid_threshold": -24,
+      "mid_ratio": 4,
+      "mid_attack": 5,
+      "mid_release": 120,
+      "mid_level": 0,
+      "mid_mute": 0,
+      "hi_comp_enabled": 1,
+      "hi_threshold": -30,
+      "hi_ratio": 8,
+      "hi_attack": 0.5,
+      "hi_release": 80,
+      "hi_level": 0,
+      "hi_mute": 0
+     }
+    },
+    {
+     "id": "app-grave-travado",
+     "origem": "app",
+     "nome": {
+      "pt": "Grave travado",
+      "en": "Locked low end",
+      "es": "Grave firme"
+     },
+     "descricao": {
+      "pt": "Graves bem comprimidos e constantes, médios leves e agudos sem compressão.",
+      "en": "Heavily compressed, steady lows; light mids; uncompressed highs.",
+      "es": "Graves muy comprimidos y constantes, medios ligeros y agudos sin compresión."
+     },
+     "valores": {
+      "lomid_xo_freq": 200,
+      "midhi_xo_freq": 1500,
+      "comp_level": 0,
+      "clean_level": -24,
+      "lo_comp_enabled": 1,
+      "lo_threshold": -36,
+      "lo_ratio": 8,
+      "lo_attack": 3,
+      "lo_release": 250,
+      "lo_level": 0,
+      "lo_mute": 0,
+      "mid_comp_enabled": 1,
+      "mid_threshold": -24,
+      "mid_ratio": 2,
+      "mid_attack": 10,
+      "mid_release": 200,
+      "mid_level": 0,
+      "mid_mute": 0,
+      "hi_comp_enabled": 0,
+      "hi_threshold": -12,
+      "hi_ratio": 2,
+      "hi_attack": 10,
+      "hi_release": 200,
+      "hi_level": 0,
+      "hi_mute": 0
+     }
+    },
+    {
+     "id": "app-paralelo",
+     "origem": "app",
+     "nome": {
+      "pt": "Paralelo (estilo NY)",
+      "en": "Parallel (NY style)",
+      "es": "Paralelo (estilo NY)"
+     },
+     "descricao": {
+      "pt": "Compressão pesada nas três bandas misturada com o sinal seco pelo Clean Level.",
+      "en": "Heavy compression on all bands blended with the dry signal through Clean Level.",
+      "es": "Compresión fuerte en las tres bandas mezclada con la señal seca por el Clean Level."
+     },
+     "valores": {
+      "lomid_xo_freq": 250,
+      "midhi_xo_freq": 1500,
+      "comp_level": -3,
+      "clean_level": 0,
+      "lo_comp_enabled": 1,
+      "lo_threshold": -40,
+      "lo_ratio": 8,
+      "lo_attack": 1,
+      "lo_release": 150,
+      "lo_level": 0,
+      "lo_mute": 0,
+      "mid_comp_enabled": 1,
+      "mid_threshold": -40,
+      "mid_ratio": 8,
+      "mid_attack": 1,
+      "mid_release": 150,
+      "mid_level": 0,
+      "mid_mute": 0,
+      "hi_comp_enabled": 1,
+      "hi_threshold": -40,
+      "hi_ratio": 8,
+      "hi_attack": 1,
+      "hi_release": 150,
+      "hi_level": 0,
+      "hi_mute": 0
+     }
+    },
+    {
+     "id": "app-limitador",
+     "origem": "app",
+     "nome": {
+      "pt": "Limitador de picos",
+      "en": "Peak limiter",
+      "es": "Limitador de picos"
+     },
+     "descricao": {
+      "pt": "Só age nos picos mais altos, com ratio alto e ataque muito rápido.",
+      "en": "Acts only on the loudest peaks, with high ratio and very fast attack.",
+      "es": "Solo actúa en los picos más altos, con ratio alto y ataque muy rápido."
+     },
+     "valores": {
+      "lomid_xo_freq": 250,
+      "midhi_xo_freq": 1500,
+      "comp_level": 0,
+      "clean_level": -24,
+      "lo_comp_enabled": 1,
+      "lo_threshold": -6,
+      "lo_ratio": 20,
+      "lo_attack": 0.1,
+      "lo_release": 100,
+      "lo_level": 0,
+      "lo_mute": 0,
+      "mid_comp_enabled": 1,
+      "mid_threshold": -6,
+      "mid_ratio": 20,
+      "mid_attack": 0.1,
+      "mid_release": 100,
+      "mid_level": 0,
+      "mid_mute": 0,
+      "hi_comp_enabled": 1,
+      "hi_threshold": -6,
+      "hi_ratio": 20,
+      "hi_attack": 0.1,
+      "hi_release": 100,
+      "hi_level": 0,
+      "hi_mute": 0
+     }
+    }
+   ]
+  },
+  {
+   "uri": "urn:darkglass:entropia",
+   "templates": [
+    {
+     "id": "dg-glass-drive",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Glass Drive",
+      "en": "Glass Drive",
+      "es": "Glass Drive"
+     },
+     "descricao": {
+      "pt": "Padrão do Entropia — clareza cristalina.",
+      "en": "Entropia defaults - Glass-like clarity",
+      "es": "Valores por defecto del Entropia: claridad cristalina."
+     },
+     "valores": {
+      "mid_drive_typemode": 7,
+      "hi_drive_typemode": 23,
+      "lo_level": 0,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 0,
+      "lo_comp_amount": 5,
+      "lo_comp_ratio": 0,
+      "lo_lp_freq": 250,
+      "mid_level": 0,
+      "mid_drive_amount": 5,
+      "mid_hp_freq": 250,
+      "mid_lp_freq": 800,
+      "hi_level": 0,
+      "hi_drive_amount": 5,
+      "hi_hp_freq": 800,
+      "hi_lp_freq": 20000,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
+    },
+    {
+     "id": "dg-hard-rock-bite",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Hard Rock Bite",
+      "en": "Hard Rock Bite",
+      "es": "Hard Rock Bite"
+     },
+     "descricao": {
+      "pt": "Mid-Forward Distortion to fit and cut through a dense rock mix",
+      "en": "Mid-Forward Distortion to fit and cut through a dense rock mix",
+      "es": "Mid-Forward Distortion to fit and cut through a dense rock mix"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-tubey-tone",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Tubey Tone",
+      "en": "Tubey Tone",
+      "es": "Tubey Tone"
+     },
+     "descricao": {
+      "pt": "Tube amp-like low gain breakup, warm and woolly!",
+      "en": "Tube amp-like low gain breakup, warm and woolly!",
+      "es": "Tube amp-like low gain breakup, warm and woolly!"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-nasty-attack",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Nasty Attack",
+      "en": "Nasty Attack",
+      "es": "Nasty Attack"
+     },
+     "descricao": {
+      "pt": "Want to be heard and still support the low end? Try here!",
+      "en": "Want to be heard and still support the low end? Try here!",
+      "es": "Want to be heard and still support the low end? Try here!"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-panic",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Panic!",
+      "en": "Panic!",
+      "es": "Panic!"
+     },
+     "descricao": {
+      "pt": "There was a muse that inspired this crazy overdriven sound!",
+      "en": "There was a muse that inspired this crazy overdriven sound!",
+      "es": "There was a muse that inspired this crazy overdriven sound!"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-alpha-and-omega",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Alpha and Omega",
+      "en": "Alpha and Omega",
+      "es": "Alpha and Omega"
+     },
+     "descricao": {
+      "pt": "Combines middle drive from Alpha to the high end of Omega. Best of both worlds!",
+      "en": "Combines middle drive from Alpha to the high end of Omega. Best of both worlds!",
+      "es": "Combines middle drive from Alpha to the high end of Omega. Best of both worlds!"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-electric-drive",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Electric Drive",
+      "en": "Electric Drive",
+      "es": "Electric Drive"
+     },
+     "descricao": {
+      "pt": "Distortion insanity with the new B3K Turbo! Try slapping this!",
+      "en": "Distortion insanity with the new B3K Turbo! Try slapping this!",
+      "es": "Distortion insanity with the new B3K Turbo! Try slapping this!"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-synth-like-drive",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Synth-like drive",
+      "en": "Synth-like drive",
+      "es": "Synth-like drive"
+     },
+     "descricao": {
+      "pt": "Low gain synth like tone",
+      "en": "Low gain synth like tone",
+      "es": "Low gain synth like tone"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-carnivore",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Carnivore",
+      "en": "Carnivore",
+      "es": "Carnivore"
+     },
+     "descricao": {
+      "pt": "Dirty and warm grind. Works great with low tunings",
+      "en": "Dirty and warm grind. Works great with low tunings",
+      "es": "Dirty and warm grind. Works great with low tunings"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-vintage-growl",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Vintage Growl",
+      "en": "Vintage Growl",
+      "es": "Vintage Growl"
+     },
+     "descricao": {
+      "pt": "High gain pushed tube amp growl",
+      "en": "High gain pushed tube amp growl",
+      "es": "High gain pushed tube amp growl"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-ultimate-fuzz",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Ultimate Fuzz",
+      "en": "Ultimate Fuzz",
+      "es": "Ultimate Fuzz"
+     },
+     "descricao": {
+      "pt": "Omega Turbo drive to cover your fuzz needs",
+      "en": "Omega Turbo drive to cover your fuzz needs",
+      "es": "Omega Turbo drive to cover your fuzz needs"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-modern-metal",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Modern Metal",
+      "en": "Modern Metal",
+      "es": "Modern Metal"
+     },
+     "descricao": {
+      "pt": "Very articulate hi-gain sound",
+      "en": "Very articulate hi-gain sound",
+      "es": "Very articulate hi-gain sound"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-rocky-road",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Rocky Road",
+      "en": "Rocky Road",
+      "es": "Rocky Road"
+     },
+     "descricao": {
+      "pt": "Timeless hard rock tone",
+      "en": "Timeless hard rock tone",
+      "es": "Timeless hard rock tone"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-slightly-hairy",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Slightly Hairy",
+      "en": "Slightly Hairy",
+      "es": "Slightly Hairy"
+     },
+     "descricao": {
+      "pt": "Oh, did I say slightly?",
+      "en": "Oh, did I say slightly?",
+      "es": "Oh, did I say slightly?"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-sand-people",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Sand People",
+      "en": "Sand People",
+      "es": "Sand People"
+     },
+     "descricao": {
+      "pt": "Picture yourself in a desert in a galaxy far, far away...",
+      "en": "Picture yourself in a desert in a galaxy far, far away...",
+      "es": "Picture yourself in a desert in a galaxy far, far away..."
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-vintage-dirt",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Vintage Dirt",
+      "en": "Vintage Dirt",
+      "es": "Vintage Dirt"
+     },
+     "descricao": {
+      "pt": "Full mid-enhanced distortion",
+      "en": "Full mid-enhanced distortion",
+      "es": "Full mid-enhanced distortion"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-modern-peaches",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Modern Peaches",
+      "en": "Modern Peaches",
+      "es": "Modern Peaches"
+     },
+     "descricao": {
+      "pt": "A modern distorted sound with a slight edge",
+      "en": "A modern distorted sound with a slight edge",
+      "es": "A modern distorted sound with a slight edge"
+     },
+     "valores": null
+    },
+    {
+     "id": "app-drive-medios",
+     "origem": "app",
+     "nome": {
+      "pt": "Drive só nos médios",
+      "en": "Drive on the mids only",
+      "es": "Drive solo en los medios"
+     },
+     "descricao": {
+      "pt": "Graves limpos e comprimidos, distorção só nos médios; agudos sem drive.",
+      "en": "Clean, compressed lows; distortion only on the mids; highs without drive.",
+      "es": "Graves limpios y comprimidos, distorsión solo en los medios; agudos sin drive."
+     },
+     "valores": {
+      "lo_comp_type": 1,
+      "lo_comp_mode": 4,
+      "lo_comp_amount": 5,
+      "lo_comp_ratio": 0,
+      "lo_lp_freq": 250,
+      "lo_level": 0,
+      "lo_mute": 0,
+      "mid_drive_typemode": 5,
+      "mid_drive_amount": 6,
+      "mid_hp_freq": 250,
+      "mid_lp_freq": 2500,
+      "mid_level": 0,
+      "mid_mute": 0,
+      "hi_drive_typemode": 0,
+      "hi_drive_amount": 0,
+      "hi_hp_freq": 2500,
+      "hi_lp_freq": 20000,
+      "hi_level": -6,
+      "hi_mute": 0
+     }
+    },
+    {
+     "id": "app-moderno",
+     "origem": "app",
+     "nome": {
+      "pt": "Moderno agressivo",
+      "en": "Aggressive modern",
+      "es": "Moderno agresivo"
+     },
+     "descricao": {
+      "pt": "Graves firmes e muito comprimidos, médios e agudos com drive alto.",
+      "en": "Tight, heavily compressed lows; high drive on mids and highs.",
+      "es": "Graves firmes y muy comprimidos, medios y agudos con drive alto."
+     },
+     "valores": {
+      "lo_comp_type": 1,
+      "lo_comp_mode": 1,
+      "lo_comp_amount": 6,
+      "lo_comp_ratio": 1,
+      "lo_lp_freq": 200,
+      "lo_level": 0,
+      "lo_mute": 0,
+      "mid_drive_typemode": 4,
+      "mid_drive_amount": 7,
+      "mid_hp_freq": 200,
+      "mid_lp_freq": 1500,
+      "mid_level": 0,
+      "mid_mute": 0,
+      "hi_drive_typemode": 24,
+      "hi_drive_amount": 7,
+      "hi_hp_freq": 1500,
+      "hi_lp_freq": 12000,
+      "hi_level": -3,
+      "hi_mute": 0
+     }
+    },
+    {
+     "id": "app-sujo-sutil",
+     "origem": "app",
+     "nome": {
+      "pt": "Sujo sutil",
+      "en": "Subtle grit",
+      "es": "Sucio sutil"
+     },
+     "descricao": {
+      "pt": "Pouco drive nos médios e agudos, para dar cor sem perder a definição.",
+      "en": "A little drive on mids and highs, for color without losing definition.",
+      "es": "Poco drive en medios y agudos, para dar color sin perder definición."
+     },
+     "valores": {
+      "lo_comp_type": 2,
+      "lo_comp_mode": 4,
+      "lo_comp_amount": 3,
+      "lo_comp_ratio": 0,
+      "lo_lp_freq": 300,
+      "lo_level": 0,
+      "lo_mute": 0,
+      "mid_drive_typemode": 5,
+      "mid_drive_amount": 3,
+      "mid_hp_freq": 300,
+      "mid_lp_freq": 2000,
+      "mid_level": -3,
+      "mid_mute": 0,
+      "hi_drive_typemode": 1,
+      "hi_drive_amount": 2,
+      "hi_hp_freq": 2000,
+      "hi_lp_freq": 10000,
+      "hi_level": -6,
+      "hi_mute": 0
+     }
+    },
+    {
+     "id": "app-graves-limpos-bite",
+     "origem": "app",
+     "nome": {
+      "pt": "Graves limpos + agudos com bite",
+      "en": "Clean lows + biting highs",
+      "es": "Graves limpios + agudos con mordida"
+     },
+     "descricao": {
+      "pt": "Graves comprimidos e limpos, médios sem drive e drive só nos agudos.",
+      "en": "Compressed clean lows, mids without drive and drive only on the highs.",
+      "es": "Graves comprimidos y limpios, medios sin drive y drive solo en los agudos."
+     },
+     "valores": {
+      "lo_comp_type": 1,
+      "lo_comp_mode": 4,
+      "lo_comp_amount": 4,
+      "lo_comp_ratio": 0,
+      "lo_lp_freq": 300,
+      "lo_level": 0,
+      "lo_mute": 0,
+      "mid_drive_typemode": 0,
+      "mid_drive_amount": 0,
+      "mid_hp_freq": 300,
+      "mid_lp_freq": 1200,
+      "mid_level": -3,
+      "mid_mute": 0,
+      "hi_drive_typemode": 11,
+      "hi_drive_amount": 6,
+      "hi_hp_freq": 1200,
+      "hi_lp_freq": 9000,
+      "hi_level": -3,
+      "hi_mute": 0
+     }
+    }
+   ]
+  }
+ ]
+}

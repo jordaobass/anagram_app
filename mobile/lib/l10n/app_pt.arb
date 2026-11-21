@@ -509,15 +509,11 @@
       }
     }
   },
-  "lpCriar": "CRIAR LINHA PARALELA",
-  "lpCriarDica": "Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.",
-  "lpRemover": "REMOVER LINHA PARALELA",
-  "lpRemoverTitulo": "Remover a linha paralela?",
-  "lpRemoverTexto": "Saem o Split, o Merge e os {quantidade} blocos da linha 2.",
+  "lpRemoverTitulo": "Remover o Split?",
+  "lpRemoverTexto": "Sem o Split a linha 2 não recebe sinal: saem também o Merge e os {quantidade} blocos da linha 2.",
   "lpRemoverConfirmar": "REMOVER",
-  "lpSemEspaco": "A linha 1 precisa de duas casas livres para o Split e o Merge.",
   "@lpRemoverTexto": {
-    "description": "Confirmação ao remover a linha paralela com blocos na linha 2",
+    "description": "Confirmação ao remover o Split com blocos na linha 2",
     "placeholders": {
       "quantidade": {
         "type": "int"
@@ -718,11 +714,6 @@
   "@mbBuscarOpcao": {
     "description": "Dica do campo de busca na lista de opções longas (tipos de drive)"
   },
-  "smFaixaCriar": "+ Criar linha paralela · Split, linha 2 e Merge",
-  "smItemBiblioteca": "Split + Merge (linha paralela)",
-  "smItemBibliotecaDica": "Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.",
-  "smJaTemLinhaParalela": "Este preset já tem linha paralela (um Split e um Merge por preset).",
-  "smDividirDepois": "Dividir o sinal depois deste bloco",
   "smOrdemInvalida": "O Split precisa ficar antes do Merge na linha 1.",
   "smSoNaLinha1": "Split e Merge ficam na linha 1.",
   "gvAnterior": "{rotulo}: opção anterior",
@@ -832,5 +823,124 @@
   "mcpSalvar": "SALVAR",
   "mcpAgoraNao": "AGORA NÃO",
   "ttDicaMouse": "Pare o mouse sobre o nome de um controle para saber o que ele faz com o som",
-  "ttDicaToque": "Toque no nome de um controle para saber o que ele faz com o som"
+  "ttDicaToque": "Toque no nome de um controle para saber o que ele faz com o som",
+  "smUmSplit": "Este preset já tem um Split (um por preset).",
+  "smUmMerge": "Este preset já tem um Merge (um por preset).",
+  "smMergeSemSplit": "Coloque o Split antes: o Merge junta a linha 2, que só existe com o Split.",
+  "smLinha2SemSplit": "Sem Split na linha 1, esta linha ainda não recebe sinal.",
+  "@smLinha2SemSplit": {
+    "description": "Na biblioteca aberta numa casa da linha 2 de um preset sem Split"
+  },
+  "lpCriar": "CRIAR LINHA PARALELA",
+  "lpCriarDica": "Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.",
+  "lpRemover": "REMOVER LINHA PARALELA",
+  "lpSemEspaco": "A linha 1 precisa de duas casas livres para o Split e o Merge.",
+  "smFaixaCriar": "+ Criar linha paralela · Split, linha 2 e Merge",
+  "smItemBiblioteca": "Split + Merge (linha paralela)",
+  "smItemBibliotecaDica": "Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.",
+  "smJaTemLinhaParalela": "Este preset já tem linha paralela (um Split e um Merge por preset).",
+  "smDividirDepois": "Dividir o sinal depois deste bloco",
+  "mpExportarJson": "Exportar JSON…",
+  "mpLimpar": "Limpar preset…",
+  "mpLimparFabrica": "Limpar preset (a Fábrica é só leitura)",
+  "mpLimparTitulo": "Limpar o {slot}?",
+  "@mpLimparTitulo": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mpLimparTexto": "O preset \"{nome}\" sai do slot {slot} na pedaleira e o slot fica vazio. Não dá para desfazer. Para guardar uma cópia, exporte o JSON antes.",
+  "@mpLimparTexto": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      },
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mpExportarAntes": "Exportar JSON",
+  "mpLimparConfirmar": "Limpar",
+  "mpLimpo": "{slot} limpo: o slot ficou vazio.",
+  "@mpLimpo": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mpExportadoGravado": "Exportado o preset gravado no {slot}; as edições não salvas ficaram de fora.",
+  "@mpExportadoGravado": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mpSlotVazio": "O {slot} já está vazio na pedaleira.",
+  "@mpSlotVazio": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "axEntrada": "Entrada",
+  "@axEntrada": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axOsciladores": "Osciladores",
+  "@axOsciladores": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axFiltro": "Filtro",
+  "@axFiltro": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axEnvelope": "Envelope",
+  "@axEnvelope": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axArpejador": "Arpejador",
+  "@axArpejador": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axSaida": "Saída",
+  "@axSaida": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axOutros": "Outros",
+  "@axOutros": {
+    "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "ppTemplates": "Templates",
+  "ppPersonalizado": "Personalizado",
+  "ppAplicado": "Template {nome} aplicado",
+  "@ppAplicado": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "ppEscolherTemplate": "Escolher template",
+  "ppDaDarkglass": "Da Darkglass (os da pedaleira)",
+  "ppDoApp": "Do app (pontos de partida nossos)",
+  "ppAConfirmar": "Valores ainda não lidos da pedaleira",
+  "mbTipoDrive": "Drive type",
+  "mbModoDrive": "Drive mode",
+  "mbSolo": "Solo",
+  "mbSoloLigado": "Só {banda} soando",
+  "@mbSoloLigado": {
+    "placeholders": {
+      "banda": {
+        "type": "String"
+      }
+    }
+  },
+  "mbSoloDesligado": "Solo desligado: as três bandas soam",
+  "mbOff": "OFF"
 }

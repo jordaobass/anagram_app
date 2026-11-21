@@ -15,7 +15,9 @@ import '../textos.dart';
 import 'cartao_banda.dart';
 import 'coluna_banda.dart';
 import 'controle_no_painel.dart';
+import 'botoes_banda.dart' show mutesDoArranjo;
 import 'faixa_frequencias.dart';
+import 'seletor_templates.dart';
 
 class PainelMultibanda extends ConsumerStatefulWidget {
   const PainelMultibanda({
@@ -56,6 +58,8 @@ class _EstadoPainelMultibanda extends ConsumerState<PainelMultibanda> {
         final lado = widget.arranjo.bandas.length;
         final cabem = largura >= lado * Medidas.larguraColunaBanda + (lado - 1) * Espacos.m;
         return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          _topo(context),
+          const SizedBox(height: Espacos.m),
           FaixaFrequencias(
             arranjo: widget.arranjo,
             parametro: widget.definicao.parametro,
@@ -71,7 +75,37 @@ class _EstadoPainelMultibanda extends ConsumerState<PainelMultibanda> {
       });
 
   ColunaBanda _coluna(ArranjoBanda banda, double largura) => ColunaBanda(
-      arranjo: banda, bloco: widget.bloco, definicao: widget.definicao, cena: widget.cena, largura: largura);
+      arranjo: banda,
+      bloco: widget.bloco,
+      definicao: widget.definicao,
+      cena: widget.cena,
+      largura: largura,
+      mutes: mutesDoArranjo(widget.arranjo));
+
+  /// Templates à esquerda; à direita, a legenda das linhas da faixa (só as
+  /// que o bloco tem: o Entropia não tem Threshold).
+  Widget _topo(BuildContext context) {
+    final temLimiar = widget.arranjo.bandas.any((b) => b.limiar != null);
+    return Wrap(
+      alignment: WrapAlignment.spaceBetween,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: Espacos.m,
+      runSpacing: Espacos.s,
+      children: [
+        SeletorTemplates(bloco: widget.bloco, definicao: widget.definicao, cena: widget.cena),
+        Wrap(spacing: Espacos.m, children: [
+          if (temLimiar) _legenda(context, 'Threshold', Cores.linhaThreshold),
+          _legenda(context, 'Level', Cores.linhaLevel),
+        ]),
+      ],
+    );
+  }
+
+  Widget _legenda(BuildContext context, String texto, Color cor) => Row(mainAxisSize: MainAxisSize.min, children: [
+        Container(width: Espacos.l, height: Medidas.tracoCurvaBanda, color: cor),
+        const SizedBox(width: Espacos.xs),
+        Text(texto.toUpperCase(), style: Theme.of(context).textTheme.labelSmall),
+      ]);
 
   /// Três colunas do mesmo tamanho, lado a lado.
   Widget _lado(double largura) {

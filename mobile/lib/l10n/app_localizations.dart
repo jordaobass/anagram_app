@@ -1234,34 +1234,16 @@ abstract class AppLocalizations {
   /// **'APLICAR'**
   String get kbAplicar;
 
-  /// No description provided for @lpCriar.
-  ///
-  /// In pt, this message translates to:
-  /// **'CRIAR LINHA PARALELA'**
-  String get lpCriar;
-
-  /// No description provided for @lpCriarDica.
-  ///
-  /// In pt, this message translates to:
-  /// **'Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.'**
-  String get lpCriarDica;
-
-  /// No description provided for @lpRemover.
-  ///
-  /// In pt, this message translates to:
-  /// **'REMOVER LINHA PARALELA'**
-  String get lpRemover;
-
   /// No description provided for @lpRemoverTitulo.
   ///
   /// In pt, this message translates to:
-  /// **'Remover a linha paralela?'**
+  /// **'Remover o Split?'**
   String get lpRemoverTitulo;
 
-  /// Confirmação ao remover a linha paralela com blocos na linha 2
+  /// Confirmação ao remover o Split com blocos na linha 2
   ///
   /// In pt, this message translates to:
-  /// **'Saem o Split, o Merge e os {quantidade} blocos da linha 2.'**
+  /// **'Sem o Split a linha 2 não recebe sinal: saem também o Merge e os {quantidade} blocos da linha 2.'**
   String lpRemoverTexto(int quantidade);
 
   /// No description provided for @lpRemoverConfirmar.
@@ -1269,12 +1251,6 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'REMOVER'**
   String get lpRemoverConfirmar;
-
-  /// No description provided for @lpSemEspaco.
-  ///
-  /// In pt, this message translates to:
-  /// **'A linha 1 precisa de duas casas livres para o Split e o Merge.'**
-  String get lpSemEspaco;
 
   /// No description provided for @cbGabinete.
   ///
@@ -1564,36 +1540,6 @@ abstract class AppLocalizations {
   /// **'Buscar (ex.: turbo grunt)'**
   String get mbBuscarOpcao;
 
-  /// No description provided for @smFaixaCriar.
-  ///
-  /// In pt, this message translates to:
-  /// **'+ Criar linha paralela · Split, linha 2 e Merge'**
-  String get smFaixaCriar;
-
-  /// No description provided for @smItemBiblioteca.
-  ///
-  /// In pt, this message translates to:
-  /// **'Split + Merge (linha paralela)'**
-  String get smItemBiblioteca;
-
-  /// No description provided for @smItemBibliotecaDica.
-  ///
-  /// In pt, this message translates to:
-  /// **'Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.'**
-  String get smItemBibliotecaDica;
-
-  /// No description provided for @smJaTemLinhaParalela.
-  ///
-  /// In pt, this message translates to:
-  /// **'Este preset já tem linha paralela (um Split e um Merge por preset).'**
-  String get smJaTemLinhaParalela;
-
-  /// No description provided for @smDividirDepois.
-  ///
-  /// In pt, this message translates to:
-  /// **'Dividir o sinal depois deste bloco'**
-  String get smDividirDepois;
-
   /// No description provided for @smOrdemInvalida.
   ///
   /// In pt, this message translates to:
@@ -1863,6 +1809,264 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Toque no nome de um controle para saber o que ele faz com o som'**
   String get ttDicaToque;
+
+  /// No description provided for @smUmSplit.
+  ///
+  /// In pt, this message translates to:
+  /// **'Este preset já tem um Split (um por preset).'**
+  String get smUmSplit;
+
+  /// No description provided for @smUmMerge.
+  ///
+  /// In pt, this message translates to:
+  /// **'Este preset já tem um Merge (um por preset).'**
+  String get smUmMerge;
+
+  /// No description provided for @smMergeSemSplit.
+  ///
+  /// In pt, this message translates to:
+  /// **'Coloque o Split antes: o Merge junta a linha 2, que só existe com o Split.'**
+  String get smMergeSemSplit;
+
+  /// Na biblioteca aberta numa casa da linha 2 de um preset sem Split
+  ///
+  /// In pt, this message translates to:
+  /// **'Sem Split na linha 1, esta linha ainda não recebe sinal.'**
+  String get smLinha2SemSplit;
+
+  /// No description provided for @lpCriar.
+  ///
+  /// In pt, this message translates to:
+  /// **'CRIAR LINHA PARALELA'**
+  String get lpCriar;
+
+  /// No description provided for @lpCriarDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.'**
+  String get lpCriarDica;
+
+  /// No description provided for @lpRemover.
+  ///
+  /// In pt, this message translates to:
+  /// **'REMOVER LINHA PARALELA'**
+  String get lpRemover;
+
+  /// No description provided for @lpSemEspaco.
+  ///
+  /// In pt, this message translates to:
+  /// **'A linha 1 precisa de duas casas livres para o Split e o Merge.'**
+  String get lpSemEspaco;
+
+  /// No description provided for @smFaixaCriar.
+  ///
+  /// In pt, this message translates to:
+  /// **'+ Criar linha paralela · Split, linha 2 e Merge'**
+  String get smFaixaCriar;
+
+  /// No description provided for @smItemBiblioteca.
+  ///
+  /// In pt, this message translates to:
+  /// **'Split + Merge (linha paralela)'**
+  String get smItemBiblioteca;
+
+  /// No description provided for @smItemBibliotecaDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.'**
+  String get smItemBibliotecaDica;
+
+  /// No description provided for @smJaTemLinhaParalela.
+  ///
+  /// In pt, this message translates to:
+  /// **'Este preset já tem linha paralela (um Split e um Merge por preset).'**
+  String get smJaTemLinhaParalela;
+
+  /// No description provided for @smDividirDepois.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dividir o sinal depois deste bloco'**
+  String get smDividirDepois;
+
+  /// No description provided for @mpExportarJson.
+  ///
+  /// In pt, this message translates to:
+  /// **'Exportar JSON…'**
+  String get mpExportarJson;
+
+  /// No description provided for @mpLimpar.
+  ///
+  /// In pt, this message translates to:
+  /// **'Limpar preset…'**
+  String get mpLimpar;
+
+  /// No description provided for @mpLimparFabrica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Limpar preset (a Fábrica é só leitura)'**
+  String get mpLimparFabrica;
+
+  /// No description provided for @mpLimparTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Limpar o {slot}?'**
+  String mpLimparTitulo(String slot);
+
+  /// No description provided for @mpLimparTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'O preset \"{nome}\" sai do slot {slot} na pedaleira e o slot fica vazio. Não dá para desfazer. Para guardar uma cópia, exporte o JSON antes.'**
+  String mpLimparTexto(String nome, String slot);
+
+  /// No description provided for @mpExportarAntes.
+  ///
+  /// In pt, this message translates to:
+  /// **'Exportar JSON'**
+  String get mpExportarAntes;
+
+  /// No description provided for @mpLimparConfirmar.
+  ///
+  /// In pt, this message translates to:
+  /// **'Limpar'**
+  String get mpLimparConfirmar;
+
+  /// No description provided for @mpLimpo.
+  ///
+  /// In pt, this message translates to:
+  /// **'{slot} limpo: o slot ficou vazio.'**
+  String mpLimpo(String slot);
+
+  /// No description provided for @mpExportadoGravado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Exportado o preset gravado no {slot}; as edições não salvas ficaram de fora.'**
+  String mpExportadoGravado(String slot);
+
+  /// No description provided for @mpSlotVazio.
+  ///
+  /// In pt, this message translates to:
+  /// **'O {slot} já está vazio na pedaleira.'**
+  String mpSlotVazio(String slot);
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Entrada'**
+  String get axEntrada;
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Osciladores'**
+  String get axOsciladores;
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Filtro'**
+  String get axFiltro;
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Envelope'**
+  String get axEnvelope;
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Arpejador'**
+  String get axArpejador;
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Saída'**
+  String get axSaida;
+
+  /// Título de seção do painel do Axioma Mono Synth
+  ///
+  /// In pt, this message translates to:
+  /// **'Outros'**
+  String get axOutros;
+
+  /// No description provided for @ppTemplates.
+  ///
+  /// In pt, this message translates to:
+  /// **'Templates'**
+  String get ppTemplates;
+
+  /// No description provided for @ppPersonalizado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Personalizado'**
+  String get ppPersonalizado;
+
+  /// No description provided for @ppAplicado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Template {nome} aplicado'**
+  String ppAplicado(String nome);
+
+  /// No description provided for @ppEscolherTemplate.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escolher template'**
+  String get ppEscolherTemplate;
+
+  /// No description provided for @ppDaDarkglass.
+  ///
+  /// In pt, this message translates to:
+  /// **'Da Darkglass (os da pedaleira)'**
+  String get ppDaDarkglass;
+
+  /// No description provided for @ppDoApp.
+  ///
+  /// In pt, this message translates to:
+  /// **'Do app (pontos de partida nossos)'**
+  String get ppDoApp;
+
+  /// No description provided for @ppAConfirmar.
+  ///
+  /// In pt, this message translates to:
+  /// **'Valores ainda não lidos da pedaleira'**
+  String get ppAConfirmar;
+
+  /// No description provided for @mbTipoDrive.
+  ///
+  /// In pt, this message translates to:
+  /// **'Drive type'**
+  String get mbTipoDrive;
+
+  /// No description provided for @mbModoDrive.
+  ///
+  /// In pt, this message translates to:
+  /// **'Drive mode'**
+  String get mbModoDrive;
+
+  /// No description provided for @mbSolo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Solo'**
+  String get mbSolo;
+
+  /// No description provided for @mbSoloLigado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Só {banda} soando'**
+  String mbSoloLigado(String banda);
+
+  /// No description provided for @mbSoloDesligado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Solo desligado: as três bandas soam'**
+  String get mbSoloDesligado;
+
+  /// No description provided for @mbOff.
+  ///
+  /// In pt, this message translates to:
+  /// **'OFF'**
+  String get mbOff;
 }
 
 class _AppLocalizationsDelegate

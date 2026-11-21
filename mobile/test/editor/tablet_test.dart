@@ -17,8 +17,7 @@ Future<void> abrirNoTablet(WidgetTester tester, Size tela, String rotulo) async 
 
 void main() {
   testWidgets('should_show_all_twelve_chain_slots_when_on_the_smallest_ipad_in_landscape', (tester) async {
-    // 03A tem linha paralela: as duas linhas mostram as 12 casas (sem ela, a
-    // linha 2 é a faixa de criar a linha paralela)
+    // 03A tem linha paralela: as duas linhas mostram as 12 casas
     await abrirNoTablet(tester, ipadMiniPaisagem, '03A');
     for (final linha in [1, 2]) {
       final retangulo = tester.getRect(find.byKey(ValueKey('casa-$linha-12')));

@@ -682,29 +682,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kbAplicar => 'APPLY';
 
   @override
-  String get lpCriar => 'ADD PARALLEL ROW';
-
-  @override
-  String get lpCriarDica =>
-      'Splits the signal after the selected row 1 block: row 2 plays in parallel and the Merge joins both before the output.';
-
-  @override
-  String get lpRemover => 'REMOVE PARALLEL ROW';
-
-  @override
-  String get lpRemoverTitulo => 'Remove the parallel row?';
+  String get lpRemoverTitulo => 'Remove the Split?';
 
   @override
   String lpRemoverTexto(int quantidade) {
-    return 'The Split, the Merge and the $quantidade row 2 blocks will be removed.';
+    return 'Without the Split, row 2 gets no signal: the Merge and the $quantidade blocks on row 2 go too.';
   }
 
   @override
   String get lpRemoverConfirmar => 'REMOVE';
-
-  @override
-  String get lpSemEspaco =>
-      'Row 1 needs two free positions for the Split and the Merge.';
 
   @override
   String get cbGabinete => 'Cabinet';
@@ -878,23 +864,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mbBuscarOpcao => 'Search (e.g. turbo grunt)';
 
   @override
-  String get smFaixaCriar => '+ Add parallel row · Split, row 2 and Merge';
-
-  @override
-  String get smItemBiblioteca => 'Split + Merge (parallel row)';
-
-  @override
-  String get smItemBibliotecaDica =>
-      'Splits the signal at this position: row 2 plays in parallel and the Merge joins both.';
-
-  @override
-  String get smJaTemLinhaParalela =>
-      'This preset already has a parallel row (one Split and one Merge per preset).';
-
-  @override
-  String get smDividirDepois => 'Split the signal after this block';
-
-  @override
   String get smOrdemInvalida =>
       'The Split has to stay before the Merge on row 1.';
 
@@ -1051,4 +1020,153 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get ttDicaToque =>
       'Tap a control\'s name to see what it does to the sound';
+
+  @override
+  String get smUmSplit => 'This preset already has a Split (one per preset).';
+
+  @override
+  String get smUmMerge => 'This preset already has a Merge (one per preset).';
+
+  @override
+  String get smMergeSemSplit =>
+      'Add the Split first: the Merge joins row 2, which only exists with a Split.';
+
+  @override
+  String get smLinha2SemSplit =>
+      'With no Split on row 1, this row gets no signal yet.';
+
+  @override
+  String get lpCriar => 'ADD PARALLEL ROW';
+
+  @override
+  String get lpCriarDica =>
+      'Splits the signal after the selected row 1 block: row 2 plays in parallel and the Merge joins both before the output.';
+
+  @override
+  String get lpRemover => 'REMOVE PARALLEL ROW';
+
+  @override
+  String get lpSemEspaco =>
+      'Row 1 needs two free positions for the Split and the Merge.';
+
+  @override
+  String get smFaixaCriar => '+ Add parallel row · Split, row 2 and Merge';
+
+  @override
+  String get smItemBiblioteca => 'Split + Merge (parallel row)';
+
+  @override
+  String get smItemBibliotecaDica =>
+      'Splits the signal at this position: row 2 plays in parallel and the Merge joins both.';
+
+  @override
+  String get smJaTemLinhaParalela =>
+      'This preset already has a parallel row (one Split and one Merge per preset).';
+
+  @override
+  String get smDividirDepois => 'Split the signal after this block';
+
+  @override
+  String get mpExportarJson => 'Export JSON…';
+
+  @override
+  String get mpLimpar => 'Clear preset…';
+
+  @override
+  String get mpLimparFabrica => 'Clear preset (Factory is read-only)';
+
+  @override
+  String mpLimparTitulo(String slot) {
+    return 'Clear $slot?';
+  }
+
+  @override
+  String mpLimparTexto(String nome, String slot) {
+    return 'The preset \"$nome\" is removed from slot $slot on the pedal and the slot becomes empty. This can\'t be undone. To keep a copy, export the JSON first.';
+  }
+
+  @override
+  String get mpExportarAntes => 'Export JSON';
+
+  @override
+  String get mpLimparConfirmar => 'Clear';
+
+  @override
+  String mpLimpo(String slot) {
+    return '$slot cleared: the slot is now empty.';
+  }
+
+  @override
+  String mpExportadoGravado(String slot) {
+    return 'Exported the preset saved in $slot; unsaved edits were left out.';
+  }
+
+  @override
+  String mpSlotVazio(String slot) {
+    return '$slot is already empty on the pedal.';
+  }
+
+  @override
+  String get axEntrada => 'Input';
+
+  @override
+  String get axOsciladores => 'Oscillators';
+
+  @override
+  String get axFiltro => 'Filter';
+
+  @override
+  String get axEnvelope => 'Envelope';
+
+  @override
+  String get axArpejador => 'Arpeggiator';
+
+  @override
+  String get axSaida => 'Output';
+
+  @override
+  String get axOutros => 'Other';
+
+  @override
+  String get ppTemplates => 'Templates';
+
+  @override
+  String get ppPersonalizado => 'Custom';
+
+  @override
+  String ppAplicado(String nome) {
+    return 'Template $nome applied';
+  }
+
+  @override
+  String get ppEscolherTemplate => 'Choose a template';
+
+  @override
+  String get ppDaDarkglass => 'From Darkglass (the pedal\'s own)';
+
+  @override
+  String get ppDoApp => 'From the app (our starting points)';
+
+  @override
+  String get ppAConfirmar => 'Values not read from the pedal yet';
+
+  @override
+  String get mbTipoDrive => 'Drive type';
+
+  @override
+  String get mbModoDrive => 'Drive mode';
+
+  @override
+  String get mbSolo => 'Solo';
+
+  @override
+  String mbSoloLigado(String banda) {
+    return 'Only $banda playing';
+  }
+
+  @override
+  String get mbSoloDesligado => 'Solo off: all three bands play';
+
+  @override
+  String get mbOff => 'OFF';
 }

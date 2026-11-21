@@ -10,6 +10,7 @@ import '../dados/arquivos_preset.dart';
 import '../nucleo/catalogo/catalogo_blocos.dart';
 import '../nucleo/catalogo/definicao_bloco.dart';
 import '../nucleo/catalogo/explicacoes_parametros.dart';
+import '../nucleo/catalogo/templates_bloco.dart';
 import '../nucleo/demonstracao/transporte_demonstracao.dart';
 import '../nucleo/midi/saida_midi.dart';
 import '../nucleo/modelo/presets_fabrica.dart';
@@ -25,6 +26,7 @@ abstract final class CaminhosAssets {
   static const fabrica = 'assets/blocos_terceiros/fabrica.json';
   static const demonstracao = 'assets/demonstracao/presets.json';
   static const explicacoes = 'assets/explicacoes/parametros.json';
+  static const templates = 'assets/templates/blocos.json';
   static const exemplos = [1, 2, 13, 41];
   static String exemplo(int n) => 'assets/referencia/exemplos/$n.json';
 }
@@ -65,6 +67,16 @@ final explicacoesProvider = FutureProvider<ExplicacoesParametros>((ref) async {
   } on FlutterError catch (erro) {
     registro.w('explicações dos parâmetros ausentes (${erro.message})');
     return ExplicacoesParametros.vazio;
+  }
+});
+
+/// Templates de bloco (DECISOES PP). Sem o arquivo, o seletor só não aparece.
+final templatesProvider = FutureProvider<TemplatesBlocos>((ref) async {
+  try {
+    return TemplatesBlocos.doTexto(await ref.watch(pacoteAssetsProvider).loadString(CaminhosAssets.templates));
+  } on FlutterError catch (erro) {
+    registro.w('templates de bloco ausentes (${erro.message})');
+    return TemplatesBlocos.vazio;
   }
 });
 

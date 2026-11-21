@@ -26,10 +26,12 @@ import 'edicao_do_preset.dart';
 import 'estado_conexao.dart';
 import 'estado_editor.dart';
 import 'gravacao_do_editor.dart';
+import 'limpeza_do_editor.dart';
 
 final editorProvider = NotifierProvider<ControladorEditor, EstadoEditor>(ControladorEditor.new);
 
-class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVivoDoEditor, GravacaoDoEditor {
+class ControladorEditor extends Notifier<EstadoEditor>
+    with EdicaoDoPreset, AoVivoDoEditor, GravacaoDoEditor, LimpezaDoEditor {
   /// Cresce a cada abertura: o resultado de uma abertura vencida é descartado.
   int _abertura = 0;
 

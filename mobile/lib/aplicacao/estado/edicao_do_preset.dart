@@ -7,7 +7,6 @@ import '../../nucleo/catalogo/linha_paralela.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
-import '../provedores.dart';
 import 'estado_editor.dart';
 
 mixin EdicaoDoPreset on Notifier<EstadoEditor> {
@@ -55,6 +54,19 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
     if (atual != null && motivoNomeInvalido(nome) == null) await aplicarDocumento(atual.comNome(nome.trim()));
   }
 
+  /// Vários parâmetros do mesmo bloco numa alteração só (template, solo da
+  /// banda): cada um vale como o knob (bloco e cena ativa), mas a pedaleira
+  /// recebe um envio só, sem passar pelos estados intermediários.
+  Future<void> alterarParametros(PosicaoBloco posicao, Map<String, num> valores,
+      {Map<String, String> nomes = const {}}) async {
+    var documento = state.atual;
+    if (documento == null || documento.bloco(posicao) == null || valores.isEmpty) return;
+    for (final MapEntry(key: simbolo, value: valor) in valores.entries) {
+      documento = documento!.comParametro(posicao, simbolo, valor, nomeExibicao: nomes[simbolo]);
+    }
+    await aplicarDocumento(documento!);
+  }
+
   /// Gabinete: o IR do modelo/microfone/posição escolhido (ao vivo, desfazer).
   Future<void> escolherIrDoGabinete(PosicaoBloco posicao, String caminho) async {
     final atual = state.atual;
@@ -62,20 +74,27 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
     await aplicarDocumento(atual.comArquivoDeIr(posicao, caminho));
   }
 
+  /// Tirar o Split leva junto o Merge e a linha 2 (ver [semSplit]; a tela
+  /// pergunta antes quando a linha 2 tem blocos).
   Future<void> removerBloco(PosicaoBloco posicao) async {
     final atual = state.atual;
-    if (atual == null || atual.bloco(posicao) == null) return;
-    await aplicarDocumento(atual.semBloco(posicao));
+    final bloco = atual?.bloco(posicao);
+    if (atual == null || bloco == null) return;
+    await aplicarDocumento(bloco.uri == uriSplit ? semSplit(atual) : atual.semBloco(posicao));
     state = state.copiar(selecionado: primeiraPosicao(state.atual!));
   }
 
   /// Efeito escolhido na biblioteca entra numa casa vazia, com os padrões do
   /// catálogo. Casa ocupada fica como está: substituir é remover e adicionar.
-  Future<void> adicionarBloco(PosicaoBloco posicao, DefinicaoBloco definicao) async {
+  /// Split e Merge seguem [recusaAoAdicionar]; a recusa volta para a tela.
+  Future<RecusaAdicionar?> adicionarBloco(PosicaoBloco posicao, DefinicaoBloco definicao) async {
     final atual = state.atual;
-    if (atual == null || atual.bloco(posicao) != null) return;
+    if (atual == null || atual.bloco(posicao) != null) return null;
+    final recusa = recusaAoAdicionar(atual, posicao, definicao.uri);
+    if (recusa != null) return recusa;
     await aplicarDocumento(atual.comBlocoColado(posicao, blocoNovo(definicao)));
     state = state.copiar(selecionado: posicao);
+    return null;
   }
 
   /// Arrastar ou "Mover para": casa vazia recebe o bloco, ocupada troca.
@@ -85,30 +104,6 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
     if (atual == null || !podeMover(atual, de, para)) return;
     await aplicarDocumento(atual.comBlocoMovido(de, para));
     state = state.copiar(selecionado: para);
-  }
-
-  /// Manda o sinal também para a linha 2: Split na primeira casa livre
-  /// depois da casa [depoisDe] da linha 1 (sem ela, depois do bloco
-  /// selecionado na linha 1; sem seleção, depois do último) e Merge na casa
-  /// livre seguinte. Falso quando a linha 1 não tem duas casas livres.
-  Future<bool> criarLinhaParalela({int? depoisDe}) async {
-    final atual = state.atual;
-    final catalogo = ref.read(catalogoProvider).value;
-    if (atual == null || catalogo == null) return false;
-    final selecionado = state.selecionado;
-    final referencia = depoisDe ?? (selecionado?.linha == 1 ? selecionado!.casa : null);
-    final novo = comLinhaParalela(atual, catalogo, depoisDe: referencia);
-    if (novo == null) return false;
-    await aplicarDocumento(novo);
-    return true;
-  }
-
-  /// Tira Split, Merge e os blocos da linha 2 (a tela pergunta antes se há blocos).
-  Future<void> removerLinhaParalela() async {
-    final atual = state.atual;
-    if (atual == null || !temLinhaParalela(atual)) return;
-    await aplicarDocumento(semLinhaParalela(atual));
-    state = state.copiar(selecionado: primeiraPosicao(state.atual!));
   }
 
   /// Slot vazio aberto: começa um preset novo ali (com uuid próprio). O
