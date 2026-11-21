@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/demonstracao_na_tela.dart';
+import '../apoio/fixtures.dart';
 
 /// Aparelho preso por outro programa, com o nome técnico do meio entre parênteses.
 class _AparelhoOcupado implements TransporteAnagram {
@@ -160,5 +161,15 @@ void main() {
     final visiveis = parametrosVisiveis(definicao, const BlocoPreset(PosicaoBloco(1, 1), {'uri': 'urn:darkglass-anagram:cabinet-bass'}));
 
     expect(visiveis.map((p) => p.simbolo), ['Level']);
+  });
+
+  test('should_hide_the_peak_hold_reset_of_the_parametric_eq_since_there_is_no_meter_to_reset', () {
+    final parametrico = lerCatalogo().definicao('urn:darkglass:fil4#mono');
+    final bloco = BlocoPreset(const PosicaoBloco(1, 1), {'uri': parametrico.uri});
+
+    final simbolos = parametrosVisiveis(parametrico, bloco).map((p) => p.simbolo);
+
+    expect(simbolos, isNot(contains('peakreset')));
+    expect(simbolos, contains('HSgain'));
   });
 }

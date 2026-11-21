@@ -679,5 +679,22 @@
   "fbCopiarPara": "Copiar para a minha área…",
   "@fbCopiarPara": {
     "description": "Item do menu de um preset da fábrica"
-  }
+  },
+  "eqBandaGeral": "Geral",
+  "@eqBandaGeral": {
+    "description": "Título do grupo com o ganho geral do equalizador paramétrico"
+  },
+  "eqPassaAltas": "Passa-altas",
+  "eqPassaBaixas": "Passa-baixas",
+  "eqShelfGraves": "Shelf de graves",
+  "eqBanda": "Banda {numero}",
+  "@eqBanda": {
+    "description": "Título de uma banda do equalizador paramétrico",
+    "placeholders": {
+      "numero": {
+        "type": "int"
+      }
+    }
+  },
+  "eqShelfAgudos": "Shelf de agudos"
 }

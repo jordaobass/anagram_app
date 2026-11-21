@@ -14,6 +14,10 @@ extension EscalaParametro on DefinicaoParametro {
     return (limitado - minimo) / (maximo - minimo);
   }
 
+  /// Onde o arco ou a faixa do controle nasce: no zero dos parâmetros que
+  /// cortam e reforçam (-12…+12 dB), no início dos outros.
+  double get fracaoDaOrigem => minimo < 0 && maximo > 0 && opcoes.isEmpty ? fracaoDe(0) : 0;
+
   num valorDe(double fracao) {
     final t = fracao.clamp(0.0, 1.0);
     if (opcoes.length > 1) return valorDaOpcao((t * (opcoes.length - 1)).round());

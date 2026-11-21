@@ -101,6 +101,17 @@ abstract final class Medidas {
   static const double knobCompacto = 84;
   static const double espessuraArco = 6;
 
+  /// Fader do GEQ: mais alto que o knob (o curso é o que se lê) e estreito,
+  /// para as bandas ficarem juntas e desenharem a curva.
+  static const double alturaFaderPorKnob = 1.5;
+  static const double larguraFader = 56;
+  static const double larguraCursorFader = 34;
+  static const double alturaCursorFader = 14;
+  static const double marcaZeroFader = 12;
+
+  /// Banda desligada do paramétrico: ainda editável, mas apagada.
+  static const double opacidadeBandaDesligada = 0.45;
+
   /// Knob em proporções do próprio desenho: o corpo fica a 1,6 arco para
   /// dentro do anel, e o ponteiro vai de 25% a 82% do raio do corpo.
   static const double folgaCorpoKnob = 1.6;

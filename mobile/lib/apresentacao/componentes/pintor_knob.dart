@@ -1,5 +1,5 @@
-// Knob de 270°: trilho de alumínio, arco na cor da família e ponteiro de
-// fita gaffer.
+// Knob de 270°: trilho de alumínio, arco na cor da família (do zero, nos
+// parâmetros de corte e reforço) e ponteiro de fita gaffer.
 import 'dart:math';
 
 import 'package:flutter/rendering.dart';
@@ -7,9 +7,12 @@ import 'package:flutter/rendering.dart';
 import '../tema/tokens.dart';
 
 class PintorKnob extends CustomPainter {
-  const PintorKnob({required this.fracao, required this.cor, required this.focado});
+  const PintorKnob({required this.fracao, required this.cor, required this.focado, this.origem = 0});
 
   final double fracao;
+
+  /// Onde o arco colorido nasce: 0 no início do curso, 0,5 no meio (dB ±).
+  final double origem;
   final Color cor;
   final bool focado;
 
@@ -22,7 +25,7 @@ class PintorKnob extends CustomPainter {
     final raio = size.shortestSide / 2 - Medidas.espessuraArco;
     final arco = Rect.fromCircle(center: centro, radius: raio);
     canvas.drawArc(arco, _inicio, _varredura, false, _traco(Cores.filete));
-    canvas.drawArc(arco, _inicio, _varredura * fracao, false, _traco(cor));
+    canvas.drawArc(arco, _inicio + _varredura * origem, _varredura * (fracao - origem), false, _traco(cor));
     final corpo = raio - Medidas.espessuraArco * Medidas.folgaCorpoKnob;
     canvas.drawCircle(centro, corpo, Paint()..color = Cores.painelElevado);
     canvas.drawCircle(
@@ -46,5 +49,5 @@ class PintorKnob extends CustomPainter {
     ..strokeCap = StrokeCap.round;
 
   @override
-  bool shouldRepaint(PintorKnob antigo) => antigo.fracao != fracao || antigo.cor != cor || antigo.focado != focado;
+  bool shouldRepaint(PintorKnob antigo) => antigo.fracao != fracao || antigo.origem != origem || antigo.cor != cor || antigo.focado != focado;
 }

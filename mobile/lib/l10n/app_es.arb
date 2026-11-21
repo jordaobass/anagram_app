@@ -228,5 +228,11 @@
   "fbAvisoPresetDeFabrica": "PRESET DE FÁBRICA — solo suena. Cópialo a una de tus áreas para guardarlo.",
   "fbCopiarParaMinhaArea": "COPIAR A MI ÁREA…",
   "fbCopiarTitulo": "¿Copiar a qué área?",
-  "fbCopiarPara": "Copiar a mi área…"
+  "fbCopiarPara": "Copiar a mi área…",
+  "eqBandaGeral": "General",
+  "eqPassaAltas": "Pasa altos",
+  "eqPassaBaixas": "Pasa bajos",
+  "eqShelfGraves": "Shelf de graves",
+  "eqBanda": "Banda {numero}",
+  "eqShelfAgudos": "Shelf de agudos"
 }

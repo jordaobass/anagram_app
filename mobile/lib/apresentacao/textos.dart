@@ -11,6 +11,7 @@ import '../aplicacao/avisos.dart';
 import '../aplicacao/casos_de_uso/salvar_no_slot.dart';
 import '../aplicacao/casos_de_uso/transferir_preset.dart';
 import '../l10n/app_localizations.dart';
+import '../nucleo/catalogo/arranjo_parametros.dart';
 import '../nucleo/catalogo/definicao_bloco.dart';
 import '../nucleo/catalogo/familia_bloco.dart';
 import '../nucleo/catalogo/formatador_valor.dart';
@@ -20,6 +21,19 @@ import '../nucleo/protocolo/erros_anagram.dart';
 import '../nucleo/suporte_aparelho.dart';
 
 extension TextosDoApp on AppLocalizations {
+  /// Título de uma banda do paramétrico.
+  String nomeDaBanda(BandaEq banda) => switch (banda) {
+        BandaEq.geral => eqBandaGeral,
+        BandaEq.passaAltas => eqPassaAltas,
+        BandaEq.passaBaixas => eqPassaBaixas,
+        BandaEq.shelfGraves => eqShelfGraves,
+        BandaEq.banda1 => eqBanda(1),
+        BandaEq.banda2 => eqBanda(2),
+        BandaEq.banda3 => eqBanda(3),
+        BandaEq.banda4 => eqBanda(4),
+        BandaEq.shelfAgudos => eqShelfAgudos,
+      };
+
   /// Nome do bloco na tela; versões mono e estéreo com o mesmo nome ganham o
   /// canal junto ("Parametric EQ · Estéreo"). O nome gravado no preset não muda.
   String nomeDoBloco(DefinicaoBloco bloco) => switch (bloco.canal) {
