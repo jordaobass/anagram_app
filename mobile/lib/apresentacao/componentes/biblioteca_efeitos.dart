@@ -140,7 +140,7 @@ class _ItemEfeito extends StatelessWidget {
         key: ValueKey('efeito-${definicao.uri}'),
         contentPadding: EdgeInsets.zero,
         leading: ArteBlocoWidget(definicao: definicao, tamanho: Medidas.alvoMinimo),
-        title: Text(definicao.nome),
+        title: Text(AppLocalizations.of(context).nomeDoBloco(definicao)),
         subtitle: Text(AppLocalizations.of(context).familia(definicao.familia)),
         trailing: Container(width: Medidas.fitaCategoria, height: Medidas.alvoMinimo, color: Cores.daFamilia(definicao.familia)),
         onTap: () => Navigator.pop(context, definicao),

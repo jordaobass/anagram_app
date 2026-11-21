@@ -658,4 +658,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get uiDicaToqueDuplo => 'Doble toque en el pedal lo enciende y apaga';
+
+  @override
+  String get cdBlocoMono => 'Mono';
+
+  @override
+  String get cdBlocoEstereo => 'Estéreo';
+
+  @override
+  String get cdBlocoMonoCurto => 'M';
+
+  @override
+  String get cdBlocoEstereoCurto => 'ST';
 }

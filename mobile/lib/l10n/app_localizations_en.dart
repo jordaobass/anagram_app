@@ -654,4 +654,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get uiDicaToqueDuplo => 'Double-tap the pedal to turn it on or off';
+
+  @override
+  String get cdBlocoMono => 'Mono';
+
+  @override
+  String get cdBlocoEstereo => 'Stereo';
+
+  @override
+  String get cdBlocoMonoCurto => 'M';
+
+  @override
+  String get cdBlocoEstereoCurto => 'ST';
 }

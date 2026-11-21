@@ -56,6 +56,17 @@ void main() {
     expect(find.text('NÃO SALVO'), findsOneWidget);
   });
 
+  testWidgets('should_show_mono_and_stereo_in_the_library_when_two_effects_share_the_same_name', (tester) async {
+    await _abrirPresetComBuracos(tester);
+    await tester.tap(_casa(1, 4));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('busca-efeito')), 'parametric');
+    await tester.pumpAndSettle();
+
+    expect(find.text('Parametric EQ · Mono'), findsOneWidget);
+    expect(find.text('Parametric EQ · Estéreo'), findsOneWidget);
+  });
+
   testWidgets('should_show_only_modulation_effects_when_the_modulation_filter_is_tapped', (tester) async {
     await _abrirPresetComBuracos(tester);
     await tester.tap(_casa(1, 4));
@@ -66,6 +77,27 @@ void main() {
 
     final subtitulos = tester.widgetList<ListTile>(find.byType(ListTile)).map((t) => (t.subtitle! as Text).data).toSet();
     expect(subtitulos, {'Modulação'});
+  });
+
+  testWidgets('should_keep_the_stereo_mark_in_the_chain_when_the_long_name_needs_to_shrink', (tester) async {
+    await tester.runAsync(carregarFontes);
+    await abrirDemonstracao(tester);
+    await tocarNoSlot(tester, '03A');
+
+    // o Mint Chocolate Chorus estéreo do 03A: o canal não some na casa
+    final nomes = tester.widgetList<Text>(find.descendant(of: _casa(2, 4), matching: find.byType(Text))).map((t) => t.data ?? '');
+    expect(nomes.any((n) => n.endsWith('· ST')), isTrue, reason: 'achou: $nomes');
+  });
+
+  testWidgets('should_shrink_the_font_instead_of_abbreviating_when_a_long_word_misses_the_desktop_slot', (tester) async {
+    await tester.runAsync(carregarFontes);
+    await abrirDemonstracao(tester);
+    await tocarNoSlot(tester, '02A');
+
+    // "Compressor" não cabe na casa com a letra cheia; a pessoa pediu o nome
+    // inteiro, então a letra diminui antes de virar "CMP"
+    final nomes = tester.widgetList<Text>(find.descendant(of: _casa(1, 2), matching: find.byType(Text))).map((t) => t.data);
+    expect(nomes, contains('Compressor / Limiter'));
   });
 
   testWidgets('should_show_the_full_block_name_in_the_chain_when_every_word_fits_the_slot', (tester) async {
@@ -84,12 +116,12 @@ void main() {
   test('should_use_the_abbreviation_instead_of_breaking_a_word_when_the_slot_is_too_narrow', () {
     const estilo = TextStyle(fontSize: 14);
 
-    expect(rotuloQueCabe('Suppressor', 'SUP', estilo, 60, TextDirection.ltr), 'SUP',
+    expect(rotuloQueCabe('Suppressor', 'SUP', estilo, 60, TextDirection.ltr).$1, 'SUP',
         reason: '"Suppress/or" partido lê pior que a abreviação');
-    expect(rotuloQueCabe('Suppressor', 'SUP', estilo, 200, TextDirection.ltr), 'Suppressor');
-    expect(rotuloQueCabe('Darkglass GEQ', 'DGQ', estilo, 200, TextDirection.ltr), 'Darkglass GEQ',
+    expect(rotuloQueCabe('Suppressor', 'SUP', estilo, 200, TextDirection.ltr).$1, 'Suppressor');
+    expect(rotuloQueCabe('Darkglass GEQ', 'DGQ', estilo, 200, TextDirection.ltr).$1, 'Darkglass GEQ',
         reason: 'quebrar entre palavras é permitido');
-    expect(rotuloQueCabe('Tuner', '', estilo, 10, TextDirection.ltr), 'Tuner', reason: 'sem abreviação, fica o nome');
+    expect(rotuloQueCabe('Tuner', '', estilo, 10, TextDirection.ltr).$1, 'Tuner', reason: 'sem abreviação, fica o nome');
   });
 
   testWidgets('should_explain_how_to_add_an_effect_when_a_new_preset_has_no_blocks', (tester) async {

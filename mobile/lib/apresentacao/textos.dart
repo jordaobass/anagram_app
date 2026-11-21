@@ -20,6 +20,24 @@ import '../nucleo/protocolo/erros_anagram.dart';
 import '../nucleo/suporte_aparelho.dart';
 
 extension TextosDoApp on AppLocalizations {
+  /// Nome do bloco na tela; versões mono e estéreo com o mesmo nome ganham o
+  /// canal junto ("Parametric EQ · Estéreo"). O nome gravado no preset não muda.
+  String nomeDoBloco(DefinicaoBloco bloco) => switch (bloco.canal) {
+        CanalBloco.unico => bloco.nome,
+        CanalBloco.mono => '${bloco.nome} · $cdBlocoMono',
+        CanalBloco.estereo => '${bloco.nome} · $cdBlocoEstereo',
+      };
+
+  /// Na casa da cadeia o canal vai abreviado ("· ST"), para caber o nome.
+  String nomeCurtoDoBloco(DefinicaoBloco bloco, {bool abreviado = false}) {
+    final base = abreviado && bloco.abreviacao.isNotEmpty ? bloco.abreviacao : bloco.nome;
+    return switch (bloco.canal) {
+      CanalBloco.unico => base,
+      CanalBloco.mono => '$base · $cdBlocoMonoCurto',
+      CanalBloco.estereo => '$base · $cdBlocoEstereoCurto',
+    };
+  }
+
   String aviso(Aviso aviso) => switch (aviso) {
         AvisoConexao(:final erro) => erroDeConexao(erro),
         AvisoErro(:final erro) => erroDeOperacao(erro),

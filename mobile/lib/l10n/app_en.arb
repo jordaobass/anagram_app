@@ -180,5 +180,9 @@
   "uiSeloDesligado": "OFF",
   "uiRenomear": "Rename",
   "uiDicaDuploClique": "Double-click the pedal to turn it on or off",
-  "uiDicaToqueDuplo": "Double-tap the pedal to turn it on or off"
+  "uiDicaToqueDuplo": "Double-tap the pedal to turn it on or off",
+  "cdBlocoMono": "Mono",
+  "cdBlocoEstereo": "Stereo",
+  "cdBlocoMonoCurto": "M",
+  "cdBlocoEstereoCurto": "ST"
 }

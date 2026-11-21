@@ -50,7 +50,7 @@ class CabecalhoBloco extends ConsumerWidget {
       const SizedBox(width: Espacos.m),
       Expanded(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(definicao.nome, style: tema.titleLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
+          Text(l.nomeDoBloco(definicao), style: tema.titleLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
           Text(l.blocoPosicao(l.familia(definicao.familia), bloco.posicao.linha, bloco.posicao.casa),
               style: tema.bodySmall),
           Text(arrastoComMouse ? l.arrasteComMouse : l.arrasteNoToque,

@@ -15,6 +15,7 @@ import 'arte_bloco.dart';
 import 'pintor_encaixe.dart';
 import 'toque_duplo.dart';
 import '../../l10n/app_localizations.dart';
+import '../textos.dart';
 
 class CasaBloco extends ConsumerWidget {
   const CasaBloco({
@@ -66,7 +67,7 @@ class CasaBloco extends ConsumerWidget {
   /// O que o leitor de tela diz: a casa vazia pela posição, a ocupada pelo bloco.
   String _rotulo(AppLocalizations l, WidgetRef ref, BlocoPreset? atual) {
     if (atual == null) return l.adicionarEfeitoNaCasa(posicao.casa, posicao.linha);
-    final nome = ref.watch(definicaoBlocoProvider(atual.uri)).nome;
+    final nome = l.nomeDoBloco(ref.watch(definicaoBlocoProvider(atual.uri)));
     return ligado ? l.blocoLigado(nome) : l.blocoDesligado(nome);
   }
 
@@ -98,6 +99,9 @@ class CasaBloco extends ConsumerWidget {
           color: ligado ? Cores.texto : Cores.textoSecundario,
           height: Medidas.entrelinhaRotuloCasa,
         );
+    final l = AppLocalizations.of(context);
+    final (rotulo, estiloRotulo) = rotuloQueCabe(l.nomeCurtoDoBloco(definicao),
+        l.nomeCurtoDoBloco(definicao, abreviado: true), estilo, _interno, Directionality.of(context));
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -108,11 +112,11 @@ class CasaBloco extends ConsumerWidget {
         SizedBox(
           height: Medidas.alturaRotuloCasa,
           child: Text(
-            rotuloQueCabe(definicao.nome, definicao.abreviacao, estilo, _interno, Directionality.of(context)),
+            rotulo,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: estilo,
+            style: estiloRotulo,
           ),
         ),
       ],
@@ -123,19 +127,34 @@ class CasaBloco extends ConsumerWidget {
 /// O nome inteiro, como na tela da pedaleira ("SUP" não diz qual bloco é),
 /// desde que nenhuma palavra precise ser partida: numa casa estreita
 /// "Suppress/or" lê pior que a abreviação. Sem abreviação, fica o nome.
-String rotuloQueCabe(String nome, String abreviacao, TextStyle? estilo, double largura, TextDirection direcao) {
-  if (abreviacao.isEmpty) return nome;
-  final pintor = TextPainter(textDirection: direcao, maxLines: 1);
-  for (final palavra in nome.split(' ')) {
-    pintor.text = TextSpan(text: palavra, style: estilo);
-    pintor.layout();
-    if (pintor.width > largura) {
-      pintor.dispose();
-      return abreviacao;
-    }
+(String, TextStyle?) rotuloQueCabe(String nome, String abreviacao, TextStyle? estilo, double largura, TextDirection direcao) {
+  // o nome inteiro vem primeiro (como na tela da pedaleira): a letra diminui
+  // em passos antes de desistir; a abreviação só sobra em casa muito estreita
+  for (final escala in Medidas.reducoesRotuloCasa) {
+    final tamanho = (estilo?.fontSize ?? Medidas.fonteRotuloCasaPadrao) * escala;
+    final reduzido = estilo?.copyWith(fontSize: tamanho) ?? TextStyle(fontSize: tamanho);
+    if (_cabeEmDuasLinhas(nome, reduzido, largura, direcao)) return (nome, reduzido);
   }
-  pintor.dispose();
-  return nome;
+  return abreviacao.isEmpty ? (nome, estilo) : (abreviacao, estilo);
+}
+
+/// Cada palavra cabe numa linha (nada de "Suppress/or") e o todo, em duas.
+bool _cabeEmDuasLinhas(String texto, TextStyle estilo, double largura, TextDirection direcao) {
+  final pintor = TextPainter(textDirection: direcao, maxLines: 1);
+  try {
+    for (final palavra in texto.split(' ')) {
+      pintor.text = TextSpan(text: palavra, style: estilo);
+      pintor.layout();
+      if (pintor.width > largura) return false;
+    }
+    pintor
+      ..maxLines = 2
+      ..text = TextSpan(text: texto, style: estilo)
+      ..layout(maxWidth: largura);
+    return !pintor.didExceedMaxLines;
+  } finally {
+    pintor.dispose();
+  }
 }
 
 /// Caixa fixa do pedal na cadeia: fundo de painel opaco (a linha do sinal

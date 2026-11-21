@@ -1185,6 +1185,30 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Toque duplo no pedal liga e desliga'**
   String get uiDicaToqueDuplo;
+
+  /// Sufixo do nome de um bloco que tem versão estéreo com o mesmo nome
+  ///
+  /// In pt, this message translates to:
+  /// **'Mono'**
+  String get cdBlocoMono;
+
+  /// Sufixo do nome de um bloco que tem versão mono com o mesmo nome
+  ///
+  /// In pt, this message translates to:
+  /// **'Estéreo'**
+  String get cdBlocoEstereo;
+
+  /// Canal mono abreviado na casa da cadeia
+  ///
+  /// In pt, this message translates to:
+  /// **'M'**
+  String get cdBlocoMonoCurto;
+
+  /// Canal estéreo abreviado na casa da cadeia
+  ///
+  /// In pt, this message translates to:
+  /// **'ST'**
+  String get cdBlocoEstereoCurto;
 }
 
 class _AppLocalizationsDelegate

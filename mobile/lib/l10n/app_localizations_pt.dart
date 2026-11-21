@@ -659,4 +659,16 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get uiDicaToqueDuplo => 'Toque duplo no pedal liga e desliga';
+
+  @override
+  String get cdBlocoMono => 'Mono';
+
+  @override
+  String get cdBlocoEstereo => 'Estéreo';
+
+  @override
+  String get cdBlocoMonoCurto => 'M';
+
+  @override
+  String get cdBlocoEstereoCurto => 'ST';
 }

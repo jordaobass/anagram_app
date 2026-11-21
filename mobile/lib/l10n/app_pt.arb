@@ -477,5 +477,21 @@
   "uiSeloDesligado": "OFF",
   "uiRenomear": "Renomear",
   "uiDicaDuploClique": "Duplo clique no pedal liga e desliga",
-  "uiDicaToqueDuplo": "Toque duplo no pedal liga e desliga"
+  "uiDicaToqueDuplo": "Toque duplo no pedal liga e desliga",
+  "cdBlocoMono": "Mono",
+  "cdBlocoEstereo": "Estéreo",
+  "@cdBlocoMono": {
+    "description": "Sufixo do nome de um bloco que tem versão estéreo com o mesmo nome"
+  },
+  "@cdBlocoEstereo": {
+    "description": "Sufixo do nome de um bloco que tem versão mono com o mesmo nome"
+  },
+  "cdBlocoMonoCurto": "M",
+  "cdBlocoEstereoCurto": "ST",
+  "@cdBlocoMonoCurto": {
+    "description": "Canal mono abreviado na casa da cadeia"
+  },
+  "@cdBlocoEstereoCurto": {
+    "description": "Canal estéreo abreviado na casa da cadeia"
+  }
 }

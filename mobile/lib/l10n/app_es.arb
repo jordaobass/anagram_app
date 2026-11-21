@@ -180,5 +180,9 @@
   "uiSeloDesligado": "OFF",
   "uiRenomear": "Renombrar",
   "uiDicaDuploClique": "Doble clic en el pedal lo enciende y apaga",
-  "uiDicaToqueDuplo": "Doble toque en el pedal lo enciende y apaga"
+  "uiDicaToqueDuplo": "Doble toque en el pedal lo enciende y apaga",
+  "cdBlocoMono": "Mono",
+  "cdBlocoEstereo": "Estéreo",
+  "cdBlocoMonoCurto": "M",
+  "cdBlocoEstereoCurto": "ST"
 }
