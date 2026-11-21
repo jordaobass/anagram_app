@@ -710,4 +710,21 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get lpSemEspaco =>
       'A linha 1 precisa de duas casas livres para o Split e o Merge.';
+
+  @override
+  String get cbGabinete => 'Gabinete';
+
+  @override
+  String get cbMicrofone => 'Microfone';
+
+  @override
+  String get cbPosicao => 'Posição';
+
+  @override
+  String get cbEscolher => 'Escolher';
+
+  @override
+  String cbIrDoUsuario(String arquivo) {
+    return 'IR próprio: $arquivo';
+  }
 }

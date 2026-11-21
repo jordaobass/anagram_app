@@ -705,4 +705,21 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get lpSemEspaco =>
       'Row 1 needs two free positions for the Split and the Merge.';
+
+  @override
+  String get cbGabinete => 'Cabinet';
+
+  @override
+  String get cbMicrofone => 'Microphone';
+
+  @override
+  String get cbPosicao => 'Position';
+
+  @override
+  String get cbEscolher => 'Choose';
+
+  @override
+  String cbIrDoUsuario(String arquivo) {
+    return 'Own IR: $arquivo';
+  }
 }

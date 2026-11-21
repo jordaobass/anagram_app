@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
@@ -69,9 +70,10 @@ Future<void> assentarImagens(WidgetTester tester) async {
 }
 
 Future<void> preparar(WidgetTester tester, Tamanho t,
-    {List<Override> overrides = const [], IdiomaApp idioma = IdiomaApp.portugues}) {
+    {List<Override> overrides = const [], IdiomaApp idioma = IdiomaApp.portugues, IndiceMiniaturas? indice}) {
   debugDefaultTargetPlatformOverride = t.plataforma;
-  return montarApp(tester, tamanho: Size(t.largura, t.altura), densidade: t.densidade, overrides: overrides, idioma: idioma);
+  return montarApp(tester,
+      tamanho: Size(t.largura, t.altura), densidade: t.densidade, overrides: overrides, idioma: idioma, indice: indice);
 }
 
 /// Assenta as imagens (a arte dos pedais carrega fora do relógio falso e, sem

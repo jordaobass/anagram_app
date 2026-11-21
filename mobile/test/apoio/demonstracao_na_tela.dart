@@ -1,5 +1,6 @@
 // Preparo comum dos testes de interface: tela do tamanho pedido, app montado
 // e, quando preciso, já conectado à pedaleira de demonstração.
+import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,18 +20,22 @@ Future<void> montarApp(WidgetTester tester,
     {Size tamanho = telaDesktop,
     double densidade = 1,
     List<Override> overrides = const [],
-    IdiomaApp? idioma = IdiomaApp.portugues}) async {
+    IdiomaApp? idioma = IdiomaApp.portugues,
+    IndiceMiniaturas? indice}) async {
   tester.view.physicalSize = tamanho * densidade;
   tester.view.devicePixelRatio = densidade;
   addTearDown(tester.view.reset);
-  await tester.pumpWidget(appDeTeste(overrides: overrides, idioma: idioma));
+  await tester.pumpWidget(appDeTeste(overrides: overrides, idioma: idioma, indice: indice));
   await tester.pumpAndSettle();
 }
 
 /// Monta o app e entra no modo demonstração; devolve o container dos provedores.
 Future<ProviderContainer> abrirDemonstracao(WidgetTester tester,
-    {Size tamanho = telaDesktop, double densidade = 1, List<Override> overrides = const []}) async {
-  await montarApp(tester, tamanho: tamanho, densidade: densidade, overrides: overrides);
+    {Size tamanho = telaDesktop,
+    double densidade = 1,
+    List<Override> overrides = const [],
+    IndiceMiniaturas? indice}) async {
+  await montarApp(tester, tamanho: tamanho, densidade: densidade, overrides: overrides, indice: indice);
   return entrarNaDemonstracao(tester);
 }
 

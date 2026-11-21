@@ -55,6 +55,13 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
     if (atual != null && motivoNomeInvalido(nome) == null) await aplicarDocumento(atual.comNome(nome.trim()));
   }
 
+  /// Gabinete: o IR do modelo/microfone/posição escolhido (ao vivo, desfazer).
+  Future<void> escolherIrDoGabinete(PosicaoBloco posicao, String caminho) async {
+    final atual = state.atual;
+    if (atual == null || atual.bloco(posicao) == null) return;
+    await aplicarDocumento(atual.comArquivoDeIr(posicao, caminho));
+  }
+
   Future<void> removerBloco(PosicaoBloco posicao) async {
     final atual = state.atual;
     if (atual == null || atual.bloco(posicao) == null) return;

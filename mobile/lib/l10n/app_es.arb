@@ -195,5 +195,10 @@
   "lpRemoverTitulo": "¿Quitar la fila paralela?",
   "lpRemoverTexto": "Se quitan el Split, el Merge y los {quantidade} bloques de la fila 2.",
   "lpRemoverConfirmar": "QUITAR",
-  "lpSemEspaco": "La fila 1 necesita dos casillas libres para el Split y el Merge."
+  "lpSemEspaco": "La fila 1 necesita dos casillas libres para el Split y el Merge.",
+  "cbGabinete": "Gabinete",
+  "cbMicrofone": "Micrófono",
+  "cbPosicao": "Posición",
+  "cbEscolher": "Elegir",
+  "cbIrDoUsuario": "IR propio: {arquivo}"
 }

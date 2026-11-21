@@ -195,5 +195,10 @@
   "lpRemoverTitulo": "Remove the parallel row?",
   "lpRemoverTexto": "The Split, the Merge and the {quantidade} row 2 blocks will be removed.",
   "lpRemoverConfirmar": "REMOVE",
-  "lpSemEspaco": "Row 1 needs two free positions for the Split and the Merge."
+  "lpSemEspaco": "Row 1 needs two free positions for the Split and the Merge.",
+  "cbGabinete": "Cabinet",
+  "cbMicrofone": "Microphone",
+  "cbPosicao": "Position",
+  "cbEscolher": "Choose",
+  "cbIrDoUsuario": "Own IR: {arquivo}"
 }

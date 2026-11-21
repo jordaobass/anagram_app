@@ -1275,6 +1275,36 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'A linha 1 precisa de duas casas livres para o Split e o Merge.'**
   String get lpSemEspaco;
+
+  /// No description provided for @cbGabinete.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gabinete'**
+  String get cbGabinete;
+
+  /// No description provided for @cbMicrofone.
+  ///
+  /// In pt, this message translates to:
+  /// **'Microfone'**
+  String get cbMicrofone;
+
+  /// No description provided for @cbPosicao.
+  ///
+  /// In pt, this message translates to:
+  /// **'Posição'**
+  String get cbPosicao;
+
+  /// No description provided for @cbEscolher.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escolher'**
+  String get cbEscolher;
+
+  /// IR de gabinete que não está na tabela da Darkglass (do usuário)
+  ///
+  /// In pt, this message translates to:
+  /// **'IR próprio: {arquivo}'**
+  String cbIrDoUsuario(String arquivo);
 }
 
 class _AppLocalizationsDelegate

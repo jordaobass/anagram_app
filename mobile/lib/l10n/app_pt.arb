@@ -523,5 +523,18 @@
         "type": "int"
       }
     }
+  },
+  "cbGabinete": "Gabinete",
+  "cbMicrofone": "Microfone",
+  "cbPosicao": "Posição",
+  "cbEscolher": "Escolher",
+  "cbIrDoUsuario": "IR próprio: {arquivo}",
+  "@cbIrDoUsuario": {
+    "description": "IR de gabinete que não está na tabela da Darkglass (do usuário)",
+    "placeholders": {
+      "arquivo": {
+        "type": "String"
+      }
+    }
   }
 }

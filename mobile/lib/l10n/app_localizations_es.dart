@@ -709,4 +709,21 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get lpSemEspaco =>
       'La fila 1 necesita dos casillas libres para el Split y el Merge.';
+
+  @override
+  String get cbGabinete => 'Gabinete';
+
+  @override
+  String get cbMicrofone => 'Micrófono';
+
+  @override
+  String get cbPosicao => 'Posición';
+
+  @override
+  String get cbEscolher => 'Elegir';
+
+  @override
+  String cbIrDoUsuario(String arquivo) {
+    return 'IR propio: $arquivo';
+  }
 }
