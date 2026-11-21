@@ -65,6 +65,39 @@ Sem pedaleira, **Abrir demonstração** simula uma Anagram em memória para voc�
 > (na barra de cima aparece "· arte da pedaleira"). O código-fonte não traz essa arte: ela entra no
 > build de release (veja [Arte de terceiros](#arte-de-terceiros)).
 
+## IA local via MCP (opcional, só no computador)
+
+O app pode receber pedidos de um assistente de IA que roda no seu computador (LM Studio, Claude Desktop ou
+outro cliente com suporte a MCP): *"deixa o grave mais encorpado"*, *"monta um timbre de slap"*. A IA lê o
+preset aberto e mexe nos blocos; cada mudança **soa na hora**, aparece na tela e fica **não salva**. Gravar
+na pedaleira só acontece se você confirmar no app.
+
+1. Abra **Configurações** (engrenagem na barra de cima) e ligue **Permitir IA via MCP**. O app passa a
+   escutar só no próprio computador, em `http://127.0.0.1:8765/mcp`, e exige o token mostrado ali.
+2. Clique em **Copiar configuração para** o seu cliente e cole no arquivo de MCP dele. No LM Studio
+   (`mcp.json`):
+
+   ```json
+   {
+     "mcpServers": {
+       "anagram": {
+         "url": "http://127.0.0.1:8765/mcp",
+         "headers": { "Authorization": "Bearer <token das Configurações>" }
+       }
+     }
+   }
+   ```
+
+   No Claude Desktop, que só fala stdio, a configuração copiada usa a ponte
+   `npx -y mcp-remote <url> --transport http-only --header "Authorization: Bearer <token>"`.
+3. Abra um preset no app e converse com a IA.
+
+> **A IA não ouve o som**: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos
+> costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a
+> ferramentas (*tool calling*). Ferramentas: `get_current_preset`, `list_block_types`, `set_parameter`,
+> `set_block_enabled`, `select_scene`, `add_block`, `move_block`, `remove_block`, `choose_cabinet`,
+> `undo` e `save_preset` (decisões IA1–IA6 em `docs/DECISOES.md`).
+
 ## Organização do repositório
 
 | Pasta | O que tem |

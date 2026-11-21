@@ -3,6 +3,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
+import 'telas/tela_configuracoes.dart';
 import 'telas/tela_creditos.dart';
 import 'telas/tela_editor.dart';
 import 'telas/tela_presets.dart';
@@ -14,6 +15,7 @@ part 'rotas.g.dart';
   routes: [
     TypedGoRoute<RotaPresets>(path: 'presets'),
     TypedGoRoute<RotaCreditos>(path: 'creditos'),
+    TypedGoRoute<RotaConfiguracoes>(path: 'configuracoes'),
   ],
 )
 class RotaEditor extends GoRouteData with $RotaEditor {
@@ -35,6 +37,13 @@ class RotaCreditos extends GoRouteData with $RotaCreditos {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const TelaCreditos();
+}
+
+class RotaConfiguracoes extends GoRouteData with $RotaConfiguracoes {
+  const RotaConfiguracoes();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const TelaConfiguracoes();
 }
 
 GoRouter criarRoteador() => GoRouter(routes: $appRoutes);

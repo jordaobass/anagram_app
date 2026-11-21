@@ -1,4 +1,4 @@
-// Idioma da interface: escolhido na tela Sobre, muda na hora e fica guardado;
+// Idioma da interface: escolhido em Configurações, muda na hora e fica guardado;
 // sem escolha, segue o sistema. As três traduções têm de cobrir as mesmas
 // frases, senão uma tela aparece com buraco num dos idiomas.
 import 'dart:convert';
@@ -16,8 +16,8 @@ Set<String> _chaves(String idioma) {
   return {for (final k in arb.keys) if (!k.startsWith('@')) k};
 }
 
-Future<void> _escolherNoSobre(WidgetTester tester, String codigo) async {
-  await tester.tap(find.byIcon(Icons.info_outline));
+Future<void> _escolherNasConfiguracoes(WidgetTester tester, String codigo) async {
+  await tester.tap(find.byKey(const ValueKey('botao-configuracoes')));
   await tester.pumpAndSettle();
   final opcao = find.byKey(ValueKey('idioma-$codigo'));
   await tester.scrollUntilVisible(opcao, 200, scrollable: find.byType(Scrollable).first);
@@ -26,15 +26,15 @@ Future<void> _escolherNoSobre(WidgetTester tester, String codigo) async {
 }
 
 void main() {
-  testWidgets('should_switch_the_interface_language_and_keep_the_choice_when_english_is_picked_in_about',
+  testWidgets('should_switch_the_interface_language_and_keep_the_choice_when_english_is_picked_in_settings',
       (tester) async {
     final preferencias = PreferenciasIdiomaEmMemoria();
     await montarApp(tester, overrides: [preferenciasIdiomaProvider.overrideWithValue(preferencias)]);
     expect(find.text('ABRIR DEMONSTRAÇÃO'), findsOneWidget);
 
-    await _escolherNoSobre(tester, 'en');
+    await _escolherNasConfiguracoes(tester, 'en');
 
-    expect(find.text('About and diagnostics'), findsOneWidget);
+    expect(find.text('Settings'), findsOneWidget);
     expect(preferencias.salvo, 'en');
     await tester.pageBack();
     await tester.pumpAndSettle();

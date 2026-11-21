@@ -1,5 +1,6 @@
-// Idioma, versão, créditos, avisos e diagnóstico. A versão fica só aqui (a
-// barra de cima já tem o essencial) e diz se o build traz a arte da pedaleira.
+// Versão, créditos, avisos e diagnóstico; o idioma fica em Configurações.
+// A versão fica só aqui (a barra de cima já tem o essencial) e diz se o
+// build traz a arte da pedaleira.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,7 +9,6 @@ import '../../aplicacao/provedores.dart';
 import '../../l10n/app_localizations.dart';
 import '../app_anagram.dart';
 import '../componentes/rotulo_versao.dart';
-import '../componentes/seletor_idioma.dart';
 import '../componentes/seletor_pausa.dart';
 import '../tema/tokens.dart';
 
@@ -28,8 +28,6 @@ class TelaCreditos extends ConsumerWidget {
           Text(AppAnagram.titulo, style: tema.titleLarge),
           RotuloVersao(estilo: tema.bodyMedium?.copyWith(color: Cores.textoSecundario)),
           const SizedBox(height: Espacos.xl),
-          // o idioma vem antes de tudo: quem caiu num idioma que não lê precisa achá-lo
-          ..._secao(tema, l.idioma, const Align(alignment: Alignment.centerLeft, child: SeletorIdioma())),
           for (final (titulo, texto) in itens) ..._secao(tema, titulo, Text(texto, style: tema.bodyLarge)),
           Text(l.diagnosticoPausa, style: _estiloTitulo(tema)),
           const SizedBox(height: Espacos.xs),

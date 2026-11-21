@@ -753,5 +753,82 @@
     }
   },
   "gvBuscar": "Escreva para buscar",
-  "gvNadaEncontrado": "Nada encontrado"
+  "gvNadaEncontrado": "Nada encontrado",
+  "gxModeloAnterior": "Gabinete anterior",
+  "gxProximoModelo": "Próximo gabinete",
+  "gxBuscarGabinete": "Escreva para buscar",
+  "@gxBuscarGabinete": {
+    "description": "Dica do campo de busca do modelo de gabinete"
+  },
+  "mcpConfiguracoes": "Configurações",
+  "mcpSecao": "IA local (MCP)",
+  "mcpPermitir": "Permitir IA via MCP",
+  "mcpPermitirTexto": "Um assistente de IA no seu computador (LM Studio, Claude Desktop…) pode ler o preset aberto e ajustar o timbre. As mudanças soam na hora e só vão para a pedaleira se você salvar.",
+  "mcpEstadoDesligado": "Desligado: nenhum programa consegue falar com o app.",
+  "mcpEstadoIniciando": "Iniciando…",
+  "mcpEstadoEscutando": "Escutando em {endereco}",
+  "@mcpEstadoEscutando": {
+    "placeholders": {
+      "endereco": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpEstadoPortaOcupada": "A porta {porta} já está em uso por outro programa (ou outra janela do app). Escolha outra porta.",
+  "@mcpEstadoPortaOcupada": {
+    "placeholders": {
+      "porta": {
+        "type": "int"
+      }
+    }
+  },
+  "mcpPorta": "Porta",
+  "mcpPortaInvalida": "Use um número de 1024 a 65535.",
+  "mcpAplicarPorta": "APLICAR",
+  "mcpToken": "Token de acesso",
+  "mcpTokenTexto": "O cliente de IA manda este token em cada pedido. Sem ele, o app não obedece.",
+  "mcpMostrarToken": "Mostrar token",
+  "mcpOcultarToken": "Ocultar token",
+  "mcpCopiarToken": "Copiar token",
+  "mcpGerarNovoToken": "GERAR NOVO",
+  "mcpGerarNovoTitulo": "Gerar um token novo?",
+  "mcpGerarNovoTexto": "O token atual deixa de valer na hora: o cliente de IA vai precisar do novo.",
+  "mcpCopiarConfiguracao": "Copiar configuração para",
+  "mcpClienteLmStudio": "LM Studio",
+  "mcpClienteClaudeDesktop": "Claude Desktop",
+  "mcpClienteGenerico": "Outro cliente",
+  "mcpCopiado": "Copiado para a área de transferência.",
+  "mcpLimitacoes": "A IA não ouve o som: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a ferramentas.",
+  "mcpAtivoNaBarra": "IA",
+  "mcpAtivoDica": "IA local pode ajustar o timbre (MCP ligado)",
+  "mcpMudancaDaIa": "IA: {resumo}",
+  "@mcpMudancaDaIa": {
+    "placeholders": {
+      "resumo": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpPedidoSalvarTitulo": "Salvar o que a IA ajustou?",
+  "mcpPedidoSalvarTexto": "A IA pediu para gravar \"{nome}\" no slot {slot} da pedaleira.",
+  "@mcpPedidoSalvarTexto": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      },
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpPedidoSalvarSemSlot": "A IA pediu para gravar \"{nome}\" na pedaleira. Você vai escolher o slot.",
+  "@mcpPedidoSalvarSemSlot": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpSalvar": "SALVAR",
+  "mcpAgoraNao": "AGORA NÃO"
 }
