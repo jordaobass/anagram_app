@@ -7,6 +7,7 @@
 // áreas, e o pedido sai sem `userArea`, igual ao de antes.
 import 'dart:convert';
 
+import '../ajustes/ajustes_pedaleira.dart';
 import '../modelo/areas_presets.dart';
 import '../modelo/documento_preset.dart';
 import '../modelo/json_util.dart';
@@ -71,6 +72,18 @@ class ApiAnagram {
   Future<void> tornarAreaAtiva(String area) => cliente.chamar(
         AcoesAnagram.gravarAjustes,
         {'settings': {'selected-preset-area': area}, 'reloadLvgl': true},
+      );
+
+  /// Mixer, Global EQ, ganho de entrada e a placa de som: os ajustes globais.
+  Future<AjustesPedaleira> lerAjustesGlobais() async =>
+      AjustesPedaleira.daResposta(await cliente.chamar(AcoesAnagram.lerAjustes, const {}, prazoAjustes));
+
+  /// [porChave]: chaves planas do protocolo (`mixer.headphones.vol`), provado
+  /// na v1.19.2.24; várias de uma vez valem (DECISOES PD1).
+  Future<void> gravarAjustesGlobais(Map<String, num> porChave) => cliente.chamar(
+        AcoesAnagram.gravarAjustes,
+        {'settings': porChave, 'reloadLvgl': true},
+        prazoAjustes,
       );
 
   Future<List<ResumoSlot>> listarSlots({String? area}) async {
