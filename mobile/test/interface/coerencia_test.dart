@@ -143,4 +143,22 @@ void main() {
 
     expect(visiveis.map((p) => p.simbolo), ['level']);
   });
+
+  test('should_hide_reset_and_host_tempo_parameters_since_they_are_device_actions_not_settings', () {
+    const definicao = DefinicaoBloco(
+      uri: 'urn:darkglass-anagram:cabinet-bass',
+      nome: 'Bass Cabinet',
+      abreviacao: 'BCB',
+      categoria: 'Amp & Cabs',
+      parametros: [
+        DefinicaoParametro(simbolo: 'reset', nome: 'Reset', minimo: 0, maximo: 1, padrao: 0, papel: 'reset'),
+        DefinicaoParametro(simbolo: 'tempo', nome: 'Tempo', minimo: 0, maximo: 1, padrao: 0, papel: 'hostTempo'),
+        DefinicaoParametro(simbolo: 'Level', nome: 'Level', minimo: -20, maximo: 20, padrao: 0),
+      ],
+    );
+
+    final visiveis = parametrosVisiveis(definicao, const BlocoPreset(PosicaoBloco(1, 1), {'uri': 'urn:darkglass-anagram:cabinet-bass'}));
+
+    expect(visiveis.map((p) => p.simbolo), ['Level']);
+  });
 }
