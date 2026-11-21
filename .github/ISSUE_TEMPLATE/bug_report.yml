@@ -1,0 +1,35 @@
+name: Bug report
+description: Something doesn't work as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected and what happened instead.
+    validations:
+      required: true
+  - type: input
+    id: app
+    attributes:
+      label: App version
+      description: ⓘ button in the top bar (e.g. 0.1.12)
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options: [Windows 10/11, macOS (Apple Silicon), Linux, Android, Browser (Chrome/Edge), Other]
+    validations:
+      required: true
+  - type: input
+    id: firmware
+    attributes:
+      label: Anagram firmware
+      description: Shown in the app's About screen when connected (e.g. v1.19.2.24)
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots, preset JSON or logs
+      description: A screenshot helps a lot. For preset problems, attach the JSON (⋮ › Export JSON…).

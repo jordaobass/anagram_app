@@ -149,6 +149,11 @@ do Darkglass Suite por `mobile/ferramentas/baixar_arte_pedaleira.py`;
 `mobile/ferramentas/verificar_release.sh` recusa qualquer arquivo na pasta que não seja dessa arte.
 Decisões A9 a A16 em [`docs/DECISOES.md`](docs/DECISOES.md).
 
+## Contribuir
+
+Issues, ideias e pull requests são bem-vindos, em português, inglês ou espanhol. Veja
+[`CONTRIBUTING.md`](CONTRIBUTING.md) (em inglês) para rodar o projeto, reportar bugs e mandar PRs.
+
 ## Créditos e licença
 
 Protocolo USB, catálogo de blocos e presets de exemplo portados do

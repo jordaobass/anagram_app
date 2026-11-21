@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Download the app
+    url: https://s3.nexttag.app/apps/desktop/anagram-app/index.html
+    about: Latest Windows and macOS builds.
