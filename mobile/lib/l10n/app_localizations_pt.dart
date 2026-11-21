@@ -1190,11 +1190,36 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pdGlobalEq => 'Global EQ';
 
   @override
-  String get pdEqPlano => 'Plano';
+  String get pdEqModoGanho => 'Ganho';
+
+  @override
+  String get pdEqModoFrequencia => 'Frequência';
+
+  @override
+  String get pdEqModoLargura => 'Largura';
+
+  @override
+  String get pdEqInputGain => 'Input Gain';
+
+  @override
+  String get pdEqReset => 'Reset';
+
+  @override
+  String get pdEqResetTitulo => 'Voltar o Global EQ ao padrão?';
+
+  @override
+  String get pdEqResetTexto =>
+      'As 6 bandas voltam a 35 Hz, 160 Hz, 397 Hz, 1,25 kHz, 2,5 kHz e 9,63 kHz, com ganho 0 e a largura de fábrica. Dá para desfazer logo depois.';
+
+  @override
+  String get pdEqResetConfirmar => 'VOLTAR AO PADRÃO';
+
+  @override
+  String get pdEqResetFeito => 'Global EQ de volta ao padrão.';
 
   @override
   String get pdEqDica =>
-      'Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho.';
+      'Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho. Os knobs mexem no que o modo escolhido mostra.';
 
   @override
   String get pdEntrada => 'Entrada';
@@ -1228,5 +1253,5 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pdPendentes =>
-      'Ainda não dá para mudar pelo app: Master, Mute e Link do mixer, as bandas 2 a 5 e a largura do Global EQ e os nomes dos instrumentos.';
+      'Ainda não dá para mudar pelo app: Master, Mute e Link do mixer e os nomes dos instrumentos.';
 }

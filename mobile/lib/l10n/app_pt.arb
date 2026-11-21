@@ -947,8 +947,16 @@
   "pdDica": "Ajustes globais da Anagram: valem para todos os presets e não entram no preset. Mudam na hora.",
   "pdSaidas": "Saídas",
   "pdGlobalEq": "Global EQ",
-  "pdEqPlano": "Plano",
-  "pdEqDica": "Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho.",
+  "pdEqModoGanho": "Ganho",
+  "pdEqModoFrequencia": "Frequência",
+  "pdEqModoLargura": "Largura",
+  "pdEqInputGain": "Input Gain",
+  "pdEqReset": "Reset",
+  "pdEqResetTitulo": "Voltar o Global EQ ao padrão?",
+  "pdEqResetTexto": "As 6 bandas voltam a 35 Hz, 160 Hz, 397 Hz, 1,25 kHz, 2,5 kHz e 9,63 kHz, com ganho 0 e a largura de fábrica. Dá para desfazer logo depois.",
+  "pdEqResetConfirmar": "VOLTAR AO PADRÃO",
+  "pdEqResetFeito": "Global EQ de volta ao padrão.",
+  "pdEqDica": "Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho. Os knobs mexem no que o modo escolhido mostra.",
   "pdEntrada": "Entrada",
   "pdEntradaDica": "Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; os outros cinco e os nomes entram quando o app conhecer as chaves deles.",
   "pdPlaca": "Placa de som",
@@ -958,7 +966,7 @@
   "pdFalhaLer": "Não deu para ler os ajustes da pedaleira.",
   "pdTentarDeNovo": "Tentar de novo",
   "pdErroGravar": "A pedaleira não aceitou a última mudança. Os valores mostrados são os que ela tem agora.",
-  "pdPendentes": "Ainda não dá para mudar pelo app: Master, Mute e Link do mixer, as bandas 2 a 5 e a largura do Global EQ e os nomes dos instrumentos.",
+  "pdPendentes": "Ainda não dá para mudar pelo app: Master, Mute e Link do mixer e os nomes dos instrumentos.",
   "@pdSecao": {
     "description": "Seção das Configurações com os ajustes globais da pedaleira (mixer, Global EQ, entrada)"
   }

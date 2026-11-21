@@ -332,8 +332,16 @@
   "pdDica": "Global Anagram settings: they apply to every preset and are not stored in the preset. Changes are immediate.",
   "pdSaidas": "Outputs",
   "pdGlobalEq": "Global EQ",
-  "pdEqPlano": "Flat",
-  "pdEqDica": "Drag the points: sideways changes the frequency, up and down the gain.",
+  "pdEqModoGanho": "Gain",
+  "pdEqModoFrequencia": "Frequency",
+  "pdEqModoLargura": "Width",
+  "pdEqInputGain": "Input Gain",
+  "pdEqReset": "Reset",
+  "pdEqResetTitulo": "Reset the Global EQ?",
+  "pdEqResetTexto": "The 6 bands go back to 35 Hz, 160 Hz, 397 Hz, 1.25 kHz, 2.5 kHz and 9.63 kHz, with 0 gain and the factory width. You can undo it right after.",
+  "pdEqResetConfirmar": "RESET",
+  "pdEqResetFeito": "Global EQ back to default.",
+  "pdEqDica": "Drag the points: sideways changes the frequency, up and down the gain. The knobs change what the selected mode shows.",
   "pdEntrada": "Input",
   "pdEntradaDica": "Input gain for instrument 1 (−12 to +12 dB). The Anagram stores six instruments; the other five and their names will come once the app knows their keys.",
   "pdPlaca": "Sound card",
@@ -343,5 +351,5 @@
   "pdFalhaLer": "Could not read the pedal settings.",
   "pdTentarDeNovo": "Try again",
   "pdErroGravar": "The pedal did not accept the last change. The values shown are the ones it has now.",
-  "pdPendentes": "Not yet adjustable in the app: mixer Master, Mute and Link, Global EQ bands 2 to 5 and width, and instrument names."
+  "pdPendentes": "Not yet adjustable from the app: mixer Master, Mute and Link, and the instrument names."
 }

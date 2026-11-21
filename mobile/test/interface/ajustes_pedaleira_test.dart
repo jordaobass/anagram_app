@@ -69,16 +69,67 @@ void main() {
     await tester.ensureVisible(curva);
     await tester.pumpAndSettle();
     final caixa = tester.getRect(curva);
-    // o ponto do low shelf da demonstração: 40,5 Hz, −3 dB
-    final x = caixa.left + caixa.width * 0.1019;
-    final y = caixa.top + caixa.height / 2 * (1 + 3 / 15);
+    // o ponto do low shelf da demonstração: 35 Hz, −7,8 dB
+    final x = caixa.left + caixa.width * 0.0810;
+    final y = caixa.top + caixa.height / 2 * (1 + 7.8 / 15);
 
     await tester.dragFrom(Offset(x, y), const Offset(0, 30));
     await _esperarEnvio(tester);
 
     final ganho = pedaleira.ajustesGlobais['globaleq.ls.gain'] as num;
-    expect(ganho, lessThan(-3), reason: 'arrastar para baixo corta mais grave');
+    expect(ganho, lessThan(-7.8), reason: 'arrastar para baixo corta mais grave');
     expect(_gravacoes(pedaleira).last.keys, containsAll(['globaleq.ls.freq', 'globaleq.ls.gain']));
+  });
+
+  testWidgets('should_send_the_band_2_frequency_when_it_is_changed_in_frequency_mode', (tester) async {
+    final container = await _abrirPedaleira(tester);
+    final pedaleira = _pedaleira(container);
+    await tester.ensureVisible(find.byKey(const ValueKey('modo-eq-freq')));
+    await tester.tap(find.byKey(const ValueKey('modo-eq-freq')));
+    await tester.pumpAndSettle();
+
+    await _digitar(tester, 'eq_2_freq', '700');
+    await _esperarEnvio(tester);
+
+    expect(_gravacoes(pedaleira).last, {'globaleq.2.freq': 700});
+    expect(pedaleira.ajustesGlobais['globaleq.2.freq'], 700);
+  });
+
+  testWidgets('should_send_the_band_3_width_when_it_is_changed_in_width_mode', (tester) async {
+    final container = await _abrirPedaleira(tester);
+    final pedaleira = _pedaleira(container);
+    await tester.ensureVisible(find.byKey(const ValueKey('modo-eq-width')));
+    await tester.tap(find.byKey(const ValueKey('modo-eq-width')));
+    await tester.pumpAndSettle();
+
+    await _digitar(tester, 'eq_3_width', '1,5');
+    await _esperarEnvio(tester);
+
+    expect(_gravacoes(pedaleira).last, {'globaleq.3.width': 1.5});
+  });
+
+  testWidgets('should_send_the_factory_values_on_reset_and_bring_the_old_ones_back_on_undo', (tester) async {
+    final container = await _abrirPedaleira(tester);
+    final pedaleira = _pedaleira(container);
+    await tester.ensureVisible(find.byKey(const ValueKey('eq-reset')));
+    await tester.tap(find.byKey(const ValueKey('eq-reset')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('confirmar-reset-eq')));
+    await tester.pumpAndSettle();
+    await _esperarEnvio(tester);
+
+    final reset = _gravacoes(pedaleira).last;
+    expect(reset, containsPair('globaleq.ls.gain', 0));
+    expect(reset, containsPair('globaleq.2.freq', 397));
+    expect(reset, containsPair('globaleq.hs.freq', 9630));
+    expect(reset, containsPair('globaleq.ls.width', 0.33));
+    expect(reset.length, 18);
+
+    await tester.tap(find.text('DESFAZER'));
+    await _esperarEnvio(tester);
+
+    expect(pedaleira.ajustesGlobais['globaleq.ls.gain'], -7.8);
+    expect(pedaleira.ajustesGlobais['globaleq.hs.freq'], 8000);
   });
 
   testWidgets('should_show_the_sound_card_as_text_without_any_control_to_change_it', (tester) async {

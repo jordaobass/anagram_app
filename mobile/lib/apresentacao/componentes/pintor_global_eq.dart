@@ -1,6 +1,7 @@
-// Curva do Global EQ: grade de frequência (log, 20 Hz–20 kHz) e de ganho,
-// a soma das bandas em verde (a cor do ganho na tela da pedaleira) e um
-// ponto por banda, que o dedo arrasta em frequência × ganho.
+// Curva do Global EQ como na tela da Anagram: grade de frequência (log,
+// 20 Hz–20 kHz), eixo de +15 a −15 dB, a soma das 6 bandas preenchida na cor
+// do modo (ganho verde, frequência roxa, largura laranja) e um ponto por
+// banda, que o dedo arrasta em frequência × ganho.
 import 'dart:math' as math;
 
 import 'package:flutter/rendering.dart';
@@ -15,20 +16,21 @@ class GeometriaGlobalEq {
   static const fMin = 20.0;
   static const fMax = 20000.0;
 
-  /// Um pouco além de ±12 dB, para o ponto no extremo não colar na borda.
-  static const dbVisivel = 15.0;
+  /// O eixo da tela da pedaleira; o ganho vai a ±18, o ponto para na borda.
+  static const dbVisivel = Medidas.dbVisivelGlobalEq;
 
   double x(double f) => tamanho.width * math.log(f / fMin) / math.log(fMax / fMin);
   double y(double db) => tamanho.height / 2 * (1 - db / dbVisivel);
   double frequencia(double x) => fMin * math.pow(fMax / fMin, (x / tamanho.width).clamp(0.0, 1.0));
   double ganho(double y) => (1 - y / (tamanho.height / 2)) * dbVisivel;
-  Offset ponto(BandaGlobalEq b) => Offset(x(b.frequencia), y(b.ganho));
+  Offset ponto(BandaGlobalEq b) => Offset(x(b.frequencia), y(b.ganho.clamp(-dbVisivel, dbVisivel)));
 }
 
 class PintorGlobalEq extends CustomPainter {
-  const PintorGlobalEq(this.bandas, {this.ativa});
+  const PintorGlobalEq(this.bandas, {required this.cor, this.ativa});
 
   final List<BandaGlobalEq> bandas;
+  final Color cor;
 
   /// Índice da banda sendo arrastada (desenhada em destaque).
   final int? ativa;
@@ -46,8 +48,8 @@ class PintorGlobalEq extends CustomPainter {
       ..lineTo(size.width, g.y(0))
       ..lineTo(0, g.y(0))
       ..close();
-    canvas.drawPath(preenchida, Paint()..color = Cores.linhaLevel.withValues(alpha: Medidas.opacidadeCurvaBanda));
-    canvas.drawPath(curva, _traco(Cores.linhaLevel, Medidas.espessuraArco));
+    canvas.drawPath(preenchida, Paint()..color = cor.withValues(alpha: Medidas.opacidadeCurvaBanda));
+    canvas.drawPath(curva, _traco(cor, Medidas.filete * 2));
     for (var i = 0; i < bandas.length; i++) {
       _ponto(canvas, g.ponto(bandas[i]), destaque: i == ativa);
     }
@@ -58,10 +60,23 @@ class PintorGlobalEq extends CustomPainter {
     for (final f in const [50.0, 100.0, 200.0, 500.0, 1000.0, 2000.0, 5000.0, 10000.0]) {
       canvas.drawLine(Offset(g.x(f), 0), Offset(g.x(f), size.height), fina);
     }
-    for (final db in const [-12.0, -6.0, 6.0, 12.0]) {
+    for (final db in const [-15.0, -10.0, -5.0, 5.0, 10.0, 15.0]) {
       canvas.drawLine(Offset(0, g.y(db)), Offset(size.width, g.y(db)), fina);
     }
     canvas.drawLine(Offset(0, g.y(0)), Offset(size.width, g.y(0)), _traco(Cores.aluminio, Medidas.filete));
+    _rotulo(canvas, '+15', Offset(Espacos.xs, g.y(15)));
+    _rotulo(canvas, '-15', Offset(Espacos.xs, g.y(-15) - Medidas.fonteEixoEq - Espacos.xs));
+  }
+
+  void _rotulo(Canvas canvas, String texto, Offset onde) {
+    final pintor = TextPainter(
+      text: TextSpan(
+          text: texto,
+          style: const TextStyle(fontFamily: Fontes.rotulo, color: Cores.textoSecundario, fontSize: Medidas.fonteEixoEq)),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    pintor.paint(canvas, onde);
+    pintor.dispose();
   }
 
   void _ponto(Canvas canvas, Offset centro, {required bool destaque}) {
@@ -77,10 +92,10 @@ class PintorGlobalEq extends CustomPainter {
 
   @override
   bool shouldRepaint(PintorGlobalEq antigo) {
-    if (antigo.ativa != ativa || antigo.bandas.length != bandas.length) return true;
+    if (antigo.ativa != ativa || antigo.cor != cor || antigo.bandas.length != bandas.length) return true;
     for (var i = 0; i < bandas.length; i++) {
       final (a, b) = (antigo.bandas[i], bandas[i]);
-      if (a.frequencia != b.frequencia || a.ganho != b.ganho) return true;
+      if (a.frequencia != b.frequencia || a.ganho != b.ganho || a.largura != b.largura) return true;
     }
     return false;
   }
