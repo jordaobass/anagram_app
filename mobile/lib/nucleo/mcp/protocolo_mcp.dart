@@ -2,6 +2,7 @@
 // devolve a resposta (ou nada, para notificação). O transporte HTTP fica na
 // plataforma; aqui é Dart puro, testável sem socket.
 
+import '../registro.dart';
 import 'ferramenta_mcp.dart';
 
 abstract final class CodigosJsonRpc {
@@ -66,6 +67,11 @@ class ProtocoloMcp {
       return _sucesso(id, (await ferramenta.executar(mapa)).paraJson());
     } on RecusaFerramenta catch (recusa) {
       return _sucesso(id, ResultadoFerramenta.recusa(recusa.mensagem).paraJson());
+    } on Object catch (erro, pilha) {
+      // erro que a IA não tem como corrigir: vira erro JSON-RPC com o id do
+      // pedido (DECISOES RN3), e a causa fica só no log
+      registro.e('mcp: a ferramenta ${ferramenta.nome} falhou', error: erro, stackTrace: pilha);
+      return _erro(id, CodigosJsonRpc.erroInterno, 'Internal error while running ${ferramenta.nome}.');
     }
   }
 
