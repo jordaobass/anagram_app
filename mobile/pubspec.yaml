@@ -1,7 +1,7 @@
 name: anagram_app
 description: "Editor de presets gratuito e open source para a pedaleira Darkglass Anagram, no estilo do HX Edit. Autor: jordao_bass."
 publish_to: 'none'
-version: 0.1.15+16
+version: 0.1.16+17
 
 environment:
   sdk: ^3.11.5
