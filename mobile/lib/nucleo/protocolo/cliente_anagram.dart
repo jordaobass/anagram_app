@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import '../registro.dart';
-import 'api_anagram.dart' show AcoesAnagram;
 import 'erros_anagram.dart';
 import 'quadros_hid.dart';
 import 'respostas_anagram.dart';
@@ -63,9 +62,10 @@ class ClienteAnagram {
       throw const ErroDesconectado('A pedaleira não está conectada.');
     }
     final relogio = _cronometro()..start();
-    final relatorios = _codificar(acao, carga);
+    final pedido = MensagemAnagram(acao, carga);
+    final relatorios = _codificar(pedido);
     final pausa = _pausa();
-    final espera = _aguardarResposta(acao, prazo);
+    final espera = _aguardarResposta(pedido, prazo);
     await _enviar(acao, relatorios, pausa, prazo, espera);
     final quadro = await espera.resposta;
     relogio.stop();
@@ -73,11 +73,11 @@ class ClienteAnagram {
     return _extrairCarga(acao, quadro);
   }
 
-  List<Uint8List> _codificar(String acao, Map<String, dynamic> carga) {
+  List<Uint8List> _codificar(MensagemAnagram pedido) {
     try {
-      return _codificador.codificar(MensagemAnagram(acao, carga));
+      return _codificador.codificar(pedido);
     } on MensagemComMarcador catch (erro) {
-      registro.e('anagram: $acao não enviado', error: erro);
+      registro.e('anagram: ${pedido.acao} não enviado', error: erro);
       throw ErroRespostaInvalida('$erro');
     }
   }
@@ -106,25 +106,12 @@ class ClienteAnagram {
     }
   }
 
-  _Espera _aguardarResposta(String acao, Duration prazo) {
-    final montador = MontadorQuadros();
+  _Espera _aguardarResposta(MensagemAnagram pedido, Duration prazo) {
     final concluido = Completer<Map<String, dynamic>>();
-    final assinaturaDados = _transporte.relatoriosRecebidos.listen((relatorio) {
-      if (concluido.isCompleted) return;
-      try {
-        // um relatório pode fechar a resposta atrasada de outra ação e já trazer esta
-        for (var quadro = montador.acrescentar(relatorio); quadro != null; quadro = montador.proximoQuadro()) {
-          if (!_ehRespostaDe(acao, quadro)) continue;
-          concluido.complete(quadro);
-          return;
-        }
-      } on QuadroMalformado catch (erro) {
-        concluido.completeError(ErroRespostaInvalida('$erro'));
-      }
-    });
+    final assinaturaDados = _transporte.relatoriosRecebidos.listen(_receptor(pedido, concluido));
     final assinaturaEstado = _transporte.estados.listen((estado) {
       if (estado == EstadoTransporte.perdido && !concluido.isCompleted) {
-        concluido.completeError(ErroDesconectado('A pedaleira foi desconectada durante "$acao".'));
+        concluido.completeError(ErroDesconectado('A pedaleira foi desconectada durante "${pedido.acao}".'));
       }
     });
     void encerrar() {
@@ -133,21 +120,30 @@ class ClienteAnagram {
     }
 
     final resposta = concluido.future
-        .timeout(prazo, onTimeout: () => throw ErroSemResposta(acao, prazo))
+        .timeout(prazo, onTimeout: () => throw ErroSemResposta(pedido.acao, prazo))
         .whenComplete(encerrar);
     // o erro de "cabo saiu" pode chegar enquanto ainda enviamos: já fica tratado
     resposta.ignore();
     return _Espera(resposta, encerrar);
   }
 
-  /// Resposta atrasada de OUTRA ação conhecida (de uma chamada que estourou o
-  /// prazo) é descartada. Nome de ação desconhecido ou ausente é aceito: o
-  /// formato exato do eco do firmware não está documentado.
-  static bool _ehRespostaDe(String acao, Map<String, dynamic> quadro) {
-    final ecoada = quadro['action'];
-    final descartar = ecoada is String && ecoada != acao && AcoesAnagram.todas.contains(ecoada);
-    if (descartar) registro.w('anagram: descartada resposta atrasada de "$ecoada" enquanto esperava "$acao"');
-    return !descartar;
+  /// Remonta os relatórios e completa com o primeiro quadro que responde a
+  /// [pedido]; os de outra conversa (respostas atrasadas) são pulados.
+  static void Function(Uint8List) _receptor(MensagemAnagram pedido, Completer<Map<String, dynamic>> concluido) {
+    final montador = MontadorQuadros();
+    return (relatorio) {
+      if (concluido.isCompleted) return;
+      try {
+        // um relatório pode fechar a resposta atrasada de outra ação e já trazer esta
+        for (var quadro = montador.acrescentar(relatorio); quadro != null; quadro = montador.proximoQuadro()) {
+          if (!ehRespostaDe(pedido, quadro)) continue;
+          concluido.complete(quadro);
+          return;
+        }
+      } on QuadroMalformado catch (erro) {
+        concluido.completeError(ErroRespostaInvalida('$erro'));
+      }
+    };
   }
 
   void _registrarMedicao(MedicaoChamada medicao) {
