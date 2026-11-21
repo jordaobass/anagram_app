@@ -3,7 +3,9 @@
 // o envelope mais longo quando o knob sobe.
 import 'package:anagram_app/apresentacao/componentes/painel_parametros.dart';
 import 'package:anagram_app/nucleo/catalogo/arranjo_sintetizador.dart';
+import 'package:anagram_app/nucleo/catalogo/biblioteca_blocos.dart';
 import 'package:anagram_app/nucleo/catalogo/desenho_sintetizador.dart';
+import 'package:anagram_app/nucleo/catalogo/familia_bloco.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -74,5 +76,14 @@ void main() {
     expect(longo[1].$1, greaterThan(curto[1].$1), reason: 'attack maior, subida mais longa');
     expect(curto[2].$2, nivelSegurado);
     expect(curto.last, (1.0, 0.0), reason: 'o release volta ao silêncio no fim');
+  });
+
+  test('should_find_the_axioma_among_the_modulations_when_the_library_is_filtered_by_family', () {
+    final grupos = blocosDaBiblioteca(catalogo, familia: FamiliaBloco.modulacao);
+    final uris = [for (final g in grupos) for (final b in g.blocos) b.uri];
+
+    expect(uris, contains(_axioma), reason: 'decisão do dono (AX6): synth fica com chorus, flanger e octavers');
+    expect(uris, contains('urn:darkglass:Chorus'));
+    expect(catalogo.definicao(_axioma).familia, FamiliaBloco.modulacao);
   });
 }

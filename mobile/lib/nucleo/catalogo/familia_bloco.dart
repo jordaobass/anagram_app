@@ -23,6 +23,9 @@ enum FamiliaBloco {
     // com os filtros, embora o firmware o ponha em "EQs, Filters & Dynamics"
     if (tem(['comp', 'suppressor', 'noisegate', 'gate', 'gravitron', 'ignissor'])) return compressor;
     if (tem(['hpf', 'lpf', 'pass filter', 'wah', 'wauwa', 'moerfer'])) return filtro;
+    // o Axioma é um synth que segue a nota tocada, como os octavers: fica
+    // com a modulação, embora o firmware o ponha em "Utilities" (AX6)
+    if (tem(['axioma'])) return modulacao;
     if (tem(['eq', 'geq', 'fil4'])) return equalizador;
     return _porCategoria(categoria);
   }
