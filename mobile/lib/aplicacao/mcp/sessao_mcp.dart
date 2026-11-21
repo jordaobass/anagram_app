@@ -71,11 +71,16 @@ class SessaoMcp {
 
   /// Faz a mudança pelo editor e, se o preset mudou, guarda o anterior para
   /// o `undo` e avisa a tela de que a mudança veio da IA.
+  ///
+  /// Se a tela não está mais no que a IA deixou (a pessoa mexeu num knob ou
+  /// abriu outro preset), o histórico anterior é descartado: voltar a ele
+  /// apagaria a edição da pessoa ou poria outro preset dentro deste slot.
   Future<void> mudar(String resumo, Future<void> Function() acao) async {
     final antes = presetAberto();
     await acao();
     final depois = estado.atual;
     if (depois == null || identical(depois, antes)) return;
+    if (!identical(antes, _deixadoPelaIa)) _historico.clear();
     _historico.add(antes);
     if (_historico.length > _limiteHistorico) _historico.removeAt(0);
     _deixadoPelaIa = depois;
