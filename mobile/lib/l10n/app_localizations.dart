@@ -1209,6 +1209,30 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'ST'**
   String get cdBlocoEstereoCurto;
+
+  /// No description provided for @kbDigitarDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Clique no número para digitar o valor'**
+  String get kbDigitarDica;
+
+  /// Faixa do parâmetro no diálogo de digitar o valor
+  ///
+  /// In pt, this message translates to:
+  /// **'De {minimo} a {maximo}'**
+  String kbFaixa(String minimo, String maximo);
+
+  /// No description provided for @kbNaoEhNumero.
+  ///
+  /// In pt, this message translates to:
+  /// **'Digite um número, como -12,5 ou 1,5k.'**
+  String get kbNaoEhNumero;
+
+  /// No description provided for @kbAplicar.
+  ///
+  /// In pt, this message translates to:
+  /// **'APLICAR'**
+  String get kbAplicar;
 }
 
 class _AppLocalizationsDelegate
