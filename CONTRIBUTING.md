@@ -12,7 +12,7 @@ Open an [issue](https://github.com/jordaobass/anagram_app/issues/new/choose) usi
 template and include:
 
 - the app version (ⓘ button in the top bar) and your OS;
-- your Anagram **firmware version** (shown in the app's About screen when connected);
+- your Anagram **firmware version** (shown in the top bar when connected, e.g. `Anagram · USB · v1.19.2.24`);
 - what you did, what you expected and what happened;
 - a screenshot, and if the bug is about a preset, the preset JSON (**⋮ › Export JSON…** in the preset menu).
 

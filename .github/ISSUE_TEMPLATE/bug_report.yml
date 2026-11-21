@@ -27,7 +27,7 @@ body:
     id: firmware
     attributes:
       label: Anagram firmware
-      description: Shown in the app's About screen when connected (e.g. v1.19.2.24)
+      description: Shown in the top bar when connected (e.g. Anagram · USB · v1.19.2.24)
   - type: textarea
     id: extra
     attributes:
