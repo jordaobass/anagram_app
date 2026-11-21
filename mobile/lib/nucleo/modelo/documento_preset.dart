@@ -7,6 +7,7 @@ import 'dart:math';
 import '../protocolo/quadros_hid.dart';
 import 'bloco_preset.dart';
 import 'json_util.dart';
+import 'cenas_do_bloco.dart';
 import 'vinculos_preset.dart';
 
 class DocumentoPreset {
@@ -22,7 +23,20 @@ class DocumentoPreset {
     if (json['preset'] is! Map<String, dynamic>) {
       throw const FormatException('Falta o objeto "preset".');
     }
-    return DocumentoPreset._(copiaProfunda(json));
+    return DocumentoPreset._(_comCenaAtivaNoBloco(copiaProfunda(json)));
+  }
+
+  /// A pedaleira grava o bloco com os valores da cena ativa (é o que ela
+  /// toca). Preset que não segue isso (escrito à mão, de outro editor) é
+  /// acertado ao abrir, com os valores que a tela já mostra para a cena; num
+  /// preset da pedaleira nada muda.
+  static Map<String, dynamic> _comCenaAtivaNoBloco(Map<String, dynamic> json) {
+    final preset = json['preset'] as Map<String, dynamic>;
+    final ativa = (numeroOuNulo(preset['scene'])?.toInt() ?? 0) + 1;
+    for (final bloco in _todosOsBlocos(preset)) {
+      carregarCena(bloco, ativa);
+    }
+    return json;
   }
 
   factory DocumentoPreset.vazio(String nome) => DocumentoPreset._({
@@ -54,7 +68,8 @@ class DocumentoPreset {
 
   String _assinaturaSemCena() {
     final json = paraJson();
-    (json['preset'] as Map<String, dynamic>).remove('scene');
+    final preset = json['preset'] as Map<String, dynamic>..remove('scene');
+    _todosOsBlocos(preset).forEach(semEstadoDaCena);
     return jsonEncode(json);
   }
 
@@ -84,23 +99,37 @@ class DocumentoPreset {
 
   DocumentoPreset comNome(String nome) => _editar((p) => p['name'] = nome);
 
-  DocumentoPreset comCena(int cena) => _editar((p) => p['scene'] = cena - 1);
+  /// Troca a cena ativa: cada bloco guarda a foto da cena que sai e recebe a
+  /// da que entra, porque a pedaleira toca o que está no bloco.
+  DocumentoPreset comCena(int cena) => _editar((p) {
+        final saindo = cenaAtiva;
+        if (cena != saindo) {
+          for (final bloco in _todosOsBlocos(p)) {
+            guardarFotoDaCena(bloco, saindo);
+            carregarCena(bloco, cena);
+          }
+        }
+        p['scene'] = cena - 1;
+      });
 
   DocumentoPreset comUuid(String uuid) => _editar((p) => p['uuid'] = uuid);
 
-  /// Liga/desliga o bloco na cena ativa. As cenas guardam só o que difere,
-  /// então a base e as outras cenas não mudam; sem registro da cena, ele é
-  /// criado (as cenas que não têm registro seguem a base).
+  /// Liga/desliga o bloco na cena ativa: no próprio bloco (é o que a pedaleira
+  /// toca ao vivo) e na foto da cena; as outras cenas não mudam.
   DocumentoPreset comBlocoHabilitado(PosicaoBloco posicao, bool habilitado) =>
       _editarBloco(posicao, (bloco) {
+        // as outras cenas guardam o liga/desliga que tinham antes: senão,
+        // sem registro, passariam a seguir o bloco, que vai mudar agora
+        fixarLigaNasOutrasCenas(bloco, cenaAtiva);
+        bloco['enabled'] = habilitado;
         final cenas = bloco.putIfAbsent('scenes', () => <String, dynamic>{}) as Map<String, dynamic>;
         final cena = cenas.putIfAbsent('$cenaAtiva', () => <String, dynamic>{'parameters': <dynamic>[]})
             as Map<String, dynamic>;
         cena['enabled'] = habilitado;
       });
 
-  /// Muda um parâmetro. Se a cena ativa sobrepõe esse parâmetro, a mudança
-  /// fica na cena; senão vai para o valor base (vale para todas as cenas).
+  /// Muda um parâmetro no bloco (o que soa) e, se a cena ativa tem valor
+  /// próprio para ele, também na foto dela; as outras cenas não mudam.
   DocumentoPreset comParametro(
     PosicaoBloco posicao,
     String simbolo,
@@ -108,7 +137,7 @@ class DocumentoPreset {
     String? nomeExibicao,
   }) =>
       _editarBloco(posicao, (bloco) {
-        if (_mudarSobreposicao(bloco, simbolo, valor)) return;
+        if (!_mudarSobreposicao(bloco, simbolo, valor)) gravarNaCenaAtiva(bloco, cenaAtiva, simbolo, valor);
         _mudarBase(bloco, simbolo, valor, nomeExibicao ?? simbolo);
       });
 
@@ -194,6 +223,11 @@ class DocumentoPreset {
       ..addAll(ordenado)
       ..addAll(outras);
   }
+
+  static Iterable<Map<String, dynamic>> _todosOsBlocos(Map<String, dynamic> preset) => [
+        for (final linha in mapaOuVazio(preset['chains']).values)
+          ...mapaOuVazio(mapaOuVazio(linha)['blocks']).values.whereType<Map<String, dynamic>>(),
+      ];
 
   static Map<String, dynamic> _blocosBrutos(Map<String, dynamic> preset, int linha) =>
       mapaOuVazio(mapaOuVazio(mapaOuVazio(preset['chains'])['$linha'])['blocks']);
