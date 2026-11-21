@@ -7,13 +7,13 @@ lista de presets por banco, cadeia de blocos com a arte da pedaleira, knobs gran
 **ao vivo** pelo USB. Um código Flutter só para macOS, Windows, Linux, Android e navegador (Chrome/Edge).
 
 <p align="center">
-  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Baixar para Windows" src="https://img.shields.io/badge/Baixar-Windows%2010%2F11-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
-  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Baixar para macOS" src="https://img.shields.io/badge/Baixar-macOS%20(Apple%20Silicon)-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
+  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Baixar para Windows" src="https://img.shields.io/badge/Baixar-Windows%2010%2F11-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
+  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Baixar para macOS" src="https://img.shields.io/badge/Baixar-macOS%20(Apple%20Silicon)-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
   <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Última versão no GitHub" src="https://img.shields.io/github/v/release/jordaobass/anagram_app?style=for-the-badge&label=vers%C3%A3o"></a>
 </p>
 
 <p align="center">
-  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Editor com a cadeia de blocos e a linha paralela" src="docs/imagens/editor.webp" width="900"></a>
+  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Editor com a cadeia de blocos e a linha paralela" src="docs/imagens/editor.webp" width="900"></a>
 </p>
 
 > **App não oficial, sem vínculo com a Darkglass Electronics.** Anagram é marca do fabricante; a arte
@@ -40,7 +40,8 @@ exportar e importar JSON, área Fábrica (36 presets da Darkglass, só leitura) 
 ## Como instalar
 
 O app não tem instalador: é uma pasta que você extrai e abre. Todas as versões ficam em
-**[Releases › última versão](https://github.com/jordaobass/anagram_app/releases/latest)**.
+**[Releases › última versão](https://github.com/jordaobass/anagram_app/releases/latest)**: baixe o zip
+do seu sistema em **Assets**. (O botão verde **Code** baixa o código-fonte, não o app.)
 
 ### Windows 10 ou 11 (64 bits)
 

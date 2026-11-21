@@ -7,13 +7,13 @@ bank, a signal chain with the pedal's own block art, big knobs, scenes and **liv
 One Flutter codebase for macOS, Windows, Linux, Android and the browser (Chrome/Edge).
 
 <p align="center">
-  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Download for Windows" src="https://img.shields.io/badge/Download-Windows%2010%2F11-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
-  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Download for macOS" src="https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
+  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Download for Windows" src="https://img.shields.io/badge/Download-Windows%2010%2F11-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
+  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Download for macOS" src="https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
   <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Latest release on GitHub" src="https://img.shields.io/github/v/release/jordaobass/anagram_app?style=for-the-badge&label=version"></a>
 </p>
 
 <p align="center">
-  <a href="https://s3.nexttag.app/apps/desktop/anagram-app/index.html"><img alt="Editor with the block chain and the parallel row" src="docs/imagens/en/editor.webp" width="900"></a>
+  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Editor with the block chain and the parallel row" src="docs/imagens/en/editor.webp" width="900"></a>
 </p>
 
 > **Unofficial app, not affiliated with Darkglass Electronics.** Anagram is a trademark of its
@@ -40,13 +40,12 @@ and import JSON, the Factory area (36 Darkglass presets, read-only) and local AI
 ## How to install
 
 There's no installer: it's a folder you extract and open. Every version is in
-**[Releases › latest](https://github.com/jordaobass/anagram_app/releases/latest)**, and the
-[download page](https://s3.nexttag.app/apps/desktop/anagram-app/index.html) always has the newest one.
+**[Releases › latest](https://github.com/jordaobass/anagram_app/releases/latest)**: download the zip
+for your system under **Assets**. (The green **Code** button downloads the source code, not the app.)
 
 ### Windows 10 or 11 (64-bit)
 
-1. Download `anagram-app-windows-<version>.zip` from the
-   [download page](https://s3.nexttag.app/apps/desktop/anagram-app/index.html) or from **Assets** in the
+1. Download `anagram-app-windows-<version>.zip` from **Assets** in the
    [latest release](https://github.com/jordaobass/anagram_app/releases/latest).
 2. In your Downloads folder, right-click the zip and choose **Extract All…**. Don't run the app from
    inside the zip: it needs the other files in the folder.
@@ -66,8 +65,8 @@ Keep all the files together in the folder: `hidapi.dll` talks to the pedal over 
 
 ### macOS (Apple Silicon, M1 or newer)
 
-1. Download the macOS zip from the
-   [download page](https://s3.nexttag.app/apps/desktop/anagram-app/index.html) and double-click it to
+1. Download `anagram-app-macos-<version>.zip` from **Assets** in the
+   [latest release](https://github.com/jordaobass/anagram_app/releases/latest) and double-click it to
    extract.
 2. Drag **Anagram App** to **Applications**.
 3. The first time, macOS blocks it because the app isn't notarized yet: open **System Settings ›
