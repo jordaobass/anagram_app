@@ -1,6 +1,6 @@
 // O nome do modo do EQ é texto na cor do modo sobre o painel: precisa de
 // 4,5:1 (WCAG AA, texto normal). A cor da pedaleira continua no chip e na curva.
-import 'package:anagram_app/apresentacao/componentes/cartao_global_eq.dart';
+import 'package:anagram_app/apresentacao/componentes/tela_eq.dart';
 import 'package:anagram_app/apresentacao/tema/tokens.dart';
 import 'package:anagram_app/l10n/app_localizations.dart';
 import 'package:anagram_app/nucleo/ajustes/mapa_ajustes.dart';
