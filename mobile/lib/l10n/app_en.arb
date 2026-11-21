@@ -307,5 +307,12 @@
   "mpLimparConfirmar": "Clear",
   "mpLimpo": "{slot} cleared: the slot is now empty.",
   "mpExportadoGravado": "Exported the preset saved in {slot}; unsaved edits were left out.",
-  "mpSlotVazio": "{slot} is already empty on the pedal."
+  "mpSlotVazio": "{slot} is already empty on the pedal.",
+  "axEntrada": "Input",
+  "axOsciladores": "Oscillators",
+  "axFiltro": "Filter",
+  "axEnvelope": "Envelope",
+  "axArpejador": "Arpeggiator",
+  "axSaida": "Output",
+  "axOutros": "Other"
 }

@@ -307,5 +307,12 @@
   "mpLimparConfirmar": "Borrar",
   "mpLimpo": "{slot} borrado: el slot quedó vacío.",
   "mpExportadoGravado": "Se exportó el preset guardado en {slot}; las ediciones sin guardar quedaron fuera.",
-  "mpSlotVazio": "El {slot} ya está vacío en la pedalera."
+  "mpSlotVazio": "El {slot} ya está vacío en la pedalera.",
+  "axEntrada": "Entrada",
+  "axOsciladores": "Osciladores",
+  "axFiltro": "Filtro",
+  "axEnvelope": "Envolvente",
+  "axArpejador": "Arpegiador",
+  "axSaida": "Salida",
+  "axOutros": "Otros"
 }
