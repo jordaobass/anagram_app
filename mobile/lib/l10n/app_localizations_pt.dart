@@ -1040,4 +1040,96 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get smLinha2SemSplit =>
       'Sem Split na linha 1, esta linha ainda não recebe sinal.';
+
+  @override
+  String get lpCriar => 'CRIAR LINHA PARALELA';
+
+  @override
+  String get lpCriarDica =>
+      'Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.';
+
+  @override
+  String get lpRemover => 'REMOVER LINHA PARALELA';
+
+  @override
+  String get lpSemEspaco =>
+      'A linha 1 precisa de duas casas livres para o Split e o Merge.';
+
+  @override
+  String get smFaixaCriar => '+ Criar linha paralela · Split, linha 2 e Merge';
+
+  @override
+  String get smItemBiblioteca => 'Split + Merge (linha paralela)';
+
+  @override
+  String get smItemBibliotecaDica =>
+      'Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.';
+
+  @override
+  String get smJaTemLinhaParalela =>
+      'Este preset já tem linha paralela (um Split e um Merge por preset).';
+
+  @override
+  String get smDividirDepois => 'Dividir o sinal depois deste bloco';
+
+  @override
+  String get mpExportarJson => 'Exportar JSON…';
+
+  @override
+  String get mpLimpar => 'Limpar preset…';
+
+  @override
+  String get mpLimparFabrica => 'Limpar preset (a Fábrica é só leitura)';
+
+  @override
+  String mpLimparTitulo(String slot) {
+    return 'Limpar o $slot?';
+  }
+
+  @override
+  String mpLimparTexto(String nome, String slot) {
+    return 'O preset \"$nome\" sai do slot $slot na pedaleira e o slot fica vazio. Não dá para desfazer. Para guardar uma cópia, exporte o JSON antes.';
+  }
+
+  @override
+  String get mpExportarAntes => 'Exportar JSON';
+
+  @override
+  String get mpLimparConfirmar => 'Limpar';
+
+  @override
+  String mpLimpo(String slot) {
+    return '$slot limpo: o slot ficou vazio.';
+  }
+
+  @override
+  String mpExportadoGravado(String slot) {
+    return 'Exportado o preset gravado no $slot; as edições não salvas ficaram de fora.';
+  }
+
+  @override
+  String mpSlotVazio(String slot) {
+    return 'O $slot já está vazio na pedaleira.';
+  }
+
+  @override
+  String get axEntrada => 'Entrada';
+
+  @override
+  String get axOsciladores => 'Osciladores';
+
+  @override
+  String get axFiltro => 'Filtro';
+
+  @override
+  String get axEnvelope => 'Envelope';
+
+  @override
+  String get axArpejador => 'Arpejador';
+
+  @override
+  String get axSaida => 'Saída';
+
+  @override
+  String get axOutros => 'Outros';
 }
