@@ -105,7 +105,13 @@ class CasaBloco extends ConsumerWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        CaixaPedal(tamanho: _caixa, child: ArteBlocoWidget(definicao: definicao, tamanho: _caixa - Espacos.xs * 2, ligado: ligado)),
+        CaixaPedal(
+            tamanho: _caixa,
+            child: ArteBlocoWidget(
+                definicao: definicao,
+                tamanho: _caixa - Medidas.folgaArteNaCaixa * 2,
+                ligado: ligado,
+                arquivoIr: atual.arquivoDeIr)),
         const SizedBox(height: Espacos.xs),
         Container(height: Medidas.fitaCategoria, color: Cores.daFamilia(definicao.familia)),
         const SizedBox(height: Espacos.xxs),

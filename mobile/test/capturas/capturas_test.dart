@@ -78,4 +78,15 @@ void main() {
     await tester.pumpAndSettle();
     await capturar(tester, '$pasta/desktop-6-bloco-desligado.png');
   });
+
+  // FILTER TONE (exemplo real 2): o gabinete com o IR "212 103 on axis_01-MP",
+  // que no Darkglass Suite é o Darkglass Neo 2x12 (só com a arte da pedaleira)
+  testWidgets('captura desktop: gabinete com o IR escolhido', (tester) async {
+    await preparar(tester, desktopWindows);
+    final container = await abrirSlot(tester, '01B');
+    container.read(editorProvider.notifier).selecionarBloco(const PosicaoBloco(1, 9));
+    await tester.pumpAndSettle();
+    await assentarImagens(tester);
+    await capturar(tester, '$pasta/desktop-7-gabinete.png');
+  });
 }

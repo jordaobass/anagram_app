@@ -73,7 +73,18 @@ abstract final class Medidas {
   static const double casaMinima = 56;
   static const double casaMaxima = 112;
 
-  static const double arteNaCasa = 0.86;
+  /// A caixa do pedal ocupa a casa inteira: a foto é o que identifica o bloco.
+  static const double arteNaCasa = 1.0;
+
+  /// Folga entre a borda da caixa do pedal e a foto.
+  static const double folgaArteNaCaixa = 2;
+
+  /// Vão entre as casas da cadeia (o fio do sinal passa por ele).
+  static const double vaoEntreCasas = 4;
+
+  /// Foto do pedal no painel do bloco e na biblioteca de efeitos.
+  static const double artePainelBloco = 64;
+  static const double arteBiblioteca = 56;
 
   /// O "+" do encaixe vazio, em fração da caixa do pedal: grande o bastante
   /// para se ler a um metro da tela.

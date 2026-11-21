@@ -22,7 +22,7 @@ class GradeBlocos extends ConsumerWidget {
     if (documento == null) return const SizedBox.shrink();
     return LayoutBuilder(builder: (context, restricoes) {
       const casas = PosicaoBloco.casasPorLinha;
-      final util = restricoes.maxWidth - Medidas.margemJaque * 2 - (casas - 1) * Espacos.s;
+      final util = restricoes.maxWidth - Medidas.margemJaque * 2 - (casas - 1) * Medidas.vaoEntreCasas;
       final largura = (util / casas).clamp(Medidas.casaMinima, Medidas.casaMaxima);
       final geometria = geometriaDaCasa(largura);
       return SingleChildScrollView(
@@ -54,7 +54,7 @@ class GradeBlocos extends ConsumerWidget {
     final alturaTexto = Medidas.alturaRotuloCasa + Medidas.fitaCategoria + Espacos.xs + Espacos.xxs;
     return GeometriaGrade(
       larguraCasa: largura,
-      vao: Espacos.s,
+      vao: Medidas.vaoEntreCasas,
       alturaLinha: arte + alturaTexto + Espacos.xs * 2 + Medidas.contornoSelecao * 2,
       centroArte: Espacos.xs + Medidas.contornoSelecao + arte / 2,
     );
@@ -82,7 +82,7 @@ class GradeBlocos extends ConsumerWidget {
         height: geometriaDaCasa(largura).alturaLinha,
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           for (var casa = 1; casa <= PosicaoBloco.casasPorLinha; casa++) ...[
-            if (casa > 1) const SizedBox(width: Espacos.s),
+            if (casa > 1) const SizedBox(width: Medidas.vaoEntreCasas),
             casaDaGrade(context, ref, documento, PosicaoBloco(linha, casa), largura),
           ],
         ]),
