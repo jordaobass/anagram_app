@@ -67,6 +67,8 @@ mixin AoVivoDoEditor on Notifier<EstadoEditor> {
         .listen((m) => state = state.copiar(latencia: m.duracao));
     return EnvioAoVivo((documento) async {
       final envio = await repositorio.tocarAoVivo(documento);
+      // falha de uma conexão que já acabou: a tela de conectar já diz isso
+      if (!identical(repositorioAtual, repositorio)) return;
       if (envio case Falha(:final erro)) state = state.copiar(aviso: AvisoErro(erro));
     });
   }

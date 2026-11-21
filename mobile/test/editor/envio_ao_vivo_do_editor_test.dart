@@ -2,6 +2,7 @@
 // meio-tempo a pessoa pode desligar o "Ao vivo", abrir outro preset ou o
 // cabo pode sair. Nada disso pode fazer a pedaleira tocar o que já não vale,
 // nem acusar erro de uma conexão que já acabou.
+import 'package:anagram_app/aplicacao/avisos.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
@@ -49,4 +50,17 @@ void main() {
     expect(tocando, anyOf(isNull, container.read(editorProvider).atual!.nome));
   });
 
+  test('should_not_show_an_error_for_a_live_send_that_failed_because_the_cable_was_pulled', () async {
+    final (container, pedaleira) = await conectarDemonstracao();
+    addTearDown(container.dispose);
+    final editor = container.read(editorProvider.notifier);
+    await editor.abrirSlot(SlotPreset(3));
+    pedaleira.desconectarAoReceber = AcoesAnagram.tocarAoVivo;
+
+    editor.alterarParametro('Threshold', -20, arrastando: false);
+    await _passarDaJanela();
+
+    expect(container.read(editorProvider).aviso, isNot(isA<AvisoErro>()),
+        reason: 'a desconexão já é dita na tela de conectar; o envio perdido não vira outro erro');
+  });
 }
