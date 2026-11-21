@@ -58,6 +58,7 @@
   "abrirDemonstracao": "OPEN DEMO",
   "conectarPeloUsb": "CONNECT OVER USB",
   "cancelar": "CANCEL",
+  "versaoAppNaBarra": "App v{versao}",
   "versaoApp": "v{versao}",
   "versaoAppComArte": "v{versao} · pedal art",
   "fecharAviso": "Dismiss",

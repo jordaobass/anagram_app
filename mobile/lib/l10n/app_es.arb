@@ -58,6 +58,7 @@
   "abrirDemonstracao": "ABRIR DEMOSTRACIÓN",
   "conectarPeloUsb": "CONECTAR POR USB",
   "cancelar": "CANCELAR",
+  "versaoAppNaBarra": "App v{versao}",
   "versaoApp": "v{versao}",
   "versaoAppComArte": "v{versao} · arte de la pedalera",
   "fecharAviso": "Cerrar aviso",
