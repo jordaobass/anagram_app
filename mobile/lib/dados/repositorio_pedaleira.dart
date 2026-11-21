@@ -45,7 +45,28 @@ class RepositorioPedaleira {
       _proteger('tocar ao vivo', () => _api.tocarAoVivo(preset));
 
   Future<Resultado<void>> salvar(SlotPreset slot, DocumentoPreset preset, {String? area}) =>
-      _proteger('salvar ${slot.rotulo}', () => _api.salvar(slot, preset, area: area));
+      _proteger('salvar ${slot.rotulo}', () => _salvarConferindo(slot, preset, area));
+
+  /// A Anagram grava o preset mas pode não confirmar em 30 s (provado em
+  /// 2026-11-21 na v1.19.2.24, com 2 a 5 blocos pesados): sem confirmação,
+  /// relê o slot e só acusa a falha se o que está lá não for o que se mandou.
+  Future<void> _salvarConferindo(SlotPreset slot, DocumentoPreset preset, String? area) async {
+    try {
+      await _api.salvar(slot, preset, area: area);
+    } on ErroSemResposta {
+      final gravado = await _api.lerPreset(slot, area: area);
+      if (gravado == null || !_mesmaCadeia(gravado, preset)) rethrow;
+      registro.w('pedaleira: salvar ${slot.rotulo} sem confirmação; a releitura mostrou o preset gravado');
+    }
+  }
+
+  static bool _mesmaCadeia(DocumentoPreset a, DocumentoPreset b) {
+    String cadeia(DocumentoPreset d) => [
+          for (final linha in [1, 2])
+            for (final bloco in d.blocosDaLinha(linha)) '${bloco.posicao.linha}.${bloco.posicao.casa}=${bloco.uri}',
+        ].join(';');
+    return a.nome == b.nome && cadeia(a) == cadeia(b);
+  }
 
   /// Apaga o preset do slot (o slot fica vazio na pedaleira).
   Future<Resultado<void>> excluir(SlotPreset slot, {String? area}) =>
