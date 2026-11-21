@@ -18,6 +18,7 @@ abstract final class ProtocoloAnagram {
   static const int tamanhoCarga = tamanhoRelatorio - 1;
   static const String marcadorInicio = 'DSTART';
   static const String marcadorFim = 'DEND';
+  static const List<String> marcadores = [marcadorInicio, marcadorFim];
 }
 
 /// Uma mensagem do protocolo: ação + carga JSON.
@@ -34,11 +35,14 @@ class MensagemAnagram {
 class CodificadorQuadros {
   const CodificadorQuadros();
 
+  /// Lança [MensagemComMarcador] se o JSON trouxer um marcador de quadro: a
+  /// pedaleira cortaria o pedido no meio e ficaria sem responder até o prazo.
   List<Uint8List> codificar(MensagemAnagram mensagem) {
-    final texto = ProtocoloAnagram.marcadorInicio +
-        jsonEncode(mensagem.paraJson()) +
-        ProtocoloAnagram.marcadorFim;
-    return fatiar(utf8.encode(texto));
+    final json = jsonEncode(mensagem.paraJson());
+    for (final marcador in ProtocoloAnagram.marcadores) {
+      if (json.contains(marcador)) throw MensagemComMarcador(mensagem.acao, marcador);
+    }
+    return fatiar(utf8.encode(ProtocoloAnagram.marcadorInicio + json + ProtocoloAnagram.marcadorFim));
   }
 
   /// Fatia bytes em relatórios, mais o relatório de preenchimento final.
@@ -56,6 +60,18 @@ class CodificadorQuadros {
       return relatorio;
     });
   }
+}
+
+/// Pedido que não pode ir para o fio: um texto dele (nome do preset, nome de
+/// cena) contém um marcador de quadro. O firmware não escapa os marcadores
+/// (DECISOES P6), então escapar aqui seria apostar num formato não provado.
+class MensagemComMarcador implements Exception {
+  const MensagemComMarcador(this.acao, this.marcador);
+  final String acao;
+  final String marcador;
+
+  @override
+  String toString() => 'O pedido "$acao" contém "$marcador", que a pedaleira lê como marcador de quadro.';
 }
 
 /// Erro de quadro: chegou algo entre os marcadores que não é JSON.

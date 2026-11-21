@@ -62,7 +62,7 @@ class ClienteAnagram {
       throw const ErroDesconectado('A pedaleira não está conectada.');
     }
     final relogio = _cronometro()..start();
-    final relatorios = _codificador.codificar(MensagemAnagram(acao, carga));
+    final relatorios = _codificar(acao, carga);
     final pausa = _pausa();
     final espera = _aguardarResposta(acao, prazo);
     try {
@@ -75,6 +75,15 @@ class ClienteAnagram {
     relogio.stop();
     _registrarMedicao(MedicaoChamada(acao, relogio.elapsed, relatorios.length, pausa));
     return _extrairCarga(acao, quadro);
+  }
+
+  List<Uint8List> _codificar(String acao, Map<String, dynamic> carga) {
+    try {
+      return _codificador.codificar(MensagemAnagram(acao, carga));
+    } on MensagemComMarcador catch (erro) {
+      registro.e('anagram: $acao não enviado', error: erro);
+      throw ErroRespostaInvalida('$erro');
+    }
   }
 
   Future<void> _enviarTodos(List<Uint8List> relatorios, Duration pausa) async {

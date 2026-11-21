@@ -16,6 +16,8 @@ class DocumentoPreset {
 
   /// Valida o envelope `{"preset":{...},"type":"preset","version":1}`.
   /// Versão maior que 1 é aceita (campos novos são preservados) com aviso.
+  /// Preset com marcador de quadro num texto também é recusado: ele não
+  /// teria como ir para a pedaleira (arquivo importado, DECISOES RN4).
   factory DocumentoPreset.doJson(Map<String, dynamic> json) {
     final versao = json['version'];
     if (json['type'] != 'preset' || versao is! int || versao < 1) {
@@ -24,7 +26,18 @@ class DocumentoPreset {
     if (json['preset'] is! Map<String, dynamic>) {
       throw const FormatException('Falta o objeto "preset".');
     }
+    _recusarMarcadorDeQuadro(json);
     return DocumentoPreset._(_comCenaAtivaNoBloco(copiaProfunda(json)));
+  }
+
+  static void _recusarMarcadorDeQuadro(Map<String, dynamic> json) {
+    final texto = jsonEncode(json);
+    for (final marcador in ProtocoloAnagram.marcadores) {
+      if (texto.contains(marcador)) {
+        throw FormatException('um texto do preset (nome, cena ou controle) contém "$marcador", '
+            'que a pedaleira lê como marcador de mensagem.');
+      }
+    }
   }
 
   /// A pedaleira grava o bloco com os valores da cena ativa (é o que ela
@@ -252,7 +265,7 @@ String novoUuidPreset([Random? aleatorio]) {
 NomeInvalido? motivoNomeInvalido(String nome) {
   final limpo = nome.trim();
   if (limpo.isEmpty) return const NomeVazio();
-  for (final marcador in const [ProtocoloAnagram.marcadorInicio, ProtocoloAnagram.marcadorFim]) {
+  for (final marcador in ProtocoloAnagram.marcadores) {
     if (limpo.contains(marcador)) return NomeComMarcador(marcador);
   }
   return null;
