@@ -95,3 +95,24 @@ class CatalogoGabinetes {
 
   static List<String> _semRepetir(Iterable<String> valores) => valores.toSet().toList();
 }
+
+/// Tipo do microfone de um IR, deduzido do nome que o Suite dá ("Dynamic 421",
+/// "Condenser 103", "Ribbon 121"; nos Artists, nomes de modelo como "Beta52A").
+/// Só serve para o ícone: as fotos dos microfones ficam no firmware da
+/// pedaleira, não no Darkglass Suite.
+enum TipoMicrofone {
+  dinamico,
+  condensador,
+  fita,
+  outro;
+
+  static final _dinamicosPorModelo = RegExp(r'beta|d12|md4|sm5|e60|906');
+
+  static TipoMicrofone doNome(String nome) {
+    final texto = nome.toLowerCase();
+    if (texto.contains('condenser')) return condensador;
+    if (texto.contains('ribbon')) return fita;
+    if (texto.contains('dynamic') || _dinamicosPorModelo.hasMatch(texto)) return dinamico;
+    return outro;
+  }
+}

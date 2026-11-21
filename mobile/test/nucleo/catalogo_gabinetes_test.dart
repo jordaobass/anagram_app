@@ -70,4 +70,12 @@ void main() {
     expect((bloco.bruto['properties'] as Map<String, dynamic>)['1'],
         {'name': 'Cabinet File', 'uri': 'urn:darkglass-anagram:cabinet-bass#file', 'value': '/factory-data/cabinets/x.dat'});
   });
+
+  test('should_tell_the_mic_type_from_the_suite_name_for_the_icon', () {
+    expect(TipoMicrofone.doNome('Condenser 103'), TipoMicrofone.condensador);
+    expect(TipoMicrofone.doNome('Dynamic 421'), TipoMicrofone.dinamico);
+    expect(TipoMicrofone.doNome('Ribbon 121'), TipoMicrofone.fita);
+    expect(TipoMicrofone.doNome('Beta52A'), TipoMicrofone.dinamico);
+    expect(TipoMicrofone.doNome('ScoopyDoo'), TipoMicrofone.outro);
+  });
 }
