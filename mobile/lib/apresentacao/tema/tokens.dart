@@ -285,9 +285,20 @@ abstract final class Medidas {
   static const double tracoDesenhoSynth = 2;
   static const double opacidadePreenchimentoSynth = 0.18;
   static const double knobSynth = 64;
+
+  /// Menor janela do computador (Windows: WM_GETMINMAXINFO em
+  /// `win32_window.cpp`; macOS: `contentMinSize` em `MainFlutterWindow.swift`).
+  /// Medido: a 440 px tudo cabe nos três idiomas, a 400 px a fita do preset
+  /// em espanhol estoura; 480 deixa folga (DECISOES K6).
+  static const double larguraMinimaJanela = 480;
+  static const double alturaMinimaJanela = 480;
 }
 
 abstract final class Quebras {
+  /// Abaixo disto a versão do app sai da barra de conexão larga (fica no
+  /// Sobre): em espanhol, entre 780 e 840 px, ela empurrava a barra para fora.
+  static const double barraComVersao = 880;
+
   /// A partir daqui a lista de presets fica ao lado (iPad em retrato já entra).
   static const double amplo = 780;
 

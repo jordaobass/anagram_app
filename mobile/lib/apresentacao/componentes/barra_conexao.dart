@@ -36,8 +36,9 @@ class BarraConexao extends ConsumerWidget {
         children: [
           Flexible(child: _Estado(cor: cor, texto: texto, linhas: compacta ? 2 : 1)),
           // a versão do app ao lado do firmware: ao relatar um problema, as duas
-          // estão à vista (no celular a barra não comporta, fica no Sobre)
-          if (!compacta) const _VersaoNaBarra(),
+          // estão à vista (no celular e logo acima da quebra larga a barra não
+          // comporta: fica no Sobre)
+          if (!compacta && MediaQuery.sizeOf(context).width >= Quebras.barraComVersao) const _VersaoNaBarra(),
           const SizedBox(width: Espacos.s),
           if (conexao is Conectada) _AoVivo(compacta: compacta),
           if (conexao is Conectada)
