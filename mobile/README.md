@@ -105,6 +105,11 @@ ferramentas/verificar_release.sh && flutter build <plataforma> --release
 Sem `--suite`, a ferramenta traz só a arte dos efeitos (101 blocos, 202 imagens) e os gabinetes
 ficam com a arte própria do app.
 
+Com `--suite` e `--renderer`, ela grava também `fabrica.json`: os 36 presets de fábrica (01A a 12C)
+que o Suite traz embutidos no `renderer.prod.js` (Suite 6.11.4). Com esse arquivo no build, o seletor
+de área ganha a opção **Fábrica**, só leitura: abrir um preset dela só toca (temporário, sem Program
+Change) e o botão de gravar vira "Copiar para a minha área…" (DECISOES U18). Sem ele, a opção não aparece.
+
 O script falha (código 1) sem a arte da pedaleira, com menos de 100 imagens dela ou com qualquer outro
 arquivo na pasta. No macOS com Xcode 27, o release só compila para arm64: acrescente `ARCHS = arm64` ao
 `macos/Runner/Configs/Release.xcconfig` do clone (o `lipo` recusa `-verify_arch` com várias arquiteturas).
