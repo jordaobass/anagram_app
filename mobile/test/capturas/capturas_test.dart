@@ -1,5 +1,8 @@
 // Capturas das telas principais em modo demonstração, com as fontes reais,
 // em três tamanhos. Gerar/atualizar: flutter test test/capturas --update-goldens
+import 'dart:async';
+
+import 'package:anagram_app/aplicacao/estado/controlador_biblioteca.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:flutter/material.dart';
@@ -13,13 +16,13 @@ void main() {
   for (final t in tamanhos) {
     testWidgets('captura ${t.nome}: conectar', (tester) async {
       await preparar(tester, t);
-      await expectLater(find.byType(MaterialApp), matchesGoldenFile('$pasta/${t.nome}-1-conectar.png'));
+      await capturar(tester, '$pasta/${t.nome}-1-conectar.png');
     });
 
     testWidgets('captura ${t.nome}: editor', (tester) async {
       await preparar(tester, t);
       await abrirPresetEditado(tester, t);
-      await expectLater(find.byType(MaterialApp), matchesGoldenFile('$pasta/${t.nome}-2-editor.png'));
+      await capturar(tester, '$pasta/${t.nome}-2-editor.png');
     });
 
     testWidgets('captura ${t.nome}: salvar', (tester) async {
@@ -29,7 +32,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('slot-02B')));
       await tester.pumpAndSettle();
-      await expectLater(find.byType(MaterialApp), matchesGoldenFile('$pasta/${t.nome}-3-confirmar-salvar.png'));
+      await capturar(tester, '$pasta/${t.nome}-3-confirmar-salvar.png');
     });
   }
 
@@ -39,7 +42,7 @@ void main() {
     await abrirPresetEditado(tester, t);
     await tester.tap(find.byKey(const ValueKey('abrir-lista')));
     await tester.pumpAndSettle();
-    await expectLater(find.byType(MaterialApp), matchesGoldenFile('$pasta/celular-retrato-4-lista.png'));
+    await capturar(tester, '$pasta/celular-retrato-4-lista.png');
   });
 
   testWidgets('captura desktop: cadeia paralela com split e merge', (tester) async {
@@ -49,6 +52,30 @@ void main() {
     container.read(editorProvider.notifier).selecionarBloco(const PosicaoBloco(2, 4));
     await tester.pumpAndSettle();
     await assentarImagens(tester);
-    await expectLater(find.byType(MaterialApp), matchesGoldenFile('$pasta/desktop-4-paralelo.png'));
+    await capturar(tester, '$pasta/desktop-4-paralelo.png');
+  });
+
+  testWidgets('captura desktop-macos: editor', (tester) async {
+    await preparar(tester, desktopMac);
+    await abrirPresetEditado(tester, desktopMac);
+    await capturar(tester, '$pasta/desktop-macos-2-editor.png');
+  });
+
+  testWidgets('captura desktop: área que não está ativa na pedaleira', (tester) async {
+    await preparar(tester, desktopWindows);
+    final container = await abrirSlot(tester, '02A');
+    unawaited(container.read(bibliotecaProvider.notifier).selecionarArea('user-2'));
+    await tester.pumpAndSettle();
+    await capturar(tester, '$pasta/desktop-5-area-nao-ativa.png');
+  });
+
+  testWidgets('captura desktop: bloco desligado selecionado', (tester) async {
+    await preparar(tester, desktopWindows);
+    final container = await abrirSlot(tester, '02A');
+    const posicao = PosicaoBloco(1, 2);
+    unawaited(container.read(editorProvider.notifier).alternarBypass(posicao));
+    container.read(editorProvider.notifier).selecionarBloco(posicao);
+    await tester.pumpAndSettle();
+    await capturar(tester, '$pasta/desktop-6-bloco-desligado.png');
   });
 }
