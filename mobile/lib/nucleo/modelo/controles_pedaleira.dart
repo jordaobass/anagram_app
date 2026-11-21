@@ -75,7 +75,8 @@ class ControlePedaleira {
 
   List<AlvoControle> get alvos {
     final lista = bruto['parameters'];
-    return lista is List ? [for (final alvo in lista.whereType<Map<String, dynamic>>()) AlvoControle(alvo)] : const [];
+    if (lista is! List<dynamic>) return const [];
+    return [for (final alvo in lista.whereType<Map<String, dynamic>>()) AlvoControle(alvo)];
   }
 }
 
@@ -122,7 +123,7 @@ Map<String, dynamic> _vinculos(Map<String, dynamic> preset) {
 
 List<dynamic>? _alvosBrutos(Map<String, dynamic> preset, IdControle id) {
   final lista = mapaOuVazio(_vinculos(preset)[id.chave])['parameters'];
-  return lista is List ? lista : null;
+  return lista is List<dynamic> ? lista : null;
 }
 
 /// Um parâmetro move um controle só: atribuí-lo a [id] o tira de onde
@@ -132,7 +133,7 @@ void atribuirAlvo(Map<String, dynamic> preset, IdControle id, NovoAlvo alvo) {
     if (outro != id) _tirarParametro(preset, outro, alvo.posicao, alvo.simbolo);
   }
   final controle = _controleOuNovo(preset, id, alvo.nomePadrao);
-  final alvos = controle['parameters'] as List;
+  final alvos = controle['parameters'] as List<dynamic>;
   final existente =
       alvos.indexWhere((a) => a is Map<String, dynamic> && AlvoControle(a).mesmoParametro(alvo.posicao, alvo.simbolo));
   if (existente >= 0) {
@@ -153,7 +154,7 @@ Map<String, dynamic> _controleOuNovo(Map<String, dynamic> preset, IdControle id,
   final controle = atual is Map<String, dynamic>
       ? atual
       : vinculos[id.chave] = <String, dynamic>{'name': nome, 'parameters': <dynamic>[], 'properties': <dynamic>[]};
-  if (controle['parameters'] is! List) controle['parameters'] = <dynamic>[];
+  if (controle['parameters'] is! List<dynamic>) controle['parameters'] = <dynamic>[];
   return controle;
 }
 

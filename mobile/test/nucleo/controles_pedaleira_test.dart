@@ -16,7 +16,7 @@ List<Map<String, dynamic>> presetsReais() {
   final fabrica = jsonDecode(File('assets/blocos_terceiros/fabrica.json').readAsStringSync()) as Map<String, dynamic>;
   return [
     for (final n in ['1', '2', '13', '41']) lerExemplo(n),
-    for (final item in fabrica['presets'] as List) (item as Map<String, dynamic>)['preset'] as Map<String, dynamic>,
+    for (final item in fabrica['presets'] as List<dynamic>) (item as Map<String, dynamic>)['preset'] as Map<String, dynamic>,
   ];
 }
 
