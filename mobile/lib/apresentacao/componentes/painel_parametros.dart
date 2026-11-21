@@ -115,13 +115,17 @@ class DicaMontarCadeia extends StatelessWidget {
 /// com faixa estimada (marcada no nome por [nomeEstimado], no idioma da tela).
 const _papeisSemControle = {'bypass', 'reset', 'hostTempo'};
 
+/// Sem papel no catálogo, mas também ação e não ajuste: o "Reset Peak Hold"
+/// do paramétrico zera o medidor de pico, que pelo USB não chega ao app.
+const _simbolosSemControle = {'peakreset'};
+
 List<DefinicaoParametro> parametrosVisiveis(DefinicaoBloco definicao, BlocoPreset bloco,
     {String Function(String simbolo) nomeEstimado = _nomeEstimadoPadrao}) {
   // "bypass" é o próprio liga/desliga do bloco (o botão LIGADO do cabeçalho);
   // "reset" e "hostTempo" são ações do aparelho, que o preset nem guarda.
   // Mostrados como controle, seriam botões que não fazem o que dizem
   if (definicao.parametros.isNotEmpty) {
-    return [for (final p in definicao.parametros) if (!_papeisSemControle.contains(p.papel)) p];
+    return [for (final p in definicao.parametros) if (!_papeisSemControle.contains(p.papel) && !_simbolosSemControle.contains(p.simbolo)) p];
   }
   return [
     for (final simbolo in bloco.simbolosGuardados)
