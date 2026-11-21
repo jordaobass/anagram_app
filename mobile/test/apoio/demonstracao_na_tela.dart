@@ -63,6 +63,30 @@ Future<ProviderContainer> entrarNaDemonstracao(WidgetTester tester) async {
 ProviderContainer containerDaTela(WidgetTester tester) =>
     ProviderScope.containerOf(tester.element(find.byType(Scaffold).first));
 
+/// Rola o editor de volta ao topo (fita do preset e Salvar): depois de
+/// rolar até um knob, a fita sai da lista, que só monta o que está à vista.
+Future<void> voltarAoTopoDoEditor(WidgetTester tester) async {
+  _rolagemDoEditor(tester).jumpTo(0);
+  await tester.pumpAndSettle();
+}
+
+/// Rola o editor para baixo até [alvo] estar montado (o painel dos controles
+/// da pedaleira fica no fim, fora da tela).
+Future<void> rolarEditorAte(WidgetTester tester, Finder alvo) async {
+  final posicao = _rolagemDoEditor(tester);
+  while (alvo.evaluate().isEmpty && posicao.pixels < posicao.maxScrollExtent) {
+    posicao.jumpTo((posicao.pixels + posicao.viewportDimension / 2).clamp(0, posicao.maxScrollExtent));
+    await tester.pumpAndSettle();
+  }
+  await tester.ensureVisible(alvo);
+  await tester.pumpAndSettle();
+}
+
+ScrollPosition _rolagemDoEditor(WidgetTester tester) => tester
+    .state<ScrollableState>(
+        find.descendant(of: find.byKey(const ValueKey('rolagem-editor')), matching: find.byType(Scrollable)).first)
+    .position;
+
 /// Toca na linha do slot (ex. '02A') na lista de presets.
 Future<void> tocarNoSlot(WidgetTester tester, String rotulo) async {
   await tester.tap(find.byKey(ValueKey('slot-$rotulo')));

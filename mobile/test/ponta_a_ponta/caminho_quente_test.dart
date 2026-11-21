@@ -42,6 +42,7 @@ void main() {
     expect(enviado, greaterThan(-30));
     expect(envios - enviosAntes, inInclusiveRange(1, 4), reason: 'arraste com vazão limitada + valor final');
     expect(find.descendant(of: knob, matching: find.text(FormatadorValor.formatar(limiar, enviado))), findsOneWidget);
+    await voltarAoTopoDoEditor(tester);
     expect(find.byKey(const ValueKey('selo-nao-salvo')), findsOneWidget);
 
     // Salvar grava no slot aberto, sem escolher nem confirmar (é o próprio slot)

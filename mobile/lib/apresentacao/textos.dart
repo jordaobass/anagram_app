@@ -17,6 +17,7 @@ import '../nucleo/catalogo/definicao_bloco.dart';
 import '../nucleo/catalogo/familia_bloco.dart';
 import '../nucleo/catalogo/formatador_valor.dart';
 import '../nucleo/modelo/areas_presets.dart';
+import '../nucleo/modelo/controles_pedaleira.dart';
 import '../nucleo/modelo/documento_preset.dart';
 import '../nucleo/protocolo/erros_anagram.dart';
 import '../nucleo/suporte_aparelho.dart';
@@ -154,6 +155,19 @@ extension TextosDoApp on AppLocalizations {
 
   /// O nome dado na pedaleira; sem nome, "Área N".
   String nomeDaArea(AreaPresets area) => area.nome.isEmpty ? areaSemNome(area.numero) : area.nome;
+
+  /// Como a pedaleira chama o controle: "FOOT 1", "POT 2", "EXP".
+  String rotuloControle(IdControle id) =>
+      id.tipo == TipoControle.expressao ? siglaControle(id) : '${siglaControle(id)} ${id.numero}';
+
+  /// A sigla impressa na pedaleira, sem o número.
+  String siglaControle(IdControle id) => switch (id.tipo) {
+        TipoControle.footswitch => ctlSiglaFoot,
+        TipoControle.pot => ctlSiglaPot,
+        TipoControle.expressao => ctlSiglaExp,
+      };
+
+  String ctlDicaPara({required bool mouse}) => mouse ? ctlDicaMouse : ctlDicaToque;
 
   /// Com mouse a pessoa clica e usa o botão direito; no toque, toca e segura.
   String dicaMontarCadeiaPara({required bool mouse}) => mouse ? txDicaMontarCadeiaMouse : dicaMontarCadeia;

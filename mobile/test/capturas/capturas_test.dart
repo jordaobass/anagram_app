@@ -120,6 +120,8 @@ void main() {
     // no celular o painel fica abaixo da cadeia: rola até os cartões aparecerem
     await tester.scrollUntilVisible(find.byKey(const ValueKey('cartao-microfone')), 300,
         scrollable: find.byType(Scrollable).first);
+    // com os controles da pedaleira embaixo, a rolagem pode passar da foto
+    await tester.ensureVisible(find.byKey(const ValueKey('gabinete-abrir')));
     await tester.pumpAndSettle();
     await assentarImagens(tester);
     await capturar(tester, '$pasta/celular-retrato-6-gabinete.png');
@@ -130,6 +132,9 @@ void main() {
     // rola até o cartão de baixo, para a foto do gabinete ficar inteira na tela
     await tester.scrollUntilVisible(find.byKey(const ValueKey('cartao-microfone')), 300,
         scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    // com os controles da pedaleira embaixo, a rolagem pode passar da foto
+    await tester.ensureVisible(find.byKey(const ValueKey('gabinete-abrir')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('gabinete-abrir')));
     await tester.pumpAndSettle();

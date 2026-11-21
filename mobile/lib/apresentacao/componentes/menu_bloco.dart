@@ -1,18 +1,41 @@
 // Menu de uma casa: adicionar efeito (vazia), copiar, colar, ligar/desligar,
-// mover e remover. Abre pelo botão direito e pelo botão "mais ações" do painel;
-// o "mover" serve a quem não arrasta (teclado, leitor de tela, toque difícil).
+// mover, pôr um footswitch e remover. Abre pelo botão direito e pelo botão
+// "mais ações" do painel; o "mover" serve a quem não arrasta (teclado, leitor
+// de tela, toque difícil).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
+import '../../aplicacao/provedores.dart';
 import '../../nucleo/catalogo/biblioteca_blocos.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
+import '../../nucleo/modelo/controles_pedaleira.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import 'acoes_roteamento.dart';
 import 'biblioteca_efeitos.dart';
+import 'menu_atribuir.dart';
 import '../../l10n/app_localizations.dart';
 
-enum _AcaoMenu { adicionar, copiar, colar, bypass, esquerda, direita, outraLinha, remover }
+enum _AcaoMenu {
+  adicionar,
+  copiar,
+  colar,
+  bypass,
+  esquerda,
+  direita,
+  outraLinha,
+  foot1(IdControle.foot1),
+  foot2(IdControle.foot2),
+  foot3(IdControle.foot3),
+  remover;
+
+  const _AcaoMenu([this.footswitch]);
+
+  /// O footswitch que esta ação põe no bloco.
+  final IdControle? footswitch;
+
+  static const footswitches = [foot1, foot2, foot3];
+}
 
 Future<void> abrirMenuBloco(BuildContext context, WidgetRef ref, PosicaoBloco posicao, Offset ponto) async {
   final estado = ref.read(editorProvider);
@@ -21,7 +44,14 @@ Future<void> abrirMenuBloco(BuildContext context, WidgetRef ref, PosicaoBloco po
   final acao = await showMenu<_AcaoMenu>(
     context: context,
     position: RelativeRect.fromLTRB(ponto.dx, ponto.dy, ponto.dx, ponto.dy),
-    items: _itens(AppLocalizations.of(context), documento, posicao, temCopia: estado.blocoCopiado != null),
+    items: [
+      ..._itens(AppLocalizations.of(context), documento, posicao, temCopia: estado.blocoCopiado != null),
+      if (documento.bloco(posicao) != null) ..._itensFootswitch(context, documento, posicao),
+      PopupMenuItem(
+          value: _AcaoMenu.remover,
+          enabled: documento.bloco(posicao) != null,
+          child: Text(AppLocalizations.of(context).removerBloco)),
+    ],
   );
   if (acao == null || !context.mounted) return;
   await _executar(context, ref, acao, posicao);
@@ -49,7 +79,21 @@ List<PopupMenuEntry<_AcaoMenu>> _itens(AppLocalizations l, DocumentoPreset docum
       item(_AcaoMenu.outraLinha, l.moverParaLinha(posicao.linha == 1 ? 2 : 1), ativo: podeIr(_AcaoMenu.outraLinha)),
       const PopupMenuDivider(),
     ],
-    item(_AcaoMenu.remover, l.removerBloco, ativo: temBloco),
+  ];
+}
+
+/// "Footswitch N liga/desliga este bloco", com o que cada um já faz; depois, remover.
+List<PopupMenuEntry<_AcaoMenu>> _itensFootswitch(BuildContext context, DocumentoPreset documento, PosicaoBloco posicao) {
+  final l = AppLocalizations.of(context);
+  final controles = documento.controles;
+  return [
+    for (final acao in _AcaoMenu.footswitches)
+      itemDeControle(context, acao,
+          chave: 'menu-${acao.footswitch!.chave}',
+          controle: controles[acao.footswitch],
+          rotulo: l.ctlFootswitchLigaBloco(acao.footswitch!.numero),
+          jaAqui: controles[acao.footswitch]?.alvos.any((a) => a.ehBypass && a.posicao == posicao) ?? false),
+    const PopupMenuDivider(),
   ];
 }
 
@@ -78,7 +122,17 @@ Future<void> _executar(BuildContext context, WidgetRef ref, _AcaoMenu acao, Posi
       await controlador.alternarBypass(posicao);
     case _AcaoMenu.esquerda || _AcaoMenu.direita || _AcaoMenu.outraLinha:
       await controlador.moverBloco(posicao, _destino(posicao, acao));
+    case _AcaoMenu.foot1 || _AcaoMenu.foot2 || _AcaoMenu.foot3:
+      await _porFootswitch(ref, acao.footswitch!, posicao);
     case _AcaoMenu.remover:
       await removerBlocoComAviso(context, ref, posicao);
   }
+}
+
+/// O controle novo leva o nome do bloco no catálogo, como os presets gravados.
+Future<void> _porFootswitch(WidgetRef ref, IdControle footswitch, PosicaoBloco posicao) async {
+  final uri = ref.read(editorProvider).atual?.bloco(posicao)?.uri;
+  if (uri == null) return;
+  final nome = ref.read(definicaoBlocoProvider(uri)).nome;
+  await ref.read(editorProvider.notifier).atribuirFootswitch(footswitch, posicao, nome);
 }
