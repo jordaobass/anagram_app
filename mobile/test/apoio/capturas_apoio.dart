@@ -72,7 +72,7 @@ Future<void> assentarImagens(WidgetTester tester) async {
 
 Future<void> preparar(WidgetTester tester, Tamanho t,
     {List<Override> overrides = const [],
-    IdiomaApp idioma = IdiomaApp.portugues,
+    IdiomaApp? idioma,
     IndiceMiniaturas? indice,
     PresetsDeFabrica? fabrica}) {
   debugDefaultTargetPlatformOverride = t.plataforma;
@@ -80,7 +80,7 @@ Future<void> preparar(WidgetTester tester, Tamanho t,
       tamanho: Size(t.largura, t.altura),
       densidade: t.densidade,
       overrides: overrides,
-      idioma: idioma,
+      idioma: idioma ?? IdiomaApp.doCodigo(Platform.environment['CAPTURAS_IDIOMA']) ?? IdiomaApp.portugues,
       indice: indice,
       fabrica: fabrica);
 }
