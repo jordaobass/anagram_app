@@ -81,11 +81,35 @@ def gabinetes_por_arquivo(tabelas, modelos):
     return porArquivo
 
 
+# O app mostra a arte como ícone (cerca de 70 px na cadeia, 64 no painel);
+# 256 px cobre telas de densidade 3x com folga. As fotos de gabinete do Suite
+# chegam a 1700 px e, copiadas inteiras, triplicavam o download do app.
+LADO_MAXIMO = 256
+
+
 def copiar(origem, destino_pasta, nome_destino):
     destino = destino_pasta / nome_destino
     if not destino.exists():
-        shutil.copyfile(origem, destino)
+        _copiar_em_tamanho_de_icone(origem, destino)
     return f'assets/blocos_terceiros/{nome_destino}'
+
+
+def _copiar_em_tamanho_de_icone(origem, destino):
+    try:
+        from PIL import Image
+    except ImportError:
+        print('aviso: sem Pillow (pip install pillow), a arte vai no tamanho original')
+        shutil.copyfile(origem, destino)
+        return
+    with Image.open(origem) as imagem:
+        if max(imagem.size) <= LADO_MAXIMO:
+            shutil.copyfile(origem, destino)
+            return
+        imagem.thumbnail((LADO_MAXIMO, LADO_MAXIMO), Image.LANCZOS)
+        if destino.suffix.lower() == '.webp':
+            imagem.save(destino, 'WEBP', quality=88, method=6)
+        else:
+            imagem.save(destino, optimize=True)
 
 
 def montar_gabinetes(tabelas, modelos, pasta_cabs, destino_pasta):
