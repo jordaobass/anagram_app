@@ -98,7 +98,7 @@ void main() {
     final no = tester.getSemantics(find.byType(BotaoGiratorio));
 
     expect(no.getSemanticsData().increasedValue, '1/8');
-    tester.binding.pipelineOwner.semanticsOwner!.performAction(no.id, SemanticsAction.increase);
+    no.owner!.performAction(no.id, SemanticsAction.increase);
     await tester.pump();
 
     expect(enviados, [1]);

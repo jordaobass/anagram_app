@@ -59,17 +59,22 @@ class PresetsDeFabrica {
         final trocas = _renomear[mapaOuVazio(bloco)['uri']];
         if (trocas == null) continue;
         _renomearNoBloco(mapaOuVazio(bloco), trocas);
-        _renomearNosControles(preset, '$linha', '$casa', trocas);
+        _renomearNosControles(preset, linha, casa, trocas);
       }
     }
     return envelope;
   }
 
   static void _renomearNoBloco(Map<String, dynamic> bloco, Map<String, String> trocas) {
-    mapaOuVazio(bloco['parameters']).values.forEach((parametro) => _trocar(parametro, trocas));
+    for (final parametro in mapaOuVazio(bloco['parameters']).values) {
+      _trocar(parametro, trocas);
+    }
     for (final cena in mapaOuVazio(bloco['scenes']).values) {
       final lista = mapaOuVazio(cena)['parameters'];
-      if (lista is List) lista.forEach((parametro) => _trocar(parametro, trocas));
+      if (lista is! List) continue;
+      for (final parametro in lista) {
+        _trocar(parametro, trocas);
+      }
     }
   }
 

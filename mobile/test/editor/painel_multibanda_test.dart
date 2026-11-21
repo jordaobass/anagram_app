@@ -229,7 +229,7 @@ void main() {
     await _rolarAte(tester, linha);
 
     final no = tester.getSemantics(find.descendant(of: linha, matching: find.byType(Semantics)).first);
-    tester.binding.pipelineOwner.semanticsOwner!.performAction(no.id, SemanticsAction.increase);
+    no.owner!.performAction(no.id, SemanticsAction.increase);
     await tester.pumpAndSettle();
     final depoisDoLeitor = _valor(c, 'lo_threshold')!;
     expect(depoisDoLeitor, greaterThan(-30));

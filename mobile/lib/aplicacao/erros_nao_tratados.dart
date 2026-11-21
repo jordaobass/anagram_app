@@ -2,7 +2,6 @@
 // registro do app, com a pilha: sem isto ele só aparece no console do
 // Flutter, que a pessoa não vê e não tem como mandar. O comportamento padrão
 // continua (nada é engolido): a tela vermelha em depuração, o relato do motor.
-import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 

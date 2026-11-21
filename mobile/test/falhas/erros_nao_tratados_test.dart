@@ -1,7 +1,5 @@
 // Erro sem tratamento vai para o registro do app, e o tratamento padrão do
 // Flutter continua acontecendo (nada é engolido).
-import 'dart:ui';
-
 import 'package:anagram_app/aplicacao/erros_nao_tratados.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
