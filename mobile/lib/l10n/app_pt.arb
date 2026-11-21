@@ -830,5 +830,62 @@
   "smLinha2SemSplit": "Sem Split na linha 1, esta linha ainda não recebe sinal.",
   "@smLinha2SemSplit": {
     "description": "Na biblioteca aberta numa casa da linha 2 de um preset sem Split"
+  },
+  "lpCriar": "CRIAR LINHA PARALELA",
+  "lpCriarDica": "Divide o sinal depois do bloco selecionado na linha 1: a linha 2 toca em paralelo e o Merge junta as duas antes da saída.",
+  "lpRemover": "REMOVER LINHA PARALELA",
+  "lpSemEspaco": "A linha 1 precisa de duas casas livres para o Split e o Merge.",
+  "smFaixaCriar": "+ Criar linha paralela · Split, linha 2 e Merge",
+  "smItemBiblioteca": "Split + Merge (linha paralela)",
+  "smItemBibliotecaDica": "Divide o sinal nesta casa: a linha 2 toca em paralelo e o Merge junta as duas.",
+  "smJaTemLinhaParalela": "Este preset já tem linha paralela (um Split e um Merge por preset).",
+  "smDividirDepois": "Dividir o sinal depois deste bloco",
+  "mpExportarJson": "Exportar JSON…",
+  "mpLimpar": "Limpar preset…",
+  "mpLimparFabrica": "Limpar preset (a Fábrica é só leitura)",
+  "mpLimparTitulo": "Limpar o {slot}?",
+  "@mpLimparTitulo": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mpLimparTexto": "O preset \"{nome}\" sai do slot {slot} na pedaleira e o slot fica vazio. Não dá para desfazer. Para guardar uma cópia, exporte o JSON antes.",
+  "@mpLimparTexto": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      },
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mpExportarAntes": "Exportar JSON",
+  "mpLimparConfirmar": "Limpar",
+  "mpLimpo": "{slot} limpo: o slot ficou vazio.",
+  "@mpLimpo": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mpExportadoGravado": "Exportado o preset gravado no {slot}; as edições não salvas ficaram de fora.",
+  "@mpExportadoGravado": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mpSlotVazio": "O {slot} já está vazio na pedaleira.",
+  "@mpSlotVazio": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
   }
 }

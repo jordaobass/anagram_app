@@ -76,10 +76,12 @@ class TransferirPreset {
     }
   }
 
-  Future<ResultadoExportacao> exportar(DocumentoPreset documento) async {
+  /// [nome]: o nome sugerido do arquivo, se não for o do preset (a lista
+  /// sugere "01A Nome", para o arquivo dizer de que slot veio).
+  Future<ResultadoExportacao> exportar(DocumentoPreset documento, {String? nome}) async {
     final texto = const JsonEncoder.withIndent(' ').convert(documento.paraJson());
     try {
-      return PresetExportado(await _arquivos.gravar(nomeDeArquivo(documento.nome), texto));
+      return PresetExportado(await _arquivos.gravar(nomeDeArquivo(nome ?? documento.nome), texto));
     } on Exception catch (erro, pilha) {
       registro.e('exportação: arquivo não foi gravado', error: erro, stackTrace: pilha);
       return const ExportacaoFalhou();
