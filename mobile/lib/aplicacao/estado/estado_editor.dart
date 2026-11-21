@@ -9,6 +9,7 @@ const Object _manter = Object();
 class EstadoEditor {
   const EstadoEditor({
     this.slot,
+    this.area,
     this.original,
     this.atual,
     this.selecionado,
@@ -23,6 +24,11 @@ class EstadoEditor {
   });
 
   final SlotPreset? slot;
+
+  /// Área de presets do [slot] aberto (firmware 1.18+). O "Salvar" só grava
+  /// sem perguntar se ela ainda é a área na tela: depois de reconectar, o
+  /// mesmo rótulo 01A pode ser de outra área.
+  final String? area;
 
   /// Como está gravado no aparelho (null = ainda não gravado).
   final DocumentoPreset? original;
@@ -66,6 +72,7 @@ class EstadoEditor {
 
   EstadoEditor copiar({
     Object? slot = _manter,
+    Object? area = _manter,
     Object? original = _manter,
     Object? atual = _manter,
     Object? selecionado = _manter,
@@ -80,6 +87,7 @@ class EstadoEditor {
   }) =>
       EstadoEditor(
         slot: identical(slot, _manter) ? this.slot : slot as SlotPreset?,
+        area: identical(area, _manter) ? this.area : area as String?,
         original: identical(original, _manter) ? this.original : original as DocumentoPreset?,
         atual: identical(atual, _manter) ? this.atual : atual as DocumentoPreset?,
         selecionado: identical(selecionado, _manter) ? this.selecionado : selecionado as PosicaoBloco?,

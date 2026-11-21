@@ -38,21 +38,22 @@ class SalvarNoSlot {
     SlotPreset slot,
     DocumentoPreset preset, {
     bool sobrescreverConfirmado = false,
+    String? area,
   }) async {
     if (!sobrescreverConfirmado) {
-      final ocupante = await _repositorio.lerPreset(slot);
+      final ocupante = await _repositorio.lerPreset(slot, area: area);
       if (ocupante case Falha(:final erro)) return FalhaAoSalvar(erro);
       if (ocupante case Sucesso(valor: final DocumentoPreset atual)) {
         return SlotOcupado(slot, atual.nome);
       }
     }
-    final gravacao = await _repositorio.salvar(slot, preset);
+    final gravacao = await _repositorio.salvar(slot, preset, area: area);
     if (gravacao case Falha(:final erro)) return FalhaAoSalvar(erro);
-    return _conferir(slot);
+    return _conferir(slot, area);
   }
 
-  Future<ResultadoSalvar> _conferir(SlotPreset slot) async {
-    final releitura = await _repositorio.lerPreset(slot);
+  Future<ResultadoSalvar> _conferir(SlotPreset slot, String? area) async {
+    final releitura = await _repositorio.lerPreset(slot, area: area);
     return switch (releitura) {
       Sucesso(valor: final DocumentoPreset relido) => PresetSalvo(slot, relido),
       Sucesso() => const FalhaAoSalvar(

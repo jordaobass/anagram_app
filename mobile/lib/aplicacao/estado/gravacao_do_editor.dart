@@ -18,11 +18,13 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
   Future<bool> trocarSlotNaPedaleira(SlotPreset slot);
 
   /// Salvar (Cmd+S): grava no slot aberto, sem perguntar — é a origem.
-  /// Sem slot (preset importado), cai no "Salvar como".
+  /// Sem slot (preset importado), ou com o slot de outra área que não a da
+  /// tela (a lista trocou de área, ou reconectou na ativa), cai no "Salvar
+  /// como": gravar direto poria o preset no mesmo número de outra área.
   Future<ResultadoSalvar?> salvar() async {
     if (_motivoParaNaoGravar() case final recusa?) return recusa;
     final slot = state.slot;
-    if (slot == null) {
+    if (slot == null || !_slotNaAreaDaTela) {
       iniciarSalvarComo();
       return null;
     }
@@ -34,7 +36,7 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
   /// vir a confirmação. Em outro slot o preset ganha uuid novo.
   Future<ResultadoSalvar> salvarComo(SlotPreset slot, {bool confirmado = false}) async {
     if (_motivoParaNaoGravar() case final recusa?) return recusa;
-    final resultado = await _gravar(slot, confirmado: confirmado || slot == state.slot);
+    final resultado = await _gravar(slot, confirmado: confirmado || (slot == state.slot && _slotNaAreaDaTela));
     if (resultado is! SlotOcupado) state = state.copiar(escolhendoDestino: false);
     return resultado;
   }
@@ -50,6 +52,11 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
     return null;
   }
 
+  String? get _areaDaTela => ref.read(bibliotecaProvider).areaSelecionada;
+
+  /// O slot aberto é da área cuja lista está na tela.
+  bool get _slotNaAreaDaTela => state.area == _areaDaTela;
+
   /// A lista de presets passa a escolher o destino em vez de abrir.
   void iniciarSalvarComo() => state = state.copiar(escolhendoDestino: true);
 
@@ -61,14 +68,16 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
     if (repositorio == null || atual == null) {
       return const FalhaAoSalvar(ErroDesconectado('Conecte a pedaleira para salvar.'));
     }
-    // mesmo slot e mesmo preset mantém o uuid; outro slot ou importado ganha novo
-    final mesmoPreset = slot == state.slot && state.original != null;
+    // o destino é sempre da área na tela; mesmo slot da mesma área e mesmo
+    // preset mantém o uuid; outro slot, outra área ou importado ganha novo
+    final area = _areaDaTela;
+    final mesmoPreset = slot == state.slot && area == state.area && state.original != null;
     final documento = mesmoPreset ? atual : atual.comUuid(novoUuidPreset());
     state = state.copiar(salvando: true);
     try {
-      final resultado =
-          await SalvarNoSlot(repositorio).executar(slot, documento, sobrescreverConfirmado: confirmado);
-      if (resultado case PresetSalvo(:final relido)) await _aplicarSalvo(slot, relido, gravado: atual);
+      final resultado = await SalvarNoSlot(repositorio)
+          .executar(slot, documento, sobrescreverConfirmado: confirmado, area: area);
+      if (resultado case PresetSalvo(:final relido)) await _aplicarSalvo(slot, area, relido, gravado: atual);
       return resultado;
     } finally {
       state = state.copiar(salvando: false);
@@ -78,9 +87,10 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
   /// [gravado] é o documento que estava aberto quando a gravação começou. Se a
   /// pessoa editou nesse meio-tempo (knob, bypass, nome), a edição fica na
   /// tela, já com o uuid do que foi salvo, e o preset volta a "não salvo".
-  Future<void> _aplicarSalvo(SlotPreset slot, DocumentoPreset relido, {required DocumentoPreset gravado}) async {
-    // gravou em outro slot: a pedaleira vai junto para ele
-    final mudou = slot != state.slot;
+  Future<void> _aplicarSalvo(SlotPreset slot, String? area, DocumentoPreset relido,
+      {required DocumentoPreset gravado}) async {
+    // gravou em outro slot (ou outra área): a pedaleira vai junto para ele
+    final mudou = slot != state.slot || area != state.area;
     final editadoDurante = state.atual;
     final uuidSalvo = relido.uuid;
     final atual = switch (editadoDurante) {
@@ -88,7 +98,7 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
       _ when identical(editadoDurante, gravado) => relido,
       _ => uuidSalvo == null ? editadoDurante : editadoDurante.comUuid(uuidSalvo),
     };
-    state = state.copiar(slot: slot, original: relido, atual: atual);
+    state = state.copiar(slot: slot, area: area, original: relido, atual: atual);
     if (mudou) state = state.copiar(slotNaPedaleira: await trocarSlotNaPedaleira(slot));
     ref.read(bibliotecaProvider.notifier).registrarSalvo(slot, relido.nome, id: relido.uuid);
   }

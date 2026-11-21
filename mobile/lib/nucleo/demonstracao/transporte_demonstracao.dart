@@ -37,6 +37,11 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
 
   /// Falha injetada: firmware anterior aos ajustes, que recusa `export_settings`.
   bool semAjustes = false;
+
+  /// Falhas injetadas das áreas: o firmware responde "ok" ao `edit_settings`
+  /// sem trocar de área, ou não informa qual área está ativa.
+  bool ignorarTrocaDeArea = false;
+  bool semAreaAtiva = false;
   final Duration latencia;
   final String firmware;
   final _montador = MontadorQuadros();
@@ -173,7 +178,7 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
     return {
       'settings': {
         'user-areas': ?nomes,
-        'selected-preset-area': areaAtiva,
+        if (!semAreaAtiva) 'selected-preset-area': areaAtiva,
         'selected-preset': 0,
       },
     };
@@ -181,7 +186,7 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
 
   Map<String, dynamic> _gravarAjustes(Object? ajustes) {
     final area = ajustes is Map<String, dynamic> ? ajustes['selected-preset-area'] : null;
-    if (area is String) areaAtiva = area;
+    if (area is String && !ignorarTrocaDeArea) areaAtiva = area;
     return {'status': 'ok'};
   }
 

@@ -34,11 +34,7 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
   @override
   EstadoEditor build() {
     ref.listen(conexaoProvider, (_, estado) => _aoMudarConexao(estado));
-    ref.listen(bibliotecaProvider.select((b) => b.areaSelecionada), (antes, depois) {
-      // só troca entre duas áreas: desconectar zera a área, e a edição não
-      // salva tem de sobreviver ao cabo que saiu
-      if (antes != null && depois != null && antes != depois) _fecharPreset();
-    });
+    ref.listen<String?>(bibliotecaProvider.select((b) => b.areaSelecionada), _aoMudarArea);
     ref.onDispose(largarEnvioAoVivo);
     return const EstadoEditor();
   }
@@ -51,9 +47,11 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
     // gravando: o resultado da gravação ainda vai escrever o slot salvo
     if (repositorio == null || state.salvando) return;
     final abertura = ++_abertura;
-    state = state.copiar(slot: slot, carregando: true, aviso: null);
+    // o slot é desta área: se ela mudar depois, o "Salvar" pergunta o destino
+    final area = ref.read(bibliotecaProvider).areaSelecionada;
+    state = state.copiar(slot: slot, area: area, carregando: true, aviso: null);
     try {
-      await _carregar(repositorio, slot, abertura);
+      await _carregar(repositorio, slot, area, abertura);
     } finally {
       // nenhuma saída, nem erro inesperado, deixa a tela presa em "carregando"
       if (abertura == _abertura && state.carregando) state = state.copiar(carregando: false);
@@ -69,8 +67,8 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
     await super.carregarDocumento(documento);
   }
 
-  Future<void> _carregar(RepositorioPedaleira repositorio, SlotPreset slot, int abertura) async {
-    final leitura = await repositorio.lerPreset(slot);
+  Future<void> _carregar(RepositorioPedaleira repositorio, SlotPreset slot, String? area, int abertura) async {
+    final leitura = await repositorio.lerPreset(slot, area: area);
     // outro slot foi aberto enquanto este carregava: este resultado já não vale
     if (abertura != _abertura) return;
     switch (leitura) {
@@ -115,12 +113,15 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
   }
 
   /// Program Change: a pedaleira passa a ESTAR no slot (o try sozinho só toca).
-  /// O Program Change vale na área ATIVA da pedaleira: com outra área na tela,
-  /// ele levaria a pedaleira ao mesmo número na área errada, então não sai.
+  /// O Program Change vale na área ATIVA da pedaleira: com outra área na tela
+  /// (ou sem saber qual está ativa), ele levaria a pedaleira ao mesmo número
+  /// na área errada, então não sai. A ativa é relida antes, porque a pessoa
+  /// pode ter trocado de área na própria pedaleira.
   @override
   Future<bool> trocarSlotNaPedaleira(SlotPreset slot) async {
     final midi = ref.read(conexaoProvider.notifier).midi;
-    if (midi == null || ref.read(bibliotecaProvider).areaForaDaPedaleira) return false;
+    if (midi == null) return false;
+    if (!await ref.read(bibliotecaProvider.notifier).areaDaTelaEstaAtiva()) return false;
     try {
       await midi.enviar(MensagensMidi.trocaDePrograma(slot));
       return true;
@@ -153,11 +154,26 @@ class ControladorEditor extends Notifier<EstadoEditor> with EdicaoDoPreset, AoVi
     await enviarAoVivo(documento);
   }
 
-  /// Outra área na tela: o preset aberto é de um slot da área anterior e não
-  /// pode continuar sob o mesmo rótulo (nem ser gravado na área nova).
-  void _fecharPreset() {
+  void _aoMudarArea(String? antes, String? depois) {
+    // aberto antes de as áreas chegarem: foi lido sem `userArea`, isto é, da
+    // área ativa da pedaleira — que é a primeira a aparecer na tela
+    final semArea = state.slot != null && state.area == null;
+    if (antes == null && semArea && depois != null && depois == ref.read(bibliotecaProvider).areas.ativa) {
+      state = state.copiar(area: depois);
+      return;
+    }
+    // só troca entre duas áreas: desconectar zera a área, e a edição não
+    // salva tem de sobreviver ao cabo que saiu
+    if (antes != null && depois != null && antes != depois) _soltarDoSlot();
+  }
+
+  /// Outra área na tela: o preset aberto era de um slot da área anterior e não
+  /// pode continuar sob o mesmo rótulo. Ele fica na tela sem slot, como um
+  /// importado: o "Salvar" vira "Salvar como" e pergunta o destino na área
+  /// nova (é assim que se copia um preset de uma área para outra).
+  void _soltarDoSlot() {
     _abertura++;
-    state = EstadoEditor(aoVivo: state.aoVivo, latencia: state.latencia);
+    state = state.copiar(slot: null, area: null, original: null, carregando: false, slotNaPedaleira: false);
   }
 
   void _aoMudarConexao(EstadoConexao estado) {
