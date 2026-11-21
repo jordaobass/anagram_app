@@ -6,9 +6,10 @@ import 'dart:math';
 
 import '../protocolo/quadros_hid.dart';
 import 'bloco_preset.dart';
-import 'json_util.dart';
 import 'cenas_do_bloco.dart';
 import 'ir_do_gabinete.dart';
+import 'json_util.dart';
+import 'preset_bruto.dart';
 import 'vinculos_preset.dart';
 
 class DocumentoPreset {
@@ -16,6 +17,8 @@ class DocumentoPreset {
 
   /// Valida o envelope `{"preset":{...},"type":"preset","version":1}`.
   /// Versão maior que 1 é aceita (campos novos são preservados) com aviso.
+  /// Preset com marcador de quadro num texto também é recusado: ele não
+  /// teria como ir para a pedaleira (arquivo importado, DECISOES RN4).
   factory DocumentoPreset.doJson(Map<String, dynamic> json) {
     final versao = json['version'];
     if (json['type'] != 'preset' || versao is! int || versao < 1) {
@@ -24,6 +27,7 @@ class DocumentoPreset {
     if (json['preset'] is! Map<String, dynamic>) {
       throw const FormatException('Falta o objeto "preset".');
     }
+    _recusarMarcadorDeQuadro(json);
     return DocumentoPreset._(_comCenaAtivaNoBloco(copiaProfunda(json)));
   }
 
@@ -34,7 +38,7 @@ class DocumentoPreset {
   static Map<String, dynamic> _comCenaAtivaNoBloco(Map<String, dynamic> json) {
     final preset = json['preset'] as Map<String, dynamic>;
     final ativa = (numeroOuNulo(preset['scene'])?.toInt() ?? 0) + 1;
-    for (final bloco in _todosOsBlocos(preset)) {
+    for (final bloco in todosOsBlocos(preset)) {
       carregarCena(bloco, ativa);
     }
     return json;
@@ -70,7 +74,7 @@ class DocumentoPreset {
   String _assinaturaSemCena() {
     final json = paraJson();
     final preset = json['preset'] as Map<String, dynamic>..remove('scene');
-    _todosOsBlocos(preset).forEach(semEstadoDaCena);
+    todosOsBlocos(preset).forEach(semEstadoDaCena);
     return jsonEncode(json);
   }
 
@@ -84,7 +88,7 @@ class DocumentoPreset {
 
   /// Blocos de uma linha (1 ou 2), em ordem de casa.
   List<BlocoPreset> blocosDaLinha(int linha) {
-    final blocos = _blocosBrutos(_preset, linha);
+    final blocos = blocosBrutos(_preset, linha);
     return [
       for (final chave in chavesNumericas(blocos))
         // casa que não é objeto (arquivo editado à mão, firmware novo) é ignorada
@@ -94,7 +98,7 @@ class DocumentoPreset {
   }
 
   BlocoPreset? bloco(PosicaoBloco posicao) {
-    final bruto = _blocosBrutos(_preset, posicao.linha)['${posicao.casa}'];
+    final bruto = blocosBrutos(_preset, posicao.linha)['${posicao.casa}'];
     return bruto is Map<String, dynamic> ? BlocoPreset(posicao, bruto) : null;
   }
 
@@ -105,7 +109,7 @@ class DocumentoPreset {
   DocumentoPreset comCena(int cena) => _editar((p) {
         final saindo = cenaAtiva;
         if (cena != saindo) {
-          for (final bloco in _todosOsBlocos(p)) {
+          for (final bloco in todosOsBlocos(p)) {
             guardarFotoDaCena(bloco, saindo);
             carregarCena(bloco, cena);
           }
@@ -142,8 +146,10 @@ class DocumentoPreset {
     String? nomeExibicao,
   }) =>
       _editarBloco(posicao, (bloco) {
-        if (!_mudarSobreposicao(bloco, simbolo, valor)) gravarNaCenaAtiva(bloco, cenaAtiva, simbolo, valor);
-        _mudarBase(bloco, simbolo, valor, nomeExibicao ?? simbolo);
+        if (!mudarSobreposicaoDaCena(bloco, cenaAtiva, simbolo, valor)) {
+          gravarNaCenaAtiva(bloco, cenaAtiva, simbolo, valor);
+        }
+        mudarValorBase(bloco, simbolo, valor, nomeExibicao ?? simbolo);
       });
 
   /// Coloca uma cópia do bloco (colar, efeito novo da biblioteca) na posição,
@@ -151,57 +157,32 @@ class DocumentoPreset {
   /// Colar por cima de um bloco o substitui: os controles que mexiam nele
   /// são soltos, como ao remover, senão passariam a mexer no bloco colado.
   DocumentoPreset comBlocoColado(PosicaoBloco posicao, Map<String, dynamic> bloco) => _editar((p) {
-        if (_blocosBrutos(p, posicao.linha).containsKey('${posicao.casa}')) soltarVinculos(p, posicao);
-        _colocar(p, posicao, copiaProfunda(bloco));
+        if (blocosBrutos(p, posicao.linha).containsKey('${posicao.casa}')) soltarVinculos(p, posicao);
+        colocarBloco(p, posicao, copiaProfunda(bloco));
       });
 
   /// Muda o bloco de casa; com a casa ocupada, os dois trocam de lugar.
   /// Parâmetros e cenas moram dentro do bloco e vão junto; os controles
   /// (pots, footswitches, pedal) são remapeados para seguir o bloco.
   DocumentoPreset comBlocoMovido(PosicaoBloco de, PosicaoBloco para) => _editar((p) {
-        final origem = _blocosBrutos(p, de.linha).remove('${de.casa}');
+        final origem = blocosBrutos(p, de.linha).remove('${de.casa}');
         if (origem is! Map<String, dynamic>) throw StateError('Não há bloco em $de.');
-        final destino = _blocosBrutos(p, para.linha).remove('${para.casa}');
-        _colocar(p, para, origem);
-        if (destino is Map<String, dynamic>) _colocar(p, de, destino);
+        final destino = blocosBrutos(p, para.linha).remove('${para.casa}');
+        colocarBloco(p, para, origem);
+        if (destino is Map<String, dynamic>) colocarBloco(p, de, destino);
         trocarVinculos(p, de, para);
       });
 
   /// Remove o bloco e solta os controles que mexiam nele: senão o próximo
   /// bloco posto na casa herdaria o pot ou o pedal sem a pessoa pedir.
   DocumentoPreset semBloco(PosicaoBloco posicao) => _editar((p) {
-        _blocosBrutos(p, posicao.linha).remove('${posicao.casa}');
+        blocosBrutos(p, posicao.linha).remove('${posicao.casa}');
         soltarVinculos(p, posicao);
       });
 
-  bool _mudarSobreposicao(Map<String, dynamic> bloco, String simbolo, num valor) {
-    final cena = mapaOuVazio(bloco['scenes'])['$cenaAtiva'];
-    final lista = cena is Map<String, dynamic> ? cena['parameters'] : null;
-    if (lista is! List) return false;
-    for (final item in lista) {
-      if (item is Map<String, dynamic> && item['symbol'] == simbolo) {
-        item['value'] = valor;
-        return true;
-      }
-    }
-    return false;
-  }
-
-  void _mudarBase(Map<String, dynamic> bloco, String simbolo, num valor, String nome) {
-    final parametros =
-        bloco.putIfAbsent('parameters', () => <String, dynamic>{}) as Map<String, dynamic>;
-    for (final entrada in parametros.values) {
-      if (entrada is Map<String, dynamic> && entrada['symbol'] == simbolo) {
-        entrada['value'] = valor;
-        return;
-      }
-    }
-    parametros[proximaChave(parametros)] = {'name': nome, 'symbol': simbolo, 'value': valor};
-  }
-
   DocumentoPreset _editarBloco(PosicaoBloco posicao, void Function(Map<String, dynamic>) mudar) =>
       _editar((p) {
-        final bloco = _blocosBrutos(p, posicao.linha)['${posicao.casa}'];
+        final bloco = blocosBrutos(p, posicao.linha)['${posicao.casa}'];
         if (bloco is! Map<String, dynamic>) {
           throw StateError('Não há bloco em $posicao.');
         }
@@ -213,29 +194,17 @@ class DocumentoPreset {
     mudar(copia['preset'] as Map<String, dynamic>);
     return DocumentoPreset._(copia);
   }
+}
 
-  /// Põe o bloco na casa criando a linha se faltar, e mantém as casas em
-  /// ordem numérica, como a pedaleira grava.
-  static void _colocar(Map<String, dynamic> preset, PosicaoBloco posicao, Map<String, dynamic> bloco) {
-    final chains = preset.putIfAbsent('chains', () => <String, dynamic>{}) as Map<String, dynamic>;
-    final linha = chains.putIfAbsent('${posicao.linha}', () => <String, dynamic>{}) as Map<String, dynamic>;
-    final blocos = linha.putIfAbsent('blocks', () => <String, dynamic>{}) as Map<String, dynamic>;
-    blocos['${posicao.casa}'] = bloco;
-    final ordenado = {for (final chave in chavesNumericas(blocos)) chave: blocos[chave]};
-    final outras = {for (final e in blocos.entries) if (!ordenado.containsKey(e.key)) e.key: e.value};
-    blocos
-      ..clear()
-      ..addAll(ordenado)
-      ..addAll(outras);
+/// Preset com marcador de quadro num texto não teria como ir para a pedaleira.
+void _recusarMarcadorDeQuadro(Map<String, dynamic> json) {
+  final texto = jsonEncode(json);
+  for (final marcador in ProtocoloAnagram.marcadores) {
+    if (texto.contains(marcador)) {
+      throw FormatException('um texto do preset (nome, cena ou controle) contém "$marcador", '
+          'que a pedaleira lê como marcador de mensagem.');
+    }
   }
-
-  static Iterable<Map<String, dynamic>> _todosOsBlocos(Map<String, dynamic> preset) => [
-        for (final linha in mapaOuVazio(preset['chains']).values)
-          ...mapaOuVazio(mapaOuVazio(linha)['blocks']).values.whereType<Map<String, dynamic>>(),
-      ];
-
-  static Map<String, dynamic> _blocosBrutos(Map<String, dynamic> preset, int linha) =>
-      mapaOuVazio(mapaOuVazio(mapaOuVazio(preset['chains'])['$linha'])['blocks']);
 }
 
 /// Id novo no formato do aparelho: 56 hexadecimais em grupos 16-8-8-24.
@@ -252,7 +221,7 @@ String novoUuidPreset([Random? aleatorio]) {
 NomeInvalido? motivoNomeInvalido(String nome) {
   final limpo = nome.trim();
   if (limpo.isEmpty) return const NomeVazio();
-  for (final marcador in const [ProtocoloAnagram.marcadorInicio, ProtocoloAnagram.marcadorFim]) {
+  for (final marcador in ProtocoloAnagram.marcadores) {
     if (limpo.contains(marcador)) return NomeComMarcador(marcador);
   }
   return null;

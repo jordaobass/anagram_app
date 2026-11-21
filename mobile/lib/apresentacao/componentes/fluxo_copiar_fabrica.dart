@@ -28,6 +28,7 @@ Future<void> copiarDaFabrica(BuildContext context, WidgetRef ref, SlotPreset slo
   final editor = ref.read(editorProvider);
   if (editor.slot != slot || editor.area != PresetsDeFabrica.idArea) {
     if (editor.naoSalvo && !await confirmarLargarEdicoes(context, editor.atual?.nome ?? '')) return;
+    if (!context.mounted) return;
     await ref.read(editorProvider.notifier).abrirSlot(slot);
   }
   if (context.mounted) await copiarParaMinhaArea(context, ref);

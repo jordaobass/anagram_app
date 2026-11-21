@@ -55,37 +55,39 @@ class ControleNoPainel extends ConsumerWidget {
           .alterarParametro(p.simbolo, valor, arrastando: arrastando, nome: p.nome, posicao: bloco.posicao);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) => Column(mainAxisSize: MainAxisSize.min, children: [
+        _controle(ref),
+        // como o valor "atribuído ao snapshot" do HX: esta cena sobrepõe
+        if (bloco.sobreposicaoDaCena(parametro.simbolo, cena) != null)
+          // neutro: o âmbar é da ação e da seleção, não de marca informativa
+          Text(AppLocalizations.of(context).soNaCena(cena),
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.aluminioClaro)),
+      ]);
+
+  Widget _controle(WidgetRef ref) {
     final p = parametro;
     final cor = Cores.daFamilia(definicao.familia);
     final valor = valorNaCena(bloco, p, cena);
-    return Column(mainAxisSize: MainAxisSize.min, children: [
-      if (seletor)
-        SeletorOpcao(
-            key: ValueKey('param-${p.simbolo}'),
-            parametro: p,
-            rotulo: rotulo,
-            valor: valor,
-            cor: cor,
-            largura: tamanho,
-            aoMudar: alterar(ref, p, bloco))
-      else
-        ControleParametro(
+    if (seletor) {
+      return SeletorOpcao(
           key: ValueKey('param-${p.simbolo}'),
           parametro: p,
           rotulo: rotulo,
-          forma: forma ?? formaDoControle(definicao, p),
-          corChip: corChip,
           valor: valor,
           cor: cor,
-          tamanho: tamanho,
-          aoMudar: alterar(ref, p, bloco),
-        ),
-      // como o valor "atribuído ao snapshot" do HX: esta cena sobrepõe
-      if (bloco.sobreposicaoDaCena(p.simbolo, cena) != null)
-        // neutro: o âmbar é da ação e da seleção, não de marca informativa
-        Text(AppLocalizations.of(context).soNaCena(cena),
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.aluminioClaro)),
-    ]);
+          largura: tamanho,
+          aoMudar: alterar(ref, p, bloco));
+    }
+    return ControleParametro(
+      key: ValueKey('param-${p.simbolo}'),
+      parametro: p,
+      rotulo: rotulo,
+      forma: forma ?? formaDoControle(definicao, p),
+      corChip: corChip,
+      valor: valor,
+      cor: cor,
+      tamanho: tamanho,
+      aoMudar: alterar(ref, p, bloco),
+    );
   }
 }

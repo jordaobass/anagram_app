@@ -13,15 +13,8 @@ import '../tema/tokens.dart';
 import '../textos.dart';
 import 'controles_ajuste.dart';
 
-class FileiraBandasEq extends ConsumerWidget {
-  const FileiraBandasEq({super.key, required this.modo});
-
-  final ModoEq modo;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) =>
-      LinhaDeBandas(filhos: [for (final banda in bandasEqGlobal) _BandaEq(banda: banda, modo: modo)]);
-}
+/// As 6 bandas do Global EQ no [modo], para a [LinhaDeBandas].
+List<Widget> bandasDoGlobalEq(ModoEq modo) => [for (final banda in bandasEqGlobal) _BandaEq(banda: banda, modo: modo)];
 
 /// As bandas de um equalizador lado a lado, todas da mesma largura; abaixo de
 /// [Medidas.larguraEqEmLinha] viram linhas de 3. Serve ao Global EQ e ao

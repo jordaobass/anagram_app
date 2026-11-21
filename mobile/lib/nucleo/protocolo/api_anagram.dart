@@ -166,7 +166,7 @@ class ApiAnagram {
       area == null ? carga : {...carga, 'userArea': area};
 
   static bool _slotValido(Object? arquivo) {
-    final numero = int.tryParse('$arquivo'.split('.').first);
+    final numero = SlotPreset.numeroDoArquivo('$arquivo');
     return numero != null && numero >= 1 && numero <= SlotPreset.total;
   }
 }

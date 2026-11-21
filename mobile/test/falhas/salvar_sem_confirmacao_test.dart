@@ -25,7 +25,7 @@ class _PedaleiraMuda extends ClienteAnagram {
   }
 }
 
-Map<String, dynamic> _preset(String nome, String uri) => {
+Map<String, dynamic> _preset(String nome, String uri, {num ganho = 5, num? ganhoNaCena2}) => {
       'type': 'preset',
       'version': 1,
       'preset': {
@@ -33,7 +33,23 @@ Map<String, dynamic> _preset(String nome, String uri) => {
         'chains': {
           '1': {
             'blocks': {
-              '1': {'uri': uri, 'enabled': true, 'parameters': {}, 'properties': {}, 'scenes': {}},
+              '1': {
+                'uri': uri,
+                'enabled': true,
+                'parameters': {
+                  '1': {'name': 'Gain', 'symbol': 'gain', 'value': ganho},
+                },
+                'properties': {},
+                'scenes': {
+                  if (ganhoNaCena2 != null)
+                    '2': {
+                      'enabled': true,
+                      'parameters': [
+                        {'symbol': 'gain', 'value': ganhoNaCena2},
+                      ],
+                    },
+                },
+              },
             },
           },
         },
@@ -57,5 +73,33 @@ void main() {
     final resultado = await repositorio.salvar(SlotPreset(10), enviado, area: 'user');
 
     expect((resultado as Falha).erro, isA<ErroSemResposta>());
+  });
+
+  test('should_report_the_failure_when_the_slot_holds_the_same_chain_with_another_knob_value', () async {
+    final repositorio = RepositorioPedaleira(ApiAnagram(_PedaleiraMuda(_preset('CAPTURA IGN', 'urn:darkglass:ignissor', ganho: 2))));
+
+    final resultado = await repositorio.salvar(SlotPreset(10), enviado, area: 'user');
+
+    expect((resultado as Falha).erro, isA<ErroSemResposta>());
+  });
+
+  test('should_report_the_failure_when_the_slot_lost_the_value_of_a_scene', () async {
+    final enviadoComCena = DocumentoPreset.doJson(_preset('CAPTURA IGN', 'urn:darkglass:ignissor', ganhoNaCena2: 8));
+    final semACena = _preset('CAPTURA IGN', 'urn:darkglass:ignissor', ganhoNaCena2: 3);
+    final repositorio = RepositorioPedaleira(ApiAnagram(_PedaleiraMuda(semACena)));
+
+    final resultado = await repositorio.salvar(SlotPreset(10), enviadoComCena, area: 'user');
+
+    expect((resultado as Falha).erro, isA<ErroSemResposta>());
+  });
+
+  test('should_report_success_when_the_slot_holds_the_sent_value_rounded_to_single_precision', () async {
+    final enviadoComFracao = DocumentoPreset.doJson(_preset('CAPTURA IGN', 'urn:darkglass:ignissor', ganho: 7.6));
+    final gravadoEmFloat = _preset('CAPTURA IGN', 'urn:darkglass:ignissor', ganho: 7.599999904632568);
+    final repositorio = RepositorioPedaleira(ApiAnagram(_PedaleiraMuda(gravadoEmFloat)));
+
+    final resultado = await repositorio.salvar(SlotPreset(10), enviadoComFracao, area: 'user');
+
+    expect(resultado, isA<Sucesso<void>>());
   });
 }

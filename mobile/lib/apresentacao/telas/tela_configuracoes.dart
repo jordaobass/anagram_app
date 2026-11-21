@@ -19,46 +19,40 @@ class TelaConfiguracoes extends ConsumerWidget {
   const TelaConfiguracoes({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(l.mcpConfiguracoes)),
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: Medidas.larguraConfiguracoes),
-          child: ListView(
-            padding: const EdgeInsets.all(Espacos.xl),
-            children: [
-              // o idioma vem antes de tudo: quem caiu num idioma que não lê precisa achá-lo
-              TituloSecao(l.idioma),
-              const Align(alignment: Alignment.centerLeft, child: SeletorIdioma()),
-              // os ajustes globais só existem com uma pedaleira (ou a demonstração) do outro lado
-              if (ref.watch(conexaoProvider) is Conectada) ...[
-                const SizedBox(height: Espacos.xxl),
-                TituloSecao(l.pdSecao),
-                const SecaoPedaleira(),
-              ],
-              if (ref.watch(mcpDisponivelProvider)) ...[
-                const SizedBox(height: Espacos.xxl),
-                TituloSecao(l.mcpSecao),
-                const PainelMcp(),
-              ],
-              const SizedBox(height: Espacos.xxl),
-              ListTile(
-                key: const ValueKey('abrir-sobre'),
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.info_outline),
-                title: Text(l.sobreTitulo),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () => const RotaCreditos().push<void>(context),
-              ),
-            ],
+  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
+        appBar: AppBar(title: Text(AppLocalizations.of(context).mcpConfiguracoes)),
+        body: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: Medidas.larguraConfiguracoes),
+            child: ListView(padding: const EdgeInsets.all(Espacos.xl), children: _secoes(context, ref)),
           ),
         ),
+      );
+
+  List<Widget> _secoes(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context);
+    return [
+      // o idioma vem antes de tudo: quem caiu num idioma que não lê precisa achá-lo
+      TituloSecao(l.idioma),
+      const Align(alignment: Alignment.centerLeft, child: SeletorIdioma()),
+      // os ajustes globais só existem com uma pedaleira (ou a demonstração) do outro lado
+      if (ref.watch(conexaoProvider) is Conectada) ..._secao(l.pdSecao, const SecaoPedaleira()),
+      if (ref.watch(mcpDisponivelProvider)) ..._secao(l.mcpSecao, const PainelMcp()),
+      const SizedBox(height: Espacos.xxl),
+      ListTile(
+        key: const ValueKey('abrir-sobre'),
+        contentPadding: EdgeInsets.zero,
+        leading: const Icon(Icons.info_outline),
+        title: Text(l.sobreTitulo),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => const RotaCreditos().push<void>(context),
       ),
-    );
+    ];
   }
+
+  static List<Widget> _secao(String titulo, Widget conteudo) =>
+      [const SizedBox(height: Espacos.xxl), TituloSecao(titulo), conteudo];
 }
 
 /// Título de seção em alumínio: o âmbar é só de seleção e ação (DESIGN.md).

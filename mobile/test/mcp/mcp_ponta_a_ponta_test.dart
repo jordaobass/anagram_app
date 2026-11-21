@@ -138,6 +138,25 @@ void main() {
     expect(container.read(editorProvider).naoSalvo, isTrue);
   });
 
+  test('should_save_nothing_when_the_preset_changed_while_the_player_was_confirming', () async {
+    final (container, endereco, token) = await appComMcp();
+    final pedaleira = container.read(conexaoProvider.notifier).transporte! as TransporteDemonstracao;
+    await ferramenta(endereco, token, 'set_parameter', {'row': 1, 'column': 1, 'parameter': 'Threshold', 'value': -12});
+    final gravado = pedaleira.conteudoDoSlot(3);
+    container.listen(pedidoSalvarProvider, (_, pedido) async {
+      if (pedido == null) return;
+      // outra chamada da IA muda o som enquanto a pessoa lê a pergunta
+      await ferramenta(endereco, token, 'set_parameter', {'row': 1, 'column': 1, 'parameter': 'Threshold', 'value': -30});
+      pedido.responder(true);
+    });
+
+    final (erro, motivo) = await ferramenta(endereco, token, 'save_preset');
+
+    expect(erro, isTrue, reason: 'a pessoa confirmou outro preset, não este');
+    expect(motivo, contains('changed'));
+    expect(pedaleira.conteudoDoSlot(3), gravado, reason: 'nada vai para o slot');
+  });
+
   test('should_change_a_global_output_on_the_pedal_and_refuse_a_setting_without_a_known_key', () async {
     final (container, endereco, token) = await appComMcp();
     final pedaleira = container.read(conexaoProvider.notifier).transporte! as TransporteDemonstracao;

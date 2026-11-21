@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/provedores.dart';
+import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'arte_bloco.dart';
@@ -95,13 +96,6 @@ class CasaBloco extends ConsumerWidget {
 
   Widget _ocupada(BuildContext context, WidgetRef ref, BlocoPreset atual) {
     final definicao = ref.watch(definicaoBlocoProvider(atual.uri));
-    final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(
-          color: ligado ? Cores.texto : Cores.textoSecundario,
-          height: Medidas.entrelinhaRotuloCasa,
-        );
-    final l = AppLocalizations.of(context);
-    final (rotulo, estiloRotulo) = rotuloQueCabe(l.nomeCurtoDoBloco(definicao),
-        l.nomeCurtoDoBloco(definicao, abreviado: true), estilo, _interno, Directionality.of(context));
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -115,18 +109,21 @@ class CasaBloco extends ConsumerWidget {
         const SizedBox(height: Espacos.xs),
         Container(height: Medidas.fitaCategoria, color: Cores.daFita(definicao.uri, definicao.familia)),
         const SizedBox(height: Espacos.xxs),
-        SizedBox(
-          height: Medidas.alturaRotuloCasa,
-          child: Text(
-            rotulo,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: estiloRotulo,
-          ),
-        ),
+        SizedBox(height: Medidas.alturaRotuloCasa, child: _nomeEmbaixo(context, definicao)),
       ],
     );
+  }
+
+  /// O nome do bloco embaixo da arte, no maior tamanho em que cabe.
+  Widget _nomeEmbaixo(BuildContext context, DefinicaoBloco definicao) {
+    final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(
+          color: ligado ? Cores.texto : Cores.textoSecundario,
+          height: Medidas.entrelinhaRotuloCasa,
+        );
+    final l = AppLocalizations.of(context);
+    final (rotulo, estiloRotulo) = rotuloQueCabe(l.nomeCurtoDoBloco(definicao),
+        l.nomeCurtoDoBloco(definicao, abreviado: true), estilo, _interno, Directionality.of(context));
+    return Text(rotulo, maxLines: 2, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center, style: estiloRotulo);
   }
 }
 

@@ -46,7 +46,7 @@ class CartaoSecaoSynth extends StatelessWidget {
           Opacity(
             opacity: apagada ? Medidas.opacidadeBandaDesligada : 1,
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
-              if (desenho != null) ...[desenho!, const SizedBox(height: Espacos.m)],
+              if (desenho != null) ...[desenho!, if (filhos.isNotEmpty) const SizedBox(height: Espacos.m)],
               Wrap(
                 alignment: WrapAlignment.spaceEvenly,
                 crossAxisAlignment: alinharTopo ? WrapCrossAlignment.start : WrapCrossAlignment.end,

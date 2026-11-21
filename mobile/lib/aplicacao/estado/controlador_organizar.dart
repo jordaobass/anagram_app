@@ -84,7 +84,7 @@ class ControladorOrganizar extends Notifier<OperacaoPendente?> {
       final pergunta = await _precisaConfirmar(repositorio, pendente, destino, area);
       if (pergunta != null) return pergunta;
     }
-    final resultado = await _executar(repositorio, pendente, destino, area);
+    final resultado = await _executar(repositorio, pendente, destino, area, confirmado: confirmado);
     if (resultado is Organizado) await _depoisDe(pendente, destino, area);
     if (resultado is! DestinoOcupado) state = null;
     return resultado;
@@ -110,9 +110,12 @@ class ControladorOrganizar extends Notifier<OperacaoPendente?> {
       };
 
   Future<ResultadoOrganizar> _executar(
-      RepositorioPedaleira repositorio, OperacaoPendente pendente, SlotPreset destino, String? area) async {
+      RepositorioPedaleira repositorio, OperacaoPendente pendente, SlotPreset destino, String? area,
+      {required bool confirmado}) async {
     final origem = pendente.origem;
-    if (pendente.operacao == OperacaoPreset.clonar) return _clonar(repositorio, origem, destino, area);
+    if (pendente.operacao == OperacaoPreset.clonar) {
+      return _clonar(repositorio, origem, destino, area, confirmado: confirmado);
+    }
     final feito = pendente.operacao == OperacaoPreset.mover
         ? await repositorio.trocarPresets(origem, destino, area: area)
         : await repositorio.trocarBancos(origem.banco, destino.banco, area: area);
@@ -122,8 +125,10 @@ class ControladorOrganizar extends Notifier<OperacaoPendente?> {
     };
   }
 
+  /// Com [confirmado] a pessoa já aceitou substituir o preset do destino.
   Future<ResultadoOrganizar> _clonar(
-      RepositorioPedaleira repositorio, SlotPreset origem, SlotPreset destino, String? area) async {
+      RepositorioPedaleira repositorio, SlotPreset origem, SlotPreset destino, String? area,
+      {required bool confirmado}) async {
     final leitura = await repositorio.lerPreset(origem, area: area);
     final DocumentoPreset original;
     switch (leitura) {
@@ -136,7 +141,8 @@ class ControladorOrganizar extends Notifier<OperacaoPendente?> {
     }
     // dois presets com o mesmo uuid confundiriam a pedaleira e a lista
     final copia = original.comUuid(novoUuidPreset());
-    final gravacao = await SalvarNoSlot(repositorio).executar(destino, copia, area: area);
+    final gravacao =
+        await SalvarNoSlot(repositorio).executar(destino, copia, sobrescreverConfirmado: confirmado, area: area);
     return switch (gravacao) {
       PresetSalvo() => Organizado(OperacaoPreset.clonar, origem, destino),
       SlotOcupado(:final nomeAtual) => DestinoOcupado(destino, nomeAtual),
@@ -144,15 +150,17 @@ class ControladorOrganizar extends Notifier<OperacaoPendente?> {
     };
   }
 
-  /// A lista é relida da pedaleira, e o preset aberto acompanha a troca.
+  /// A lista é relida da pedaleira, e o preset aberto acompanha a troca; se
+  /// o clone foi para o slot aberto, o editor o reabre.
   Future<void> _depoisDe(OperacaoPendente pendente, SlotPreset destino, String? area) async {
     final novoLugar = switch (pendente.operacao) {
       OperacaoPreset.mover => {pendente.origem: destino, destino: pendente.origem},
       OperacaoPreset.trocarBanco => _bancosTrocados(pendente.origem.banco, destino.banco),
       OperacaoPreset.clonar => const <SlotPreset, SlotPreset>{},
     };
-    ref.read(editorProvider.notifier).acompanharTroca(novoLugar, area: area);
+    final editor = ref.read(editorProvider.notifier)..acompanharTroca(novoLugar, area: area);
     await ref.read(bibliotecaProvider.notifier).recarregar();
+    if (pendente.operacao == OperacaoPreset.clonar) await editor.aoRegravarSlot(destino, area: area);
   }
 
   static Map<SlotPreset, SlotPreset> _bancosTrocados(int a, int b) {

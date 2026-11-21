@@ -101,14 +101,15 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
     // vivo a deixou tocando o "temporário", fora do slot, e sem isto a tela
     // dela fica num slot vazio até a próxima troca
     final editadoDurante = state.atual;
+    final editou = editadoDurante != null && !identical(editadoDurante, gravado);
     final uuidSalvo = relido.uuid;
-    final atual = switch (editadoDurante) {
-      null => relido,
-      _ when identical(editadoDurante, gravado) => relido,
-      _ => uuidSalvo == null ? editadoDurante : editadoDurante.comUuid(uuidSalvo),
-    };
+    final atual = !editou ? relido : (uuidSalvo == null ? editadoDurante : editadoDurante.comUuid(uuidSalvo));
     state = state.copiar(slot: slot, area: area, original: relido, atual: atual);
-    state = state.copiar(slotNaPedaleira: await trocarSlotNaPedaleira(slot));
+    final trocou = await trocarSlotNaPedaleira(slot);
+    state = state.copiar(slotNaPedaleira: trocou);
     ref.read(bibliotecaProvider.notifier).registrarSalvo(slot, relido.nome, id: relido.uuid);
+    // o Program Change fez a pedaleira tocar a versão gravada; a edição feita
+    // durante a gravação é o que está na tela, então volta a soar
+    if (trocou && editou) await enviarAoVivo(state.atual ?? atual);
   }
 }

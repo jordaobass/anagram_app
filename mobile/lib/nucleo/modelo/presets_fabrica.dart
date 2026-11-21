@@ -49,20 +49,49 @@ class PresetsDeFabrica {
     'urn:darkglass:neural-plugins:gentle': {'level': 'output_lvl'},
   };
 
+  /// A troca vale onde o símbolo aparece: no bloco, nas fotos das cenas e nos
+  /// controles (pots, footswitches, pedal) que apontam para o bloco.
   static Map<String, dynamic> _comSimbolosDoFirmware(Map<String, dynamic> envelope) {
-    final cadeias = mapaOuVazio(mapaOuVazio(envelope['preset'])['chains']);
-    for (final cadeia in cadeias.values) {
-      for (final bloco in mapaOuVazio(mapaOuVazio(cadeia)['blocks']).values) {
+    final preset = mapaOuVazio(envelope['preset']);
+    final cadeias = mapaOuVazio(preset['chains']);
+    for (final MapEntry(key: linha, value: cadeia) in cadeias.entries) {
+      for (final MapEntry(key: casa, value: bloco) in mapaOuVazio(mapaOuVazio(cadeia)['blocks']).entries) {
         final trocas = _renomear[mapaOuVazio(bloco)['uri']];
         if (trocas == null) continue;
-        for (final parametro in mapaOuVazio(mapaOuVazio(bloco)['parameters']).values) {
-          final campos = mapaOuVazio(parametro);
-          final novo = trocas[campos['symbol']];
-          if (novo != null) campos['symbol'] = novo;
-        }
+        _renomearNoBloco(mapaOuVazio(bloco), trocas);
+        _renomearNosControles(preset, linha, casa, trocas);
       }
     }
     return envelope;
+  }
+
+  static void _renomearNoBloco(Map<String, dynamic> bloco, Map<String, String> trocas) {
+    for (final parametro in mapaOuVazio(bloco['parameters']).values) {
+      _trocar(parametro, trocas);
+    }
+    for (final cena in mapaOuVazio(bloco['scenes']).values) {
+      final lista = mapaOuVazio(cena)['parameters'];
+      if (lista is! List) continue;
+      for (final parametro in lista) {
+        _trocar(parametro, trocas);
+      }
+    }
+  }
+
+  static void _renomearNosControles(Map<String, dynamic> preset, String linha, String casa, Map<String, String> trocas) {
+    for (final controle in mapaOuVazio(preset['bindings']).values) {
+      final alvos = mapaOuVazio(controle)['parameters'];
+      if (alvos is! List) continue;
+      for (final alvo in alvos.whereType<Map<String, dynamic>>()) {
+        if ('${alvo['row']}' == linha && '${alvo['block']}' == casa) _trocar(alvo, trocas);
+      }
+    }
+  }
+
+  static void _trocar(Object? parametro, Map<String, String> trocas) {
+    final campos = mapaOuVazio(parametro);
+    final novo = trocas[campos['symbol']];
+    if (novo != null) campos['symbol'] = novo;
   }
 
   final Map<SlotPreset, DocumentoPreset> _porSlot;

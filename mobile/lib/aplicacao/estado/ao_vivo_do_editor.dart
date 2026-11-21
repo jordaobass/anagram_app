@@ -24,6 +24,8 @@ mixin AoVivoDoEditor on Notifier<EstadoEditor> {
 
   Future<void> definirAoVivo(bool ligado) async {
     state = state.copiar(aoVivo: ligado);
+    // desligado, nem o valor do arraste já agendado sai mais
+    if (!ligado) descartarEnvioPendente();
     final atual = state.atual;
     if (ligado && atual != null) await enviarAoVivo(atual);
   }
@@ -38,6 +40,11 @@ mixin AoVivoDoEditor on Notifier<EstadoEditor> {
     if (!state.aoVivo) return;
     await _envioAtivo()?.enviarAgora(documento);
   }
+
+  /// O que estava agendado (arraste) ou esperando a vez deixa de valer; o
+  /// envio já em voo termina, porque a pedaleira atende uma conversa por vez.
+  @protected
+  void descartarEnvioPendente() => _envio?.cancelar();
 
   /// A conexão acabou: o envio pendente e a escuta das medições morrem com ela.
   @protected
@@ -60,6 +67,8 @@ mixin AoVivoDoEditor on Notifier<EstadoEditor> {
         .listen((m) => state = state.copiar(latencia: m.duracao));
     return EnvioAoVivo((documento) async {
       final envio = await repositorio.tocarAoVivo(documento);
+      // falha de uma conexão que já acabou: a tela de conectar já diz isso
+      if (!identical(repositorioAtual, repositorio)) return;
       if (envio case Falha(:final erro)) state = state.copiar(aviso: AvisoErro(erro));
     });
   }

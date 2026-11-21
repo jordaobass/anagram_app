@@ -21,6 +21,8 @@ import '../../nucleo/resultado.dart';
 import 'controlador_conexao.dart';
 import 'estado_conexao.dart';
 
+const Object _manter = Object();
+
 class EstadoBiblioteca {
   const EstadoBiblioteca({
     this.ocupados = const {},
@@ -40,25 +42,26 @@ class EstadoBiblioteca {
 
   ResumoSlot? resumo(SlotPreset slot) => ocupados[slot];
 
-  /// A lista na tela é de uma área que a pedaleira não está usando (ou não se
-  /// sabe qual ela usa): o Program Change trocaria o slot de OUTRA área, então
-  /// abrir um preset só o toca.
   /// A lista na tela é a da fábrica: só leitura, e o Program Change não vale.
   bool get naFabrica => areaSelecionada == PresetsDeFabrica.idArea;
 
+  /// A lista na tela é de uma área que a pedaleira não está usando (ou não se
+  /// sabe qual ela usa): o Program Change trocaria o slot de OUTRA área, então
+  /// abrir um preset só o toca.
   bool get areaForaDaPedaleira => areas.temAreas && (areas.ativa == null || areaSelecionada != areas.ativa);
 
+  /// [erro] fica como está se não for passado; `erro: null` o apaga.
   EstadoBiblioteca copiar({
     Map<SlotPreset, ResumoSlot>? ocupados,
     bool? carregando,
-    Aviso? erro,
+    Object? erro = _manter,
     AreasDaPedaleira? areas,
     String? areaSelecionada,
   }) =>
       EstadoBiblioteca(
         ocupados: ocupados ?? this.ocupados,
         carregando: carregando ?? this.carregando,
-        erro: erro,
+        erro: identical(erro, _manter) ? this.erro : erro as Aviso?,
         areas: areas ?? this.areas,
         areaSelecionada: areaSelecionada ?? this.areaSelecionada,
       );
@@ -123,7 +126,8 @@ class ControladorBiblioteca extends Notifier<EstadoBiblioteca> {
       return;
     }
     final area = state.areaSelecionada;
-    state = state.copiar(carregando: true);
+    // nova tentativa: o erro da anterior sai da tela
+    state = state.copiar(carregando: true, erro: null);
     if (relerAreas) await _atualizarAtiva(repositorio);
     final resultado = await repositorio.listarSlots(area: area);
     // o cabo saiu, ou trocou de área enquanto a lista vinha: a resposta não vale
@@ -177,7 +181,11 @@ class ControladorBiblioteca extends Notifier<EstadoBiblioteca> {
       return;
     }
     await _atualizarAtiva(repositorio);
-    if (!_mesmaConexao(repositorio) || state.areas.ativa == id) return;
+    if (!_mesmaConexao(repositorio)) return;
+    if (state.areas.ativa == id) {
+      state = state.copiar(erro: null);
+      return;
+    }
     final continuou = state.areas.ativa ?? '?';
     state = state.copiar(erro: AvisoAreaNaoTrocou(ErroRespostaInvalida('A pedaleira continuou na área $continuou.')));
   }

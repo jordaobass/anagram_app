@@ -329,6 +329,7 @@
   "mbSolo": "Solo",
   "mbSoloLigado": "Solo suena {banda}",
   "mbSoloDesligado": "Solo apagado: suenan las tres bandas",
+  "mbCurvaCompressor": "Curva del compresor: Threshold {limiar} dB, Ratio {razao}:1",
   "mbOff": "OFF",
   "pdSecao": "Pedalera",
   "pdDica": "Ajustes globales de la Anagram: valen para todos los presets y no se guardan en el preset. Cambian al instante.",

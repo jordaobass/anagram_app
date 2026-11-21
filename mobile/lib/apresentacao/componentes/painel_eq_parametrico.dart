@@ -17,12 +17,10 @@ import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import '../textos.dart';
 import 'alteracao_em_grupo.dart';
-import 'cartao_global_eq.dart' show SeletorModoEq;
 import 'cartao_grupo_eq.dart';
 import 'controle_no_painel.dart';
-import 'curva_eq_arrastavel.dart';
 import 'dialogo_confirmar.dart';
-import 'fileira_bandas_eq.dart';
+import 'tela_eq.dart';
 
 class PainelEqParametrico extends ConsumerStatefulWidget {
   const PainelEqParametrico(
@@ -47,24 +45,21 @@ class _PainelEqParametricoState extends ConsumerState<PainelEqParametrico> {
     final grupos = agruparParametros(widget.definicao, widget.parametros);
     final curva = bandasDaCurva(grupos, _valor);
     return Column(key: const ValueKey('painel-eq-parametrico'), crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Row(children: [
-        Expanded(child: SeletorModoEq(modo: _modo, aoEscolher: (m) => setState(() => _modo = m))),
-        TextButton(
+      TelaEq(
+        modo: _modo,
+        aoEscolherModo: (m) => setState(() => _modo = m),
+        acoes: TextButton(
             key: const ValueKey('eq-bloco-reset'), onPressed: _reset, child: Text(AppLocalizations.of(context).pdEqReset)),
-      ]),
-      const SizedBox(height: Espacos.s),
-      CurvaEqArrastavel(
-        key: const ValueKey('curva-eq-bloco'),
-        bandas: [for (final (_, banda) in curva) banda],
-        cor: Cores.doModoEq(_modo),
+        chaveCurva: const ValueKey('curva-eq-bloco'),
+        bandasDaCurva: [for (final (_, banda) in curva) banda],
         ganhoGeral: ganhoGeralDoBloco(grupos, _valor),
-        aoArrastar: (i, frequencia, ganho) => _arrastar(curva[i], frequencia, ganho),
+        aoArrastar: (i, frequencia, ganho, {required arrastando}) =>
+            _arrastar(curva[i], frequencia, ganho, arrastando: arrastando),
+        bandas: [
+          for (final g in grupos)
+            if (ehBandaDoSeletor(g)) _BandaDoBloco(grupo: g, modo: _modo, painel: widget),
+        ],
       ),
-      const SizedBox(height: Espacos.m),
-      LinhaDeBandas(filhos: [
-        for (final g in grupos)
-          if (ehBandaDoSeletor(g)) _BandaDoBloco(grupo: g, modo: _modo, painel: widget),
-      ]),
       const SizedBox(height: Espacos.l),
       Wrap(alignment: WrapAlignment.center, spacing: Espacos.m, runSpacing: Espacos.m, children: [
         for (final g in grupos)
@@ -75,14 +70,15 @@ class _PainelEqParametricoState extends ConsumerState<PainelEqParametrico> {
   }
 
   /// Arrastar o ponto muda frequência e ganho da banda; no corte, só a frequência.
-  void _arrastar(BandaDaCurva alvo, double frequencia, double ganho) {
+  /// Ao soltar ([arrastando] falso) o valor final vai ao vivo na hora, como no knob.
+  void _arrastar(BandaDaCurva alvo, double frequencia, double ganho, {required bool arrastando}) {
     final (grupo, banda) = alvo;
     final editor = ref.read(editorProvider.notifier);
     void mudar(ModoEq modo, double valor) {
       final p = parametroDoModo(grupo, modo)?.parametro;
       if (p == null) return;
       editor.alterarParametro(p.simbolo, p.limitar(valor),
-          arrastando: true, nome: p.nome, posicao: widget.bloco.posicao);
+          arrastando: arrastando, nome: p.nome, posicao: widget.bloco.posicao);
     }
 
     mudar(ModoEq.freq, frequencia);

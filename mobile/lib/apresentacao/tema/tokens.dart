@@ -6,6 +6,7 @@ import 'package:flutter/painting.dart';
 import '../../nucleo/ajustes/mapa_ajustes.dart';
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/familia_bloco.dart';
+import '../../nucleo/catalogo/linha_paralela.dart';
 
 abstract final class Cores {
   static const fundoCase = Color(0xFF131416);
@@ -39,8 +40,8 @@ abstract final class Cores {
   /// A fita da casa: Split e Merge levam a cor do trecho que abrem e fecham,
   /// para ligar o bloco ao fio; os demais, a da família.
   static Color daFita(String uri, FamiliaBloco familia) {
-    if (uri.endsWith(':split')) return sinalSplit;
-    if (uri.endsWith(':merge')) return sinalMerge;
+    if (uri == uriSplit) return sinalSplit;
+    if (uri == uriMerge) return sinalMerge;
     return daFamilia(familia);
   }
 
@@ -83,6 +84,14 @@ abstract final class Cores {
         ModoEq.gain => const Color(0xFF5FCF7E),
         ModoEq.freq => const Color(0xFF8A6CF2),
         ModoEq.width => const Color(0xFFF2A531),
+      };
+
+  /// O nome do modo escrito na cor dele sobre o painel. O roxo da pedaleira
+  /// dá 4,47:1 como texto (abaixo dos 4,5 da WCAG AA): o texto usa um roxo
+  /// mais claro, e o chip, o ícone e a curva continuam na cor da pedaleira.
+  static Color textoDoModoEq(ModoEq modo) => switch (modo) {
+        ModoEq.freq => const Color(0xFF9B84F5),
+        _ => doModoEq(modo),
       };
 
   /// Texto sobre o chip colorido do modo: escuro, para contraste com as três.
@@ -164,11 +173,16 @@ abstract final class Medidas {
   /// e a alça do corte larga o bastante para o dedo, com o traço fino no meio.
   static const double alturaRaiaBanda = 44;
 
-  /// Alvo de toque do traço de Threshold/Level na faixa (o traço tem 2 px).
-  static const double alvoTracoGanho = 16;
+  /// Alvo de toque do traço de Threshold/Level na faixa: o traço tem 2 px,
+  /// o alvo tem a altura mínima de toque, centrado nele (DECISOES K5).
+  static const double alvoTracoGanho = alvoMinimo;
   static const double larguraDialogoTemplates = 440;
   static const double alturaReguaFrequencias = 18;
-  static const double larguraAlcaFrequencia = 32;
+
+  /// Números da régua de frequência e da escala de dB da faixa.
+  static const double fonteReguaFrequencias = 11;
+  /// Alvo de toque da alça do corte: o traço e o puxador ficam no meio dele.
+  static const double larguraAlcaFrequencia = alvoMinimo;
   static const double tracoAlcaFrequencia = 3;
   static const double puxadorAlcaFrequencia = 10;
 
@@ -246,7 +260,8 @@ abstract final class Medidas {
   static const double larguraCampoPorta = 120;
 
   /// Global EQ nas Configurações: altura da curva, raio do ponto arrastável
-  /// e a distância em que o dedo ainda pega o ponto.
+  /// e a distância em que o dedo ainda pega o ponto. O alcance é um raio:
+  /// o alvo de cada ponto já é um círculo de 64 px, acima dos 48 mínimos.
   static const double alturaCurvaGlobalEq = 160;
   static const double raioPontoEq = 7;
   static const double alcancePontoEq = 32;
@@ -256,6 +271,9 @@ abstract final class Medidas {
   static const double dbVisivelGlobalEq = 15;
   static const double larguraEqEmLinha = 560;
   static const double fonteEixoEq = 10;
+
+  /// De quantos em quantos pixels a resposta do EQ é calculada para a curva.
+  static const double passoAmostraCurvaEq = 2;
   static const double larguraChipEq = 72;
 
   /// Um item da placa de som (nome: valor), duas colunas no notebook.
@@ -274,9 +292,20 @@ abstract final class Medidas {
   static const double tracoDesenhoSynth = 2;
   static const double opacidadePreenchimentoSynth = 0.18;
   static const double knobSynth = 64;
+
+  /// Menor janela do computador (Windows: WM_GETMINMAXINFO em
+  /// `win32_window.cpp`; macOS: `contentMinSize` em `MainFlutterWindow.swift`).
+  /// Medido: a 440 px tudo cabe nos três idiomas, a 400 px a fita do preset
+  /// em espanhol estoura; 480 deixa folga (DECISOES K6).
+  static const double larguraMinimaJanela = 480;
+  static const double alturaMinimaJanela = 480;
 }
 
 abstract final class Quebras {
+  /// Abaixo disto a versão do app sai da barra de conexão larga (fica no
+  /// Sobre): em espanhol, entre 780 e 840 px, ela empurrava a barra para fora.
+  static const double barraComVersao = 880;
+
   /// A partir daqui a lista de presets fica ao lado (iPad em retrato já entra).
   static const double amplo = 780;
 
@@ -317,4 +346,10 @@ abstract final class Opacidades {
 
   /// Realce de foco do teclado sobre o tally: visível sem competir com a seleção.
   static const foco = 0.24;
+
+  /// Linhas da escala de dB que não são a do 0 dB: guia, não divisão.
+  static const gradeSecundaria = 0.5;
+
+  /// Sombra do corpo do pedal desenhado pelo app (sem a arte da pedaleira).
+  static const sombraArteFamilia = 0.18;
 }

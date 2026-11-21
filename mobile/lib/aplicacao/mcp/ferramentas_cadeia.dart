@@ -8,11 +8,6 @@ import '../../nucleo/mcp/ferramenta_mcp.dart';
 import 'descricao_preset.dart';
 import 'sessao_mcp.dart';
 
-Map<String, Map<String, dynamic>> _posicao({String prefixo = ''}) => {
-      '${prefixo}row': inteiro('Row (1 = main line, 2 = parallel line).', minimo: 1, maximo: 2),
-      '${prefixo}column': inteiro('Column, 1-12.', minimo: 1, maximo: 12),
-    };
-
 class AdicionarBloco extends FerramentaMcp {
   const AdicionarBloco(this.sessao);
   final SessaoMcp sessao;
@@ -26,7 +21,8 @@ class AdicionarBloco extends FerramentaMcp {
       'it on row 1 joins row 2 (from its column 12) back. One Split and one Merge per preset.';
 
   @override
-  Map<String, dynamic> get esquema => esquemaObjeto({..._posicao(), 'type': texto('Block type from list_block_types.')},
+  Map<String, dynamic> get esquema => esquemaObjeto(
+      {...SessaoMcp.esquemaPosicao(), 'type': texto('Block type from list_block_types.')},
       obrigatorias: const ['row', 'column', 'type']);
 
   @override
@@ -70,7 +66,8 @@ class MoverBloco extends FerramentaMcp {
       'Split and Merge stay on row 1, with the Split before the Merge.';
 
   @override
-  Map<String, dynamic> get esquema => esquemaObjeto({..._posicao(prefixo: 'from_'), ..._posicao(prefixo: 'to_')},
+  Map<String, dynamic> get esquema => esquemaObjeto(
+      {...SessaoMcp.esquemaPosicao(prefixo: 'from_'), ...SessaoMcp.esquemaPosicao(prefixo: 'to_')},
       obrigatorias: const ['from_row', 'from_column', 'to_row', 'to_column']);
 
   @override
@@ -98,7 +95,7 @@ class RemoverBloco extends FerramentaMcp {
       'refused while row 2 has blocks (remove those first).';
 
   @override
-  Map<String, dynamic> get esquema => esquemaObjeto(_posicao(), obrigatorias: const ['row', 'column']);
+  Map<String, dynamic> get esquema => esquemaObjeto(SessaoMcp.esquemaPosicao(), obrigatorias: const ['row', 'column']);
 
   @override
   Future<ResultadoFerramenta> executar(Map<String, dynamic> argumentos) async {
@@ -126,7 +123,7 @@ class EscolherGabinete extends FerramentaMcp {
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto({
-        ..._posicao(),
+        ...SessaoMcp.esquemaPosicao(),
         'model': texto('Cabinet model, as in available_models.'),
         'microphone': texto('Microphone name (optional).'),
         'position': texto('Mic position (optional).'),

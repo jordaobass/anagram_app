@@ -18,6 +18,14 @@ import '../estado/estado_editor.dart';
 import '../provedores.dart';
 import 'avisos_mcp.dart';
 
+/// Recusa que a IA consegue explicar à pessoa, a mesma em toda ferramenta.
+void exigirPedaleiraConectada(Ref ref) {
+  if (ref.read(conexaoProvider) is! Conectada) {
+    throw const RecusaFerramenta('The pedal is not connected. Ask the player to connect it '
+        '(or open the demo) in the Anagram App.');
+  }
+}
+
 class SessaoMcp {
   SessaoMcp(this._ref);
 
@@ -34,10 +42,7 @@ class SessaoMcp {
 
   /// O preset aberto, ou a recusa que explica à IA o que falta.
   DocumentoPreset presetAberto() {
-    if (_ref.read(conexaoProvider) is! Conectada) {
-      throw const RecusaFerramenta('The pedal is not connected. Ask the player to connect it '
-          '(or open the demo) in the Anagram App.');
-    }
+    exigirPedaleiraConectada(_ref);
     final atual = estado.atual;
     if (estado.ocupado) throw const RecusaFerramenta('The app is loading or saving a preset; try again in a moment.');
     if (atual == null) throw const RecusaFerramenta('No preset is open. Ask the player to open one in the app.');
@@ -61,21 +66,35 @@ class SessaoMcp {
   }
 
   static PosicaoBloco posicaoDe(Map<String, dynamic> argumentos, {String linha = 'row', String casa = 'column'}) {
-    final l = argumentos.inteiroObrigatorio(linha);
-    final c = argumentos.inteiroObrigatorio(casa);
-    if (l < 1 || l > PosicaoBloco.linhas || c < 1 || c > PosicaoBloco.casasPorLinha) {
+    final numeroLinha = argumentos.inteiroObrigatorio(linha);
+    final numeroCasa = argumentos.inteiroObrigatorio(casa);
+    final foraDaGrade = numeroLinha < 1 || numeroLinha > PosicaoBloco.linhas ||
+        numeroCasa < 1 || numeroCasa > PosicaoBloco.casasPorLinha;
+    if (foraDaGrade) {
       throw const RecusaFerramenta('Position must be row 1-${PosicaoBloco.linhas}, column 1-${PosicaoBloco.casasPorLinha}.');
     }
-    return PosicaoBloco(l, c);
+    return PosicaoBloco(numeroLinha, numeroCasa);
   }
+
+  /// O esquema da posição que [posicaoDe] lê (`row`, `column`, com [prefixo]).
+  static Map<String, Map<String, dynamic>> esquemaPosicao({String prefixo = ''}) => {
+        '${prefixo}row': inteiro('Row (1 = main line, 2 = parallel line).', minimo: 1, maximo: PosicaoBloco.linhas),
+        '${prefixo}column':
+            inteiro('Column, 1-${PosicaoBloco.casasPorLinha}.', minimo: 1, maximo: PosicaoBloco.casasPorLinha),
+      };
 
   /// Faz a mudança pelo editor e, se o preset mudou, guarda o anterior para
   /// o `undo` e avisa a tela de que a mudança veio da IA.
+  ///
+  /// Se a tela não está mais no que a IA deixou (a pessoa mexeu num knob ou
+  /// abriu outro preset), o histórico anterior é descartado: voltar a ele
+  /// apagaria a edição da pessoa ou poria outro preset dentro deste slot.
   Future<void> mudar(String resumo, Future<void> Function() acao) async {
     final antes = presetAberto();
     await acao();
     final depois = estado.atual;
     if (depois == null || identical(depois, antes)) return;
+    if (!identical(antes, _deixadoPelaIa)) _historico.clear();
     _historico.add(antes);
     if (_historico.length > _limiteHistorico) _historico.removeAt(0);
     _deixadoPelaIa = depois;

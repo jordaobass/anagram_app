@@ -15,6 +15,9 @@ import re
 import shutil
 
 PREFIXO_GABINETE = 'dg_cab_'
+# colunas da tabela de gabinetes de baixo (qv) do Suite
+COLUNA_ARQUIVO_ORIGINAL = 'Original file name'
+COLUNA_NOME_GABINETE = 'Cab listing name'
 # sem modelo reconhecido, o Suite mostra o gabinete de vidro
 PADRAO_GABINETE = ('Glass-Cabinet.webp', 'Bypass-Glass-Cabinet.webp')
 
@@ -49,11 +52,27 @@ def _modelos(texto):
     return {nome: (arquivo, desligadas.get(nome, arquivo)) for nome, arquivo in ligadas.items()}
 
 
+_COMPARACAO_URI = re.compile(r'"(urn:[^"]+)"===e\.uri(?:\|\||\?Gce\+"/devices/anagram/effects/([^"/]+)")')
+
+
+def _cadeias_de_uri(texto):
+    """Cada `"urn:a"===e.uri||"urn:b"===e.uri?Gce+"/…/arquivo"` vira (["urn:a", "urn:b"], arquivo).
+    Varredura linear: um elo só continua a cadeia se começa onde o anterior terminou."""
+    pendentes, fim_anterior = [], -1
+    for elo in _COMPARACAO_URI.finditer(texto):
+        if elo.start() != fim_anterior:
+            pendentes = []
+        pendentes.append(elo.group(1))
+        fim_anterior = elo.end()
+        if elo.group(2):
+            yield pendentes, elo.group(2)
+            pendentes = []
+
+
 def _uris(texto):
-    padrao = r'((?:"urn:[^"]+"===e\.uri(?:\|\|)?)+)\?Gce\+"/devices/anagram/effects/([^"/]+)"'
     ligadas, desligadas = {}, {}
-    for grupo, arquivo in re.findall(padrao, texto):
-        for uri in re.findall(r'"(urn:[^"]+)"', grupo):
+    for uris, arquivo in _cadeias_de_uri(texto):
+        for uri in uris:
             (desligadas if _eh_desligada(arquivo) else ligadas).setdefault(uri, arquivo)
     achadas = {uri: (arquivo, desligadas.get(uri, arquivo)) for uri, arquivo in ligadas.items()}
     return {**GABINETES_GENERICOS, **achadas}
@@ -71,24 +90,24 @@ def modelo_do_artista(descricao, modelos):
 
 def gabinetes_por_arquivo(tabelas, modelos):
     """Nome do arquivo de IR (sem extensão) -> modelo, nos três tipos de gabinete."""
-    porArquivo = {}
+    por_arquivo = {}
     for linha in tabelas.get('qv', []):
-        if linha.get('Original file name'):
-            porArquivo[linha['Original file name']] = linha.get('Cab listing name', '')
+        if linha.get(COLUNA_ARQUIVO_ORIGINAL):
+            por_arquivo[linha[COLUNA_ARQUIVO_ORIGINAL]] = linha.get(COLUNA_NOME_GABINETE, '')
     for linha in tabelas.get('hP', []):
-        porArquivo[linha['Filename']] = linha['Cab']
+        por_arquivo[linha['Filename']] = linha['Cab']
     for linha in tabelas.get('Rh', []):
-        porArquivo[linha['Filename']] = modelo_do_artista(linha['Description'], modelos) or ''
-    return porArquivo
+        por_arquivo[linha['Filename']] = modelo_do_artista(linha['Description'], modelos) or ''
+    return por_arquivo
 
 
 def escolhas_de_gabinete(tabelas):
     """O que se escolhe no bloco de gabinete, como na pedaleira: por tipo,
     [modelo, microfone, posição, arquivo de IR]. Os Artists não têm posição: a
     descrição é "Modelo - Microfone"."""
-    bass = [[linha['Cab listing name'], linha.get('Mic name in Suite', ''), linha.get('Mic position', ''),
-             linha['Original file name']]
-            for linha in tabelas.get('qv', []) if linha.get('Original file name') and linha.get('Cab listing name')]
+    bass = [[linha[COLUNA_NOME_GABINETE], linha.get('Mic name in Suite', ''), linha.get('Mic position', ''),
+             linha[COLUNA_ARQUIVO_ORIGINAL]]
+            for linha in tabelas.get('qv', []) if linha.get(COLUNA_ARQUIVO_ORIGINAL) and linha.get(COLUNA_NOME_GABINETE)]
     guitar = [[linha['Cab'], linha.get('Mic', ''), linha.get('Position', ''), linha['Filename']]
               for linha in tabelas.get('hP', []) if linha.get('Filename') and linha.get('Cab')]
     artists = [[*_modelo_e_microfone(linha['Description']), '', linha['Filename']]
@@ -147,7 +166,7 @@ def montar_gabinetes(tabelas, modelos, pasta_cabs, destino_pasta):
 # USB (DECISOES U18); o Suite traz uma cópia embutida no array `Ah` do renderer,
 # como literal JavaScript (chaves sem aspas, !0/!1, Pp.FACTORY).
 INICIO_FABRICA = 'Ah=[{name:"Harmonic Booster"'
-_NUMERO = re.compile(r'-?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?')
+_NUMERO = re.compile(r'-?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?')
 _PALAVRA = re.compile(r'[A-Za-z_$][\w$]*(?:\.[\w$]+)*|!0|!1')
 
 

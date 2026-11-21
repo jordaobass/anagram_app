@@ -38,6 +38,26 @@ class _MidiSegurado implements SaidaMidiAnagram {
   }
 }
 
+/// MIDI que faz a pedaleira simulada fazer o que a real faz com o Program
+/// Change: passar a tocar o que está GRAVADO no slot.
+class _MidiQueTocaOSlot implements SaidaMidiAnagram {
+  late TransporteDemonstracao pedaleira;
+
+  @override
+  String get descricao => 'MIDI que troca o slot';
+  @override
+  bool get aberta => true;
+  @override
+  Future<void> abrir() async {}
+  @override
+  Future<void> fechar() async {}
+  @override
+  Future<void> enviar(List<int> mensagem) async {
+    if (mensagem.first & 0xF0 != 0xC0) return;
+    pedaleira.presetTocando = pedaleira.conteudoDoSlot(mensagem[1], area: pedaleira.areaAtiva);
+  }
+}
+
 Future<void> _esperarAte(bool Function() condicao) async {
   while (!condicao()) {
     await Future<void>.delayed(const Duration(milliseconds: 1));
@@ -142,5 +162,29 @@ void main() {
     final estado = container.read(editorProvider);
     expect(estado.atual!.nome, 'Importado');
     expect(estado.carregando, isFalse);
+  });
+
+  test('should_keep_playing_the_edit_made_while_saving_after_the_pedal_switches_to_the_saved_slot', () async {
+    final midi = _MidiQueTocaOSlot();
+    final container = ProviderContainer(overrides: [
+      presetsDemonstracaoProvider.overrideWith((ref) async => lerPresetsDemonstracao()),
+      midiDemonstracaoProvider.overrideWithValue(() => midi),
+    ]);
+    addTearDown(container.dispose);
+    await container.read(conexaoProvider.notifier).conectarDemonstracao();
+    final pedaleira = container.read(conexaoProvider.notifier).transporte! as TransporteDemonstracao;
+    midi.pedaleira = pedaleira;
+    final editor = container.read(editorProvider.notifier);
+    await editor.abrirSlot(SlotPreset(3));
+
+    final gravacao = editor.salvar();
+    await _esperarAte(() => _relendoDepoisDeGravar(pedaleira));
+    await editor.renomear('Editado durante a gravação');
+    await gravacao;
+    await Future<void>.delayed(const Duration(milliseconds: 10));
+
+    expect(container.read(editorProvider).atual!.nome, 'Editado durante a gravação');
+    expect(pedaleira.presetTocando!['preset']['name'], 'Editado durante a gravação',
+        reason: 'a pedaleira toca o que está na tela, não a versão gravada antes da edição');
   });
 }

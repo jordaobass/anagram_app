@@ -27,27 +27,45 @@ Future<bool> confirmar(
 }) async {
   final resposta = await showDialog<bool>(
     context: context,
-    builder: (contexto) {
-      void responder(bool sim) => Navigator.pop(contexto, sim);
-      return AlertDialog(
-        title: Text(titulo),
-        content: Text(texto),
-        actionsAlignment: MainAxisAlignment.spaceBetween,
-        actions: [
-          TextButton(
-            style: TextButton.styleFrom(foregroundColor: Cores.texto),
-            onPressed: () => responder(false),
-            child: Text(rotuloCancelar),
-          ),
-          FilledButton(
-            key: chaveConfirmar,
-            style: FilledButton.styleFrom(backgroundColor: Cores.fitaAlerta, foregroundColor: Cores.sobreAlerta),
-            onPressed: () => responder(true),
-            child: Text(rotuloConfirmar),
-          ),
-        ],
-      );
-    },
+    builder: (contexto) => AlertDialog(
+      title: Text(titulo),
+      content: Text(texto),
+      actionsAlignment: MainAxisAlignment.spaceBetween,
+      actions: [
+        BotaoCancelarDialogo(rotulo: rotuloCancelar, aoTocar: () => Navigator.pop(contexto, false)),
+        BotaoConfirmarPerda(key: chaveConfirmar, rotulo: rotuloConfirmar, aoTocar: () => Navigator.pop(contexto, true)),
+      ],
+    ),
   );
   return resposta ?? false;
+}
+
+/// O "não" dos diálogos de perda: neutro, em texto.
+class BotaoCancelarDialogo extends StatelessWidget {
+  const BotaoCancelarDialogo({super.key, required this.rotulo, required this.aoTocar});
+
+  final String rotulo;
+  final VoidCallback aoTocar;
+
+  @override
+  Widget build(BuildContext context) => TextButton(
+        style: TextButton.styleFrom(foregroundColor: Cores.texto),
+        onPressed: aoTocar,
+        child: Text(rotulo),
+      );
+}
+
+/// O "sim" que apaga algo: cheio, no vermelho de alerta.
+class BotaoConfirmarPerda extends StatelessWidget {
+  const BotaoConfirmarPerda({super.key, required this.rotulo, required this.aoTocar});
+
+  final String rotulo;
+  final VoidCallback aoTocar;
+
+  @override
+  Widget build(BuildContext context) => FilledButton(
+        style: FilledButton.styleFrom(backgroundColor: Cores.fitaAlerta, foregroundColor: Cores.sobreAlerta),
+        onPressed: aoTocar,
+        child: Text(rotulo),
+      );
 }

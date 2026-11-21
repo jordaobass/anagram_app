@@ -30,15 +30,32 @@ class ListaPresets extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final biblioteca = ref.watch(bibliotecaProvider);
-    final aberto = ref.watch(editorProvider.select((e) => e.slot));
+    final escolhendo = ref.watch(editorProvider.select((e) => e.escolhendoDestino));
+    final organizando = ref.watch(organizarProvider);
+    // o seletor de área fica à vista também enquanto a lista da área carrega
+    final carregandoLista = biblioteca.carregando && biblioteca.ocupados.isEmpty;
+    return Column(children: [
+      if (escolhendo) const FaixaEscolherDestino(),
+      if (organizando != null) FaixaOrganizar(organizando),
+      const SeletorArea(),
+      // falhas da lista (listar, tornar a área ativa) não podem ficar mudas:
+      // a lista vazia pareceria uma área sem presets
+      if (biblioteca.erro case final erro?) FaixaErroLista(AppLocalizations.of(context).aviso(erro)),
+      Expanded(child: carregandoLista ? const Center(child: CircularProgressIndicator()) : _lista(context, ref)),
+    ]);
+  }
+
+  Widget _lista(BuildContext context, WidgetRef ref) {
+    final biblioteca = ref.watch(bibliotecaProvider);
     final escolhendo = ref.watch(editorProvider.select((e) => e.escolhendoDestino));
     final naPedaleira = ref.watch(editorProvider.select((e) => e.slotNaPedaleira ? e.slot : null));
     // a marca de "pedaleira aqui" usa a cor do LED da barra (azul na demonstração)
     final demonstracao = ref.watch(conexaoProvider.select((c) => c is Conectada && c.demonstracao));
     // gravando: o resultado da gravação ainda vai escrever o slot salvo
     final salvando = ref.watch(editorProvider.select((e) => e.salvando));
-    final organizando = ref.watch(organizarProvider);
-    final lista = ListView.builder(
+    final semMenu = salvando || escolhendo || ref.watch(organizarProvider) != null;
+    final aberto = ref.watch(editorProvider.select((e) => e.slot));
+    return ListView.builder(
       key: const ValueKey('lista-presets'),
       itemCount: SlotPreset.bancos,
       itemBuilder: (context, indice) => _Banco(
@@ -50,38 +67,25 @@ class ListaPresets extends ConsumerWidget {
         corLed: demonstracao ? Cores.ledDemonstracao : Cores.ledLigado,
         aoEscolher: salvando ? null : (slot) => _abrir(context, ref, slot),
         // o menu só existe fora de outra escolha de destino (salvar ou organizar)
-        aoMenu: salvando || escolhendo || organizando != null
-            ? null
-            : (slot, onde) => abrirMenuPreset(context, ref, slot, onde),
+        aoMenu: semMenu ? null : (slot, onde) => abrirMenuPreset(context, ref, slot, onde),
       ),
     );
-    // o seletor de área fica à vista também enquanto a lista da área carrega
-    final carregandoLista = biblioteca.carregando && biblioteca.ocupados.isEmpty;
-    return Column(children: [
-      if (escolhendo) const FaixaEscolherDestino(),
-      if (organizando != null) FaixaOrganizar(organizando),
-      const SeletorArea(),
-      // falhas da lista (listar, tornar a área ativa) não podem ficar mudas:
-      // a lista vazia pareceria uma área sem presets
-      if (biblioteca.erro case final erro?) FaixaErroLista(AppLocalizations.of(context).aviso(erro)),
-      Expanded(child: carregandoLista ? const Center(child: CircularProgressIndicator()) : lista),
-    ]);
   }
 
+  /// Toda espera pode terminar com a lista já fechada (o "voltar" do celular
+  /// durante a leitura): depois dela, nada de ref nem de voltar de novo.
   Future<void> _abrir(BuildContext context, WidgetRef ref, SlotPreset slot) async {
     if (ref.read(organizarProvider) != null) return concluirOrganizacao(context, ref, slot);
     final estado = ref.read(editorProvider);
     if (estado.escolhendoDestino) {
       final gravou = await salvarComoNoDestino(context, ref, slot);
-      if (gravou) aoAbrir?.call();
+      if (gravou && context.mounted) aoAbrir?.call();
       return;
     }
-    if (estado.naoSalvo) {
-      final largar = await confirmarLargarEdicoes(context, estado.atual?.nome ?? '');
-      if (!largar) return;
-    }
+    if (estado.naoSalvo && !await confirmarLargarEdicoes(context, estado.atual?.nome ?? '')) return;
+    if (!context.mounted) return;
     await ref.read(editorProvider.notifier).abrirSlot(slot);
-    aoAbrir?.call();
+    if (context.mounted) aoAbrir?.call();
   }
 }
 

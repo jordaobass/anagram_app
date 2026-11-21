@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../nucleo/catalogo/curvas_multibanda.dart';
 import '../tema/tokens.dart';
+import 'escalas_grafico.dart';
 
 /// Uma banda na faixa: os cortes (nulo = borda do áudio), o nível e se está mutada.
 class RaiaBanda {
@@ -25,18 +26,12 @@ class RaiaBanda {
   int get hashCode => Object.hash(cor, inferior, superior, nivelDb, muda);
 }
 
-/// Escala vertical das curvas: o topo é o maior Level da pedaleira (+12 dB);
-/// o que fica abaixo da base some na borda de baixo.
-const topoCurvaDb = 12.0;
-const baseCurvaDb = -36.0;
-
-/// Altura (0 em cima, 1 embaixo) de um ganho em dB na faixa.
-double alturaDoGanho(double db) => ((topoCurvaDb - db) / (topoCurvaDb - baseCurvaDb)).clamp(0.0, 1.0);
-
 class PintorFaixaFrequencias extends CustomPainter {
-  const PintorFaixaFrequencias({required this.raias, required this.rotulos, required this.alturaRaia});
+  const PintorFaixaFrequencias(
+      {required this.raias, required this.rotulos, required this.alturaRaia, this.escala = const EscalaGanho()});
 
   final List<RaiaBanda> raias;
+  final EscalaGanho escala;
 
   /// Marcas da régua: posição na faixa → texto ("100", "1k").
   final Map<double, String> rotulos;
@@ -63,7 +58,7 @@ class PintorFaixaFrequencias extends CustomPainter {
     final altura = raias.length * alturaRaia;
     final pontos = [
       for (final (x, db) in curvaDaBanda(inferior: raia.inferior, superior: raia.superior, nivelDb: raia.nivelDb))
-        Offset(x * size.width, alturaDoGanho(db) * altura),
+        Offset(x * size.width, escala.altura(db) * altura),
     ];
     final contorno = Path()..addPolygon(pontos, false);
     final area = Path.from(contorno)
@@ -83,24 +78,17 @@ class PintorFaixaFrequencias extends CustomPainter {
     canvas.restore();
   }
 
-  /// A escala em dB da tela da pedaleira (+12, 0, −12, −24, −36): linhas
+  /// A escala em dB (+12, 0, −12, −24, −36 e, se preciso, até −60): linhas
   /// discretas e o número na borda esquerda; a de 0 dB um pouco mais forte.
   void _eixo(Canvas canvas, Size size) {
     final altura = raias.length * alturaRaia;
-    for (var db = topoCurvaDb; db >= baseCurvaDb; db -= 12) {
-      final y = alturaDoGanho(db) * altura;
+    for (final db in escala.marcas) {
+      final y = escala.altura(db) * altura;
       canvas.drawLine(Offset(0, y), Offset(size.width, y), Paint()
-        ..color = Cores.filete.withValues(alpha: db == 0 ? 1 : 0.5)
+        ..color = Cores.filete.withValues(alpha: db == 0 ? 1 : Opacidades.gradeSecundaria)
         ..strokeWidth = Medidas.filete);
-      final pintor = TextPainter(
-        text: TextSpan(
-            text: db > 0 ? '+${db.round()}' : '${db.round()}',
-            style: const TextStyle(color: Cores.textoSecundario, fontSize: _fonteRegua, fontFamily: Fontes.rotulo)),
-        textDirection: TextDirection.ltr,
-      )..layout();
-      final topo = (y - pintor.height / 2).clamp(0.0, altura - pintor.height);
-      pintor.paint(canvas, Offset(Espacos.xs, topo));
-      pintor.dispose();
+      pintarRotuloDoEixo(canvas, rotuloDoDb(db), Medidas.fonteReguaFrequencias,
+          (texto) => Offset(Espacos.xs, (y - texto.height / 2).clamp(0.0, altura - texto.height)));
     }
   }
 
@@ -111,20 +99,14 @@ class PintorFaixaFrequencias extends CustomPainter {
     for (final MapEntry(key: fracao, value: texto) in rotulos.entries) {
       final x = fracao * size.width;
       canvas.drawLine(Offset(x, fundo.top), Offset(x, fundo.bottom), linha);
-      final pintor = TextPainter(
-        text: TextSpan(text: texto, style: const TextStyle(color: Cores.textoSecundario, fontSize: _fonteRegua, fontFamily: Fontes.rotulo)),
-        textDirection: TextDirection.ltr,
-      )..layout();
-      pintor.paint(canvas, Offset(x - pintor.width / 2, fundo.bottom + Espacos.xxs));
-      pintor.dispose();
+      pintarRotuloDoEixo(canvas, texto, Medidas.fonteReguaFrequencias,
+          (tamanho) => Offset(x - tamanho.width / 2, fundo.bottom + Espacos.xxs));
     }
   }
 
-  static const _fonteRegua = 11.0;
-
   @override
   bool shouldRepaint(PintorFaixaFrequencias antigo) =>
-      !_mesmas(antigo.raias, raias) || antigo.rotulos.length != rotulos.length;
+      !_mesmas(antigo.raias, raias) || antigo.rotulos.length != rotulos.length || antigo.escala != escala;
 
   static bool _mesmas(List<RaiaBanda> a, List<RaiaBanda> b) =>
       a.length == b.length && [for (var i = 0; i < a.length; i++) a[i] == b[i]].every((igual) => igual);

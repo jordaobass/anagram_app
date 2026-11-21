@@ -26,6 +26,12 @@ constexpr const wchar_t kGetPreferredBrightnessRegKey[] =
   L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
 constexpr const wchar_t kGetPreferredBrightnessRegValue[] = L"AppsUseLightTheme";
 
+// Menor área útil da janela, em pixels lógicos: a mesma de
+// Medidas.larguraMinimaJanela e alturaMinimaJanela (lib/apresentacao/tema/tokens.dart).
+// Abaixo disto a barra e as bandas do EQ estouram a linha (DECISOES K6).
+constexpr int kLarguraMinimaJanela = 480;
+constexpr int kAlturaMinimaJanela = 480;
+
 // The number of Win32Window objects that currently exist.
 static int g_active_window_count = 0;
 
@@ -195,6 +201,18 @@ Win32Window::MessageHandler(HWND hwnd,
       SetWindowPos(hwnd, nullptr, newRectSize->left, newRectSize->top, newWidth,
                    newHeight, SWP_NOZORDER | SWP_NOACTIVATE);
 
+      return 0;
+    }
+    case WM_GETMINMAXINFO: {
+      // o mínimo vale para a área do app: soma a moldura e a barra de título
+      const double escala =
+          FlutterDesktopGetDpiForMonitor(MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST)) / 96.0;
+      RECT area = {0, 0, Scale(kLarguraMinimaJanela, escala), Scale(kAlturaMinimaJanela, escala)};
+      AdjustWindowRectEx(&area, static_cast<DWORD>(GetWindowLongPtr(hwnd, GWL_STYLE)), FALSE,
+                         static_cast<DWORD>(GetWindowLongPtr(hwnd, GWL_EXSTYLE)));
+      auto info = reinterpret_cast<MINMAXINFO*>(lparam);
+      info->ptMinTrackSize.x = area.right - area.left;
+      info->ptMinTrackSize.y = area.bottom - area.top;
       return 0;
     }
     case WM_SIZE: {
