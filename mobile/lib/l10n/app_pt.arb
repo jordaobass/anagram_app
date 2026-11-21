@@ -536,5 +536,114 @@
         "type": "String"
       }
     }
+  },
+  "opMoverPara": "Mover para…",
+  "opClonarPara": "Clonar para…",
+  "opTrocarBanco": "Trocar de banco com…",
+  "opAcoesPreset": "Mover, clonar ou trocar de banco",
+  "opDestinoMover": "Mover {origem}: toque no slot de destino",
+  "@opDestinoMover": {
+    "placeholders": {
+      "origem": {
+        "type": "String"
+      }
+    }
+  },
+  "opDestinoClonar": "Clonar {origem}: toque no slot de destino",
+  "@opDestinoClonar": {
+    "placeholders": {
+      "origem": {
+        "type": "String"
+      }
+    }
+  },
+  "opDestinoBanco": "Trocar o banco {banco}: toque num slot do outro banco",
+  "@opDestinoBanco": {
+    "placeholders": {
+      "banco": {
+        "type": "String"
+      }
+    }
+  },
+  "opTrocarTitulo": "Trocar os dois de lugar?",
+  "opTrocarTexto": "{destino} tem \"{nome}\". Ele vai para {origem}.",
+  "@opTrocarTexto": {
+    "placeholders": {
+      "destino": {
+        "type": "String"
+      },
+      "nome": {
+        "type": "String"
+      },
+      "origem": {
+        "type": "String"
+      }
+    }
+  },
+  "opTrocar": "TROCAR",
+  "opSubstituirTitulo": "Substituir {destino}?",
+  "@opSubstituirTitulo": {
+    "placeholders": {
+      "destino": {
+        "type": "String"
+      }
+    }
+  },
+  "opSubstituirTexto": "\"{nome}\" vai ser apagado e trocado pela cópia de {origem}.",
+  "@opSubstituirTexto": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      },
+      "origem": {
+        "type": "String"
+      }
+    }
+  },
+  "opSubstituir": "SUBSTITUIR",
+  "opBancosTitulo": "Trocar os bancos {a} e {b}?",
+  "@opBancosTitulo": {
+    "placeholders": {
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
+  },
+  "opBancosTexto": "Os três presets de cada banco trocam de lugar.",
+  "opMovido": "{origem} foi para {destino}.",
+  "@opMovido": {
+    "placeholders": {
+      "origem": {
+        "type": "String"
+      },
+      "destino": {
+        "type": "String"
+      }
+    }
+  },
+  "opClonado": "Cópia de {origem} gravada em {destino}.",
+  "@opClonado": {
+    "placeholders": {
+      "origem": {
+        "type": "String"
+      },
+      "destino": {
+        "type": "String"
+      }
+    }
+  },
+  "opBancosTrocados": "Bancos {a} e {b} trocados.",
+  "@opBancosTrocados": {
+    "placeholders": {
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
   }
 }

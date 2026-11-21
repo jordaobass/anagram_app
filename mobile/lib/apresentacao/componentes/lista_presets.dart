@@ -1,19 +1,23 @@
 // Presets por banco (01A … 42C). Tocar abre e faz tocar na pedaleira;
 // com edição não salva, pergunta antes de largar — também no slot já aberto,
-// porque abrir de novo relê da pedaleira por cima das edições.
+// porque abrir de novo relê da pedaleira por cima das edições. Botão direito,
+// toque longo ou o ⋮ de um preset abrem mover, clonar e trocar de banco.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_biblioteca.dart';
 import '../../aplicacao/estado/controlador_conexao.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
+import '../../aplicacao/estado/controlador_organizar.dart';
 import '../../aplicacao/estado/estado_conexao.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../textos.dart';
 import '../tema/tokens.dart';
 import 'dialogo_confirmar.dart';
 import 'faixa_escolher_destino.dart';
+import 'faixas_lista.dart';
 import 'fluxo_salvar.dart';
+import 'menu_preset.dart';
 import 'seletor_area.dart';
 import '../../l10n/app_localizations.dart';
 
@@ -33,6 +37,7 @@ class ListaPresets extends ConsumerWidget {
     final demonstracao = ref.watch(conexaoProvider.select((c) => c is Conectada && c.demonstracao));
     // gravando: o resultado da gravação ainda vai escrever o slot salvo
     final salvando = ref.watch(editorProvider.select((e) => e.salvando));
+    final organizando = ref.watch(organizarProvider);
     final lista = ListView.builder(
       key: const ValueKey('lista-presets'),
       itemCount: SlotPreset.bancos,
@@ -44,21 +49,27 @@ class ListaPresets extends ConsumerWidget {
         naPedaleira: naPedaleira,
         corLed: demonstracao ? Cores.ledDemonstracao : Cores.ledLigado,
         aoEscolher: salvando ? null : (slot) => _abrir(context, ref, slot),
+        // o menu só existe fora de outra escolha de destino (salvar ou organizar)
+        aoMenu: salvando || escolhendo || organizando != null
+            ? null
+            : (slot, onde) => abrirMenuPreset(context, ref, slot, onde),
       ),
     );
     // o seletor de área fica à vista também enquanto a lista da área carrega
     final carregandoLista = biblioteca.carregando && biblioteca.ocupados.isEmpty;
     return Column(children: [
       if (escolhendo) const FaixaEscolherDestino(),
+      if (organizando != null) FaixaOrganizar(organizando),
       const SeletorArea(),
       // falhas da lista (listar, tornar a área ativa) não podem ficar mudas:
       // a lista vazia pareceria uma área sem presets
-      if (biblioteca.erro case final erro?) _FaixaErro(AppLocalizations.of(context).aviso(erro)),
+      if (biblioteca.erro case final erro?) FaixaErroLista(AppLocalizations.of(context).aviso(erro)),
       Expanded(child: carregandoLista ? const Center(child: CircularProgressIndicator()) : lista),
     ]);
   }
 
   Future<void> _abrir(BuildContext context, WidgetRef ref, SlotPreset slot) async {
+    if (ref.read(organizarProvider) != null) return concluirOrganizacao(context, ref, slot);
     final estado = ref.read(editorProvider);
     if (estado.escolhendoDestino) {
       final gravou = await salvarComoNoDestino(context, ref, slot);
@@ -85,21 +96,6 @@ class ListaPresets extends ConsumerWidget {
   }
 }
 
-class _FaixaErro extends StatelessWidget {
-  const _FaixaErro(this.texto);
-
-  final String texto;
-
-  @override
-  Widget build(BuildContext context) => Container(
-        key: const ValueKey('erro-lista'),
-        width: double.infinity,
-        color: Cores.painelElevado,
-        padding: const EdgeInsets.symmetric(horizontal: Espacos.m, vertical: Espacos.s),
-        child: Text(texto, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.erro)),
-      );
-}
-
 class _Banco extends StatelessWidget {
   const _Banco({
     required this.banco,
@@ -109,6 +105,7 @@ class _Banco extends StatelessWidget {
     required this.naPedaleira,
     required this.corLed,
     required this.aoEscolher,
+    required this.aoMenu,
   });
 
   final Color corLed;
@@ -124,6 +121,9 @@ class _Banco extends StatelessWidget {
 
   /// `null` enquanto grava: a lista fica visível, mas não abre nem escolhe.
   final void Function(SlotPreset)? aoEscolher;
+
+  /// Menu de mover/clonar/trocar banco de um preset, na posição tocada.
+  final void Function(SlotPreset, Offset)? aoMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +157,8 @@ class _Banco extends StatelessWidget {
       child: InkWell(
         key: ValueKey('slot-${slot.rotulo}'),
         onTap: escolher == null ? null : () => escolher(slot),
+        onSecondaryTapDown: _menuEm(slot, (d) => d.globalPosition),
+        onLongPress: aoMenu == null || biblioteca.resumo(slot) == null ? null : () => _menuNoCentro(context, slot),
         child: Container(
           constraints: const BoxConstraints(minHeight: Medidas.alvoMinimo),
           padding: const EdgeInsets.symmetric(horizontal: Espacos.m),
@@ -183,6 +185,28 @@ class _Banco extends StatelessWidget {
             style: resumo == null ? tema.bodySmall : tema.bodyLarge),
       ),
       ?_marca(l, tema, slot),
+      if (aoMenu != null && resumo != null) _botaoMenu(l, slot),
     ]);
   }
+
+  /// O menu só vale para slot com preset; o vazio não tem o que mover.
+  void Function(TapDownDetails)? _menuEm(SlotPreset slot, Offset Function(TapDownDetails) onde) {
+    final menu = aoMenu;
+    if (menu == null || biblioteca.resumo(slot) == null) return null;
+    return (detalhes) => menu(slot, onde(detalhes));
+  }
+
+  void _menuNoCentro(BuildContext context, SlotPreset slot) {
+    final caixa = context.findRenderObject() as RenderBox?;
+    aoMenu?.call(slot, caixa == null ? Offset.zero : caixa.localToGlobal(caixa.size.center(Offset.zero)));
+  }
+
+  Widget _botaoMenu(AppLocalizations l, SlotPreset slot) => Builder(
+        builder: (contexto) => IconButton(
+          key: ValueKey('menu-preset-${slot.rotulo}'),
+          tooltip: l.opAcoesPreset,
+          icon: const Icon(Icons.more_vert, color: Cores.textoSecundario),
+          onPressed: () => _menuNoCentro(contexto, slot),
+        ),
+      );
 }

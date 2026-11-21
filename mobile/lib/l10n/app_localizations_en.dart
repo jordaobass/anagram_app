@@ -722,4 +722,78 @@ class AppLocalizationsEn extends AppLocalizations {
   String cbIrDoUsuario(String arquivo) {
     return 'Own IR: $arquivo';
   }
+
+  @override
+  String get opMoverPara => 'Move to…';
+
+  @override
+  String get opClonarPara => 'Clone to…';
+
+  @override
+  String get opTrocarBanco => 'Swap bank with…';
+
+  @override
+  String get opAcoesPreset => 'Move, clone or swap bank';
+
+  @override
+  String opDestinoMover(String origem) {
+    return 'Move $origem: tap the destination slot';
+  }
+
+  @override
+  String opDestinoClonar(String origem) {
+    return 'Clone $origem: tap the destination slot';
+  }
+
+  @override
+  String opDestinoBanco(String banco) {
+    return 'Swap bank $banco: tap a slot of the other bank';
+  }
+
+  @override
+  String get opTrocarTitulo => 'Swap both presets?';
+
+  @override
+  String opTrocarTexto(String destino, String nome, String origem) {
+    return '$destino has \"$nome\". It moves to $origem.';
+  }
+
+  @override
+  String get opTrocar => 'SWAP';
+
+  @override
+  String opSubstituirTitulo(String destino) {
+    return 'Replace $destino?';
+  }
+
+  @override
+  String opSubstituirTexto(String nome, String origem) {
+    return '\"$nome\" will be erased and replaced by the copy of $origem.';
+  }
+
+  @override
+  String get opSubstituir => 'REPLACE';
+
+  @override
+  String opBancosTitulo(String a, String b) {
+    return 'Swap banks $a and $b?';
+  }
+
+  @override
+  String get opBancosTexto => 'The three presets of each bank swap places.';
+
+  @override
+  String opMovido(String origem, String destino) {
+    return '$origem moved to $destino.';
+  }
+
+  @override
+  String opClonado(String origem, String destino) {
+    return 'Copy of $origem saved to $destino.';
+  }
+
+  @override
+  String opBancosTrocados(String a, String b) {
+    return 'Banks $a and $b swapped.';
+  }
 }

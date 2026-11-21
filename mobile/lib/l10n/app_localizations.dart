@@ -1305,6 +1305,114 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'IR próprio: {arquivo}'**
   String cbIrDoUsuario(String arquivo);
+
+  /// No description provided for @opMoverPara.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mover para…'**
+  String get opMoverPara;
+
+  /// No description provided for @opClonarPara.
+  ///
+  /// In pt, this message translates to:
+  /// **'Clonar para…'**
+  String get opClonarPara;
+
+  /// No description provided for @opTrocarBanco.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trocar de banco com…'**
+  String get opTrocarBanco;
+
+  /// No description provided for @opAcoesPreset.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mover, clonar ou trocar de banco'**
+  String get opAcoesPreset;
+
+  /// No description provided for @opDestinoMover.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mover {origem}: toque no slot de destino'**
+  String opDestinoMover(String origem);
+
+  /// No description provided for @opDestinoClonar.
+  ///
+  /// In pt, this message translates to:
+  /// **'Clonar {origem}: toque no slot de destino'**
+  String opDestinoClonar(String origem);
+
+  /// No description provided for @opDestinoBanco.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trocar o banco {banco}: toque num slot do outro banco'**
+  String opDestinoBanco(String banco);
+
+  /// No description provided for @opTrocarTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trocar os dois de lugar?'**
+  String get opTrocarTitulo;
+
+  /// No description provided for @opTrocarTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'{destino} tem \"{nome}\". Ele vai para {origem}.'**
+  String opTrocarTexto(String destino, String nome, String origem);
+
+  /// No description provided for @opTrocar.
+  ///
+  /// In pt, this message translates to:
+  /// **'TROCAR'**
+  String get opTrocar;
+
+  /// No description provided for @opSubstituirTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Substituir {destino}?'**
+  String opSubstituirTitulo(String destino);
+
+  /// No description provided for @opSubstituirTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'\"{nome}\" vai ser apagado e trocado pela cópia de {origem}.'**
+  String opSubstituirTexto(String nome, String origem);
+
+  /// No description provided for @opSubstituir.
+  ///
+  /// In pt, this message translates to:
+  /// **'SUBSTITUIR'**
+  String get opSubstituir;
+
+  /// No description provided for @opBancosTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trocar os bancos {a} e {b}?'**
+  String opBancosTitulo(String a, String b);
+
+  /// No description provided for @opBancosTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'Os três presets de cada banco trocam de lugar.'**
+  String get opBancosTexto;
+
+  /// No description provided for @opMovido.
+  ///
+  /// In pt, this message translates to:
+  /// **'{origem} foi para {destino}.'**
+  String opMovido(String origem, String destino);
+
+  /// No description provided for @opClonado.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cópia de {origem} gravada em {destino}.'**
+  String opClonado(String origem, String destino);
+
+  /// No description provided for @opBancosTrocados.
+  ///
+  /// In pt, this message translates to:
+  /// **'Bancos {a} e {b} trocados.'**
+  String opBancosTrocados(String a, String b);
 }
 
 class _AppLocalizationsDelegate
