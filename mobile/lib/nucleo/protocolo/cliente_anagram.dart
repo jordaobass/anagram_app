@@ -66,12 +66,7 @@ class ClienteAnagram {
     final relatorios = _codificar(acao, carga);
     final pausa = _pausa();
     final espera = _aguardarResposta(acao, prazo);
-    try {
-      await _enviarTodos(relatorios, pausa);
-    } on Object catch (erro) {
-      espera.cancelar();
-      throw ErroDesconectado('Falha ao enviar "$acao": $erro');
-    }
+    await _enviar(acao, relatorios, pausa, prazo, espera);
     final quadro = await espera.resposta;
     relogio.stop();
     _registrarMedicao(MedicaoChamada(acao, relogio.elapsed, relatorios.length, pausa));
@@ -87,8 +82,25 @@ class ClienteAnagram {
     }
   }
 
-  Future<void> _enviarTodos(List<Uint8List> relatorios, Duration pausa) async {
+  /// O envio também tem prazo: um relatório que nunca volta (USB travado)
+  /// prenderia a fila, e nenhuma outra ação seria atendida.
+  Future<void> _enviar(String acao, List<Uint8List> relatorios, Duration pausa, Duration prazo, _Espera espera) async {
+    try {
+      await _enviarTodos(relatorios, pausa, espera).timeout(prazo, onTimeout: () => throw ErroSemResposta(acao, prazo));
+    } on ErroSemResposta {
+      espera.cancelar();
+      rethrow;
+    } on Object catch (erro) {
+      espera.cancelar();
+      throw ErroDesconectado('Falha ao enviar "$acao": $erro');
+    }
+  }
+
+  /// Para no meio se a espera foi cancelada: o resto de um pedido que estourou
+  /// o prazo não pode cair no meio do pedido seguinte.
+  Future<void> _enviarTodos(List<Uint8List> relatorios, Duration pausa, _Espera espera) async {
     for (final relatorio in relatorios) {
+      if (espera.cancelada) return;
       await _transporte.enviarRelatorio(relatorio);
       if (pausa > Duration.zero) await Future<void>.delayed(pausa);
     }
@@ -161,7 +173,15 @@ class ClienteAnagram {
 }
 
 class _Espera {
-  const _Espera(this.resposta, this.cancelar);
+  _Espera(this.resposta, this._encerrar);
   final Future<Map<String, dynamic>> resposta;
-  final void Function() cancelar;
+  final void Function() _encerrar;
+  bool _cancelada = false;
+
+  bool get cancelada => _cancelada;
+
+  void cancelar() {
+    _cancelada = true;
+    _encerrar();
+  }
 }
