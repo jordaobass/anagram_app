@@ -9,11 +9,23 @@ One Flutter codebase for macOS, Windows, Linux, Android and the browser (Chrome/
 <p align="center">
   <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Download for Windows" src="https://img.shields.io/badge/Download-Windows%2010%2F11-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
   <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Download for macOS" src="https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
-  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Latest release on GitHub" src="https://img.shields.io/github/v/release/jordaobass/anagram_app?style=for-the-badge&label=version"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Editor with the block chain and the parallel row" src="docs/imagens/en/editor.webp" width="900"></a>
+  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Latest version" src="https://img.shields.io/github/v/release/jordaobass/anagram_app?label=version&color=F0B429"></a>
+  <a href="https://github.com/jordaobass/anagram_app/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/jordaobass/anagram_app/total?label=downloads&color=41D68A"></a>
+  <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/github/license/jordaobass/anagram_app?color=8E949B"></a>
+  <a href="https://github.com/jordaobass/anagram_app/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/jordaobass/anagram_app?style=flat&color=E8E1CD"></a>
+</p>
+
+<p align="center">
+  <a href="https://jordaobass.github.io/anagram_app/"><strong>Website</strong></a> ·
+  <a href="https://github.com/jordaobass/anagram_app/discussions">Discussions</a> ·
+  <a href="https://github.com/jordaobass/anagram_app/issues/new">Suggest a feature</a>
+</p>
+
+<p align="center">
+  <a href="https://jordaobass.github.io/anagram_app/"><img alt="Tour of the app: editor, multiband compressor and drive, templates, Axioma synth, cabinets and control explanations" src="docs/imagens/en/tour.gif" width="900"></a>
 </p>
 
 > **Unofficial app, not affiliated with Darkglass Electronics.** Anagram is a trademark of its
