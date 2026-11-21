@@ -296,6 +296,12 @@ abstract final class Medidas {
   static const double opacidadePreenchimentoSynth = 0.18;
   static const double knobSynth = 64;
 
+  /// Cartão de um controle da pedaleira (FOOT, POT, EXP) e os knobs de
+  /// mínimo e máximo de cada alvo no diálogo do controle.
+  static const double larguraCartaoControle = 136;
+  static const double larguraMinimaCartaoControle = 96;
+  static const double knobFaixaControle = 72;
+
   /// Menor janela do computador (Windows: WM_GETMINMAXINFO em
   /// `win32_window.cpp`; macOS: `contentMinSize` em `MainFlutterWindow.swift`).
   /// Medido: a 440 px tudo cabe nos três idiomas, a 400 px a fita do preset

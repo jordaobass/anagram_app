@@ -1048,5 +1048,146 @@
   "versaoNovaSemResposta": "Não deu para verificar agora; o app tenta de novo na próxima abertura.",
   "@versaoNovaSemResposta": {
     "description": "Aviso de versão nova: barra de cima e seção Atualizações das Configurações"
+  },
+  "ctlTitulo": "Controles da pedaleira",
+  "@ctlTitulo": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlDicaMouse": "Clique num controle para editar. Botão direito num knob atribui o parâmetro a um pot ou ao pedal; o menu do bloco põe um footswitch nele.",
+  "@ctlDicaMouse": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlDicaToque": "Toque num controle para editar ou atribuir um parâmetro do bloco aberto; o menu do bloco põe um footswitch nele.",
+  "@ctlDicaToque": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlSiglaFoot": "FOOT",
+  "@ctlSiglaFoot": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlSiglaPot": "POT",
+  "@ctlSiglaPot": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlSiglaExp": "EXP",
+  "@ctlSiglaExp": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlLivre": "livre",
+  "@ctlLivre": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlLigaDesliga": "Liga/desliga",
+  "@ctlLigaDesliga": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlAtribuirA": "Atribuir a {controle}",
+  "@ctlAtribuirA": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor",
+    "placeholders": {
+      "controle": {
+        "type": "String"
+      }
+    }
+  },
+  "ctlJaAqui": "já está aqui",
+  "@ctlJaAqui": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlFootswitchLigaBloco": "Footswitch {numero} liga/desliga este bloco",
+  "@ctlFootswitchLigaBloco": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor",
+    "placeholders": {
+      "numero": {
+        "type": "int"
+      }
+    }
+  },
+  "ctlNome": "Nome no visor",
+  "@ctlNome": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlNomeLongo": "Os presets de fábrica usam até {maximo} letras; um nome maior pode ser cortado no visor.",
+  "@ctlNomeLongo": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor",
+    "placeholders": {
+      "maximo": {
+        "type": "int"
+      }
+    }
+  },
+  "ctlMinimo": "MÍN",
+  "@ctlMinimo": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlMaximo": "MÁX",
+  "@ctlMaximo": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlRemoverAlvo": "Tirar este parâmetro",
+  "@ctlRemoverAlvo": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlRemoverControle": "SOLTAR CONTROLE",
+  "@ctlRemoverControle": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlAtribuirDoBloco": "ATRIBUIR PARÂMETRO",
+  "@ctlAtribuirDoBloco": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlEscolherParametro": "Parâmetro de {bloco}",
+  "@ctlEscolherParametro": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor",
+    "placeholders": {
+      "bloco": {
+        "type": "String"
+      }
+    }
+  },
+  "ctlSemBlocoAberto": "Abra um bloco na cadeia para atribuir um parâmetro dele.",
+  "@ctlSemBlocoAberto": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlSemAlvos": "Nenhum parâmetro neste controle.",
+  "@ctlSemAlvos": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlFaixaIguais": "Mínimo e máximo iguais deixam o controle sem curso.",
+  "@ctlFaixaIguais": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlFaixaFora": "Fora da faixa do parâmetro.",
+  "@ctlFaixaFora": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlCasaVazia": "casa {linha}·{casa} vazia",
+  "@ctlCasaVazia": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor",
+    "placeholders": {
+      "linha": {
+        "type": "int"
+      },
+      "casa": {
+        "type": "int"
+      }
+    }
+  },
+  "ctlAtribuidoA": "Atribuído a {controle}",
+  "@ctlAtribuidoA": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor",
+    "placeholders": {
+      "controle": {
+        "type": "String"
+      }
+    }
+  },
+  "ctlAcaoAtribuir": "Atribuir a um controle da pedaleira",
+  "@ctlAcaoAtribuir": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
+  },
+  "ctlFechar": "FECHAR",
+  "@ctlFechar": {
+    "description": "Controles da pedaleira (footswitches, pots e pedal de expressão) no editor"
   }
 }

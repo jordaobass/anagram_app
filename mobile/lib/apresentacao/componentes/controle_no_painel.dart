@@ -1,17 +1,24 @@
 // Um parâmetro do bloco selecionado no painel: lê o valor na cena ativa,
 // manda a mudança pelo editor (ao vivo, desfazer, cena) e marca quando a
 // cena sobrepõe o valor. O painel genérico e o do multibanda usam o mesmo.
+// Botão direito atribui o parâmetro a um pot ou ao pedal de expressão, e a
+// marca embaixo ("POT 2") diz que ele já está num controle da pedaleira.
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
+import '../../aplicacao/estado/estado_editor.dart';
 import '../../l10n/app_localizations.dart';
 import '../../nucleo/catalogo/arranjo_parametros.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
+import '../../nucleo/modelo/controles_pedaleira.dart';
 import '../tema/tokens.dart';
+import '../textos.dart';
 import 'botao_giratorio.dart' show AoMudarValor;
 import 'controle_parametro.dart';
+import 'menu_atribuir.dart';
 import 'seletor_opcao.dart';
 
 class ControleNoPainel extends ConsumerWidget {
@@ -55,14 +62,46 @@ class ControleNoPainel extends ConsumerWidget {
           .alterarParametro(p.simbolo, valor, arrastando: arrastando, nome: p.nome, posicao: bloco.posicao);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => Column(mainAxisSize: MainAxisSize.min, children: [
-        _controle(ref),
-        // como o valor "atribuído ao snapshot" do HX: esta cena sobrepõe
-        if (bloco.sobreposicaoDaCena(parametro.simbolo, cena) != null)
-          // neutro: o âmbar é da ação e da seleção, não de marca informativa
-          Text(AppLocalizations.of(context).soNaCena(cena),
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.aluminioClaro)),
-      ]);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context);
+    final marca = Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.aluminioClaro);
+    final chaves = ref.watch(editorProvider.select(_controlesDoParametro));
+    final controles = [
+      for (final chave in chaves.split(' '))
+        if (IdControle.daChave(chave) case final id?) l.rotuloControle(id),
+    ].join(' · ');
+    return Semantics(
+      customSemanticsActions: {CustomSemanticsAction(label: l.ctlAcaoAtribuir): () => _atribuir(context, ref, null)},
+      child: GestureDetector(
+        onSecondaryTapUp: (detalhes) => _atribuir(context, ref, detalhes.globalPosition),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          _controle(ref),
+          // como o valor "atribuído ao snapshot" do HX: esta cena sobrepõe
+          // (neutro: o âmbar é da ação e da seleção, não de marca informativa)
+          if (bloco.sobreposicaoDaCena(parametro.simbolo, cena) != null) Text(l.soNaCena(cena), style: marca),
+          if (controles.isNotEmpty)
+            Semantics(
+              label: l.ctlAtribuidoA(controles),
+              child: ExcludeSemantics(
+                  child: Text(controles, key: ValueKey('marca-controle-${parametro.simbolo}'), style: marca)),
+            ),
+        ]),
+      ),
+    );
+  }
+
+  /// "POT 2", "POT 2 · EXP": os controles que movem este parâmetro. Texto, e
+  /// não lista, para o select só reconstruir quando a marca muda.
+  String _controlesDoParametro(EstadoEditor estado) {
+    final controles = estado.atual?.controles ?? const {};
+    return controlesDoParametro(controles, bloco.posicao, parametro.simbolo).map((id) => id.chave).join(' ');
+  }
+
+  void _atribuir(BuildContext context, WidgetRef ref, Offset? ponto) {
+    final caixa = context.findRenderObject()! as RenderBox;
+    final origem = ponto ?? caixa.localToGlobal(caixa.size.bottomCenter(Offset.zero));
+    abrirMenuAtribuir(context, ref, bloco.posicao, parametro, origem);
+  }
 
   Widget _controle(WidgetRef ref) {
     final p = parametro;

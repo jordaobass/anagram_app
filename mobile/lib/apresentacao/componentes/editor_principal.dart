@@ -1,4 +1,5 @@
-// Corpo do editor: fita do preset, cenas, cadeia de blocos e parâmetros.
+// Corpo do editor: fita do preset, cenas, cadeia de blocos, parâmetros e,
+// no fim, os controles da pedaleira (o que se edita menos vai mais abaixo).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,6 +10,7 @@ import 'faixa_preset.dart';
 import 'grade_blocos.dart';
 import 'grade_compacta.dart';
 import 'moldura_case.dart';
+import 'painel_controles.dart';
 import 'painel_parametros.dart';
 import 'seletor_cenas.dart';
 
@@ -40,6 +42,8 @@ class EditorPrincipal extends ConsumerWidget {
         ),
         SizedBox(height: espaco),
         if (ref.watch(editorProvider.select((e) => e.blocoSelecionado != null))) _painel() else const DicaMontarCadeia(),
+        SizedBox(height: espaco),
+        MolduraCase(child: PainelControles(compacto: compacto)),
       ],
     );
   }

@@ -1262,4 +1262,97 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get versaoNovaSemResposta => 'Could not check right now; the app will try again next time it opens.';
+
+  @override
+  String get ctlTitulo => 'Pedal controls';
+
+  @override
+  String get ctlDicaMouse => 'Click a control to edit it. Right-click a knob to assign its parameter to a pot or the pedal; the block menu puts a footswitch on it.';
+
+  @override
+  String get ctlDicaToque => 'Tap a control to edit it or assign a parameter of the open block; the block menu puts a footswitch on it.';
+
+  @override
+  String get ctlSiglaFoot => 'FOOT';
+
+  @override
+  String get ctlSiglaPot => 'POT';
+
+  @override
+  String get ctlSiglaExp => 'EXP';
+
+  @override
+  String get ctlLivre => 'free';
+
+  @override
+  String get ctlLigaDesliga => 'On/off';
+
+  @override
+  String ctlAtribuirA(String controle) {
+    return 'Assign to $controle';
+  }
+
+  @override
+  String get ctlJaAqui => 'already here';
+
+  @override
+  String ctlFootswitchLigaBloco(int numero) {
+    return 'Footswitch $numero turns this block on/off';
+  }
+
+  @override
+  String get ctlNome => 'Name on the display';
+
+  @override
+  String ctlNomeLongo(int maximo) {
+    return 'Factory presets use up to $maximo letters; a longer name may be cut on the display.';
+  }
+
+  @override
+  String get ctlMinimo => 'MIN';
+
+  @override
+  String get ctlMaximo => 'MAX';
+
+  @override
+  String get ctlRemoverAlvo => 'Remove this parameter';
+
+  @override
+  String get ctlRemoverControle => 'CLEAR CONTROL';
+
+  @override
+  String get ctlAtribuirDoBloco => 'ASSIGN PARAMETER';
+
+  @override
+  String ctlEscolherParametro(String bloco) {
+    return 'Parameter of $bloco';
+  }
+
+  @override
+  String get ctlSemBlocoAberto => 'Open a block in the chain to assign one of its parameters.';
+
+  @override
+  String get ctlSemAlvos => 'No parameter on this control.';
+
+  @override
+  String get ctlFaixaIguais => 'Equal minimum and maximum leave the control without travel.';
+
+  @override
+  String get ctlFaixaFora => 'Outside the parameter range.';
+
+  @override
+  String ctlCasaVazia(int linha, int casa) {
+    return 'empty slot $linha·$casa';
+  }
+
+  @override
+  String ctlAtribuidoA(String controle) {
+    return 'Assigned to $controle';
+  }
+
+  @override
+  String get ctlAcaoAtribuir => 'Assign to a pedal control';
+
+  @override
+  String get ctlFechar => 'CLOSE';
 }

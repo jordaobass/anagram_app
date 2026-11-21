@@ -1262,4 +1262,97 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get versaoNovaSemResposta => 'No se pudo comprobar ahora; la app lo intentará de nuevo la próxima vez que se abra.';
+
+  @override
+  String get ctlTitulo => 'Controles de la pedalera';
+
+  @override
+  String get ctlDicaMouse => 'Haz clic en un control para editarlo. Clic derecho en una perilla asigna el parámetro a un pot o al pedal; el menú del bloque le pone un footswitch.';
+
+  @override
+  String get ctlDicaToque => 'Toca un control para editarlo o asignarle un parámetro del bloque abierto; el menú del bloque le pone un footswitch.';
+
+  @override
+  String get ctlSiglaFoot => 'FOOT';
+
+  @override
+  String get ctlSiglaPot => 'POT';
+
+  @override
+  String get ctlSiglaExp => 'EXP';
+
+  @override
+  String get ctlLivre => 'libre';
+
+  @override
+  String get ctlLigaDesliga => 'Encendido/apagado';
+
+  @override
+  String ctlAtribuirA(String controle) {
+    return 'Asignar a $controle';
+  }
+
+  @override
+  String get ctlJaAqui => 'ya está aquí';
+
+  @override
+  String ctlFootswitchLigaBloco(int numero) {
+    return 'Footswitch $numero enciende/apaga este bloque';
+  }
+
+  @override
+  String get ctlNome => 'Nombre en la pantalla';
+
+  @override
+  String ctlNomeLongo(int maximo) {
+    return 'Los presets de fábrica usan hasta $maximo letras; un nombre más largo puede cortarse en la pantalla.';
+  }
+
+  @override
+  String get ctlMinimo => 'MÍN';
+
+  @override
+  String get ctlMaximo => 'MÁX';
+
+  @override
+  String get ctlRemoverAlvo => 'Quitar este parámetro';
+
+  @override
+  String get ctlRemoverControle => 'LIBERAR CONTROL';
+
+  @override
+  String get ctlAtribuirDoBloco => 'ASIGNAR PARÁMETRO';
+
+  @override
+  String ctlEscolherParametro(String bloco) {
+    return 'Parámetro de $bloco';
+  }
+
+  @override
+  String get ctlSemBlocoAberto => 'Abre un bloque en la cadena para asignar uno de sus parámetros.';
+
+  @override
+  String get ctlSemAlvos => 'Ningún parámetro en este control.';
+
+  @override
+  String get ctlFaixaIguais => 'Mínimo y máximo iguales dejan el control sin recorrido.';
+
+  @override
+  String get ctlFaixaFora => 'Fuera del rango del parámetro.';
+
+  @override
+  String ctlCasaVazia(int linha, int casa) {
+    return 'casilla $linha·$casa vacía';
+  }
+
+  @override
+  String ctlAtribuidoA(String controle) {
+    return 'Asignado a $controle';
+  }
+
+  @override
+  String get ctlAcaoAtribuir => 'Asignar a un control de la pedalera';
+
+  @override
+  String get ctlFechar => 'CERRAR';
 }

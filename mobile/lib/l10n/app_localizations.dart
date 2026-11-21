@@ -2322,6 +2322,168 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Não deu para verificar agora; o app tenta de novo na próxima abertura.'**
   String get versaoNovaSemResposta;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Controles da pedaleira'**
+  String get ctlTitulo;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Clique num controle para editar. Botão direito num knob atribui o parâmetro a um pot ou ao pedal; o menu do bloco põe um footswitch nele.'**
+  String get ctlDicaMouse;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Toque num controle para editar ou atribuir um parâmetro do bloco aberto; o menu do bloco põe um footswitch nele.'**
+  String get ctlDicaToque;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'FOOT'**
+  String get ctlSiglaFoot;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'POT'**
+  String get ctlSiglaPot;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'EXP'**
+  String get ctlSiglaExp;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'livre'**
+  String get ctlLivre;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Liga/desliga'**
+  String get ctlLigaDesliga;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Atribuir a {controle}'**
+  String ctlAtribuirA(String controle);
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'já está aqui'**
+  String get ctlJaAqui;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Footswitch {numero} liga/desliga este bloco'**
+  String ctlFootswitchLigaBloco(int numero);
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Nome no visor'**
+  String get ctlNome;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Os presets de fábrica usam até {maximo} letras; um nome maior pode ser cortado no visor.'**
+  String ctlNomeLongo(int maximo);
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'MÍN'**
+  String get ctlMinimo;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'MÁX'**
+  String get ctlMaximo;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Tirar este parâmetro'**
+  String get ctlRemoverAlvo;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'SOLTAR CONTROLE'**
+  String get ctlRemoverControle;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'ATRIBUIR PARÂMETRO'**
+  String get ctlAtribuirDoBloco;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Parâmetro de {bloco}'**
+  String ctlEscolherParametro(String bloco);
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Abra um bloco na cadeia para atribuir um parâmetro dele.'**
+  String get ctlSemBlocoAberto;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Nenhum parâmetro neste controle.'**
+  String get ctlSemAlvos;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Mínimo e máximo iguais deixam o controle sem curso.'**
+  String get ctlFaixaIguais;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Fora da faixa do parâmetro.'**
+  String get ctlFaixaFora;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'casa {linha}·{casa} vazia'**
+  String ctlCasaVazia(int linha, int casa);
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Atribuído a {controle}'**
+  String ctlAtribuidoA(String controle);
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'Atribuir a um controle da pedaleira'**
+  String get ctlAcaoAtribuir;
+
+  /// Controles da pedaleira (footswitches, pots e pedal de expressão) no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'FECHAR'**
+  String get ctlFechar;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
