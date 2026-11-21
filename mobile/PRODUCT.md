@@ -51,13 +51,18 @@ pedaleira; não é um site preso a um navegador nem o app oficial.
 
 - Leitura/gravação do JSON real do preset preservando campos desconhecidos.
 - Edição ao vivo (`try_anagram_preset`) ligada por padrão, com interruptor "Ao vivo".
-- Arte dos blocos: ilustração própria por categoria, sem foto, logo ou marca de fabricante.
+- Arte dos blocos: a mesma da tela da pedaleira (Darkglass Electronics), na única versão publicada;
+  ilustração própria por categoria só onde a pedaleira não tem imagem (gabinetes, Tuner, utilitários)
+  ou rodando do código-fonte sem a arte (docs/DECISOES.md, A9 a A12).
 - Não oficial; sem relação com a Darkglass Electronics.
 
 ## Brand Commitments
 
-Nome de trabalho "Anagram App" (pasta `anagram-app`, pacote `anagram_app`, definido pelo usuário). Nenhuma marca, logo ou arte da Darkglass.
-Créditos ao projeto MIT anagram-tone-maker (basster6). Arte própria por categoria, sem marca. Miniaturas de anagramanswers.com só como pasta local opcional, fora do repositório, até haver autorização.
+Nome de trabalho "Anagram App" (pasta `anagram-app`, pacote `anagram_app`, definido pelo usuário). Sem logo
+nem marca da Darkglass na interface (ícone, nome, telas); a única exceção é a arte dos blocos, que o usuário
+decidiu mostrar como a pedaleira mostra (A9 a A12), com crédito à Darkglass Electronics na tela Sobre.
+Créditos ao projeto MIT anagram-tone-maker (basster6). A arte não fica no repositório: entra no build de
+release. Miniaturas de anagramanswers.com só como pasta local opcional, nunca no build publicado.
 
 ## Evidence on Hand
 

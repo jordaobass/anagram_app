@@ -308,5 +308,32 @@ Snackbar flutuante em fita gaffer com texto `tinta-marcador`, 15px. Diálogo em 
 - **Don't** usar âmbar como cor de família ou decoração.
 - **Don't** pintar ação destrutiva em cor cheia; descartar/largar é contorno.
 - **Don't** usar sombra projetada nem cantos acima de 8px.
-- **Don't** usar logo, foto ou marca da Darkglass na arte de bloco.
+- **Don't** usar logo ou marca da Darkglass fora da arte dos blocos (ícone, nome, telas).
 - **Don't** criar tela de cards cinza com sliders genéricos; parâmetro contínuo é knob.
+
+<!-- produto-arte-acoes: bloco mantido junto com PRODUCT.md e docs/DECISOES.md (A9 a A12, U13 a U15) -->
+## Arte dos blocos, nomes de ação e textos (2026-11-21)
+
+Este bloco vale por cima de qualquer frase anterior deste arquivo que diga o contrário.
+
+- **Arte dos blocos:** a mesma imagem que a pedaleira mostra na tela (Darkglass Electronics), ligada e
+  desligada, é a única versão publicada. A arte própria por família continua como reserva para os blocos
+  sem imagem na pedaleira e para o app rodando do código-fonte sem a arte.
+- **Nomes de ação** (os mesmos em todas as telas e tamanhos):
+  - **SALVAR** grava no slot aberto; **SALVAR COMO…** escolhe o destino.
+  - **DESCARTAR** desfaz as edições não salvas. A pergunta de confirmação diz "Descartar edições?" e o
+    botão de confirmar diz DESCARTAR: não existe "largar" na interface.
+- **Textos que acompanham o aparelho:** com mouse, "clique" e "botão direito"; no toque, "toque" e
+  "segure". Copiar um bloco é pelo ícone de copiar do painel do bloco; colar é pelo menu da casa vazia.
+- **Sem jargão técnico na tela:** nada de nome de biblioteca ("hidapi", "IOKit") nem de ação do protocolo
+  ("edit_anagram_presets"). O detalhe vai para o log; a tela diz o que aconteceu e o que fazer.
+- **Avisos:** erro em `erro` com ícone de alerta, logo acima das ações; informação (a pedaleira saiu) em
+  texto normal com ícone de informação.
+- **Área de presets:** o campo mostra só o nome que a pessoa deu; a área ativa na pedaleira é marcada ao
+  lado com o LED `led-ligado` e o rótulo ATIVA, nunca colada no nome.
+- **Versão do app:** só na tela Sobre, com "· arte da pedaleira" quando o build traz a arte.
+- **Idioma:** pílulas no topo da tela Sobre e um menu compacto (globo + idioma atual) na tela de conectar.
+- **Sem USB na plataforma** (iPhone/iPad, navegador sem WebHID): título "Modo demonstração", uma frase,
+  ABRIR DEMONSTRAÇÃO como botão primário e "POR QUÊ?" com a explicação inteira.
+<!-- /produto-arte-acoes -->
+
