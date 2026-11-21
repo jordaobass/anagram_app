@@ -1049,4 +1049,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get mcpAgoraNao => 'AGORA NÃO';
+
+  @override
+  String get ttDicaMouse =>
+      'Pare o mouse sobre o nome de um controle para saber o que ele faz com o som';
+
+  @override
+  String get ttDicaToque =>
+      'Toque no nome de um controle para saber o que ele faz com o som';
 }

@@ -1050,4 +1050,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mcpAgoraNao => 'AHORA NO';
+
+  @override
+  String get ttDicaMouse =>
+      'Deja el ratón sobre el nombre de un control para ver qué hace con el sonido';
+
+  @override
+  String get ttDicaToque =>
+      'Toca el nombre de un control para ver qué hace con el sonido';
 }

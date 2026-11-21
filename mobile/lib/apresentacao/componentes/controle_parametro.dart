@@ -6,6 +6,7 @@ import '../../nucleo/catalogo/arranjo_parametros.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../tema/tokens.dart';
 import 'botao_giratorio.dart';
+import 'explicacao_parametro.dart';
 import '../../l10n/app_localizations.dart';
 
 class ControleParametro extends StatelessWidget {
@@ -45,8 +46,7 @@ class ControleParametro extends StatelessWidget {
   Widget _comTitulo(BuildContext context, Widget controle) => SizedBox(
         width: tamanho + Espacos.l,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Text((rotulo ?? parametro.nome).toUpperCase(),
-              maxLines: 1, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.labelMedium),
+          RotuloParametro(parametro: parametro, texto: rotulo ?? parametro.nome),
           const SizedBox(height: Espacos.xs),
           controle,
         ]),
@@ -110,9 +110,14 @@ class ChaveParametro extends StatelessWidget {
     required this.texto,
     required this.aoMudar,
     this.empilhada = false,
+    this.parametro,
   });
 
   final Key? chave;
+
+  /// Com ele, segurar (ou parar o mouse sobre) a chave explica o que ela faz;
+  /// no meio dos knobs quem explica é o título, então ali ele fica de fora.
+  final DefinicaoParametro? parametro;
 
   /// No meio dos knobs, o estado fica embaixo da chave, como o valor do knob;
   /// no título da banda, ao lado.
@@ -124,7 +129,13 @@ class ChaveParametro extends StatelessWidget {
   final ValueChanged<bool> aoMudar;
 
   @override
-  Widget build(BuildContext context) => MergeSemantics(
+  Widget build(BuildContext context) {
+    final explicado = parametro;
+    final controle = _chave(context);
+    return explicado == null ? controle : comExplicacao(context, explicado, controle, aoTocar: false);
+  }
+
+  Widget _chave(BuildContext context) => MergeSemantics(
         child: Semantics(
           label: nome,
           child: InkWell(

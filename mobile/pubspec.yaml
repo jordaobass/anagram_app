@@ -41,6 +41,7 @@ flutter:
     - assets/referencia/exemplos/
     - assets/blocos_terceiros/
     - assets/demonstracao/
+    - assets/explicacoes/
   fonts:
     - family: Barlow
       fonts:

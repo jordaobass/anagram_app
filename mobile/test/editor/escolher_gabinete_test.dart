@@ -37,6 +37,8 @@ String? _nomeNoCartao(WidgetTester tester, String cartao) =>
 
 Future<void> _tocar(WidgetTester tester, String chave) async {
   await tester.ensureVisible(find.byKey(ValueKey(chave)));
+  // a rolagem só chega à tela no próximo quadro
+  await tester.pump();
   await tester.tap(find.byKey(ValueKey(chave)));
   await tester.pumpAndSettle();
 }

@@ -212,6 +212,9 @@ abstract final class Medidas {
   /// Configurações: coluna de leitura, não a tela inteira do notebook.
   static const double larguraConfiguracoes = 640;
   static const double larguraCampoPorta = 120;
+
+  /// Balão da explicação do parâmetro: uma frase curta por linha legível.
+  static const double larguraExplicacao = 320;
 }
 
 abstract final class Quebras {
@@ -228,6 +231,9 @@ abstract final class Quebras {
 
 abstract final class Duracoes {
   static const curta = Duration(milliseconds: 150);
+
+  /// O mouse passa pelo rótulo a caminho do knob: só explica se parar nele.
+  static const esperaExplicacao = Duration(milliseconds: 500);
 }
 
 abstract final class Fontes {

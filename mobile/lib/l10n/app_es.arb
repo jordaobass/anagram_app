@@ -291,5 +291,7 @@
   "mcpPedidoSalvarTexto": "La IA pidió grabar \"{nome}\" en el slot {slot} de la pedalera.",
   "mcpPedidoSalvarSemSlot": "La IA pidió grabar \"{nome}\" en la pedalera. Tú eliges el slot.",
   "mcpSalvar": "GUARDAR",
-  "mcpAgoraNao": "AHORA NO"
+  "mcpAgoraNao": "AHORA NO",
+  "ttDicaMouse": "Deja el ratón sobre el nombre de un control para ver qué hace con el sonido",
+  "ttDicaToque": "Toca el nombre de un control para ver qué hace con el sonido"
 }

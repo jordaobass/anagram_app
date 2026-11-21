@@ -11,6 +11,7 @@ import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/escala_parametro.dart';
 import '../tema/tokens.dart';
 import 'dialogo_valor.dart';
+import 'explicacao_parametro.dart';
 import 'pintor_fader.dart';
 import 'pintor_knob.dart';
 import '../../l10n/app_localizations.dart';
@@ -125,6 +126,7 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
       slider: true,
       label: p.nome,
       value: texto,
+      hint: ContextoExplicacao.de(context, p),
       increasedValue: l.valorDe(p, p.valorDe(_fracaoMais(_passoFino))),
       decreasedValue: l.valorDe(p, p.valorDe(_fracaoMais(-_passoFino))),
       onIncrease: () => _passo(_passoFino),
@@ -198,8 +200,7 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
     return SizedBox(
       width: _largura,
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        Text((widget.rotulo ?? widget.parametro.nome).toUpperCase(),
-            maxLines: 1, overflow: TextOverflow.ellipsis, style: tema.labelMedium),
+        RotuloParametro(parametro: widget.parametro, texto: widget.rotulo ?? widget.parametro.nome),
         const SizedBox(height: Espacos.xs),
         _desenho(),
         _valorClicavel(context, texto, tema),

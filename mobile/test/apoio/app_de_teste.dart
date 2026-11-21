@@ -52,6 +52,7 @@ Widget appDeTeste(
         mcpDisponivelProvider.overrideWithValue(mcpDisponivel),
         cronometroProvider.overrideWithValue(CronometroFixo.new),
         catalogoProvider.overrideWith((ref) async => lerCatalogo()),
+        explicacoesProvider.overrideWith((ref) async => lerExplicacoes()),
         presetsDemonstracaoProvider.overrideWith((ref) async => lerPresetsDemonstracao()),
         indiceMiniaturasProvider.overrideWith((ref) async => indice ?? lerIndiceMiniaturas()),
         presetsFabricaProvider.overrideWith((ref) async => fabrica ?? const PresetsDeFabrica.vazio()),
