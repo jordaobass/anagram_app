@@ -72,6 +72,11 @@
   },
   "avisoPedaleiraDesconectada": "A pedaleira foi desconectada. Conecte de novo para continuar de onde parou.",
   "avisoFormatoMaisNovo": "Preset de formato mais novo que o deste app: campos desconhecidos são preservados.",
+  "avisoPresetAtualizado": "O {slot} mudou fora do app; a lista foi relida e a versão atual foi aberta.",
+  "@avisoPresetAtualizado": {
+    "description": "Slot alterado fora do app e reaberto depois de reler a lista",
+    "placeholders": { "slot": { "type": "String" } }
+  },
   "avisoPresetTrocado": "A pedaleira devolveu outro preset para {slot} (id diferente da lista). A lista foi relida; abra de novo.",
   "@avisoPresetTrocado": {
     "placeholders": {

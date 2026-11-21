@@ -49,6 +49,13 @@ final class AvisoPresetTrocado extends Aviso {
   final String slot;
 }
 
+/// O [slot] mudou fora do app (outro programa, a própria pedaleira): a lista
+/// foi relida, confirmou o preset novo e ele foi aberto.
+final class AvisoPresetAtualizado extends Aviso {
+  const AvisoPresetAtualizado(this.slot);
+  final String slot;
+}
+
 final class AvisoAreaNaoTrocou extends Aviso {
   const AvisoAreaNaoTrocou(this.erro);
   final ErroAnagram erro;

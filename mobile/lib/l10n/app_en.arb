@@ -26,6 +26,7 @@
   "avisoFalhaInesperada": "Couldn't open {meio}. Try again; the details are in the log.",
   "avisoPedaleiraDesconectada": "The pedal was disconnected. Connect again to pick up where you left off.",
   "avisoFormatoMaisNovo": "This preset uses a newer format than this app: unknown fields are kept.",
+  "avisoPresetAtualizado": "{slot} changed outside the app; the list was reloaded and the current version was opened.",
   "avisoPresetTrocado": "The pedal returned a different preset for {slot} (id differs from the list). The list was reloaded; open it again.",
   "avisoAreaNaoTrocou": "The pedal didn't switch area.",
   "naoSalvou": "Not saved: {motivo}",

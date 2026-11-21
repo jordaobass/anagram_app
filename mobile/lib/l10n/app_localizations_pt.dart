@@ -108,6 +108,11 @@ class AppLocalizationsPt extends AppLocalizations {
       'Preset de formato mais novo que o deste app: campos desconhecidos são preservados.';
 
   @override
+  String avisoPresetAtualizado(String slot) {
+    return 'O $slot mudou fora do app; a lista foi relida e a versão atual foi aberta.';
+  }
+
+  @override
   String avisoPresetTrocado(String slot) {
     return 'A pedaleira devolveu outro preset para $slot (id diferente da lista). A lista foi relida; abra de novo.';
   }

@@ -256,6 +256,12 @@ abstract class AppLocalizations {
   /// **'Preset de formato mais novo que o deste app: campos desconhecidos são preservados.'**
   String get avisoFormatoMaisNovo;
 
+  /// Slot alterado fora do app e reaberto depois de reler a lista
+  ///
+  /// In pt, this message translates to:
+  /// **'O {slot} mudou fora do app; a lista foi relida e a versão atual foi aberta.'**
+  String avisoPresetAtualizado(String slot);
+
   /// No description provided for @avisoPresetTrocado.
   ///
   /// In pt, this message translates to:
