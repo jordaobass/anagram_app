@@ -138,6 +138,18 @@ extension TextosDoApp on AppLocalizations {
   String valorDe(DefinicaoParametro parametro, num valor) => FormatadorValor.formatar(parametro, valor,
       separadorDecimal: separadorDecimal, ligado: valorLigado, desligado: valorDesligado);
 
+  /// O que o leitor de tela diz do gráfico do compressor da banda: o Ratio
+  /// com a casa decimal que tiver ("2,5:1"), no separador do idioma.
+  String rotuloCurvaCompressor(double limiarDb, double razao) =>
+      mbCurvaCompressor(_numeroCurto(limiarDb), _numeroCurto(razao));
+
+  /// Uma casa decimal só quando ela existe: "-30", "2,5".
+  String _numeroCurto(double valor) {
+    final texto = valor.toStringAsFixed(1);
+    final semZero = texto.endsWith('.0') ? texto.substring(0, texto.length - 2) : texto;
+    return (semZero == '-0' ? '0' : semZero).replaceAll('.', separadorDecimal);
+  }
+
   /// O nome dado na pedaleira; sem nome, "Área N".
   String nomeDaArea(AreaPresets area) => area.nome.isEmpty ? areaSemNome(area.numero) : area.nome;
 

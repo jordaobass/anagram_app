@@ -1185,6 +1185,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mbSoloDesligado => 'Solo apagado: suenan las tres bandas';
 
   @override
+  String mbCurvaCompressor(String limiar, String razao) {
+    return 'Curva del compresor: Threshold $limiar dB, Ratio $razao:1';
+  }
+
+  @override
   String get mbOff => 'OFF';
 
   @override

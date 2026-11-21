@@ -4,8 +4,10 @@
 // ilustram o ajuste e acompanham os controles ao vivo; não são medição.
 import 'package:flutter/material.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../nucleo/catalogo/curvas_multibanda.dart';
 import '../tema/tokens.dart';
+import '../textos.dart';
 
 class GraficoCompressor extends StatelessWidget {
   const GraficoCompressor({super.key, required this.limiarDb, required this.razao, required this.ligado, required this.cor});
@@ -17,7 +19,7 @@ class GraficoCompressor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Semantics(
-        label: 'Threshold ${limiarDb.round()} dB, ${razao.round()}:1',
+        label: AppLocalizations.of(context).rotuloCurvaCompressor(limiarDb, razao),
         child: SizedBox(
           height: Medidas.alturaGraficoBanda,
           child: CustomPaint(

@@ -952,6 +952,17 @@
     }
   },
   "mbSoloDesligado": "Solo desligado: as três bandas soam",
+  "mbCurvaCompressor": "Curva do compressor: Threshold {limiar} dB, Ratio {razao}:1",
+  "@mbCurvaCompressor": {
+    "placeholders": {
+      "limiar": {
+        "type": "String"
+      },
+      "razao": {
+        "type": "String"
+      }
+    }
+  },
   "mbOff": "OFF",
   "pdSecao": "Pedaleira",
   "pdDica": "Ajustes globais da Anagram: valem para todos os presets e não entram no preset. Mudam na hora.",

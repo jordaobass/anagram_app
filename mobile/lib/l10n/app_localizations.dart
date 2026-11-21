@@ -2074,6 +2074,12 @@ abstract class AppLocalizations {
   /// **'Solo desligado: as três bandas soam'**
   String get mbSoloDesligado;
 
+  /// No description provided for @mbCurvaCompressor.
+  ///
+  /// In pt, this message translates to:
+  /// **'Curva do compressor: Threshold {limiar} dB, Ratio {razao}:1'**
+  String mbCurvaCompressor(String limiar, String razao);
+
   /// No description provided for @mbOff.
   ///
   /// In pt, this message translates to:
