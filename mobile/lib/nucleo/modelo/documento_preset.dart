@@ -7,6 +7,7 @@ import 'dart:math';
 import '../protocolo/quadros_hid.dart';
 import 'bloco_preset.dart';
 import 'cenas_do_bloco.dart';
+import 'controles_pedaleira.dart';
 import 'ir_do_gabinete.dart';
 import 'json_util.dart';
 import 'preset_bruto.dart';
@@ -101,6 +102,13 @@ class DocumentoPreset {
     final bruto = blocosBrutos(_preset, posicao.linha)['${posicao.casa}'];
     return bruto is Map<String, dynamic> ? BlocoPreset(posicao, bruto) : null;
   }
+
+  /// Footswitches, pots e pedal de expressão que o preset usa.
+  Map<IdControle, ControlePedaleira> get controles => lerControles(_preset);
+
+  /// Edita os controles no preset copiado (as operações de
+  /// `controles_pedaleira.dart`); o resto do arquivo não muda.
+  DocumentoPreset comControles(void Function(Map<String, dynamic> preset) mudar) => _editar(mudar);
 
   DocumentoPreset comNome(String nome) => _editar((p) => p['name'] = nome);
 
