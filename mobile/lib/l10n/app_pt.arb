@@ -986,5 +986,21 @@
   "pdPendentes": "Ainda não dá para mudar pelo app: Master, Mute e Link do mixer e os nomes dos instrumentos.",
   "@pdSecao": {
     "description": "Seção das Configurações com os ajustes globais da pedaleira (mixer, Global EQ, entrada)"
+  },
+  "registroSecao": "Registro para suporte",
+  "@registroSecao": {
+    "description": "Seção das Configurações com o arquivo de registro (log) do app, para relatar defeitos"
+  },
+  "registroOnde": "O app guarda o que acontece neste arquivo:",
+  "@registroOnde": {
+    "description": "Seção das Configurações com o arquivo de registro (log) do app, para relatar defeitos"
+  },
+  "registroCopiar": "Copiar registro",
+  "@registroCopiar": {
+    "description": "Seção das Configurações com o arquivo de registro (log) do app, para relatar defeitos"
+  },
+  "registroCopiado": "Registro copiado. Cole na issue do GitHub junto com o que aconteceu.",
+  "@registroCopiado": {
+    "description": "Seção das Configurações com o arquivo de registro (log) do app, para relatar defeitos"
   }
 }
