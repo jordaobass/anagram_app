@@ -134,4 +134,18 @@ void main() {
     expect(container.read(editorProvider).naoSalvo, isFalse);
   });
 
+  test('should_not_save_the_replaced_preset_over_the_clone_when_the_clone_went_to_the_slot_open_in_the_editor',
+      () async {
+    final (container, pedaleira) = await _conectarComLista();
+    final editor = container.read(editorProvider.notifier);
+    await editor.abrirSlot(slot01b);
+    final nomeDaOrigem = _nome(container, slot01a);
+
+    await _fazer(container, OperacaoPreset.clonar, slot01a, slot01b, confirmado: true);
+    await editor.salvar();
+
+    expect(container.read(editorProvider).atual!.nome, nomeDaOrigem, reason: 'o editor mostra o que está no slot');
+    expect(pedaleira.conteudoDoSlot(slot01b.numero)!['preset']['name'], nomeDaOrigem,
+        reason: 'o Cmd+S não pode gravar o preset substituído por cima do clone');
+  });
 }

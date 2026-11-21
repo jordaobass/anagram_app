@@ -46,6 +46,7 @@ class ControladorEditor extends Notifier<EstadoEditor>
   @override
   RepositorioPedaleira? get repositorioAtual => ref.read(conexaoProvider.notifier).repositorio;
 
+  @override
   Future<void> abrirSlot(SlotPreset slot) async {
     final repositorio = repositorioAtual;
     // gravando: o resultado da gravação ainda vai escrever o slot salvo

@@ -150,15 +150,17 @@ class ControladorOrganizar extends Notifier<OperacaoPendente?> {
     };
   }
 
-  /// A lista é relida da pedaleira, e o preset aberto acompanha a troca.
+  /// A lista é relida da pedaleira, e o preset aberto acompanha a troca; se
+  /// o clone foi para o slot aberto, o editor o reabre.
   Future<void> _depoisDe(OperacaoPendente pendente, SlotPreset destino, String? area) async {
     final novoLugar = switch (pendente.operacao) {
       OperacaoPreset.mover => {pendente.origem: destino, destino: pendente.origem},
       OperacaoPreset.trocarBanco => _bancosTrocados(pendente.origem.banco, destino.banco),
       OperacaoPreset.clonar => const <SlotPreset, SlotPreset>{},
     };
-    ref.read(editorProvider.notifier).acompanharTroca(novoLugar, area: area);
+    final editor = ref.read(editorProvider.notifier)..acompanharTroca(novoLugar, area: area);
     await ref.read(bibliotecaProvider.notifier).recarregar();
+    if (pendente.operacao == OperacaoPreset.clonar) await editor.aoRegravarSlot(destino, area: area);
   }
 
   static Map<SlotPreset, SlotPreset> _bancosTrocados(int a, int b) {
