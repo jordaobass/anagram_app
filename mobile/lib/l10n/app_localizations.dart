@@ -2067,6 +2067,102 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'OFF'**
   String get mbOff;
+
+  /// Seção das Configurações com os ajustes globais da pedaleira (mixer, Global EQ, entrada)
+  ///
+  /// In pt, this message translates to:
+  /// **'Pedaleira'**
+  String get pdSecao;
+
+  /// No description provided for @pdDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ajustes globais da Anagram: valem para todos os presets e não entram no preset. Mudam na hora.'**
+  String get pdDica;
+
+  /// No description provided for @pdSaidas.
+  ///
+  /// In pt, this message translates to:
+  /// **'Saídas'**
+  String get pdSaidas;
+
+  /// No description provided for @pdGlobalEq.
+  ///
+  /// In pt, this message translates to:
+  /// **'Global EQ'**
+  String get pdGlobalEq;
+
+  /// No description provided for @pdEqPlano.
+  ///
+  /// In pt, this message translates to:
+  /// **'Plano'**
+  String get pdEqPlano;
+
+  /// No description provided for @pdEqDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho.'**
+  String get pdEqDica;
+
+  /// No description provided for @pdEntrada.
+  ///
+  /// In pt, this message translates to:
+  /// **'Entrada'**
+  String get pdEntrada;
+
+  /// No description provided for @pdEntradaDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; os outros cinco e os nomes entram quando o app conhecer as chaves deles.'**
+  String get pdEntradaDica;
+
+  /// No description provided for @pdPlaca.
+  ///
+  /// In pt, this message translates to:
+  /// **'Placa de som'**
+  String get pdPlaca;
+
+  /// No description provided for @pdPlacaDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Só leitura: a pedaleira não aceita mudar estes pelo USB.'**
+  String get pdPlacaDica;
+
+  /// No description provided for @pdAtualizar.
+  ///
+  /// In pt, this message translates to:
+  /// **'Atualizar'**
+  String get pdAtualizar;
+
+  /// No description provided for @pdLendo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Lendo os ajustes da pedaleira…'**
+  String get pdLendo;
+
+  /// No description provided for @pdFalhaLer.
+  ///
+  /// In pt, this message translates to:
+  /// **'Não deu para ler os ajustes da pedaleira.'**
+  String get pdFalhaLer;
+
+  /// No description provided for @pdTentarDeNovo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tentar de novo'**
+  String get pdTentarDeNovo;
+
+  /// No description provided for @pdErroGravar.
+  ///
+  /// In pt, this message translates to:
+  /// **'A pedaleira não aceitou a última mudança. Os valores mostrados são os que ela tem agora.'**
+  String get pdErroGravar;
+
+  /// No description provided for @pdPendentes.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ainda não dá para mudar pelo app: Master, Mute e Link do mixer, as bandas 2 a 5 e a largura do Global EQ e os nomes dos instrumentos.'**
+  String get pdPendentes;
 }
 
 class _AppLocalizationsDelegate

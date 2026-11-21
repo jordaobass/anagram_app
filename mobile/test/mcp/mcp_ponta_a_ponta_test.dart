@@ -137,4 +137,22 @@ void main() {
     expect(pedaleira.conteudoDoSlot(3), gravado, reason: 'recusado, nada vai para o slot');
     expect(container.read(editorProvider).naoSalvo, isTrue);
   });
+
+  test('should_change_a_global_output_on_the_pedal_and_refuse_a_setting_without_a_known_key', () async {
+    final (container, endereco, token) = await appComMcp();
+    final pedaleira = container.read(conexaoProvider.notifier).transporte! as TransporteDemonstracao;
+
+    final (_, lidos) = await ferramenta(endereco, token, 'get_global_settings');
+    final (erro, resposta) =
+        await ferramenta(endereco, token, 'set_global_setting', {'setting': 'headphones', 'value': -40});
+    final (recusado, motivo) = await ferramenta(endereco, token, 'set_global_setting', {'setting': 'master', 'value': 0});
+
+    expect(((lidos! as Map)['settings'] as List).map((s) => (s as Map)['setting']), contains('headphones'));
+    expect(erro, isFalse);
+    expect((resposta! as Map)['value'], -30, reason: 'fora da faixa do mixer, fica no mínimo');
+    expect(pedaleira.ajustesGlobais['mixer.headphones.vol'], -30);
+    expect(container.read(editorProvider).naoSalvo, isFalse, reason: 'ajuste global não é do preset');
+    expect(recusado, isTrue);
+    expect(motivo, contains('not yet supported'));
+  });
 }

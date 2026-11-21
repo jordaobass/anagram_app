@@ -1175,4 +1175,58 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get mbOff => 'OFF';
+
+  @override
+  String get pdSecao => 'Pedaleira';
+
+  @override
+  String get pdDica =>
+      'Ajustes globais da Anagram: valem para todos os presets e não entram no preset. Mudam na hora.';
+
+  @override
+  String get pdSaidas => 'Saídas';
+
+  @override
+  String get pdGlobalEq => 'Global EQ';
+
+  @override
+  String get pdEqPlano => 'Plano';
+
+  @override
+  String get pdEqDica =>
+      'Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho.';
+
+  @override
+  String get pdEntrada => 'Entrada';
+
+  @override
+  String get pdEntradaDica =>
+      'Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; os outros cinco e os nomes entram quando o app conhecer as chaves deles.';
+
+  @override
+  String get pdPlaca => 'Placa de som';
+
+  @override
+  String get pdPlacaDica =>
+      'Só leitura: a pedaleira não aceita mudar estes pelo USB.';
+
+  @override
+  String get pdAtualizar => 'Atualizar';
+
+  @override
+  String get pdLendo => 'Lendo os ajustes da pedaleira…';
+
+  @override
+  String get pdFalhaLer => 'Não deu para ler os ajustes da pedaleira.';
+
+  @override
+  String get pdTentarDeNovo => 'Tentar de novo';
+
+  @override
+  String get pdErroGravar =>
+      'A pedaleira não aceitou a última mudança. Os valores mostrados são os que ela tem agora.';
+
+  @override
+  String get pdPendentes =>
+      'Ainda não dá para mudar pelo app: Master, Mute e Link do mixer, as bandas 2 a 5 e a largura do Global EQ e os nomes dos instrumentos.';
 }
