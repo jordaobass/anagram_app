@@ -10,6 +10,11 @@ import '../modelo/documento_preset.dart';
 const uriSplit = 'urn:darkglass-anagram:split';
 const uriMerge = 'urn:darkglass-anagram:merge';
 
+/// Split e merge marcam onde a linha 2 sai e volta: copiar ou colar por cima
+/// deles quebraria o roteamento. Mudar de lugar pode, com as regras de
+/// `recusaAoMover`; pôr e tirar, com as daqui.
+bool ehBlocoDeRoteamento(String uri) => uri == uriSplit || uri == uriMerge;
+
 bool temLinhaParalela(DocumentoPreset documento) => documento.blocosDaLinha(1).any((b) => b.uri == uriSplit);
 
 /// Por que um Split ou Merge não pode entrar numa casa. Os outros blocos
@@ -19,7 +24,7 @@ enum RecusaAdicionar { splitRepetido, mergeRepetido, mergeSemSplit, foraDaLinha1
 /// Nulo quando o bloco [uri] pode entrar em [posicao]: um Split e um Merge
 /// por preset, os dois na linha 1, o Merge só com Split e sempre depois dele.
 RecusaAdicionar? recusaAoAdicionar(DocumentoPreset documento, PosicaoBloco posicao, String uri) {
-  if (uri != uriSplit && uri != uriMerge) return null;
+  if (!ehBlocoDeRoteamento(uri)) return null;
   final split = _casaNaLinha1(documento, uriSplit);
   final merge = _casaNaLinha1(documento, uriMerge);
   if (uri == uriSplit) {
@@ -43,7 +48,7 @@ DocumentoPreset semSplit(DocumentoPreset documento) {
   var resultado = documento;
   final saem = [
     for (final bloco in documento.blocosDaLinha(1))
-      if (bloco.uri == uriSplit || bloco.uri == uriMerge) bloco.posicao,
+      if (ehBlocoDeRoteamento(bloco.uri)) bloco.posicao,
     for (final bloco in documento.blocosDaLinha(2)) bloco.posicao,
   ];
   for (final posicao in saem) {
@@ -52,5 +57,8 @@ DocumentoPreset semSplit(DocumentoPreset documento) {
   return resultado;
 }
 
-int? _casaNaLinha1(DocumentoPreset documento, String uri) =>
-    documento.blocosDaLinha(1).where((b) => b.uri == uri).firstOrNull?.posicao.casa;
+/// Onde está o bloco [uri] na linha 1 (Split e Merge só moram nela).
+PosicaoBloco? posicaoNaLinha1(DocumentoPreset documento, String uri) =>
+    documento.blocosDaLinha(1).where((b) => b.uri == uri).firstOrNull?.posicao;
+
+int? _casaNaLinha1(DocumentoPreset documento, String uri) => posicaoNaLinha1(documento, uri)?.casa;
