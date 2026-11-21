@@ -40,12 +40,12 @@ class EstadoBiblioteca {
 
   ResumoSlot? resumo(SlotPreset slot) => ocupados[slot];
 
-  /// A lista na tela é de uma área que a pedaleira não está usando (ou não se
-  /// sabe qual ela usa): o Program Change trocaria o slot de OUTRA área, então
-  /// abrir um preset só o toca.
   /// A lista na tela é a da fábrica: só leitura, e o Program Change não vale.
   bool get naFabrica => areaSelecionada == PresetsDeFabrica.idArea;
 
+  /// A lista na tela é de uma área que a pedaleira não está usando (ou não se
+  /// sabe qual ela usa): o Program Change trocaria o slot de OUTRA área, então
+  /// abrir um preset só o toca.
   bool get areaForaDaPedaleira => areas.temAreas && (areas.ativa == null || areaSelecionada != areas.ativa);
 
   EstadoBiblioteca copiar({
