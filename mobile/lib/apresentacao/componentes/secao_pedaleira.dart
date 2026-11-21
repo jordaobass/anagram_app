@@ -21,6 +21,15 @@ class SecaoPedaleira extends ConsumerStatefulWidget {
 }
 
 class _SecaoPedaleiraState extends ConsumerState<SecaoPedaleira> {
+  /// O "Input Gain" do Global EQ rola até o cartão Entrada, como o botão da
+  /// tela da pedaleira leva à tela de ganho de entrada.
+  final _entrada = GlobalKey();
+
+  void _irParaEntrada() {
+    final alvo = _entrada.currentContext;
+    if (alvo != null) Scrollable.ensureVisible(alvo, duration: Duracoes.curta);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -58,9 +67,14 @@ class _SecaoPedaleiraState extends ConsumerState<SecaoPedaleira> {
   List<Widget> _cartoes(AppLocalizations l, TextTheme tema) => [
         _CartaoGrupo(titulo: l.pdSaidas, grupo: GrupoAjuste.saidas, forma: FormaControle.fader, cor: Cores.mixerGlobal),
         const SizedBox(height: Espacos.m),
-        const CartaoGlobalEq(),
+        CartaoGlobalEq(aoIrParaEntrada: _irParaEntrada),
         const SizedBox(height: Espacos.m),
-        _CartaoGrupo(titulo: l.pdEntrada, grupo: GrupoAjuste.entrada, forma: FormaControle.knob, dica: l.pdEntradaDica),
+        _CartaoGrupo(
+            key: _entrada,
+            titulo: l.pdEntrada,
+            grupo: GrupoAjuste.entrada,
+            forma: FormaControle.knob,
+            dica: l.pdEntradaDica),
         const SizedBox(height: Espacos.m),
         const _CartaoPlaca(),
         const SizedBox(height: Espacos.s),
@@ -70,7 +84,7 @@ class _SecaoPedaleiraState extends ConsumerState<SecaoPedaleira> {
 }
 
 class _CartaoGrupo extends StatelessWidget {
-  const _CartaoGrupo({required this.titulo, required this.grupo, required this.forma, this.cor, this.dica});
+  const _CartaoGrupo({super.key, required this.titulo, required this.grupo, required this.forma, this.cor, this.dica});
 
   final String titulo;
   final GrupoAjuste grupo;

@@ -11,13 +11,23 @@ Map<String, Object?> ajustesGlobaisIniciais() => {
       'mixer.speaker.vol': 0.0,
       'mixer.xlr.left.vol': 0.0,
       'mixer.xlr.right.vol': 0.0,
-      'globaleq.ls.freq': 40.5,
-      'globaleq.ls.gain': -3.0,
-      'globaleq.hs.freq': 9630.0,
-      'globaleq.hs.gain': -4.6,
+      // as 6 bandas do Global EQ como a pedaleira real exportou (2026-11-21):
+      // médios no padrão de fábrica, grave e agudo cortados com width 4
+      ..._bandaEq('ls', 35, -7.8, 4.0),
+      ..._bandaEq('1', 160, 0, 0.5),
+      ..._bandaEq('2', 397, 0, 0.5),
+      ..._bandaEq('3', 1250, 0, 0.5),
+      ..._bandaEq('4', 2500, 0, 0.5),
+      ..._bandaEq('hs', 8000, -6.8, 4.0),
       'input-gain-preset0.db': 0,
       'mode': 'stomp',
       'scene-mode': 'all',
+    };
+
+Map<String, Object?> _bandaEq(String codigo, num freq, num gain, num width) => {
+      'globaleq.$codigo.freq': freq,
+      'globaleq.$codigo.gain': gain,
+      'globaleq.$codigo.width': width,
     };
 
 Map<String, Object?> placaDeSomInicial() => {

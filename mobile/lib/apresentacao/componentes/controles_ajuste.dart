@@ -13,22 +13,28 @@ import '../tema/tokens.dart';
 import 'botao_giratorio.dart';
 
 class ControleAjuste extends ConsumerWidget {
-  const ControleAjuste({super.key, required this.definicao, this.forma = FormaControle.knob, this.cor});
+  const ControleAjuste({super.key, required this.definicao, this.forma = FormaControle.knob, this.cor, this.tamanho, this.rotulo, this.corChip});
 
   final DefinicaoAjuste definicao;
   final FormaControle forma;
   final Color? cor;
+  final double? tamanho;
+  final String? rotulo;
+  final Color? corChip;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final valor = ref.watch(controladorAjustesProvider.select((e) => e.valor(definicao))) ?? definicao.padrao;
+    final faixa = ref.watch(controladorAjustesProvider.select((e) => e.faixa(definicao)));
     return BotaoGiratorio(
       key: ValueKey('ajuste-${definicao.id}'),
-      parametro: definicao.parametro,
+      parametro: faixa.parametro,
       valor: valor,
       cor: cor ?? Cores.linhaLevel,
-      tamanho: Medidas.knobCompacto,
+      tamanho: tamanho ?? Medidas.knobCompacto,
       forma: forma,
+      rotulo: rotulo,
+      corChipValor: corChip,
       aoMudar: (v, {required arrastando}) => ref.read(controladorAjustesProvider.notifier).alterar(definicao, v),
     );
   }

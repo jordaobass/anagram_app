@@ -34,6 +34,9 @@ class EstadoAjustes {
 
   num? valor(DefinicaoAjuste definicao) => locais[definicao.id] ?? lidos?.valor(definicao);
 
+  /// A definição com a faixa que contém o valor lido da pedaleira.
+  DefinicaoAjuste faixa(DefinicaoAjuste definicao) => definicao.abrangendo(lidos?.valor(definicao));
+
   EstadoAjustes copiar({AjustesPedaleira? lidos, bool? carregando, bool? falhouLeitura,
           Map<String, num>? locais, Set<String>? comErro}) =>
       EstadoAjustes(
@@ -78,7 +81,7 @@ class ControladorAjustes extends Notifier<EstadoAjustes> {
   /// não sai daqui: a pedaleira não o conhece por esse nome.
   void alterar(DefinicaoAjuste definicao, num valor) {
     if (!definicao.confirmado) return;
-    final limitado = definicao.limitar(valor);
+    final limitado = state.faixa(definicao).limitar(valor);
     state = state.copiar(
       locais: {...state.locais, definicao.id: limitado},
       comErro: {...state.comErro}..remove(definicao.id),

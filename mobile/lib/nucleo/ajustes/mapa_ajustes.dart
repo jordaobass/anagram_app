@@ -2,12 +2,52 @@
 // ler e gravar por `export_settings` / `edit_settings`. Um lugar só: quando
 // descobrirmos a chave de um ajuste pendente (a pedaleira só exporta o que já
 // foi mexido), basta preencher [DefinicaoAjuste.chave] aqui (DECISOES PD2).
+import 'dart:math' as math;
+
 import '../catalogo/definicao_bloco.dart';
 
 enum GrupoAjuste { saidas, globalEq, entrada }
 
 /// Banda do Global EQ, para o desenho da curva (DECISOES PD4).
-enum TipoBandaEq { lowShelf, highShelf }
+enum TipoBandaEq { lowShelf, peak, highShelf }
+
+/// O que os knobs mexem no Global EQ, como o seletor da tela da Anagram.
+enum ModoEq { gain, freq, width }
+
+/// Uma das 6 bandas do Global EQ. As chaves `globaleq.<codigo>.<freq|gain|width>`
+/// e os padrões de fábrica foram lidos da Anagram v1.19.2.24 (2026-11-21); as
+/// faixas de frequência são as do Parametric EQ do catálogo, o mesmo DSP
+/// (hipótese, DECISOES PD7).
+class BandaEqGlobal {
+  const BandaEqGlobal(this.codigo, this.tipo, this.freqMin, this.freqMax, this.freqPadrao, this.larguraPadrao);
+
+  final String codigo;
+  final TipoBandaEq tipo;
+  final num freqMin;
+  final num freqMax;
+  final num freqPadrao;
+  final num larguraPadrao;
+
+  String id(ModoEq modo) => 'eq_${codigo}_${modo.name}';
+  String chave(ModoEq modo) => 'globaleq.$codigo.${modo.name}';
+}
+
+/// Da esquerda para a direita, como na tela da pedaleira.
+const bandasEqGlobal = <BandaEqGlobal>[
+  BandaEqGlobal('ls', TipoBandaEq.lowShelf, 25, 300, 35, 0.33),
+  BandaEqGlobal('1', TipoBandaEq.peak, 20, 320, 160, 0.5),
+  BandaEqGlobal('2', TipoBandaEq.peak, 80, 1250, 397, 0.5),
+  BandaEqGlobal('3', TipoBandaEq.peak, 320, 5000, 1250, 0.5),
+  BandaEqGlobal('4', TipoBandaEq.peak, 1250, 20000, 2500, 0.5),
+  BandaEqGlobal('hs', TipoBandaEq.highShelf, 1500, 16000, 9630, 0.33),
+];
+
+/// Ganho do Global EQ: a pedaleira aceitou e devolveu −18 dB (2026-11-21).
+const ganhoMaximoEq = 18;
+
+/// Largura: a pedaleira devolveu 4,0 nos shelves (2026-11-21), então a faixa
+/// 0–1 do Parametric EQ não vale aqui; 0–4 é hipótese (DECISOES PD7).
+const larguraMaximaEq = 4;
 
 class DefinicaoAjuste {
   const DefinicaoAjuste({
@@ -45,6 +85,24 @@ class DefinicaoAjuste {
 
   num limitar(num valor) => valor.clamp(minimo, maximo);
 
+  /// A mesma definição com a faixa alargada para conter [valor]: se a
+  /// pedaleira devolve algo fora da faixa suposta, a faixa estava errada, não
+  /// o valor (DECISOES PD7).
+  DefinicaoAjuste abrangendo(num? valor) {
+    if (valor == null || (valor >= minimo && valor <= maximo)) return this;
+    return DefinicaoAjuste(
+        id: id,
+        nome: nome,
+        grupo: grupo,
+        minimo: math.min(minimo, valor),
+        maximo: math.max(maximo, valor),
+        padrao: padrao,
+        chave: chave,
+        unidade: unidade,
+        logaritmico: logaritmico,
+        faixaConfirmada: faixaConfirmada);
+  }
+
   /// O mesmo formato dos parâmetros de bloco: assim os knobs e faders do
   /// painel servem aqui sem cópia (arrastar, digitar, segurar volta ao padrão).
   DefinicaoParametro get parametro => DefinicaoParametro(
@@ -69,18 +127,24 @@ DefinicaoAjuste _saida(String id, String nome, String? chave) => DefinicaoAjuste
     unidade: 'dB',
     faixaConfirmada: true);
 
-DefinicaoAjuste _eq(String id, String nome, String? chave, num minimo, num maximo, num padrao, String unidade,
-        {bool log = false}) =>
-    DefinicaoAjuste(
-        id: id,
-        nome: nome,
-        chave: chave,
-        grupo: GrupoAjuste.globalEq,
-        minimo: minimo,
-        maximo: maximo,
-        padrao: padrao,
-        unidade: unidade,
-        logaritmico: log);
+DefinicaoAjuste _eq(BandaEqGlobal banda, ModoEq modo) {
+  final (minimo, maximo, padrao, unidade) = switch (modo) {
+    ModoEq.gain => (-ganhoMaximoEq, ganhoMaximoEq, 0, 'dB'),
+    ModoEq.freq => (banda.freqMin, banda.freqMax, banda.freqPadrao, 'Hz'),
+    ModoEq.width => (0, larguraMaximaEq, banda.larguraPadrao, null),
+  };
+  return DefinicaoAjuste(
+      id: banda.id(modo),
+      nome: '${banda.codigo.toUpperCase()} ${modo.name}',
+      chave: banda.chave(modo),
+      grupo: GrupoAjuste.globalEq,
+      minimo: minimo,
+      maximo: maximo,
+      padrao: padrao,
+      unidade: unidade,
+      logaritmico: modo == ModoEq.freq,
+      faixaConfirmada: modo == ModoEq.gain);
+}
 
 DefinicaoAjuste _instrumento(int slot, String? chave) => DefinicaoAjuste(
     id: 'input_gain_${slot + 1}',
@@ -104,14 +168,8 @@ final mapaAjustes = <DefinicaoAjuste>[
   _saida('headphones', 'Headphones', 'mixer.headphones.vol'),
   _saida('speaker', 'Speaker', 'mixer.speaker.vol'),
   _saida('master', 'Master', null),
-  _eq('eq_low_freq', 'Low Shelf Freq', 'globaleq.ls.freq', 20, 500, 100, 'Hz', log: true),
-  _eq('eq_low_gain', 'Low Shelf Gain', 'globaleq.ls.gain', -12, 12, 0, 'dB'),
-  _eq('eq_high_freq', 'High Shelf Freq', 'globaleq.hs.freq', 1000, 20000, 10000, 'Hz', log: true),
-  _eq('eq_high_gain', 'High Shelf Gain', 'globaleq.hs.gain', -12, 12, 0, 'dB'),
-  for (var banda = 2; banda <= 5; banda++) ...[
-    _eq('eq_band${banda}_freq', 'Band $banda Freq', null, 20, 20000, 1000, 'Hz', log: true),
-    _eq('eq_band${banda}_gain', 'Band $banda Gain', null, -12, 12, 0, 'dB'),
-  ],
+  for (final banda in bandasEqGlobal)
+    for (final modo in ModoEq.values) _eq(banda, modo),
   _instrumento(0, 'input-gain-preset0.db'),
   for (var slot = 1; slot < 6; slot++) _instrumento(slot, null),
 ];
@@ -128,9 +186,3 @@ DefinicaoAjuste? ajustePorIdOuChave(String pedido) {
   }
   return null;
 }
-
-/// As bandas do Global EQ que o app desenha: tipo, id da frequência e do ganho.
-const bandasGlobalEq = <(TipoBandaEq, String, String)>[
-  (TipoBandaEq.lowShelf, 'eq_low_freq', 'eq_low_gain'),
-  (TipoBandaEq.highShelf, 'eq_high_freq', 'eq_high_gain'),
-];

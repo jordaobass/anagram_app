@@ -29,6 +29,7 @@ class BotaoGiratorio extends StatefulWidget {
     required this.aoMudar,
     this.rotulo,
     this.forma = FormaControle.knob,
+    this.corChipValor,
   });
 
   final DefinicaoParametro parametro;
@@ -37,6 +38,10 @@ class BotaoGiratorio extends StatefulWidget {
   /// o aviso de voltar ao padrão continua com o nome inteiro.
   final String? rotulo;
   final FormaControle forma;
+
+  /// O valor num chip dessa cor (o Global EQ, como na tela da pedaleira);
+  /// nulo = o número sublinhado de sempre.
+  final Color? corChipValor;
   final num valor;
   final Color cor;
   final double tamanho;
@@ -164,16 +169,27 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
             key: ValueKey('valor-${widget.parametro.simbolo}'),
             behavior: HitTestBehavior.opaque,
             onTap: _digitar,
-            child: Text(texto,
-                maxLines: 1,
-                style: tema.titleMedium?.copyWith(
-                  fontFeatures: const [FontFeature.tabularFigures()],
-                  decoration: TextDecoration.underline,
-                  decorationStyle: TextDecorationStyle.dotted,
-                  decorationColor: Cores.textoSecundario,
-                )),
+            child: widget.corChipValor == null ? _numero(texto, tema) : _chip(texto, tema, widget.corChipValor!),
           ),
         ),
+      );
+
+  Widget _numero(String texto, TextTheme tema) => Text(texto,
+      maxLines: 1,
+      style: tema.titleMedium?.copyWith(
+        fontFeatures: const [FontFeature.tabularFigures()],
+        decoration: TextDecoration.underline,
+        decorationStyle: TextDecorationStyle.dotted,
+        decorationColor: Cores.textoSecundario,
+      ));
+
+  Widget _chip(String texto, TextTheme tema, Color cor) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: Espacos.s, vertical: Espacos.xxs),
+        decoration: BoxDecoration(color: cor, borderRadius: BorderRadius.circular(Raios.controle)),
+        child: Text(texto,
+            maxLines: 1,
+            style: tema.labelLarge?.copyWith(
+                color: Cores.textoSobreModoEq, fontFeatures: const [FontFeature.tabularFigures()])),
       );
 
   Widget _desenho() {

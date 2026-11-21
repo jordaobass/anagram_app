@@ -1189,11 +1189,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pdGlobalEq => 'Global EQ';
 
   @override
-  String get pdEqPlano => 'Flat';
+  String get pdEqModoGanho => 'Gain';
+
+  @override
+  String get pdEqModoFrequencia => 'Frequency';
+
+  @override
+  String get pdEqModoLargura => 'Width';
+
+  @override
+  String get pdEqInputGain => 'Input Gain';
+
+  @override
+  String get pdEqReset => 'Reset';
+
+  @override
+  String get pdEqResetTitulo => 'Reset the Global EQ?';
+
+  @override
+  String get pdEqResetTexto =>
+      'The 6 bands go back to 35 Hz, 160 Hz, 397 Hz, 1.25 kHz, 2.5 kHz and 9.63 kHz, with 0 gain and the factory width. You can undo it right after.';
+
+  @override
+  String get pdEqResetConfirmar => 'RESET';
+
+  @override
+  String get pdEqResetFeito => 'Global EQ back to default.';
 
   @override
   String get pdEqDica =>
-      'Drag the points: sideways changes the frequency, up and down the gain.';
+      'Drag the points: sideways changes the frequency, up and down the gain. The knobs change what the selected mode shows.';
 
   @override
   String get pdEntrada => 'Input';
@@ -1227,5 +1252,5 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pdPendentes =>
-      'Not yet adjustable in the app: mixer Master, Mute and Link, Global EQ bands 2 to 5 and width, and instrument names.';
+      'Not yet adjustable from the app: mixer Master, Mute and Link, and the instrument names.';
 }

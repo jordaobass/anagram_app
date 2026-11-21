@@ -3,6 +3,7 @@
 // roadie codificando a família do bloco. Nenhuma cor ou medida fora daqui.
 import 'package:flutter/painting.dart';
 
+import '../../nucleo/ajustes/mapa_ajustes.dart';
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/familia_bloco.dart';
 
@@ -75,6 +76,17 @@ abstract final class Cores {
   /// Faders do mixer global: azul de painel, fora das cores de família (um
   /// ajuste da pedaleira não é bloco) e longe do âmbar de ação.
   static const mixerGlobal = Color(0xFF7FB2E5);
+
+  /// O modo do Global EQ, com as cores da tela da Anagram: ganho em verde,
+  /// frequência em roxo, largura em laranja.
+  static Color doModoEq(ModoEq modo) => switch (modo) {
+        ModoEq.gain => const Color(0xFF5FCF7E),
+        ModoEq.freq => const Color(0xFF8A6CF2),
+        ModoEq.width => const Color(0xFFF2A531),
+      };
+
+  /// Texto sobre o chip colorido do modo: escuro, para contraste com as três.
+  static const textoSobreModoEq = Color(0xFF101114);
 }
 
 abstract final class Espacos {
@@ -238,6 +250,13 @@ abstract final class Medidas {
   static const double alturaCurvaGlobalEq = 160;
   static const double raioPontoEq = 7;
   static const double alcancePontoEq = 32;
+
+  /// Global EQ: eixo de ±15 dB como a tela da pedaleira; abaixo desta
+  /// largura as 6 bandas viram duas linhas de 3.
+  static const double dbVisivelGlobalEq = 15;
+  static const double larguraEqEmLinha = 560;
+  static const double fonteEixoEq = 10;
+  static const double larguraChipEq = 72;
 
   /// Um item da placa de som (nome: valor), duas colunas no notebook.
   static const double larguraItemPlaca = 240;
