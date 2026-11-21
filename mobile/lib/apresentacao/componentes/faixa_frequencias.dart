@@ -22,8 +22,12 @@ export '../../nucleo/catalogo/curvas_multibanda.dart' show fracaoDaFrequencia, f
 
 /// O valor de um corte como a pedaleira escreve: passa-baixas no máximo
 /// (20 kHz) não corta nada e aparece "OFF".
+/// O passa-baixas se reconhece pelo símbolo (`lo_lp_freq`, `mid_lp_freq`,
+/// `hi_lp_freq`), não pelo nome de exibição, que pode mudar no catálogo.
 String textoDoCorte(AppLocalizations l, DefinicaoParametro p, num valor) =>
-    p.nome.toLowerCase().contains('lo-pass') && valor >= p.maximo ? l.mbOff : l.valorDe(p, valor);
+    p.simbolo.endsWith(_sufixoPassaBaixas) && valor >= p.maximo ? l.mbOff : l.valorDe(p, valor);
+
+const _sufixoPassaBaixas = '_lp_freq';
 
 class FaixaFrequencias extends StatefulWidget {
   const FaixaFrequencias({
