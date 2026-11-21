@@ -71,6 +71,10 @@ abstract final class Cores {
   /// As linhas da tela principal da pedaleira: Threshold em rosa, Level em verde.
   static const linhaThreshold = Color(0xFFF26FA8);
   static const linhaLevel = Color(0xFF7BD86A);
+
+  /// Faders do mixer global: azul de painel, fora das cores de família (um
+  /// ajuste da pedaleira não é bloco) e longe do âmbar de ação.
+  static const mixerGlobal = Color(0xFF7FB2E5);
 }
 
 abstract final class Espacos {
@@ -228,6 +232,15 @@ abstract final class Medidas {
   /// Configurações: coluna de leitura, não a tela inteira do notebook.
   static const double larguraConfiguracoes = 640;
   static const double larguraCampoPorta = 120;
+
+  /// Global EQ nas Configurações: altura da curva, raio do ponto arrastável
+  /// e a distância em que o dedo ainda pega o ponto.
+  static const double alturaCurvaGlobalEq = 160;
+  static const double raioPontoEq = 7;
+  static const double alcancePontoEq = 32;
+
+  /// Um item da placa de som (nome: valor), duas colunas no notebook.
+  static const double larguraItemPlaca = 240;
 
   /// Balão da explicação do parâmetro: uma frase curta por linha legível.
   static const double larguraExplicacao = 320;

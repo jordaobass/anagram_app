@@ -1,12 +1,16 @@
-// Configurações do app: idioma e, no computador, a IA local pelo MCP. Abre
+// Configurações do app: idioma, os ajustes globais da pedaleira conectada e,
+// no computador, a IA local pelo MCP. Abre
 // pela engrenagem da barra de cima, conectado ou não; no celular, onde a
 // barra não tem lugar para o "i", é por aqui que se chega ao Sobre.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../aplicacao/estado/controlador_conexao.dart';
+import '../../aplicacao/estado/estado_conexao.dart';
 import '../../aplicacao/mcp/controlador_mcp.dart';
 import '../../l10n/app_localizations.dart';
 import '../componentes/painel_mcp.dart';
+import '../componentes/secao_pedaleira.dart';
 import '../componentes/seletor_idioma.dart';
 import '../rotas.dart';
 import '../tema/tokens.dart';
@@ -29,6 +33,12 @@ class TelaConfiguracoes extends ConsumerWidget {
               // o idioma vem antes de tudo: quem caiu num idioma que não lê precisa achá-lo
               TituloSecao(l.idioma),
               const Align(alignment: Alignment.centerLeft, child: SeletorIdioma()),
+              // os ajustes globais só existem com uma pedaleira (ou a demonstração) do outro lado
+              if (ref.watch(conexaoProvider) is Conectada) ...[
+                const SizedBox(height: Espacos.xxl),
+                TituloSecao(l.pdSecao),
+                const SecaoPedaleira(),
+              ],
               if (ref.watch(mcpDisponivelProvider)) ...[
                 const SizedBox(height: Espacos.xxl),
                 TituloSecao(l.mcpSecao),
