@@ -89,20 +89,7 @@ class ControladorConexao extends Notifier<EstadoConexao> {
     await _soltar();
     final tentativa = ++_tentativa;
     state = Conectando(transporte.descricao, demonstracao: demonstracao);
-    try {
-      await transporte.abrir();
-    } on ErroAnagram catch (erro) {
-      registro.e('conexão: não abriu ${transporte.descricao}', error: erro);
-      if (tentativa == _tentativa) state = FalhaDeConexao(AvisoConexao(erro));
-      return;
-    } on Object catch (erro, pilha) {
-      // erro fora do protocolo (DOMException do WebHID bloqueado por política,
-      // falha ao criar o isolate do hidapi): sem isto a tela ficaria em
-      // "Conectando…" para sempre
-      registro.e('conexão: falha inesperada ao abrir ${transporte.descricao}', error: erro, stackTrace: pilha);
-      if (tentativa == _tentativa) state = FalhaDeConexao(AvisoFalhaInesperada(transporte.descricao));
-      return;
-    }
+    if (!await _abrirTransporte(transporte, tentativa)) return;
     if (tentativa != _tentativa) return unawaited(_fecharSemFalhar(transporte.descricao, transporte.fechar));
     final cliente = ClienteAnagram(
       transporte,
@@ -117,6 +104,24 @@ class ControladorConexao extends Notifier<EstadoConexao> {
     if (tentativa != _tentativa) return;
     _vigia = transporte.estados.listen(_aoMudarTransporte);
     await _confirmarFirmware(transporte.descricao, demonstracao, tentativa);
+  }
+
+  /// Abre o transporte; se falhar, a tela mostra a falha e devolve falso.
+  Future<bool> _abrirTransporte(TransporteAnagram transporte, int tentativa) async {
+    try {
+      await transporte.abrir();
+      return true;
+    } on ErroAnagram catch (erro) {
+      registro.e('conexão: não abriu ${transporte.descricao}', error: erro);
+      if (tentativa == _tentativa) state = FalhaDeConexao(AvisoConexao(erro));
+    } on Object catch (erro, pilha) {
+      // erro fora do protocolo (DOMException do WebHID bloqueado por política,
+      // falha ao criar o isolate do hidapi): sem isto a tela ficaria em
+      // "Conectando…" para sempre
+      registro.e('conexão: falha inesperada ao abrir ${transporte.descricao}', error: erro, stackTrace: pilha);
+      if (tentativa == _tentativa) state = FalhaDeConexao(AvisoFalhaInesperada(transporte.descricao));
+    }
+    return false;
   }
 
   /// Aperto de mão curto (3 s): quem espera na tela pode desistir antes.
