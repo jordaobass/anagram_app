@@ -146,7 +146,9 @@ class DocumentoPreset {
     String? nomeExibicao,
   }) =>
       _editarBloco(posicao, (bloco) {
-        if (!mudarSobreposicaoDaCena(bloco, cenaAtiva, simbolo, valor)) gravarNaCenaAtiva(bloco, cenaAtiva, simbolo, valor);
+        if (!mudarSobreposicaoDaCena(bloco, cenaAtiva, simbolo, valor)) {
+          gravarNaCenaAtiva(bloco, cenaAtiva, simbolo, valor);
+        }
         mudarValorBase(bloco, simbolo, valor, nomeExibicao ?? simbolo);
       });
 
