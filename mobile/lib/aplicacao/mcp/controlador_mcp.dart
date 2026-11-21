@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../dados/preferencias_mcp.dart';
 import '../../nucleo/mcp/ferramenta_mcp.dart';
 import '../../nucleo/mcp/protocolo_mcp.dart';
+import '../../nucleo/registro.dart';
 import '../../plataforma/servidor_mcp.dart';
 import '../versao_app.dart';
 import 'ferramenta_salvar.dart';
@@ -133,6 +134,9 @@ class ControladorMcp extends Notifier<EstadoMcp> {
           .iniciar(porta: configuracao.porta, token: configuracao.token!, protocolo: protocolo);
       state = state.copiar(situacao: McpEscutando(porta));
     } on ErroPortaOcupada catch (erro) {
+      // a tela diz "porta ocupada"; o log guarda a causa de verdade (pode ser
+      // permissão, endereço indisponível...) para quem for diagnosticar
+      registro.w('mcp: não abriu a porta ${erro.porta} em 127.0.0.1', error: erro.causa);
       state = state.copiar(situacao: McpPortaOcupada(erro.porta));
     }
   }
