@@ -437,5 +437,9 @@
   "salvarReleituraDiferente": "la pedalera confirmó, pero el slot releído es distinto de lo enviado. La edición sigue en pantalla; revisa el slot y guarda de nuevo.",
   "pdSemAcesso": "Volumen de las salidas, Global EQ y ganancia de entrada: la app no tiene acceso a estas funciones de la pedalera. La Anagram acepta el valor enviado, pero no lo aplica al sonido. Ajústalos con los knobs y pantallas de la propia pedalera; aquí ves los valores actuales (toca Actualizar después de cambiarlos).",
   "utAcaoChave": "En la app, este interruptor es el Action del pedal. Según el manual del plugin: activarlo empieza el ritmo con una introducción; con el ritmo sonando, un nuevo accionamiento hace un redoble; un accionamiento doble lo detiene; mantenerlo pasa a la siguiente parte. Lo que toca la batería en cada caso lo decide el plugin.",
-  "utSoNoVisor": "Solo en la pantalla del pedal"
+  "utSoNoVisor": "Solo en la pantalla del pedal",
+  "caProcurando": "Buscando el pedal…",
+  "caConectarAoAbrir": "Conectar al abrir",
+  "caConectarAoAbrirTexto": "Al abrir, la app busca el pedal en el USB una vez. Conectar no toca nada; sin pedal, la pantalla de conectar queda como está.",
+  "caConectarAoAbrirMac": "En macOS, solo después de permitir la Monitorización de entrada para Anagram App en Ajustes del Sistema › Privacidad y seguridad."
 }

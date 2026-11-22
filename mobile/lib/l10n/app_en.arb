@@ -437,5 +437,9 @@
   "salvarReleituraDiferente": "the pedal confirmed, but the slot read back differs from what was sent. Your edit is still on screen; check the slot and save again.",
   "pdSemAcesso": "Output levels, Global EQ and input gain: the app has no access to these pedal features. The Anagram accepts a value sent to it, but does not apply it to the sound. Adjust them with the pedal's own knobs and screens; here you see the current values (tap Refresh after changing them).",
   "utAcaoChave": "In the app, this switch is the pedal's Action. Per the plugin's manual: turning it on starts the rhythm with an intro; while it plays, triggering again plays a fill; a double trigger stops; holding moves to the next part. What the drums play in each case is up to the plugin.",
-  "utSoNoVisor": "Only on the pedal screen"
+  "utSoNoVisor": "Only on the pedal screen",
+  "caProcurando": "Looking for the pedal…",
+  "caConectarAoAbrir": "Connect on launch",
+  "caConectarAoAbrirTexto": "On launch the app looks for the pedal on USB once. Connecting plays nothing; with no pedal, the connect screen stays as it is.",
+  "caConectarAoAbrirMac": "On macOS, only after you allow Input Monitoring for Anagram App in System Settings › Privacy & Security."
 }

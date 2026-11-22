@@ -2724,6 +2724,30 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Só no visor da pedaleira'**
   String get utSoNoVisor;
+
+  /// Barra e botão de conectar enquanto o app, ao abrir, procura a pedaleira no USB sozinho (DECISOES CA2)
+  ///
+  /// In pt, this message translates to:
+  /// **'Procurando a pedaleira…'**
+  String get caProcurando;
+
+  /// Interruptor nas Configurações: ao abrir, o app tenta uma vez conectar pelo USB (DECISOES CA1)
+  ///
+  /// In pt, this message translates to:
+  /// **'Conectar ao abrir'**
+  String get caConectarAoAbrir;
+
+  /// Explicação do interruptor Conectar ao abrir
+  ///
+  /// In pt, this message translates to:
+  /// **'Ao abrir, o app procura a pedaleira no USB uma vez. Conectar não toca nada; sem pedaleira, a tela de conectar fica como está.'**
+  String get caConectarAoAbrirTexto;
+
+  /// Linha extra do interruptor no macOS (DECISOES CA3)
+  ///
+  /// In pt, this message translates to:
+  /// **'No macOS, só depois de liberar o Monitoramento de Entrada para o Anagram App em Ajustes do Sistema › Privacidade e Segurança.'**
+  String get caConectarAoAbrirMac;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
