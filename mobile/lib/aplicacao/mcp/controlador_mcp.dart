@@ -18,6 +18,7 @@ import 'ferramentas_ajuste.dart';
 import 'ferramentas_ajustes_globais.dart';
 import 'ferramentas_cadeia.dart';
 import 'ferramentas_conhecimento.dart';
+import 'ferramentas_controles.dart';
 import 'ferramentas_leitura.dart';
 import 'sessao_mcp.dart';
 
@@ -170,6 +171,9 @@ List<FerramentaMcp> ferramentasDoTimbre(SessaoMcp sessao, Ref ref) => [
       MoverBloco(sessao),
       RemoverBloco(sessao),
       EscolherGabinete(sessao),
+      LerControles(sessao),
+      AtribuirControle(sessao),
+      SoltarControle(sessao),
       Desfazer(sessao),
       SalvarPreset(sessao, ref),
       LerAjustesGlobais(ref),

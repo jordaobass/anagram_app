@@ -233,6 +233,9 @@ void _recusarMarcadorDeQuadro(Map<String, dynamic> json) {
   }
 }
 
+/// Nome curto o bastante para o visor da pedaleira (hipótese: ver DECISOES).
+const tamanhoMaximoNome = 24;
+
 /// Id novo no formato do aparelho: 56 hexadecimais em grupos 16-8-8-24.
 String novoUuidPreset([Random? aleatorio]) {
   final gerador = aleatorio ?? Random.secure();

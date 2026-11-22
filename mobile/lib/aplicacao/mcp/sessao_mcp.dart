@@ -5,6 +5,7 @@
 // mexeu no preset depois (senão o desfazer apagaria a edição dela).
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../nucleo/ajustes/modo_footswitches.dart';
 import '../../nucleo/catalogo/catalogo_blocos.dart';
 import '../../nucleo/catalogo/catalogo_gabinetes.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
@@ -13,8 +14,10 @@ import '../../nucleo/conhecimento/base_conhecimento.dart';
 import '../../nucleo/mcp/ferramenta_mcp.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
+import '../estado/controlador_ajustes.dart';
 import '../estado/controlador_conexao.dart';
 import '../estado/controlador_editor.dart';
+import '../estado/controlador_modo_footswitches.dart';
 import '../estado/estado_conexao.dart';
 import '../estado/estado_editor.dart';
 import '../provedores.dart';
@@ -91,6 +94,15 @@ class SessaoMcp {
             inteiro('Column, 1-${PosicaoBloco.casasPorLinha}.', minimo: 1, maximo: PosicaoBloco.casasPorLinha),
       };
 
+  /// O modo dos footswitches lido da pedaleira (nulo se o firmware não informa).
+  Future<ModoFootswitches?> modoFootswitches() async {
+    await _ref.read(controladorModoProvider.notifier).garantirLeitura();
+    return _ref.read(controladorAjustesProvider).lidos?.modo;
+  }
+
+  /// A tela mostra o aviso "IA: …" também do que não muda o preset aberto.
+  void avisar(String resumo) => _ref.read(avisosMcpProvider.notifier).mudancaDaIa(resumo);
+
   /// Faz a mudança pelo editor e, se o preset mudou, guarda o anterior para
   /// o `undo` e avisa a tela de que a mudança veio da IA.
   ///
@@ -106,7 +118,7 @@ class SessaoMcp {
     _historico.add(antes);
     if (_historico.length > _limiteHistorico) _historico.removeAt(0);
     _deixadoPelaIa = depois;
-    _ref.read(avisosMcpProvider.notifier).mudancaDaIa(resumo);
+    avisar(resumo);
   }
 
   /// Volta a última mudança da IA; devolve quantas ainda dá para voltar.
@@ -121,7 +133,7 @@ class SessaoMcp {
     final anterior = _historico.removeLast();
     await editor.aplicarDocumento(anterior);
     _deixadoPelaIa = estado.atual;
-    _ref.read(avisosMcpProvider.notifier).mudancaDaIa('undo');
+    avisar('undo');
     return _historico.length;
   }
 }
