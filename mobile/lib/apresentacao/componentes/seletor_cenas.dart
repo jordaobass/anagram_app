@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../tema/tokens.dart';
 import '../../l10n/app_localizations.dart';
+import 'botao_tally.dart';
 
 class SeletorCenas extends ConsumerWidget {
   const SeletorCenas({super.key});
@@ -45,40 +46,26 @@ class _BotaoCena extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tema = Theme.of(context).textTheme;
-    final corTexto = ativa ? Cores.sobreTally : Cores.texto;
-    return Semantics(
-      selected: ativa,
-      button: true,
-      label: AppLocalizations.of(context).cenaSemantica(numero, nome ?? AppLocalizations.of(context).cenaPadrao(numero)),
-      child: Material(
-        color: ativa ? Cores.tally : Cores.painelElevado,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Raios.controle),
-          side: BorderSide(color: ativa ? Cores.tally : Cores.filete),
-        ),
-        child: InkWell(
-          key: ValueKey('cena-$numero'),
-          borderRadius: BorderRadius.circular(Raios.controle),
-          onTap: aoTocar,
-          child: _rotulo(tema, corTexto, nome ?? AppLocalizations.of(context).uiCena),
-        ),
-      ),
+    final l = AppLocalizations.of(context);
+    return BotaoTally(
+      chave: ValueKey('cena-$numero'),
+      ativo: ativa,
+      rotuloSemantico: l.cenaSemantica(numero, nome ?? l.cenaPadrao(numero)),
+      aoTocar: aoTocar,
+      alturaMinima: Medidas.alvoMinimo + Espacos.s,
+      filho: _rotulo(Theme.of(context).textTheme, BotaoTally.corDoTexto(ativo: ativa), nome ?? l.uiCena),
     );
   }
 
-  Widget _rotulo(TextTheme tema, Color corTexto, String texto) => ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: Medidas.alvoMinimo + Espacos.s),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Espacos.m, vertical: Espacos.xs),
-          child: Row(children: [
-            Text('$numero', style: tema.displaySmall?.copyWith(color: corTexto, fontSize: tema.titleLarge?.fontSize)),
-            const SizedBox(width: Espacos.s),
-            Expanded(
-              child: Text(texto.toUpperCase(),
-                  maxLines: 1, overflow: TextOverflow.ellipsis, style: tema.labelLarge?.copyWith(color: corTexto)),
-            ),
-          ]),
-        ),
+  Widget _rotulo(TextTheme tema, Color corTexto, String texto) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Espacos.m, vertical: Espacos.xs),
+        child: Row(children: [
+          Text('$numero', style: tema.displaySmall?.copyWith(color: corTexto, fontSize: tema.titleLarge?.fontSize)),
+          const SizedBox(width: Espacos.s),
+          Expanded(
+            child: Text(texto.toUpperCase(),
+                maxLines: 1, overflow: TextOverflow.ellipsis, style: tema.labelLarge?.copyWith(color: corTexto)),
+          ),
+        ]),
       );
 }
