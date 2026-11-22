@@ -7,6 +7,7 @@ import '../../l10n/app_localizations.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/formatador_valor.dart';
 import '../textos.dart';
+import 'dialogo_confirmar.dart';
 
 /// Devolve o valor escolhido, ou nulo se a pessoa cancelar.
 Future<num?> digitarValor(BuildContext context, DefinicaoParametro parametro, num atual) =>
@@ -73,7 +74,7 @@ class _EstadoDialogoValor extends State<_DialogoValor> {
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: Text(l.cancelar)),
+        BotaoCancelarDialogo(rotulo: l.cancelar, aoTocar: () => Navigator.pop(context)),
         FilledButton(onPressed: _aplicar, child: Text(l.kbAplicar)),
       ],
     );

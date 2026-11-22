@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../tema/tema_app.dart';
 import '../tema/tokens.dart';
 
 /// Abrir outro preset com edição não salva: as edições de [nome] se perdem.
@@ -64,7 +65,8 @@ class BotaoConfirmarPerda extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => FilledButton(
-        style: FilledButton.styleFrom(backgroundColor: Cores.fitaAlerta, foregroundColor: Cores.sobreAlerta),
+        style: FilledButton.styleFrom(backgroundColor: Cores.fitaAlerta, foregroundColor: Cores.sobreAlerta)
+            .copyWith(side: TemaApp.anelDeFoco(cor: Cores.sobreAlerta)),
         onPressed: aoTocar,
         child: Text(rotulo),
       );

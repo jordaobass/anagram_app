@@ -26,6 +26,9 @@ enum FamiliaBloco {
     // o Axioma é um synth que segue a nota tocada, como os octavers: fica
     // com a modulação, embora o firmware o ponha em "Utilities" (AX6)
     if (tem(['axioma'])) return modulacao;
+    // o Neural Amp é a captura de um amplificador, com o tone stack dele: fica
+    // com os amps, embora o firmware o ponha em "Utilities" (UI1)
+    if (tem(['neural:amp'])) return amplificador;
     if (tem(['eq', 'geq', 'fil4'])) return equalizador;
     return _porCategoria(categoria);
   }

@@ -1,17 +1,24 @@
 // Preparo comum dos testes de interface: tela do tamanho pedido, app montado
 // e, quando preciso, já conectado à pedaleira de demonstração.
+import 'dart:async';
+
 import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
 import 'package:anagram_app/plataforma/servidor_mcp.dart';
 import 'package:anagram_app/dados/preferencias_pausa.dart';
 import 'package:anagram_app/dados/preferencias_versao.dart';
+import 'package:anagram_app/dados/preferencias_paineis.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
+import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
+import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 
 import 'app_de_teste.dart';
+import 'fixtures.dart';
 import 'versao_falsa.dart';
 
 /// Tamanho lógico de um notebook comum, o padrão dos testes de interface.
@@ -32,7 +39,8 @@ Future<void> montarApp(WidgetTester tester,
     bool mcpDisponivel = true,
     GithubFalso? github,
     PreferenciasVersao? preferenciasVersao,
-    PreferenciasPausa? preferenciasPausa}) async {
+    PreferenciasPausa? preferenciasPausa,
+    PreferenciasPaineis? preferenciasPaineis}) async {
   tester.view.physicalSize = tamanho * densidade;
   tester.view.devicePixelRatio = densidade;
   addTearDown(tester.view.reset);
@@ -45,7 +53,8 @@ Future<void> montarApp(WidgetTester tester,
       mcpDisponivel: mcpDisponivel,
       github: github,
       preferenciasVersao: preferenciasVersao,
-      preferenciasPausa: preferenciasPausa));
+      preferenciasPausa: preferenciasPausa,
+      preferenciasPaineis: preferenciasPaineis));
   await tester.pumpAndSettle();
 }
 
@@ -99,5 +108,27 @@ ScrollPosition _rolagemDoEditor(WidgetTester tester) => tester
 /// Toca na linha do slot (ex. '02A') na lista de presets.
 Future<void> tocarNoSlot(WidgetTester tester, String rotulo) async {
   await tester.tap(find.byKey(ValueKey('slot-$rotulo')));
+  await tester.pumpAndSettle();
+}
+
+/// Demonstração com o 01A aberto e o bloco [uri] posto em [casa]: o painel
+/// dele fica na tela, selecionado.
+Future<ProviderContainer> abrirComBloco(WidgetTester tester, String uri,
+    {Size tamanho = const Size(1440, 2000), PosicaoBloco casa = const PosicaoBloco(1, 4), String slot = '01A'}) async {
+  final container = await abrirDemonstracao(tester, tamanho: tamanho);
+  unawaited(container.read(editorProvider.notifier).abrirSlot(SlotPreset.doRotulo(slot)));
+  await tester.pumpAndSettle();
+  unawaited(container.read(editorProvider.notifier).adicionarBloco(casa, lerCatalogo().definicao(uri)));
+  await tester.pumpAndSettle();
+  return container;
+}
+
+/// Abre "Controles da pedaleira" se estiver recolhido (preset sem controle
+/// atribuído começa recolhido) e rola até ele.
+Future<void> abrirControlesDaPedaleira(WidgetTester tester) async {
+  final cabecalho = find.byKey(const ValueKey('cabecalho-controles'));
+  await rolarEditorAte(tester, cabecalho);
+  if (find.byKey(const ValueKey('controle-foot1')).evaluate().isNotEmpty) return;
+  await tester.tap(cabecalho);
   await tester.pumpAndSettle();
 }

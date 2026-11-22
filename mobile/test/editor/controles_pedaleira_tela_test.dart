@@ -15,8 +15,12 @@ Map<IdControle, ControlePedaleira> controles(ProviderContainer container) =>
 
 Future<void> tocar(WidgetTester tester, String chave) async {
   final alvo = find.byKey(ValueKey(chave));
-  // os cartões ficam no fim do editor; menus e diálogos já estão à vista
-  if (chave.startsWith('controle-')) await rolarEditorAte(tester, alvo);
+  // os cartões ficam no fim do editor (recolhidos no 01C, que não tem
+  // controle atribuído); menus e diálogos já estão à vista
+  if (chave.startsWith('controle-')) {
+    await abrirControlesDaPedaleira(tester);
+    await rolarEditorAte(tester, alvo);
+  }
   await tester.tap(alvo);
   await tester.pumpAndSettle();
 }

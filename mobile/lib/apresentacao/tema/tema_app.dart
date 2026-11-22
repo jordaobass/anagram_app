@@ -14,6 +14,9 @@ abstract final class TemaApp {
         visualDensity: VisualDensity.standard,
         filledButtonTheme: FilledButtonThemeData(style: _botao(Cores.tally, Cores.sobreTally)),
         outlinedButtonTheme: OutlinedButtonThemeData(style: _botaoContornado()),
+        textButtonTheme: TextButtonThemeData(style: ButtonStyle(side: anelDeFoco(), shape: _formaControle)),
+        iconButtonTheme: IconButtonThemeData(style: ButtonStyle(side: anelDeFoco())),
+        appBarTheme: _barraDeTitulo,
         dialogTheme: _dialogo(),
         snackBarTheme: _aviso(),
         chipTheme: _chip(),
@@ -38,15 +41,38 @@ abstract final class TemaApp {
     error: Cores.erro,
     outline: Cores.filete,
     outlineVariant: Cores.filete,
+    // o Material 3 tinge superfícies elevadas com a primária: no case, o
+    // âmbar é só seleção e ação, nunca a cor de uma barra rolada
+    surfaceTint: Colors.transparent,
+  );
+
+  /// Barra de título no painel, rolada ou não, com o filete embaixo.
+  static const _barraDeTitulo = AppBarTheme(
+    backgroundColor: Cores.painel,
+    foregroundColor: Cores.texto,
+    surfaceTintColor: Colors.transparent,
+    elevation: 0,
+    scrolledUnderElevation: 0,
+    shape: Border(bottom: BorderSide(color: Cores.filete)),
   );
 
   static ButtonStyle _botaoContornado() => OutlinedButton.styleFrom(
         foregroundColor: Cores.texto,
         minimumSize: const Size(Medidas.alvoMinimo, Medidas.alvoMinimo),
-        side: const BorderSide(color: Cores.aluminio),
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(Raios.controle))),
         textStyle: _texto().labelLarge,
-      );
+      ).copyWith(side: anelDeFoco(semFoco: const BorderSide(color: Cores.aluminio)));
+
+  static const _formaControle =
+      WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(Raios.controle))));
+
+  /// Foco do teclado: contorno sólido de 2px em âmbar, que passa de 3:1 sobre
+  /// o case e os painéis (o realce a 24% dava 1,69:1). Sobre um botão já
+  /// preenchido, o anel é da cor do texto dele, para não sumir no fundo.
+  static WidgetStateProperty<BorderSide?> anelDeFoco({BorderSide? semFoco, Color cor = Cores.tally}) =>
+      WidgetStateProperty.resolveWith((estados) => estados.contains(WidgetState.focused)
+          ? BorderSide(color: cor, width: Medidas.contornoSelecao)
+          : semFoco);
 
   static final _contornoSelecao = WidgetStateBorderSide.resolveWith((estados) => estados.contains(WidgetState.selected)
       ? const BorderSide(color: Cores.tally, width: Medidas.contornoSelecao)
@@ -91,7 +117,7 @@ abstract final class TemaApp {
         padding: const EdgeInsets.symmetric(horizontal: Espacos.l),
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(Raios.controle))),
         textStyle: _texto().labelLarge,
-      );
+      ).copyWith(side: anelDeFoco(cor: frente));
 
   static const _figurasTabulares = [FontFeature.tabularFigures()];
 

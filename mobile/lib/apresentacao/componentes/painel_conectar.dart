@@ -13,6 +13,8 @@ import '../../l10n/app_localizations.dart';
 import '../../nucleo/suporte_aparelho.dart';
 import '../tema/tokens.dart';
 import '../textos.dart';
+import '../app_anagram.dart';
+import 'fita_gaffer.dart';
 import 'seletor_idioma.dart';
 
 class PainelConectar extends ConsumerWidget {
@@ -29,6 +31,8 @@ class PainelConectar extends ConsumerWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: Medidas.larguraConteudoVazio),
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            const _Identidade(),
+            const SizedBox(height: Espacos.xl),
             ..._cabecalho(context, l, suporte),
             const SizedBox(height: Espacos.xl),
             ..._aviso(context, l, conexao),
@@ -63,44 +67,44 @@ class PainelConectar extends ConsumerWidget {
     final controlador = ref.read(conexaoProvider.notifier);
     final ocupado = conexao is Conectando;
     // sem USB nesta plataforma, a demonstração é o caminho: vira o botão cheio
-    if (suporte is AparelhoIndisponivel) {
-      return [_demonstracao(controlador, l, ocupado: ocupado, principal: true), if (ocupado) ..._progresso(controlador, l)];
-    }
+    final demonstracao = _BotaoDeConexao(
+      chave: const ValueKey('botao-demonstracao'),
+      icone: Icons.science_outlined,
+      rotulo: l.abrirDemonstracao,
+      principal: suporte is AparelhoIndisponivel,
+      emAndamento: conexao is Conectando && conexao.demonstracao ? l.txEstadoAbrindoDemonstracao : null,
+      aoTocar: ocupado ? null : controlador.conectarDemonstracao,
+    );
+    if (suporte is AparelhoIndisponivel) return [demonstracao, if (ocupado) _cancelar(controlador, l)];
     return [
-      FilledButton.icon(
-        key: const ValueKey('botao-conectar'),
-        onPressed: ocupado ? null : controlador.conectarAparelho,
-        icon: const Icon(Icons.usb),
-        label: Text(l.conectarPeloUsb),
+      _BotaoDeConexao(
+        chave: const ValueKey('botao-conectar'),
+        icone: Icons.usb,
+        rotulo: l.conectarPeloUsb,
+        principal: true,
+        emAndamento: _conectandoUsb(l, conexao),
+        aoTocar: ocupado ? null : controlador.conectarAparelho,
       ),
-      if (ocupado) ..._progresso(controlador, l),
       const SizedBox(height: Espacos.m),
-      _demonstracao(controlador, l, ocupado: ocupado, principal: false),
+      demonstracao,
+      if (ocupado) _cancelar(controlador, l),
     ];
   }
 
-  static Widget _demonstracao(ControladorConexao controlador, AppLocalizations l,
-      {required bool ocupado, required bool principal}) {
-    final aoTocar = ocupado ? null : controlador.conectarDemonstracao;
-    const icone = Icon(Icons.science_outlined);
-    final rotulo = Text(l.abrirDemonstracao);
-    const chave = ValueKey('botao-demonstracao');
-    return principal
-        ? FilledButton.icon(key: chave, onPressed: aoTocar, icon: icone, label: rotulo)
-        : OutlinedButton.icon(key: chave, onPressed: aoTocar, icon: icone, label: rotulo);
-  }
+  /// "Conectando (USB)…" enquanto o USB abre; o botão tocado é que diz.
+  static String? _conectandoUsb(AppLocalizations l, EstadoConexao conexao) => switch (conexao) {
+        Conectando(demonstracao: false, :final meio) => l.estadoConectando(TextosDoApp.meioVisivel(meio)),
+        _ => null,
+      };
 
-  static List<Widget> _progresso(ControladorConexao controlador, AppLocalizations l) => [
-        const SizedBox(height: Espacos.m),
-        // âmbar: é a ação em curso, não um estado neutro
-        const LinearProgressIndicator(color: Cores.tally, backgroundColor: Cores.painelElevado),
-        const SizedBox(height: Espacos.s),
-        OutlinedButton(
+  static Widget _cancelar(ControladorConexao controlador, AppLocalizations l) => Padding(
+        padding: const EdgeInsets.only(top: Espacos.m),
+        child: OutlinedButton(
           key: const ValueKey('botao-cancelar-conexao'),
           onPressed: controlador.cancelarConexao,
           child: Text(l.cancelar),
         ),
-      ];
+      );
 
   /// Erro de conexão em vermelho; a pedaleira que saiu é informação, em tom neutro.
   static List<Widget> _aviso(BuildContext context, AppLocalizations l, EstadoConexao conexao) {
@@ -123,6 +127,68 @@ class PainelConectar extends ConsumerWidget {
       ]),
       const SizedBox(height: Espacos.l),
     ];
+  }
+}
+
+/// "01A" em estêncil e o nome do app em fita gaffer, como a faixa do preset
+/// no editor e a página do app: a tela de entrada já é o case de estrada.
+class _Identidade extends StatelessWidget {
+  const _Identidade();
+
+  @override
+  Widget build(BuildContext context) {
+    final tema = Theme.of(context).textTheme;
+    return ExcludeSemantics(
+      child: Row(children: [
+        Text('01A', style: tema.displaySmall),
+        const SizedBox(width: Espacos.m),
+        Flexible(child: FitaGaffer(child: Text(AppAnagram.titulo, maxLines: 1, style: tema.headlineSmall))),
+      ]),
+    );
+  }
+}
+
+/// Conectar ou abrir a demonstração. Em andamento, o próprio botão diz o que
+/// está acontecendo, com o giro ao lado, e não responde a novo toque.
+class _BotaoDeConexao extends StatelessWidget {
+  const _BotaoDeConexao({
+    required this.chave,
+    required this.icone,
+    required this.rotulo,
+    required this.principal,
+    required this.aoTocar,
+    this.emAndamento,
+  });
+
+  final Key chave;
+  final IconData icone;
+  final String rotulo;
+  final bool principal;
+  final VoidCallback? aoTocar;
+
+  /// A frase da espera ("Abrindo a demonstração…"), ou nulo parado.
+  final String? emAndamento;
+
+  @override
+  Widget build(BuildContext context) {
+    final andamento = emAndamento;
+    final frente = principal ? Cores.sobreTally : Cores.texto;
+    final icone = andamento == null
+        ? Icon(this.icone)
+        : SizedBox.square(
+            dimension: Medidas.iconeMenu,
+            child: CircularProgressIndicator(strokeWidth: Medidas.linhaSinal, color: frente),
+          );
+    final texto = Text(andamento ?? rotulo);
+    // em andamento o botão não aceita toque, mas mantém a cor: não está desligado
+    final estilo = andamento == null
+        ? null
+        : (principal
+            ? FilledButton.styleFrom(disabledBackgroundColor: Cores.tally, disabledForegroundColor: frente)
+            : OutlinedButton.styleFrom(disabledForegroundColor: frente));
+    return principal
+        ? FilledButton.icon(key: chave, onPressed: aoTocar, style: estilo, icon: icone, label: texto)
+        : OutlinedButton.icon(key: chave, onPressed: aoTocar, style: estilo, icon: icone, label: texto);
   }
 }
 

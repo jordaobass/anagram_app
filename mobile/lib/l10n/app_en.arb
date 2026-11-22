@@ -441,5 +441,11 @@
   "t3kResumo": "On the pedal: {fabrica} factory and {seus} uploaded by you",
   "t3kDetalheFabrica": "{autor} · {licenca} license",
   "t3kDetalheSeu": "{autor} · {licenca} license · yours, reference only",
-  "t3kSemAutor": "no author"
+  "t3kSemAutor": "no author",
+  "uiDicas": "Tips",
+  "ctlResumo": "{n, plural, =0{none assigned} =1{1 assigned} other{{n} assigned}}",
+  "ctlMostrar": "Show the pedal controls",
+  "ctlRecolher": "Collapse the pedal controls",
+  "sbSubstitui": "replaces {nome}",
+  "sbSubstituirAqui": "Replace the preset in this slot"
 }

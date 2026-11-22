@@ -1,16 +1,19 @@
 // "Controles da pedaleira": os três footswitches, os seis pots e o pedal de
 // expressão na ordem em que estão no aparelho, cada um com o nome que o
 // visor mostra e o que ele move. Tocar abre a edição do controle.
+// Recolhível: aberto por padrão só com algum controle atribuído (DECISOES UI2).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
+import '../../aplicacao/estado/paineis_recolhidos.dart';
 import '../../l10n/app_localizations.dart';
 import '../../nucleo/modelo/controles_pedaleira.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../tema/tokens.dart';
 import '../textos.dart';
 import 'alvo_do_controle.dart';
+import 'botao_dicas.dart';
 import 'casa_arrastavel.dart' show arrastoComMouse;
 import 'dialogo_controle.dart';
 import 'seletor_modo_footswitches.dart' show AvisoModoNosControles;
@@ -25,17 +28,16 @@ class PainelControles extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final documento = ref.watch(editorProvider.select((e) => e.atual));
     if (documento == null) return const SizedBox.shrink();
-    final l = AppLocalizations.of(context);
-    final tema = Theme.of(context).textTheme;
+    // o arquivo traz os footswitches com nome mesmo sem alvo: conta quem move algo
+    final atribuidos = documento.controles.values.where((c) => c.alvos.isNotEmpty).length;
+    final aberto = ControlesAbertos.resolver(ref.watch(controlesAbertosProvider), temAtribuicao: atribuidos > 0);
     return Column(key: const ValueKey('painel-controles'), crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(l.ctlTitulo.toUpperCase(), style: tema.labelLarge),
-      const SizedBox(height: Espacos.xs),
-      Text(l.ctlDicaPara(mouse: arrastoComMouse), style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
-      const SizedBox(height: Espacos.xs),
-      Text(l.ctlDicaPedaleira, style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
-      const AvisoModoNosControles(),
-      const SizedBox(height: Espacos.m),
-      LayoutBuilder(builder: (context, restricoes) => _grupos(documento, _largura(restricoes.maxWidth))),
+      _CabecalhoControles(aberto: aberto, atribuidos: atribuidos),
+      if (aberto) ...[
+        const AvisoModoNosControles(),
+        const SizedBox(height: Espacos.m),
+        LayoutBuilder(builder: (context, restricoes) => _grupos(documento, _largura(restricoes.maxWidth))),
+      ],
     ]);
   }
 
@@ -57,6 +59,46 @@ class PainelControles extends ConsumerWidget {
       runSpacing: Espacos.m,
       children: [for (final tipo in TipoControle.values) grupo(tipo)],
     );
+  }
+}
+
+/// Título clicável (abre e recolhe, e a escolha fica guardada), quantos
+/// controles estão atribuídos e o "?" com as dicas de uso.
+class _CabecalhoControles extends ConsumerWidget {
+  const _CabecalhoControles({required this.aberto, required this.atribuidos});
+
+  final bool aberto;
+  final int atribuidos;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context);
+    final tema = Theme.of(context).textTheme;
+    return Row(children: [
+      Expanded(
+        child: Semantics(
+          button: true,
+          expanded: aberto,
+          label: aberto ? l.ctlRecolher : l.ctlMostrar,
+          child: InkWell(
+            key: const ValueKey('cabecalho-controles'),
+            borderRadius: BorderRadius.circular(Raios.controle),
+            onTap: () => ref.read(controlesAbertosProvider.notifier).definir(abertos: !aberto),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: Medidas.alvoMinimo),
+              child: Row(children: [
+                Icon(aberto ? Icons.expand_less : Icons.expand_more, color: Cores.aluminioClaro),
+                const SizedBox(width: Espacos.s),
+                Flexible(child: Text(l.ctlTitulo.toUpperCase(), style: tema.labelLarge)),
+                const SizedBox(width: Espacos.m),
+                Text(l.ctlResumo(atribuidos), style: tema.labelMedium),
+              ]),
+            ),
+          ),
+        ),
+      ),
+      BotaoDicas(dicas: [l.ctlDicaPara(mouse: arrastoComMouse), l.ctlDicaPedaleira, l.fmDica]),
+    ]);
   }
 }
 

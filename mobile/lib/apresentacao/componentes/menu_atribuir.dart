@@ -12,6 +12,7 @@ import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/controles_pedaleira.dart';
 import '../tema/tokens.dart';
 import '../textos.dart';
+import 'item_de_menu.dart';
 
 /// Os controles que movem um parâmetro contínuo: os pots e o pedal.
 final controlesDeParametro = [...IdControle.doTipo(TipoControle.pot), IdControle.expressao];
@@ -29,6 +30,7 @@ Future<void> abrirMenuAtribuir(
         itemDeControle(context, id,
             controle: controles[id],
             rotulo: l.ctlAtribuirA(l.rotuloControle(id)),
+            icone: id.tipo == TipoControle.pot ? Icons.tune : Icons.straighten,
             jaAqui: _temOParametro(controles[id], posicao, parametro.simbolo)),
     ],
   );
@@ -37,7 +39,11 @@ Future<void> abrirMenuAtribuir(
 
 /// O item de um controle: o que fazer à esquerda, o que ele tem à direita.
 PopupMenuItem<T> itemDeControle<T>(BuildContext context, T valor,
-    {required ControlePedaleira? controle, required String rotulo, required bool jaAqui, String? chave}) {
+    {required ControlePedaleira? controle,
+    required String rotulo,
+    required bool jaAqui,
+    required IconData icone,
+    String? chave}) {
   final l = AppLocalizations.of(context);
   final situacao = jaAqui ? l.ctlJaAqui : (controle == null ? l.ctlLivre : controle.nome);
   final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.textoSecundario);
@@ -45,11 +51,15 @@ PopupMenuItem<T> itemDeControle<T>(BuildContext context, T valor,
     key: ValueKey(chave ?? 'atribuir-${valor is IdControle ? valor.chave : valor}'),
     value: valor,
     enabled: !jaAqui,
-    child: Row(children: [
-      Expanded(child: Text(rotulo)),
-      const SizedBox(width: Espacos.l),
-      Text(situacao, style: estilo),
-    ]),
+    child: LinhaDeMenu(
+      icone: icone,
+      ativo: !jaAqui,
+      child: Row(children: [
+        Expanded(child: Text(rotulo)),
+        const SizedBox(width: Espacos.l),
+        Text(situacao, style: estilo),
+      ]),
+    ),
   );
 }
 

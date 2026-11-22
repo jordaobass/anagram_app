@@ -14,6 +14,8 @@ import 'package:anagram_app/aplicacao/mcp/controlador_mcp.dart';
 import 'package:anagram_app/dados/preferencias_idioma.dart';
 import 'package:anagram_app/dados/preferencias_mcp.dart';
 import 'package:anagram_app/dados/preferencias_pausa.dart';
+import 'package:anagram_app/dados/preferencias_paineis.dart';
+import 'package:anagram_app/aplicacao/estado/paineis_recolhidos.dart';
 import 'package:anagram_app/nucleo/mcp/protocolo_mcp.dart';
 import 'package:anagram_app/plataforma/servidor_mcp.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
@@ -51,7 +53,8 @@ Widget appDeTeste(
         bool mcpDisponivel = true,
         GithubFalso? github,
         PreferenciasVersao? preferenciasVersao,
-        PreferenciasPausa? preferenciasPausa}) =>
+        PreferenciasPausa? preferenciasPausa,
+        PreferenciasPaineis? preferenciasPaineis}) =>
     ProviderScope(
       overrides: [
         ...overrides,
@@ -64,6 +67,7 @@ Widget appDeTeste(
         verificacaoVersaoDisponivelProvider.overrideWithValue(github != null),
         preferenciasVersaoProvider.overrideWithValue(preferenciasVersao ?? PreferenciasVersaoEmMemoria()),
         preferenciasPausaProvider.overrideWithValue(preferenciasPausa ?? PreferenciasPausaEmMemoria()),
+        preferenciasPaineisProvider.overrideWithValue(preferenciasPaineis ?? PreferenciasPaineisEmMemoria()),
         cronometroProvider.overrideWithValue(CronometroFixo.new),
         catalogoProvider.overrideWith((ref) async => lerCatalogo()),
         explicacoesProvider.overrideWith((ref) async => lerExplicacoes()),
@@ -100,6 +104,16 @@ class PreferenciasPausaEmMemoria implements PreferenciasPausa {
 
   @override
   Future<void> gravar(int? milissegundos) async => salvo = milissegundos;
+}
+
+class PreferenciasPaineisEmMemoria implements PreferenciasPaineis {
+  bool? controlesAbertos;
+
+  @override
+  Future<bool?> lerControlesAbertos() async => controlesAbertos;
+
+  @override
+  Future<void> gravarControlesAbertos(bool abertos) async => controlesAbertos = abertos;
 }
 
 class PreferenciasMcpEmMemoria implements PreferenciasMcp {

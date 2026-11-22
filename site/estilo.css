@@ -24,6 +24,8 @@
   --familia-modulacao: #34c3a0;
   --familia-gabinete: #b9a37c;
   --familia-utilitario: #8d949c;
+  --familia-delay: #5585ee;
+  --familia-reverb: #d46bb3;
 
   --fonte-estencil: "Saira Stencil One", sans-serif;
   --fonte-marcador: "Permanent Marker", cursive;
@@ -83,7 +85,8 @@ img { display: block; max-width: 100%; height: auto; }
   font: 600 15px/1 var(--fonte-rotulo); letter-spacing: 0.6px; text-transform: uppercase;
   color: var(--aluminio-claro);
 }
-.led { width: 10px; height: 10px; border-radius: 50%; background: var(--led-ligado); animation: piscar 2.4s ease-in-out infinite; }
+/* versão publicada não é "conectado": o ponto é alumínio, como o aviso de versão do app */
+.led { width: 10px; height: 10px; border-radius: 50%; background: var(--aluminio-claro); animation: piscar 2.4s ease-in-out infinite; }
 @keyframes piscar { 50% { opacity: 0.45; } }
 .barra nav { margin-left: auto; display: flex; gap: var(--l); align-items: center; }
 .barra nav a {
@@ -144,6 +147,8 @@ figure.case { margin: 0; }
 /* primeira dobra */
 .abertura { padding-block: var(--xxxl) 0; }
 .abertura .conteudo { display: grid; gap: var(--xxl); align-items: center; }
+/* coluna de grade não cresce pelo conteúdo (imagem ainda carregando, texto alternativo longo) */
+.abertura .conteudo > *, .passagem > * { min-width: 0; }
 .slot {
   font: 400 clamp(64px, 12vw, 128px)/0.9 var(--fonte-estencil);
   color: var(--texto); margin: 0; letter-spacing: 0.01em;
@@ -162,6 +167,8 @@ figure.case { margin: 0; }
   color: var(--texto-secundario);
 }
 .miudo .versao { color: var(--aluminio-claro); }
+.nota-macos { margin: var(--m) 0 0; font-size: 15px; color: var(--texto-secundario); }
+.nota-macos em { font-style: normal; color: var(--aluminio-claro); }
 
 /* títulos de seção: alumínio em caixa alta, como no app */
 .secao { padding-block: var(--secao) 0; }
@@ -198,6 +205,10 @@ figure.case { margin: 0; }
 .familia-modulacao { --cor-familia: var(--familia-modulacao); }
 .familia-gabinete { --cor-familia: var(--familia-gabinete); }
 .familia-filtro { --cor-familia: var(--familia-filtro); }
+.familia-utilitario { --cor-familia: var(--familia-utilitario); }
+.familia-delay { --cor-familia: var(--familia-delay); }
+.familia-drive { --cor-familia: var(--familia-drive); }
+.familia-reverb { --cor-familia: var(--familia-reverb); }
 
 /* passagens: texto de um lado, tela do outro */
 .passagem { display: grid; gap: var(--xxl); align-items: center; padding-block: var(--xxxl); border-top: 1px solid var(--filete); }
@@ -272,9 +283,11 @@ pre {
   .passagem { grid-template-columns: 5fr 7fr; }
   .passagem.invertida > :first-child { order: 2; }
   .conversa { grid-template-columns: 1fr 1fr; align-items: start; gap: var(--xxl); }
-  .cadeia { grid-template-columns: repeat(6, 1fr); }
+  /* dez recursos: duas fileiras de cinco, o fio não sai da quinta */
+  .cadeia { grid-template-columns: repeat(5, 1fr); }
   .pedal-caixa { aspect-ratio: 1; }
   .pedal-caixa::after { display: block; }
+  .pedal:nth-child(5n) .pedal-caixa::after { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

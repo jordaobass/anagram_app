@@ -1520,4 +1520,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get t3kSemAutor => 'no author';
+
+  @override
+  String get uiDicas => 'Tips';
+
+  @override
+  String ctlResumo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n assigned',
+      one: '1 assigned',
+      zero: 'none assigned',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ctlMostrar => 'Show the pedal controls';
+
+  @override
+  String get ctlRecolher => 'Collapse the pedal controls';
+
+  @override
+  String sbSubstitui(String nome) {
+    return 'replaces $nome';
+  }
+
+  @override
+  String get sbSubstituirAqui => 'Replace the preset in this slot';
 }

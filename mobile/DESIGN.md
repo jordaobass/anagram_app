@@ -187,14 +187,14 @@ Divergência entre direção e construído: o contrato pede "ABS preto texturiza
 Casco preto neutro com alumínio frio, um único acento âmbar de ação e uma família de dez cores de roadie restrita aos blocos.
 
 ### Primary
-- **Âmbar Tally** (`tally`): botão primário (SALVAR NO SLOT, LIGADO, CONECTAR), cena ativa, contorno de 2px da casa selecionada, filete esquerdo e rótulo do slot aberto na lista, anel de foco do knob, "AO VIVO" ligado e o interruptor. Texto sobre ele é sempre `sobre-tally`.
+- **Âmbar Tally** (`tally`): botão primário (SALVAR com edição, CONECTAR), cena ativa, contorno de 2px da casa selecionada, filete esquerdo e rótulo do slot aberto na lista, anel de foco do knob, "AO VIVO" ligado e o interruptor. Texto sobre ele é sempre `sobre-tally`.
 
 ### Secondary
 - **Fita Gaffer** (`fita-gaffer`, borda inferior `fita-gaffer-sombra`): o fundo do nome do preset e do snackbar; também o ponteiro do knob. Nunca em chip, segmento ou seleção: o tema deixa `secondary` em alumínio e a seleção de chip/segmento em `painel-elevado` com contorno âmbar. Texto sobre ela é sempre `tinta-marcador`.
 - **Fita de Alerta** (`fita-alerta`): só o selo "NÃO SALVO", com texto branco.
 
 ### Tertiary
-- **Fitas de Família** (`familia-*`): dez cores, uma por família de bloco (drive, compressor, equalizador, filtro, modulação, delay, reverb, amplificador, gabinete, utilitário). Aparecem na fita de 4px sob a casa, no arco do knob, no corpo da arte própria de bloco e na opção marcada de parâmetro de escolha (com texto `tinta-marcador`).
+- **Fitas de Família** (`familia-*`): dez cores, uma por família de bloco (drive, compressor, equalizador, filtro, modulação, delay, reverb, amplificador, gabinete, utilitário). Aparecem na fita de 4px sob a casa, no arco do knob, no corpo da arte própria de bloco e na opção marcada de parâmetro de escolha (com texto `tinta-marcador`). Família de cor neutra (utilitário, gabinete) não preenche a opção marcada, que pareceria desabilitada: ela fica em `painel-elevado` com contorno `tally` de 2px e um check (DECISOES UI1).
 - **LEDs de conexão** (`led-ligado`, `led-demonstracao`, `led-desligado`, mais `tally` em "conectando" e `erro` em falha): ponto de 10px na barra de conexão.
 
 ### Neutral
@@ -264,13 +264,13 @@ Cantos quase retos: 3px em molduras de case, 6px em controles (botões, cenas, c
 ### Buttons
 Táteis e diretos, sempre ≥ 48dp, texto em Barlow Condensed caixa alta.
 - **Shape:** cantos de controle (6px).
-- **Primário:** âmbar tally, texto `sobre-tally`, 16px de lateral. Ex.: SALVAR (só com edição não salva, junto do selo NÃO SALVO; sem edição ele é contorno), CONECTAR, LIGADO.
-- **Contorno:** transparente, borda de 1px `aluminio`, texto `texto`. Ex.: SALVAR sem edição, SALVAR COMO, DESCARTAR, DESLIGADO, ABRIR DEMONSTRAÇÃO.
-- **Foco:** cor de foco é âmbar a 24% de opacidade.
+- **Primário:** âmbar tally, texto `sobre-tally`, 16px de lateral. Ex.: SALVAR (só com edição não salva, junto do selo NÃO SALVO; sem edição ele é contorno), CONECTAR.
+- **Contorno:** transparente, borda de 1px `aluminio`, texto `texto`. Ex.: SALVAR sem edição, SALVAR COMO, DESCARTAR, ABRIR DEMONSTRAÇÃO, DISPARAR da bateria, e LIGADO/DESLIGADO do bloco, que é estado e não ação: contorno com LED de 10px em `led-ligado` (ou `led-desligado`) no lugar do ícone (DECISOES UI7).
+- **Foco:** contorno sólido de 2px em `tally` (acima de 3:1 sobre o case e os painéis); em botão já preenchido, o anel é da cor do texto dele (`sobre-tally` no âmbar). O realce âmbar a 24% fica só nas superfícies de toque sem contorno (linhas da lista) (DECISOES UI3).
 - **Descartar:** no computador fica à vista, desabilitado sem edição; no celular SALVAR, SALVAR COMO e um menu ⋯ (Descartar, Importar, Exportar) cabem numa linha.
-- **Enquanto o Salvar como espera o destino**, os botões de cima ficam desabilitados: a ação está na lista.
+- **Enquanto o Salvar como espera o destino**, os botões de cima ficam desabilitados: a ação está na lista. Na lista, o slot vazio mostra o ícone de gravar (`aluminio`); o ocupado, o ícone de substituir em `aluminio-claro` e, no lugar do nome, "substitui <nome>" em body-small (DECISOES UI8).
 - **Diálogo de confirmação:** cancelar em texto neutro (`texto`) à esquerda; confirmar à direita, sempre preenchido em `fita-alerta` com texto `sobre-alerta`, porque todo confirmar ali apaga ou sobrescreve algo.
-- **Ícone:** Material Icons via IconButton com tooltip (desconectar, créditos, copiar bloco). O menu do arquivo do preset tem ícone próprio (⇅ no computador, ⋯ no celular), para não se confundir com o ⋮ do bloco.
+- **Ícone:** Material Icons via IconButton com tooltip (desconectar, créditos, copiar bloco). O menu do arquivo do preset tem ícone próprio (pasta de arquivo no computador, ⋯ no celular), para não se confundir com o ⋮ do bloco. Todo item de menu (preset, bloco, arquivo, atribuir) leva ícone à esquerda em `aluminio-claro`; "Limpar preset…" fica sozinho depois de um divisor, ícone e texto em `erro`. Cancelar de diálogo é sempre texto neutro (`texto`), nunca âmbar (DECISOES UI6).
 
 ### Cenas
 Três botões de largura igual, altura 56px. Inativo: `painel-elevado` com borda de filete. Ativo: preenchido em âmbar. Número em estêncil + nome em caixa alta; cena sem nome mostra só o número e "CENA" (nunca "1 CENA 1").
@@ -283,7 +283,7 @@ Na linha das cenas, à direita dos três botões: PRESET / STOMP / SCENE em píl
 Movimento: ao trocar, a cor acende na nova e apaga na antiga (220ms, ease-out); quando a releitura confirma, a nova dá um pulso de brilho na própria cor (420ms); recusa volta ao valor real com um tremor horizontal de 3px que amortece, sem cor, e a frase de erro sob as cenas. Com "reduzir movimento" do sistema, a troca é seca e não há pulso nem tremor. Nas Configurações o modo é um cartão "Footswitches" com três botões iguais aos de cena.
 
 ### Fita do Preset (assinatura)
-Slot em estêncil de 40px à esquerda (no celular, com "PRESETS ▾" embaixo: tocar abre a lista), seguido da fita gaffer creme com o nome a marcador, um lápis discreto em alumínio (tocar a fita renomeia) e, se houver edição não salva, o selo vermelho "NÃO SALVO" no fim da fita. Os avisos sob a fita (ao vivo desligado, audição sem USB MIDI) usam `erro`, não âmbar.
+Slot em estêncil de 40px à esquerda (no celular, com "PRESETS ▾" embaixo: tocar abre a lista), seguido da fita gaffer creme com o nome a marcador, um lápis discreto em alumínio (tocar a fita renomeia) e, se houver edição não salva, o selo vermelho "NÃO SALVO" no fim da fita. Os avisos sob a fita (ao vivo desligado, audição sem USB MIDI) usam `erro`, não âmbar. A tela de conectar abre com a mesma assinatura: "01A" em estêncil e a fita com "Anagram App" a marcador; ao conectar ou abrir a demonstração, o giro e a frase ("Conectando (USB)…", "Abrindo a demonstração…") ficam dentro do botão tocado, com a cor mantida, e o outro botão desabilitado (DECISOES UI9).
 
 ### Moldura de Case
 Painel `painel` com filete de 1px, canto de 3px e cantoneiras de alumínio pintadas por cima. Envolve a grade de blocos e o painel de parâmetros.
@@ -292,10 +292,10 @@ Painel `painel` com filete de 1px, canto de 3px e cantoneiras de alumínio pinta
 Lida como um pedalboard: o fio (`aluminio`, 2px) sai do jaque IN à esquerda, passa pelos pedais na ordem e chega ao jaque OUT à direita; depois do último pedal o fio segue tracejado em `filete` até o OUT. Caixas de pedal e encaixes vazios são opacos e cobrem o fio. A linha 2 só tem fio quando há split: desce em 45° no split e sobe no merge (sem merge, no OUT). No celular as casas vão na posição real (buracos com encaixe), e o fio liga as caixas de cada fileira.
 
 ### Casa de Bloco
-Pedal numa caixa fixa (`painel`, filete de 1px, canto de 6px) para as fotos de proporções diferentes ficarem alinhadas; fita de família de 4px; nome em label-medium (14px). Casa vazia: encaixe tracejado do tamanho da caixa com "+" a 32% dela. Selecionada: fundo `painel-elevado` + contorno âmbar de 2px. Desligada: a imagem de bypass da pedaleira (ou a arte a 38% em cinza) com o mesmo selo "OFF" por cima, e nome em `texto-secundario`. Transição de 150ms. Toque seleciona na hora; o segundo toque dentro do prazo do duplo liga/desliga; toque longo/botão direito abre menu. No painel do bloco, toque duplo no pedal também liga/desliga, e "só na cena N" fica em `aluminio-claro`.
+Pedal numa caixa fixa (`painel`, filete de 1px, canto de 6px) para as fotos de proporções diferentes ficarem alinhadas; fita de família de 4px; nome em label-medium (14px). Casa vazia: encaixe tracejado do tamanho da caixa com "+" a 32% dela. Selecionada: fundo `painel-elevado` + contorno âmbar de 2px. Desligada: a imagem de bypass da pedaleira (ou a arte a 38% em cinza) com o mesmo selo "OFF" por cima, e nome em `texto-secundario`. Transição de 150ms. Toque seleciona na hora; o segundo toque dentro do prazo do duplo liga/desliga; toque longo/botão direito abre menu. No painel do bloco, toque duplo no pedal também liga/desliga, e "só na cena N" fica em `aluminio-claro`. As dicas de gesto do painel ficam atrás de um "?" (48dp, `aluminio-claro`) ao lado do nome do bloco; "Controles da pedaleira" recolhe pelo título e só abre sozinho com controle atribuído (DECISOES UI2).
 
 ### Knob
-Nome do parâmetro em caixa alta acima, valor tabular abaixo. Trilho em filete, arco na cor da família, corpo `painel-elevado` com aro de alumínio (âmbar 2px quando focado), ponteiro em fita gaffer. Arraste vertical/horizontal, rodinha, setas (Shift = passo de 10%), toque duplo volta ao padrão. Parâmetros com poucas opções viram coluna de botões: marcado em cor da família, demais em contorno.
+Nome do parâmetro em caixa alta acima, valor tabular abaixo. Trilho em filete, arco na cor da família, corpo `painel-elevado` com aro de alumínio (âmbar 2px quando focado), ponteiro em fita gaffer. Arraste vertical/horizontal, rodinha, setas (Shift = passo de 10%), toque duplo volta ao padrão. Parâmetros com poucas opções viram coluna de botões: marcado em cor da família (ou, em família neutra, `painel-elevado` + contorno âmbar + check), demais em contorno.
 
 ### Navigation
 - **Barra de conexão:** 64px, `painel`, filete inferior. LED de 10px + estado em title-small, "AO VIVO" + interruptor âmbar, latência "ida e volta N ms" (só na ampla), ícones de desconectar e créditos. Com versão nova publicada, aviso discreto: ícone em `aluminio-claro` + "vX.Y.Z disponível" em label-medium + BAIXAR (texto em âmbar, é ação) + fechar ("Lembrar depois"); abaixo de 1200px de janela, só o ícone, com as duas ações num menu.
@@ -343,7 +343,7 @@ Este bloco vale por cima de qualquer frase anterior deste arquivo que diga o con
   texto normal com ícone de informação.
 - **Área de presets:** o campo mostra só o nome que a pessoa deu; a área ativa na pedaleira é marcada ao
   lado com o LED `led-ligado` e o rótulo ATIVA, nunca colada no nome.
-- **Versão do app:** só na tela Sobre, com "· arte da pedaleira" quando o build traz a arte.
+- **Versão do app:** na tela Sobre, com "· arte da pedaleira" quando o build traz a arte, e também na barra de cima a partir de 880px de janela, ao lado do estado e do firmware (pedido do dono depois desta regra; DECISOES UI9).
 - **Idioma:** pílulas no topo da tela Sobre e um menu compacto (globo + idioma atual) na tela de conectar.
 - **Sem USB na plataforma** (iPhone/iPad, navegador sem WebHID): título "Modo demonstração", uma frase,
   ABRIR DEMONSTRAÇÃO como botão primário e "POR QUÊ?" com a explicação inteira.

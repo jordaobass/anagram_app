@@ -11,6 +11,7 @@ import '../../l10n/app_localizations.dart';
 import '../../nucleo/modelo/areas_presets.dart';
 import '../../nucleo/modelo/presets_fabrica.dart';
 import '../../nucleo/modelo/slot_preset.dart';
+import '../tema/tokens.dart';
 import '../textos.dart';
 import 'dialogo_confirmar.dart';
 import 'fluxo_salvar.dart';
@@ -49,6 +50,14 @@ Future<String?> _escolherArea(BuildContext context, AreasDaPedaleira areas) asyn
             onPressed: () => Navigator.pop(contexto, area.id),
             child: Text(area.id == areas.ativa ? '${l.nomeDaArea(area)} · ${l.txAtiva}' : l.nomeDaArea(area)),
           ),
+        // toda escolha em diálogo tem saída à vista, não só tocar fora
+        Padding(
+          padding: const EdgeInsets.fromLTRB(Espacos.l, Espacos.s, Espacos.l, 0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: BotaoCancelarDialogo(rotulo: l.cancelar, aoTocar: () => Navigator.pop(contexto)),
+          ),
+        ),
       ],
     ),
   );
