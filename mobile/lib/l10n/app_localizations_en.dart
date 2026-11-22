@@ -519,6 +519,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get idiomaDoSistema => 'System';
 
   @override
+  String get temaSecao => 'Appearance';
+
+  @override
+  String get temaSistema => 'System';
+
+  @override
+  String get temaEscuro => 'Dark';
+
+  @override
+  String get temaClaro => 'Light';
+
+  @override
   String get separadorDecimal => '.';
 
   @override

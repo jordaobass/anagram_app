@@ -1,4 +1,4 @@
-// Configurações do app: idioma, os ajustes globais da pedaleira conectada (e a
+// Configurações do app: idioma, tema (sistema, escuro ou claro), os ajustes globais da pedaleira conectada (e a
 // pausa entre pacotes USB, que vale mesmo sem pedaleira) e,
 // no computador, a IA local pelo MCP, as atualizações e o registro para
 // suporte. Abre pela engrenagem da barra de cima, conectado ou não; no
@@ -20,6 +20,7 @@ import '../componentes/secao_registro.dart';
 import '../componentes/secao_versao_nova.dart';
 import '../componentes/seletor_pausa.dart';
 import '../componentes/seletor_idioma.dart';
+import '../componentes/seletor_tema.dart';
 import '../rotas.dart';
 import '../tema/tokens.dart';
 
@@ -44,6 +45,7 @@ class TelaConfiguracoes extends ConsumerWidget {
       // o idioma vem antes de tudo: quem caiu num idioma que não lê precisa achá-lo
       TituloSecao(l.idioma),
       const Align(alignment: Alignment.centerLeft, child: SeletorIdioma()),
+      ..._secao(l.temaSecao, const Align(alignment: Alignment.centerLeft, child: SeletorTema())),
       ..._secao(
           l.pdSecao,
           _pedaleira(

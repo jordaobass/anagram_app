@@ -1,12 +1,15 @@
-// O tema do case num jogo de cores só: o escuro (palco e bancada mal
+// O tema do case em dois jogos de cores: o escuro (palco e bancada mal
 // iluminados pedem fundo escuro, texto claro de alto contraste e alvos
-// grandes). Tudo aqui pede a cor pelo papel na [Paleta].
+// grandes) e o claro (o case de alumínio à luz do dia). Os dois usam o mesmo
+// desenho: tudo aqui pede a cor pelo papel na [Paleta].
 import 'package:flutter/material.dart';
 
 import 'tokens.dart';
 
 abstract final class TemaApp {
   static ThemeData escuro() => _tema(Paleta.escura);
+
+  static ThemeData claro() => _tema(Paleta.clara);
 
   static ThemeData _tema(Paleta p) {
     final texto = _texto(p);
@@ -21,7 +24,10 @@ abstract final class TemaApp {
       visualDensity: VisualDensity.standard,
       filledButtonTheme: FilledButtonThemeData(style: _botao(texto, p.tally, p.sobreTally)),
       outlinedButtonTheme: OutlinedButtonThemeData(style: _botaoContornado(p, texto)),
-      textButtonTheme: TextButtonThemeData(style: ButtonStyle(side: anelDeFoco(p.tallyTinta), shape: _formaControle)),
+      // o texto do botão de texto é ação: âmbar de tinta (o de preenchimento some no claro)
+      textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(foregroundColor: p.tallyTinta)
+              .copyWith(side: anelDeFoco(p.tallyTinta), shape: _formaControle)),
       iconButtonTheme: IconButtonThemeData(style: ButtonStyle(side: anelDeFoco(p.tallyTinta))),
       appBarTheme: _barraDeTitulo(p),
       dialogTheme: _dialogo(p, texto),

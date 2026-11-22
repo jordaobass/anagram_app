@@ -44,6 +44,9 @@ class Paleta extends ThemeExtension<Paleta> {
     required this.linhaLevel,
     required this.mixerGlobal,
     required this.textoSobreModoEq,
+    required this.corpoKnob,
+    required this.alcaGrafico,
+    required this.mioloAlca,
     required this.familias,
     required this.bandas,
     required this.modosEq,
@@ -106,6 +109,18 @@ class Paleta extends ThemeExtension<Paleta> {
 
   /// Texto sobre o chip colorido do modo do Global EQ.
   final Color textoSobreModoEq;
+
+  /// Corpo do knob e do cursor do fader; o ponteiro por cima é a fita gaffer.
+  /// No claro o knob é preto, como o de verdade num case de alumínio: um
+  /// corpo claro com ponteiro creme sumia.
+  final Color corpoKnob;
+
+  /// Ponto arrastável sobre os gráficos (bandas do EQ): creme no escuro,
+  /// grafite no claro.
+  final Color alcaGrafico;
+
+  /// O miolo do puxador da alça de frequência, que é da cor do texto.
+  final Color mioloAlca;
   final Map<FamiliaBloco, Color> familias;
   final Map<(PaletaBandas, BandaMultibanda), Color> bandas;
   final Map<ModoEq, Color> modosEq;
@@ -173,6 +188,9 @@ class Paleta extends ThemeExtension<Paleta> {
     linhaLevel: Color(0xFF7BD86A),
     mixerGlobal: Color(0xFF7FB2E5),
     textoSobreModoEq: Color(0xFF101114),
+    corpoKnob: Color(0xFF24262A),
+    alcaGrafico: Color(0xFFE8E1CD),
+    mioloAlca: Color(0xFF17171A),
     familias: {
       FamiliaBloco.drive: Color(0xFFE8772E),
       // verde-limão: o amarelo antigo (E2C23A) se confundia com o âmbar de ação
@@ -203,6 +221,78 @@ class Paleta extends ThemeExtension<Paleta> {
       ModoEq.gain: Color(0xFF5FCF7E),
       ModoEq.freq: Color(0xFF9B84F5),
       ModoEq.width: Color(0xFFF2A531),
+    },
+  );
+
+  /// O case de alumínio: degraus claros (o elevado é o mais claro, como no
+  /// escuro), filetes e tintas escuros. As cores de destaque (família, banda,
+  /// fio, linhas do EQ) mantêm matiz e saturação e baixam a luminância até a
+  /// faixa em que passam de 3:1 sobre o painel e ainda levam a tinta de
+  /// marcador por cima no AA (DECISOES TC3).
+  static const clara = Paleta(
+    brilho: Brightness.light,
+    fundoCase: Color(0xFFDFE1E3),
+    painel: Color(0xFFECEEF0),
+    painelElevado: Color(0xFFF8F9FA),
+    filete: Color(0xFFC5C9CE),
+    aluminio: Color(0xFF6B7178),
+    aluminioClaro: Color(0xFF454B52),
+    texto: Color(0xFF16181B),
+    textoSecundario: Color(0xFF50565D),
+    fitaGaffer: Color(0xFFE8E1CD),
+    fitaGafferSombra: Color(0xFFB9AE8E),
+    tintaMarcador: Color(0xFF17171A),
+    tally: Color(0xFFF0B429),
+    sobreTally: Color(0xFF1A1405),
+    tallyTinta: Color(0xFF865600),
+    fitaAlerta: Color(0xFFC2361F),
+    sobreAlerta: Color(0xFFFFFFFF),
+    ledLigado: Color(0xFF15703F),
+    ledDemonstracao: Color(0xFF1F69AE),
+    ledDesligado: Color(0xFF868B92),
+    erro: Color(0xFFB3261E),
+    modoStomp: Color(0xFF6B46D6),
+    modoPreset: Color(0xFF2B2E33),
+    modoScene: Color(0xFF16679F),
+    sobreModo: Color(0xFFFFFFFF),
+    sinalSplit: Color(0xFF958209),
+    sinalMerge: Color(0xFF1C937F),
+    linhaThreshold: Color(0xFFED3786),
+    linhaLevel: Color(0xFF389527),
+    mixerGlobal: Color(0xFF3585D6),
+    textoSobreModoEq: Color(0xFF101114),
+    corpoKnob: Color(0xFF2B2E33),
+    alcaGrafico: Color(0xFF2B2E33),
+    mioloAlca: Color(0xFFF8F9FA),
+    familias: {
+      FamiliaBloco.drive: Color(0xFFD36117),
+      FamiliaBloco.compressor: Color(0xFF778B1E),
+      FamiliaBloco.equalizador: Color(0xFF238EA8),
+      FamiliaBloco.filtro: Color(0xFF936DE1),
+      FamiliaBloco.modulacao: Color(0xFF279278),
+      FamiliaBloco.delay: Color(0xFF4B7EED),
+      FamiliaBloco.reverb: Color(0xFFCE55A8),
+      FamiliaBloco.amplificador: Color(0xFFE0543C),
+      FamiliaBloco.gabinete: Color(0xFF987F51),
+      FamiliaBloco.utilitario: Color(0xFF7B838D),
+    },
+    bandas: {
+      (PaletaBandas.ignissor, BandaMultibanda.graves): Color(0xFF4B7EED),
+      (PaletaBandas.ignissor, BandaMultibanda.medios): Color(0xFF279278),
+      (PaletaBandas.ignissor, BandaMultibanda.agudos): Color(0xFFCE55A8),
+      (PaletaBandas.entropia, BandaMultibanda.graves): Color(0xFF29918A),
+      (PaletaBandas.entropia, BandaMultibanda.medios): Color(0xFF906CE8),
+      (PaletaBandas.entropia, BandaMultibanda.agudos): Color(0xFFBC710E),
+    },
+    modosEq: {
+      ModoEq.gain: Color(0xFF2D9549),
+      ModoEq.freq: Color(0xFF8A6CF2),
+      ModoEq.width: Color(0xFFB8730C),
+    },
+    textosModoEq: {
+      ModoEq.gain: Color(0xFF237339),
+      ModoEq.freq: Color(0xFF6842EE),
+      ModoEq.width: Color(0xFF8E5909),
     },
   );
 

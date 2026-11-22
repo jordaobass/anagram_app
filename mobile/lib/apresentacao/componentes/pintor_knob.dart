@@ -29,7 +29,7 @@ class PintorKnob extends CustomPainter {
     canvas.drawArc(arco, _inicio, _varredura, false, _traco(cores.filete));
     canvas.drawArc(arco, _inicio + _varredura * origem, _varredura * (fracao - origem), false, _traco(cor));
     final corpo = raio - Medidas.espessuraArco * Medidas.folgaCorpoKnob;
-    canvas.drawCircle(centro, corpo, Paint()..color = cores.painelElevado);
+    canvas.drawCircle(centro, corpo, Paint()..color = cores.corpoKnob);
     canvas.drawCircle(
       centro,
       corpo,

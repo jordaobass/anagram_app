@@ -10,6 +10,8 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import 'fixtures.dart';
 import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
+import 'package:anagram_app/aplicacao/tema.dart';
+import 'package:anagram_app/dados/preferencias_tema.dart';
 import 'package:anagram_app/aplicacao/mcp/controlador_mcp.dart';
 import 'package:anagram_app/dados/preferencias_idioma.dart';
 import 'package:anagram_app/dados/preferencias_mcp.dart';
@@ -52,6 +54,7 @@ const versaoNasCapturas = '0.1.3';
 Widget appDeTeste(
         {List<Override> overrides = const [],
         IdiomaApp? idioma = IdiomaApp.portugues,
+        EscolhaTema? tema = EscolhaTema.escuro,
         IndiceMiniaturas? indice,
         PresetsDeFabrica? fabrica,
         ServidorMcp? servidorMcp,
@@ -92,9 +95,23 @@ Widget appDeTeste(
         // o ambiente de teste é en-US: as capturas de referência são em português
         // (nulo = seguir o idioma do sistema)
         idiomaSalvoProvider.overrideWithValue(idioma),
+        // o ambiente de teste é claro: as capturas e os testes de tela são no
+        // escuro, a não ser que o teste peça outro tema
+        temaSalvoProvider.overrideWithValue(tema),
       ],
       child: const AppAnagram(),
     );
+
+/// Guarda a escolha de tema só em memória (o teste não toca no disco).
+class PreferenciasTemaEmMemoria implements PreferenciasTema {
+  String? salvo;
+
+  @override
+  Future<String?> ler() async => salvo;
+
+  @override
+  Future<void> gravar(String codigo) async => salvo = codigo;
+}
 
 /// Guarda a escolha de idioma só em memória (o teste não toca no disco).
 class PreferenciasIdiomaEmMemoria implements PreferenciasIdioma {

@@ -95,7 +95,7 @@ class PintorGlobalEq extends CustomPainter {
   }
 
   void _ponto(Canvas canvas, Offset centro, {required bool destaque, required bool ligada}) {
-    final miolo = ligada ? cores.fitaGaffer : cores.fitaGaffer.withValues(alpha: Opacidades.itemIndisponivel);
+    final miolo = ligada ? cores.alcaGrafico : cores.alcaGrafico.withValues(alpha: Opacidades.itemIndisponivel);
     canvas.drawCircle(centro, Medidas.raioPontoEq, Paint()..color = miolo);
     canvas.drawCircle(centro, Medidas.raioPontoEq,
         _traco(destaque ? cores.tallyTinta : cores.painel, destaque ? Medidas.contornoSelecao : Medidas.filete));

@@ -31,6 +31,9 @@ void main() {
     final copiar = find.byKey(const ValueKey('copiar-registro'));
     await tester.scrollUntilVisible(copiar, 200, scrollable: find.byType(Scrollable).first);
     expect(find.textContaining(r'Anagram App\logs\anagram-app.log'), findsOneWidget);
+    // a rolagem pode parar com o botão na borda: traz ele inteiro para a tela
+    await tester.ensureVisible(copiar);
+    await tester.pumpAndSettle();
     await tester.tap(copiar);
     await tester.pumpAndSettle();
 

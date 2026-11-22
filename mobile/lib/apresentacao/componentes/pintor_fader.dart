@@ -31,7 +31,7 @@ class PintorFader extends CustomPainter {
       Rect.fromCenter(center: Offset(x, y(fracao)), width: Medidas.larguraCursorFader, height: Medidas.alturaCursorFader),
       const Radius.circular(Raios.canto),
     );
-    canvas.drawRRect(cursor, Paint()..color = cores.painelElevado);
+    canvas.drawRRect(cursor, Paint()..color = cores.corpoKnob);
     canvas.drawRRect(
       cursor,
       Paint()

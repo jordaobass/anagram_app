@@ -140,7 +140,7 @@ class PintorAlcaFrequencia extends CustomPainter {
     );
     final centro = Offset(x, size.height / 2);
     canvas.drawCircle(centro, Medidas.puxadorAlcaFrequencia / 2, Paint()..color = cores.texto);
-    canvas.drawCircle(centro, Medidas.puxadorAlcaFrequencia / 4, Paint()..color = cores.tintaMarcador);
+    canvas.drawCircle(centro, Medidas.puxadorAlcaFrequencia / 4, Paint()..color = cores.mioloAlca);
     final pintor = TextPainter(text: TextSpan(text: texto, style: estilo), textDirection: TextDirection.ltr)..layout();
     final dx = aEsquerda ? x - Espacos.xs - pintor.width : x + Espacos.xs;
     pintor.paint(canvas, Offset(dx, Espacos.xxs));
