@@ -1,10 +1,11 @@
-// Transporte USB para Linux e Windows via hidapi. A leitura bloqueante
-// roda num isolate próprio para não travar a interface.
+// Transporte USB para Linux e Windows via hidapi. A leitura e a escrita
+// bloqueantes rodam cada uma num isolate próprio para não travar a interface
+// (o hidapi aceita ler e escrever o mesmo dispositivo em threads distintas).
 //
 // Quem fecha o dispositivo é o isolate de leitura, e só depois de sair do
 // laço: fechar pelo lado principal enquanto o `hid_read_timeout` ainda roda
-// seria usar um handle já liberado (queda do app). O lado principal só pede a
-// parada e libera a memória compartilhada quando o isolate termina.
+// seria usar um handle já liberado (queda do app). Pelo mesmo motivo a parada
+// da leitura só é pedida depois que a fila de escrita terminou o que tinha.
 import 'dart:async';
 import 'dart:ffi';
 import 'dart:io' show sleep;
@@ -18,6 +19,7 @@ import '../nucleo/protocolo/quadros_hid.dart';
 import '../nucleo/protocolo/transporte_anagram.dart';
 import '../nucleo/registro.dart';
 import 'ciclo_leitura_hid.dart';
+import 'fila_escrita_isolada.dart';
 import 'hidapi_ffi.dart';
 
 /// Uma interface da Anagram que o `hid_enumerate` listou.
@@ -48,6 +50,7 @@ class TransporteHidapi with FluxosDoTransporte implements TransporteAnagram {
 
   HidApi? _api;
   _SessaoLeitura? _sessao;
+  FilaEscritaIsolada? _escrita;
 
   /// Sem pausa: na bancada (Windows, fw 1.19.2.24, DECISOES SV3) 0 ms
   /// respondeu em todos os envios e levou um preset de 50 relatórios de
@@ -76,8 +79,32 @@ class TransporteHidapi with FluxosDoTransporte implements TransporteAnagram {
       throw const ErroInterfaceOcupada('A interface de controle não abriu (Suite aberto ou sem permissão udev).');
     }
     _sessao = await _SessaoLeitura.iniciar(api, dispositivo, aoReceber: entregarRelatorio, aoPerder: _aoPerder);
+    await _iniciarEscrita(api.nomeBiblioteca, dispositivo.address);
     anunciarEstado(EstadoTransporte.aberto);
   }
+
+  Future<void> _iniciarEscrita(String biblioteca, int dispositivo) async {
+    try {
+      _escrita = await FilaEscritaIsolada.iniciar(_escritorHid(biblioteca, dispositivo));
+    } on Object catch (erro, pilha) {
+      registro.e('hidapi: a escrita não começou', error: erro, stackTrace: pilha);
+      _soltar();
+      throw const ErroDesconectado('Não foi possível começar a escrever no USB.');
+    }
+  }
+
+  /// Monta, dentro do isolate de escrita, o `hid_write` do dispositivo.
+  static EscreverRelatorio Function() _escritorHid(String biblioteca, int dispositivo) => () {
+        final api = HidApi.carregar(biblioteca)!;
+        final alvo = Pointer<Void>.fromAddress(dispositivo);
+        return (relatorio) {
+          final memoria = calloc<Uint8>(relatorio.length);
+          memoria.asTypedList(relatorio.length).setAll(0, relatorio);
+          final escritos = api.hid_write(alvo, memoria, relatorio.length);
+          calloc.free(memoria);
+          return escritos;
+        };
+      };
 
   static List<CandidatoHid> _listarCandidatos(HidApi api) {
     final lista = api.hid_enumerate(ProtocoloAnagram.idFornecedor, ProtocoloAnagram.idProduto);
@@ -113,15 +140,12 @@ class TransporteHidapi with FluxosDoTransporte implements TransporteAnagram {
     anunciarEstado(EstadoTransporte.perdido);
   }
 
+  /// Conclui depois que o relatório foi escrito, na ordem dos pedidos.
   @override
   Future<void> enviarRelatorio(Uint8List relatorio) async {
-    final api = _api;
-    final sessao = _sessao;
-    if (api == null || sessao == null) throw const ErroDesconectado('USB fechado.');
-    final memoria = calloc<Uint8>(relatorio.length);
-    memoria.asTypedList(relatorio.length).setAll(0, relatorio);
-    final escritos = api.hid_write(sessao.dispositivo, memoria, relatorio.length);
-    calloc.free(memoria);
+    final escrita = _escrita;
+    if (escrita == null || _sessao == null) throw const ErroDesconectado('USB fechado.');
+    final escritos = await escrita.escrever(relatorio);
     if (escritos < 0) throw const ErroDesconectado('Falha de escrita no USB.');
   }
 
@@ -131,9 +155,16 @@ class TransporteHidapi with FluxosDoTransporte implements TransporteAnagram {
     anunciarEstado(EstadoTransporte.fechado);
   }
 
+  /// A leitura (que fecha o dispositivo) só para depois que a escrita
+  /// terminou o que estava na fila.
   void _soltar() {
-    _sessao?.pedirParada();
+    final sessao = _sessao;
+    final escrita = _escrita;
     _sessao = null;
+    _escrita = null;
+    if (sessao == null) return;
+    if (escrita == null) return sessao.pedirParada();
+    unawaited(escrita.encerrar().whenComplete(sessao.pedirParada));
   }
 }
 
@@ -197,8 +228,8 @@ class _PedidoLeitura {
 }
 
 /// Lê até pedirem a parada. Se a leitura falhar antes, avisa e continua
-/// esperando a parada sem fechar nada: o lado principal pode estar no meio de
-/// um `hid_write` com este mesmo dispositivo.
+/// esperando a parada sem fechar nada: o isolate de escrita pode estar no
+/// meio de um `hid_write` com este mesmo dispositivo.
 void _lerEmLaco(_PedidoLeitura pedido) {
   final api = HidApi.carregar(pedido.biblioteca)!;
   final dispositivo = Pointer<Void>.fromAddress(pedido.dispositivo);
