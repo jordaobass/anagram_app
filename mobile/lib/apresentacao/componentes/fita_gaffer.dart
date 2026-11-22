@@ -1,6 +1,6 @@
 // A fita gaffer creme com a borda de baixo mais escura (espessura de fita
 // colada): o nome do preset na faixa do editor e o nome do app na tela de
-// conectar. Só existe onde há nome escrito a marcador.
+// conectar. Só existe onde há nome escrito.
 import 'package:flutter/material.dart';
 
 import '../tema/tokens.dart';

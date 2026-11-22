@@ -301,7 +301,7 @@ class MedidasDoTopo {
     cena: Medidas.alvoMinimo + Espacos.s,
     alvoPilula: Medidas.alvoMinimo,
     slot: 40,
-    nomePreset: 26,
+    nomePreset: 24,
     entreFaixas: Espacos.l,
   );
 
@@ -365,6 +365,17 @@ abstract final class Fontes {
 
 /// Estilos de texto fora da escala do Material, cada um com um papel só.
 abstract final class Tipos {
+  /// O nome do preset na fita gaffer: dado do usuário, lido a um metro. A
+  /// condensada de rótulo do case em semibold, na caixa em que a pessoa
+  /// escreveu; o marcador ficou só no nome fixo do app (DECISOES BC2). O
+  /// corpo vem de [MedidasDoTopo.nomePreset].
+  static const nomePreset =
+      TextStyle(fontFamily: Fontes.rotulo, fontWeight: FontWeight.w600, letterSpacing: 0.3, height: 1.15);
+
+  /// O nome do preset na lista: o corpo do texto, um passo mais firme que a
+  /// frase comum, para a coluna de nomes se ler de relance.
+  static const nomeNaLista = FontWeight.w500;
+
   /// Item de menu (botão direito, ⋮, menus suspensos): lido como menu do
   /// sistema, não como botão. Barlow média, sem a condensada em negrito e o
   /// espaçamento largo do rótulo de botão (DECISOES UI12).

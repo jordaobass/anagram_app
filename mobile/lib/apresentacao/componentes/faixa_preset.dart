@@ -144,7 +144,7 @@ class _Fita extends StatelessWidget {
           child: Text(nome,
               maxLines: linhas,
               overflow: TextOverflow.ellipsis,
-              style: tema.headlineSmall?.copyWith(fontSize: medidas.nomePreset)),
+              style: Tipos.nomePreset.copyWith(fontSize: medidas.nomePreset, color: context.cores.tintaMarcador)),
         ),
         // tocar a fita renomeia: o lápis diz isso sem competir com o nome
         Tooltip(

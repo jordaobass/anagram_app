@@ -184,7 +184,7 @@ class _Banco extends StatelessWidget {
     final substitui = escolhendo && nome != null && slot != aberto;
     final texto = nome == null ? l.slotVazio : (substitui ? l.sbSubstitui(nome) : nome);
     return Text(texto,
-        maxLines: 1, overflow: TextOverflow.ellipsis, style: nome == null || substitui ? tema.bodySmall : tema.bodyLarge);
+        maxLines: 1, overflow: TextOverflow.ellipsis, style: nome == null || substitui ? tema.bodySmall : tema.bodyLarge?.copyWith(fontWeight: Tipos.nomeNaLista));
   }
 
   /// O menu só vale para slot com preset; o vazio não tem o que mover.
