@@ -1409,5 +1409,26 @@
   "t3kSemAutor": "sem autor",
   "@t3kSemAutor": {
     "description": "Quando o tom não traz o username"
+  },
+  "uiDicas": "Dicas",
+  "@uiDicas": {
+    "description": "Botão ? que mostra as dicas de gesto do painel"
+  },
+  "ctlResumo": "{n, plural, =0{nenhum atribuído} =1{1 atribuído} other{{n} atribuídos}}",
+  "@ctlResumo": {
+    "description": "Ao lado do título Controles da pedaleira: quantos controles têm algo atribuído",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "ctlMostrar": "Mostrar os controles da pedaleira",
+  "@ctlMostrar": {
+    "description": "Leitor de tela no cabeçalho recolhido"
+  },
+  "ctlRecolher": "Recolher os controles da pedaleira",
+  "@ctlRecolher": {
+    "description": "Leitor de tela no cabeçalho aberto"
   }
 }

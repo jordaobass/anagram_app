@@ -441,5 +441,9 @@
   "t3kResumo": "En la pedalera: {fabrica} de fábrica y {seus} enviados por ti",
   "t3kDetalheFabrica": "{autor} · licencia {licenca}",
   "t3kDetalheSeu": "{autor} · licencia {licenca} · tuyo, solo consulta",
-  "t3kSemAutor": "sin autor"
+  "t3kSemAutor": "sin autor",
+  "uiDicas": "Consejos",
+  "ctlResumo": "{n, plural, =0{ninguno asignado} =1{1 asignado} other{{n} asignados}}",
+  "ctlMostrar": "Mostrar los controles de la pedalera",
+  "ctlRecolher": "Contraer los controles de la pedalera"
 }

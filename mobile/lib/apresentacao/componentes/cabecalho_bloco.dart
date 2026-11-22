@@ -7,6 +7,7 @@ import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'arte_bloco.dart';
+import 'botao_dicas.dart';
 import 'casa_arrastavel.dart';
 import 'menu_bloco.dart';
 import 'toque_duplo.dart';
@@ -51,13 +52,15 @@ class CabecalhoBloco extends ConsumerWidget {
     ]);
   }
 
-  /// Nome, o tom carregado (se houver), onde o bloco está e as dicas de gesto.
+  /// Nome (com o "?" das dicas de gesto), o tom carregado e onde o bloco está.
   Widget _textos(BuildContext context, {required bool ligado, String? modelo}) {
     final tema = Theme.of(context).textTheme;
     final l = AppLocalizations.of(context);
-    final dica = tema.bodySmall?.copyWith(color: Cores.textoSecundario);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(l.nomeDoBloco(definicao), style: tema.titleLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
+      Row(children: [
+        Flexible(child: Text(l.nomeDoBloco(definicao), style: tema.titleLarge, maxLines: 1, overflow: TextOverflow.ellipsis)),
+        BotaoDicas(key: const ValueKey('dicas-bloco'), dicas: _dicas(l)),
+      ]),
       if (modelo != null)
         Text(modelo,
             key: const ValueKey('nome-do-modelo'),
@@ -65,16 +68,17 @@ class CabecalhoBloco extends ConsumerWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis),
       Text(l.blocoPosicao(l.familia(definicao.familia), bloco.posicao.linha, bloco.posicao.casa), style: tema.bodySmall),
-      Text(arrastoComMouse ? l.arrasteComMouse : l.arrasteNoToque, style: dica),
-      Text(arrastoComMouse ? l.uiDicaDuploClique : l.uiDicaToqueDuplo, style: dica),
-      // o balão dos parâmetros não se descobre olhando: a dica fica aqui,
-      // não num "?" em cada rótulo (cortava nomes que cabiam)
-      Text(arrastoComMouse ? l.ttDicaMouse : l.ttDicaToque, key: const ValueKey('dica-explicacao'), style: dica),
       if (bloco.bypassSoNaCena(cena))
         Text(ligado ? l.ligadoSoNaCena(cena) : l.desligadoSoNaCena(cena),
             style: tema.labelSmall?.copyWith(color: Cores.aluminioClaro)),
     ]);
   }
+
+  /// Arrastar, ligar pelo pedal e o balão dos parâmetros: o balão não se
+  /// descobre olhando, então a dica dele vai junto das outras.
+  static List<String> _dicas(AppLocalizations l) => arrastoComMouse
+      ? [l.arrasteComMouse, l.uiDicaDuploClique, l.ttDicaMouse]
+      : [l.arrasteNoToque, l.uiDicaToqueDuplo, l.ttDicaToque];
 
   Widget _acoes(BuildContext context, WidgetRef ref) {
     final controlador = ref.read(editorProvider.notifier);

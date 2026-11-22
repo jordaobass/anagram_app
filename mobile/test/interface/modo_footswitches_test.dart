@@ -167,13 +167,13 @@ void main() {
   testWidgets('should_warn_in_the_controls_panel_that_assigned_foots_only_act_in_stomp', (tester) async {
     await _abrirPreset(tester);
     final aviso = find.byKey(const ValueKey('aviso-modo-controles'));
-    await rolarEditorAte(tester, find.byKey(const ValueKey('painel-controles')));
+    await abrirControlesDaPedaleira(tester);
     expect(aviso, findsNothing, reason: 'em Stomp os FOOT atribuídos já agem');
 
     await voltarAoTopoDoEditor(tester);
     await tester.tap(_pilula('scene'));
     await tester.pumpAndSettle();
-    await rolarEditorAte(tester, find.byKey(const ValueKey('painel-controles')));
+    await abrirControlesDaPedaleira(tester);
 
     expect(aviso, findsOneWidget);
   });

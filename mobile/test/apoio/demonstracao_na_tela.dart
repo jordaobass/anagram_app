@@ -8,6 +8,7 @@ import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
 import 'package:anagram_app/plataforma/servidor_mcp.dart';
 import 'package:anagram_app/dados/preferencias_pausa.dart';
 import 'package:anagram_app/dados/preferencias_versao.dart';
+import 'package:anagram_app/dados/preferencias_paineis.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -38,7 +39,8 @@ Future<void> montarApp(WidgetTester tester,
     bool mcpDisponivel = true,
     GithubFalso? github,
     PreferenciasVersao? preferenciasVersao,
-    PreferenciasPausa? preferenciasPausa}) async {
+    PreferenciasPausa? preferenciasPausa,
+    PreferenciasPaineis? preferenciasPaineis}) async {
   tester.view.physicalSize = tamanho * densidade;
   tester.view.devicePixelRatio = densidade;
   addTearDown(tester.view.reset);
@@ -51,7 +53,8 @@ Future<void> montarApp(WidgetTester tester,
       mcpDisponivel: mcpDisponivel,
       github: github,
       preferenciasVersao: preferenciasVersao,
-      preferenciasPausa: preferenciasPausa));
+      preferenciasPausa: preferenciasPausa,
+      preferenciasPaineis: preferenciasPaineis));
   await tester.pumpAndSettle();
 }
 
@@ -111,11 +114,21 @@ Future<void> tocarNoSlot(WidgetTester tester, String rotulo) async {
 /// Demonstração com o 01A aberto e o bloco [uri] posto em [casa]: o painel
 /// dele fica na tela, selecionado.
 Future<ProviderContainer> abrirComBloco(WidgetTester tester, String uri,
-    {Size tamanho = const Size(1440, 2000), PosicaoBloco casa = const PosicaoBloco(1, 4)}) async {
+    {Size tamanho = const Size(1440, 2000), PosicaoBloco casa = const PosicaoBloco(1, 4), String slot = '01A'}) async {
   final container = await abrirDemonstracao(tester, tamanho: tamanho);
-  unawaited(container.read(editorProvider.notifier).abrirSlot(SlotPreset.doRotulo('01A')));
+  unawaited(container.read(editorProvider.notifier).abrirSlot(SlotPreset.doRotulo(slot)));
   await tester.pumpAndSettle();
   unawaited(container.read(editorProvider.notifier).adicionarBloco(casa, lerCatalogo().definicao(uri)));
   await tester.pumpAndSettle();
   return container;
+}
+
+/// Abre "Controles da pedaleira" se estiver recolhido (preset sem controle
+/// atribuído começa recolhido) e rola até ele.
+Future<void> abrirControlesDaPedaleira(WidgetTester tester) async {
+  final cabecalho = find.byKey(const ValueKey('cabecalho-controles'));
+  await rolarEditorAte(tester, cabecalho);
+  if (find.byKey(const ValueKey('controle-foot1')).evaluate().isNotEmpty) return;
+  await tester.tap(cabecalho);
+  await tester.pumpAndSettle();
 }

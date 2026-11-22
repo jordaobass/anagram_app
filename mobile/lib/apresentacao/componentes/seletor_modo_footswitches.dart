@@ -117,23 +117,22 @@ class _Rodape extends ConsumerWidget {
   }
 }
 
-/// No painel de Controles: a dica do Stomp e, fora dele, o aviso de que os
-/// FOOT atribuídos não agem.
+/// Fora do Stomp os FOOT atribuídos não agem: o aviso fica à vista no painel
+/// dos controles. No Stomp a dica do modo vai para o "?" do painel.
 class AvisoModoNosControles extends ConsumerWidget {
   const AvisoModoNosControles({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final modo = ref.watch(modoExibidoProvider);
+    if (modo == null || modo == ModoFootswitches.stomp) return const SizedBox.shrink();
     final l = AppLocalizations.of(context);
-    final estilo = Theme.of(context).textTheme.bodySmall;
-    final foraDoStomp = modo != null && modo != ModoFootswitches.stomp;
     return Padding(
       padding: const EdgeInsets.only(top: Espacos.xs),
       child: Text(
-        foraDoStomp ? l.fmAvisoControles(nomeDoModo(l, modo)) : l.fmDica,
-        key: ValueKey(foraDoStomp ? 'aviso-modo-controles' : 'dica-modo-controles'),
-        style: estilo?.copyWith(color: foraDoStomp ? Cores.aluminioClaro : Cores.textoSecundario),
+        l.fmAvisoControles(nomeDoModo(l, modo)),
+        key: const ValueKey('aviso-modo-controles'),
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.aluminioClaro),
       ),
     );
   }

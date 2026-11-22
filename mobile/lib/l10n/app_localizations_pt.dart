@@ -1520,4 +1520,25 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get t3kSemAutor => 'sem autor';
+
+  @override
+  String get uiDicas => 'Dicas';
+
+  @override
+  String ctlResumo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n atribuídos',
+      one: '1 atribuído',
+      zero: 'nenhum atribuído',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ctlMostrar => 'Mostrar os controles da pedaleira';
+
+  @override
+  String get ctlRecolher => 'Recolher os controles da pedaleira';
 }

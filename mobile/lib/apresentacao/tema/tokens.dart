@@ -369,6 +369,9 @@ abstract final class Duracoes {
 
   /// O mouse passa pelo rótulo a caminho do knob: só explica se parar nele.
   static const esperaExplicacao = Duration(milliseconds: 500);
+
+  /// Tempo para ler as dicas do "?" depois de um clique ou toque.
+  static const dicas = Duration(seconds: 8);
 }
 
 abstract final class Fontes {

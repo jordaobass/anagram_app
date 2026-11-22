@@ -2748,6 +2748,30 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'sem autor'**
   String get t3kSemAutor;
+
+  /// Botão ? que mostra as dicas de gesto do painel
+  ///
+  /// In pt, this message translates to:
+  /// **'Dicas'**
+  String get uiDicas;
+
+  /// Ao lado do título Controles da pedaleira: quantos controles têm algo atribuído
+  ///
+  /// In pt, this message translates to:
+  /// **'{n, plural, =0{nenhum atribuído} =1{1 atribuído} other{{n} atribuídos}}'**
+  String ctlResumo(int n);
+
+  /// Leitor de tela no cabeçalho recolhido
+  ///
+  /// In pt, this message translates to:
+  /// **'Mostrar os controles da pedaleira'**
+  String get ctlMostrar;
+
+  /// Leitor de tela no cabeçalho aberto
+  ///
+  /// In pt, this message translates to:
+  /// **'Recolher os controles da pedaleira'**
+  String get ctlRecolher;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
