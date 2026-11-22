@@ -1434,4 +1434,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pausaUsbTexto => 'Menor = ao vivo mais rápido; aumente se a pedaleira deixar de responder. Auto usa o padrão deste computador.';
+
+  @override
+  String get versaoNovaConsultaTexto => 'Ao abrir, o app consulta só o GitHub para saber qual é a última versão publicada. A consulta envia apenas a versão do app (no cabeçalho User-Agent); como em toda conexão, o GitHub vê o seu endereço IP. Desligado, o app não acessa a internet.';
 }

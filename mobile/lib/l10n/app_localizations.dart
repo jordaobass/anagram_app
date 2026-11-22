@@ -2622,6 +2622,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Menor = ao vivo mais rápido; aumente se a pedaleira deixar de responder. Auto usa o padrão deste computador.'**
   String get pausaUsbTexto;
+
+  /// No description provided for @versaoNovaConsultaTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ao abrir, o app consulta só o GitHub para saber qual é a última versão publicada. A consulta envia apenas a versão do app (no cabeçalho User-Agent); como em toda conexão, o GitHub vê o seu endereço IP. Desligado, o app não acessa a internet.'**
+  String get versaoNovaConsultaTexto;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

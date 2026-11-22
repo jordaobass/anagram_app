@@ -33,7 +33,8 @@ lista de presets por banco, cadeia de blocos com a arte da pedaleira, knobs gran
 
 Sem anúncios e sem telemetria. O app conversa com a pedaleira pelo USB; a única chamada de rede é
 uma verificação opcional ao abrir (Windows, macOS e Linux) que pergunta ao GitHub qual é a última
-versão, não envia nenhum dado seu e pode ser desligada em **Configurações › Atualizações**.
+versão. Essa consulta envia apenas a versão do app (no cabeçalho User-Agent); como em toda conexão,
+o GitHub vê o seu endereço IP. Ela pode ser desligada em **Configurações › Atualizações**.
 
 Interface em **português, inglês e espanhol** (segue o idioma do sistema; dá para trocar em
 **Configurações**, na engrenagem).

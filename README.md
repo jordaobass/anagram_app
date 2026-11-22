@@ -32,8 +32,9 @@ One Flutter codebase for macOS, Windows, Linux, Android and the browser (Chrome/
 > manufacturer; the block art is used with Darkglass's permission.
 
 No ads and no telemetry. The app talks to the pedal over USB; its only network call is an optional
-check on launch (Windows, macOS and Linux) that asks GitHub for the latest release, sends none of
-your data and can be turned off in **Settings › Updates**.
+check on launch (Windows, macOS and Linux) that asks GitHub for the latest release. That request
+sends only the app's version (in the User-Agent header); as with any connection, GitHub sees your IP
+address. It can be turned off in **Settings › Updates**.
 
 The interface is in **English, Portuguese and Spanish** (it follows your system language; you can
 change it in **Settings**, the gear icon).

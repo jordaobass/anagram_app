@@ -91,7 +91,7 @@ void main() {
     final interruptor = find.byKey(const ValueKey('versao-nova-verificar'));
     await tester.ensureVisible(interruptor);
     expect(find.text('Você está na versão mais recente.'), findsOneWidget);
-    expect(find.textContaining('Nenhum dado seu é enviado'), findsOneWidget);
+    expect(find.textContaining('A consulta envia apenas a versão do app (no cabeçalho User-Agent)'), findsOneWidget);
 
     await tester.tap(interruptor);
     await tester.pumpAndSettle();

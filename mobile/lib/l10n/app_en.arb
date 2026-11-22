@@ -420,5 +420,6 @@
   "recarregarTexto": "The unsaved changes to \"{nome}\" are lost and the editor shows what is saved in the slot.",
   "recarregar": "RELOAD",
   "pausaUsbTitulo": "Pause between USB packets",
-  "pausaUsbTexto": "Lower = faster live changes; raise it if the pedal stops responding. Auto uses this computer's default."
+  "pausaUsbTexto": "Lower = faster live changes; raise it if the pedal stops responding. Auto uses this computer's default.",
+  "versaoNovaConsultaTexto": "On launch the app asks only GitHub which version is the latest one published. The request sends only the app's version (in the User-Agent header); as with any connection, GitHub sees your IP address. When off, the app does not go online."
 }

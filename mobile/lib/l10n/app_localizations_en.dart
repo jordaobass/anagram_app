@@ -1434,4 +1434,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pausaUsbTexto => 'Lower = faster live changes; raise it if the pedal stops responding. Auto uses this computer\'s default.';
+
+  @override
+  String get versaoNovaConsultaTexto => 'On launch the app asks only GitHub which version is the latest one published. The request sends only the app\'s version (in the User-Agent header); as with any connection, GitHub sees your IP address. When off, the app does not go online.';
 }
