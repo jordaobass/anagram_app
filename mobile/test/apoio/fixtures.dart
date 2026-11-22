@@ -40,10 +40,11 @@ Map<int, Map<String, dynamic>> lerPresetsDemonstracao() {
   };
 }
 
-/// Capturas usam só a arte própria (as miniaturas de terceiros ficam fora do
-/// git), a não ser com COM_MINIATURAS=1 e a pasta local preenchida.
+/// Capturas saem com a arte real dos pedais (o indice.json versionado,
+/// DECISOES A16): é o que a pessoa vê no app. SEM_MINIATURAS=1 tira a arte
+/// (só a própria, por família), para quem precisar comparar sem ela.
 bool get comMiniaturas =>
-    Platform.environment['COM_MINIATURAS'] == '1' && File('assets/blocos_terceiros/indice.json').existsSync();
+    Platform.environment['SEM_MINIATURAS'] != '1' && File('assets/blocos_terceiros/indice.json').existsSync();
 
 /// Fábrica pequena para os testes, no formato do fabrica.json que a
 /// ferramenta de arte gera do Suite: dois presets reais nos slots 01A e 01B.
@@ -57,19 +58,22 @@ String textoFabricaDeTeste() {
   });
 }
 
-/// Com a arte (COM_MINIATURAS=1), a fábrica de verdade, se a ferramenta já a
-/// gerou; senão, a pequena dos testes.
+/// Com a arte (o padrão das capturas), a fábrica de verdade, se a ferramenta
+/// já a gerou; senão, a pequena dos testes.
 PresetsDeFabrica lerFabrica() {
   final arquivo = File('assets/blocos_terceiros/fabrica.json');
   return PresetsDeFabrica.doTexto(
       comMiniaturas && arquivo.existsSync() ? arquivo.readAsStringSync() : textoFabricaDeTeste());
 }
 
-/// O indice.json versionado (DECISOES A16), sem depender de COM_MINIATURAS:
-/// para conferir o casamento da arte real, não para capturas.
+/// O indice.json versionado (DECISOES A16), sempre: para conferir o
+/// casamento da arte real.
 IndiceMiniaturas lerIndiceVersionado() =>
     IndiceMiniaturas.doTexto(File('assets/blocos_terceiros/indice.json').readAsStringSync());
 
-IndiceMiniaturas lerIndiceMiniaturas() => comMiniaturas
-    ? IndiceMiniaturas.doTexto(File('assets/blocos_terceiros/indice.json').readAsStringSync())
-    : IndiceMiniaturas.vazio();
+/// Índice dos testes de comportamento: vazio, todo bloco com a arte própria,
+/// para que o resultado não dependa da arte de terceiros.
+IndiceMiniaturas lerIndiceMiniaturas() => IndiceMiniaturas.vazio();
+
+/// Índice das capturas: a arte real, a não ser com SEM_MINIATURAS=1.
+IndiceMiniaturas lerIndiceDasCapturas() => comMiniaturas ? lerIndiceVersionado() : IndiceMiniaturas.vazio();

@@ -1,7 +1,7 @@
 // Capturas do painel dos blocos de 3 bandas (Ignissor e Entropia): o bloco
 // novo na casa 4 do 01A, no computador e no celular, e o Ignissor com uma
-// banda mutada e cortes mexidos. Prefixo "mb-". Com COM_MINIATURAS=1 saem com
-// a arte, na pasta ignorada pelo git.
+// banda mutada e cortes mexidos. Prefixo "mb-". Saem com a arte
+// real dos pedais.
 import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';

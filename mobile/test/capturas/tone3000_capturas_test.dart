@@ -1,7 +1,7 @@
 // Capturas da escolha de tom do TONE3000 (DECISOES T3K): o painel do NAM
 // Loader com os cartões TOM e MODELO, a galeria com autor e licença, e o
-// painel no celular. Prefixo "t3k-". Com COM_MINIATURAS=1 saem com as fotos
-// dos tons, na pasta ignorada pelo git.
+// painel no celular. Prefixo "t3k-". Saem com as fotos
+// reais dos tons.
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';

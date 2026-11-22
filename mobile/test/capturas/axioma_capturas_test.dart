@@ -1,7 +1,7 @@
 // Capturas do painel do Axioma Mono Synth: o bloco novo na casa 4 do 01A,
 // no computador (padrão e com filtro ressonante, onda quadrada e arpejador
-// ligado) e no celular. Prefixo "ax-". Com COM_MINIATURAS=1 saem com a arte,
-// na pasta ignorada pelo git.
+// ligado) e no celular. Prefixo "ax-". Saem com a arte real
+// dos pedais.
 import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';

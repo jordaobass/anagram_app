@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../apoio/app_de_teste.dart';
 import '../apoio/capturas_apoio.dart';
 import '../apoio/demonstracao_na_tela.dart';
+import '../apoio/fixtures.dart' show lerIndiceDasCapturas;
 
 Future<void> _abrirComMcp(WidgetTester tester, Tamanho t, {bool ocupada = false, bool disponivel = true}) async {
   debugDefaultTargetPlatformOverride = t.plataforma;
@@ -15,6 +16,7 @@ Future<void> _abrirComMcp(WidgetTester tester, Tamanho t, {bool ocupada = false,
       tamanho: Size(t.largura, t.altura),
       densidade: t.densidade,
       servidorMcp: ServidorMcpFalso(ocupada: ocupada),
+      indice: lerIndiceDasCapturas(),
       mcpDisponivel: disponivel);
   await tester.tap(find.byKey(const ValueKey('botao-configuracoes')));
   await tester.pumpAndSettle();

@@ -1,6 +1,6 @@
 // Capturas dos painéis da bateria (Auto Drummer) e do metrônomo (Cognate
 // Metro): o bloco novo na casa 4 do 01A, no computador e no celular.
-// Prefixo "ut-". Com COM_MINIATURAS=1 saem com a arte, na pasta ignorada.
+// Prefixo "ut-". Saem com a arte real dos pedais.
 import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';

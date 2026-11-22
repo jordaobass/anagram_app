@@ -53,10 +53,10 @@ docker run --rm -v "$PWD":/p -w /p ghcr.io/cirruslabs/flutter:3.41.7 sh -c \
   'flutter pub get && flutter analyze && flutter test'
 # rotas tipadas (go_router_builder), depois de mudar lib/apresentacao/rotas.dart:
 #   dart run build_runner build --delete-conflicting-outputs
-# capturas (goldens) das telas principais, só com a arte própria:
+# capturas (goldens) das telas principais, com a arte real dos pedais:
 #   flutter test test/capturas --update-goldens
-# variante local com as miniaturas de terceiros (vai para test/capturas/goldens_terceiros/, ignorada):
-#   COM_MINIATURAS=1 flutter test test/capturas --update-goldens
+# variante local só com a arte própria (vai para test/capturas/goldens_sem_arte/, ignorada):
+#   SEM_MINIATURAS=1 flutter test test/capturas --update-goldens
 docker run --rm -v "$PWD":/p alpine chown -R 1000:1000 /p   # o container escreve como root
 ```
 

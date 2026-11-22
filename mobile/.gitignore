@@ -52,8 +52,8 @@ app.*.map.json
 !.env.example
 
 # A arte da pedaleira (Darkglass) é versionada em assets/blocos_terceiros/ (DECISOES A16).
-# As capturas com essa arte continuam locais.
-/test/capturas/goldens_terceiros/
+# As capturas saem com essa arte; só a variante sem ela (SEM_MINIATURAS=1) fica local.
+/test/capturas/goldens_sem_arte/
 /.impeccable/build/
 
 # Diferenças geradas quando uma captura falha: resultado local, não referência
