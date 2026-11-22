@@ -10,6 +10,7 @@ import '../../l10n/app_localizations.dart';
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
+import '../tema/tema_app.dart';
 import '../tema/tokens.dart';
 import '../textos.dart';
 import 'alteracao_em_grupo.dart';
@@ -102,7 +103,8 @@ class BotoesBanda extends ConsumerWidget {
             ? FilledButton(
                 key: ValueKey(chave),
                 onPressed: aoTocar,
-                style: FilledButton.styleFrom(backgroundColor: cor, foregroundColor: Cores.sobreAlerta),
+                style: FilledButton.styleFrom(backgroundColor: cor, foregroundColor: Cores.sobreAlerta)
+                    .copyWith(side: TemaApp.anelDeFoco(cor: Cores.sobreAlerta)),
                 child: Text(texto),
               )
             : OutlinedButton(key: ValueKey(chave), onPressed: aoTocar, child: Text(texto)),

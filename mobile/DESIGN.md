@@ -266,7 +266,7 @@ Táteis e diretos, sempre ≥ 48dp, texto em Barlow Condensed caixa alta.
 - **Shape:** cantos de controle (6px).
 - **Primário:** âmbar tally, texto `sobre-tally`, 16px de lateral. Ex.: SALVAR (só com edição não salva, junto do selo NÃO SALVO; sem edição ele é contorno), CONECTAR, LIGADO.
 - **Contorno:** transparente, borda de 1px `aluminio`, texto `texto`. Ex.: SALVAR sem edição, SALVAR COMO, DESCARTAR, DESLIGADO, ABRIR DEMONSTRAÇÃO.
-- **Foco:** cor de foco é âmbar a 24% de opacidade.
+- **Foco:** contorno sólido de 2px em `tally` (acima de 3:1 sobre o case e os painéis); em botão já preenchido, o anel é da cor do texto dele (`sobre-tally` no âmbar). O realce âmbar a 24% fica só nas superfícies de toque sem contorno (linhas da lista) (DECISOES UI3).
 - **Descartar:** no computador fica à vista, desabilitado sem edição; no celular SALVAR, SALVAR COMO e um menu ⋯ (Descartar, Importar, Exportar) cabem numa linha.
 - **Enquanto o Salvar como espera o destino**, os botões de cima ficam desabilitados: a ação está na lista.
 - **Diálogo de confirmação:** cancelar em texto neutro (`texto`) à esquerda; confirmar à direita, sempre preenchido em `fita-alerta` com texto `sobre-alerta`, porque todo confirmar ali apaga ou sobrescreve algo.
