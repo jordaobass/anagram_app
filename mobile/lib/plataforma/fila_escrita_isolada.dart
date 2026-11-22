@@ -79,7 +79,7 @@ void _escreverEmLaco((SendPort, EscreverRelatorio Function()) pedido) {
   final pedidos = ReceivePort();
   respostas.send(pedidos.sendPort);
   pedidos.listen((mensagem) {
-    if (mensagem case (int id, Uint8List relatorio)) {
+    if (mensagem case (final int id, final Uint8List relatorio)) {
       respostas.send((id, escrever(relatorio)));
     } else {
       pedidos.close();

@@ -52,10 +52,7 @@ class DescricaoGuiaBloco {
   List<DefinicaoParametro> _parametrosChave(DefinicaoBloco definicao, EntradaGuiaBloco? entrada) {
     final ajustaveis = DescricaoPreset.parametrosAjustaveis(definicao);
     if (entrada == null || entrada.parametrosChave.isEmpty) return ajustaveis.take(_chaveSemCuradoria).toList();
-    return [
-      for (final simbolo in entrada.parametrosChave.keys)
-        if (definicao.parametro(simbolo) case final p? when ajustaveis.contains(p)) p,
-    ];
+    return entrada.parametrosChave.keys.map(definicao.parametro).nonNulls.where(ajustaveis.contains).toList();
   }
 
   Map<String, dynamic> _parametro(String uri, DefinicaoParametro p, String? dicaCurada) {

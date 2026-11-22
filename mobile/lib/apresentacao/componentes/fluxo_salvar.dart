@@ -46,7 +46,8 @@ Future<ResultadoSalvar?> _decidirSlotAlterado(
     BuildContext context, WidgetRef ref, SlotPreset slot, Future<ResultadoSalvar?> Function() sobrescrever) async {
   final mensageiro = ScaffoldMessenger.of(context);
   final l = AppLocalizations.of(context);
-  switch (await perguntarSlotAlterado(context, slot)) {
+  final decisao = await perguntarSlotAlterado(context, slot);
+  switch (decisao) {
     case DecisaoSlotAlterado.sobrescrever:
       final resultado = await sobrescrever();
       if (resultado != null) _avisar(mensageiro, l, resultado);
