@@ -136,9 +136,20 @@ preset and adjusts the blocks; every change is **heard immediately**, shows up o
 
 > **The AI can't hear the sound**: it adjusts based on what you describe, and you tell it whether it
 > got better. Small models tend to describe what they would do instead of calling the tools; prefer a
-> model with good tool calling. Tools: `get_current_preset`, `list_block_types`, `set_parameter`,
-> `set_block_enabled`, `select_scene`, `add_block`, `move_block`, `remove_block`, `choose_cabinet`,
-> `undo` and `save_preset`.
+> model with good tool calling. Tools: `get_current_preset`, `list_block_types`, `get_block_guide`,
+> `get_tone_building_guide`, `get_tone_recipe`, `set_parameter`, `set_block_enabled`, `select_scene`,
+> `add_block`, `move_block`, `remove_block`, `choose_cabinet`, `undo`, `save_preset`,
+> `get_global_settings` and `set_global_setting`.
+
+**The app teaches the AI the pedal.** It ships a tone-building knowledge base that the assistant reads
+through the same connection: what each of the 109 factory blocks does (role, key parameters with
+ranges, a starting point and pitfalls, via `get_block_guide`), how to build a bass chain (order, gain
+staging, the parallel line, EQ by frequency, compression, drive, cabinets, scenes, via
+`get_tone_building_guide`) and starting recipes by style or player reference ("funk slap", "modern
+metal", "Steve Harris", via `get_tone_recipe`). The connection also carries a recommended flow: read
+the preset, ask, propose, apply in small steps, let you listen, and only save when you say so. For
+Claude Desktop or Claude Code there is a ready-made skill in [`docs/ia/SKILL.md`](docs/ia/SKILL.md),
+which also has a system prompt to paste into LM Studio.
 
 ## Repository layout
 
@@ -179,6 +190,8 @@ Issues, ideas and pull requests are welcome, in English, Portuguese or Spanish. 
 ## Credits and license
 
 USB protocol, block catalog and example presets ported from
-[anagram-tone-maker](https://github.com/basster6/anagram-tone-maker) (MIT). Project license:
+[anagram-tone-maker](https://github.com/basster6/anagram-tone-maker) (MIT); the AI block guide also
+draws on the community block attributions that project collected (kept as hints, not as Darkglass
+statements). Project license:
 [MIT](LICENSE). The block art is © Darkglass Electronics, used with permission, and is not covered by
 the MIT license.

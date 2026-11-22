@@ -16,7 +16,8 @@ class MudarParametro extends FerramentaMcp {
   @override
   String get descricao => 'Change one parameter of a block; it is heard immediately (not saved). The value is a '
       'number in the parameter unit, or an option label for option parameters, or true/false for toggles. '
-      'Out-of-range values are clamped and the applied value is returned.';
+      'Out-of-range values are clamped and the applied value is returned. Change 2-4 parameters, then ask '
+      'the player how it sounds before going on; you cannot hear the result.';
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto({

@@ -1,0 +1,169 @@
+{
+  "version": 1,
+  "language": "en",
+  "topics": [
+    {
+      "id": "workflow",
+      "title": "How to work with the player",
+      "summary": "You cannot hear the pedal: read the preset, ask, propose, apply in small steps, let the player judge, save only on their word.",
+      "points": [
+        "You do not hear the audio. Every judgement comes from the player's words: after each change ask them to play and say better/worse, and adjust from that.",
+        "Start with get_current_preset. Note what is already there (compressor? drive? cabinet? parallel row?), the active scene and whether the preset is unsaved.",
+        "Ask before building, in one message: what the pedal feeds (PA/interface/FRFR = needs a cabinet block; a real bass amp and speaker = no cabinet), the bass (passive/active, 4/5/6 strings), fingers/pick/slap, how much drive they want, and what from the current preset must stay.",
+        "Propose the chain in two or three lines in sound terms ('compressor, then a B3K at 50 % blend into an Ampeg-style head and a 4x10 cab'), then apply it: add blocks with defaults first, ask them to play, then set 2-4 parameters at a time.",
+        "Prefer changing what exists over adding blocks. Darkglass factory presets have six blocks on average; a chain of 5-7 is typical, 12 is the maximum per row.",
+        "Use the knowledge tools: get_block_guide before touching a block you don't know (it has the key parameters and the pitfalls), get_tone_recipe for a starting chain, get_tone_building_guide gain_staging before boosting anything.",
+        "Explain each change with numbers and frequencies ('cut 250 Hz by 3 dB to clear the mud', 'attack 20 ms so the slap transient passes'), never with JSON or parameter dumps.",
+        "Every change is heard live and marks the preset unsaved. Offer undo when the player dislikes a step. Call save_preset only when they say it sounds right; they confirm in the app.",
+        "The app also has Darkglass templates for the Ignissor and Entropia blocks and dedicated panels (multiband, Axioma, cabinets): mention them when the player wants to see what you changed.",
+        "If a request needs hardware (expression pedal, something in the FX loop, a NAM capture or IR file), ask whether it is there; the tools cannot plug or upload anything."
+      ]
+    },
+    {
+      "id": "chain_order",
+      "title": "Typical order of a bass chain",
+      "summary": "Trackers first, dynamics-readers next, compressor, drive, amp, gate, EQ, modulation, delay, reverb, cabinet; signal flows left to right on row 1.",
+      "points": [
+        "Signal flows left to right through the occupied columns of row 1 (1-12); gaps are fine. Row 2 is the parallel line between a Split and a Merge.",
+        "A workable default: [tuner] > octaver / synth / pitch shifter > envelope filter or wah > compressor > drive(s) or multiband drive > amp or preamp > noise gate > EQ > chorus / flanger / phaser > delay > reverb > cabinet IR > [Gain or limiter].",
+        "What the Darkglass factory presets actually do, 6 blocks most of the time: compressor > drive > amp head > Suppressor (gate) > Darkglass GEQ > bass cabinet. Several put the drive first and the compressor second.",
+        "Pitch trackers (Sublime, Sublemon, Subcitri, Pitch Shifter, Axioma) go first: they need a clean, fundamental-rich signal and fall apart after a gain stage.",
+        "Envelope filters (Gravitron, moerfer, Wauwa with dynamics) go before compressors and drives, which flatten the dynamics they read.",
+        "Compressor before the drive gives an even, consistent saturation; after the drive it controls level. Both are legitimate; the factory uses both.",
+        "The noise gate (Suppressor) goes right after the block that makes the hiss, usually the drive or the amp.",
+        "EQ after the drive and amp places the bass in the mix; a high-pass or EQ before a drive shapes what saturates (tighter grind).",
+        "Modulation, delay and reverb sit late in the chain; the cabinet can be before or after them (the factory does both).",
+        "End with the cabinet IR when the pedal feeds a PA, interface or FRFR; add a Gain block at the very end only to match volume between presets (factory 'Peggy Pick' ends with Gain -20 dB)."
+      ]
+    },
+    {
+      "id": "gain_staging",
+      "title": "Gain staging and headroom",
+      "summary": "Boosts accumulate and clip; set character with gain controls, loudness with level controls, and trim at the source, not with the global master.",
+      "points": [
+        "Every block has an output control (Level, Output, OutputGain, Master, output_lvl, OUTPUT dB). After shaping a block, match its volume with the block bypassed (set_block_enabled false/true and ask the player) so switching it on does not jump.",
+        "Clipping sources, in the order they usually appear: EQ boosts (+6 dB on two bands is not +6, it is louder), drive blocks with Level high, Harmonic Booster Boost, a Merge summing two full-range rows (up to +6 dB), amp Master/Volume. Fix at the block that adds the level; as a last resort trim with the cabinet Level or a Gain block at -3..-6 dB.",
+        "Amp blocks have three kinds of knob: Gain/Volume/INPUT set the character (how dirty), Master sets the push, Level/OUTPUT/output_lvl sets how loud. Decide the character first, then set the level. Raising gain to get louder only gets dirtier.",
+        "Neural captures (Neural Amp/Pedal/Loader, TONE3000, neural-plugins amps): INPUT in dB drives the model like the real amp's gain; OUTPUT in dB is the clean trim.",
+        "Prefer cuts to boosts in EQ, then raise the EQ block's Level to compensate; a cut at 250 Hz does more for clarity than a boost at 3 kHz.",
+        "Compressors add level with makeup: on the FET compressor raising Input compresses more AND gets louder, so lower Output by the same amount; on CompLim/BUS use OutputGain.",
+        "A boost placed before a drive changes how much it distorts; the same boost after the drive only changes the volume. Put level trims where you mean them.",
+        "When both rows carry the full range, set the Merge Level to about -3 dB; with a crossover split the bands don't add up the same way and 0 dB is usually fine.",
+        "Do not fix a hot preset with the pedal's global master or mixer (get_global_settings): those apply to every preset. Fix the preset.",
+        "Headroom check with the player: have them dig in hard on the lowest string; if it crackles or pumps, lower the Level of the last block that boosted."
+      ]
+    },
+    {
+      "id": "parallel",
+      "title": "The parallel line (Split and Merge)",
+      "summary": "Split on row 1 feeds row 2 until the Merge: with Crossover on it is multiband processing, with Crossover off it is two voices from one bass.",
+      "points": [
+        "Build it in this order with add_block: Split on row 1, Merge on row 1 further right, then the row 2 blocks (row 2 only exists while a Split is on row 1). One Split and one Merge per preset.",
+        "Crossover '1 Lo, 2 Hi' at CrossoverFreq 100-250 Hz: lows stay on row 1, highs go to row 2. Put the drive or fuzz on row 2 and a compressor on row 1 and you get grind that keeps the fundamental clean: the single most useful bass trick. '1 Hi, 2 Lo' is the mirror.",
+        "Crossover 'Off': both rows get the full range. Use it to layer a clean bass with a distorted, pitch-shifted or synth voice (factory 'Djentlemen', 'Velcro Synth', 'Regal Blood'). For an ordinary drive tone this only makes the balance harder.",
+        "Do not hand-roll a crossover with an HPF on one row and an LPF on the other: the Split's own crossover is cleaner and saves two slots. Spend filter blocks shaping inside a band.",
+        "Trim the rows at the source: Split LevelRow1/LevelRow2 (-24..6 dB) set what goes in, Merge Blend (50 = equal) sets the balance coming out, Merge Level trims the sum.",
+        "If the low end turns thin or hollow at the Merge, the rows are cancelling: add a Gain block on one row with PolarityInversion on and compare; pitch shifters and some drives shift phase.",
+        "Entropia (three-band drive) and Microtubes X (two-band drive) do multiband distortion inside one block; use them when the chain is short on slots and keep the Split for layering different effects.",
+        "A guitar cabinet makes sense only on the high band or the dirty row; the clean lows keep a bass cabinet or none.",
+        "In the preset JSON the rows are 'chains' 1 and 2; the tools address them as row 1 and row 2, columns 1-12."
+      ]
+    },
+    {
+      "id": "eq",
+      "title": "EQ by frequency on a bass",
+      "summary": "Sub 30-60, fundamental 60-120, mud 120-250, body 250-500, growl 500-1000, attack 1-2k, click 2-4k, fizz above 4k; cut before you boost.",
+      "points": [
+        "30-60 Hz: sub, more felt than heard; a 5-string low B is 31 Hz. A high-pass at 30-40 Hz removes rumble without touching the fundamental; above 60 Hz it thins the bass.",
+        "60-120 Hz: weight and fundamental. Boom lives here too; cutting 2-3 dB around 100 Hz often cleans a muddy stage sound better than any treble.",
+        "120-250 Hz: warmth or mud. The most common cut on bass is 2-4 dB around 200-250 Hz (Darkglass GEQ 250 band, Generic GEQ 200/400). Factory drive presets cut the low shelf by 6 dB after the drive.",
+        "250-500 Hz: body and boxiness; this is where a tone sounds 'full' or 'cardboard'.",
+        "500-1000 Hz: growl, honk and presence in a band; this is where the bass is heard next to guitars. Mid-forward rock tones live here.",
+        "1-2 kHz: pick attack and finger definition; 2-4 kHz: string click, slap pop and fret noise (+3 dB at 3 kHz is a common factory move); above 4-5 kHz: air and the fizz of distortion, where an LPF at 4-6 kHz cleans a drive.",
+        "Which block: Darkglass GEQ (low shelf, 250, 500, 1.5k, 3k, high shelf) for broad musical moves; Generic GEQ (100-3200 in octaves) for narrower fixes; Amp EQ for semi-parametric mids; Parametric EQ (fil4) when you need an exact frequency or a high-pass with Q; amp tone stacks and the cabinet microphone are EQ too.",
+        "Cut before you boost, 2-4 dB at a time, and compensate with the EQ block's Level. A scooped 'smile' sounds huge alone and disappears in a band; mids are where the bass is heard.",
+        "EQ position: after drive and amp to place the tone; before a drive (HPF 80-120 Hz, low-mid cut) to tighten what saturates.",
+        "A cabinet IR removes most of the top end: EQ boosts above 5 kHz placed before the cab largely vanish; change the microphone instead (choose_cabinet)."
+      ]
+    },
+    {
+      "id": "compression",
+      "title": "Compression: which block and how much",
+      "summary": "FET for fast levelling, BUS for glue, CompLim when you want real ms values or a limiter, Ignissor per band, IV-4N for smooth vintage; slow attack when the attack is the sound.",
+      "points": [
+        "Pick by what the attack is doing: fast attack (1 ms) levels fingerstyle and smooths a drive; when the transient IS the sound (slap, pick, percussive) use 15-30 ms so it passes, with a 4:1 ratio and threshold around -20..-30 dB, release 100-250 ms.",
+        "FET Compressor (1176-style): no threshold knob; raise Input to compress more, lower Output to compensate. Fast and punchy. Ratio 'All' is the over-the-top 1176 effect.",
+        "BUS Compressor (SSL-style): glue, with attack in real ms (10-30 keeps transients) and release in seconds; factory presets start chains with it at -20..-34 dB, 4:1, 10 ms.",
+        "Compressor / Limiter: real units for threshold, attack and release; at 20:1 or 100:1 with attack 0.1 ms it is a peak limiter; put one at the end of a loud chain with threshold -6..-10 dB.",
+        "Ignissor (3 bands): control only the band that misbehaves: lower lo_threshold for boomy lows, hi band fast attack for slap pops; the band levels double as a 3-band EQ; clean_level mixes dry signal back in for parallel (NY) compression.",
+        "IV-4N tube compressor (LA-2A-style): two knobs, slow and smooth; for soul, jazz and fingerstyle where compression should be felt, not heard.",
+        "Parallel compression (Blend 50-70 % on CompLim, FET or BUS) gives density while the attack stays; a fast attack at 100 % flattens riffs into mush, which is the opposite of loud.",
+        "Before the drive: an even, consistent saturation. After the drive or amp: level control and sustain. Two gentle stages beat one extreme one.",
+        "Never put a compressor before an envelope filter (Gravitron, moerfer): it removes the dynamics the filter reads.",
+        "An external compressor pedal always on in front of the Anagram means no compressor block, or a very light one."
+      ]
+    },
+    {
+      "id": "drive",
+      "title": "Drive, distortion and fuzz on bass",
+      "summary": "Blend keeps the low end; keep the lows clean (Blend, multiband or Split crossover), set drive Level for unity, kill fizz at the source, gate after.",
+      "points": [
+        "The Darkglass circuits: B3K = tight modern grind; VMT = warm tube-like overdrive, Era dark-to-bright; Alpha·Omicron = heaviest, Alpha round to Omega raw; Microtubes X = two-band (clean lows, driven highs); Entropia = three-band with any of those circuits per band; Duality = fuzz; Harmonic Booster = clean/warm boost.",
+        "Other circuits: Chinchilla = RAT (mid-heavy, Tone is a low-pass); Atomic Sans = SansAmp DI (punk/DI rock); Arc Dreamer = Tube Screamer (boost into an amp); Green PiRate = Big Muff; Bee Kolme = ODB-3 clank; Mood = bass fuzz with EQ. Community attributions, hints about voicing.",
+        "Blend is the bass player's control: 40-60 % keeps the fundamental clean and the grind on top; 90-100 % is all distortion and loses weight. When the low end gets loose, lower Blend before touching the EQ.",
+        "To keep lows clean with heavy distortion, use a multiband block (Microtubes X, Entropia) or a Split with Crossover '1 Lo, 2 Hi' at 150-250 Hz and the drive on row 2.",
+        "Every drive has a Level: set it so the block on and off are the same volume, then decide if you want the drive louder. Drive, Grunt and Boost add level by themselves.",
+        "Fizz: cut it at the source first (B3K Tone, Entropia hi_lp_freq 4-6 kHz, Atomic Sans Presence, Duality filter), then with an LPF at 4-6 kHz after the drive, then with EQ. Lowering a high-pass that feeds the drive helps more than EQ after it.",
+        "Stack gently: a boost (Harmonic Booster, Arc Dreamer at low drive/high level) into a drive gives a thicker, more controllable wall than one block cranked.",
+        "An amp block after the drive (factory: drive > Jim Bass / Super California / Peggy) smooths the distortion like a real cab; the cabinet IR then removes the top fizz.",
+        "Fuzz needs clean under it: Blend 50-70 or the Split trick, and a Suppressor after it (threshold -45..-40 dB) for the hiss between notes.",
+        "By request: 'a little hair' = VMT Drive 2-4 Blend 40 or Harmonic Booster Character 6+; 'rock grind' = B3K or a pushed Ampeg-style head; 'modern metal' = Microtubes X / Entropia / B3K at high Blend; 'fuzz' = Duality or Green PiRate; 'punk DI' = Atomic Sans."
+      ]
+    },
+    {
+      "id": "cabinets",
+      "title": "Cabinets, IRs and microphones",
+      "summary": "Needed into PA/interface/FRFR, off into a real amp and speaker; the microphone is a tone control; one cab per path; Blend below 100 adds direct attack.",
+      "points": [
+        "Ask what the pedal feeds. PA, audio interface, headphones or FRFR speaker: add a cabinet block. Real bass amp and speaker: no cabinet; if one is in the preset, disable it (set_block_enabled false) rather than removing it.",
+        "choose_cabinet sets model, microphone and mic position on a Bass/Guitar/Artists cabinet block; a wrong name returns the valid list, so call it with a guess to discover the names on this install.",
+        "Model families (community attribution of the names, hints only): Peggy = Ampeg SVT 8x10/4x10/1x15 (rock grind), Peggy Fliptop = Ampeg B-15 (vintage), SWIRL = SWR (hi-fi, slap), Garden = Eden (hi-fi), Modern Bass = Mesa PowerHouse (modern), Black & Yellow = Markbass, California Bass = Fender Bassman 410, Fruity = Orange, Mountainino = Bergantino NV610, Darkglass Neo = DG212N/DG410N, SWE Nordline = EBS.",
+        "The microphone decides the top end (same source): Condenser 103 = bright, detailed hi-fi; Condenser 414 = neutral; Condenser 67 = vintage warm, rolled-off top; Dynamic 112 = deep lows, scooped mids; Dynamic 421 = forward mids; Dynamic 52 = hyped lows and presence (a smile curve); Dynamic 7 = thick low mids. Change the mic before adding a treble boost.",
+        "Artist cabinets are DG410C captures by engineers whose capture names state the intent (Punch, Thick, Clear, Bitey, Monster, ScoopyDoo, AllTheMids): the fastest route to a mix-ready tone.",
+        "Blend 70-90 % mixes the direct signal under the IR: more raw attack and sub (Darkglass factory presets use 70-100). Level (-12..12 dB) is the trim.",
+        "One cabinet per path: two in series double the roll-off. A guitar cabinet belongs only on the dirty high band or a guitar-like voice, never alone on a full-range bass.",
+        "User Cabinet (IRs uploaded in the Darkglass Suite) and TONE3000 Cabinet (tones from tone3000.com) are picked by the player; the tools cannot change the file. Ask which is loaded.",
+        "After the cabinet, EQ boosts above 5 kHz do little: the IR already removed that region."
+      ]
+    },
+    {
+      "id": "scenes",
+      "title": "Scenes: three variations in one preset",
+      "summary": "A preset has 3 scenes sharing the same blocks; each stores its own parameter values and on/off states; select_scene first, then change.",
+      "points": [
+        "The chain (which blocks, where) is shared by the three scenes; each scene stores parameter values and whether each block is on. You cannot have different blocks per scene, only different settings and bypasses.",
+        "select_scene N makes the following set_parameter and set_block_enabled calls apply to scene N. get_current_preset tells you the active scene and the scene names.",
+        "Typical use: scene 1 = the base tone, scene 2 = pushed (drive on, Gain +3 dB, delay on), scene 3 = pulled back (drive off, darker). Or verse / chorus / solo of one song.",
+        "Build the base tone in scene 1 first; then switch to scene 2 and change only what differs, so the player can compare by switching.",
+        "In Scene mode the pedal's footswitches select scenes; in Stomp mode they toggle blocks. The player sets that mode and the scene names in the app; the tools don't.",
+        "When you change something, say which scene you changed; players often listen in another scene and think nothing happened.",
+        "A level jump between scenes is the usual complaint: match the Gain/Level of the pushed scene with the player before saving."
+      ]
+    },
+    {
+      "id": "time_and_modulation",
+      "title": "Chorus, delay, reverb and pitch on bass",
+      "summary": "Keep the lows dry (HPF options, LoCut, HP cutoff), blend 20-35 %, sync delays to BPM, trackers first in the chain, stereo variants only with stereo outputs.",
+      "points": [
+        "Chorus and flanger have an HPF option (Low/Mid/High): set it to Mid or High so only the upper harmonics shimmer and the fundamental stays tight. Blend 20-35 % (factory presets use 20-22).",
+        "Delays: Range picks the span (10-100 ms slapback, 0.1-1 s, 1-2 s); for rhythmic delays ask the song's BPM, set TempoBPM and a Subdivision ('1/8', '1/4 dot'...). The Modulation Delay has an HP cutoff on the repeats: raise it to 150-250 Hz so echoes don't muddy the bass.",
+        "Reverb: Wet 2-4 on bass, LoCut 3-6 to keep the tail out of the low end, Damping for a darker tail; Room is short, Plate bright, Hall long, Shimmer adds an octave-up voice. Factory presets end with Room reverb at Wet ~3.",
+        "Trails on: repeats or tail keep ringing when the block is bypassed instead of cutting dead.",
+        "Octavers and pitch shifters go first in the chain, on single notes: Sublime = round vintage sub, Sublemon = raspy fuzz-octave, Subcitri = polyphonic and clean, Pitch Shifter = any interval with its own dry/wet (DryLevel defaults to 0!), Axioma = a real mono synth with oscillators and filter.",
+        "Modulation usually sits after the drive and amp; the cabinet can come before or after it. Tremolo and phaser are classic on funk and dub; keep depth moderate on bass.",
+        "Stereo variants (…Stereo, …#stereo) only make a difference with two outputs in use or stereo headphones; otherwise the mono one saves DSP.",
+        "Envelope filters (Gravitron) and the Moog-style filter (moerfer) are modulation too, driven by playing dynamics: before compressors, Mode 'BP' for the funk quack."
+      ]
+    }
+  ]
+}

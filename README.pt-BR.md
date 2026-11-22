@@ -136,9 +136,21 @@ na pedaleira só acontece se você confirmar no app.
 
 > **A IA não ouve o som**: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos
 > costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a
-> ferramentas (*tool calling*). Ferramentas: `get_current_preset`, `list_block_types`, `set_parameter`,
-> `set_block_enabled`, `select_scene`, `add_block`, `move_block`, `remove_block`, `choose_cabinet`,
-> `undo` e `save_preset` (decisões IA1–IA6 em `docs/DECISOES.md`).
+> ferramentas (*tool calling*). Ferramentas: `get_current_preset`, `list_block_types`, `get_block_guide`,
+> `get_tone_building_guide`, `get_tone_recipe`, `set_parameter`, `set_block_enabled`, `select_scene`,
+> `add_block`, `move_block`, `remove_block`, `choose_cabinet`, `undo`, `save_preset`,
+> `get_global_settings` e `set_global_setting` (decisões IA1–IA6 e IC1–IC9 em `docs/DECISOES.md`).
+
+**O app ensina a pedaleira à IA.** Ele traz uma base de conhecimento de timbre que o assistente lê pela
+mesma conexão: o que cada um dos 109 blocos de fábrica faz (papel, parâmetros que importam com faixas,
+ponto de partida e armadilhas, por `get_block_guide`), como montar uma cadeia de baixo (ordem, gain
+staging, linha paralela, EQ por frequência, compressão, drive, gabinetes, cenas, por
+`get_tone_building_guide`) e receitas de partida por estilo ou baixista de referência ("slap", "metal
+moderno", "Steve Harris", por `get_tone_recipe`). A conexão também leva o fluxo recomendado: ler o
+preset, perguntar, propor, aplicar em passos pequenos, deixar você ouvir e só gravar quando você disser.
+Para Claude Desktop ou Claude Code há uma skill pronta em [`docs/ia/SKILL.md`](docs/ia/SKILL.md), que
+também traz um prompt de sistema para colar no LM Studio. O conteúdo é em inglês de propósito: é o
+idioma em que os modelos seguem melhor as ferramentas.
 
 ## Organização do repositório
 
@@ -175,5 +187,7 @@ Issues, ideias e pull requests são bem-vindos, em português, inglês ou espanh
 ## Créditos e licença
 
 Protocolo USB, catálogo de blocos e presets de exemplo portados do
-[anagram-tone-maker](https://github.com/basster6/anagram-tone-maker) (MIT). Licença do projeto:
+[anagram-tone-maker](https://github.com/basster6/anagram-tone-maker) (MIT); o guia de blocos da IA
+também aproveita as atribuições da comunidade que esse projeto reuniu (como pistas, não como afirmação
+da Darkglass). Licença do projeto:
 [MIT](LICENSE).

@@ -8,6 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../nucleo/catalogo/catalogo_blocos.dart';
 import '../../nucleo/catalogo/catalogo_gabinetes.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
+import '../../nucleo/catalogo/explicacoes_parametros.dart';
+import '../../nucleo/conhecimento/base_conhecimento.dart';
 import '../../nucleo/mcp/ferramenta_mcp.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
@@ -56,6 +58,12 @@ class SessaoMcp {
       _ref.read(indiceMiniaturasProvider).value?.escolhasDeGabinete ?? const CatalogoGabinetes.vazio();
 
   DefinicaoBloco definicao(String uri) => _ref.read(definicaoBlocoProvider(uri));
+
+  /// O conhecimento de timbre (IC1), esperando o arquivo carregar na primeira
+  /// chamada; sem o arquivo, a base vem vazia e a ferramenta explica.
+  Future<BaseConhecimento> conhecimento() => _ref.read(conhecimentoProvider.future);
+
+  Future<ExplicacoesParametros> explicacoes() => _ref.read(explicacoesProvider.future);
 
   /// O bloco na posição dos argumentos (`row`, `column`), ou a recusa.
   BlocoPreset bloco(Map<String, dynamic> argumentos, {String linha = 'row', String casa = 'column'}) {
