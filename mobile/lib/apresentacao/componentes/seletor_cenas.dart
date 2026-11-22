@@ -1,4 +1,5 @@
-// Cenas 1–3 como os snapshots do HX: trocar de cena soa na hora.
+// Cenas 1–3 como os snapshots do HX: trocar de cena soa na hora. À direita
+// delas, as pílulas do modo dos footswitches; sem largura, logo abaixo.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,6 +7,7 @@ import '../../aplicacao/estado/controlador_editor.dart';
 import '../tema/tokens.dart';
 import '../../l10n/app_localizations.dart';
 import 'botao_tally.dart';
+import 'pilulas_modo_footswitches.dart';
 
 class SeletorCenas extends ConsumerWidget {
   const SeletorCenas({super.key});
@@ -17,19 +19,27 @@ class SeletorCenas extends ConsumerWidget {
     final documento = ref.watch(editorProvider.select((e) => e.atual));
     if (documento == null) return const SizedBox.shrink();
     final controlador = ref.read(editorProvider.notifier);
-    return Row(children: [
-      for (final cena in cenas) ...[
-        if (cena > 1) const SizedBox(width: Espacos.s),
-        Expanded(
-          child: _BotaoCena(
-            numero: cena,
-            nome: documento.nomeDaCena(cena),
-            ativa: documento.cenaAtiva == cena,
-            aoTocar: () => controlador.escolherCena(cena),
-          ),
-        ),
-      ],
-    ]);
+    return LayoutBuilder(builder: (context, restricoes) {
+      final aoLado = restricoes.maxWidth >= Medidas.larguraCenasComModo;
+      return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Row(children: [
+          for (final cena in cenas) ...[
+            if (cena > 1) const SizedBox(width: Espacos.s),
+            Expanded(
+              child: _BotaoCena(
+                numero: cena,
+                nome: documento.nomeDaCena(cena),
+                ativa: documento.cenaAtiva == cena,
+                aoTocar: () => controlador.escolherCena(cena),
+              ),
+            ),
+          ],
+          if (aoLado) const PilulasModoFootswitches(espacoAntes: Espacos.m),
+        ]),
+        if (!aoLado) const Align(alignment: Alignment.centerRight, child: PilulasModoFootswitches()),
+        const AvisoErroModoFootswitches(),
+      ]);
+    });
   }
 }
 

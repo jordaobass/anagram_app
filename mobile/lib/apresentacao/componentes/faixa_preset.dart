@@ -1,6 +1,5 @@
 // Fita gaffer do preset aberto: slot em estêncil, nome a marcador, selo
-// "NÃO SALVO", o selo do modo dos footswitches e as ações de gravar. É o
-// que se lê de longe no palco.
+// "NÃO SALVO" e as ações de gravar. É o que se lê de longe no palco.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,7 +9,6 @@ import '../../nucleo/modelo/presets_fabrica.dart';
 import '../tema/tokens.dart';
 import 'acoes_preset.dart';
 import 'dialogo_renomear.dart';
-import 'selo_modo_footswitches.dart';
 import '../../l10n/app_localizations.dart';
 
 class FaixaPreset extends ConsumerWidget {
@@ -24,11 +22,12 @@ class FaixaPreset extends ConsumerWidget {
     final estado = ref.watch(editorProvider);
     final documento = estado.atual;
     if (documento == null) return const SizedBox.shrink();
-    final linha = _linha(context, ref, estado);
-    final avisos = Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      _Avisos(estado: estado),
-      const AvisoErroModoFootswitches(),
+    final linha = Row(children: [
+      _slot(context, estado),
+      const SizedBox(width: Espacos.m),
+      Expanded(child: _fitaTocavel(context, ref, estado)),
     ]);
+    final avisos = _Avisos(estado: estado);
     return LayoutBuilder(builder: (context, restricoes) {
       // sem largura para fita e botões lado a lado, os botões descem (iPad mini em paisagem)
       final empilhar = compacta || restricoes.maxWidth < Medidas.larguraFaixaEmLinha;
@@ -48,26 +47,6 @@ class FaixaPreset extends ConsumerWidget {
       ]);
     });
   }
-
-  /// Slot, fita e o selo do modo dos footswitches. Sem largura para o selo ao
-  /// lado do nome (celular, janela estreita), ele vai sob o slot, na altura
-  /// que a fita já ocupa (sem fileira própria).
-  Widget _linha(BuildContext context, WidgetRef ref, EstadoEditor estado) =>
-      LayoutBuilder(builder: (context, restricoes) {
-        final aoLado = !compacta && restricoes.maxWidth >= MedidasSelo.larguraParaFicarAoLado;
-        return Row(children: [
-          if (aoLado)
-            _slot(context, estado)
-          else
-            Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-              _slot(context, estado),
-              const SeloModoFootswitches(),
-            ]),
-          const SizedBox(width: Espacos.m),
-          Expanded(child: _fitaTocavel(context, ref, estado)),
-          if (aoLado) ...[const SizedBox(width: Espacos.s), const SeloModoFootswitches()],
-        ]);
-      });
 
   /// Slot em estêncil; no layout de uma coluna, abre a lista. Ali ele leva
   /// "PRESETS ▾" embaixo: trocar de preset é a tarefa do palco, e um número
