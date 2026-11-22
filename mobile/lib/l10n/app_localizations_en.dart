@@ -1396,4 +1396,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String utTemposDoCompasso(int tempos) {
     return 'Bar of $tempos beats, beat 1 accented';
   }
+
+  @override
+  String slotAlteradoForaTitulo(String slot) {
+    return '$slot changed on the pedal';
+  }
+
+  @override
+  String slotAlteradoForaTexto(String slot) {
+    return 'Slot $slot was changed on the pedal since you opened it. Overwrite saves your version over what is there; reload discards your edits and shows the pedal\'s version.';
+  }
+
+  @override
+  String get sobrescreverMesmoAssim => 'OVERWRITE ANYWAY';
+
+  @override
+  String get recarregarDaPedaleira => 'RELOAD FROM PEDAL';
+
+  @override
+  String get uiRecarregarDaPedaleira => 'Reload from pedal';
+
+  @override
+  String recarregarTitulo(String slot) {
+    return 'Reload $slot from the pedal?';
+  }
+
+  @override
+  String recarregarTexto(String nome) {
+    return 'The unsaved changes to \"$nome\" are lost and the editor shows what is saved in the slot.';
+  }
+
+  @override
+  String get recarregar => 'RELOAD';
 }

@@ -1396,4 +1396,36 @@ class AppLocalizationsPt extends AppLocalizations {
   String utTemposDoCompasso(int tempos) {
     return 'Compasso de $tempos tempos, o 1 acentuado';
   }
+
+  @override
+  String slotAlteradoForaTitulo(String slot) {
+    return '$slot mudou na pedaleira';
+  }
+
+  @override
+  String slotAlteradoForaTexto(String slot) {
+    return 'O slot $slot foi alterado na pedaleira desde que você abriu. Sobrescrever grava a sua versão por cima do que está lá; recarregar descarta as suas edições e mostra a versão da pedaleira.';
+  }
+
+  @override
+  String get sobrescreverMesmoAssim => 'SOBRESCREVER MESMO ASSIM';
+
+  @override
+  String get recarregarDaPedaleira => 'RECARREGAR DA PEDALEIRA';
+
+  @override
+  String get uiRecarregarDaPedaleira => 'Recarregar da pedaleira';
+
+  @override
+  String recarregarTitulo(String slot) {
+    return 'Recarregar $slot da pedaleira?';
+  }
+
+  @override
+  String recarregarTexto(String nome) {
+    return 'As mudanças não salvas de \"$nome\" se perdem e o editor passa a mostrar o que está gravado no slot.';
+  }
+
+  @override
+  String get recarregar => 'RECARREGAR';
 }

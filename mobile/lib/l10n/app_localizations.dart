@@ -2562,6 +2562,54 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Compasso de {tempos} tempos, o 1 acentuado'**
   String utTemposDoCompasso(int tempos);
+
+  /// No description provided for @slotAlteradoForaTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'{slot} mudou na pedaleira'**
+  String slotAlteradoForaTitulo(String slot);
+
+  /// No description provided for @slotAlteradoForaTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'O slot {slot} foi alterado na pedaleira desde que você abriu. Sobrescrever grava a sua versão por cima do que está lá; recarregar descarta as suas edições e mostra a versão da pedaleira.'**
+  String slotAlteradoForaTexto(String slot);
+
+  /// No description provided for @sobrescreverMesmoAssim.
+  ///
+  /// In pt, this message translates to:
+  /// **'SOBRESCREVER MESMO ASSIM'**
+  String get sobrescreverMesmoAssim;
+
+  /// No description provided for @recarregarDaPedaleira.
+  ///
+  /// In pt, this message translates to:
+  /// **'RECARREGAR DA PEDALEIRA'**
+  String get recarregarDaPedaleira;
+
+  /// No description provided for @uiRecarregarDaPedaleira.
+  ///
+  /// In pt, this message translates to:
+  /// **'Recarregar da pedaleira'**
+  String get uiRecarregarDaPedaleira;
+
+  /// No description provided for @recarregarTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Recarregar {slot} da pedaleira?'**
+  String recarregarTitulo(String slot);
+
+  /// No description provided for @recarregarTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'As mudanças não salvas de \"{nome}\" se perdem e o editor passa a mostrar o que está gravado no slot.'**
+  String recarregarTexto(String nome);
+
+  /// No description provided for @recarregar.
+  ///
+  /// In pt, this message translates to:
+  /// **'RECARREGAR'**
+  String get recarregar;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

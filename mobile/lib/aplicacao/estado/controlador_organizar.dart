@@ -146,6 +146,8 @@ class ControladorOrganizar extends Notifier<OperacaoPendente?> {
     return switch (gravacao) {
       PresetSalvo() => Organizado(OperacaoPreset.clonar, origem, destino),
       SlotOcupado(:final nomeAtual) => DestinoOcupado(destino, nomeAtual),
+      // sem o documento aberto (o clone não o passa), não há o que comparar
+      SlotAlteradoFora(:final atual) => DestinoOcupado(destino, atual?.nome ?? ''),
       FalhaAoSalvar(:final erro) => FalhaAoOrganizar(erro),
     };
   }
