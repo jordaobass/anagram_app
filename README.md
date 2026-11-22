@@ -139,7 +139,7 @@ preset and adjusts the blocks; every change is **heard immediately**, shows up o
 > model with good tool calling. Tools: `get_current_preset`, `list_block_types`, `get_block_guide`,
 > `get_tone_building_guide`, `get_tone_recipe`, `set_parameter`, `set_block_enabled`, `select_scene`,
 > `add_block`, `move_block`, `remove_block`, `choose_cabinet`, `undo`, `save_preset`,
-> `get_global_settings` and `set_global_setting`.
+> `get_global_settings` (read only) and `set_global_setting` (footswitch mode only).
 
 **The app teaches the AI the pedal.** It ships a tone-building knowledge base that the assistant reads
 through the same connection: what each of the 109 factory blocks does (role, key parameters with

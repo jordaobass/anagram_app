@@ -139,7 +139,7 @@ na pedaleira só acontece se você confirmar no app.
 > ferramentas (*tool calling*). Ferramentas: `get_current_preset`, `list_block_types`, `get_block_guide`,
 > `get_tone_building_guide`, `get_tone_recipe`, `set_parameter`, `set_block_enabled`, `select_scene`,
 > `add_block`, `move_block`, `remove_block`, `choose_cabinet`, `undo`, `save_preset`,
-> `get_global_settings` e `set_global_setting` (decisões IA1–IA6 e IC1–IC9 em `docs/DECISOES.md`).
+> `get_global_settings` (só leitura) e `set_global_setting` (só o modo dos footswitches) (decisões IA1–IA6 e IC1–IC9 em `docs/DECISOES.md`).
 
 **O app ensina a pedaleira à IA.** Ele traz uma base de conhecimento de timbre que o assistente lê pela
 mesma conexão: o que cada um dos 109 blocos de fábrica faz (papel, parâmetros que importam com faixas,
