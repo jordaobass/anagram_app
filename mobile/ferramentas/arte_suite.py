@@ -141,13 +141,19 @@ def _copiar_em_tamanho_de_icone(origem, destino):
         print('aviso: sem Pillow (pip install pillow), a arte vai no tamanho original')
         shutil.copyfile(origem, destino)
         return
-    with Image.open(origem) as imagem:
-        if max(imagem.size) <= LADO_MAXIMO:
+    from PIL import ImageOps
+    with Image.open(origem) as aberta:
+        if max(aberta.size) <= LADO_MAXIMO:
             shutil.copyfile(origem, destino)
             return
+        # fotos de celular (tons do TONE3000) vêm deitadas, com a rotação no EXIF
+        imagem = ImageOps.exif_transpose(aberta)
         imagem.thumbnail((LADO_MAXIMO, LADO_MAXIMO), Image.LANCZOS)
-        if destino.suffix.lower() == '.webp':
+        formato = destino.suffix.lower()
+        if formato == '.webp':
             imagem.save(destino, 'WEBP', quality=88, method=6)
+        elif formato in ('.jpg', '.jpeg'):
+            imagem.convert('RGB').save(destino, 'JPEG', quality=85, optimize=True, progressive=True)
         else:
             imagem.save(destino, optimize=True)
 

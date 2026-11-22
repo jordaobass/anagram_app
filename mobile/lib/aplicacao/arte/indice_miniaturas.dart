@@ -9,6 +9,7 @@ import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/familia_bloco.dart';
 import '../../nucleo/catalogo/variantes_uri.dart';
 import '../../nucleo/modelo/json_util.dart';
+import '../../plataforma/fotos_suite.dart';
 import 'tons_tone3000.dart';
 
 sealed class ArteBloco {
@@ -22,6 +23,12 @@ final class ArteMiniatura extends ArteBloco {
 
   /// Imagem do bloco em bypass, quando a fonte tem uma (a arte da pedaleira tem).
   final String? caminhoDesligado;
+}
+
+/// Foto fora dos assets: a do tom que a pessoa baixou pelo Darkglass Suite.
+final class ArteFotoExterna extends ArteBloco {
+  const ArteFotoExterna(this.caminho);
+  final String caminho;
 }
 
 final class ArteDaFamilia extends ArteBloco {
@@ -95,8 +102,10 @@ class IndiceMiniaturas {
 
   /// Casa pela uri que a pedaleira informa (com ou sem sufixo de canal);
   /// senão pelo nome do bloco. Com [arquivoIr] (gabinete), a foto do modelo
-  /// daquele IR vence a genérica do bloco.
-  ArteBloco arteDe(DefinicaoBloco bloco, {String? arquivoIr}) {
+  /// daquele IR vence a genérica do bloco; no TONE3000, a foto do tom.
+  ArteBloco arteDe(DefinicaoBloco bloco, {String? arquivoIr, FotosDoSuite? fotosDoSuite}) {
+    final doTom = tons.arteDoTom(bloco.uri, arquivoIr, credito, fotosDoSuite);
+    if (doTom != null) return doTom;
     final arquivos = _gabineteDe(arquivoIr) ??
         buscarPorVariantes(_porUri, bloco.uri) ??
         _porNome[normalizarNome(bloco.nome)];

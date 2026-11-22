@@ -11984,5 +11984,95 @@
   }
  },
  "origem": "Arte da pedaleira (Darkglass Suite).",
- "credito": "Imagens: Darkglass Electronics (arte da pedaleira)"
+ "credito": "Imagens: Darkglass Electronics (arte da pedaleira)",
+ "tone3000": {
+  "credito": "Fotos dos tons de fábrica: TONE3000 (via Darkglass Suite)",
+  "tons": {
+   "1612": {
+    "titulo": "Mesa OS 4x12 IR",
+    "gear": "cab",
+    "foto": "assets/blocos_terceiros/t3k_1612.jpg"
+   },
+   "26483": {
+    "titulo": "BAE 1073MP Preamp",
+    "gear": "outboard",
+    "foto": "assets/blocos_terceiros/t3k_26483.jpg"
+   },
+   "26828": {
+    "titulo": "Ampeg B-15 Fliptop",
+    "gear": "amp-cab",
+    "foto": "assets/blocos_terceiros/t3k_26828.jpg"
+   },
+   "27465": {
+    "titulo": "Fender Deluxe Reverb Mix Ready",
+    "gear": "cab",
+    "foto": "assets/blocos_terceiros/t3k_27465.jpg"
+   },
+   "28202": {
+    "titulo": "Ampeg SVT Classic with 6x10",
+    "gear": "amp-cab",
+    "foto": "assets/blocos_terceiros/t3k_28202.jpg"
+   },
+   "31010": {
+    "titulo": "TECH21 Sansamp Bass Driver",
+    "gear": "pedal",
+    "foto": "assets/blocos_terceiros/t3k_31010.jpg"
+   },
+   "36273": {
+    "titulo": "Modern HIGH GAIN - Mix Ready",
+    "gear": "cab",
+    "foto": "assets/blocos_terceiros/t3k_36273.jpg"
+   },
+   "43868": {
+    "titulo": "Ampeg B-18N Portaflex Fliptop",
+    "gear": "amp",
+    "foto": "assets/blocos_terceiros/t3k_43868.jpg"
+   },
+   "44680": {
+    "titulo": "Marantz SD 3020 tape deck - cassette player (1979) - 1000 epochs",
+    "gear": "experimental",
+    "foto": "assets/blocos_terceiros/t3k_44680.jpg"
+   },
+   "45809": {
+    "titulo": "AMPEG SVT-CL BASS HEAD",
+    "gear": "amp",
+    "foto": "assets/blocos_terceiros/t3k_45809.jpg"
+   },
+   "49310": {
+    "titulo": "Philips EL3541D Tape player Mic input",
+    "gear": "experimental",
+    "foto": "assets/blocos_terceiros/t3k_49310.jpg"
+   },
+   "50546": {
+    "titulo": "Soldano SLO-30",
+    "gear": "amp",
+    "foto": "assets/blocos_terceiros/t3k_50546.jpg"
+   },
+   "53231": {
+    "titulo": "Panasonic RQ-711S Tape Player",
+    "gear": "experimental",
+    "foto": "assets/blocos_terceiros/t3k_53231.jpg"
+   },
+   "57611": {
+    "titulo": "CAPI VP28 Preamp - 19dBu Send/Return - TTSV10",
+    "gear": "outboard",
+    "foto": "assets/blocos_terceiros/t3k_57611.jpg"
+   },
+   "61091": {
+    "titulo": "Sundragon Super Dragon - Jimmy Page's Nr. 1 amp",
+    "gear": "amp-cab",
+    "foto": "assets/blocos_terceiros/t3k_61091.jpg"
+   }
+  },
+  "porGear": {
+   "amp-cab": "assets/blocos_terceiros/t3k_gear_amp-cab.png",
+   "amp": "assets/blocos_terceiros/t3k_gear_amp.png",
+   "cab": "assets/blocos_terceiros/t3k_gear_cab.png",
+   "experimental": "assets/blocos_terceiros/t3k_gear_experimental.png",
+   "full-rig": "assets/blocos_terceiros/t3k_gear_full-rig.png",
+   "outboard": "assets/blocos_terceiros/t3k_gear_outboard.png",
+   "pedal": "assets/blocos_terceiros/t3k_gear_pedal.png",
+   "space": "assets/blocos_terceiros/t3k_gear_space.png"
+  }
+ }
 }

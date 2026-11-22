@@ -25,7 +25,9 @@ falhar() {
 pedaleira=$(find "$pasta" -type f -name 'dg_*.png' | wc -l)
 [ "$pedaleira" -ge "$minimo" ] || falhar "só $pedaleira imagens da pedaleira (dg_*.png); esperado pelo menos $minimo."
 
-intrusos=$(find "$pasta" -type f ! -name 'dg_*.png' ! -name 'dg_*.webp' ! -name indice.json ! -name fabrica.json ! -name LEIAME.txt | sort)
+# t3k_*: fotos dos tons de fábrica do TONE3000 e ícones por tipo, do Suite (A18)
+intrusos=$(find "$pasta" -type f ! -name 'dg_*.png' ! -name 'dg_*.webp' ! -name 't3k_*.jpg' ! -name 't3k_*.png' \
+  ! -name indice.json ! -name fabrica.json ! -name LEIAME.txt | sort)
 if [ -n "$intrusos" ]; then
   echo "$intrusos" | sed 's/^/  /' >&2
   falhar "arquivos que não são arte da pedaleira em assets/blocos_terceiros/ (acima)."
