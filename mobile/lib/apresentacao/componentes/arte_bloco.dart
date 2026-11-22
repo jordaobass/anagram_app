@@ -14,6 +14,7 @@ import '../../plataforma/fotos_suite.dart';
 import '../../l10n/app_localizations.dart';
 import '../tema/tokens.dart';
 import 'pintor_arte_familia.dart';
+import 'pintor_arte_utilitario.dart';
 
 /// O tom/arquivo que o bloco carrega (TONE3000, neural, IR do usuário), pelo
 /// título de fábrica quando há; nulo nos outros blocos.
@@ -42,7 +43,7 @@ class ArteBlocoWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final indice = ref.watch(indiceMiniaturasProvider).value;
     final arte = indice?.arteDe(definicao, arquivoIr: arquivoIr, fotosDoSuite: ref.watch(fotosDoSuiteProvider)) ??
-        ArteDaFamilia(definicao.familia);
+        arteDesenhada(definicao);
     if (ligado) return SizedBox.square(dimension: tamanho, child: _desenho(arte));
     return SizedBox.square(
       dimension: tamanho,
@@ -65,14 +66,15 @@ class ArteBlocoWidget extends ConsumerWidget {
   Widget _desenho(ArteBloco arte) => switch (arte) {
         ArteMiniatura(:final caminhoAsset) => _imagem(caminhoAsset),
         ArteFotoExterna(:final caminho) => _imagemDe(imagemDeArquivo(caminho)),
+        ArteUtilitario(:final tipo) => CustomPaint(painter: PintorArteUtilitario(tipo)),
         ArteDaFamilia(:final familia) => CustomPaint(painter: PintorArteFamilia(familia)),
       };
 
   Widget _imagem(String caminho) => _imagemDe(AssetImage(caminho));
 
-  /// Imagem que falha (arquivo apagado, sem disco) vira a arte da família.
+  /// Imagem que falha (arquivo apagado, sem disco) vira a arte desenhada.
   Widget _imagemDe(ImageProvider? imagem) {
-    final reserva = CustomPaint(painter: PintorArteFamilia(definicao.familia));
+    final reserva = _desenho(arteDesenhada(definicao));
     if (imagem == null) return reserva;
     return Image(image: imagem, fit: BoxFit.contain, filterQuality: FilterQuality.medium, errorBuilder: (_, _, _) => reserva);
   }

@@ -8,6 +8,7 @@ import '../../nucleo/catalogo/catalogo_gabinetes.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/familia_bloco.dart';
 import '../../nucleo/catalogo/variantes_uri.dart';
+import '../../nucleo/catalogo/utilitario_bloco.dart';
 import '../../nucleo/modelo/json_util.dart';
 import '../../plataforma/fotos_suite.dart';
 import 'tons_tone3000.dart';
@@ -35,6 +36,18 @@ final class ArteDaFamilia extends ArteBloco {
   const ArteDaFamilia(this.familia);
   final FamiliaBloco familia;
 }
+
+/// Ícone próprio de utilitário interno (afinador, mixer, MIDI…), sem arte em fonte nenhuma.
+final class ArteUtilitario extends ArteBloco {
+  const ArteUtilitario(this.tipo);
+  final TipoUtilitario tipo;
+}
+
+/// A arte desenhada pelo app: o ícone do utilitário, senão a da família.
+ArteBloco arteDesenhada(DefinicaoBloco bloco) => switch (utilitarioDaUri(bloco.uri)) {
+      final TipoUtilitario tipo => ArteUtilitario(tipo),
+      null => ArteDaFamilia(bloco.familia),
+    };
 
 class IndiceMiniaturas {
   IndiceMiniaturas(this._porUri, this._porNome, this.credito,
@@ -125,7 +138,7 @@ class IndiceMiniaturas {
     final arquivos = _gabineteDe(arquivoIr) ??
         buscarPorVariantes(_porUri, bloco.uri) ??
         _porNome[normalizarNome(bloco.nome)];
-    if (arquivos == null) return ArteDaFamilia(bloco.familia);
+    if (arquivos == null) return arteDesenhada(bloco);
     final (ligado, desligado) = arquivos;
     return ArteMiniatura(ligado, credito, caminhoDesligado: desligado);
   }
