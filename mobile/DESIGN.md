@@ -1,6 +1,6 @@
 ---
 name: Anagram App
-description: Editor de presets da Anagram com cara de case de estrada, tema escuro único.
+description: Editor de presets da Anagram com cara de case de estrada, em tema escuro (ABS preto) e claro (alumínio).
 colors:
   fundo-case: "#131416"
   painel: "#1B1C1F"
@@ -40,6 +40,12 @@ typography:
     fontFamily: "PermanentMarker"
     fontSize: "26px"
     lineHeight: 1.1
+  nome-preset:
+    fontFamily: "BarlowCondensed"
+    fontSize: "24px"
+    fontWeight: 600
+    lineHeight: 1.15
+    letterSpacing: "0.3px"
   headline-valor:
     fontFamily: "Barlow"
     fontSize: "26px"
@@ -129,15 +135,20 @@ components:
     rounded: "{rounded.controle}"
     padding: "4px 12px"
     height: "56px"
+  botao-cena-mouse:
+    height: "40px"
   botao-cena-ativa:
     backgroundColor: "{colors.tally}"
     textColor: "{colors.sobre-tally}"
   fita-preset:
     backgroundColor: "{colors.fita-gaffer}"
     textColor: "{colors.tinta-marcador}"
-    typography: "{typography.headline}"
+    typography: "{typography.nome-preset}"
     padding: "8px 16px"
     height: "56px"
+  fita-preset-mouse:
+    padding: "4px 16px"
+    height: "40px"
   selo-nao-salvo:
     backgroundColor: "{colors.fita-alerta}"
     textColor: "{colors.sobre-alerta}"
@@ -153,6 +164,8 @@ components:
     typography: "{typography.title-small}"
     padding: "0 16px"
     height: "64px"
+  barra-conexao-mouse:
+    height: "48px"
   linha-preset:
     backgroundColor: "transparent"
     textColor: "{colors.texto}"
@@ -190,7 +203,7 @@ components:
 
 O app é o flight case da pedaleira, não um site de configurações. Tudo é desenhado como equipamento de turnê visto no chão do palco: casco escuro, quinas de alumínio, nomes escritos a marcador em fita gaffer, numeração em estêncil e fitas de cor de roadie que dizem a família de cada bloco. A densidade é de ferramenta de bancada (lista de 126 slots, grade de 2 × 12 casas, knobs grandes), mas tudo legível de longe e com alvo de toque de no mínimo 48dp.
 
-Tema escuro único, sem variante clara. A cor é rara e funcional: o âmbar "tally" marca o que está ativo/selecionado, a fita gaffer marca o nome do preset, o vermelho de alerta marca o que ainda não foi gravado, e as cores de família só aparecem onde há bloco. Recusa explícita do contrato: a tela de cards cinza com sliders genéricos.
+Dois temas com o mesmo desenho: o escuro (ABS preto, o padrão de palco) e o claro (o mesmo case em alumínio, à luz do dia), escolhidos em Configurações › Aparência (Do sistema, Escuro, Claro; padrão Do sistema). A cor é rara e funcional: o âmbar "tally" marca o que está ativo/selecionado, a fita gaffer marca o nome do preset, o vermelho de alerta marca o que ainda não foi gravado, e as cores de família só aparecem onde há bloco. Recusa explícita do contrato: a tela de cards cinza com sliders genéricos.
 
 Divergência entre direção e construído: o contrato pede "ABS preto texturizado"; o construído é um preto chapado (`fundo-case`), sem textura. O registro segue o construído. A linha do sinal com dobras de 45° (estilo metrô) só aparece quando o preset tem a segunda pista (ver captura `desktop-4-paralelo`).
 
@@ -242,8 +255,9 @@ Casco preto neutro com alumínio frio, um único acento âmbar de ação e uma f
 **Character:** Barlow dá a leitura limpa de manual técnico; Barlow Condensed faz os rótulos de painel em caixa alta; estêncil e marcador são as duas "vozes de estrada", cada uma presa a um único papel.
 
 ### Hierarchy
-- **Display** (Saira Stencil, 40px, altura 1): slot do preset aberto ("02A"). Nos botões de cena o mesmo estêncil aparece no tamanho de `title-large` (20px).
-- **Headline** (Permanent Marker, 26px, 1.1): nome do preset sobre a fita gaffer, em `tinta-marcador`.
+- **Display** (Saira Stencil, 40px no toque e 32px com mouse, altura 1): slot do preset aberto ("02A"). Nos botões de cena o mesmo estêncil aparece no tamanho de `title-large` (20px).
+- **Headline** (Permanent Marker, 26px, 1.1): só "Anagram App" na fita da tela de conectar.
+- **Nome do Preset** (Barlow Condensed 600, 24px no toque e 22px com mouse, 1.15, +0.3px; `Tipos.nomePreset`): o nome sobre a fita gaffer, em `tinta-marcador`. Na lista, o nome vai em Body Large com peso 500 (`Tipos.nomeNaLista`).
 - **Headline Valor** (Barlow 600, 26px, figuras tabulares): valores numéricos grandes.
 - **Title Large / Medium** (Barlow 600, 20px / 17px): nome do bloco no painel, título de diálogo; valor sob o knob (17px, tabular).
 - **Title Small** (Barlow Condensed 600, 15px, +0.6px): estado da conexão, rótulo do slot na lista.
@@ -253,7 +267,7 @@ Casco preto neutro com alumínio frio, um único acento âmbar de ação e uma f
 - **Item de Menu** (Barlow 500, 15px, 1.25, +0.1px, caixa normal; `Tipos.itemMenu`): todo item de menu, do botão direito ao ⋮ e aos seletores. O que fica à direita do item vai em **Detalhe de Menu** (Barlow 400, 13px, `texto-secundario`; `Tipos.detalheMenu`). Menu não usa Label Large: condensada em negrito é voz de botão (DECISOES UI12).
 
 ### Named Rules
-**The Hand-Lettered Tape Rule.** Marcador só existe em cima de fita gaffer, e fita só existe onde há nome escrito à mão. Fora da fita do preset, nada de Permanent Marker.
+**The Hand-Lettered Tape Rule.** Marcador só existe em cima de fita gaffer, e só no nome FIXO do app (tela de conectar). O nome do preset, que é dado do usuário, vai na fita em `nome-preset` (Barlow Condensed 600), a voz de rótulo do case, na caixa em que foi escrito (DECISOES BC2).
 
 **The Stencil Is A Number Rule.** Estêncil é para identificador numérico (slot, cena), nunca para frase.
 
@@ -304,7 +318,7 @@ Menu de contexto (botão direito, toque longo, ⋮), menu de arquivo, idioma, ve
 - **Divisores:** filete de 1px entre grupos (ações, mover, footswitches, remover).
 
 ### Cenas
-Três botões de largura igual, altura 56px. Inativo: `painel-elevado` com borda de filete. Ativo: preenchido em âmbar. Número em estêncil + nome em caixa alta; cena sem nome mostra só o número e "CENA" (nunca "1 CENA 1").
+Três botões de largura igual, altura 56px no toque e 40px com mouse (`MedidasDoTopo`). Inativo: `painel-elevado` com borda de filete. Ativo: preenchido em âmbar. Número em estêncil + nome em caixa alta; cena sem nome mostra só o número e "CENA" (nunca "1 CENA 1").
 
 ### Modo dos footswitches
 Na linha das cenas, à direita dos três botões: PRESET / STOMP / SCENE em pílulas pequenas lado a lado (desenho de 26px de altura, raio inteiro, label-small; alvo de toque de 48dp por pílula — empilhadas, três alvos de 48dp não caberiam na altura de 56px de uma cena). Abaixo de 560px de largura na linha (celular, janela estreita), as pílulas descem para uma linha fina logo abaixo das cenas, alinhadas à direita.
@@ -329,7 +343,7 @@ Pedal numa caixa fixa (`painel`, filete de 1px, canto de 6px) para as fotos de p
 Nome do parâmetro em caixa alta acima, valor tabular abaixo. Trilho em filete, arco na cor da família, corpo `painel-elevado` com aro de alumínio (âmbar 2px quando focado), ponteiro em fita gaffer. Arraste vertical/horizontal, rodinha, setas (Shift = passo de 10%), toque duplo volta ao padrão. Parâmetros com poucas opções viram coluna de botões: marcado em cor da família (ou, em família neutra, `painel-elevado` + contorno âmbar + check), demais em contorno.
 
 ### Navigation
-- **Barra de conexão:** 64px, `painel`, filete inferior. LED de 10px + estado em title-small, "AO VIVO" + interruptor âmbar, latência "ida e volta N ms" (só na ampla), ícones de desconectar e créditos. Com versão nova publicada, aviso discreto: ícone em `aluminio-claro` + "vX.Y.Z disponível" em label-medium + BAIXAR (texto em âmbar, é ação) + fechar ("Lembrar depois"); abaixo de 1200px de janela, só o ícone, com as duas ações num menu.
+- **Barra de conexão:** 64px no toque, 48px com mouse (ícones e interruptor sem a margem de toque, 40px), `painel`, filete inferior. LED de 10px + estado em title-small, "AO VIVO" + interruptor âmbar, latência "ida e volta N ms" (só na ampla), ícones de desconectar e créditos. Com versão nova publicada, aviso discreto: ícone em `aluminio-claro` + "vX.Y.Z disponível" em label-medium + BAIXAR (texto em âmbar, é ação) + fechar ("Lembrar depois"); abaixo de 1200px de janela, só o ícone, com as duas ações num menu.
 - **Lista de presets:** linhas de 48px, slot em title-small (`aluminio-claro`, âmbar quando aberto), nome em body-large ou "vazio" em body-small; linha aberta ganha `painel-elevado` e filete esquerdo âmbar de 2px. A marca "a pedaleira está neste slot" usa a cor do LED da barra (azul na demonstração) e não aparece em slot vazio.
 
 ### Avisos
@@ -338,8 +352,8 @@ Snackbar flutuante em fita gaffer com texto `tinta-marcador`, 15px. Diálogo em 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** usar só tokens de `lib/apresentacao/tema/tokens.dart`; nenhuma cor ou medida fora dali.
-- **Do** manter alvo mínimo de 48dp em todo controle tocável.
+- **Do** usar só tokens de `lib/apresentacao/tema/tokens.dart` e cores por papel de `paleta.dart` (`context.cores.<papel>`); nenhuma cor ou medida fora dali.
+- **Do** manter alvo mínimo de 48dp em todo controle tocável; com mouse, o topo do editor usa alvos de 32 a 40px (`MedidasDoTopo.mouse`, DECISOES BC1).
 - **Do** separar camadas por tom (`fundo-case` → `painel` → `painel-elevado`) e filete de 1px.
 - **Do** marcar seleção com contorno âmbar de 2px ou preenchimento âmbar, nunca com sombra.
 - **Do** colocar a fita de família de 4px sob todo bloco e herdar a mesma cor no arco do knob.
@@ -353,6 +367,67 @@ Snackbar flutuante em fita gaffer com texto `tinta-marcador`, 15px. Diálogo em 
 - **Don't** usar sombra projetada nem cantos acima de 8px.
 - **Don't** usar logo ou marca da Darkglass fora da arte dos blocos (ícone, nome, telas).
 - **Don't** criar tela de cards cinza com sliders genéricos; parâmetro contínuo é knob.
+
+<!-- tema-claro-topo: bloco mantido junto com docs/DECISOES.md (TC1 a TC6, BC1 a BC3) -->
+## Tema claro e topo compacto (2026-11-22)
+
+Este bloco vale por cima de qualquer frase anterior deste arquivo que diga o contrário. Origem: dois relatos de
+usuários (Reddit: letra feia no nome do preset e barra de cima grande; fórum: só existe o modo escuro).
+
+### Cores por papel, dois jogos
+As cores vivem em `lib/apresentacao/tema/paleta.dart` (`Paleta.escura`, `Paleta.clara`, uma `ThemeExtension`
+lida por `context.cores`). Os hex do frontmatter são do escuro. O claro, papel a papel:
+
+| Papel | Escuro | Claro | Nota |
+|---|---|---|---|
+| fundo-case | #131416 | #DFE1E3 | degrau mais fundo |
+| painel | #1B1C1F | #ECEEF0 | |
+| painel-elevado | #24262A | #F8F9FA | o elevado é o mais claro nos dois |
+| filete | #34373C | #C5C9CE | |
+| aluminio | #8E949B | #6B7178 | contorno de botão, cantoneira, fio |
+| aluminio-claro | #C9CDD2 | #454B52 | vira tinta escura no claro |
+| texto / texto-secundario | #EDEDEB / #A7ACB2 | #16181B / #50565D | |
+| fita-gaffer / sombra | #E8E1CD / #CFC6AE | #E8E1CD / #B9AE8E | a fita é a mesma; a borda escurece |
+| tinta-marcador | #17171A | #17171A | |
+| tally (preenchimento) / sobre-tally | #F0B429 / #1A1405 | igual | botão primário, cena ativa, interruptor |
+| tally-tinta (novo) | #F0B429 | #865600 | âmbar como TEXTO, contorno de seleção e anel de foco |
+| fita-alerta / sobre-alerta | #C2361F / #FFFFFF | igual | |
+| led-ligado | #41D68A | #15703F | |
+| led-demonstracao | #5AA9F0 | #1F69AE | |
+| led-desligado | #6B7077 | #868B92 | |
+| erro | #FF7A66 | #B3261E | |
+| modo-preset / stomp / scene | #FFFFFF / #9B6CF0 / #6EC6F5 | #2B2E33 / #6B46D6 / #16679F | o LED branco no alumínio parecia apagado: Preset aceso vira grafite |
+| sobre-modo | #121014 | #FFFFFF | |
+| corpo-knob (novo) | #24262A | #2B2E33 | knob e cursor do fader pretos no claro, ponteiro creme |
+| alca-grafico (novo) | #E8E1CD | #2B2E33 | pontos arrastáveis do EQ |
+| miolo-alca (novo) | #17171A | #F8F9FA | miolo do puxador da faixa de frequência |
+| familia-* | (frontmatter) | drive #D36117 · compressor #778B1E · equalizador #238EA8 · filtro #936DE1 · modulação #279278 · delay #4B7EED · reverb #CE55A8 · amplificador #E0543C · gabinete #987F51 · utilitário #7B838D | mesma matiz e saturação, luminância baixada |
+| sinal-split / sinal-merge | #F5E05A / #8FEADB | #958209 / #1C937F | |
+
+**Regra de derivação do claro.** Cor de destaque (família, banda do multibanda, fio, linhas Threshold/Level, mixer,
+modo do Global EQ) mantém matiz e saturação HSL e só baixa a luminância relativa para ~0,225: assim passa de 3:1
+sobre o painel claro e ainda leva `tinta-marcador` por cima no AA (a opção marcada). O texto do modo do EQ desce
+mais (~0,13, AA como texto). Medido com a luminância da cor de verdade em `test/tema/contraste_tema_test.dart`.
+
+**The Ink Amber Rule.** Âmbar de preenchimento (`tally`) e âmbar de tinta (`tally-tinta`) são papéis diferentes:
+o primeiro sempre tem `sobre-tally` em cima; o segundo é a cor do texto "AO VIVO", do slot aberto, do "ORIGEM",
+do contorno da casa selecionada, do anel de foco e do texto de TextButton. No escuro são o mesmo hex.
+
+As fotos dos pedais não mudam com o tema.
+
+### Topo do editor por ponteiro (`MedidasDoTopo`)
+| Peça | Toque (celular, tablet) | Mouse (Windows, macOS, Linux) |
+|---|---|---|
+| Barra de conexão | 64 | 48 (ícones e interruptor de 40, sem margem de toque) |
+| Fita do preset | 56 (respiro 8) | 40 (respiro 4) |
+| SALVAR / SALVAR COMO / DESCARTAR / menu | 48 | 40 |
+| Cenas | 56 | 40 |
+| Alvo da pílula do modo | 48 | 32 (desenho de 26) |
+| Estêncil do slot / nome do preset | 40 / 24 | 32 / 22 |
+| Espaço fita → cenas | 16 | 8 |
+
+A tela de conectar mantém a fita no tamanho cheio: é a vitrine, não o topo do editor.
+<!-- /tema-claro-topo -->
 
 <!-- produto-arte-acoes: bloco mantido junto com PRODUCT.md e docs/DECISOES.md (A9 a A12, U13 a U15) -->
 ## Arte dos blocos, nomes de ação e textos (2026-11-21)
