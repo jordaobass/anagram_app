@@ -124,6 +124,18 @@ final conhecimentoProvider = FutureProvider<BaseConhecimento>((ref) async {
   );
 });
 
+/// Nomes corrigidos na demonstração: o exemplo real 1 veio da pedaleira com
+/// erro de digitação ("My faorite tone"); o arquivo de referência fica como
+/// foi gravado e só a pedaleira simulada mostra o nome certo.
+const _nomesNaDemonstracao = {1: 'My favorite tone'};
+
+/// O exemplo real [n] como a pedaleira simulada o mostra.
+Map<String, dynamic> exemploNaDemonstracao(int n, Map<String, dynamic> exemplo) {
+  final nome = _nomesNaDemonstracao[n];
+  if (nome != null) (exemplo['preset'] as Map<String, dynamic>)['name'] = nome;
+  return exemplo;
+}
+
 /// Presets da pedaleira simulada: os autorais + os exemplos reais.
 final presetsDemonstracaoProvider = FutureProvider<Map<int, Map<String, dynamic>>>((ref) async {
   final pacote = ref.watch(pacoteAssetsProvider);
@@ -131,7 +143,7 @@ final presetsDemonstracaoProvider = FutureProvider<Map<int, Map<String, dynamic>
   return {
     for (final e in autorais.entries) int.parse(e.key): e.value as Map<String, dynamic>,
     for (final n in CaminhosAssets.exemplos)
-      n: jsonDecode(await pacote.loadString(CaminhosAssets.exemplo(n))) as Map<String, dynamic>,
+      n: exemploNaDemonstracao(n, jsonDecode(await pacote.loadString(CaminhosAssets.exemplo(n))) as Map<String, dynamic>),
   };
 });
 

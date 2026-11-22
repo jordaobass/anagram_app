@@ -13,7 +13,7 @@ import '../apoio/demonstracao_na_tela.dart';
 
 const _celular = Tamanho('celular-retrato', 390, 844, 2);
 
-/// 01A ("My faorite tone") tem o pedal no Position do wah e dois pots.
+/// 01A ("My favorite tone") tem o pedal no Position do wah e dois pots.
 Future<void> _abrirComWah(WidgetTester tester, Tamanho tamanho) async {
   await preparar(tester, tamanho);
   final container = await abrirSlot(tester, '01A');
