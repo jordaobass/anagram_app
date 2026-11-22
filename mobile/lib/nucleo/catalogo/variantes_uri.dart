@@ -3,10 +3,11 @@
 // "#stereo"`. Catálogo e arte guardam uma das formas só; a busca tenta as
 // outras para o bloco não cair sem nome nem arte por causa do sufixo.
 
-/// A uri exata primeiro, depois sem o sufixo "#…", depois a variante estéreo.
+/// A uri exata primeiro, depois sem o sufixo "#…", depois as variantes
+/// estéreo e mono (há plugin que o catálogo só traz com uma delas).
 List<String> variantesDeUri(String uri) {
   final base = semSufixoDeCanal(uri);
-  return {uri, base, '$base#stereo'}.toList();
+  return {uri, base, '$base#stereo', '$base#mono'}.toList();
 }
 
 String semSufixoDeCanal(String uri) {

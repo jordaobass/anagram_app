@@ -52,7 +52,8 @@ def _modelos(texto):
     return {nome: (arquivo, desligadas.get(nome, arquivo)) for nome, arquivo in ligadas.items()}
 
 
-_COMPARACAO_URI = re.compile(r'"(urn:[^"]+)"===e\.uri(?:\|\||\?Gce\+"/devices/anagram/effects/([^"/]+)")')
+# uris de plugin também vêm como endereço (https://cognate.audio/plugins/…)
+_COMPARACAO_URI = re.compile(r'"((?:urn:|https?://)[^"]+)"===e\.uri(?:\|\||\?Gce\+"/devices/anagram/effects/([^"/]+)")')
 
 
 def _cadeias_de_uri(texto):
