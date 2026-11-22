@@ -283,7 +283,7 @@ Na linha das cenas, à direita dos três botões: PRESET / STOMP / SCENE em píl
 Movimento: ao trocar, a cor acende na nova e apaga na antiga (220ms, ease-out); quando a releitura confirma, a nova dá um pulso de brilho na própria cor (420ms); recusa volta ao valor real com um tremor horizontal de 3px que amortece, sem cor, e a frase de erro sob as cenas. Com "reduzir movimento" do sistema, a troca é seca e não há pulso nem tremor. Nas Configurações o modo é um cartão "Footswitches" com três botões iguais aos de cena.
 
 ### Fita do Preset (assinatura)
-Slot em estêncil de 40px à esquerda (no celular, com "PRESETS ▾" embaixo: tocar abre a lista), seguido da fita gaffer creme com o nome a marcador, um lápis discreto em alumínio (tocar a fita renomeia) e, se houver edição não salva, o selo vermelho "NÃO SALVO" no fim da fita. Os avisos sob a fita (ao vivo desligado, audição sem USB MIDI) usam `erro`, não âmbar.
+Slot em estêncil de 40px à esquerda (no celular, com "PRESETS ▾" embaixo: tocar abre a lista), seguido da fita gaffer creme com o nome a marcador, um lápis discreto em alumínio (tocar a fita renomeia) e, se houver edição não salva, o selo vermelho "NÃO SALVO" no fim da fita. Os avisos sob a fita (ao vivo desligado, audição sem USB MIDI) usam `erro`, não âmbar. A tela de conectar abre com a mesma assinatura: "01A" em estêncil e a fita com "Anagram App" a marcador; ao conectar ou abrir a demonstração, o giro e a frase ("Conectando (USB)…", "Abrindo a demonstração…") ficam dentro do botão tocado, com a cor mantida, e o outro botão desabilitado (DECISOES UI9).
 
 ### Moldura de Case
 Painel `painel` com filete de 1px, canto de 3px e cantoneiras de alumínio pintadas por cima. Envolve a grade de blocos e o painel de parâmetros.
@@ -343,7 +343,7 @@ Este bloco vale por cima de qualquer frase anterior deste arquivo que diga o con
   texto normal com ícone de informação.
 - **Área de presets:** o campo mostra só o nome que a pessoa deu; a área ativa na pedaleira é marcada ao
   lado com o LED `led-ligado` e o rótulo ATIVA, nunca colada no nome.
-- **Versão do app:** só na tela Sobre, com "· arte da pedaleira" quando o build traz a arte.
+- **Versão do app:** na tela Sobre, com "· arte da pedaleira" quando o build traz a arte, e também na barra de cima a partir de 880px de janela, ao lado do estado e do firmware (pedido do dono depois desta regra; DECISOES UI9).
 - **Idioma:** pílulas no topo da tela Sobre e um menu compacto (globo + idioma atual) na tela de conectar.
 - **Sem USB na plataforma** (iPhone/iPad, navegador sem WebHID): título "Modo demonstração", uma frase,
   ABRIR DEMONSTRAÇÃO como botão primário e "POR QUÊ?" com a explicação inteira.
