@@ -50,8 +50,10 @@ class TonsTone3000 {
 
   /// A arte do tom carregado num bloco TONE3000, como o Suite (função rQe):
   /// tom conhecido pela foto ou pelo ícone do tipo; tom da pessoa pela foto
-  /// que o Suite baixou. Null = fica a arte do bloco.
-  ArteBloco? arteDoTom(String uri, String? valor, String creditoImagens, FotosDoSuite? fotosDoSuite) {
+  /// que o Suite baixou. Null = fica a arte do bloco. [gear] vale quando o
+  /// tom não está entre os de fábrica conhecidos (veio da pedaleira).
+  ArteBloco? arteDoTom(String uri, String? valor, String creditoImagens, FotosDoSuite? fotosDoSuite,
+      {String? gear}) {
     final modelo = ehBlocoTone3000(uri) ? modeloCarregadoDe(uri, valor) : null;
     final id = modelo?.idTone3000;
     if (modelo == null || id == null) return null;
@@ -59,7 +61,9 @@ class TonsTone3000 {
     final asset = tom?.foto ?? _porGear[tom?.gear];
     if (asset != null) return ArteMiniatura(asset, creditoImagens);
     final externa = modelo.doUsuario ? fotosDoSuite?.fotoDoTom(id, ehIr: modelo.ehIr) : null;
-    return externa == null ? null : ArteFotoExterna(externa);
+    if (externa != null) return ArteFotoExterna(externa);
+    final doTipo = _porGear[gear];
+    return doTipo == null ? null : ArteMiniatura(doTipo, creditoImagens);
   }
 }
 

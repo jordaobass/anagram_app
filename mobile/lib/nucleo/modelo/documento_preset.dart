@@ -127,7 +127,7 @@ class DocumentoPreset {
 
   DocumentoPreset comUuid(String uuid) => _editar((p) => p['uuid'] = uuid);
 
-  /// Troca o arquivo de IR do gabinete (modelo, microfone e posição escolhidos).
+  /// Troca o arquivo do bloco: IR do gabinete ou tom/modelo do TONE3000.
   DocumentoPreset comArquivoDeIr(PosicaoBloco posicao, String caminho) =>
       _editarBloco(posicao, (bloco) => gravarArquivoDeIr(bloco, caminho));
 

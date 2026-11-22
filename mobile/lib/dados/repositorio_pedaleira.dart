@@ -10,10 +10,12 @@ import '../nucleo/modelo/conferencia_gravacao.dart';
 import '../nucleo/modelo/documento_preset.dart';
 import '../nucleo/modelo/slot_preset.dart';
 import '../nucleo/protocolo/api_anagram.dart';
+import '../nucleo/protocolo/api_tone3000.dart';
 import '../nucleo/protocolo/cliente_anagram.dart';
 import '../nucleo/protocolo/erros_anagram.dart';
 import '../nucleo/registro.dart';
 import '../nucleo/resultado.dart';
+import '../nucleo/tone3000/tons_da_pedaleira.dart';
 
 class RepositorioPedaleira {
   RepositorioPedaleira(this._api);
@@ -76,6 +78,10 @@ class RepositorioPedaleira {
 
   Future<Resultado<void>> trocarBancos(int de, int para, {String? area}) =>
       _proteger('trocar os bancos $de e $para', () => _api.trocarBancos(de, para, area: area));
+
+  /// Os tons do TONE3000 que estão na pedaleira (só leitura).
+  Future<Resultado<TonsDaPedaleira>> lerTonsDaPedaleira() =>
+      _proteger('ler os tons do TONE3000', _api.lerTonsDaPedaleira);
 
   Future<Resultado<T>> _proteger<T>(String operacao, Future<T> Function() acao) async {
     try {

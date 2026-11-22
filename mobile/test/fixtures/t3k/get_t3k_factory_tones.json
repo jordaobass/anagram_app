@@ -1,0 +1,2156 @@
+{
+ "acao": "get_t3k_factory_tones",
+ "carga": {},
+ "ok": true,
+ "ms": 1631,
+ "resposta": {
+  "success": 1,
+  "data": {
+   "tones": [
+    {
+     "id": 1612,
+     "user_id": "650cbb55-776b-4a79-a2b3-ea9e085e6324",
+     "title": "Mesa OS 4x12 IR",
+     "description": "2000s Mesa oversized straight cab as an IR. \n\nSM57 at the edge of the dust cap. M160 in the center of the speaker.\n\nClean Pre (UAD), no compression, no saturation.\n\nMix ready in the low end. Adjust the top end to taste based off of which amp is being sent into the IR.",
+     "created_at": "2023-04-17T12:42:05.722+00:00",
+     "updated_at": "2023-04-29T10:03:05.991+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/rfk2d96rph.jpg"
+     ],
+     "is_public": true,
+     "links": null,
+     "models_count": 1,
+     "favorites_count": 736,
+     "downloads_count": 57654,
+     "license": "t3k",
+     "sizes": null,
+     "a1_models_count": 0,
+     "a2_models_count": 0,
+     "irs_count": 1,
+     "custom_models_count": 0,
+     "user": {
+      "id": "650cbb55-776b-4a79-a2b3-ea9e085e6324",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/scottcorgan-1682523316.jpg",
+      "username": "scottcorgan",
+      "url": "https://www.tone3000.com/scottcorgan"
+     },
+     "makes": [
+      {
+       "id": 893,
+       "name": "Mesa OS 4x12"
+      }
+     ],
+     "tags": [
+      {
+       "id": 242,
+       "name": "guitar"
+      },
+      {
+       "id": 118,
+       "name": "high-gain"
+      },
+      {
+       "id": 15,
+       "name": "ir"
+      },
+      {
+       "id": 39,
+       "name": "metal"
+      },
+      {
+       "id": 140,
+       "name": "punk"
+      },
+      {
+       "id": 91,
+       "name": "rock"
+      },
+      {
+       "id": 135,
+       "name": "tight"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/mesa-os-4x12-ir-1612",
+     "format": "ir",
+     "gear": "cab",
+     "a2_models": [
+      {
+       "id": 81565,
+       "tone_id": 1612,
+       "user_id": "650cbb55-776b-4a79-a2b3-ea9e085e6324",
+       "created_at": "2023-04-17T12:42:05.722+00:00",
+       "updated_at": "2023-04-29T10:03:05.991+00:00",
+       "name": "Mesa_OS_4x12_57_m160",
+       "model_url": "https://www.tone3000.com/api/v1/models/81565/download/3dd00ee151e2d1a9.wav",
+       "size": null,
+       "architecture_version": null,
+       "scaling_method": "static18dB",
+       "ir_length": 9056
+      }
+     ]
+    },
+    {
+     "id": 27465,
+     "user_id": "3c78becb-d9ce-4c7b-9f83-be91859629e0",
+     "title": "Fender Deluxe Reverb Mix Ready",
+     "description": "The classic blackface sound with an Oxford speaker, polished and ready to go. Sounds very pleasing and balanced to me. No harsh high end, no muddy low mids, controlled low end.\n\nBuy my Mix Ready Guitar IRs:\nhttps://lamego.gumroad.com",
+     "created_at": "2025-04-11T23:56:00.05117+00:00",
+     "updated_at": "2025-11-14T10:33:52.846+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/neyd0ho10zb.jpg"
+     ],
+     "is_public": true,
+     "links": [
+      "https://lamego.gumroad.com"
+     ],
+     "models_count": 2,
+     "favorites_count": 505,
+     "downloads_count": 74579,
+     "license": "t3k",
+     "sizes": null,
+     "a1_models_count": 0,
+     "a2_models_count": 0,
+     "irs_count": 2,
+     "custom_models_count": 0,
+     "user": {
+      "id": "3c78becb-d9ce-4c7b-9f83-be91859629e0",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/VULTURIZED-1740182310.jpg",
+      "username": "vulturized",
+      "url": "https://www.tone3000.com/vulturized"
+     },
+     "makes": [
+      {
+       "id": 208,
+       "name": "Fender Deluxe Reverb"
+      }
+     ],
+     "tags": [
+      {
+       "id": 59665,
+       "name": "blackface"
+      },
+      {
+       "id": 281,
+       "name": "blues"
+      },
+      {
+       "id": 65,
+       "name": "clean"
+      },
+      {
+       "id": 661,
+       "name": "country"
+      },
+      {
+       "id": 57611,
+       "name": "deluxe"
+      },
+      {
+       "id": 56881,
+       "name": "fender"
+      },
+      {
+       "id": 15,
+       "name": "ir"
+      },
+      {
+       "id": 59666,
+       "name": "oxford"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/fender-deluxe-reverb-mix-ready-27465",
+     "format": "ir",
+     "gear": "cab",
+     "a2_models": [
+      {
+       "id": 220918,
+       "tone_id": 27465,
+       "user_id": "3c78becb-d9ce-4c7b-9f83-be91859629e0",
+       "created_at": "2025-11-14T10:34:16.698664+00:00",
+       "updated_at": "2025-11-14T10:34:16.698664+00:00",
+       "name": "DELUXE REVERB OXFORD - BIG - 48 24",
+       "model_url": "https://www.tone3000.com/api/v1/models/220918/download/rwgu5i8d54k.wav",
+       "size": null,
+       "architecture_version": null,
+       "scaling_method": "static18dB",
+       "ir_length": 35109
+      },
+      {
+       "id": 220917,
+       "tone_id": 27465,
+       "user_id": "3c78becb-d9ce-4c7b-9f83-be91859629e0",
+       "created_at": "2025-11-14T10:34:16.690741+00:00",
+       "updated_at": "2025-11-14T10:34:16.690741+00:00",
+       "name": "DELUXE REVERB OXFORD - LEAN - 48 24",
+       "model_url": "https://www.tone3000.com/api/v1/models/220917/download/w4lcgg5wjq.wav",
+       "size": null,
+       "architecture_version": null,
+       "scaling_method": "static18dB",
+       "ir_length": 35109
+      }
+     ]
+    },
+    {
+     "id": 36273,
+     "user_id": "3c78becb-d9ce-4c7b-9f83-be91859629e0",
+     "title": "Modern HIGH GAIN - Mix Ready",
+     "description": "Blend of Marshall 4x12 and a Mesa Oversized 4x12.\nBoth loaded with Celestion V30s.\nBoth miked with SM57+R121.\nEQ'd to remove unecessary low end rumble and harsh high end.\nAdditionally, scooped the mids a bit, to make it sound articulate and polished.\nPhase alignment is perfect too.",
+     "created_at": "2025-08-26T17:57:38.686366+00:00",
+     "updated_at": "2025-08-26T17:57:38.686366+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/6lbme9ss4hn.jpg"
+     ],
+     "is_public": true,
+     "links": [],
+     "models_count": 1,
+     "favorites_count": 64,
+     "downloads_count": 4452,
+     "license": "t3k",
+     "sizes": null,
+     "a1_models_count": 0,
+     "a2_models_count": 0,
+     "irs_count": 1,
+     "custom_models_count": 0,
+     "user": {
+      "id": "3c78becb-d9ce-4c7b-9f83-be91859629e0",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/VULTURIZED-1740182310.jpg",
+      "username": "vulturized",
+      "url": "https://www.tone3000.com/vulturized"
+     },
+     "makes": [
+      {
+       "id": 11105,
+       "name": "Marshall 4x12"
+      },
+      {
+       "id": 5016,
+       "name": "Mesa OS 412 V30"
+      },
+      {
+       "id": 5570,
+       "name": "v30"
+      }
+     ],
+     "tags": [
+      {
+       "id": 58741,
+       "name": "4x12"
+      },
+      {
+       "id": 64738,
+       "name": "heavy metal"
+      },
+      {
+       "id": 56890,
+       "name": "high gain"
+      },
+      {
+       "id": 118,
+       "name": "high-gain"
+      },
+      {
+       "id": 15,
+       "name": "ir"
+      },
+      {
+       "id": 57811,
+       "name": "marshall"
+      },
+      {
+       "id": 70547,
+       "name": "mesa os"
+      },
+      {
+       "id": 39,
+       "name": "metal"
+      },
+      {
+       "id": 61792,
+       "name": "modern"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/modern-high-gain-mix-ready-36273",
+     "format": "ir",
+     "gear": "cab",
+     "a2_models": [
+      {
+       "id": 174178,
+       "tone_id": 36273,
+       "user_id": "3c78becb-d9ce-4c7b-9f83-be91859629e0",
+       "created_at": "2025-08-26T17:57:52.405952+00:00",
+       "updated_at": "2025-08-26T17:57:52.405952+00:00",
+       "name": "Modern HIGH GAIN - Mix Ready",
+       "model_url": "https://www.tone3000.com/api/v1/models/174178/download/5fh1h22rpy.wav",
+       "size": null,
+       "architecture_version": null,
+       "scaling_method": "static18dB",
+       "ir_length": 35109
+      }
+     ]
+    },
+    {
+     "id": 26828,
+     "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+     "title": "Ampeg B-15 Fliptop",
+     "description": "Vintage 1960s Ampeg B-15 Fliptop.\n\nCaptured with a Telefunken U47, M80 and sum of both.",
+     "created_at": "2025-03-27T17:44:21.177131+00:00",
+     "updated_at": "2025-03-27T17:44:21.177131+00:00",
+     "added_at": "2001-01-12T00:00:00.000+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/pirb9zkoey.jpg"
+     ],
+     "is_public": true,
+     "links": [],
+     "models_count": 2,
+     "favorites_count": 195,
+     "downloads_count": 7166,
+     "license": "t3k",
+     "sizes": [
+      "standard"
+     ],
+     "a1_models_count": 2,
+     "a2_models_count": 2,
+     "irs_count": 0,
+     "custom_models_count": 0,
+     "user": {
+      "id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/d1e9gybqbfa.png",
+      "username": "tone3000",
+      "url": "https://www.tone3000.com/tone3000"
+     },
+     "makes": [
+      {
+       "id": 10344,
+       "name": "Ampeg B-15"
+      },
+      {
+       "id": 10345,
+       "name": "Telefunken U47"
+      }
+     ],
+     "tags": [
+      {
+       "id": 145,
+       "name": "1960s"
+      },
+      {
+       "id": 388,
+       "name": "bass"
+      },
+      {
+       "id": 242,
+       "name": "guitar"
+      },
+      {
+       "id": 103,
+       "name": "nam"
+      },
+      {
+       "id": 3,
+       "name": "tube"
+      },
+      {
+       "id": 57782,
+       "name": "u47"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/ampeg-b-15-fliptop-26828",
+     "format": "nam",
+     "gear": "amp-cab",
+     "a2_models": [
+      {
+       "id": 379843,
+       "tone_id": 26828,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:19.1074+00:00",
+       "updated_at": "2026-05-04T20:47:19.1074+00:00",
+       "name": "Ampeg B15 Sum - U47 and M80",
+       "model_url": "https://www.tone3000.com/api/v1/models/379843/download/m6xmu0f8esl_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379842,
+       "tone_id": 26828,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:18.668463+00:00",
+       "updated_at": "2026-05-04T20:47:18.668463+00:00",
+       "name": "Ampeg B15  U47",
+       "model_url": "https://www.tone3000.com/api/v1/models/379842/download/jtm8i4pjp9g_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      }
+     ]
+    },
+    {
+     "id": 31010,
+     "user_id": "89c19620-9222-4f73-9a5a-ff5c246956ff",
+     "title": "TECH21 Sansamp Bass Driver",
+     "description": "Captures of old classic for bass players,\"Clean\" sound with everything in the middle and driven edition, added gain",
+     "created_at": "2025-06-22T10:04:16.022512+00:00",
+     "updated_at": "2025-08-19T21:56:29.849+00:00",
+     "added_at": "2001-01-07T00:00:00.000+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/g7zvzxxvw3o.jpg"
+     ],
+     "is_public": true,
+     "links": [],
+     "models_count": 2,
+     "favorites_count": 124,
+     "downloads_count": 5546,
+     "license": "t3k",
+     "sizes": [
+      "standard"
+     ],
+     "a1_models_count": 2,
+     "a2_models_count": 2,
+     "irs_count": 0,
+     "custom_models_count": 0,
+     "user": {
+      "id": "89c19620-9222-4f73-9a5a-ff5c246956ff",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/9ryl5277oep.jpg",
+      "username": "everipper",
+      "url": "https://www.tone3000.com/everipper"
+     },
+     "makes": [
+      {
+       "id": 11609,
+       "name": "SansAmp Bass Driver DI"
+      }
+     ],
+     "tags": [
+      {
+       "id": 388,
+       "name": "bass"
+      },
+      {
+       "id": 66852,
+       "name": "bass drive"
+      },
+      {
+       "id": 68476,
+       "name": "bass preamp"
+      },
+      {
+       "id": 103,
+       "name": "nam"
+      },
+      {
+       "id": 91,
+       "name": "rock"
+      },
+      {
+       "id": 64557,
+       "name": "rock bass"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/tech21-sansamp-bass-driver-31010",
+     "format": "nam",
+     "gear": "pedal",
+     "a2_models": [
+      {
+       "id": 395229,
+       "tone_id": 31010,
+       "user_id": "89c19620-9222-4f73-9a5a-ff5c246956ff",
+       "created_at": "2026-05-08T14:18:15.058572+00:00",
+       "updated_at": "2026-05-08T14:18:15.058572+00:00",
+       "name": "Sansamp Bass Driver (Driven)",
+       "model_url": "https://www.tone3000.com/api/v1/models/395229/download/ve6eoeoj7w8_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 395228,
+       "tone_id": 31010,
+       "user_id": "89c19620-9222-4f73-9a5a-ff5c246956ff",
+       "created_at": "2026-05-08T14:18:14.210329+00:00",
+       "updated_at": "2026-05-08T14:18:14.210329+00:00",
+       "name": "Sansamp Bass Driver ",
+       "model_url": "https://www.tone3000.com/api/v1/models/395228/download/gsajg4e8obo_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      }
+     ]
+    },
+    {
+     "id": 28202,
+     "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+     "title": "Ampeg SVT Classic with 6x10",
+     "description": "Classic all tube 300 watt SVT-CL nice harmonically rich bass guitar sound.\n\nMostly gain at 5 and flat EQ.\n\nCaptured with Ultra Hi, Ultra Lo and plain. Using both an SM57 and a Sennheiser MD 421.\n\nAdded one \"crazy\" with gain at 10 and both Ultra Hi and Ultra Lo on :)",
+     "created_at": "2025-05-02T19:14:25.028547+00:00",
+     "updated_at": "2025-04-29T18:19:43.643403+00:00",
+     "added_at": "2001-01-13T00:00:00.000+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/qkpbgjk0uf.jpg"
+     ],
+     "is_public": true,
+     "links": [],
+     "models_count": 8,
+     "favorites_count": 597,
+     "downloads_count": 37302,
+     "license": "t3k",
+     "sizes": [
+      "standard"
+     ],
+     "a1_models_count": 8,
+     "a2_models_count": 8,
+     "irs_count": 0,
+     "custom_models_count": 0,
+     "user": {
+      "id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/d1e9gybqbfa.png",
+      "username": "tone3000",
+      "url": "https://www.tone3000.com/tone3000"
+     },
+     "makes": [
+      {
+       "id": 1387,
+       "name": "Ampeg"
+      },
+      {
+       "id": 11403,
+       "name": "Ampeg 8x10"
+      },
+      {
+       "id": 11400,
+       "name": "Ampeg SVT"
+      },
+      {
+       "id": 11402,
+       "name": "Ampeg SVT Classic"
+      },
+      {
+       "id": 11405,
+       "name": "Sennheiser MD 421"
+      },
+      {
+       "id": 10717,
+       "name": "Shure SM57"
+      }
+     ],
+     "tags": [
+      {
+       "id": 62047,
+       "name": "ampeg"
+      },
+      {
+       "id": 388,
+       "name": "bass"
+      },
+      {
+       "id": 62046,
+       "name": "classic"
+      },
+      {
+       "id": 103,
+       "name": "nam"
+      },
+      {
+       "id": 3,
+       "name": "tube"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/ampeg-svt-classic-with-6x10-28202",
+     "format": "nam",
+     "gear": "amp-cab",
+     "a2_models": [
+      {
+       "id": 379991,
+       "tone_id": 28202,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:49:21.491768+00:00",
+       "updated_at": "2026-05-04T20:49:21.491768+00:00",
+       "name": "Ampeg SVT - Gain 10 Ultra Lo and Hi MD 421",
+       "model_url": "https://www.tone3000.com/api/v1/models/379991/download/fs06ku50167_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379990,
+       "tone_id": 28202,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:49:20.837431+00:00",
+       "updated_at": "2026-05-04T20:49:20.837431+00:00",
+       "name": "Ampeg SVT - Gain 10 Ultra Lo and Hi SM57",
+       "model_url": "https://www.tone3000.com/api/v1/models/379990/download/ge3o2usyxaa_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379989,
+       "tone_id": 28202,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:49:20.394458+00:00",
+       "updated_at": "2026-05-04T20:49:20.394458+00:00",
+       "name": "Ampeg SVT - Ultra Lo MD 421",
+       "model_url": "https://www.tone3000.com/api/v1/models/379989/download/lqxnh44c4gh_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379988,
+       "tone_id": 28202,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:49:19.903804+00:00",
+       "updated_at": "2026-05-04T20:49:19.903804+00:00",
+       "name": "Ampeg SVT - Ultra Lo SM57",
+       "model_url": "https://www.tone3000.com/api/v1/models/379988/download/l5lh9a1evq_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379987,
+       "tone_id": 28202,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:49:19.460166+00:00",
+       "updated_at": "2026-05-04T20:49:19.460166+00:00",
+       "name": "Ampeg SVT - Ultra Hi MD 421",
+       "model_url": "https://www.tone3000.com/api/v1/models/379987/download/9l9oh3upz3n_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379986,
+       "tone_id": 28202,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:49:18.735669+00:00",
+       "updated_at": "2026-05-04T20:49:18.735669+00:00",
+       "name": "Ampeg SVT - Ultra Hi SM57",
+       "model_url": "https://www.tone3000.com/api/v1/models/379986/download/7knitdgg4we_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379985,
+       "tone_id": 28202,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:49:18.232203+00:00",
+       "updated_at": "2026-05-04T20:49:18.232203+00:00",
+       "name": "Ampeg SVT - MD 421",
+       "model_url": "https://www.tone3000.com/api/v1/models/379985/download/8wjhc2nmxdl_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379984,
+       "tone_id": 28202,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:49:17.814998+00:00",
+       "updated_at": "2026-05-04T20:49:17.814998+00:00",
+       "name": "Ampeg SVT - SM75",
+       "model_url": "https://www.tone3000.com/api/v1/models/379984/download/k7ry485v9mg_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      }
+     ]
+    },
+    {
+     "id": 50546,
+     "user_id": "c88d2d80-d5b5-41cd-9f08-14635df79d61",
+     "title": "Soldano SLO-30",
+     "description": "Soldano SLO-30 Classic amplifier head\n\nCapture setup:\n- Audio interface: Focusrite Scarlett 18i20\n- Reamp box: Radial ProRMP (modded for unity gain)\n- DI/loadbox: Two Notes Torpedo Captor 8Ω",
+     "created_at": "2026-01-13T18:53:28.033123+00:00",
+     "updated_at": "2026-01-13T22:41:40.051+00:00",
+     "added_at": "2001-01-08T00:00:00.000+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/8eu2gaknrjw.jpg"
+     ],
+     "is_public": true,
+     "links": [],
+     "models_count": 2,
+     "favorites_count": 23,
+     "downloads_count": 1093,
+     "license": "t3k",
+     "sizes": [
+      "standard"
+     ],
+     "a1_models_count": 2,
+     "a2_models_count": 2,
+     "irs_count": 0,
+     "custom_models_count": 0,
+     "user": {
+      "id": "c88d2d80-d5b5-41cd-9f08-14635df79d61",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/fefif2stxz6.jpg",
+      "username": "awai",
+      "url": "https://www.tone3000.com/awai"
+     },
+     "makes": [
+      {
+       "id": 4641,
+       "name": "soldano slo 30"
+      },
+      {
+       "id": 335,
+       "name": "Soldano SLO30"
+      },
+      {
+       "id": 862,
+       "name": "Soldano SLO-30W"
+      }
+     ],
+     "tags": [
+      {
+       "id": 2,
+       "name": "crunch"
+      },
+      {
+       "id": 56890,
+       "name": "high gain"
+      },
+      {
+       "id": 39,
+       "name": "metal"
+      },
+      {
+       "id": 103,
+       "name": "nam"
+      },
+      {
+       "id": 91,
+       "name": "rock"
+      },
+      {
+       "id": 3,
+       "name": "tube"
+      },
+      {
+       "id": 152,
+       "name": "valve"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/soldano-slo-30-50546",
+     "format": "nam",
+     "gear": "amp",
+     "a2_models": [
+      {
+       "id": 383397,
+       "tone_id": 50546,
+       "user_id": "c88d2d80-d5b5-41cd-9f08-14635df79d61",
+       "created_at": "2026-05-04T22:21:21.583726+00:00",
+       "updated_at": "2026-05-04T22:21:21.583726+00:00",
+       "name": "SLO-30 - Crunch - Gain 3 BMT 466 Pres 8 Depth 5",
+       "model_url": "https://www.tone3000.com/api/v1/models/383397/download/np0t7ycxdgk_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 383396,
+       "tone_id": 50546,
+       "user_id": "c88d2d80-d5b5-41cd-9f08-14635df79d61",
+       "created_at": "2026-05-04T22:21:20.765353+00:00",
+       "updated_at": "2026-05-04T22:21:20.765353+00:00",
+       "name": "SLO-30 - Lead - Gain 5 BMT 466 Pres 8 Depth 5",
+       "model_url": "https://www.tone3000.com/api/v1/models/383396/download/zmbbl8yvir_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      }
+     ]
+    },
+    {
+     "id": 44680,
+     "user_id": "4b7c1d39-134b-48bc-9eca-29b92a16b69e",
+     "title": "Marantz SD 3020 tape deck - cassette player (1979) - 1000 epochs",
+     "description": "The Marantz 3020 is a vintage solid-state integrated amplifier celebrated for its warm, musical character and understated power. Released in the late 1970s, it embodied Marantz’s approach to hi-fi: clean circuitry, reliable build quality, and a tonal signature that leaned smooth and inviting rather than clinical. Its preamp section in particular earned a cult following among cassette enthusiasts who valued depth, clarity, and a touch of analog sweetness.\n\nIt has been my number one machine for making mixtapes and tape duplicates at normal and high speed thanks to its stable output and forgiving yet detailed sound. I also love running microphones into it to record acoustic guitar because it captures transients and harmonics in a way that feels intimate without ever becoming sharp or brittle.\n\nThis NAM capture was made direct using a tube preamp equipped with a NOS Brimar 12AU7 / ECC82 WA tube, adding extra harmonic texture. The resulting tone is dark and rich, excelling beautifully in the mid and high ranges.",
+     "created_at": "2025-11-26T11:52:43.183768+00:00",
+     "updated_at": "2025-12-09T08:53:29.965+00:00",
+     "added_at": "2001-01-04T00:00:00.000+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/vd86uqth7sf.jpg"
+     ],
+     "is_public": true,
+     "links": [
+      "https://www.youtube.com/@morenoteslesstalk",
+      "https://www.paypal.com/paypalme/slowculture",
+      "https://www.linkedin.com/in/marclouisboyard",
+      "https://www.youtube.com/watch?v=9BRnHX9RfYo"
+     ],
+     "models_count": 1,
+     "favorites_count": 23,
+     "downloads_count": 786,
+     "license": "t3k",
+     "sizes": [
+      "standard"
+     ],
+     "a1_models_count": 1,
+     "a2_models_count": 1,
+     "irs_count": 0,
+     "custom_models_count": 0,
+     "user": {
+      "id": "4b7c1d39-134b-48bc-9eca-29b92a16b69e",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/o33ijjmk2q.jpg",
+      "username": "morenoteslesstalk",
+      "url": "https://www.tone3000.com/morenoteslesstalk"
+     },
+     "makes": [
+      {
+       "id": 24271,
+       "name": "Marantz SD 3020"
+      }
+     ],
+     "tags": [
+      {
+       "id": 107895,
+       "name": "acoustic guitar recording"
+      },
+      {
+       "id": 107912,
+       "name": "analog character"
+      },
+      {
+       "id": 107889,
+       "name": "analog hifi"
+      },
+      {
+       "id": 107921,
+       "name": "analog signal path"
+      },
+      {
+       "id": 107897,
+       "name": "analog sweetness"
+      },
+      {
+       "id": 107900,
+       "name": "brimar 12au7"
+      },
+      {
+       "id": 107908,
+       "name": "cassette enthusiasts"
+      },
+      {
+       "id": 101918,
+       "name": "cassette player"
+      },
+      {
+       "id": 107893,
+       "name": "cassette preamp"
+      },
+      {
+       "id": 107892,
+       "name": "cassette recording"
+      },
+      {
+       "id": 107927,
+       "name": "characterful preamp"
+      },
+      {
+       "id": 107928,
+       "name": "classic cassette sound"
+      },
+      {
+       "id": 107922,
+       "name": "classic tape deck sound"
+      },
+      {
+       "id": 107925,
+       "name": "collector audio gear"
+      },
+      {
+       "id": 107902,
+       "name": "dark rich tone"
+      },
+      {
+       "id": 107923,
+       "name": "direct capture workflow"
+      },
+      {
+       "id": 107901,
+       "name": "ecc82 tube"
+      },
+      {
+       "id": 107915,
+       "name": "harmonically detailed sound"
+      },
+      {
+       "id": 94770,
+       "name": "harmonic richness"
+      },
+      {
+       "id": 107906,
+       "name": "high speed dubbing"
+      },
+      {
+       "id": 107909,
+       "name": "home studio vintage gear"
+      },
+      {
+       "id": 107914,
+       "name": "intimate transients"
+      },
+      {
+       "id": 107910,
+       "name": "japanese hifi engineering"
+      },
+      {
+       "id": 107911,
+       "name": "late 1970s audio"
+      },
+      {
+       "id": 107907,
+       "name": "lo fi cassette charm"
+      },
+      {
+       "id": 101916,
+       "name": "marantz"
+      },
+      {
+       "id": 107885,
+       "name": "marantz 1979"
+      },
+      {
+       "id": 107884,
+       "name": "marantz cassette deck"
+      },
+      {
+       "id": 107894,
+       "name": "marantz preamp tone"
+      },
+      {
+       "id": 107883,
+       "name": "marantz sd3020"
+      },
+      {
+       "id": 107903,
+       "name": "midrange presence"
+      },
+      {
+       "id": 107890,
+       "name": "mixtape machine"
+      },
+      {
+       "id": 103,
+       "name": "nam"
+      },
+      {
+       "id": 86923,
+       "name": "nam capture"
+      },
+      {
+       "id": 66221,
+       "name": "nam profile"
+      },
+      {
+       "id": 107920,
+       "name": "non commercial capture"
+      },
+      {
+       "id": 56642,
+       "name": "preamp"
+      },
+      {
+       "id": 107917,
+       "name": "retro recording chain"
+      },
+      {
+       "id": 107904,
+       "name": "smooth highs"
+      },
+      {
+       "id": 107888,
+       "name": "solid state hifi"
+      },
+      {
+       "id": 107905,
+       "name": "stable output"
+      },
+      {
+       "id": 107926,
+       "name": "tape coloration"
+      },
+      {
+       "id": 101915,
+       "name": "tape deck"
+      },
+      {
+       "id": 107891,
+       "name": "tape duplication"
+      },
+      {
+       "id": 107899,
+       "name": "tube enhanced capture"
+      },
+      {
+       "id": 64,
+       "name": "vintage"
+      },
+      {
+       "id": 107887,
+       "name": "vintage cassette deck"
+      },
+      {
+       "id": 107924,
+       "name": "vintage home stereo"
+      },
+      {
+       "id": 107886,
+       "name": "vintage marantz"
+      },
+      {
+       "id": 107896,
+       "name": "vintage preamp warmth"
+      },
+      {
+       "id": 107916,
+       "name": "vintage solid state amp"
+      },
+      {
+       "id": 107913,
+       "name": "warm musical tone"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/marantz-sd-3020-tape-deck-cassette-player-1979-1000-epochs-44680",
+     "format": "nam",
+     "gear": "experimental",
+     "a2_models": [
+      {
+       "id": 421336,
+       "tone_id": 44680,
+       "user_id": "4b7c1d39-134b-48bc-9eca-29b92a16b69e",
+       "created_at": "2026-05-16T18:25:47.908928+00:00",
+       "updated_at": "2026-05-16T18:25:47.908928+00:00",
+       "name": "Marantz SD 3020 tape deck - vintage cassette player ",
+       "model_url": "https://www.tone3000.com/api/v1/models/421336/download/17toyywjej8_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      }
+     ]
+    },
+    {
+     "id": 43868,
+     "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+     "title": "Ampeg B-18N Portaflex Fliptop",
+     "description": "1964 Ampeg B18N - The big brother to the legendary B-15N, delivering 50 watts of vintage tube bass tone through the same beloved B15 preamp circuit. This rare Portaflex head represents Ampeg's push for more power while maintaining that warm, pillowy low-end and musical midrange compression that defined the era's bass sound.\n\nAmp head captured at three gain stages from clean to driven saturation using a Suhr Reactive Load Box.\n\nNote: This is an amp-only capture - pair with your favorite bass cab IR for the full experience. Works beautifully with vintage 15\" or 18\" speaker IRs to recreate that authentic tone.",
+     "created_at": "2025-11-17T19:18:36.960437+00:00",
+     "updated_at": "2025-11-18T00:07:33.628+00:00",
+     "added_at": "2001-01-09T00:00:00.000+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/ijzhffv3ui.jpg"
+     ],
+     "is_public": true,
+     "links": [],
+     "models_count": 3,
+     "favorites_count": 50,
+     "downloads_count": 1760,
+     "license": "t3k",
+     "sizes": [
+      "standard"
+     ],
+     "a1_models_count": 3,
+     "a2_models_count": 3,
+     "irs_count": 0,
+     "custom_models_count": 0,
+     "user": {
+      "id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/d1e9gybqbfa.png",
+      "username": "tone3000",
+      "url": "https://www.tone3000.com/tone3000"
+     },
+     "makes": [
+      {
+       "id": 23517,
+       "name": "Ampeg B-18"
+      }
+     ],
+     "tags": [
+      {
+       "id": 145,
+       "name": "1960s"
+      },
+      {
+       "id": 62047,
+       "name": "ampeg"
+      },
+      {
+       "id": 388,
+       "name": "bass"
+      },
+      {
+       "id": 66520,
+       "name": "bass amp"
+      },
+      {
+       "id": 70666,
+       "name": "bass amplifier"
+      },
+      {
+       "id": 61775,
+       "name": "drive"
+      },
+      {
+       "id": 99085,
+       "name": "dub"
+      },
+      {
+       "id": 103,
+       "name": "nam"
+      },
+      {
+       "id": 91,
+       "name": "rock"
+      },
+      {
+       "id": 3,
+       "name": "tube"
+      },
+      {
+       "id": 64,
+       "name": "vintage"
+      },
+      {
+       "id": 66,
+       "name": "warm"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/ampeg-b-18n-portaflex-fliptop-43868",
+     "format": "nam",
+     "gear": "amp",
+     "a2_models": [
+      {
+       "id": 382513,
+       "tone_id": 43868,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T22:10:24.96635+00:00",
+       "updated_at": "2026-05-04T22:10:24.96635+00:00",
+       "name": "Ampeg B18 - Head DI - Bass Chan - Vol 5",
+       "model_url": "https://www.tone3000.com/api/v1/models/382513/download/vbzk5id886d_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 382514,
+       "tone_id": 43868,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T22:10:25.606168+00:00",
+       "updated_at": "2026-05-04T22:10:25.606168+00:00",
+       "name": "Ampeg B18 - Head DI - Bass Chan - Vol 2.5",
+       "model_url": "https://www.tone3000.com/api/v1/models/382514/download/z6ybsrxczmh_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 382512,
+       "tone_id": 43868,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T22:10:24.321864+00:00",
+       "updated_at": "2026-05-04T22:10:24.321864+00:00",
+       "name": "Ampeg B18 - Head DI - Bass Chan - Vol 7.5",
+       "model_url": "https://www.tone3000.com/api/v1/models/382512/download/1xh1z2k7e6ni_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      }
+     ]
+    },
+    {
+     "id": 49310,
+     "user_id": "a7283dd8-53c0-4651-ba64-43dac16003d5",
+     "title": "Philips EL3541D Tape player Mic input",
+     "description": "Capture of an old tube driven tape recorder and player from Philips.\nI chose the very gainy mic input, which leads to produce a very gnarly fuzz when driven too hard.\nSince I took the signal from the speaker out, power amp is captured aswell. this is the internal amplifiers only though, so son't expect any tape saturation.\n(The tape is too warbly, signal not coherent enough for the ML process)\n\nSignal chain: Interface -> Reamp box -> Mic input tape recorder -> speaker out -> Load box -> Interface.",
+     "created_at": "2026-01-03T16:27:13.965093+00:00",
+     "updated_at": "2026-05-03T21:55:53.436+00:00",
+     "added_at": "2001-01-03T00:00:00.000+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/f9q2lkki9x.jpg"
+     ],
+     "is_public": true,
+     "links": [],
+     "models_count": 5,
+     "favorites_count": 29,
+     "downloads_count": 908,
+     "license": "t3k",
+     "sizes": [
+      "standard"
+     ],
+     "a1_models_count": 5,
+     "a2_models_count": 5,
+     "irs_count": 0,
+     "custom_models_count": 0,
+     "user": {
+      "id": "a7283dd8-53c0-4651-ba64-43dac16003d5",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/6zp0ya7oqg5.jpg",
+      "username": "minddebris",
+      "url": "https://www.tone3000.com/minddebris"
+     },
+     "makes": [
+      {
+       "id": 28170,
+       "name": "Philips EL3541D22M"
+      }
+     ],
+     "tags": [
+      {
+       "id": 145,
+       "name": "1960s"
+      },
+      {
+       "id": 10,
+       "name": "fuzz"
+      },
+      {
+       "id": 121688,
+       "name": "gnarly"
+      },
+      {
+       "id": 107964,
+       "name": "home tape recorder"
+      },
+      {
+       "id": 103,
+       "name": "nam"
+      },
+      {
+       "id": 120860,
+       "name": "oddity"
+      },
+      {
+       "id": 3,
+       "name": "tube"
+      },
+      {
+       "id": 152,
+       "name": "valve"
+      },
+      {
+       "id": 120859,
+       "name": "weird"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/philips-el3541d-tape-player-mic-input-49310",
+     "format": "nam",
+     "gear": "experimental",
+     "a2_models": [
+      {
+       "id": 495575,
+       "tone_id": 49310,
+       "user_id": "a7283dd8-53c0-4651-ba64-43dac16003d5",
+       "created_at": "2026-05-26T13:33:24.117351+00:00",
+       "updated_at": "2026-05-26T13:33:24.117351+00:00",
+       "name": "Philips EL3541D Mic input 75%",
+       "model_url": "https://www.tone3000.com/api/v1/models/495575/download/586aq45ntip_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 495574,
+       "tone_id": 49310,
+       "user_id": "a7283dd8-53c0-4651-ba64-43dac16003d5",
+       "created_at": "2026-05-26T13:33:23.40671+00:00",
+       "updated_at": "2026-05-26T13:33:23.40671+00:00",
+       "name": "Philips EL3541D Mic input 0%",
+       "model_url": "https://www.tone3000.com/api/v1/models/495574/download/mvd26148ajd_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 495573,
+       "tone_id": 49310,
+       "user_id": "a7283dd8-53c0-4651-ba64-43dac16003d5",
+       "created_at": "2026-05-26T13:33:22.653098+00:00",
+       "updated_at": "2026-05-26T13:33:22.653098+00:00",
+       "name": "Philips EL3541D Mic input 50%",
+       "model_url": "https://www.tone3000.com/api/v1/models/495573/download/57faaklsa6m_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 495572,
+       "tone_id": 49310,
+       "user_id": "a7283dd8-53c0-4651-ba64-43dac16003d5",
+       "created_at": "2026-05-26T13:33:21.938356+00:00",
+       "updated_at": "2026-05-26T13:33:21.938356+00:00",
+       "name": "Philips EL3541D Mic input 25%",
+       "model_url": "https://www.tone3000.com/api/v1/models/495572/download/gwlzj4nyxvc_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 495571,
+       "tone_id": 49310,
+       "user_id": "a7283dd8-53c0-4651-ba64-43dac16003d5",
+       "created_at": "2026-05-26T13:33:21.244865+00:00",
+       "updated_at": "2026-05-26T13:33:21.244865+00:00",
+       "name": "Philips EL3541D Mic input 100%",
+       "model_url": "https://www.tone3000.com/api/v1/models/495571/download/eo9wlam47gl_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      }
+     ]
+    },
+    {
+     "id": 57611,
+     "user_id": "09efe1da-413e-46f8-9a52-470a57b372b1",
+     "title": "CAPI VP28 Preamp - 19dBu Send/Return - TTSV10",
+     "description": "I've uploaded updated captures of one of my CAPI VP28 500-series microphone preamps in Line Mode. The preamp is based on the circuitry in an API console. \n\nThe signal passes through 3 transformers and 2 op amps. The concept is that it has an API 312 preamp (input transformer, discrete op amp, output transformer) and an adaptation of console fader circuitry (op amp, transformer).\n\nThe preamp is configured with GAR2520 and GAR1731 op amps in the Preamp and Fader positions respectively.\n\nI used my RME UCX II interface set at 19dBu on the send and return. \n\nI used the rotary switches of the Preamp and Fader controls to achieve nominal unity gain (eg. +12dB Preamp and -12dB Fader).\n\nI recommend setting NAM to the Raw output mode. The intent is that you are essentially running your signal through my hardware insert. You can drive the input for more saturation if desired.\n\nTurn off the Gate for the full signal to come through.\n\nI originally uploaded low ESR Standard Architecture captures. I decided to also train some xSTD captures to see if it makes any difference.",
+     "created_at": "2026-03-14T02:20:29.993198+00:00",
+     "updated_at": "2026-03-14T02:26:09.189+00:00",
+     "added_at": "2001-01-06T00:00:00.000+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/x1lxzww1l1j.jpg"
+     ],
+     "is_public": true,
+     "links": [],
+     "models_count": 7,
+     "favorites_count": 23,
+     "downloads_count": 658,
+     "license": "t3k",
+     "sizes": [
+      "standard",
+      "custom"
+     ],
+     "a1_models_count": 7,
+     "a2_models_count": 7,
+     "irs_count": 0,
+     "custom_models_count": 7,
+     "user": {
+      "id": "09efe1da-413e-46f8-9a52-470a57b372b1",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/smrqvuw0jz.jpg",
+      "username": "outmodedelectronics",
+      "url": "https://www.tone3000.com/outmodedelectronics"
+     },
+     "makes": [
+      {
+       "id": 2102,
+       "name": "CAPI VP28"
+      }
+     ],
+     "tags": [
+      {
+       "id": 62722,
+       "name": "api"
+      },
+      {
+       "id": 60465,
+       "name": "mic preamp"
+      },
+      {
+       "id": 108203,
+       "name": "mic preamp overload"
+      },
+      {
+       "id": 103,
+       "name": "nam"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/capi-vp28-preamp-19dbu-sendreturn-ttsv10-57611",
+     "format": "nam",
+     "gear": "outboard",
+     "a2_models": [
+      {
+       "id": 496759,
+       "tone_id": 57611,
+       "user_id": "09efe1da-413e-46f8-9a52-470a57b372b1",
+       "created_at": "2026-05-26T15:28:11.072401+00:00",
+       "updated_at": "2026-05-26T15:28:11.072401+00:00",
+       "name": "CAPI VP28 Pre -9dB Fader 10dB",
+       "model_url": "https://www.tone3000.com/api/v1/models/496759/download/2ygejoql166_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 496758,
+       "tone_id": 57611,
+       "user_id": "09efe1da-413e-46f8-9a52-470a57b372b1",
+       "created_at": "2026-05-26T15:28:10.310522+00:00",
+       "updated_at": "2026-05-26T15:28:10.310522+00:00",
+       "name": "CAPI VP28 Pre -3dB Fader 2dB",
+       "model_url": "https://www.tone3000.com/api/v1/models/496758/download/hl8mgdwvd0m_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 496757,
+       "tone_id": 57611,
+       "user_id": "09efe1da-413e-46f8-9a52-470a57b372b1",
+       "created_at": "2026-05-26T15:28:09.445397+00:00",
+       "updated_at": "2026-05-26T15:28:09.445397+00:00",
+       "name": "CAPI VP28 Pre 0dB Fader 0dB",
+       "model_url": "https://www.tone3000.com/api/v1/models/496757/download/faakbihzh7r_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 496756,
+       "tone_id": 57611,
+       "user_id": "09efe1da-413e-46f8-9a52-470a57b372b1",
+       "created_at": "2026-05-26T15:26:15.339578+00:00",
+       "updated_at": "2026-05-26T15:26:15.339578+00:00",
+       "name": "CAPI VP28 Pre -6dB Fader 6dB",
+       "model_url": "https://www.tone3000.com/api/v1/models/496756/download/e0x6vvfgz74_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 496755,
+       "tone_id": 57611,
+       "user_id": "09efe1da-413e-46f8-9a52-470a57b372b1",
+       "created_at": "2026-05-26T15:26:14.758656+00:00",
+       "updated_at": "2026-05-26T15:26:14.758656+00:00",
+       "name": "CAPI VP28 Pre 3dB Fader -4dB",
+       "model_url": "https://www.tone3000.com/api/v1/models/496755/download/5tom5q7ok5h_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 496754,
+       "tone_id": 57611,
+       "user_id": "09efe1da-413e-46f8-9a52-470a57b372b1",
+       "created_at": "2026-05-26T15:26:14.169577+00:00",
+       "updated_at": "2026-05-26T15:26:14.169577+00:00",
+       "name": "CAPI VP28 Pre 18dB Fader -20dB",
+       "model_url": "https://www.tone3000.com/api/v1/models/496754/download/s0f9zw1yc0d_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 496753,
+       "tone_id": 57611,
+       "user_id": "09efe1da-413e-46f8-9a52-470a57b372b1",
+       "created_at": "2026-05-26T15:26:13.525604+00:00",
+       "updated_at": "2026-05-26T15:26:13.525604+00:00",
+       "name": "CAPI VP28 Pre 15dB Fader -16dB",
+       "model_url": "https://www.tone3000.com/api/v1/models/496753/download/sn6u2rb8ow_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      }
+     ]
+    },
+    {
+     "id": 26483,
+     "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+     "title": "BAE 1073MP Preamp",
+     "description": "Classic Neve 1073 characterful sound.\n\nCaptured input gains (MIC) at 40, 50, 60 and 70. Pushed the re-amp box has hard as a could for the extra ones labeled \"Hard\".\n\nBoth channels captured.",
+     "created_at": "2025-03-21T16:52:19.191685+00:00",
+     "updated_at": "2025-03-20T20:40:41.601591+00:00",
+     "added_at": "2001-01-05T00:00:00.000+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/19vzq0bnqfo.jpg"
+     ],
+     "is_public": true,
+     "links": [],
+     "models_count": 12,
+     "favorites_count": 146,
+     "downloads_count": 7050,
+     "license": "t3k",
+     "sizes": [
+      "standard"
+     ],
+     "a1_models_count": 12,
+     "a2_models_count": 12,
+     "irs_count": 0,
+     "custom_models_count": 0,
+     "user": {
+      "id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/d1e9gybqbfa.png",
+      "username": "tone3000",
+      "url": "https://www.tone3000.com/tone3000"
+     },
+     "makes": [
+      {
+       "id": 1465,
+       "name": "BAE 1073"
+      }
+     ],
+     "tags": [
+      {
+       "id": 103,
+       "name": "nam"
+      },
+      {
+       "id": 56657,
+       "name": "neve"
+      },
+      {
+       "id": 99,
+       "name": "outboard"
+      },
+      {
+       "id": 56642,
+       "name": "preamp"
+      },
+      {
+       "id": 514,
+       "name": "studio-gear"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/bae-1073mp-preamp-26483",
+     "format": "nam",
+     "gear": "outboard",
+     "a2_models": [
+      {
+       "id": 379835,
+       "tone_id": 26483,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:14.046658+00:00",
+       "updated_at": "2026-05-04T20:47:14.046658+00:00",
+       "name": "1073MP - 70 dB Hard - B",
+       "model_url": "https://www.tone3000.com/api/v1/models/379835/download/gbvmmaqk64o_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379834,
+       "tone_id": 26483,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:13.601758+00:00",
+       "updated_at": "2026-05-04T20:47:13.601758+00:00",
+       "name": "1073MP - 70 dB - B",
+       "model_url": "https://www.tone3000.com/api/v1/models/379834/download/ws8jvx0p36c_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379833,
+       "tone_id": 26483,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:13.14165+00:00",
+       "updated_at": "2026-05-04T20:47:13.14165+00:00",
+       "name": "1073MP - 60 dB Hard - B",
+       "model_url": "https://www.tone3000.com/api/v1/models/379833/download/wqmni8l7ysn_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379832,
+       "tone_id": 26483,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:12.626975+00:00",
+       "updated_at": "2026-05-04T20:47:12.626975+00:00",
+       "name": "1073MP - 60 dB - B",
+       "model_url": "https://www.tone3000.com/api/v1/models/379832/download/c73dm2wgdn_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379831,
+       "tone_id": 26483,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:12.190646+00:00",
+       "updated_at": "2026-05-04T20:47:12.190646+00:00",
+       "name": "1073MP - 50 dB - B",
+       "model_url": "https://www.tone3000.com/api/v1/models/379831/download/276gvtqjdmo_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379830,
+       "tone_id": 26483,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:11.742347+00:00",
+       "updated_at": "2026-05-04T20:47:11.742347+00:00",
+       "name": "1073MP - 40 dB - B",
+       "model_url": "https://www.tone3000.com/api/v1/models/379830/download/x10uthdpec_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379829,
+       "tone_id": 26483,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:11.184361+00:00",
+       "updated_at": "2026-05-04T20:47:11.184361+00:00",
+       "name": "1073MP - 70 dB Hard - A",
+       "model_url": "https://www.tone3000.com/api/v1/models/379829/download/w0ueuhnefs_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379828,
+       "tone_id": 26483,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:10.682637+00:00",
+       "updated_at": "2026-05-04T20:47:10.682637+00:00",
+       "name": "1073MP - 70 dB - A",
+       "model_url": "https://www.tone3000.com/api/v1/models/379828/download/e3isteka149_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379827,
+       "tone_id": 26483,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:09.954308+00:00",
+       "updated_at": "2026-05-04T20:47:09.954308+00:00",
+       "name": "1073MP - 60 dB Hard - A",
+       "model_url": "https://www.tone3000.com/api/v1/models/379827/download/r2ldo45dvpe_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379826,
+       "tone_id": 26483,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:09.451854+00:00",
+       "updated_at": "2026-05-04T20:47:09.451854+00:00",
+       "name": "1073MP - 60 dB - A",
+       "model_url": "https://www.tone3000.com/api/v1/models/379826/download/p1ov9fe5mb_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379825,
+       "tone_id": 26483,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:09.034444+00:00",
+       "updated_at": "2026-05-04T20:47:09.034444+00:00",
+       "name": "1073MP - 50 dB - A",
+       "model_url": "https://www.tone3000.com/api/v1/models/379825/download/k9unxt6e04q_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 379824,
+       "tone_id": 26483,
+       "user_id": "0f9804a4-488f-4293-97fb-f20415ecc599",
+       "created_at": "2026-05-04T20:47:08.598887+00:00",
+       "updated_at": "2026-05-04T20:47:08.598887+00:00",
+       "name": "1073MP - 40 dB - A",
+       "model_url": "https://www.tone3000.com/api/v1/models/379824/download/iap40dlqi4g_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      }
+     ]
+    },
+    {
+     "id": 61091,
+     "user_id": "c5b78330-855e-4f97-8691-ad0c2b49dfa7",
+     "title": "Sundragon Super Dragon - Jimmy Page's Nr. 1 amp",
+     "description": "Get the full capture pack for this amp here: https://www.amalgamcaptures.com/NAM\nSubscribe to our NEWSLETTER to be in the loop when it drops!\n\nAMP SETTINGS:\nP4 B1 M7 T4 VI8.5 VII6\n\nCAB:\nSuper Dragon 4X12 custom speakers\n\nMICS:\nR121, M160, U87\n\nDESCRIPTION:\nProbably the most legendary and mythical amp made by any amp maker in recent decades - a 1:1 meticulous recreation of Jimmy Page's Nr.1 Marshall Super Bass - a contender for best Marshall tones ever.",
+     "created_at": "2026-04-10T08:31:50.198705+00:00",
+     "updated_at": "2026-04-10T14:52:03.941+00:00",
+     "added_at": "2001-01-11T00:00:00.000+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/qa56cexyb5s.jpg"
+     ],
+     "is_public": true,
+     "links": [
+      "https://www.amalgamcaptures.com/product-page/sd-dragon-namdi",
+      "https://youtu.be/u29pAfDCjjU"
+     ],
+     "models_count": 1,
+     "favorites_count": 146,
+     "downloads_count": 5956,
+     "license": "t3k",
+     "sizes": [
+      "standard"
+     ],
+     "a1_models_count": 1,
+     "a2_models_count": 1,
+     "irs_count": 0,
+     "custom_models_count": 0,
+     "user": {
+      "id": "c5b78330-855e-4f97-8691-ad0c2b49dfa7",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/d77bfn8wf0m.jpg",
+      "username": "amalgamaudio",
+      "url": "https://www.tone3000.com/amalgamaudio"
+     },
+     "makes": [
+      {
+       "id": 39239,
+       "name": "Sundragon Super Dragon"
+      }
+     ],
+     "tags": [
+      {
+       "id": 71633,
+       "name": "amalgam"
+      },
+      {
+       "id": 108,
+       "name": "boutique"
+      },
+      {
+       "id": 89062,
+       "name": "jimmy page"
+      },
+      {
+       "id": 103,
+       "name": "nam"
+      },
+      {
+       "id": 155791,
+       "name": "sun dragon"
+      },
+      {
+       "id": 155792,
+       "name": "super dragon"
+      },
+      {
+       "id": 155794,
+       "name": "zeppelin"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/sundragon-super-dragon-jimmy-pages-nr-1-amp-61091",
+     "format": "nam",
+     "gear": "amp-cab",
+     "a2_models": [
+      {
+       "id": 385030,
+       "tone_id": 61091,
+       "user_id": "c5b78330-855e-4f97-8691-ad0c2b49dfa7",
+       "created_at": "2026-05-04T22:41:03.225384+00:00",
+       "updated_at": "2026-05-04T22:41:03.225384+00:00",
+       "name": "SD DRAGON I Crunch BAL4 CAB",
+       "model_url": "https://www.tone3000.com/api/v1/models/385030/download/wd00geo4bw_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      }
+     ]
+    },
+    {
+     "id": 45809,
+     "user_id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+     "title": "AMPEG SVT-CL BASS HEAD",
+     "description": "Ampeg SVT-CL – Bass Preamp Capture\n\nEpochs: 1000 | Reamp Box: Countryman 85\n\n⚠️Disclaimer: The online preview player does not accurately represent these captures. For the best tone and true-to-source results, please download the files and use them within the NAM plugin alongside a high-quality impulse response at the correct input gain.\n\nPlug into the undisputed king of bass amplification with the Ampeg SVT-CL — captured to deliver the massive low end, punchy mids, and unmistakable tones that have powered countless legendary recordings and live rigs.\n\nThis profile delivers the classic SVT growl, depth and clarity: thick, weighty lows that stay tight, thick midrange punch for perfect mix placement, and a smooth yet present top end that preserves attack and articulation. Ideal for rock, metal, punk, and modern bass production where power and definition must coexist, mixed with some Sansamp and Darkglass for good measure!\n\nPlease Note: This is a preamp-only capture — no cabinet IR is included, giving you complete freedom to pair with your preferred bass cab IRs or power amp simulations.\n\nMakes and Models\nAmpeg SVT-CL",
+     "created_at": "2025-12-06T02:14:57.324527+00:00",
+     "updated_at": "2025-12-06T02:14:57.324527+00:00",
+     "added_at": "2001-01-10T00:00:00.000+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/664a055n4it.jpg"
+     ],
+     "is_public": true,
+     "links": [
+      "https://www.instagram.com/deathblossomaudio"
+     ],
+     "models_count": 12,
+     "favorites_count": 156,
+     "downloads_count": 7406,
+     "license": "t3k",
+     "sizes": [
+      "standard"
+     ],
+     "a1_models_count": 12,
+     "a2_models_count": 12,
+     "irs_count": 0,
+     "custom_models_count": 0,
+     "user": {
+      "id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/zhvvc9lmlr.jpg",
+      "username": "deathblossomaudio",
+      "url": "https://www.tone3000.com/deathblossomaudio"
+     },
+     "makes": [
+      {
+       "id": 25139,
+       "name": "AMPEG SVT-CL"
+      }
+     ],
+     "tags": [
+      {
+       "id": 106484,
+       "name": "aggressive-bass"
+      },
+      {
+       "id": 106460,
+       "name": "all-tube"
+      },
+      {
+       "id": 62047,
+       "name": "ampeg"
+      },
+      {
+       "id": 106452,
+       "name": "ampeg-svt"
+      },
+      {
+       "id": 388,
+       "name": "bass"
+      },
+      {
+       "id": 106455,
+       "name": "bass-amp"
+      },
+      {
+       "id": 106458,
+       "name": "bass-amp-capture"
+      },
+      {
+       "id": 106467,
+       "name": "bass-distortion"
+      },
+      {
+       "id": 106451,
+       "name": "bass-guitar"
+      },
+      {
+       "id": 70019,
+       "name": "bass overdrive"
+      },
+      {
+       "id": 106466,
+       "name": "bass-overdrive"
+      },
+      {
+       "id": 106486,
+       "name": "bass-rig"
+      },
+      {
+       "id": 106485,
+       "name": "bass-tone"
+      },
+      {
+       "id": 106487,
+       "name": "cab-sim"
+      },
+      {
+       "id": 106468,
+       "name": "clean-bass"
+      },
+      {
+       "id": 106475,
+       "name": "di-bass"
+      },
+      {
+       "id": 106481,
+       "name": "doom-bass"
+      },
+      {
+       "id": 106464,
+       "name": "driven-bass"
+      },
+      {
+       "id": 106465,
+       "name": "gritty-bass"
+      },
+      {
+       "id": 106483,
+       "name": "hardcore-bass"
+      },
+      {
+       "id": 106463,
+       "name": "heavy-bass"
+      },
+      {
+       "id": 106488,
+       "name": "impulse-response"
+      },
+      {
+       "id": 106479,
+       "name": "live-bass-rig"
+      },
+      {
+       "id": 106472,
+       "name": "low-frequency"
+      },
+      {
+       "id": 106462,
+       "name": "metal-bass"
+      },
+      {
+       "id": 103555,
+       "name": "mix-ready"
+      },
+      {
+       "id": 103,
+       "name": "nam"
+      },
+      {
+       "id": 103547,
+       "name": "nam-capture"
+      },
+      {
+       "id": 103546,
+       "name": "neural-amp-modeler"
+      },
+      {
+       "id": 103550,
+       "name": "poweramp-capture"
+      },
+      {
+       "id": 103551,
+       "name": "preamp-capture"
+      },
+      {
+       "id": 106469,
+       "name": "punchy-bass"
+      },
+      {
+       "id": 103565,
+       "name": "reamp-ready"
+      },
+      {
+       "id": 106480,
+       "name": "recording-bass"
+      },
+      {
+       "id": 106461,
+       "name": "rock-bass"
+      },
+      {
+       "id": 106482,
+       "name": "stoner-metal-bass"
+      },
+      {
+       "id": 103556,
+       "name": "studio-quality"
+      },
+      {
+       "id": 106453,
+       "name": "svt-cl"
+      },
+      {
+       "id": 106454,
+       "name": "svt-vr"
+      },
+      {
+       "id": 106470,
+       "name": "thick-low-end"
+      },
+      {
+       "id": 106471,
+       "name": "tight-low-end"
+      },
+      {
+       "id": 106490,
+       "name": "tone3000"
+      },
+      {
+       "id": 103566,
+       "name": "tonehunt"
+      },
+      {
+       "id": 106459,
+       "name": "tube-bass-amp"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/ampeg-svt-cl-bass-head-45809",
+     "format": "nam",
+     "gear": "amp",
+     "a2_models": [
+      {
+       "id": 382800,
+       "tone_id": 45809,
+       "user_id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+       "created_at": "2026-05-04T22:13:58.128693+00:00",
+       "updated_at": "2026-05-04T22:13:58.128693+00:00",
+       "name": "SVT DIRTY PUSHED",
+       "model_url": "https://www.tone3000.com/api/v1/models/382800/download/xq66z36685_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 382799,
+       "tone_id": 45809,
+       "user_id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+       "created_at": "2026-05-04T22:13:57.271004+00:00",
+       "updated_at": "2026-05-04T22:13:57.271004+00:00",
+       "name": "SVT DIRTY",
+       "model_url": "https://www.tone3000.com/api/v1/models/382799/download/6mdw2kzijp_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 382798,
+       "tone_id": 45809,
+       "user_id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+       "created_at": "2026-05-04T22:13:56.318672+00:00",
+       "updated_at": "2026-05-04T22:13:56.318672+00:00",
+       "name": "SVT SANS BRIGHT DRIVE",
+       "model_url": "https://www.tone3000.com/api/v1/models/382798/download/xjxftf7hno_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 382797,
+       "tone_id": 45809,
+       "user_id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+       "created_at": "2026-05-04T22:13:55.510725+00:00",
+       "updated_at": "2026-05-04T22:13:55.510725+00:00",
+       "name": "SVT DARKGLASS SHREDED ",
+       "model_url": "https://www.tone3000.com/api/v1/models/382797/download/gp1b6gh3iau_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 382796,
+       "tone_id": 45809,
+       "user_id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+       "created_at": "2026-05-04T22:13:54.921201+00:00",
+       "updated_at": "2026-05-04T22:13:54.921201+00:00",
+       "name": "SVT SANS ROCK DRIVE",
+       "model_url": "https://www.tone3000.com/api/v1/models/382796/download/76pi4i14wen_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 382795,
+       "tone_id": 45809,
+       "user_id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+       "created_at": "2026-05-04T22:13:54.210254+00:00",
+       "updated_at": "2026-05-04T22:13:54.210254+00:00",
+       "name": "SVT CLEAN PUSHED",
+       "model_url": "https://www.tone3000.com/api/v1/models/382795/download/5ciiulzwbpr_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 382794,
+       "tone_id": 45809,
+       "user_id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+       "created_at": "2026-05-04T22:13:53.568992+00:00",
+       "updated_at": "2026-05-04T22:13:53.568992+00:00",
+       "name": "SVT SANS SUBDRIVE",
+       "model_url": "https://www.tone3000.com/api/v1/models/382794/download/l0mbzet6lah_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 382793,
+       "tone_id": 45809,
+       "user_id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+       "created_at": "2026-05-04T22:13:52.991862+00:00",
+       "updated_at": "2026-05-04T22:13:52.991862+00:00",
+       "name": "SVT SANS HAIRY DRIVE",
+       "model_url": "https://www.tone3000.com/api/v1/models/382793/download/pmjdpfcok9j_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 382792,
+       "tone_id": 45809,
+       "user_id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+       "created_at": "2026-05-04T22:13:51.682519+00:00",
+       "updated_at": "2026-05-04T22:13:51.682519+00:00",
+       "name": "SVT PUSHED",
+       "model_url": "https://www.tone3000.com/api/v1/models/382792/download/xfj2avdyq4c_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 382791,
+       "tone_id": 45809,
+       "user_id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+       "created_at": "2026-05-04T22:13:51.094764+00:00",
+       "updated_at": "2026-05-04T22:13:51.094764+00:00",
+       "name": "SVT SANS HYPE MY D.I",
+       "model_url": "https://www.tone3000.com/api/v1/models/382791/download/31a57cvymcg_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 382790,
+       "tone_id": 45809,
+       "user_id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+       "created_at": "2026-05-04T22:13:50.501567+00:00",
+       "updated_at": "2026-05-04T22:13:50.501567+00:00",
+       "name": "SVT CLEAN",
+       "model_url": "https://www.tone3000.com/api/v1/models/382790/download/7d86dr42iet_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 382789,
+       "tone_id": 45809,
+       "user_id": "bfa24c9b-41bf-475d-853f-2728a54a735c",
+       "created_at": "2026-05-04T22:13:49.802307+00:00",
+       "updated_at": "2026-05-04T22:13:49.802307+00:00",
+       "name": "SVT DARKGLASS SHRED MY D.I",
+       "model_url": "https://www.tone3000.com/api/v1/models/382789/download/j1zkesvcpg_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      }
+     ]
+    },
+    {
+     "id": 53231,
+     "user_id": "94294ee3-46c1-48e5-8019-db983f986b72",
+     "title": "Panasonic RQ-711S Tape Player",
+     "description": "Thats a Panasonic portable tape player/recorder from the seventies converted into a battery powered guitar amp. It should output around 1W into eight ohms. It has been captured with a MOTU m2 audio interface and a homemade loadbox/line level adaptor. Numbers 1 to 4 are to specify an increasingly higher output of the audio interface.\n\n",
+     "created_at": "2026-02-05T22:25:48.718485+00:00",
+     "updated_at": "2026-02-05T23:33:01.249+00:00",
+     "added_at": "2001-01-02T00:00:00.000+00:00",
+     "images": [
+      "https://api.tone3000.com/storage/v1/object/public/images/0gl7qhrhx9ip.jpg"
+     ],
+     "is_public": true,
+     "links": [],
+     "models_count": 4,
+     "favorites_count": 51,
+     "downloads_count": 640,
+     "license": "t3k",
+     "sizes": [
+      "standard"
+     ],
+     "a1_models_count": 4,
+     "a2_models_count": 4,
+     "irs_count": 0,
+     "custom_models_count": 0,
+     "user": {
+      "id": "94294ee3-46c1-48e5-8019-db983f986b72",
+      "avatar_url": "https://api.tone3000.com/storage/v1/object/public/avatars/5o9ipyy4iye.jpg",
+      "username": "steppan",
+      "url": "https://www.tone3000.com/steppan"
+     },
+     "makes": [
+      {
+       "id": 31501,
+       "name": "Panasonic RQ-711S"
+      }
+     ],
+     "tags": [
+      {
+       "id": 60,
+       "name": "distortion"
+      },
+      {
+       "id": 146,
+       "name": "fuzzy"
+      },
+      {
+       "id": 103,
+       "name": "nam"
+      }
+     ],
+     "url": "https://www.tone3000.com/tones/panasonic-rq-711s-tape-player-53231",
+     "format": "nam",
+     "gear": "experimental",
+     "a2_models": [
+      {
+       "id": 387964,
+       "tone_id": 53231,
+       "user_id": "94294ee3-46c1-48e5-8019-db983f986b72",
+       "created_at": "2026-05-05T22:26:41.338453+00:00",
+       "updated_at": "2026-05-05T22:26:41.338453+00:00",
+       "name": "Panasonic RQ-711S 1Full Volume",
+       "model_url": "https://www.tone3000.com/api/v1/models/387964/download/5eemd34insf_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 387963,
+       "tone_id": 53231,
+       "user_id": "94294ee3-46c1-48e5-8019-db983f986b72",
+       "created_at": "2026-05-05T22:26:40.786448+00:00",
+       "updated_at": "2026-05-05T22:26:40.786448+00:00",
+       "name": "Panasonic RQ-711S 2Full Volume",
+       "model_url": "https://www.tone3000.com/api/v1/models/387963/download/hsf2bsyzqdc_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 387962,
+       "tone_id": 53231,
+       "user_id": "94294ee3-46c1-48e5-8019-db983f986b72",
+       "created_at": "2026-05-05T22:26:39.901881+00:00",
+       "updated_at": "2026-05-05T22:26:39.901881+00:00",
+       "name": "Panasonic RQ-711S 4Full Volume",
+       "model_url": "https://www.tone3000.com/api/v1/models/387962/download/94yjpf9utc4_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      },
+      {
+       "id": 387961,
+       "tone_id": 53231,
+       "user_id": "94294ee3-46c1-48e5-8019-db983f986b72",
+       "created_at": "2026-05-05T22:26:39.339616+00:00",
+       "updated_at": "2026-05-05T22:26:39.339616+00:00",
+       "name": "Panasonic RQ-711S 3Full Volume",
+       "model_url": "https://www.tone3000.com/api/v1/models/387961/download/37edu88aapg_a2.nam",
+       "size": null,
+       "architecture_version": "2"
+      }
+     ]
+    }
+   ],
+   "hidden": null
+  },
+  "err_message": ""
+ }
+}

@@ -2676,6 +2676,78 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'A pedaleira está num modo que o app não conhece. Troque o modo na própria pedaleira.'**
   String get fmDesconhecido;
+
+  /// Cartão do tom do TONE3000 no painel do bloco
+  ///
+  /// In pt, this message translates to:
+  /// **'Tom'**
+  String get t3kTom;
+
+  /// Cartão do modelo (a2_model) do tom do TONE3000
+  ///
+  /// In pt, this message translates to:
+  /// **'Modelo'**
+  String get t3kModelo;
+
+  /// Enquanto get_t3k_factory_tones não volta (~2 s)
+  ///
+  /// In pt, this message translates to:
+  /// **'Lendo os tons da pedaleira…'**
+  String get t3kLendo;
+
+  /// get_t3k_factory_tones sem resposta
+  ///
+  /// In pt, this message translates to:
+  /// **'A pedaleira não mandou a lista de tons.'**
+  String get t3kFalhou;
+
+  /// Botão que relê a lista de tons
+  ///
+  /// In pt, this message translates to:
+  /// **'Tentar de novo'**
+  String get t3kTentarDeNovo;
+
+  /// O arquivo do bloco não está na lista de tons da pedaleira (tom removido, firmware diferente); o app não troca sozinho
+  ///
+  /// In pt, this message translates to:
+  /// **'Não encontrado na pedaleira: {arquivo}'**
+  String t3kNaoEncontrado(String arquivo);
+
+  /// Tom do usuário: a pedaleira não informa o nome do arquivo para montar o caminho (T3K4)
+  ///
+  /// In pt, this message translates to:
+  /// **'Tom enviado por você: aparece só para consulta. Trocá-lo ainda não é possível pelo app.'**
+  String get t3kSoConsulta;
+
+  /// Hipótese T3K3 no bloco de gabinete TONE3000
+  ///
+  /// In pt, this message translates to:
+  /// **'O caminho dos IRs de fábrica ainda não foi conferido numa pedaleira: ouça antes de salvar.'**
+  String get t3kIrNaoConferido;
+
+  /// Quantos tons do formato do bloco a pedaleira tem
+  ///
+  /// In pt, this message translates to:
+  /// **'Na pedaleira: {fabrica} de fábrica e {seus} enviados por você'**
+  String t3kResumo(int fabrica, int seus);
+
+  /// Linha do tom de fábrica na galeria
+  ///
+  /// In pt, this message translates to:
+  /// **'{autor} · licença {licenca}'**
+  String t3kDetalheFabrica(String autor, String licenca);
+
+  /// Linha do tom do usuário na galeria
+  ///
+  /// In pt, this message translates to:
+  /// **'{autor} · licença {licenca} · seu, só para consulta'**
+  String t3kDetalheSeu(String autor, String licenca);
+
+  /// Quando o tom não traz o username
+  ///
+  /// In pt, this message translates to:
+  /// **'sem autor'**
+  String get t3kSemAutor;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

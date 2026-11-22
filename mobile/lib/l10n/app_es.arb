@@ -429,5 +429,17 @@
   "fmErro": "El pedal no confirmó el cambio de modo. El modo mostrado es el que tiene ahora.",
   "fmIndisponivel": "Este pedal no informa el modo de los footswitches.",
   "fmAvisoControles": "Los FOOT asignados solo actúan en el modo Stomp; el pedal está en {modo}.",
-  "fmDesconhecido": "El pedal está en un modo que la app no conoce. Cambia el modo en el propio pedal."
+  "fmDesconhecido": "El pedal está en un modo que la app no conoce. Cambia el modo en el propio pedal.",
+  "t3kTom": "Tono",
+  "t3kModelo": "Modelo",
+  "t3kLendo": "Leyendo los tonos de la pedalera…",
+  "t3kFalhou": "La pedalera no envió la lista de tonos.",
+  "t3kTentarDeNovo": "Intentar de nuevo",
+  "t3kNaoEncontrado": "No encontrado en la pedalera: {arquivo}",
+  "t3kSoConsulta": "Tono que enviaste: aparece solo para consulta. La app todavía no puede cambiarlo.",
+  "t3kIrNaoConferido": "La ruta de los IR de fábrica aún no se comprobó en una pedalera: escucha antes de guardar.",
+  "t3kResumo": "En la pedalera: {fabrica} de fábrica y {seus} enviados por ti",
+  "t3kDetalheFabrica": "{autor} · licencia {licenca}",
+  "t3kDetalheSeu": "{autor} · licencia {licenca} · tuyo, solo consulta",
+  "t3kSemAutor": "sin autor"
 }

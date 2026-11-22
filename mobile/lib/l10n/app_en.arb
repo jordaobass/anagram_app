@@ -429,5 +429,17 @@
   "fmErro": "The pedal did not confirm the mode change. The mode shown is the one it has now.",
   "fmIndisponivel": "This pedal does not report the footswitch mode.",
   "fmAvisoControles": "Assigned FOOTs only act in Stomp mode; the pedal is in {modo}.",
-  "fmDesconhecido": "The pedal is in a mode this app does not know. Change the mode on the pedal itself."
+  "fmDesconhecido": "The pedal is in a mode this app does not know. Change the mode on the pedal itself.",
+  "t3kTom": "Tone",
+  "t3kModelo": "Model",
+  "t3kLendo": "Reading the tones on the pedal…",
+  "t3kFalhou": "The pedal did not send the tone list.",
+  "t3kTentarDeNovo": "Try again",
+  "t3kNaoEncontrado": "Not found on the pedal: {arquivo}",
+  "t3kSoConsulta": "Tone you uploaded: shown for reference only. The app cannot switch it yet.",
+  "t3kIrNaoConferido": "The path of factory IRs has not been checked on a pedal yet: listen before saving.",
+  "t3kResumo": "On the pedal: {fabrica} factory and {seus} uploaded by you",
+  "t3kDetalheFabrica": "{autor} · {licenca} license",
+  "t3kDetalheSeu": "{autor} · {licenca} license · yours, reference only",
+  "t3kSemAutor": "no author"
 }

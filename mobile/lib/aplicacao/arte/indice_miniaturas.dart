@@ -132,8 +132,10 @@ class IndiceMiniaturas {
   /// Casa pela uri que a pedaleira informa (com ou sem sufixo de canal);
   /// senão pelo nome do bloco. Com [arquivoIr] (gabinete), a foto do modelo
   /// daquele IR vence a genérica do bloco; no TONE3000, a foto do tom.
-  ArteBloco arteDe(DefinicaoBloco bloco, {String? arquivoIr, FotosDoSuite? fotosDoSuite}) {
-    final doTom = tons.arteDoTom(bloco.uri, arquivoIr, credito, fotosDoSuite);
+  /// [gearDoTom]: o tipo que a pedaleira informou, para o tom que o índice
+  /// não conhece ganhar o ícone do tipo.
+  ArteBloco arteDe(DefinicaoBloco bloco, {String? arquivoIr, FotosDoSuite? fotosDoSuite, String? gearDoTom}) {
+    final doTom = tons.arteDoTom(bloco.uri, arquivoIr, credito, fotosDoSuite, gear: gearDoTom);
     if (doTom != null) return doTom;
     final arquivos = _gabineteDe(arquivoIr) ??
         buscarPorVariantes(_porUri, bloco.uri) ??
