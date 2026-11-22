@@ -9,6 +9,7 @@ import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/familia_bloco.dart';
 import '../../nucleo/catalogo/variantes_uri.dart';
 import '../../nucleo/modelo/json_util.dart';
+import 'tons_tone3000.dart';
 
 sealed class ArteBloco {
   const ArteBloco();
@@ -32,7 +33,8 @@ class IndiceMiniaturas {
   IndiceMiniaturas(this._porUri, this._porNome, this.credito,
       {this.temArteDaPedaleira = false,
       Map<String, (String, String?)> gabinetes = const {},
-      this.escolhasDeGabinete = const CatalogoGabinetes.vazio()})
+      this.escolhasDeGabinete = const CatalogoGabinetes.vazio(),
+      this.tons = TonsTone3000.vazio})
       : _gabinetes = gabinetes;
 
   factory IndiceMiniaturas.doTexto(String texto) {
@@ -52,7 +54,8 @@ class IndiceMiniaturas {
     return IndiceMiniaturas(porUri, porNome, json['credito'] as String? ?? '',
         temArteDaPedaleira: entradas.any((bloco) => _prioridade(bloco) == 1),
         gabinetes: _lerGabinetes(json),
-        escolhasDeGabinete: CatalogoGabinetes.doJson(mapaOuVazio(json['gabinetes'])['escolhas']));
+        escolhasDeGabinete: CatalogoGabinetes.doJson(mapaOuVazio(json['gabinetes'])['escolhas']),
+        tons: TonsTone3000.doJson(json['tone3000']));
   }
 
   /// "gabinetes.porArquivo": nome do arquivo de IR sem extensão -> [ligada, desligada].
@@ -76,6 +79,9 @@ class IndiceMiniaturas {
   /// Modelo, microfone e posição de cada IR de gabinete (build com o Suite);
   /// vazio sem ele, e aí o bloco não oferece a escolha.
   final CatalogoGabinetes escolhasDeGabinete;
+
+  /// Título, tipo e foto dos tons de fábrica do TONE3000 (build com o Suite).
+  final TonsTone3000 tons;
 
   /// Arte da pedaleira por último, para sobrescrever a de terceiros na mesma chave.
   static int _prioridade(Map<String, dynamic> bloco) => bloco['origem'] == 'pedaleira' ? 1 : 0;

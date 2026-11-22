@@ -47,17 +47,23 @@ class CabecalhoBloco extends ConsumerWidget {
             definicao: definicao, tamanho: Medidas.artePainelBloco, ligado: ligado, arquivoIr: bloco.arquivoDeIr),
       ),
       const SizedBox(width: Espacos.m),
-      Expanded(child: _textos(context, ligado: ligado)),
+      Expanded(child: _textos(context, ligado: ligado, modelo: nomeDoModeloNoBloco(ref, bloco))),
     ]);
   }
 
-  /// Nome, onde o bloco está e as dicas de gesto do aparelho em uso.
-  Widget _textos(BuildContext context, {required bool ligado}) {
+  /// Nome, o tom carregado (se houver), onde o bloco está e as dicas de gesto.
+  Widget _textos(BuildContext context, {required bool ligado, String? modelo}) {
     final tema = Theme.of(context).textTheme;
     final l = AppLocalizations.of(context);
     final dica = tema.bodySmall?.copyWith(color: Cores.textoSecundario);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(l.nomeDoBloco(definicao), style: tema.titleLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
+      if (modelo != null)
+        Text(modelo,
+            key: const ValueKey('nome-do-modelo'),
+            style: tema.titleSmall?.copyWith(color: Cores.aluminioClaro),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis),
       Text(l.blocoPosicao(l.familia(definicao.familia), bloco.posicao.linha, bloco.posicao.casa), style: tema.bodySmall),
       Text(arrastoComMouse ? l.arrasteComMouse : l.arrasteNoToque, style: dica),
       Text(arrastoComMouse ? l.uiDicaDuploClique : l.uiDicaToqueDuplo, style: dica),

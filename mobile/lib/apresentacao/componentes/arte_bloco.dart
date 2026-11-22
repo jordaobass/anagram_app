@@ -6,11 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/arte/indice_miniaturas.dart';
+import '../../aplicacao/arte/tons_tone3000.dart';
 import '../../aplicacao/provedores.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
+import '../../nucleo/modelo/bloco_preset.dart';
 import '../../l10n/app_localizations.dart';
 import '../tema/tokens.dart';
 import 'pintor_arte_familia.dart';
+
+/// O tom/arquivo que o bloco carrega (TONE3000, neural, IR do usuário), pelo
+/// título de fábrica quando há; nulo nos outros blocos.
+String? nomeDoModeloNoBloco(WidgetRef ref, BlocoPreset bloco) => nomeDoModeloCarregado(
+    bloco.uri, bloco.arquivoDeIr, ref.watch(indiceMiniaturasProvider).value?.tons ?? TonsTone3000.vazio);
 
 class ArteBlocoWidget extends ConsumerWidget {
   const ArteBlocoWidget(
