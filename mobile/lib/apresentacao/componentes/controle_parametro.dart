@@ -6,6 +6,7 @@ import '../../nucleo/catalogo/arranjo_parametros.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../tema/tokens.dart';
 import 'botao_giratorio.dart';
+import 'botao_opcao.dart';
 import 'explicacao_parametro.dart';
 import '../../l10n/app_localizations.dart';
 
@@ -85,28 +86,17 @@ class ControleParametro extends StatelessWidget {
       for (var i = 0; i < opcoes.length; i++)
         Padding(
           padding: const EdgeInsets.only(bottom: Espacos.xs),
-          child: _opcao(opcoes[i], i == atual, () => aoMudar(parametro.valorDaOpcao(i), arrastando: false)),
+          child: SizedBox(
+            width: double.infinity,
+            child: BotaoOpcao(
+                texto: opcoes[i],
+                marcada: i == atual,
+                cor: cor,
+                aoTocar: () => aoMudar(parametro.valorDaOpcao(i), arrastando: false)),
+          ),
         ),
     ]);
   }
-
-  Widget _opcao(String texto, bool marcada, VoidCallback aoTocar) => Semantics(
-        selected: marcada,
-        button: true,
-        child: SizedBox(
-          width: double.infinity,
-          child: marcada
-              ? FilledButton(
-                  onPressed: aoTocar,
-                  style: FilledButton.styleFrom(backgroundColor: cor, foregroundColor: Cores.tintaMarcador),
-                  child: _rotulo(texto),
-                )
-              : OutlinedButton(onPressed: aoTocar, child: _rotulo(texto)),
-        ),
-      );
-
-  /// Rótulo inteiro, encolhendo se a coluna for estreita (nada de "Deslig…").
-  static Widget _rotulo(String texto) => FittedBox(fit: BoxFit.scaleDown, child: Text(texto, maxLines: 1));
 }
 
 /// A chave de um liga/desliga: usada no controle e no título das bandas do

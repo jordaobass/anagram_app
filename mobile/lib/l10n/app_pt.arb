@@ -1193,5 +1193,58 @@
   "ctlDicaPedaleira": "Na pedaleira, os pots atribuídos só respondem na tela do preset em uma linha; com o preset expandido, os knobs mexem no bloco selecionado.",
   "@ctlDicaPedaleira": {
     "description": "Comportamento da Anagram conferido na bancada (BD8): pot atribuído só vale na visualização compacta do preset"
+  },
+  "utBateria": "Bateria",
+  "@utBateria": {
+    "description": "Cartão do Auto Drummer: estilo, nível e tempo"
+  },
+  "utAcao": "Ação",
+  "@utAcao": {
+    "description": "Cartão do botão Action do Auto Drummer"
+  },
+  "utMetronomo": "Metrônomo",
+  "@utMetronomo": {
+    "description": "Cartão principal do Cognate Metro"
+  },
+  "utTreino": "Treino",
+  "@utTreino": {
+    "description": "Cartão do Gap Mode do Cognate Metro (compassos mudos para treinar)"
+  },
+  "utDisparar": "Disparar",
+  "@utDisparar": {
+    "description": "Botão que dá um toque no Action do Auto Drummer"
+  },
+  "utDispararSemAoVivo": "Ligue o AO VIVO para disparar daqui.",
+  "@utDispararSemAoVivo": {
+    "description": "O toque só existe tocado na pedaleira: sem ao vivo não há o que enviar"
+  },
+  "utGestosAcao": "Um toque começa (com intro) ou faz uma virada; dois toques rápidos param; segurar 1 s passa para a próxima parte. Aqui, cada DISPARAR é um toque.",
+  "@utGestosAcao": {
+    "description": "Gestos do Action do Auto Drummer (como num footswitch)"
+  },
+  "utEstadoNoVisor": "Se a bateria está tocando ou parada, só o visor da pedaleira mostra.",
+  "@utEstadoNoVisor": {
+    "description": "O Status é saída do plugin e não chega pelo USB (P8)"
+  },
+  "utBater": "Bater",
+  "@utBater": {
+    "description": "Tap tempo calculado no app"
+  },
+  "utBaterSoNoFixo": "Bater o tempo só vale no modo Fixed Tempo.",
+  "@utBaterSoNoFixo": {
+    "description": "Por que o Bater está desabilitado em Follow Tempo e Global Tempo"
+  },
+  "utPrecisaoNoVisor": "A precisão do seu tempo (Accuracy) só aparece no visor da pedaleira.",
+  "@utPrecisaoNoVisor": {
+    "description": "Accuracy é saída do plugin e não chega pelo USB"
+  },
+  "utTemposDoCompasso": "Compasso de {tempos} tempos, o 1 acentuado",
+  "@utTemposDoCompasso": {
+    "description": "Leitura dos pontos do compasso escolhido",
+    "placeholders": {
+      "tempos": {
+        "type": "int"
+      }
+    }
   }
 }

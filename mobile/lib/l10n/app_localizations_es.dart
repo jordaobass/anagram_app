@@ -1358,4 +1358,42 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ctlDicaPedaleira => 'En la pedalera, los pots asignados solo responden en la pantalla del preset en una fila; con el preset expandido, las perillas editan el bloque seleccionado.';
+
+  @override
+  String get utBateria => 'Batería';
+
+  @override
+  String get utAcao => 'Acción';
+
+  @override
+  String get utMetronomo => 'Metrónomo';
+
+  @override
+  String get utTreino => 'Práctica';
+
+  @override
+  String get utDisparar => 'Disparar';
+
+  @override
+  String get utDispararSemAoVivo => 'Activa EN VIVO para disparar desde aquí.';
+
+  @override
+  String get utGestosAcao => 'Un toque empieza (con intro) o hace un redoble; dos toques rápidos paran; mantener 1 s pasa a la siguiente parte. Aquí, cada DISPARAR es un toque.';
+
+  @override
+  String get utEstadoNoVisor => 'Si la batería está tocando o parada, solo lo muestra la pantalla del pedal.';
+
+  @override
+  String get utBater => 'Marcar';
+
+  @override
+  String get utBaterSoNoFixo => 'Marcar el tempo solo funciona en el modo Fixed Tempo.';
+
+  @override
+  String get utPrecisaoNoVisor => 'La precisión de tu tempo (Accuracy) solo aparece en la pantalla del pedal.';
+
+  @override
+  String utTemposDoCompasso(int tempos) {
+    return 'Compás de $tempos tiempos, el 1 acentuado';
+  }
 }

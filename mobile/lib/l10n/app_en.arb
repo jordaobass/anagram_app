@@ -398,5 +398,17 @@
   "ctlAtribuidoA": "Assigned to {controle}",
   "ctlAcaoAtribuir": "Assign to a pedal control",
   "ctlFechar": "CLOSE",
-  "ctlDicaPedaleira": "On the pedal, assigned pots only respond on the one-row preset screen; with the preset expanded, the knobs edit the selected block."
+  "ctlDicaPedaleira": "On the pedal, assigned pots only respond on the one-row preset screen; with the preset expanded, the knobs edit the selected block.",
+  "utBateria": "Drums",
+  "utAcao": "Action",
+  "utMetronomo": "Metronome",
+  "utTreino": "Practice",
+  "utDisparar": "Trigger",
+  "utDispararSemAoVivo": "Turn LIVE on to trigger from here.",
+  "utGestosAcao": "One tap starts (with an intro) or plays a fill; two quick taps stop; holding for 1 s moves to the next part. Here, each TRIGGER is one tap.",
+  "utEstadoNoVisor": "Whether the drums are playing or stopped shows only on the pedal screen.",
+  "utBater": "Tap",
+  "utBaterSoNoFixo": "Tap tempo works in Fixed Tempo mode only.",
+  "utPrecisaoNoVisor": "How accurate your timing is (Accuracy) shows only on the pedal screen.",
+  "utTemposDoCompasso": "Bar of {tempos} beats, beat 1 accented"
 }
