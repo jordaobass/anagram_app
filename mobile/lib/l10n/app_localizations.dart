@@ -2491,35 +2491,11 @@ abstract class AppLocalizations {
   /// **'Na pedaleira, os pots atribuídos só respondem na tela do preset em uma linha; com o preset expandido, os knobs mexem no bloco selecionado.'**
   String get ctlDicaPedaleira;
 
-  /// Cartão do Auto Drummer: estilo, nível e tempo
-  ///
-  /// In pt, this message translates to:
-  /// **'Bateria'**
-  String get utBateria;
-
-  /// Cartão do botão Action do Auto Drummer
-  ///
-  /// In pt, this message translates to:
-  /// **'Ação'**
-  String get utAcao;
-
-  /// Cartão principal do Cognate Metro
-  ///
-  /// In pt, this message translates to:
-  /// **'Metrônomo'**
-  String get utMetronomo;
-
   /// Cartão do Gap Mode do Cognate Metro (compassos mudos para treinar)
   ///
   /// In pt, this message translates to:
   /// **'Treino'**
   String get utTreino;
-
-  /// O Status é saída do plugin e não chega pelo USB (P8)
-  ///
-  /// In pt, this message translates to:
-  /// **'Se a bateria está tocando ou parada, só o visor da pedaleira mostra.'**
-  String get utEstadoNoVisor;
 
   /// Tap tempo calculado no app
   ///
@@ -2532,18 +2508,6 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Bater o tempo só vale no modo Fixed Tempo.'**
   String get utBaterSoNoFixo;
-
-  /// Accuracy é saída do plugin e não chega pelo USB
-  ///
-  /// In pt, this message translates to:
-  /// **'A precisão do seu tempo (Accuracy) só aparece no visor da pedaleira.'**
-  String get utPrecisaoNoVisor;
-
-  /// Leitura dos pontos do compasso escolhido
-  ///
-  /// In pt, this message translates to:
-  /// **'Compasso de {tempos} tempos, o 1 acentuado'**
-  String utTemposDoCompasso(int tempos);
 
   /// No description provided for @slotAlteradoForaTitulo.
   ///
@@ -2778,6 +2742,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'No app, esta chave é o Action da pedaleira. Pelo manual do plugin: ativar começa o ritmo com introdução; com o ritmo tocando, um novo acionamento faz uma virada; acionamento duplo para; segurar passa para a próxima parte. O que a bateria toca em cada caso é do plugin.'**
   String get utAcaoChave;
+
+  /// Cartão de uma saída do plugin (Status, Accuracy): o valor não chega pelo USB (P8)
+  ///
+  /// In pt, this message translates to:
+  /// **'Só no visor da pedaleira'**
+  String get utSoNoVisor;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

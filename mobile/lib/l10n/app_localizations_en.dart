@@ -1360,33 +1360,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ctlDicaPedaleira => 'On the pedal, assigned pots only respond on the one-row preset screen; with the preset expanded, the knobs edit the selected block.';
 
   @override
-  String get utBateria => 'Drums';
-
-  @override
-  String get utAcao => 'Action';
-
-  @override
-  String get utMetronomo => 'Metronome';
-
-  @override
   String get utTreino => 'Practice';
-
-  @override
-  String get utEstadoNoVisor => 'Whether the drums are playing or stopped shows only on the pedal screen.';
 
   @override
   String get utBater => 'Tap';
 
   @override
   String get utBaterSoNoFixo => 'Tap tempo works in Fixed Tempo mode only.';
-
-  @override
-  String get utPrecisaoNoVisor => 'How accurate your timing is (Accuracy) shows only on the pedal screen.';
-
-  @override
-  String utTemposDoCompasso(int tempos) {
-    return 'Bar of $tempos beats, beat 1 accented';
-  }
 
   @override
   String slotAlteradoForaTitulo(String slot) {
@@ -1546,4 +1526,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get utAcaoChave => 'In the app, this switch is the pedal\'s Action. Per the plugin\'s manual: turning it on starts the rhythm with an intro; while it plays, triggering again plays a fill; a double trigger stops; holding moves to the next part. What the drums play in each case is up to the plugin.';
+
+  @override
+  String get utSoNoVisor => 'Only on the pedal screen';
 }

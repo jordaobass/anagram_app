@@ -1,23 +1,27 @@
 // Como a bateria (Auto Drummer, falkTX) e o metrônomo (Cognate Metro) se
-// arrumam no painel: na ordem e no agrupamento da tela original de cada
-// plugin, com o que é lista, botão, knob e chave lá. Só entra o que o
-// catálogo do firmware traz; parâmetro novo cai em "Outros" (DECISOES BT1).
+// arrumam no painel: na ordem da tela da Anagram, um cartão por controle numa
+// fileira, com o que é lista, rolo, knob e chave lá. Só entra o que o
+// catálogo do firmware traz; parâmetro novo cai em "Outros" (DECISOES BT5).
 
-/// Os cartões dos dois painéis.
-enum SecaoUtilitario { bateria, acao, metronomo, treino }
+/// As fileiras dos painéis: a página do visor e, no metrônomo, a página 2
+/// (Treino) logo abaixo.
+enum SecaoUtilitario { principal, treino }
 
 /// Como um parâmetro aparece no cartão.
 enum TipoControleUtil {
-  /// Lista que abre com as opções (muitas opções, ou as do original).
+  /// A marcada entre as vizinhas, como a lista do visor; abre a lista toda.
   lista,
 
-  /// Uma fileira de botões, a opção marcada na cor da família.
-  botoes,
+  /// A opção grande no meio, as vizinhas apagadas dos lados (o compasso).
+  rolo,
   knob,
 
   /// O knob maior do cartão (o tempo).
   knobGrande,
   chave,
+
+  /// Saída do plugin (Status, Accuracy): não chega pelo USB, só o nome.
+  saida,
 }
 
 /// Quando o valor de outro parâmetro faz este controle não valer (o tempo
@@ -29,8 +33,17 @@ class Apagamento {
 }
 
 class ControleUtil {
-  const ControleUtil(this.simbolo, this.tipo, {this.unidade, this.apagamento, this.comToque = false});
+  const ControleUtil(this.simbolo, this.tipo, {this.unidade, this.apagamento, this.comToque = false, this.nome});
+
+  /// A saída do plugin, que o catálogo não traz: o cartão leva o [nome] do visor.
+  const ControleUtil.saida(this.simbolo, String this.nome)
+      : tipo = TipoControleUtil.saida,
+        unidade = null,
+        apagamento = null,
+        comToque = false;
+
   final String simbolo;
+  final String? nome;
   final TipoControleUtil tipo;
 
   /// Unidade que o catálogo não traz (bpm); o valor passa a ser inteiro.
@@ -54,9 +67,11 @@ class ArranjoUtilitario {
   /// Parâmetros do catálogo que a tela original não mostra: nem aqui nem em "Outros".
   final Set<String> semControle;
 
+  /// Os parâmetros que o arranjo cobre (as saídas não são parâmetros).
   Set<String> get simbolos => {
         for (final s in secoes)
-          for (final c in s.controles) c.simbolo,
+          for (final c in s.controles)
+            if (c.tipo != TipoControleUtil.saida) c.simbolo,
         ...semControle,
       };
 
@@ -79,28 +94,29 @@ const _l = TipoControleUtil.lista;
 const _k = TipoControleUtil.knob;
 
 const _bateria = ArranjoUtilitario(secoes: [
-  SecaoUtil(SecaoUtilitario.bateria, [
+  SecaoUtil(SecaoUtilitario.principal, [
     ControleUtil('style', _l),
     ControleUtil('level', _k),
+    ControleUtil('action', TipoControleUtil.chave),
+    ControleUtil.saida('status', 'Status'),
+    ControleUtil('useHostTempo', TipoControleUtil.chave),
     ControleUtil('userTempo', TipoControleUtil.knobGrande,
         unidade: 'bpm', apagamento: Apagamento('useHostTempo', _ligado)),
-    ControleUtil('useHostTempo', TipoControleUtil.chave),
   ]),
-  SecaoUtil(SecaoUtilitario.acao, [ControleUtil('action', TipoControleUtil.chave)]),
 ]);
 
 const _metronomo = ArranjoUtilitario(
   semControle: {'tap'},
   secoes: [
-    SecaoUtil(SecaoUtilitario.metronomo, [
+    SecaoUtil(SecaoUtilitario.principal, [
       ControleUtil('tempo', TipoControleUtil.knobGrande,
           unidade: 'bpm', apagamento: Apagamento('mode', _foraDoTempoFixo), comToque: true),
       ControleUtil('mode', _l),
-      ControleUtil('time_signature', TipoControleUtil.botoes),
+      ControleUtil('time_signature', TipoControleUtil.rolo),
       ControleUtil('sound', _l),
       ControleUtil('level', _k),
     ]),
-    SecaoUtil(SecaoUtilitario.treino, [ControleUtil('gap_mode', _l)]),
+    SecaoUtil(SecaoUtilitario.treino, [ControleUtil('gap_mode', _l), ControleUtil.saida('accuracy', 'Accuracy')]),
   ],
 );
 
@@ -111,10 +127,11 @@ ArranjoUtilitario? arranjoUtilitario(String uri) => switch (uri) {
       _ => null,
     };
 
-/// Os tempos do compasso pelo rótulo da opção ("6/8" = 6 tempos), com o 1
-/// acentuado; rótulo que não é compasso volta nulo.
-List<bool>? temposDoCompasso(String rotulo) {
-  final tempos = int.tryParse(RegExp(r'^(\d+)/\d+$').firstMatch(rotulo.trim())?.group(1) ?? '');
-  if (tempos == null || tempos < 1) return null;
-  return [for (var i = 0; i < tempos; i++) i == 0];
+/// As opções que a lista rolante mostra: a marcada entre as vizinhas, três
+/// por vez (alvos de 48 dp numa fileira de altura só); nas pontas, as duas
+/// do mesmo lado.
+List<int> opcoesVisiveis(int total, int atual, {int maximo = 3}) {
+  if (total <= maximo) return [for (var i = 0; i < total; i++) i];
+  final inicio = (atual - maximo ~/ 2).clamp(0, total - maximo);
+  return [for (var i = inicio; i < inicio + maximo; i++) i];
 }

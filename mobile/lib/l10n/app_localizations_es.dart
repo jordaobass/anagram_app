@@ -1360,33 +1360,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ctlDicaPedaleira => 'En la pedalera, los pots asignados solo responden en la pantalla del preset en una fila; con el preset expandido, las perillas editan el bloque seleccionado.';
 
   @override
-  String get utBateria => 'Batería';
-
-  @override
-  String get utAcao => 'Acción';
-
-  @override
-  String get utMetronomo => 'Metrónomo';
-
-  @override
   String get utTreino => 'Práctica';
-
-  @override
-  String get utEstadoNoVisor => 'Si la batería está tocando o parada, solo lo muestra la pantalla del pedal.';
 
   @override
   String get utBater => 'Marcar';
 
   @override
   String get utBaterSoNoFixo => 'Marcar el tempo solo funciona en el modo Fixed Tempo.';
-
-  @override
-  String get utPrecisaoNoVisor => 'La precisión de tu tempo (Accuracy) solo aparece en la pantalla del pedal.';
-
-  @override
-  String utTemposDoCompasso(int tempos) {
-    return 'Compás de $tempos tiempos, el 1 acentuado';
-  }
 
   @override
   String slotAlteradoForaTitulo(String slot) {
@@ -1546,4 +1526,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get utAcaoChave => 'En la app, este interruptor es el Action del pedal. Según el manual del plugin: activarlo empieza el ritmo con una introducción; con el ritmo sonando, un nuevo accionamiento hace un redoble; un accionamiento doble lo detiene; mantenerlo pasa a la siguiente parte. Lo que toca la batería en cada caso lo decide el plugin.';
+
+  @override
+  String get utSoNoVisor => 'Solo en la pantalla del pedal';
 }
