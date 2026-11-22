@@ -58,9 +58,21 @@ final class CanalHidAnagram: NSObject, FlutterStreamHandler {
     case "fechar":
       fechar()
       resultado(nil)
+    case "acessoEntrada":
+      resultado(Self.acessoEntrada())
     default:
       resultado(FlutterMethodNotImplemented)
     }
+  }
+
+  /// Monitoramento de Entrada (TCC), consultado sem pedir: o app só tenta
+  /// conectar sozinho ao abrir com ele já concedido (DECISOES CA3). Pedir aqui
+  /// faria o macOS mostrar o aviso no meio da abertura.
+  private static func acessoEntrada() -> String {
+    let acesso = IOHIDCheckAccess(kIOHIDRequestTypeListenEvent)
+    if acesso == kIOHIDAccessTypeGranted { return "concedido" }
+    if acesso == kIOHIDAccessTypeDenied { return "negado" }
+    return "nao_decidido"
   }
 
   private func abrir(fornecedor: Int, produto: Int) -> Any? {
