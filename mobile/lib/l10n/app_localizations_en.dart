@@ -1143,7 +1143,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pdSecao => 'Pedal';
 
   @override
-  String get pdDica => 'Global Anagram settings: they apply to every preset and are not stored in the preset. Changes are immediate.';
+  String get pdDica => 'Global Anagram settings: they apply to every preset and are not stored in the preset.';
 
   @override
   String get pdSaidas => 'Outputs';
@@ -1176,25 +1176,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pdEqReset => 'Reset';
 
   @override
-  String get pdEqResetTitulo => 'Reset the Global EQ?';
-
-  @override
-  String get pdEqResetTexto => 'The 6 bands go back to 35 Hz, 160 Hz, 397 Hz, 1.25 kHz, 2.5 kHz and 9.63 kHz, with 0 gain and the factory width. You can undo it right after.';
-
-  @override
   String get pdEqResetConfirmar => 'RESET';
 
   @override
-  String get pdEqResetFeito => 'Global EQ back to default.';
-
-  @override
-  String get pdEqDica => 'Drag the points: sideways changes the frequency, up and down the gain. The knobs change what the selected mode shows.';
+  String get pdEqDica => 'The curve and the bands show the Global EQ the pedal has now; the mode picks what the bands show.';
 
   @override
   String get pdEntrada => 'Input';
 
   @override
-  String get pdEntradaDica => 'Input gain for instrument 1 (−12 to +12 dB). The Anagram stores six instruments; the other five and their names will come once the app knows their keys.';
+  String get pdEntradaDica => 'Input gain for instrument 1 (−12 to +12 dB). The Anagram stores six instruments; the app only reads the first.';
 
   @override
   String get pdPlaca => 'Sound card';
@@ -1213,12 +1204,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pdTentarDeNovo => 'Try again';
-
-  @override
-  String get pdErroGravar => 'The pedal did not accept the last change. The values shown are the ones it has now.';
-
-  @override
-  String get pdPendentes => 'Not yet adjustable from the app: mixer Master, Mute and Link, and the instrument names.';
 
   @override
   String get registroSecao => 'Log for support';
@@ -1523,6 +1508,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get salvarReleituraDiferente => 'the pedal confirmed, but the slot read back differs from what was sent. Your edit is still on screen; check the slot and save again.';
+
+  @override
+  String get pdSemAcesso => 'Output levels, Global EQ and input gain: the app has no access to these pedal features. The Anagram accepts a value sent to it, but does not apply it to the sound. Adjust them with the pedal\'s own knobs and screens; here you see the current values (tap Refresh after changing them).';
 
   @override
   String get utAcaoChave => 'In the app, this switch is the pedal\'s Action. Per the plugin\'s manual: turning it on starts the rhythm with an intro; while it plays, triggering again plays a fill; a double trigger stops; holding moves to the next part. What the drums play in each case is up to the plugin.';

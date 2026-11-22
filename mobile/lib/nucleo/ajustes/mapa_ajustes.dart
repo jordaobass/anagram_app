@@ -1,5 +1,6 @@
 // Os ajustes GLOBAIS da Anagram (valem para todos os presets) que o app sabe
-// ler e gravar por `export_settings` / `edit_settings`. Um lugar só: quando
+// LER por `export_settings`. Só leitura: a pedaleira aceita `edit_settings`
+// nessas chaves, mas não muda o som (DECISOES AJ1). Um lugar só: quando
 // descobrirmos a chave de um ajuste pendente (a pedaleira só exporta o que já
 // foi mexido), basta preencher [DefinicaoAjuste.chave] aqui (DECISOES PD2).
 import 'dart:math' as math;
@@ -68,8 +69,8 @@ class DefinicaoAjuste {
   final String id;
 
   /// Chave do protocolo, plana e com pontos (`mixer.headphones.vol`). Nula =
-  /// ajuste que existe na pedaleira mas cuja chave ainda não conhecemos:
-  /// nunca é enviado.
+  /// ajuste que existe na pedaleira mas cuja chave ainda não conhecemos: não
+  /// aparece na tela.
   final String? chave;
   final String nome;
   final GrupoAjuste grupo;
@@ -83,8 +84,6 @@ class DefinicaoAjuste {
   final bool faixaConfirmada;
 
   bool get confirmado => chave != null;
-
-  num limitar(num valor) => valor.clamp(minimo, maximo);
 
   /// A mesma definição com a faixa alargada para conter [valor]: se a
   /// pedaleira devolve algo fora da faixa suposta, a faixa estava errada, não
@@ -105,7 +104,7 @@ class DefinicaoAjuste {
   }
 
   /// O mesmo formato dos parâmetros de bloco: assim os knobs e faders do
-  /// painel servem aqui sem cópia (arrastar, digitar, segurar volta ao padrão).
+  /// painel desenham o valor aqui sem cópia.
   DefinicaoParametro get parametro => DefinicaoParametro(
         simbolo: id,
         nome: nome,
@@ -158,16 +157,16 @@ DefinicaoAjuste _instrumento(int slot, String? chave) => DefinicaoAjuste(
     unidade: 'dB',
     faixaConfirmada: true);
 
-/// Na ordem do mixer da pedaleira (manual): Out 3, Out 4, Out 1, Out 2, fone;
-/// o alto-falante vem depois porque o mixer da tela não o mostra. Chave nula
-/// = pendente: existe na pedaleira, falta ler a chave dela.
+/// Na ordem do mixer da pedaleira (manual): Out 3, Out 4, Out 1, Out 2, fone.
+/// `mixer.speaker.vol` vem no export, mas o mixer do manual não tem saída de
+/// alto-falante, então fica fora (DECISOES AJ4). Chave nula = pendente:
+/// existe na pedaleira, falta ler a chave dela.
 final mapaAjustes = <DefinicaoAjuste>[
   _saida('out3', 'Out 3 L', 'mixer.jack.left.vol'),
   _saida('out4', 'Out 4 R', 'mixer.jack.right.vol'),
   _saida('out1', 'Out 1 XLR', 'mixer.xlr.left.vol'),
   _saida('out2', 'Out 2 XLR', 'mixer.xlr.right.vol'),
   _saida('headphones', 'Headphones', 'mixer.headphones.vol'),
-  _saida('speaker', 'Speaker', 'mixer.speaker.vol'),
   _saida('master', 'Master', null),
   for (final banda in bandasEqGlobal)
     for (final modo in ModoEq.values) _eq(banda, modo),
@@ -175,8 +174,7 @@ final mapaAjustes = <DefinicaoAjuste>[
   for (var slot = 1; slot < 6; slot++) _instrumento(slot, null),
 ];
 
-/// Só os ajustes com chave conhecida: os únicos que a tela mostra e que saem
-/// para a pedaleira.
+/// Só os ajustes com chave conhecida: os únicos que a tela mostra.
 Iterable<DefinicaoAjuste> ajustesConfirmados([GrupoAjuste? grupo]) =>
     mapaAjustes.where((a) => a.confirmado && (grupo == null || a.grupo == grupo));
 

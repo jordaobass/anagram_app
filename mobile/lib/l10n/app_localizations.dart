@@ -2092,7 +2092,7 @@ abstract class AppLocalizations {
   /// No description provided for @pdDica.
   ///
   /// In pt, this message translates to:
-  /// **'Ajustes globais da Anagram: valem para todos os presets e não entram no preset. Mudam na hora.'**
+  /// **'Ajustes globais da Anagram: valem para todos os presets e não entram no preset.'**
   String get pdDica;
 
   /// No description provided for @pdSaidas.
@@ -2155,34 +2155,16 @@ abstract class AppLocalizations {
   /// **'Reset'**
   String get pdEqReset;
 
-  /// No description provided for @pdEqResetTitulo.
-  ///
-  /// In pt, this message translates to:
-  /// **'Voltar o Global EQ ao padrão?'**
-  String get pdEqResetTitulo;
-
-  /// No description provided for @pdEqResetTexto.
-  ///
-  /// In pt, this message translates to:
-  /// **'As 6 bandas voltam a 35 Hz, 160 Hz, 397 Hz, 1,25 kHz, 2,5 kHz e 9,63 kHz, com ganho 0 e a largura de fábrica. Dá para desfazer logo depois.'**
-  String get pdEqResetTexto;
-
   /// No description provided for @pdEqResetConfirmar.
   ///
   /// In pt, this message translates to:
   /// **'VOLTAR AO PADRÃO'**
   String get pdEqResetConfirmar;
 
-  /// No description provided for @pdEqResetFeito.
-  ///
-  /// In pt, this message translates to:
-  /// **'Global EQ de volta ao padrão.'**
-  String get pdEqResetFeito;
-
   /// No description provided for @pdEqDica.
   ///
   /// In pt, this message translates to:
-  /// **'Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho. Os knobs mexem no que o modo escolhido mostra.'**
+  /// **'A curva e as bandas mostram o Global EQ que a pedaleira tem agora; o modo escolhe o que as bandas mostram.'**
   String get pdEqDica;
 
   /// No description provided for @pdEntrada.
@@ -2194,7 +2176,7 @@ abstract class AppLocalizations {
   /// No description provided for @pdEntradaDica.
   ///
   /// In pt, this message translates to:
-  /// **'Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; os outros cinco e os nomes entram quando o app conhecer as chaves deles.'**
+  /// **'Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; o app só lê o primeiro.'**
   String get pdEntradaDica;
 
   /// No description provided for @pdPlaca.
@@ -2232,18 +2214,6 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Tentar de novo'**
   String get pdTentarDeNovo;
-
-  /// No description provided for @pdErroGravar.
-  ///
-  /// In pt, this message translates to:
-  /// **'A pedaleira não aceitou a última mudança. Os valores mostrados são os que ela tem agora.'**
-  String get pdErroGravar;
-
-  /// No description provided for @pdPendentes.
-  ///
-  /// In pt, this message translates to:
-  /// **'Ainda não dá para mudar pelo app: Master, Mute e Link do mixer e os nomes dos instrumentos.'**
-  String get pdPendentes;
 
   /// Seção das Configurações com o arquivo de registro (log) do app, para relatar defeitos
   ///
@@ -2736,6 +2706,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'a pedaleira confirmou, mas o slot relido é diferente do enviado. A edição continua na tela; confira o slot e salve de novo.'**
   String get salvarReleituraDiferente;
+
+  /// Aviso no topo da seção Pedaleira: mixer, Global EQ e ganho de entrada são só leitura porque a pedaleira não aplica ao som o que o app envia
+  ///
+  /// In pt, this message translates to:
+  /// **'Volume das saídas, Global EQ e ganho de entrada: o app não tem acesso a esses recursos da pedaleira. A Anagram aceita o valor enviado, mas não o aplica ao som. Ajuste nos knobs e telas da própria pedaleira; aqui você vê os valores atuais (toque em Atualizar depois de mudar).'**
+  String get pdSemAcesso;
 
   /// Ajuda do Action do Auto Drummer: a chave do app é o Action da pedaleira; os gestos são do manual do plugin
   ///

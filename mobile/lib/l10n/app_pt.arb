@@ -958,7 +958,7 @@
   },
   "mbOff": "OFF",
   "pdSecao": "Pedaleira",
-  "pdDica": "Ajustes globais da Anagram: valem para todos os presets e não entram no preset. Mudam na hora.",
+  "pdDica": "Ajustes globais da Anagram: valem para todos os presets e não entram no preset.",
   "pdSaidas": "Saídas",
   "pdGlobalEq": "Global EQ",
   "pdEqModoGanho": "Ganho",
@@ -969,21 +969,16 @@
   "eqbResetTexto": "Todas as bandas, os cortes e o ganho voltam ao padrão do bloco. Dá para desfazer logo depois.",
   "eqbResetFeito": "Parametric EQ de volta ao padrão.",
   "pdEqReset": "Reset",
-  "pdEqResetTitulo": "Voltar o Global EQ ao padrão?",
-  "pdEqResetTexto": "As 6 bandas voltam a 35 Hz, 160 Hz, 397 Hz, 1,25 kHz, 2,5 kHz e 9,63 kHz, com ganho 0 e a largura de fábrica. Dá para desfazer logo depois.",
   "pdEqResetConfirmar": "VOLTAR AO PADRÃO",
-  "pdEqResetFeito": "Global EQ de volta ao padrão.",
-  "pdEqDica": "Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho. Os knobs mexem no que o modo escolhido mostra.",
+  "pdEqDica": "A curva e as bandas mostram o Global EQ que a pedaleira tem agora; o modo escolhe o que as bandas mostram.",
   "pdEntrada": "Entrada",
-  "pdEntradaDica": "Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; os outros cinco e os nomes entram quando o app conhecer as chaves deles.",
+  "pdEntradaDica": "Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; o app só lê o primeiro.",
   "pdPlaca": "Placa de som",
   "pdPlacaDica": "Só leitura: a pedaleira não aceita mudar estes pelo USB.",
   "pdAtualizar": "Atualizar",
   "pdLendo": "Lendo os ajustes da pedaleira…",
   "pdFalhaLer": "Não deu para ler os ajustes da pedaleira.",
   "pdTentarDeNovo": "Tentar de novo",
-  "pdErroGravar": "A pedaleira não aceitou a última mudança. Os valores mostrados são os que ela tem agora.",
-  "pdPendentes": "Ainda não dá para mudar pelo app: Master, Mute e Link do mixer e os nomes dos instrumentos.",
   "@pdSecao": {
     "description": "Seção das Configurações com os ajustes globais da pedaleira (mixer, Global EQ, entrada)"
   },
@@ -1406,6 +1401,10 @@
   "salvarReleituraDiferente": "a pedaleira confirmou, mas o slot relido é diferente do enviado. A edição continua na tela; confira o slot e salve de novo.",
   "@salvarReleituraDiferente": {
     "description": "Quando a releitura depois de salvar não confere com o que foi enviado"
+  },
+  "pdSemAcesso": "Volume das saídas, Global EQ e ganho de entrada: o app não tem acesso a esses recursos da pedaleira. A Anagram aceita o valor enviado, mas não o aplica ao som. Ajuste nos knobs e telas da própria pedaleira; aqui você vê os valores atuais (toque em Atualizar depois de mudar).",
+  "@pdSemAcesso": {
+    "description": "Aviso no topo da seção Pedaleira: mixer, Global EQ e ganho de entrada são só leitura porque a pedaleira não aplica ao som o que o app envia"
   },
   "utAcaoChave": "No app, esta chave é o Action da pedaleira. Pelo manual do plugin: ativar começa o ritmo com introdução; com o ritmo tocando, um novo acionamento faz uma virada; acionamento duplo para; segurar passa para a próxima parte. O que a bateria toca em cada caso é do plugin.",
   "@utAcaoChave": {

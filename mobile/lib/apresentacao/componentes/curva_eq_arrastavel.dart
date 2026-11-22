@@ -4,7 +4,8 @@
 // só a frequência — quem decide é [aoArrastar]). Como o knob, avisa
 // "arrastando" durante o gesto e, ao soltar, manda o último ponto com
 // `arrastando: false`: no bloco é o envio final ao vivo, sem esperar a janela
-// do arraste (DECISOES L1, K2).
+// do arraste (DECISOES L1, K2). Sem [CurvaEqArrastavel.aoArrastar] a curva só
+// se desenha (o Global EQ, que a pedaleira não aplica ao som, DECISOES AJ1).
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -19,14 +20,16 @@ class CurvaEqArrastavel extends StatefulWidget {
     super.key,
     required this.bandas,
     required this.cor,
-    required this.aoArrastar,
+    this.aoArrastar,
     this.ganhoGeral = 0,
   });
 
   final List<BandaGlobalEq> bandas;
   final Color cor;
   final double ganhoGeral;
-  final AoArrastarBanda aoArrastar;
+
+  /// Nulo = só leitura: sem gesto, a curva não disputa o rolar da tela.
+  final AoArrastarBanda? aoArrastar;
 
   @override
   State<CurvaEqArrastavel> createState() => _CurvaEqArrastavelState();
@@ -45,7 +48,7 @@ class _CurvaEqArrastavelState extends State<CurvaEqArrastavel> {
     if (i == null) return;
     final ultimo = (g.frequencia(local.dx), g.ganhoDaBanda(local.dy));
     _ultimo = ultimo;
-    widget.aoArrastar(i, ultimo.$1, ultimo.$2, arrastando: true);
+    widget.aoArrastar!(i, ultimo.$1, ultimo.$2, arrastando: true);
     setState(() {});
   }
 
@@ -56,7 +59,7 @@ class _CurvaEqArrastavelState extends State<CurvaEqArrastavel> {
       _ativa = null;
       _ultimo = null;
     });
-    if (i != null && ultimo != null) widget.aoArrastar(i, ultimo.$1, ultimo.$2, arrastando: false);
+    if (i != null && ultimo != null) widget.aoArrastar!(i, ultimo.$1, ultimo.$2, arrastando: false);
   }
 
   /// O ponto mais perto do toque, dentro do alcance do dedo; nulo fora dele.
@@ -75,6 +78,11 @@ class _CurvaEqArrastavelState extends State<CurvaEqArrastavel> {
         height: Medidas.alturaCurvaGlobalEq,
         child: LayoutBuilder(builder: (context, restricoes) {
           final tamanho = Size(restricoes.maxWidth, Medidas.alturaCurvaGlobalEq);
+          final desenho = CustomPaint(
+            size: tamanho,
+            painter: PintorGlobalEq(widget.bandas, cor: widget.cor, ativa: _ativa, ganhoGeral: widget.ganhoGeral),
+          );
+          if (widget.aoArrastar == null) return desenho;
           // arraste vertical e horizontal (não "pan"): assim o ponto vence o
           // rolar da tela, como os knobs; a posição inteira vale nos dois eixos
           return GestureDetector(
@@ -88,10 +96,7 @@ class _CurvaEqArrastavelState extends State<CurvaEqArrastavel> {
             onHorizontalDragUpdate: (d) => _arrastar(d.localPosition, tamanho),
             onHorizontalDragEnd: (_) => _soltar(),
             onHorizontalDragCancel: _soltar,
-            child: CustomPaint(
-              size: tamanho,
-              painter: PintorGlobalEq(widget.bandas, cor: widget.cor, ativa: _ativa, ganhoGeral: widget.ganhoGeral),
-            ),
+            child: desenho,
           );
         }),
       );

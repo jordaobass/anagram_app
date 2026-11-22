@@ -1,6 +1,7 @@
 // Knob grande: arraste (vertical ou horizontal), rodinha, setas do teclado;
 // segurar volta ao padrão; clicar no número embaixo dele abre o campo para
 // digitar o valor. Durante o arraste avisa "arrastando"; ao soltar, o valor final.
+// Sem [BotaoGiratorio.aoMudar] é só leitura: desenha o valor e nada o mexe.
 import 'package:flutter/gestures.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class BotaoGiratorio extends StatefulWidget {
     required this.valor,
     required this.cor,
     required this.tamanho,
-    required this.aoMudar,
+    this.aoMudar,
     this.rotulo,
     this.forma = FormaControle.knob,
     this.corChipValor,
@@ -46,7 +47,9 @@ class BotaoGiratorio extends StatefulWidget {
   final num valor;
   final Color cor;
   final double tamanho;
-  final AoMudarValor aoMudar;
+
+  /// Nulo = só leitura (os ajustes globais que a pedaleira não aplica ao som).
+  final AoMudarValor? aoMudar;
 
   @override
   State<BotaoGiratorio> createState() => _BotaoGiratorioState();
@@ -64,22 +67,25 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
     super.dispose();
   }
 
+  /// Só chamado nos gestos do controle editável.
+  void _mudar(num valor, {required bool arrastando}) => widget.aoMudar!(valor, arrastando: arrastando);
+
   void _arrastar(DragUpdateDetails d) {
     final passo = (d.delta.dx - d.delta.dy) / Medidas.arrasteFaixaInteira;
     setState(() => _fracaoArraste = (_fracao + passo).clamp(0.0, 1.0));
-    widget.aoMudar(widget.parametro.valorDe(_fracaoArraste!), arrastando: true);
+    _mudar(widget.parametro.valorDe(_fracaoArraste!), arrastando: true);
   }
 
   void _soltar() {
     final fracao = _fracaoArraste;
     setState(() => _fracaoArraste = null);
-    if (fracao != null) widget.aoMudar(widget.parametro.valorDe(fracao), arrastando: false);
+    if (fracao != null) _mudar(widget.parametro.valorDe(fracao), arrastando: false);
   }
 
   /// Segurar volta ao padrão, com Desfazer (que também vai ao vivo).
   void _voltarAoPadrao() {
     final anterior = widget.valor;
-    final aoMudar = widget.aoMudar;
+    final aoMudar = widget.aoMudar!;
     HapticFeedback.mediumImpact();
     aoMudar(widget.parametro.padrao, arrastando: false);
     final l = AppLocalizations.of(context);
@@ -91,7 +97,7 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
 
   Future<void> _digitar() async {
     final valor = await digitarValor(context, widget.parametro, widget.valor);
-    if (valor != null) widget.aoMudar(valor, arrastando: false);
+    if (valor != null) _mudar(valor, arrastando: false);
   }
 
   void _rodinha(PointerSignalEvent evento) {
@@ -101,7 +107,7 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
   /// O valor depois de um passo: nos discretos, sempre ao menos uma posição.
   num _valorMais(double quanto) => widget.parametro.valorDepoisDoPasso(widget.parametro.valorDe(_fracao), quanto);
 
-  void _passo(double quanto) => widget.aoMudar(_valorMais(quanto), arrastando: false);
+  void _passo(double quanto) => _mudar(_valorMais(quanto), arrastando: false);
 
   KeyEventResult _tecla(FocusNode _, KeyEvent evento) {
     if (evento is! KeyDownEvent && evento is! KeyRepeatEvent) return KeyEventResult.ignored;
@@ -123,6 +129,14 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
     final p = widget.parametro;
     final l = AppLocalizations.of(context);
     final texto = l.valorDe(p, p.valorDe(_fracao));
+    if (widget.aoMudar == null) {
+      return Semantics(
+        readOnly: true,
+        label: p.nome,
+        value: texto,
+        child: ExcludeSemantics(child: _corpo(context, texto)),
+      );
+    }
     return Semantics(
       slider: true,
       label: p.nome,
@@ -165,16 +179,20 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
             key: ValueKey('valor-${widget.parametro.simbolo}'),
             behavior: HitTestBehavior.opaque,
             onTap: _digitar,
-            child: widget.corChipValor == null ? _numero(texto, tema) : _chip(texto, tema, widget.corChipValor!),
+            child: _valor(texto, tema),
           ),
         ),
       );
 
+  Widget _valor(String texto, TextTheme tema) =>
+      widget.corChipValor == null ? _numero(texto, tema) : _chip(texto, tema, widget.corChipValor!);
+
+  /// Sublinhado pontilhado só quando tocar nele abre o campo de digitar.
   Widget _numero(String texto, TextTheme tema) => Text(texto,
       maxLines: 1,
       style: tema.titleMedium?.copyWith(
         fontFeatures: const [FontFeature.tabularFigures()],
-        decoration: TextDecoration.underline,
+        decoration: widget.aoMudar == null ? null : TextDecoration.underline,
         decorationStyle: TextDecorationStyle.dotted,
         decorationColor: Cores.textoSecundario,
       ));
@@ -215,7 +233,10 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
         RotuloParametro(parametro: widget.parametro, texto: widget.rotulo ?? widget.parametro.nome),
         const SizedBox(height: Espacos.xs),
         _desenho(),
-        _valorClicavel(context, texto, tema),
+        if (widget.aoMudar == null)
+          KeyedSubtree(key: ValueKey('valor-${widget.parametro.simbolo}'), child: _valor(texto, tema))
+        else
+          _valorClicavel(context, texto, tema),
       ]),
     );
   }
