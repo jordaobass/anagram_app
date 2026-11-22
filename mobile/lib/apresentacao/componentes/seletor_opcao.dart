@@ -7,6 +7,7 @@ import '../../l10n/app_localizations.dart';
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../tema/tokens.dart';
+import 'item_de_menu.dart';
 import 'dialogo_confirmar.dart';
 import 'botao_giratorio.dart' show AoMudarValor;
 
@@ -77,8 +78,8 @@ Future<int?> _menu(BuildContext context, DefinicaoParametro parametro, int atual
     constraints: BoxConstraints(minWidth: caixa.size.width),
     items: [
       for (var i = 0; i < parametro.opcoes.length; i++)
-        CheckedPopupMenuItem<int>(
-            key: ValueKey('opcao-${parametro.simbolo}-$i'), value: i, checked: i == atual, child: Text(parametro.opcoes[i])),
+        itemMarcado(i,
+            key: ValueKey('opcao-${parametro.simbolo}-$i'), rotulo: parametro.opcoes[i], marcado: i == atual),
     ],
   );
 }

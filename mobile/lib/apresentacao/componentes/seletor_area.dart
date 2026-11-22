@@ -79,18 +79,22 @@ class SeletorArea extends ConsumerWidget {
           DropdownMenuItem(
             key: ValueKey('area-${area.id}'),
             value: area.id,
-            child: Row(children: [
+            child: _noMenu(Row(children: [
               Expanded(child: _nome(l, area)),
               if (area.id == biblioteca.areas.ativa) const _EtiquetaAtiva(),
-            ]),
+            ])),
           ),
         if (comFabrica)
           DropdownMenuItem(
             key: const ValueKey('area-${PresetsDeFabrica.idArea}'),
             value: PresetsDeFabrica.idArea,
-            child: _fabrica(l),
+            child: _noMenu(_fabrica(l)),
           ),
       ];
+
+  /// A lista aberta no tipo de item de menu; o seletor fechado continua no
+  /// estilo dele (DECISOES UI12).
+  static Widget _noMenu(Widget item) => DefaultTextStyle.merge(style: Tipos.itemMenu, child: item);
 
   static Widget _nome(AppLocalizations l, AreaPresets area) =>
       Text(l.nomeDaArea(area), maxLines: 1, overflow: TextOverflow.ellipsis);

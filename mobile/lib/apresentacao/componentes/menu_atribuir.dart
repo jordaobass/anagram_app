@@ -46,18 +46,18 @@ PopupMenuItem<T> itemDeControle<T>(BuildContext context, T valor,
     String? chave}) {
   final l = AppLocalizations.of(context);
   final situacao = jaAqui ? l.ctlJaAqui : (controle == null ? l.ctlLivre : controle.nome);
-  final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.textoSecundario);
   return PopupMenuItem<T>(
     key: ValueKey(chave ?? 'atribuir-${valor is IdControle ? valor.chave : valor}'),
     value: valor,
     enabled: !jaAqui,
+    height: alturaItemDeMenu,
     child: LinhaDeMenu(
       icone: icone,
       ativo: !jaAqui,
       child: Row(children: [
         Expanded(child: Text(rotulo)),
         const SizedBox(width: Espacos.l),
-        Text(situacao, style: estilo),
+        Text(situacao, style: Tipos.detalheMenu),
       ]),
     ),
   );
