@@ -19,11 +19,17 @@ class DescricaoPreset {
   final DefinicaoPorUri definicaoDe;
   final CatalogoGabinetes gabinetes;
 
+  /// O preset aberto: o documento e em que pé ele está na tela.
   Map<String, dynamic> preset(EstadoEditor estado, DocumentoPreset documento) => {
-        'name': documento.nome,
         'slot': estado.slot?.rotulo,
         'unsaved': estado.naoSalvo,
         'live': estado.aoVivo,
+        ...conteudo(documento),
+      };
+
+  /// Só o que o arquivo do preset diz (serve também a um slot lido sem abrir).
+  Map<String, dynamic> conteudo(DocumentoPreset documento) => {
+        'name': documento.nome,
         'active_scene': documento.cenaAtiva,
         'scenes': [
           for (var cena = 1; cena <= 3; cena++) {'number': cena, 'name': documento.nomeDaCena(cena) ?? 'Scene $cena'},
