@@ -4,6 +4,7 @@
 // mudaria por baixo de um preset aberto (reconexão, troca de área) e o
 // "Salvar" gravaria o slot da área errada.
 import '../nucleo/ajustes/ajustes_pedaleira.dart';
+import '../nucleo/ajustes/modo_footswitches.dart';
 import '../nucleo/modelo/areas_presets.dart';
 import '../nucleo/modelo/conferencia_gravacao.dart';
 import '../nucleo/modelo/documento_preset.dart';
@@ -34,6 +35,10 @@ class RepositorioPedaleira {
 
   Future<Resultado<void>> gravarAjustesGlobais(Map<String, num> porChave) =>
       _proteger('gravar ${porChave.keys.join(', ')}', () => _api.gravarAjustesGlobais(porChave));
+
+  Future<Resultado<void>> gravarModoFootswitches(ModoFootswitches modo) => _proteger(
+      'gravar $chaveModoFootswitches=${modo.valor}',
+      () => _api.gravarAjustesGlobais({chaveModoFootswitches: modo.valor}));
 
   /// [area]: id da área ("user", "user-2"…); nulo = firmware sem áreas.
   Future<Resultado<List<ResumoSlot>>> listarSlots({String? area}) =>

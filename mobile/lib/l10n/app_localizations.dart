@@ -2628,6 +2628,54 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Ao abrir, o app consulta só o GitHub para saber qual é a última versão publicada. A consulta envia apenas a versão do app (no cabeçalho User-Agent); como em toda conexão, o GitHub vê o seu endereço IP. Desligado, o app não acessa a internet.'**
   String get versaoNovaConsultaTexto;
+
+  /// Rótulo do seletor do modo dos footswitches (ajuste global da pedaleira)
+  ///
+  /// In pt, this message translates to:
+  /// **'Footswitches'**
+  String get fmTitulo;
+
+  /// Nome do modo dos footswitches como o Darkglass Suite (P, STP, SCN); other = valor que o app não conhece
+  ///
+  /// In pt, this message translates to:
+  /// **'{modo, select, preset{PRESET} stomp{STOMP} scene{SCENE} other{—}}'**
+  String fmModo(String modo);
+
+  /// Leitor de tela do botão de um modo
+  ///
+  /// In pt, this message translates to:
+  /// **'Footswitches no modo {modo}'**
+  String fmSemantica(String modo);
+
+  /// Dica curta sob o seletor do modo
+  ///
+  /// In pt, this message translates to:
+  /// **'No modo Stomp, os footswitches seguem os controles da pedaleira deste preset. O modo vale para todos os presets.'**
+  String get fmDica;
+
+  /// A troca de modo foi recusada, não respondeu ou a releitura mostrou outro valor
+  ///
+  /// In pt, this message translates to:
+  /// **'A pedaleira não confirmou a troca de modo. O modo mostrado é o que ela tem agora.'**
+  String get fmErro;
+
+  /// O export_settings não trouxe a chave mode: o seletor fica desabilitado
+  ///
+  /// In pt, this message translates to:
+  /// **'Esta pedaleira não informa o modo dos footswitches.'**
+  String get fmIndisponivel;
+
+  /// Aviso no painel de Controles quando o modo não é Stomp
+  ///
+  /// In pt, this message translates to:
+  /// **'Os FOOT atribuídos só agem no modo Stomp; a pedaleira está em {modo}.'**
+  String fmAvisoControles(String modo);
+
+  /// Tooltip do selo desabilitado quando o valor de mode não é preset, stomp nem scene
+  ///
+  /// In pt, this message translates to:
+  /// **'A pedaleira está num modo que o app não conhece. Troque o modo na própria pedaleira.'**
+  String get fmDesconhecido;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

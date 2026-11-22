@@ -29,6 +29,15 @@ abstract final class Cores {
   static const ledDesligado = Color(0xFF6B7077);
   static const erro = Color(0xFFFF7A66);
 
+  /// O modo dos footswitches aceso nas cores dos LEDs da própria Anagram
+  /// (pedido do dono, DECISOES FM8): roxo no Stomp, branco no Preset e
+  /// azul-claro no Scene. EXCEÇÃO intencional à regra do âmbar só para ação e
+  /// seleção. O texto [sobreModo] passa de 4,5:1 sobre as três (teste).
+  static const modoStomp = Color(0xFF9B6CF0);
+  static const modoPreset = Color(0xFFFFFFFF);
+  static const modoScene = Color(0xFF6EC6F5);
+  static const sobreModo = Color(0xFF121014);
+
   /// O caminho da linha paralela: amarelo do Split até o fim da linha 2 e
   /// verde-água claro na volta ao Merge (pedido do usuário). O amarelo é mais
   /// claro e frio que o âmbar de ação ([tally]) para não parecer seleção; o
@@ -117,6 +126,12 @@ abstract final class Raios {
 
 abstract final class Medidas {
   static const double alvoMinimo = 48;
+
+  /// Pílula do modo dos footswitches: o desenho é baixo, o alvo continua de
+  /// [alvoMinimo]. Abaixo de [larguraCenasComModo] na linha das cenas, as
+  /// pílulas descem para uma linha fina sob elas.
+  static const double alturaPilulaModo = 26;
+  static const double larguraCenasComModo = 560;
   static const double filete = 1;
   static const double contornoSelecao = 2;
   static const double fitaCategoria = 4;

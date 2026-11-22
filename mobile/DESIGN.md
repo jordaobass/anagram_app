@@ -275,6 +275,13 @@ Táteis e diretos, sempre ≥ 48dp, texto em Barlow Condensed caixa alta.
 ### Cenas
 Três botões de largura igual, altura 56px. Inativo: `painel-elevado` com borda de filete. Ativo: preenchido em âmbar. Número em estêncil + nome em caixa alta; cena sem nome mostra só o número e "CENA" (nunca "1 CENA 1").
 
+### Modo dos footswitches
+Na linha das cenas, à direita dos três botões: PRESET / STOMP / SCENE em pílulas pequenas lado a lado (desenho de 26px de altura, raio inteiro, label-small; alvo de toque de 48dp por pílula — empilhadas, três alvos de 48dp não caberiam na altura de 56px de uma cena). Abaixo de 560px de largura na linha (celular, janela estreita), as pílulas descem para uma linha fina logo abaixo das cenas, alinhadas à direita.
+
+**Exceção intencional à regra do âmbar** (pedido do dono, DECISOES FM8): a pílula do modo atual acende na cor do LED da própria Anagram — `modo-preset` branco (#FFFFFF), `modo-stomp` roxo (#9B6CF0), `modo-scene` azul-claro (#6EC6F5) —, com texto `sobre-modo` (#121014), acima de 4,5:1 nas três (teste). As apagadas têm só o contorno de filete e texto `texto-secundario`. Modo desconhecido ou não informado: nenhuma acesa, todas desabilitadas, e o tooltip diz por quê; com modo conhecido, o tooltip dá a dica do Stomp.
+
+Movimento: ao trocar, a cor acende na nova e apaga na antiga (220ms, ease-out); quando a releitura confirma, a nova dá um pulso de brilho na própria cor (420ms); recusa volta ao valor real com um tremor horizontal de 3px que amortece, sem cor, e a frase de erro sob as cenas. Com "reduzir movimento" do sistema, a troca é seca e não há pulso nem tremor. Nas Configurações o modo é um cartão "Footswitches" com três botões iguais aos de cena.
+
 ### Fita do Preset (assinatura)
 Slot em estêncil de 40px à esquerda (no celular, com "PRESETS ▾" embaixo: tocar abre a lista), seguido da fita gaffer creme com o nome a marcador, um lápis discreto em alumínio (tocar a fita renomeia) e, se houver edição não salva, o selo vermelho "NÃO SALVO" no fim da fita. Os avisos sob a fita (ao vivo desligado, audição sem USB MIDI) usam `erro`, não âmbar.
 

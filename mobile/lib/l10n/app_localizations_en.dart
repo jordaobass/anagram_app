@@ -1437,4 +1437,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get versaoNovaConsultaTexto => 'On launch the app asks only GitHub which version is the latest one published. The request sends only the app\'s version (in the User-Agent header); as with any connection, GitHub sees your IP address. When off, the app does not go online.';
+
+  @override
+  String get fmTitulo => 'Footswitches';
+
+  @override
+  String fmModo(String modo) {
+    String _temp0 = intl.Intl.selectLogic(
+      modo,
+      {
+        'preset': 'PRESET',
+        'stomp': 'STOMP',
+        'scene': 'SCENE',
+        'other': '—',
+      },
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fmSemantica(String modo) {
+    return 'Footswitches in $modo mode';
+  }
+
+  @override
+  String get fmDica => 'In Stomp mode, the footswitches follow this preset\'s pedal controls. The mode applies to every preset.';
+
+  @override
+  String get fmErro => 'The pedal did not confirm the mode change. The mode shown is the one it has now.';
+
+  @override
+  String get fmIndisponivel => 'This pedal does not report the footswitch mode.';
+
+  @override
+  String fmAvisoControles(String modo) {
+    return 'Assigned FOOTs only act in Stomp mode; the pedal is in $modo.';
+  }
+
+  @override
+  String get fmDesconhecido => 'The pedal is in a mode this app does not know. Change the mode on the pedal itself.';
 }

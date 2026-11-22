@@ -421,5 +421,13 @@
   "recarregar": "RECARGAR",
   "pausaUsbTitulo": "Pausa entre paquetes USB",
   "pausaUsbTexto": "Menor = cambios en vivo más rápidos; auméntala si el pedal deja de responder. Auto usa el valor por defecto de este ordenador.",
-  "versaoNovaConsultaTexto": "Al abrir, la app consulta solo GitHub para saber cuál es la última versión publicada. La consulta envía solo la versión de la app (en la cabecera User-Agent); como en toda conexión, GitHub ve tu dirección IP. Desactivada, la app no se conecta a internet."
+  "versaoNovaConsultaTexto": "Al abrir, la app consulta solo GitHub para saber cuál es la última versión publicada. La consulta envía solo la versión de la app (en la cabecera User-Agent); como en toda conexión, GitHub ve tu dirección IP. Desactivada, la app no se conecta a internet.",
+  "fmTitulo": "Footswitches",
+  "fmModo": "{modo, select, preset{PRESET} stomp{STOMP} scene{SCENE} other{—}}",
+  "fmSemantica": "Footswitches en modo {modo}",
+  "fmDica": "En el modo Stomp, los footswitches siguen los controles del pedal de este preset. El modo vale para todos los presets.",
+  "fmErro": "El pedal no confirmó el cambio de modo. El modo mostrado es el que tiene ahora.",
+  "fmIndisponivel": "Este pedal no informa el modo de los footswitches.",
+  "fmAvisoControles": "Los FOOT asignados solo actúan en el modo Stomp; el pedal está en {modo}.",
+  "fmDesconhecido": "El pedal está en un modo que la app no conoce. Cambia el modo en el propio pedal."
 }
