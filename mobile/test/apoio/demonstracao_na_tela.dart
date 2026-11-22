@@ -1,5 +1,7 @@
 // Preparo comum dos testes de interface: tela do tamanho pedido, app montado
 // e, quando preciso, já conectado à pedaleira de demonstração.
+import 'dart:async';
+
 import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
@@ -10,8 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
+import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
+import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 
 import 'app_de_teste.dart';
+import 'fixtures.dart';
 import 'versao_falsa.dart';
 
 /// Tamanho lógico de um notebook comum, o padrão dos testes de interface.
@@ -100,4 +106,16 @@ ScrollPosition _rolagemDoEditor(WidgetTester tester) => tester
 Future<void> tocarNoSlot(WidgetTester tester, String rotulo) async {
   await tester.tap(find.byKey(ValueKey('slot-$rotulo')));
   await tester.pumpAndSettle();
+}
+
+/// Demonstração com o 01A aberto e o bloco [uri] posto em [casa]: o painel
+/// dele fica na tela, selecionado.
+Future<ProviderContainer> abrirComBloco(WidgetTester tester, String uri,
+    {Size tamanho = const Size(1440, 2000), PosicaoBloco casa = const PosicaoBloco(1, 4)}) async {
+  final container = await abrirDemonstracao(tester, tamanho: tamanho);
+  unawaited(container.read(editorProvider.notifier).abrirSlot(SlotPreset.doRotulo('01A')));
+  await tester.pumpAndSettle();
+  unawaited(container.read(editorProvider.notifier).adicionarBloco(casa, lerCatalogo().definicao(uri)));
+  await tester.pumpAndSettle();
+  return container;
 }

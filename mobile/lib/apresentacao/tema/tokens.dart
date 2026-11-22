@@ -68,6 +68,12 @@ abstract final class Cores {
         FamiliaBloco.utilitario => const Color(0xFF8D949C),
       };
 
+  /// Cor de família quase sem matiz (utilitário, gabinete): preenchida num
+  /// botão, parece o cinza de desabilitado. Quem pinta seleção com a cor da
+  /// família troca, nesse caso, para o contorno âmbar (DECISOES UI1).
+  static bool pareceDesabilitada(Color cor) => HSLColor.fromColor(cor).saturation < _saturacaoMinimaDeSelecao;
+  static const _saturacaoMinimaDeSelecao = 0.4;
+
   /// As três bandas do Ignissor e do Entropia, na faixa de frequência e no
   /// topo da coluna: matizes distantes entre si e do âmbar de ação.
   static Color daBanda(BandaMultibanda banda, [PaletaBandas paleta = PaletaBandas.ignissor]) => switch ((paleta, banda)) {
@@ -319,6 +325,9 @@ abstract final class Medidas {
   static const double pontoCompasso = 10;
   static const double pontoCompassoAcento = 16;
   static const double larguraAcaoUtilitario = 360;
+
+  /// Check da opção marcada em cor neutra (ver [Cores.pareceDesabilitada]).
+  static const double iconeMarcaOpcao = 18;
 
   /// Cartão de um controle da pedaleira (FOOT, POT, EXP) e os knobs de
   /// mínimo e máximo de cada alvo no diálogo do controle.
