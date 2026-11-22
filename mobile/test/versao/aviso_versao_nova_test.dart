@@ -17,8 +17,12 @@ final _abridorFalso = abridorDeLinkProvider.overrideWithValue((endereco) async {
   return true;
 });
 
+/// Abre as Configurações já rolada até a seção de versão nova.
 Future<void> _abrirConfiguracoes(WidgetTester tester) async {
   await tester.tap(find.byKey(const ValueKey('botao-configuracoes')));
+  await tester.pumpAndSettle();
+  await tester.scrollUntilVisible(find.byKey(const ValueKey('versao-nova-verificar')), 200,
+      scrollable: find.byType(Scrollable).first);
   await tester.pumpAndSettle();
 }
 

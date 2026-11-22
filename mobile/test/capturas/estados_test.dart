@@ -175,6 +175,8 @@ void main() {
     // no celular o Sobre fica dentro das Configurações (a barra não tem lugar)
     await tester.tap(find.byKey(const ValueKey('botao-configuracoes')));
     await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.byKey(const ValueKey('abrir-sobre')), 200,
+        scrollable: find.byType(Scrollable).first);
     await tester.tap(find.byKey(const ValueKey('abrir-sobre')));
     await tester.pumpAndSettle();
     await foto(tester, '14-sobre-diagnostico');

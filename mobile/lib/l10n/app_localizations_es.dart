@@ -1428,4 +1428,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get recarregar => 'RECARGAR';
+
+  @override
+  String get pausaUsbTitulo => 'Pausa entre paquetes USB';
+
+  @override
+  String get pausaUsbTexto => 'Menor = cambios en vivo más rápidos; auméntala si el pedal deja de responder. Auto usa el valor por defecto de este ordenador.';
 }

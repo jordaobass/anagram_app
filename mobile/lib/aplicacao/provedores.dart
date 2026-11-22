@@ -1,5 +1,6 @@
 // Provedores de infraestrutura: catálogo, presets de demonstração e
 // fábrica de transporte. Os testes sobrepõem estes.
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../dados/arquivos_preset.dart';
+import '../dados/preferencias_pausa.dart';
 import '../nucleo/catalogo/catalogo_blocos.dart';
 import '../nucleo/catalogo/definicao_bloco.dart';
 import '../nucleo/catalogo/explicacoes_parametros.dart';
@@ -106,14 +108,23 @@ final relogioDoToqueProvider = Provider<Duration Function()>((ref) {
   return () => cronometro.elapsed;
 });
 
+final preferenciasPausaProvider = Provider<PreferenciasPausa>((ref) => PreferenciasPausaLocais());
+
+/// A pausa guardada ao abrir o app; o main lê antes da primeira tela.
+final pausaSalvaProvider = Provider<Duration?>((ref) => null);
+
 /// Pausa entre relatórios escolhida pela pessoa (null = a sugerida pelo transporte).
 final pausaRelatoriosProvider = NotifierProvider<PausaRelatorios, Duration?>(PausaRelatorios.new);
 
 class PausaRelatorios extends Notifier<Duration?> {
   @override
-  Duration? build() => null;
+  Duration? build() => ref.read(pausaSalvaProvider);
 
-  void definir(Duration? pausa) => state = pausa;
+  /// Vale na próxima mensagem e fica guardada para a próxima abertura.
+  void definir(Duration? pausa) {
+    state = pausa;
+    unawaited(ref.read(preferenciasPausaProvider).gravar(pausa?.inMilliseconds));
+  }
 }
 
 /// A demonstração simula também o USB MIDI (os testes trocam: sem MIDI, MIDI lento).

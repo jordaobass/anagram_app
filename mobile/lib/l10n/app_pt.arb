@@ -1282,5 +1282,7 @@
       }
     }
   },
-  "recarregar": "RECARREGAR"
+  "recarregar": "RECARREGAR",
+  "pausaUsbTitulo": "Pausa entre pacotes USB",
+  "pausaUsbTexto": "Menor = ao vivo mais rápido; aumente se a pedaleira deixar de responder. Auto usa o padrão deste computador."
 }

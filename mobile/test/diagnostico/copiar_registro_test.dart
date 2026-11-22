@@ -29,7 +29,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final copiar = find.byKey(const ValueKey('copiar-registro'));
-    await tester.scrollUntilVisible(copiar, 200, scrollable: find.byType(Scrollable).last);
+    await tester.scrollUntilVisible(copiar, 200, scrollable: find.byType(Scrollable).first);
     expect(find.textContaining(r'Anagram App\logs\anagram-app.log'), findsOneWidget);
     await tester.tap(copiar);
     await tester.pumpAndSettle();

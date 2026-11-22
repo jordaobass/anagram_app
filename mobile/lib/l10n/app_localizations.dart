@@ -2610,6 +2610,18 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'RECARREGAR'**
   String get recarregar;
+
+  /// No description provided for @pausaUsbTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Pausa entre pacotes USB'**
+  String get pausaUsbTitulo;
+
+  /// No description provided for @pausaUsbTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'Menor = ao vivo mais rápido; aumente se a pedaleira deixar de responder. Auto usa o padrão deste computador.'**
+  String get pausaUsbTexto;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

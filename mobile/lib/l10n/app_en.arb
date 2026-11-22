@@ -418,5 +418,7 @@
   "uiRecarregarDaPedaleira": "Reload from pedal",
   "recarregarTitulo": "Reload {slot} from the pedal?",
   "recarregarTexto": "The unsaved changes to \"{nome}\" are lost and the editor shows what is saved in the slot.",
-  "recarregar": "RELOAD"
+  "recarregar": "RELOAD",
+  "pausaUsbTitulo": "Pause between USB packets",
+  "pausaUsbTexto": "Lower = faster live changes; raise it if the pedal stops responding. Auto uses this computer's default."
 }

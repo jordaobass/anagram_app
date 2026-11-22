@@ -418,5 +418,7 @@
   "uiRecarregarDaPedaleira": "Recargar del pedal",
   "recarregarTitulo": "¿Recargar {slot} del pedal?",
   "recarregarTexto": "Los cambios sin guardar de \"{nome}\" se pierden y el editor muestra lo que está guardado en el slot.",
-  "recarregar": "RECARGAR"
+  "recarregar": "RECARGAR",
+  "pausaUsbTitulo": "Pausa entre paquetes USB",
+  "pausaUsbTexto": "Menor = cambios en vivo más rápidos; auméntala si el pedal deja de responder. Auto usa el valor por defecto de este ordenador."
 }
