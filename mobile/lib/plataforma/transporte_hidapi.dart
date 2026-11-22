@@ -49,8 +49,11 @@ class TransporteHidapi with FluxosDoTransporte implements TransporteAnagram {
   HidApi? _api;
   _SessaoLeitura? _sessao;
 
+  /// Sem pausa: na bancada (Windows, fw 1.19.2.24, DECISOES SV3) 0 ms
+  /// respondeu em todos os envios e levou um preset de 50 relatórios de
+  /// ~1,13 s para ~0,38 s. Quem precisar pode voltar a 10 ms em Configurações.
   @override
-  Duration get pausaSugerida => const Duration(milliseconds: 10);
+  Duration get pausaSugerida => Duration.zero;
 
   @override
   String get descricao => 'USB (hidapi)';

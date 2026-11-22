@@ -1,8 +1,9 @@
 // Pausa entre pacotes (relatórios) USB, em Configurações › Pedaleira. "Auto"
-// usa a do transporte (0 ms no Mac, 10 ms nos outros). Menor deixa o ao vivo
-// mais rápido; maior ajuda se a pedaleira deixar de responder. A escolha fica
-// guardada (preferencias_pausa.dart) e aparece também sem pedaleira: é quando
-// ela não responde que mais se precisa mudar isto.
+// usa a do transporte (0 ms no Mac, no Windows e no Linux; 10 ms no Android e
+// no navegador). Menor deixa o ao vivo mais rápido; maior ajuda se a
+// pedaleira deixar de responder. A escolha fica guardada
+// (preferencias_pausa.dart) e aparece também sem pedaleira: é quando ela não
+// responde que mais se precisa mudar isto.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
