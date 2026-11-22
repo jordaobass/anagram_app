@@ -152,9 +152,13 @@ preset and adjusts the blocks; every change is **heard immediately**, shows up o
 > **The AI can't hear the sound**: it adjusts based on what you describe, and you tell it whether it
 > got better. Small models tend to describe what they would do instead of calling the tools; prefer a
 > model with good tool calling. Tools: `get_current_preset`, `list_block_types`, `get_block_guide`,
-> `get_tone_building_guide`, `get_tone_recipe`, `set_parameter`, `set_block_enabled`, `select_scene`,
-> `add_block`, `move_block`, `remove_block`, `choose_cabinet`, `undo`, `save_preset`,
-> `get_global_settings` (read only) and `set_global_setting` (footswitch mode only).
+> `get_tone_building_guide`, `get_tone_recipe`, `set_parameter` (with `scope`: only the active scene or
+> all scenes), `set_block_enabled`, `select_scene`, `add_block`, `move_block`, `remove_block`,
+> `choose_cabinet`, `get_controls`, `assign_control` and `release_control` (footswitches, knobs and
+> expression pedal; footswitches follow them in Stomp mode), `rename` (preset or control),
+> `list_slots`, `read_slot` (without opening), `open_slot` (refuses over unsaved edits unless told to
+> discard them), `undo`, `save_preset` (always confirmed by you in the app), `get_global_settings`
+> (read only) and `set_global_setting` (footswitch mode only).
 
 **The app teaches the AI the pedal.** It ships a tone-building knowledge base that the assistant reads
 through the same connection: what each of the 109 factory blocks does (role, key parameters with
