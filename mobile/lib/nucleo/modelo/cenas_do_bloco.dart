@@ -4,6 +4,21 @@
 // o bloco tem sempre exatamente os valores da cena ativa. Por isso trocar de
 // cena guarda a foto da cena que sai e carrega no bloco a da que entra.
 import 'json_util.dart';
+import 'preset_bruto.dart';
+
+/// Onde vale a edição de um parâmetro com uma cena ativa.
+enum EscopoParametro {
+  /// A regra do knob da tela (DECISOES C1): se a cena ativa já tem valor
+  /// próprio, muda só nela; senão muda o bloco e vale para todas as cenas.
+  comoNoKnob,
+
+  /// Só a cena ativa muda: as outras cenas que seguiam o bloco ganham a foto
+  /// do valor que tinham, para não mudarem junto (como [fixarLigaNasOutrasCenas]).
+  soNaCena,
+
+  /// O mesmo valor no bloco e em toda foto que registra o parâmetro.
+  todasAsCenas,
+}
 
 /// Guarda na foto da cena [cena] o estado atual do bloco, só no que a foto
 /// já registra: o que ela não registra segue o bloco (e toda edição de um
@@ -28,6 +43,36 @@ void fixarLigaNasOutrasCenas(Map<String, dynamic> bloco, int ativa) {
     final foto = cenas.putIfAbsent('$cena', () => <String, dynamic>{'parameters': <dynamic>[]}) as Map<String, dynamic>;
     foto.putIfAbsent('enabled', () => bloco['enabled'] ?? true);
   }
+}
+
+/// Antes de um parâmetro mudar só na cena ativa, as outras cenas sem registro
+/// dele recebem o valor que tinham ([valorAntes], o do bloco ou o padrão do
+/// catálogo quando o bloco não o guarda), para não mudarem junto.
+void fixarValorNasOutrasCenas(Map<String, dynamic> bloco, int ativa, String simbolo, num valorAntes) {
+  final cenas = bloco.putIfAbsent('scenes', () => <String, dynamic>{}) as Map<String, dynamic>;
+  for (final cena in [1, 2, 3].where((c) => c != ativa)) {
+    final foto = cenas.putIfAbsent('$cena', () => <String, dynamic>{'parameters': <dynamic>[]}) as Map<String, dynamic>;
+    if (!_registra(foto, simbolo)) _gravarNaCena(foto, simbolo, valorAntes);
+  }
+}
+
+/// Grava [valor] na foto da cena [cena], criando a foto e o registro se faltarem.
+void gravarNaFotoDaCena(Map<String, dynamic> bloco, int cena, String simbolo, num valor) {
+  final cenas = bloco.putIfAbsent('scenes', () => <String, dynamic>{}) as Map<String, dynamic>;
+  final foto = cenas.putIfAbsent('$cena', () => <String, dynamic>{'parameters': <dynamic>[]}) as Map<String, dynamic>;
+  _gravarNaCena(foto, simbolo, valor);
+}
+
+/// Muda [simbolo] em toda foto que já o registra (as que não registram seguem o bloco).
+void mudarEmTodasAsFotos(Map<String, dynamic> bloco, String simbolo, num valor) {
+  for (final cena in [1, 2, 3]) {
+    mudarSobreposicaoDaCena(bloco, cena, simbolo, valor);
+  }
+}
+
+bool _registra(Map<String, dynamic> foto, String simbolo) {
+  final lista = foto['parameters'];
+  return lista is List && lista.whereType<Map<String, dynamic>>().any((item) => item['symbol'] == simbolo);
 }
 
 /// Um valor que varia entre as cenas, editado na cena ativa, vai para a foto

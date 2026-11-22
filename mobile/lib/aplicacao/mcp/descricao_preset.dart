@@ -66,7 +66,19 @@ class DescricaoPreset {
     if (ajustaveis.isEmpty) {
       return [for (final s in bloco.simbolosGuardados) {'symbol': s, 'value': bloco.valorNaCena(s, cena)}];
     }
-    return [for (final p in ajustaveis) parametro(p, bloco.valorNaCena(p.simbolo, cena) ?? p.padrao)];
+    return [
+      for (final p in ajustaveis) {...parametro(p, bloco.valorNaCena(p.simbolo, cena) ?? p.padrao), ..._porCena(bloco, p)},
+    ];
+  }
+
+  /// Parâmetro com valor próprio em alguma cena: o valor de cada uma, para a
+  /// IA ver o que difere sem trocar de cena (sem registro, vale o do bloco).
+  static Map<String, dynamic> _porCena(BlocoPreset bloco, DefinicaoParametro p) {
+    final cenas = [1, 2, 3];
+    if (cenas.every((c) => bloco.sobreposicaoDaCena(p.simbolo, c) == null)) return const {};
+    return {
+      'scene_values': {for (final c in cenas) '$c': bloco.valorNaCena(p.simbolo, c) ?? p.padrao},
+    };
   }
 
   static Map<String, dynamic> parametro(DefinicaoParametro p, num valor) => {

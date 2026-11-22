@@ -3,6 +3,7 @@
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/mcp/ferramenta_mcp.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
+import '../../nucleo/modelo/cenas_do_bloco.dart';
 import 'descricao_preset.dart';
 import 'sessao_mcp.dart';
 
@@ -16,8 +17,12 @@ class MudarParametro extends FerramentaMcp {
   @override
   String get descricao => 'Change one parameter of a block; it is heard immediately (not saved). The value is a '
       'number in the parameter unit, or an option label for option parameters, or true/false for toggles. '
-      'Out-of-range values are clamped and the applied value is returned. Change 2-4 parameters, then ask '
-      'the player how it sounds before going on; you cannot hear the result.';
+      'Out-of-range values are clamped and the applied value is returned. Scenes: by default (no "scope") it '
+      'works like turning the knob in the app: if the parameter already has its own value in the active scene, '
+      'only that scene changes; otherwise the change reaches every scene. Use scope "scene" to change ONLY the '
+      'active scene (the others keep what they had), or "all_scenes" to set the same value in all three. The '
+      'result says which scope was applied. Change 2-4 parameters, then ask the player how it sounds before '
+      'going on; you cannot hear the result.';
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto({
@@ -27,30 +32,55 @@ class MudarParametro extends FerramentaMcp {
           'type': ['number', 'string', 'boolean'],
           'description': 'New value: number, option label, or true/false.',
         },
+        'scope': {
+          'type': 'string',
+          'enum': [for (final e in _escopos.keys) e],
+          'description': 'Omit to behave like the app knob. "scene" = only the active scene; '
+              '"all_scenes" = the same value in every scene.',
+        },
       }, obrigatorias: const ['row', 'column', 'parameter', 'value']);
 
   @override
   Future<ResultadoFerramenta> executar(Map<String, dynamic> argumentos) async {
     final bloco = sessao.bloco(argumentos);
     final definicao = sessao.definicao(bloco.uri);
-    final parametro = _parametro(definicao, bloco, argumentos.textoObrigatorio('parameter'));
+    final parametro = parametroDoBloco(definicao, bloco, argumentos.textoObrigatorio('parameter'));
     final aplicado = parametro.limitar(valorPedido(parametro, argumentos['value']));
-    await sessao.mudar('${definicao.nome}: ${parametro.nome} = ${DescricaoPreset.exibir(parametro, aplicado)}', () async {
-      sessao.editor.alterarParametro(parametro.simbolo, aplicado,
-          arrastando: false, nome: parametro.nome, posicao: bloco.posicao);
-    });
+    final escopo = _escopo(argumentos['scope']);
+    // a mesma regra do knob (comParametro), esperando o envio ao vivo: quando
+    // a resposta volta, o valor já está soando
+    final editado = sessao.presetAberto().comParametro(bloco.posicao, parametro.simbolo, aplicado,
+        nomeExibicao: parametro.nome, escopo: escopo, valorAntes: parametro.padrao);
+    await sessao.mudar('${definicao.nome}: ${parametro.nome} = ${DescricaoPreset.exibir(parametro, aplicado)}',
+        () => sessao.editor.aplicarDocumento(editado));
     return ResultadoFerramenta.dados({
       'block': DescricaoPreset.nomeDoBloco(definicao),
       'parameter': parametro.simbolo,
       'applied': aplicado,
       'display': DescricaoPreset.exibir(parametro, aplicado),
       'clamped': argumentos['value'] is num && argumentos['value'] != aplicado,
+      'scope': _escopoAplicado(escopo, bloco.posicao, parametro.simbolo),
     });
+  }
+
+  static const _escopos = {'scene': EscopoParametro.soNaCena, 'all_scenes': EscopoParametro.todasAsCenas};
+
+  static EscopoParametro _escopo(Object? pedido) {
+    if (pedido == null) return EscopoParametro.comoNoKnob;
+    return _escopos[pedido] ?? (throw const RecusaFerramenta('"scope" must be "scene" or "all_scenes" (or omitted).'));
+  }
+
+  /// Na regra do knob, vale só na cena quando a cena ativa ficou com valor próprio.
+  String _escopoAplicado(EscopoParametro escopo, PosicaoBloco posicao, String simbolo) {
+    if (escopo != EscopoParametro.comoNoKnob) return _escopos.entries.firstWhere((e) => e.value == escopo).key;
+    final documento = sessao.presetAberto();
+    final soNaCena = documento.bloco(posicao)?.sobreposicaoDaCena(simbolo, documento.cenaAtiva) != null;
+    return soNaCena ? 'scene' : 'all_scenes';
   }
 
   /// Pelo símbolo ou pelo nome, sem caixa; bloco fora do catálogo aceita os
   /// símbolos que o preset guarda, sem faixa.
-  static DefinicaoParametro _parametro(DefinicaoBloco definicao, BlocoPreset bloco, String pedido) {
+  static DefinicaoParametro parametroDoBloco(DefinicaoBloco definicao, BlocoPreset bloco, String pedido) {
     final alvo = pedido.toLowerCase();
     for (final p in DescricaoPreset.parametrosAjustaveis(definicao)) {
       if (p.simbolo.toLowerCase() == alvo || p.nome.toLowerCase() == alvo) return p;

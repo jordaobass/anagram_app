@@ -145,17 +145,30 @@ class DocumentoPreset {
         cena['enabled'] = habilitado;
       });
 
-  /// Muda um parâmetro no bloco (o que soa) e, se a cena ativa tem valor
-  /// próprio para ele, também na foto dela; as outras cenas não mudam.
+  /// Muda um parâmetro no bloco (o que soa) e nas fotos de cena conforme o
+  /// [escopo]. O padrão é a regra do knob (DECISOES C1): se a cena ativa tem
+  /// valor próprio para ele, muda também na foto dela; as outras cenas não
+  /// mudam. Em [EscopoParametro.soNaCena], [valorAntes] é o valor que as outras
+  /// cenas sem registro tinham (o padrão do catálogo, se o bloco não o guarda).
   DocumentoPreset comParametro(
     PosicaoBloco posicao,
     String simbolo,
     num valor, {
     String? nomeExibicao,
+    EscopoParametro escopo = EscopoParametro.comoNoKnob,
+    num? valorAntes,
   }) =>
       _editarBloco(posicao, (bloco) {
-        if (!mudarSobreposicaoDaCena(bloco, cenaAtiva, simbolo, valor)) {
-          gravarNaCenaAtiva(bloco, cenaAtiva, simbolo, valor);
+        switch (escopo) {
+          case EscopoParametro.comoNoKnob:
+            if (!mudarSobreposicaoDaCena(bloco, cenaAtiva, simbolo, valor)) {
+              gravarNaCenaAtiva(bloco, cenaAtiva, simbolo, valor);
+            }
+          case EscopoParametro.soNaCena:
+            fixarValorNasOutrasCenas(bloco, cenaAtiva, simbolo, valorNoBloco(bloco, simbolo) ?? valorAntes ?? valor);
+            gravarNaFotoDaCena(bloco, cenaAtiva, simbolo, valor);
+          case EscopoParametro.todasAsCenas:
+            mudarEmTodasAsFotos(bloco, simbolo, valor);
         }
         mudarValorBase(bloco, simbolo, valor, nomeExibicao ?? simbolo);
       });
