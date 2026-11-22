@@ -1372,15 +1372,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get utTreino => 'Práctica';
 
   @override
-  String get utDisparar => 'Disparar';
-
-  @override
-  String get utDispararSemAoVivo => 'Activa EN VIVO para disparar desde aquí.';
-
-  @override
-  String get utGestosAcao => 'Un toque empieza (con intro) o hace un redoble; dos toques rápidos paran; mantener 1 s pasa a la siguiente parte. Aquí, cada DISPARAR es un toque.';
-
-  @override
   String get utEstadoNoVisor => 'Si la batería está tocando o parada, solo lo muestra la pantalla del pedal.';
 
   @override
@@ -1552,4 +1543,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get salvarReleituraDiferente => 'la pedalera confirmó, pero el slot releído es distinto de lo enviado. La edición sigue en pantalla; revisa el slot y guarda de nuevo.';
+
+  @override
+  String get utAcaoChave => 'En la app, este interruptor es el Action del pedal. Según el manual del plugin: activarlo empieza el ritmo con una introducción; con el ritmo sonando, un nuevo accionamiento hace un redoble; un accionamiento doble lo detiene; mantenerlo pasa a la siguiente parte. Lo que toca la batería en cada caso lo decide el plugin.';
 }

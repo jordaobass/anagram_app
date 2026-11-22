@@ -1,11 +1,9 @@
 // Os controles próprios dos painéis da bateria e do metrônomo: a fileira de
-// botões (o compasso, com os tempos desenhados), o DISPARAR do Action e o
-// BATER do tap tempo. Todo valor gravado passa pelo ControleNoPainel.alterar,
+// botões (o compasso, com os tempos desenhados) e o BATER do tap tempo. Todo valor gravado passa pelo ControleNoPainel.alterar,
 // o mesmo caminho dos knobs (ao vivo, cena, desfazer, "não salvo").
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/provedores.dart';
 import '../../l10n/app_localizations.dart';
 import '../../nucleo/catalogo/arranjo_utilitario.dart';
@@ -89,33 +87,6 @@ class PontosDoCompasso extends StatelessWidget {
         border: Border.all(color: acento ? cor : Cores.aluminio, width: Medidas.contornoSelecao),
       ),
     );
-  }
-}
-
-/// O DISPARAR do Action: um toque ao vivo (1 e logo 0) que não entra no
-/// preset. Sem ao vivo não há o que tocar, e o botão diz por quê.
-class BotaoPulso extends ConsumerWidget {
-  const BotaoPulso({super.key, required this.parametro, required this.bloco});
-
-  final DefinicaoParametro parametro;
-  final BlocoPreset bloco;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context);
-    final aoVivo = ref.watch(editorProvider.select((e) => e.aoVivo));
-    final editor = ref.read(editorProvider.notifier);
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
-      // um toque ao vivo, não a ação principal da tela: contorno, sem âmbar
-      OutlinedButton(
-        key: ValueKey('pulso-${parametro.simbolo}'),
-        onPressed: aoVivo ? () => editor.pulsar(bloco.posicao, parametro.simbolo) : null,
-        style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(Medidas.alvoMinimo)),
-        child: Text(l.utDisparar.toUpperCase()),
-      ),
-      const SizedBox(height: Espacos.s),
-      notaDoCartao(context, aoVivo ? l.utGestosAcao : l.utDispararSemAoVivo),
-    ]);
   }
 }
 

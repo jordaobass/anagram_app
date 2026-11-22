@@ -403,9 +403,6 @@
   "utAcao": "Acción",
   "utMetronomo": "Metrónomo",
   "utTreino": "Práctica",
-  "utDisparar": "Disparar",
-  "utDispararSemAoVivo": "Activa EN VIVO para disparar desde aquí.",
-  "utGestosAcao": "Un toque empieza (con intro) o hace un redoble; dos toques rápidos paran; mantener 1 s pasa a la siguiente parte. Aquí, cada DISPARAR es un toque.",
   "utEstadoNoVisor": "Si la batería está tocando o parada, solo lo muestra la pantalla del pedal.",
   "utBater": "Marcar",
   "utBaterSoNoFixo": "Marcar el tempo solo funciona en el modo Fixed Tempo.",
@@ -448,5 +445,6 @@
   "ctlRecolher": "Contraer los controles de la pedalera",
   "sbSubstitui": "reemplaza {nome}",
   "sbSubstituirAqui": "Reemplazar el preset de este slot",
-  "salvarReleituraDiferente": "la pedalera confirmó, pero el slot releído es distinto de lo enviado. La edición sigue en pantalla; revisa el slot y guarda de nuevo."
+  "salvarReleituraDiferente": "la pedalera confirmó, pero el slot releído es distinto de lo enviado. La edición sigue en pantalla; revisa el slot y guarda de nuevo.",
+  "utAcaoChave": "En la app, este interruptor es el Action del pedal. Según el manual del plugin: activarlo empieza el ritmo con una introducción; con el ritmo sonando, un nuevo accionamiento hace un redoble; un accionamiento doble lo detiene; mantenerlo pasa a la siguiente parte. Lo que toca la batería en cada caso lo decide el plugin."
 }

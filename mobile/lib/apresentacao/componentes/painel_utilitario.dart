@@ -44,23 +44,24 @@ class PainelUtilitario extends StatelessWidget {
       });
 
   Widget _cartao(BuildContext context, _ControlesDoBloco controles, SecaoUtil secao, double largura) {
-    final nota = _notaDa(AppLocalizations.of(context), secao.secao);
+    final notas = _notasDa(AppLocalizations.of(context), secao.secao);
     return CartaoSecaoSynth(
       key: ValueKey('ut-${secao.secao.name}'),
       titulo: tituloDaSecaoUtilitario(AppLocalizations.of(context), secao.secao),
       largura: largura,
       filhos: [
         for (final c in secao.controles) ?controles.de(c),
-        if (nota != null) SizedBox(width: double.infinity, child: notaDoCartao(context, nota)),
+        for (final nota in notas) SizedBox(width: double.infinity, child: notaDoCartao(context, nota)),
       ],
     );
   }
 
-  /// O que a tela original mostra e não chega pelo USB (saídas do plugin).
-  static String? _notaDa(AppLocalizations l, SecaoUtilitario secao) => switch (secao) {
-        SecaoUtilitario.acao => l.utEstadoNoVisor,
-        SecaoUtilitario.metronomo => l.utPrecisaoNoVisor,
-        _ => null,
+  /// O que o Action faz no plugin e o que a tela original mostra sem chegar
+  /// pelo USB (saídas do plugin).
+  static List<String> _notasDa(AppLocalizations l, SecaoUtilitario secao) => switch (secao) {
+        SecaoUtilitario.acao => [l.utAcaoChave, l.utEstadoNoVisor],
+        SecaoUtilitario.metronomo => [l.utPrecisaoNoVisor],
+        _ => const [],
       };
 
   List<Widget> _outros(BuildContext context, _ControlesDoBloco controles, double largura) {
@@ -112,8 +113,6 @@ class _ControlesDoBloco {
         TipoControleUtil.knobGrande => _knobGrande(c, p, apagado),
         TipoControleUtil.botoes =>
           BotoesDeOpcao(parametro: p, bloco: bloco, valor: _valor(p), cor: Cores.daFamilia(definicao.familia)),
-        TipoControleUtil.pulso =>
-          SizedBox(width: Medidas.larguraAcaoUtilitario, child: BotaoPulso(parametro: p, bloco: bloco)),
       };
 
   /// O tempo: o knob maior e, no metrônomo, o BATER embaixo.

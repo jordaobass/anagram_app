@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../avisos.dart';
 import '../../dados/repositorio_pedaleira.dart';
-import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../../nucleo/protocolo/api_anagram.dart';
 import '../../nucleo/resultado.dart';
@@ -41,24 +40,6 @@ mixin AoVivoDoEditor on Notifier<EstadoEditor> {
     if (!state.aoVivo) return;
     await _envioAtivo()?.enviarAgora(documento);
   }
-
-  /// Um toque num parâmetro momentâneo (o Action do Auto Drummer): a
-  /// pedaleira toca o preset com o parâmetro em 1 e, logo depois, em 0. O
-  /// documento não muda (nada a salvar, nada a desfazer), então o preset
-  /// nunca é gravado com o botão "apertado" (DECISOES BT2).
-  Future<void> pulsar(PosicaoBloco posicao, String simbolo) async {
-    final atual = state.atual;
-    if (atual == null || !state.aoVivo) return;
-    await enviarAoVivo(atual.comParametro(posicao, simbolo, 1));
-    await Future<void>.delayed(pausaDoPulso);
-    // o preset pode ter mudado durante o toque: solta sobre o atual
-    final depois = state.atual;
-    if (depois != null) await enviarAoVivo(depois.comParametro(posicao, simbolo, 0));
-  }
-
-  /// Quanto o parâmetro fica em 1: o bastante para o plugin ver o toque,
-  /// e bem menos que o "segurar 1 s" que ele entende como outro gesto.
-  static const pausaDoPulso = Duration(milliseconds: 150);
 
   /// O que estava agendado (arraste) ou esperando a vez deixa de valer; o
   /// envio já em voo termina, porque a pedaleira atende uma conversa por vez.

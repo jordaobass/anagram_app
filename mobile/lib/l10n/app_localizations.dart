@@ -2515,24 +2515,6 @@ abstract class AppLocalizations {
   /// **'Treino'**
   String get utTreino;
 
-  /// Botão que dá um toque no Action do Auto Drummer
-  ///
-  /// In pt, this message translates to:
-  /// **'Disparar'**
-  String get utDisparar;
-
-  /// O toque só existe tocado na pedaleira: sem ao vivo não há o que enviar
-  ///
-  /// In pt, this message translates to:
-  /// **'Ligue o AO VIVO para disparar daqui.'**
-  String get utDispararSemAoVivo;
-
-  /// Gestos do Action do Auto Drummer (como num footswitch)
-  ///
-  /// In pt, this message translates to:
-  /// **'Um toque começa (com intro) ou faz uma virada; dois toques rápidos param; segurar 1 s passa para a próxima parte. Aqui, cada DISPARAR é um toque.'**
-  String get utGestosAcao;
-
   /// O Status é saída do plugin e não chega pelo USB (P8)
   ///
   /// In pt, this message translates to:
@@ -2790,6 +2772,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'a pedaleira confirmou, mas o slot relido é diferente do enviado. A edição continua na tela; confira o slot e salve de novo.'**
   String get salvarReleituraDiferente;
+
+  /// Ajuda do Action do Auto Drummer: a chave do app é o Action da pedaleira; os gestos são do manual do plugin
+  ///
+  /// In pt, this message translates to:
+  /// **'No app, esta chave é o Action da pedaleira. Pelo manual do plugin: ativar começa o ritmo com introdução; com o ritmo tocando, um novo acionamento faz uma virada; acionamento duplo para; segurar passa para a próxima parte. O que a bateria toca em cada caso é do plugin.'**
+  String get utAcaoChave;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

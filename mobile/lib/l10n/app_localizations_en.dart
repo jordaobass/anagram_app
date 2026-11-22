@@ -1372,15 +1372,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get utTreino => 'Practice';
 
   @override
-  String get utDisparar => 'Trigger';
-
-  @override
-  String get utDispararSemAoVivo => 'Turn LIVE on to trigger from here.';
-
-  @override
-  String get utGestosAcao => 'One tap starts (with an intro) or plays a fill; two quick taps stop; holding for 1 s moves to the next part. Here, each TRIGGER is one tap.';
-
-  @override
   String get utEstadoNoVisor => 'Whether the drums are playing or stopped shows only on the pedal screen.';
 
   @override
@@ -1552,4 +1543,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get salvarReleituraDiferente => 'the pedal confirmed, but the slot read back differs from what was sent. Your edit is still on screen; check the slot and save again.';
+
+  @override
+  String get utAcaoChave => 'In the app, this switch is the pedal\'s Action. Per the plugin\'s manual: turning it on starts the rhythm with an intro; while it plays, triggering again plays a fill; a double trigger stops; holding moves to the next part. What the drums play in each case is up to the plugin.';
 }

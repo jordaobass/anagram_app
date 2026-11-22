@@ -318,13 +318,11 @@ abstract final class Medidas {
   static const double knobSynth = 64;
 
   /// Painéis da bateria e do metrônomo: a fileira de compassos (4 botões
-  /// por linha), cada botão, os pontos dos tempos (o 1 maior) e a coluna
-  /// do DISPARAR com o texto dos gestos.
+  /// por linha), cada botão e os pontos dos tempos (o 1 maior).
   static const double larguraBotoesUtilitario = 4 * larguraBotaoCompasso + 3 * Espacos.xs;
   static const double larguraBotaoCompasso = 64;
   static const double pontoCompasso = 10;
   static const double pontoCompassoAcento = 16;
-  static const double larguraAcaoUtilitario = 360;
 
   /// Ícone à esquerda de cada item de menu.
   static const double iconeMenu = 20;

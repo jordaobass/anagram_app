@@ -18,9 +18,6 @@ enum TipoControleUtil {
   /// O knob maior do cartão (o tempo).
   knobGrande,
   chave,
-
-  /// Botão que dá um toque (1 e logo 0) sem gravar nada no preset.
-  pulso,
 }
 
 /// Quando o valor de outro parâmetro faz este controle não valer (o tempo
@@ -89,7 +86,7 @@ const _bateria = ArranjoUtilitario(secoes: [
         unidade: 'bpm', apagamento: Apagamento('useHostTempo', _ligado)),
     ControleUtil('useHostTempo', TipoControleUtil.chave),
   ]),
-  SecaoUtil(SecaoUtilitario.acao, [ControleUtil('action', TipoControleUtil.pulso)]),
+  SecaoUtil(SecaoUtilitario.acao, [ControleUtil('action', TipoControleUtil.chave)]),
 ]);
 
 const _metronomo = ArranjoUtilitario(

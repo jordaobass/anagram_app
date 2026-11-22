@@ -1,6 +1,6 @@
 // Painéis da bateria e do metrônomo na tela, ponta a ponta na demonstração:
 // trocar o estilo e o compasso muda o preset e o que a pedaleira toca; o
-// DISPARAR toca o Action em 1 e logo 0 sem mexer no preset; o BATER grava o
+// Action é uma chave, como na tela da Anagram, gravada no preset; o BATER grava o
 // BPM só no modo Fixed Tempo; no celular os cartões empilham sem estourar.
 import 'dart:async';
 
@@ -14,7 +14,6 @@ import 'package:anagram_app/nucleo/catalogo/definicao_bloco.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
-import 'package:anagram_app/nucleo/protocolo/api_anagram.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -75,20 +74,21 @@ void main() {
     expect(find.byKey(const ValueKey('ut-outros')), findsNothing, reason: 'todo parâmetro tem lugar no painel');
   });
 
-  testWidgets('should_trigger_action_as_a_live_pulse_without_touching_the_preset', (tester) async {
+  testWidgets('should_switch_action_like_the_pedal_screen_and_keep_it_in_the_preset', (tester) async {
     final c = await _comBloco(tester, _bateria);
-    final antes = c.read(editorProvider).atual;
     final pedaleira = _pedaleira(c);
-    final enviosAntes = pedaleira.comandosRecebidos.length;
+    final chave = find.byKey(const ValueKey('chave-action'));
+    expect(find.descendant(of: find.byKey(const ValueKey('ut-acao')), matching: chave), findsOneWidget);
+    expect(find.text('DISPARAR'), findsNothing, reason: 'na pedaleira o Action é chave, não botão');
 
-    await _tocar(tester, find.byKey(const ValueKey('pulso-action')));
+    await _tocar(tester, chave);
+    expect(_noTocado(pedaleira.presetTocando, _bateria, 'action'), 1, reason: 'ligar soa na hora');
+    expect(_valor(c, 'action'), 1, reason: 'o preset guarda a chave, como a pedaleira');
+    expect(c.read(editorProvider).naoSalvo, isTrue);
 
-    final tocados = [
-      for (final m in pedaleira.comandosRecebidos.skip(enviosAntes))
-        if (m.acao == AcoesAnagram.tocarAoVivo) _noTocado(m.carga['presetData'] as Map<String, dynamic>?, _bateria, 'action'),
-    ];
-    expect(tocados, [1, 0], reason: 'aperta e solta');
-    expect(identical(c.read(editorProvider).atual, antes), isTrue, reason: 'o preset nunca guarda action=1');
+    await _tocar(tester, chave);
+    expect(_noTocado(pedaleira.presetTocando, _bateria, 'action'), 0, reason: 'desligar também');
+    expect(_valor(c, 'action'), 0);
   });
 
   testWidgets('should_dim_the_drum_tempo_while_it_follows_the_global_tempo', (tester) async {

@@ -28,11 +28,11 @@ void main() {
     });
   }
 
-  test('should_send_action_as_a_pulse_and_keep_tap_off_the_screen', () {
+  test('should_show_action_as_a_switch_and_keep_tap_off_the_screen', () {
     final bateria = arranjoUtilitario(_bateria)!;
     final metro = arranjoUtilitario(_metro)!;
 
-    expect(bateria.controle('action')!.tipo, TipoControleUtil.pulso, reason: 'Action é momentâneo, não chave');
+    expect(bateria.controle('action')!.tipo, TipoControleUtil.chave, reason: 'na tela da Anagram o Action é chave');
     expect(metro.semControle, contains('tap'), reason: 'o tap do plugin não aparece na tela da pedaleira');
   });
 
