@@ -52,6 +52,14 @@ Interface em **português, inglês e espanhol** (segue o idioma do sistema; dá 
 Também: linha paralela com Split e Merge, mover/clonar/trocar presets e bancos, limpar preset,
 exportar e importar JSON, área Fábrica (36 presets da Darkglass, só leitura) e IA local via MCP.
 
+No computador o app conecta na pedaleira ao abrir (dá para desligar em **Configurações**). O modo dos
+footswitches aparece em pílulas **Stomp / Preset / Scene** na linha das cenas; os blocos Auto Drummer e
+Cognate Metro ficam dispostos como na tela da própria pedaleira, com tap tempo; um bloco TONE3000 troca
+para outro tom que já está na pedaleira; os menus têm ícones e ficam compactos com mouse; e a edição ao
+vivo pelo USB ficou mais rápida. Volume das saídas, Global EQ e ganho de entrada aparecem **só para
+leitura**: a Anagram aceita esses valores pelo USB, mas não os aplica ao som, então ajuste na própria
+pedaleira.
+
 ## Como instalar
 
 O app não tem instalador: é uma pasta que você extrai e abre. Todas as versões ficam em
@@ -84,7 +92,16 @@ Mantenha todos os arquivos juntos na pasta: a `hidapi.dll` é quem fala com a pe
 2. Arraste **Anagram App** para **Aplicativos**.
 3. Na primeira vez, o macOS bloqueia porque o app ainda não é notarizado: abra **Ajustes do Sistema ›
    Privacidade e Segurança** e clique em **Abrir Mesmo Assim**. Ou, no Terminal:
-   `xattr -dr com.apple.quarantine "/Applications/Anagram App.app"`.
+   `xattr -cr "/Applications/Anagram App.app"`.
+
+#### macOS: primeira abertura
+
+- **"A Apple não pôde verificar…"**: o app ainda não é assinado pela Apple. Abra **Ajustes do Sistema ›
+  Privacidade e Segurança** e clique em **Abrir Mesmo Assim** (ou rode
+  `xattr -cr "/Applications/Anagram App.app"` no Terminal).
+- **Monitoramento de Entrada**: o macOS trata o acesso USB da Anagram como Monitoramento de Entrada. Se o
+  app não conectar, ou ficar pulando no Dock, ligue o **Anagram App** em **Ajustes do Sistema ›
+  Privacidade e Segurança › Monitoramento de Entrada** e abra o app de novo.
 
 ### Linux
 
@@ -97,8 +114,8 @@ Ainda não há build pronto; compile pelo [README do app](mobile/README.md#desen
    fala com ela.
 2. Na pedaleira, abra os ajustes de **MIDI** e ligue o **USB MIDI**. É por ele que o app troca de slot
    quando você toca num preset; sem ele, o app só deixa ouvir o preset sem a pedaleira mudar de slot.
-3. Ligue a Anagram no computador pelo cabo USB, abra o app e clique em **Conectar pelo USB**. A barra de
-   cima mostra o firmware quando conecta.
+3. Ligue a Anagram no computador pelo cabo USB, abra o app e clique em **Conectar pelo USB**
+   (no computador o app já tenta uma vez ao abrir: "Procurando a pedaleira…"). A barra de cima mostra o firmware quando conecta.
 4. Toque num preset da lista para abrir. Para montar a cadeia, use o **+** de uma casa vazia (abre a
    biblioteca de efeitos) e arraste os blocos para mudar a ordem. **Salvar** grava no slot.
 

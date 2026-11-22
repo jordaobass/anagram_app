@@ -52,6 +52,13 @@ change it in **Settings**, the gear icon).
 Also: a parallel row with Split and Merge, move/clone/swap presets and banks, clear a preset, export
 and import JSON, the Factory area (36 Darkglass presets, read-only) and local AI via MCP.
 
+On the desktop the app connects to the pedal on launch (switch it off in **Settings**). The footswitch
+mode shows as **Stomp / Preset / Scene** pills on the scene row; the Auto Drummer and Cognate Metro
+blocks are laid out like the pedal's own screen, with tap tempo; a TONE3000 block can switch to another
+tone already on the pedal; menus have icons and are compact with a mouse; and live editing over USB is
+faster. Output levels, Global EQ and input gain are shown **read-only**: the Anagram accepts those values
+over USB but doesn't apply them to the sound, so adjust them on the pedal itself.
+
 ## How to install
 
 There's no installer: it's a folder you extract and open. Every version is in
@@ -86,7 +93,15 @@ Keep all the files together in the folder: `hidapi.dll` talks to the pedal over 
 2. Drag **Anagram App** to **Applications**.
 3. The first time, macOS blocks it because the app isn't notarized yet: open **System Settings ›
    Privacy & Security** and click **Open Anyway**. Or, in Terminal:
-   `xattr -dr com.apple.quarantine "/Applications/Anagram App.app"`.
+   `xattr -cr "/Applications/Anagram App.app"`.
+
+#### macOS: first launch
+
+- **"Apple could not verify…"**: the app isn't signed by Apple yet. Open **System Settings › Privacy &
+  Security** and click **Open Anyway** (or run `xattr -cr "/Applications/Anagram App.app"` in Terminal).
+- **Input Monitoring**: macOS treats the Anagram's USB access as Input Monitoring. If the app doesn't
+  connect, or keeps bouncing in the Dock, turn **Anagram App** on in **System Settings › Privacy &
+  Security › Input Monitoring** and open the app again.
 
 ### Linux
 
@@ -100,8 +115,8 @@ There's no ready-made build yet; build it from source (see [the app README](mobi
 2. On the pedal, open the **MIDI** settings and turn on **USB MIDI**. That's how the app switches slots
    when you click a preset; without it the app can only preview a preset while the pedal stays on its
    own slot.
-3. Connect the Anagram to your computer with the USB cable, open the app and click **Connect over USB**.
-   The top bar shows the firmware version once connected.
+3. Connect the Anagram to your computer with the USB cable, open the app and click **Connect over USB**
+   (on the desktop the app already tries once on launch: "Looking for the pedal…"). The top bar shows the firmware version once connected.
 4. Click a preset in the list to open it. To build the chain, use the **+** in an empty slot (it opens
    the effects library) and drag blocks to change their order. **Save** writes it to the slot.
 

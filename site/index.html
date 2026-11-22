@@ -66,7 +66,7 @@
             <a class="botao botao-contorno" data-baixar="macos" href="https://github.com/jordaobass/anagram_app/releases/latest">
               <svg aria-hidden="true"><use href="#i-baixar"/></svg>Download for macOS</a>
           </div>
-          <p class="nota-macos">macOS: the first time, go to System Settings › Privacy &amp; Security › <em>Open Anyway</em>.</p>
+          <p class="nota-macos">macOS: the first time, go to System Settings › Privacy &amp; Security › <em>Open Anyway</em>, and allow the app under <em>Input Monitoring</em> (<a href="#macos">why</a>).</p>
           <p class="miudo"><span class="versao" data-versao>Latest version</span> · Windows 10/11 · macOS on Apple Silicon · no installer, no account<br>
             Intel Mac? <a data-baixar="macos-intel" href="https://github.com/jordaobass/anagram_app/releases/latest">Try the experimental build</a></p>
         </div>
@@ -88,7 +88,7 @@
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-ao-vivo"/></svg></span>
             <span class="pedal-fita" aria-hidden="true"></span>
             <h3>Live over USB</h3>
-            <p>Every change is heard at once. "Not saved" stays visible until you save.</p>
+            <p>Every change is heard at once, now with faster USB writes. The app connects on launch, and "Not saved" stays visible until you save.</p>
           </li>
           <li class="pedal familia-compressor">
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-multibanda"/></svg></span>
@@ -100,7 +100,7 @@
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-eq"/></svg></span>
             <span class="pedal-fita" aria-hidden="true"></span>
             <h3>EQ curves</h3>
-            <p>Parametric EQ: drag the points, switch Gain, Frequency and Width. The Global EQ curve shows what the pedal has.</p>
+            <p>Parametric EQ: drag the points, switch Gain, Frequency and Width. The Global EQ curve shows what the pedal has (read-only).</p>
           </li>
           <li class="pedal familia-filtro">
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-explica"/></svg></span>
@@ -124,7 +124,7 @@
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-modo"/></svg></span>
             <span class="pedal-fita" aria-hidden="true"></span>
             <h3>Footswitch mode</h3>
-            <p>Switch the footswitches between Preset, Stomp and Scene from the app.</p>
+            <p>Stomp, Preset and Scene pills on the scene row show the mode and switch it from the app.</p>
           </li>
           <li class="pedal familia-drive">
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-tom"/></svg></span>
@@ -136,7 +136,7 @@
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-bateria"/></svg></span>
             <span class="pedal-fita" aria-hidden="true"></span>
             <h3>Drums and metronome</h3>
-            <p>Auto Drummer styles and Cognate Metro time signatures laid out as buttons, with tap tempo.</p>
+            <p>Auto Drummer and Cognate Metro laid out like the pedal's own screen, with tap tempo.</p>
           </li>
           <li class="pedal familia-modulacao">
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-ia"/></svg></span>
@@ -165,7 +165,8 @@
           <div>
             <h3>Know what a knob does before you turn it</h3>
             <p>Rest the mouse on a control's name to read what it does to the sound on that specific block.
-              Type an exact value when you know it, or drag, scroll and use the arrow keys when you don't.</p>
+              Type an exact value when you know it, or drag, scroll and use the arrow keys when you don't.
+              Menus have icons and stay compact when you use a mouse.</p>
           </div>
           <div class="case"><span class="quinas" aria-hidden="true"></span>
             <img src="imagens/en/explicacao.webp" width="1440" height="900" loading="lazy"
@@ -236,6 +237,15 @@
           <details>
             <summary>Windows says "Windows protected your PC". Is it safe?</summary>
             <p>The app isn't code-signed yet. Click <em>More info</em> and <em>Run anyway</em>; it only shows once. On macOS, open System Settings › Privacy &amp; Security and click <em>Open Anyway</em>. The source code is public on GitHub.</p>
+          </details>
+          <details id="macos">
+            <summary>macOS: first launch</summary>
+            <p>The app isn't signed by Apple yet, so the first time macOS blocks it: open System Settings › Privacy &amp; Security and click <em>Open Anyway</em> (or run <code>xattr -cr "/Applications/Anagram App.app"</code> in Terminal).</p>
+            <p>macOS treats the Anagram's USB access as <em>Input Monitoring</em>. If the app doesn't connect, or keeps bouncing in the Dock, turn Anagram App on in System Settings › Privacy &amp; Security › <em>Input Monitoring</em> and open the app again.</p>
+          </details>
+          <details>
+            <summary>Why can't I change the Global EQ, output levels or input gain?</summary>
+            <p>The Anagram accepts those values over USB but doesn't apply them to the sound, so the app shows them read-only, with the values the pedal has now. Adjust them with the pedal's own knobs and screens. The Parametric EQ block inside a preset stays fully editable.</p>
           </details>
           <details>
             <summary>Which firmware does it support?</summary>
