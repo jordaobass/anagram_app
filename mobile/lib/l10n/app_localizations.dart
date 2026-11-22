@@ -2772,6 +2772,18 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Recolher os controles da pedaleira'**
   String get ctlRecolher;
+
+  /// Salvar como: na linha de um slot ocupado, o preset que será substituído
+  ///
+  /// In pt, this message translates to:
+  /// **'substitui {nome}'**
+  String sbSubstitui(String nome);
+
+  /// Leitor de tela no ícone de substituir do Salvar como
+  ///
+  /// In pt, this message translates to:
+  /// **'Substituir o preset deste slot'**
+  String get sbSubstituirAqui;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

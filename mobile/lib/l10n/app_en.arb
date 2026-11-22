@@ -445,5 +445,7 @@
   "uiDicas": "Tips",
   "ctlResumo": "{n, plural, =0{none assigned} =1{1 assigned} other{{n} assigned}}",
   "ctlMostrar": "Show the pedal controls",
-  "ctlRecolher": "Collapse the pedal controls"
+  "ctlRecolher": "Collapse the pedal controls",
+  "sbSubstitui": "replaces {nome}",
+  "sbSubstituirAqui": "Replace the preset in this slot"
 }

@@ -445,5 +445,7 @@
   "uiDicas": "Consejos",
   "ctlResumo": "{n, plural, =0{ninguno asignado} =1{1 asignado} other{{n} asignados}}",
   "ctlMostrar": "Mostrar los controles de la pedalera",
-  "ctlRecolher": "Contraer los controles de la pedalera"
+  "ctlRecolher": "Contraer los controles de la pedalera",
+  "sbSubstitui": "reemplaza {nome}",
+  "sbSubstituirAqui": "Reemplazar el preset de este slot"
 }

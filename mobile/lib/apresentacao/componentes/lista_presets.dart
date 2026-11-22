@@ -129,13 +129,14 @@ class _Banco extends StatelessWidget {
     );
   }
 
-  /// Modo destino: "ORIGEM" no slot aberto, ícone de gravar nos outros.
-  /// Fora dele: onde a pedaleira está.
+  /// Modo destino: "ORIGEM" no slot aberto; nos outros, gravar (vazio) ou
+  /// substituir (ocupado). Fora dele: onde a pedaleira está.
   Widget? _marca(AppLocalizations l, TextTheme tema, SlotPreset slot) {
     if (escolhendo) {
-      return slot == aberto
-          ? Text(l.origem, style: tema.labelSmall?.copyWith(color: Cores.tally))
-          : Icon(Icons.save_alt, color: Cores.aluminio, semanticLabel: l.gravarAqui);
+      if (slot == aberto) return Text(l.origem, style: tema.labelSmall?.copyWith(color: Cores.tally));
+      return biblioteca.resumo(slot) == null
+          ? Icon(Icons.save_alt, color: Cores.aluminio, semanticLabel: l.gravarAqui)
+          : Icon(Icons.find_replace, color: Cores.aluminioClaro, semanticLabel: l.sbSubstituirAqui);
     }
     // slot vazio (preset novo ainda não gravado) não tem o que tocar
     if (slot != naPedaleira || biblioteca.resumo(slot) == null) return null;
@@ -171,15 +172,19 @@ class _Banco extends StatelessWidget {
         width: Espacos.xxxl,
         child: Text(slot.rotulo, style: tema.titleSmall?.copyWith(color: ativo ? Cores.tally : Cores.aluminioClaro)),
       ),
-      Expanded(
-        child: Text(resumo?.nome ?? l.slotVazio,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: resumo == null ? tema.bodySmall : tema.bodyLarge),
-      ),
+      Expanded(child: _nome(l, tema, slot, resumo?.nome)),
       ?_marca(l, tema, slot),
       if (aoMenu != null && resumo != null) _botaoMenu(l, slot),
     ]);
+  }
+
+  /// O nome, "vazio" ou, escolhendo o destino do "Salvar como", o que o
+  /// toque vai substituir (o slot aberto continua com o nome: é a origem).
+  Widget _nome(AppLocalizations l, TextTheme tema, SlotPreset slot, String? nome) {
+    final substitui = escolhendo && nome != null && slot != aberto;
+    final texto = nome == null ? l.slotVazio : (substitui ? l.sbSubstitui(nome) : nome);
+    return Text(texto,
+        maxLines: 1, overflow: TextOverflow.ellipsis, style: nome == null || substitui ? tema.bodySmall : tema.bodyLarge);
   }
 
   /// O menu só vale para slot com preset; o vazio não tem o que mover.

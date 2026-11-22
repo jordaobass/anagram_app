@@ -1430,5 +1430,18 @@
   "ctlRecolher": "Recolher os controles da pedaleira",
   "@ctlRecolher": {
     "description": "Leitor de tela no cabeçalho aberto"
+  },
+  "sbSubstitui": "substitui {nome}",
+  "@sbSubstitui": {
+    "description": "Salvar como: na linha de um slot ocupado, o preset que será substituído",
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "sbSubstituirAqui": "Substituir o preset deste slot",
+  "@sbSubstituirAqui": {
+    "description": "Leitor de tela no ícone de substituir do Salvar como"
   }
 }

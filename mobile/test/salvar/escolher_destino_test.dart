@@ -30,6 +30,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.descendant(of: find.byKey(const ValueKey('slot-01C')), matching: find.text('ORIGEM')), findsOneWidget);
-    expect(find.descendant(of: find.byKey(const ValueKey('slot-02A')), matching: find.byIcon(Icons.save_alt)), findsOneWidget);
+    // o 03C está vazio: gravar aqui (o ocupado mostra substituir, UI8)
+    expect(find.descendant(of: find.byKey(const ValueKey('slot-03C')), matching: find.byIcon(Icons.save_alt)), findsOneWidget);
   });
 }

@@ -1541,4 +1541,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ctlRecolher => 'Contraer los controles de la pedalera';
+
+  @override
+  String sbSubstitui(String nome) {
+    return 'reemplaza $nome';
+  }
+
+  @override
+  String get sbSubstituirAqui => 'Reemplazar el preset de este slot';
 }
