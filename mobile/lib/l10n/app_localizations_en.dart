@@ -1396,4 +1396,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String utTemposDoCompasso(int tempos) {
     return 'Bar of $tempos beats, beat 1 accented';
   }
+
+  @override
+  String get t3kTom => 'Tone';
+
+  @override
+  String get t3kModelo => 'Model';
+
+  @override
+  String get t3kLendo => 'Reading the tones on the pedal…';
+
+  @override
+  String get t3kFalhou => 'The pedal did not send the tone list.';
+
+  @override
+  String get t3kTentarDeNovo => 'Try again';
+
+  @override
+  String t3kNaoEncontrado(String arquivo) {
+    return 'Not found on the pedal: $arquivo';
+  }
+
+  @override
+  String get t3kSoConsulta => 'Tone you uploaded: shown for reference only. The app cannot switch it yet.';
+
+  @override
+  String get t3kIrNaoConferido => 'The path of factory IRs has not been checked on a pedal yet: listen before saving.';
+
+  @override
+  String t3kResumo(int fabrica, int seus) {
+    return 'On the pedal: $fabrica factory and $seus uploaded by you';
+  }
+
+  @override
+  String t3kDetalheFabrica(String autor, String licenca) {
+    return '$autor · $licenca license';
+  }
+
+  @override
+  String t3kDetalheSeu(String autor, String licenca) {
+    return '$autor · $licenca license · yours, reference only';
+  }
+
+  @override
+  String get t3kSemAutor => 'no author';
 }

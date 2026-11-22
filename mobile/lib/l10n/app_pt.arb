@@ -1246,5 +1246,82 @@
         "type": "int"
       }
     }
+  },
+  "t3kTom": "Tom",
+  "@t3kTom": {
+    "description": "Cartão do tom do TONE3000 no painel do bloco"
+  },
+  "t3kModelo": "Modelo",
+  "@t3kModelo": {
+    "description": "Cartão do modelo (a2_model) do tom do TONE3000"
+  },
+  "t3kLendo": "Lendo os tons da pedaleira…",
+  "@t3kLendo": {
+    "description": "Enquanto get_t3k_factory_tones não volta (~2 s)"
+  },
+  "t3kFalhou": "A pedaleira não mandou a lista de tons.",
+  "@t3kFalhou": {
+    "description": "get_t3k_factory_tones sem resposta"
+  },
+  "t3kTentarDeNovo": "Tentar de novo",
+  "@t3kTentarDeNovo": {
+    "description": "Botão que relê a lista de tons"
+  },
+  "t3kNaoEncontrado": "Não encontrado na pedaleira: {arquivo}",
+  "@t3kNaoEncontrado": {
+    "description": "O arquivo do bloco não está na lista de tons da pedaleira (tom removido, firmware diferente); o app não troca sozinho",
+    "placeholders": {
+      "arquivo": {
+        "type": "String"
+      }
+    }
+  },
+  "t3kSoConsulta": "Tom enviado por você: aparece só para consulta. Trocá-lo ainda não é possível pelo app.",
+  "@t3kSoConsulta": {
+    "description": "Tom do usuário: a pedaleira não informa o nome do arquivo para montar o caminho (T3K4)"
+  },
+  "t3kIrNaoConferido": "O caminho dos IRs de fábrica ainda não foi conferido numa pedaleira: ouça antes de salvar.",
+  "@t3kIrNaoConferido": {
+    "description": "Hipótese T3K3 no bloco de gabinete TONE3000"
+  },
+  "t3kResumo": "Na pedaleira: {fabrica} de fábrica e {seus} enviados por você",
+  "@t3kResumo": {
+    "description": "Quantos tons do formato do bloco a pedaleira tem",
+    "placeholders": {
+      "fabrica": {
+        "type": "int"
+      },
+      "seus": {
+        "type": "int"
+      }
+    }
+  },
+  "t3kDetalheFabrica": "{autor} · licença {licenca}",
+  "@t3kDetalheFabrica": {
+    "description": "Linha do tom de fábrica na galeria",
+    "placeholders": {
+      "autor": {
+        "type": "String"
+      },
+      "licenca": {
+        "type": "String"
+      }
+    }
+  },
+  "t3kDetalheSeu": "{autor} · licença {licenca} · seu, só para consulta",
+  "@t3kDetalheSeu": {
+    "description": "Linha do tom do usuário na galeria",
+    "placeholders": {
+      "autor": {
+        "type": "String"
+      },
+      "licenca": {
+        "type": "String"
+      }
+    }
+  },
+  "t3kSemAutor": "sem autor",
+  "@t3kSemAutor": {
+    "description": "Quando o tom não traz o username"
   }
 }

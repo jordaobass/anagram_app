@@ -2,6 +2,7 @@
 // `get_t3k_tones_metadata` o devolvem (fw 1.19.2.24, DECISOES T3K1): título,
 // formato (NAM ou IR), tipo de equipamento e os modelos (`a2_models`). A
 // resposta é entrada externa: campo com tipo inesperado vale como ausente.
+import '../catalogo/variantes_uri.dart';
 import '../modelo/json_util.dart';
 
 /// NAM vai no bloco neural, IR no gabinete TONE3000. A pasta é a que a
@@ -18,6 +19,13 @@ enum FormatoTom {
   static FormatoTom? doTexto(Object? texto) => switch (texto) {
         'nam' => FormatoTom.nam,
         'ir' => FormatoTom.ir,
+        _ => null,
+      };
+
+  /// O formato que o bloco carrega; nulo fora dos dois blocos TONE3000.
+  static FormatoTom? doBloco(String uri) => switch (semSufixoDeCanal(uri)) {
+        'urn:darkglass:neural:tone3000' => FormatoTom.nam,
+        'urn:darkglass-anagram:cabinet-tone3000' => FormatoTom.ir,
         _ => null,
       };
 }
@@ -102,6 +110,11 @@ class TomTone3000 {
     if (doUsuario) return null;
     return '/factory-data/${formato.pasta}/$id/${modelo.id}.${modelo.extensao ?? formato.extensaoPadrao}';
   }
+
+  /// Um caminho com a pasta do tom (de fábrica ou da pessoa), para achar a
+  /// foto dele como se estivesse carregado num bloco; não é para gravar.
+  String get caminhoDeReferencia =>
+      '${doUsuario ? '/data/user-files' : '/factory-data'}/${formato.pasta}/$id/${modelos.firstOrNull?.id ?? id}';
 
   ModeloDoTom? modeloDoArquivo(String nomeDoArquivo) {
     final id = int.tryParse(nomeDoArquivo);

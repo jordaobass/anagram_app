@@ -1396,4 +1396,48 @@ class AppLocalizationsPt extends AppLocalizations {
   String utTemposDoCompasso(int tempos) {
     return 'Compasso de $tempos tempos, o 1 acentuado';
   }
+
+  @override
+  String get t3kTom => 'Tom';
+
+  @override
+  String get t3kModelo => 'Modelo';
+
+  @override
+  String get t3kLendo => 'Lendo os tons da pedaleira…';
+
+  @override
+  String get t3kFalhou => 'A pedaleira não mandou a lista de tons.';
+
+  @override
+  String get t3kTentarDeNovo => 'Tentar de novo';
+
+  @override
+  String t3kNaoEncontrado(String arquivo) {
+    return 'Não encontrado na pedaleira: $arquivo';
+  }
+
+  @override
+  String get t3kSoConsulta => 'Tom enviado por você: aparece só para consulta. Trocá-lo ainda não é possível pelo app.';
+
+  @override
+  String get t3kIrNaoConferido => 'O caminho dos IRs de fábrica ainda não foi conferido numa pedaleira: ouça antes de salvar.';
+
+  @override
+  String t3kResumo(int fabrica, int seus) {
+    return 'Na pedaleira: $fabrica de fábrica e $seus enviados por você';
+  }
+
+  @override
+  String t3kDetalheFabrica(String autor, String licenca) {
+    return '$autor · licença $licenca';
+  }
+
+  @override
+  String t3kDetalheSeu(String autor, String licenca) {
+    return '$autor · licença $licenca · seu, só para consulta';
+  }
+
+  @override
+  String get t3kSemAutor => 'sem autor';
 }

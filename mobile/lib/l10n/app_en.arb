@@ -410,5 +410,17 @@
   "utBater": "Tap",
   "utBaterSoNoFixo": "Tap tempo works in Fixed Tempo mode only.",
   "utPrecisaoNoVisor": "How accurate your timing is (Accuracy) shows only on the pedal screen.",
-  "utTemposDoCompasso": "Bar of {tempos} beats, beat 1 accented"
+  "utTemposDoCompasso": "Bar of {tempos} beats, beat 1 accented",
+  "t3kTom": "Tone",
+  "t3kModelo": "Model",
+  "t3kLendo": "Reading the tones on the pedal…",
+  "t3kFalhou": "The pedal did not send the tone list.",
+  "t3kTentarDeNovo": "Try again",
+  "t3kNaoEncontrado": "Not found on the pedal: {arquivo}",
+  "t3kSoConsulta": "Tone you uploaded: shown for reference only. The app cannot switch it yet.",
+  "t3kIrNaoConferido": "The path of factory IRs has not been checked on a pedal yet: listen before saving.",
+  "t3kResumo": "On the pedal: {fabrica} factory and {seus} uploaded by you",
+  "t3kDetalheFabrica": "{autor} · {licenca} license",
+  "t3kDetalheSeu": "{autor} · {licenca} license · yours, reference only",
+  "t3kSemAutor": "no author"
 }

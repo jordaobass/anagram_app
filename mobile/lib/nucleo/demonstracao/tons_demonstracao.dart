@@ -47,12 +47,16 @@ final List<Map<String, dynamic>> tonsDeFabricaDemonstracao = [
 /// Fictício: a pedaleira do dono não tem nenhum tom próprio.
 final List<Map<String, dynamic>> tonsDoUsuarioDemonstracao = [
   {
-    'data': _tom(990001, 'Meu SVT do ensaio', 'nam', 'amp', 'demonstracao', [(990101, 'SVT ensaio DI')]),
+    'data': _tom(990001, 'Meu SVT do ensaio', 'nam', 'amp', 'demonstracao', [
+      (990101, 'SVT ensaio DI'),
+      (990102, 'SVT ensaio microfone'),
+    ]),
     'metadata': {
       'id': 1,
       't3k_tone_id': 990001,
       'models': [
         {'id': 1, 't3k_model_id': 990101, 'visible': true},
+        {'id': 2, 't3k_model_id': 990102, 'visible': true},
       ],
     },
   },

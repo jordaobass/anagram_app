@@ -24,6 +24,7 @@ import 'painel_multibanda.dart';
 import 'painel_sintetizador.dart';
 import 'painel_utilitario.dart';
 import 'seletor_gabinete.dart';
+import 'seletor_tone3000.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
 import 'casa_arrastavel.dart' show arrastoComMouse;
@@ -56,6 +57,7 @@ class PainelParametros extends ConsumerWidget {
         CabecalhoBloco(bloco: bloco, definicao: definicao, cena: cena),
         const SizedBox(height: Espacos.m),
         SeletorGabinete(bloco: bloco, definicao: definicao),
+        SeletorTone3000(bloco: bloco, definicao: definicao),
         _painelDoBloco(ref, parametros, bloco, definicao, cena),
       ]),
     );
