@@ -3,7 +3,6 @@
 // painel no celular. Prefixo "t3k-". Saem com as fotos
 // reais dos tons.
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

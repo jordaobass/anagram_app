@@ -62,11 +62,11 @@ void main() {
   testWidgets('should_credit_the_marketplace_makers_and_tone3000_on_the_about_screen', (tester) async {
     await tester.pumpWidget(ProviderScope(
       overrides: [indiceMiniaturasProvider.overrideWith((ref) async => lerIndiceVersionado())],
-      child: MaterialApp(
-        locale: const Locale('pt'),
+      child: const MaterialApp(
+        locale: Locale('pt'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const TelaCreditos(),
+        home: TelaCreditos(),
       ),
     ));
     await tester.pumpAndSettle();

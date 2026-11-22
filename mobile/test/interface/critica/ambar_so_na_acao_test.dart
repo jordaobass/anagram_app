@@ -31,7 +31,7 @@ void main() {
 
   testWidgets('should_draw_the_drum_trigger_as_an_outline_not_an_amber_fill', (tester) async {
     await abrirComBloco(tester, _bateria);
-    final disparar = find.byWidgetPredicate((w) => w.key is ValueKey<String> && '${(w.key! as ValueKey<String>).value}'.startsWith('pulso-'));
+    final disparar = find.byWidgetPredicate((w) => w.key is ValueKey<String> && (w.key! as ValueKey<String>).value.startsWith('pulso-'));
     await tester.ensureVisible(disparar);
     await tester.pumpAndSettle();
 

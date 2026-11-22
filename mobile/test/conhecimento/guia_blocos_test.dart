@@ -3,7 +3,6 @@
 // cita (parâmetro-chave, ponto de partida) tem de existir no catálogo com o
 // valor dentro da faixa — senão a IA aprende a mexer no que não existe.
 import 'package:anagram_app/nucleo/catalogo/variantes_uri.dart';
-import 'package:anagram_app/nucleo/conhecimento/base_conhecimento.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/fixtures.dart';

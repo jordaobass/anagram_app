@@ -12,15 +12,15 @@ const _semOpcoes = DefinicaoParametro(simbolo: 'signature', nome: 'Time Signatur
 
 void main() {
   testWidgets('should_show_the_label_without_buttons_when_the_parameter_has_no_options', (tester) async {
-    await tester.pumpWidget(ProviderScope(
+    await tester.pumpWidget(const ProviderScope(
       child: MaterialApp(
-        locale: const Locale('pt'),
+        locale: Locale('pt'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(
           body: BotoesDeOpcao(
             parametro: _semOpcoes,
-            bloco: BlocoPreset(const PosicaoBloco(1, 1), {'uri': 'urn:teste:metro'}),
+            bloco: BlocoPreset(PosicaoBloco(1, 1), {'uri': 'urn:teste:metro'}),
             valor: 0,
             cor: Colors.blue,
           ),

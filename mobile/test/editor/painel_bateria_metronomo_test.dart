@@ -154,7 +154,7 @@ void main() {
     const novo = DefinicaoParametro(simbolo: 'swing', nome: 'Swing', minimo: 0, maximo: 1, padrao: 0);
     final definicao = DefinicaoBloco(
         uri: _metro, nome: catalogo.nome, abreviacao: '', categoria: '', parametros: [...catalogo.parametros, novo]);
-    final bloco = BlocoPreset(_casa, const {'uri': _metro});
+    const bloco = BlocoPreset(_casa, {'uri': _metro});
 
     await tester.pumpWidget(ProviderScope(
       child: MaterialApp(
