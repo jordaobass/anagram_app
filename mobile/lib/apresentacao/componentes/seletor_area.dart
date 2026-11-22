@@ -41,7 +41,7 @@ class SeletorArea extends ConsumerWidget {
           {required bool habilitado, required bool comFabrica}) =>
       Row(children: [
         Text(AppLocalizations.of(context).area,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.textoSecundario)),
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: context.cores.textoSecundario)),
         const SizedBox(width: Espacos.s),
         Expanded(child: _lista(context, ref, biblioteca, habilitado: habilitado, comFabrica: comFabrica)),
         // a marca de ativa fica fora do nome: o nome nunca é cortado por ela
@@ -68,13 +68,15 @@ class SeletorArea extends ConsumerWidget {
         if (comFabrica)
           Align(alignment: Alignment.centerLeft, child: Text(l.fbAreaFabrica, maxLines: 1, overflow: TextOverflow.ellipsis)),
       ],
-      items: _itens(l, biblioteca, comFabrica: comFabrica),
+      items: _itens(l, context.cores, biblioteca, comFabrica: comFabrica),
       onChanged: habilitado ? (id) => _trocar(context, ref, id) : null,
     );
   }
 
   /// No menu aberto: cada área com a etiqueta da ativa e, por último, a fábrica.
-  List<DropdownMenuItem<String>> _itens(AppLocalizations l, EstadoBiblioteca biblioteca, {required bool comFabrica}) => [
+  List<DropdownMenuItem<String>> _itens(AppLocalizations l, Paleta cores, EstadoBiblioteca biblioteca,
+          {required bool comFabrica}) =>
+      [
         for (final area in biblioteca.areas.areas)
           DropdownMenuItem(
             key: ValueKey('area-${area.id}'),
@@ -88,7 +90,7 @@ class SeletorArea extends ConsumerWidget {
           DropdownMenuItem(
             key: const ValueKey('area-${PresetsDeFabrica.idArea}'),
             value: PresetsDeFabrica.idArea,
-            child: _noMenu(_fabrica(l)),
+            child: _noMenu(_fabrica(l, cores)),
           ),
       ];
 
@@ -100,9 +102,9 @@ class SeletorArea extends ConsumerWidget {
       Text(l.nomeDaArea(area), maxLines: 1, overflow: TextOverflow.ellipsis);
 
   /// No menu, o cadeado: o selo inteiro não cabe na largura do seletor.
-  static Widget _fabrica(AppLocalizations l) => Row(children: [
+  static Widget _fabrica(AppLocalizations l, Paleta cores) => Row(children: [
         Expanded(child: Text(l.fbAreaFabrica, maxLines: 1, overflow: TextOverflow.ellipsis)),
-        Icon(Icons.lock_outline, size: Medidas.iconeLapis, color: Cores.textoSecundario, semanticLabel: l.fbSoLeitura),
+        Icon(Icons.lock_outline, size: Medidas.iconeLapis, color: cores.textoSecundario, semanticLabel: l.fbSoLeitura),
       ]);
 
   Future<void> _trocar(BuildContext context, WidgetRef ref, String? id) async {
@@ -137,7 +139,7 @@ class _AvisoAreaInativa extends ConsumerWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
           Text(
             AppLocalizations.of(context).areaInativa,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.textoSecundario),
           ),
           TextButton(
             key: const ValueKey('tornar-area-ativa'),
@@ -157,7 +159,7 @@ class _Nota extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: Espacos.xs),
-        child: Text(texto, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario)),
+        child: Text(texto, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.textoSecundario)),
       );
 }
 
@@ -170,11 +172,11 @@ class SeloSoLeitura extends StatelessWidget {
         key: const ValueKey('selo-so-leitura'),
         padding: const EdgeInsets.symmetric(horizontal: Espacos.xs, vertical: Espacos.xxs),
         decoration: BoxDecoration(
-          border: Border.all(color: Cores.textoSecundario),
+          border: Border.all(color: context.cores.textoSecundario),
           borderRadius: BorderRadius.circular(Raios.controle),
         ),
         child: Text(AppLocalizations.of(context).fbSoLeitura,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.textoSecundario)),
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: context.cores.textoSecundario)),
       );
 }
 
@@ -191,10 +193,10 @@ class _EtiquetaAtiva extends StatelessWidget {
         Container(
           width: Medidas.led,
           height: Medidas.led,
-          decoration: const BoxDecoration(color: Cores.ledLigado, shape: BoxShape.circle),
+          decoration: BoxDecoration(color: context.cores.ledLigado, shape: BoxShape.circle),
         ),
         const SizedBox(width: Espacos.xs),
-        Text(l.txAtiva, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.ledLigado)),
+        Text(l.txAtiva, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: context.cores.ledLigado)),
       ]),
     );
   }

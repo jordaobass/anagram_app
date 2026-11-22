@@ -27,8 +27,9 @@ class RaiaBanda {
 }
 
 class PintorFaixaFrequencias extends CustomPainter {
-  const PintorFaixaFrequencias(
-      {required this.raias, required this.rotulos, required this.alturaRaia, this.escala = const EscalaGanho()});
+  const PintorFaixaFrequencias({required this.cores, required this.raias, required this.rotulos, required this.alturaRaia, this.escala = const EscalaGanho()});
+
+  final Paleta cores;
 
   final List<RaiaBanda> raias;
   final EscalaGanho escala;
@@ -40,7 +41,7 @@ class PintorFaixaFrequencias extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final fundo = Rect.fromLTWH(0, 0, size.width, raias.length * alturaRaia);
-    canvas.drawRRect(RRect.fromRectAndRadius(fundo, const Radius.circular(Raios.controle)), Paint()..color = Cores.painel);
+    canvas.drawRRect(RRect.fromRectAndRadius(fundo, const Radius.circular(Raios.controle)), Paint()..color = cores.painel);
     _marcas(canvas, size, fundo);
     _eixo(canvas, size);
     for (final raia in raias) {
@@ -49,7 +50,7 @@ class PintorFaixaFrequencias extends CustomPainter {
     canvas.drawRRect(
       RRect.fromRectAndRadius(fundo, const Radius.circular(Raios.controle)),
       Paint()
-        ..color = Cores.filete
+        ..color = cores.filete
         ..style = PaintingStyle.stroke,
     );
   }
@@ -85,28 +86,28 @@ class PintorFaixaFrequencias extends CustomPainter {
     for (final db in escala.marcas) {
       final y = escala.altura(db) * altura;
       canvas.drawLine(Offset(0, y), Offset(size.width, y), Paint()
-        ..color = Cores.filete.withValues(alpha: db == 0 ? 1 : Opacidades.gradeSecundaria)
+        ..color = cores.filete.withValues(alpha: db == 0 ? 1 : Opacidades.gradeSecundaria)
         ..strokeWidth = Medidas.filete);
-      pintarRotuloDoEixo(canvas, rotuloDoDb(db), Medidas.fonteReguaFrequencias,
+      pintarRotuloDoEixo(canvas, cores, rotuloDoDb(db), Medidas.fonteReguaFrequencias,
           (texto) => Offset(Espacos.xs, (y - texto.height / 2).clamp(0.0, altura - texto.height)));
     }
   }
 
   void _marcas(Canvas canvas, Size size, Rect fundo) {
     final linha = Paint()
-      ..color = Cores.filete
+      ..color = cores.filete
       ..strokeWidth = Medidas.filete;
     for (final MapEntry(key: fracao, value: texto) in rotulos.entries) {
       final x = fracao * size.width;
       canvas.drawLine(Offset(x, fundo.top), Offset(x, fundo.bottom), linha);
-      pintarRotuloDoEixo(canvas, texto, Medidas.fonteReguaFrequencias,
+      pintarRotuloDoEixo(canvas, cores, texto, Medidas.fonteReguaFrequencias,
           (tamanho) => Offset(x - tamanho.width / 2, fundo.bottom + Espacos.xxs));
     }
   }
 
   @override
   bool shouldRepaint(PintorFaixaFrequencias antigo) =>
-      !_mesmas(antigo.raias, raias) || antigo.rotulos.length != rotulos.length || antigo.escala != escala;
+      antigo.cores != cores || !_mesmas(antigo.raias, raias) || antigo.rotulos.length != rotulos.length || antigo.escala != escala;
 
   static bool _mesmas(List<RaiaBanda> a, List<RaiaBanda> b) =>
       a.length == b.length && [for (var i = 0; i < a.length; i++) a[i] == b[i]].every((igual) => igual);
@@ -114,8 +115,9 @@ class PintorFaixaFrequencias extends CustomPainter {
 
 /// A alça: traço vertical no meio do alvo, puxador redondo e o valor ao lado.
 class PintorAlcaFrequencia extends CustomPainter {
-  const PintorAlcaFrequencia(
-      {required this.texto, required this.estilo, this.aEsquerda = false, this.acima = 0, this.abaixo = 0});
+  const PintorAlcaFrequencia({required this.cores, required this.texto, required this.estilo, this.aEsquerda = false, this.acima = 0, this.abaixo = 0});
+
+  final Paleta cores;
 
   final String texto;
   final TextStyle? estilo;
@@ -133,12 +135,12 @@ class PintorAlcaFrequencia extends CustomPainter {
       Offset(x, -acima),
       Offset(x, size.height + abaixo),
       Paint()
-        ..color = Cores.texto
+        ..color = cores.texto
         ..strokeWidth = Medidas.tracoAlcaFrequencia,
     );
     final centro = Offset(x, size.height / 2);
-    canvas.drawCircle(centro, Medidas.puxadorAlcaFrequencia / 2, Paint()..color = Cores.texto);
-    canvas.drawCircle(centro, Medidas.puxadorAlcaFrequencia / 4, Paint()..color = Cores.tintaMarcador);
+    canvas.drawCircle(centro, Medidas.puxadorAlcaFrequencia / 2, Paint()..color = cores.texto);
+    canvas.drawCircle(centro, Medidas.puxadorAlcaFrequencia / 4, Paint()..color = cores.tintaMarcador);
     final pintor = TextPainter(text: TextSpan(text: texto, style: estilo), textDirection: TextDirection.ltr)..layout();
     final dx = aEsquerda ? x - Espacos.xs - pintor.width : x + Espacos.xs;
     pintor.paint(canvas, Offset(dx, Espacos.xxs));
@@ -146,5 +148,5 @@ class PintorAlcaFrequencia extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(PintorAlcaFrequencia antigo) => antigo.texto != texto || antigo.aEsquerda != aEsquerda || antigo.acima != acima || antigo.abaixo != abaixo;
+  bool shouldRepaint(PintorAlcaFrequencia antigo) => antigo.cores != cores || antigo.texto != texto || antigo.aEsquerda != aEsquerda || antigo.acima != acima || antigo.abaixo != abaixo;
 }

@@ -23,7 +23,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(tester.widget<BotaoOpcao>(marcada).marcada, isTrue, reason: 'Click é o padrão do metrônomo');
 
-    expect(contornoDoBotao(tester, marcada), const BorderSide(color: Cores.tally, width: Medidas.contornoSelecao));
+    expect(contornoDoBotao(tester, marcada), BorderSide(color: Paleta.escura.tally, width: Medidas.contornoSelecao));
     expect(find.descendant(of: marcada, matching: find.byIcon(Icons.check)), findsOneWidget);
     expect(find.descendant(of: vizinha, matching: find.byIcon(Icons.check)), findsNothing);
   });

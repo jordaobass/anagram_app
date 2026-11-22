@@ -81,7 +81,7 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
           if (_linha2SemSplit)
             Text(l.smLinha2SemSplit,
                 key: const ValueKey('aviso-linha2-sem-split'),
-                style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
+                style: tema.bodySmall?.copyWith(color: context.cores.textoSecundario)),
         ]),
       ),
       IconButton(
@@ -148,7 +148,7 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
   Widget _tituloCategoria(BuildContext context, String categoria) => Padding(
         padding: const EdgeInsets.only(top: Espacos.m, bottom: Espacos.xs),
         child: Text(categoria.toUpperCase(),
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.textoSecundario)),
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: context.cores.textoSecundario)),
       );
 }
 
@@ -174,7 +174,7 @@ class _ItemEfeito extends StatelessWidget {
           child: ArteBlocoWidget(definicao: definicao, tamanho: Medidas.arteBiblioteca)),
       title: Text(l.nomeDoBloco(definicao)),
       subtitle: Text(motivo == null ? l.familia(definicao.familia) : textoDaRecusa(l, motivo)),
-      trailing: Container(width: Medidas.fitaCategoria, height: Medidas.alvoMinimo, color: Cores.daFita(definicao.uri, definicao.familia)),
+      trailing: Container(width: Medidas.fitaCategoria, height: Medidas.alvoMinimo, color: context.cores.daFita(definicao.uri, definicao.familia)),
       onTap: () => Navigator.pop(context, definicao),
     );
   }

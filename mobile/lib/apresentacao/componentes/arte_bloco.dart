@@ -58,37 +58,38 @@ class ArteBlocoWidget extends ConsumerWidget {
     final arte = indice?.arteDe(definicao,
             arquivoIr: arquivoIr, fotosDoSuite: ref.watch(fotosDoSuiteProvider), gearDoTom: gearDoTom) ??
         arteDesenhada(definicao);
-    if (ligado) return SizedBox.square(dimension: tamanho, child: _desenho(arte));
+    final cores = context.cores;
+    if (ligado) return SizedBox.square(dimension: tamanho, child: _desenho(arte, cores));
     return SizedBox.square(
       dimension: tamanho,
       child: Stack(fit: StackFit.expand, children: [
-        _apagado(arte),
+        _apagado(arte, cores),
         const Align(alignment: Alignment.bottomRight, child: _SeloDesligado()),
       ]),
     );
   }
 
   /// A imagem de bypass da pedaleira, se houver; senão a arte em cinza.
-  Widget _apagado(ArteBloco arte) {
-    if (arte is ArteMiniatura && arte.caminhoDesligado != null) return _imagem(arte.caminhoDesligado!);
+  Widget _apagado(ArteBloco arte, Paleta cores) {
+    if (arte is ArteMiniatura && arte.caminhoDesligado != null) return _imagem(arte.caminhoDesligado!, cores);
     return Opacity(
       opacity: Opacidades.blocoDesligado,
-      child: ColorFiltered(colorFilter: _cinza, child: _desenho(arte)),
+      child: ColorFiltered(colorFilter: _cinza, child: _desenho(arte, cores)),
     );
   }
 
-  Widget _desenho(ArteBloco arte) => switch (arte) {
-        ArteMiniatura(:final caminhoAsset) => _imagem(caminhoAsset),
-        ArteFotoExterna(:final caminho) => _imagemDe(imagemDeArquivo(caminho)),
-        ArteUtilitario(:final tipo) => CustomPaint(painter: PintorArteUtilitario(tipo)),
-        ArteDaFamilia(:final familia) => CustomPaint(painter: PintorArteFamilia(familia)),
+  Widget _desenho(ArteBloco arte, Paleta cores) => switch (arte) {
+        ArteMiniatura(:final caminhoAsset) => _imagem(caminhoAsset, cores),
+        ArteFotoExterna(:final caminho) => _imagemDe(imagemDeArquivo(caminho), cores),
+        ArteUtilitario(:final tipo) => CustomPaint(painter: PintorArteUtilitario(tipo, cores: cores)),
+        ArteDaFamilia(:final familia) => CustomPaint(painter: PintorArteFamilia(familia, cores: cores)),
       };
 
-  Widget _imagem(String caminho) => _imagemDe(AssetImage(caminho));
+  Widget _imagem(String caminho, Paleta cores) => _imagemDe(AssetImage(caminho), cores);
 
   /// Imagem que falha (arquivo apagado, sem disco) vira a arte desenhada.
-  Widget _imagemDe(ImageProvider? imagem) {
-    final reserva = _desenho(arteDesenhada(definicao));
+  Widget _imagemDe(ImageProvider? imagem, Paleta cores) {
+    final reserva = _desenho(arteDesenhada(definicao), cores);
     if (imagem == null) return reserva;
     return Image(image: imagem, fit: BoxFit.contain, filterQuality: FilterQuality.medium, errorBuilder: (_, _, _) => reserva);
   }
@@ -105,13 +106,13 @@ class _SeloDesligado extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: Espacos.xs),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Cores.fundoCase,
+          color: context.cores.fundoCase,
           borderRadius: BorderRadius.circular(Raios.canto),
-          border: Border.all(color: Cores.ledDesligado),
+          border: Border.all(color: context.cores.ledDesligado),
         ),
         child: Text(
           AppLocalizations.of(context).uiSeloDesligado,
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.aluminioClaro, height: 1),
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: context.cores.aluminioClaro, height: 1),
         ),
       );
 }

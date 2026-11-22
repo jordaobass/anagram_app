@@ -44,7 +44,7 @@ class PainelSintetizador extends StatelessWidget {
   Widget build(BuildContext context) => LayoutBuilder(builder: (context, restricoes) {
         final largura = restricoes.maxWidth;
         final duas = largura >= Medidas.larguraCartaoSynth * 2 + Espacos.m;
-        final secoes = SecoesSintetizador(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena);
+        final secoes = SecoesSintetizador(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, cores: context.cores);
         final fileiras = duas ? _pares : [for (final s in SecaoSintetizador.values) [s]];
         return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           for (final fileira in fileiras) ...[

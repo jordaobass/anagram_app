@@ -34,7 +34,7 @@ void main() {
     _todosComIcone(tester);
     final limpar = find.byKey(const ValueKey('op-limpar'));
     final texto = tester.widget<Text>(find.descendant(of: limpar, matching: find.text(textosPt.mpLimpar)));
-    expect(texto.style?.color, Cores.erro);
+    expect(texto.style?.color, Paleta.escura.erro);
     final divisores = find.byType(PopupMenuDivider).evaluate().map((e) => tester.getCenter(find.byWidget(e.widget)).dy);
     final exportar = tester.getCenter(find.byKey(const ValueKey('op-exportar'))).dy;
     expect(divisores.any((y) => y > exportar && y < tester.getCenter(limpar).dy), isTrue,
@@ -63,6 +63,6 @@ void main() {
 
     final cancelar = find.widgetWithText(TextButton, textosPt.cancelar);
     final estilo = tester.widget<TextButton>(cancelar).style;
-    expect(estilo?.foregroundColor?.resolve({}), Cores.texto);
+    expect(estilo?.foregroundColor?.resolve({}), Paleta.escura.texto);
   });
 }

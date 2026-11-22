@@ -33,7 +33,7 @@ void main() {
 
     final anel = contornoDoBotao(tester, demonstracao);
     expect(anel.width, Medidas.contornoSelecao);
-    expect(contraste(anel.color, Cores.fundoCase), greaterThanOrEqualTo(3));
+    expect(contraste(anel.color, Paleta.escura.fundoCase), greaterThanOrEqualTo(3));
   });
 
   testWidgets('should_draw_a_ring_that_stands_out_from_the_fill_on_a_focused_filled_button', (tester) async {

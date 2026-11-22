@@ -100,7 +100,7 @@ class _MenuArquivo extends ConsumerWidget {
         enabled: !parado,
         // no celular, ⋯; no computador, a pasta de arquivo (o ⇅ não dizia o
         // que era), do tamanho de um ícone para a fita do nome não apertar
-        icon: Icon(comDescartar ? Icons.more_horiz : Icons.folder_open_outlined, color: Cores.texto),
+        icon: Icon(comDescartar ? Icons.more_horiz : Icons.folder_open_outlined, color: context.cores.texto),
         onSelected: (acao) => switch (acao) {
           _AcaoArquivo.descartar => ref.read(editorProvider.notifier).descartarEdicoes(),
           _AcaoArquivo.recarregar => executarRecarregar(context, ref),

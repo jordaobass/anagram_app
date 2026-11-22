@@ -18,7 +18,7 @@ class SecaoVersaoNova extends ConsumerWidget {
       SwitchListTile(
         key: const ValueKey('versao-nova-verificar'),
         contentPadding: EdgeInsets.zero,
-        activeThumbColor: Cores.tally,
+        activeThumbColor: context.cores.tally,
         title: Text(l.versaoNovaVerificar),
         subtitle: Text(l.versaoNovaConsultaTexto),
         value: estado.configuracao.verificarAoAbrir,

@@ -20,8 +20,8 @@ void main() {
     await tester.pumpAndSettle();
 
     final barra = _materialDaBarra(tester);
-    expect(barra.color, Cores.painel);
+    expect(barra.color, Paleta.escura.painel);
     expect(barra.elevation == 0 || barra.surfaceTintColor == Colors.transparent, isTrue, reason: 'sem tinta âmbar');
-    expect((barra.shape! as Border).bottom.color, Cores.filete);
+    expect((barra.shape! as Border).bottom.color, Paleta.escura.filete);
   });
 }

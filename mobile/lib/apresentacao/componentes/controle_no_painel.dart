@@ -72,7 +72,7 @@ class ControleNoPainel extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
-    final marca = Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.aluminioClaro);
+    final marca = Theme.of(context).textTheme.labelSmall?.copyWith(color: context.cores.aluminioClaro);
     final chaves = ref.watch(editorProvider.select(_controlesDoParametro));
     final controles = [
       for (final chave in chaves.split(' '))
@@ -83,7 +83,7 @@ class ControleNoPainel extends ConsumerWidget {
       child: GestureDetector(
         onSecondaryTapUp: (detalhes) => _atribuir(context, ref, detalhes.globalPosition),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          _controle(ref),
+          _controle(context, ref),
           // como o valor "atribuído ao snapshot" do HX: esta cena sobrepõe
           // (neutro: o âmbar é da ação e da seleção, não de marca informativa)
           if (bloco.sobreposicaoDaCena(parametro.simbolo, cena) != null) Text(l.soNaCena(cena), style: marca),
@@ -111,9 +111,9 @@ class ControleNoPainel extends ConsumerWidget {
     abrirMenuAtribuir(context, ref, bloco.posicao, parametro, origem);
   }
 
-  Widget _controle(WidgetRef ref) {
+  Widget _controle(BuildContext context, WidgetRef ref) {
     final p = parametro;
-    final cor = Cores.daFamilia(definicao.familia);
+    final cor = context.cores.daFamilia(definicao.familia);
     final valor = valorNaCena(bloco, p, cena);
     if (construtor case final desenhar?) {
       return KeyedSubtree(key: ValueKey('param-${p.simbolo}'), child: desenhar(valor, cor, alterar(ref, p, bloco)));

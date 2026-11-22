@@ -94,8 +94,8 @@ class _EstadoPainelMultibanda extends ConsumerState<PainelMultibanda> {
       children: [
         SeletorTemplates(bloco: widget.bloco, definicao: widget.definicao, cena: widget.cena),
         Wrap(spacing: Espacos.m, children: [
-          if (temLimiar) _legenda(context, 'Threshold', Cores.linhaThreshold),
-          _legenda(context, 'Level', Cores.linhaLevel),
+          if (temLimiar) _legenda(context, 'Threshold', context.cores.linhaThreshold),
+          _legenda(context, 'Level', context.cores.linhaLevel),
         ]),
       ],
     );
@@ -165,7 +165,7 @@ class _EstadoPainelMultibanda extends ConsumerState<PainelMultibanda> {
 
   Widget _explicacao(BuildContext context, String texto) => ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: Medidas.larguraColunaBanda),
-        child: Text(texto, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario)),
+        child: Text(texto, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.textoSecundario)),
       );
 
   List<Widget> _outros(BuildContext context) {

@@ -58,7 +58,7 @@ class _DialogoPedidoSalvar extends ConsumerWidget {
       actionsAlignment: MainAxisAlignment.spaceBetween,
       actions: [
         TextButton(
-          style: TextButton.styleFrom(foregroundColor: Cores.texto),
+          style: TextButton.styleFrom(foregroundColor: context.cores.texto),
           onPressed: () => Navigator.pop(context, false),
           child: Text(l.mcpAgoraNao),
         ),

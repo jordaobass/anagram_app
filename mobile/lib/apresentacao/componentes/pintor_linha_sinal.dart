@@ -49,13 +49,15 @@ class GeometriaGrade {
 }
 
 class PintorLinhaSinal extends CustomPainter {
-  const PintorLinhaSinal({
+  const PintorLinhaSinal({required this.cores, 
     required this.geometria,
     required this.ocupadas,
     this.ocupadas2 = const [],
     this.casaSplit,
     this.casaMerge,
   });
+
+  final Paleta cores;
 
   final GeometriaGrade geometria;
 
@@ -65,26 +67,26 @@ class PintorLinhaSinal extends CustomPainter {
   final int? casaSplit;
   final int? casaMerge;
 
-  static final _fio = Paint()
-    ..color = Cores.aluminio
+  Paint get _fio => Paint()
+    ..color = cores.aluminio
     ..style = PaintingStyle.stroke
     ..strokeWidth = Medidas.linhaSinal
     ..strokeJoin = StrokeJoin.round;
 
-  static final _fioDoSplit = Paint()
-    ..color = Cores.sinalSplit
+  Paint get _fioDoSplit => Paint()
+    ..color = cores.sinalSplit
     ..style = PaintingStyle.stroke
     ..strokeWidth = Medidas.linhaSinal
     ..strokeJoin = StrokeJoin.round;
 
-  static final _fioDoMerge = Paint()
-    ..color = Cores.sinalMerge
+  Paint get _fioDoMerge => Paint()
+    ..color = cores.sinalMerge
     ..style = PaintingStyle.stroke
     ..strokeWidth = Medidas.linhaSinal
     ..strokeJoin = StrokeJoin.round;
 
-  static final _fioVazio = Paint()
-    ..color = Cores.filete
+  Paint get _fioVazio => Paint()
+    ..color = cores.filete
     ..style = PaintingStyle.stroke
     ..strokeWidth = Medidas.linhaSinal;
 
@@ -121,13 +123,13 @@ class PintorLinhaSinal extends CustomPainter {
 
   /// O jaque: um anel no fim do fio e o rótulo acima.
   void _jaque(Canvas canvas, Offset centro, String rotulo) {
-    canvas.drawCircle(centro, Medidas.raioJaque, Paint()..color = Cores.fundoCase);
+    canvas.drawCircle(centro, Medidas.raioJaque, Paint()..color = cores.fundoCase);
     canvas.drawCircle(centro, Medidas.raioJaque, _fio);
     final texto = TextPainter(
       text: TextSpan(
         text: rotulo,
-        style: const TextStyle(
-            fontFamily: Fontes.rotulo, fontSize: Medidas.rotuloJaque, fontWeight: FontWeight.w700, color: Cores.aluminio),
+        style: TextStyle(
+            fontFamily: Fontes.rotulo, fontSize: Medidas.rotuloJaque, fontWeight: FontWeight.w700, color: cores.aluminio),
       ),
       textDirection: TextDirection.ltr,
     )..layout();
@@ -137,7 +139,7 @@ class PintorLinhaSinal extends CustomPainter {
 
   @override
   bool shouldRepaint(PintorLinhaSinal antigo) =>
-      antigo.casaSplit != casaSplit || antigo.casaMerge != casaMerge ||
+      antigo.cores != cores || antigo.casaSplit != casaSplit || antigo.casaMerge != casaMerge ||
       antigo.geometria.larguraCasa != geometria.larguraCasa || !_mesmas(antigo.ocupadas, ocupadas) ||
       !_mesmas(antigo.ocupadas2, ocupadas2);
 

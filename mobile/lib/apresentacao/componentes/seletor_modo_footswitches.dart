@@ -74,7 +74,7 @@ class _BotaoModo extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final nome = nomeDoModo(l, modo);
-    final cor = BotaoTally.corDoTexto(ativo: ativo, habilitado: habilitado);
+    final cor = BotaoTally.corDoTexto(context.cores, ativo: ativo, habilitado: habilitado);
     return BotaoTally(
       chave: ValueKey('modo-footswitches-${modo.valor}'),
       ativo: ativo,
@@ -109,9 +109,9 @@ class _Rodape extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.only(top: Espacos.xs),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(l.fmDica, style: estilo?.copyWith(color: Cores.textoSecundario)),
-        if (recusado) Text(l.fmErro, style: estilo?.copyWith(color: Cores.erro)),
-        if (lido && !disponivel) Text(l.fmIndisponivel, style: estilo?.copyWith(color: Cores.textoSecundario)),
+        Text(l.fmDica, style: estilo?.copyWith(color: context.cores.textoSecundario)),
+        if (recusado) Text(l.fmErro, style: estilo?.copyWith(color: context.cores.erro)),
+        if (lido && !disponivel) Text(l.fmIndisponivel, style: estilo?.copyWith(color: context.cores.textoSecundario)),
       ]),
     );
   }
@@ -132,7 +132,7 @@ class AvisoModoNosControles extends ConsumerWidget {
       child: Text(
         l.fmAvisoControles(nomeDoModo(l, modo)),
         key: const ValueKey('aviso-modo-controles'),
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.aluminioClaro),
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.aluminioClaro),
       ),
     );
   }

@@ -5,14 +5,16 @@ import 'package:flutter/rendering.dart';
 import '../tema/tokens.dart';
 
 class PintorEncaixe extends CustomPainter {
-  const PintorEncaixe();
+  const PintorEncaixe({required this.cores});
+
+  final Paleta cores;
 
   @override
   void paint(Canvas canvas, Size size) {
     final caixa = RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(Raios.controle));
-    canvas.drawRRect(caixa, Paint()..color = Cores.fundoCase);
+    canvas.drawRRect(caixa, Paint()..color = cores.fundoCase);
     final tinta = Paint()
-      ..color = Cores.filete
+      ..color = cores.filete
       ..style = PaintingStyle.stroke
       ..strokeWidth = Medidas.contornoSelecao;
     for (final metrica in (Path()..addRRect(caixa.deflate(Medidas.contornoSelecao / 2))).computeMetrics()) {
@@ -23,5 +25,5 @@ class PintorEncaixe extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(PintorEncaixe antigo) => false;
+  bool shouldRepaint(PintorEncaixe antigo) => antigo.cores != cores;
 }

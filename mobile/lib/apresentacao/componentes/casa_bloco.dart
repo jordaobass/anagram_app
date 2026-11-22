@@ -57,8 +57,8 @@ class CasaBloco extends ConsumerWidget {
             duration: Duracoes.curta,
             width: largura,
             padding: const EdgeInsets.all(Espacos.xs),
-            decoration: _moldura(),
-            child: atual == null ? _vazia() : _ocupada(context, ref, atual),
+            decoration: _moldura(context.cores),
+            child: atual == null ? _vazia(context.cores) : _ocupada(context, ref, atual),
           ),
         ),
       ),
@@ -74,11 +74,11 @@ class CasaBloco extends ConsumerWidget {
     return ligado ? l.blocoLigado(nome) : l.blocoDesligado(nome);
   }
 
-  BoxDecoration _moldura() => BoxDecoration(
-        color: selecionado ? Cores.painelElevado : Colors.transparent,
+  BoxDecoration _moldura(Paleta cores) => BoxDecoration(
+        color: selecionado ? cores.painelElevado : Colors.transparent,
         borderRadius: BorderRadius.circular(Raios.controle),
         border: Border.all(
-          color: selecionado ? Cores.tally : Colors.transparent,
+          color: selecionado ? cores.tallyTinta : Colors.transparent,
           width: Medidas.contornoSelecao,
         ),
       );
@@ -86,11 +86,11 @@ class CasaBloco extends ConsumerWidget {
   double get _caixa => _interno * Medidas.arteNaCasa;
 
   /// Encaixe tracejado do tamanho da caixa do pedal, no mesmo lugar dela.
-  Widget _vazia() => SizedBox.square(
+  Widget _vazia(Paleta cores) => SizedBox.square(
         dimension: _caixa,
         child: CustomPaint(
-          painter: const PintorEncaixe(),
-          child: Center(child: Icon(Icons.add, size: _caixa * Medidas.marcaCasaVazia, color: Cores.textoSecundario)),
+          painter: PintorEncaixe(cores: cores),
+          child: Center(child: Icon(Icons.add, size: _caixa * Medidas.marcaCasaVazia, color: cores.textoSecundario)),
         ),
       );
 
@@ -109,7 +109,7 @@ class CasaBloco extends ConsumerWidget {
                 ligado: ligado,
                 arquivoIr: atual.arquivoDeIr)),
         const SizedBox(height: Espacos.xs),
-        Container(height: Medidas.fitaCategoria, color: Cores.daFita(definicao.uri, definicao.familia)),
+        Container(height: Medidas.fitaCategoria, color: context.cores.daFita(definicao.uri, definicao.familia)),
         const SizedBox(height: Espacos.xxs),
         SizedBox(
             height: Medidas.alturaRotuloCasa,
@@ -122,7 +122,7 @@ class CasaBloco extends ConsumerWidget {
   /// carrega arquivo (TONE3000, neural) mostra o tom: o tipo já está na arte.
   Widget _nomeEmbaixo(BuildContext context, DefinicaoBloco definicao, String? modelo) {
     final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(
-          color: ligado ? Cores.texto : Cores.textoSecundario,
+          color: ligado ? context.cores.texto : context.cores.textoSecundario,
           height: Medidas.entrelinhaRotuloCasa,
         );
     final l = AppLocalizations.of(context);
@@ -179,9 +179,9 @@ class CaixaPedal extends StatelessWidget {
         height: tamanho,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Cores.painel,
+          color: context.cores.painel,
           borderRadius: BorderRadius.circular(Raios.controle),
-          border: Border.all(color: Cores.filete),
+          border: Border.all(color: context.cores.filete),
         ),
         child: child,
       );

@@ -23,19 +23,19 @@ class BotaoOpcao extends StatelessWidget {
   EdgeInsetsGeometry? get _margem => estreito ? const EdgeInsets.symmetric(horizontal: Espacos.s) : null;
 
   @override
-  Widget build(BuildContext context) => Semantics(selected: marcada, button: true, child: _botao());
+  Widget build(BuildContext context) => Semantics(selected: marcada, button: true, child: _botao(context.cores));
 
-  Widget _botao() {
+  Widget _botao(Paleta cores) {
     if (!marcada) {
       return OutlinedButton(onPressed: aoTocar, style: OutlinedButton.styleFrom(padding: _margem), child: _rotulo());
     }
-    if (Cores.pareceDesabilitada(cor)) {
+    if (Paleta.pareceDesabilitada(cor)) {
       return OutlinedButton(
         onPressed: aoTocar,
         style: OutlinedButton.styleFrom(
-          backgroundColor: Cores.painelElevado,
-          foregroundColor: Cores.texto,
-          side: const BorderSide(color: Cores.tally, width: Medidas.contornoSelecao),
+          backgroundColor: cores.painelElevado,
+          foregroundColor: cores.texto,
+          side: BorderSide(color: cores.tallyTinta, width: Medidas.contornoSelecao),
           padding: _margem,
         ),
         child: _rotulo(marca: true),
@@ -43,7 +43,7 @@ class BotaoOpcao extends StatelessWidget {
     }
     return FilledButton(
       onPressed: aoTocar,
-      style: FilledButton.styleFrom(backgroundColor: cor, foregroundColor: Cores.tintaMarcador, padding: _margem),
+      style: FilledButton.styleFrom(backgroundColor: cor, foregroundColor: cores.tintaMarcador, padding: _margem),
       child: _rotulo(),
     );
   }

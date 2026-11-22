@@ -29,7 +29,7 @@ class ControleAjuste extends ConsumerWidget {
       key: ValueKey('ajuste-${definicao.id}'),
       parametro: faixa.parametro,
       valor: valor,
-      cor: cor ?? Cores.linhaLevel,
+      cor: cor ?? context.cores.linhaLevel,
       tamanho: tamanho ?? Medidas.knobCompacto,
       forma: forma,
       rotulo: rotulo,

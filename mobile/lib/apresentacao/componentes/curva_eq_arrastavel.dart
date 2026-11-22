@@ -80,7 +80,7 @@ class _CurvaEqArrastavelState extends State<CurvaEqArrastavel> {
           final tamanho = Size(restricoes.maxWidth, Medidas.alturaCurvaGlobalEq);
           final desenho = CustomPaint(
             size: tamanho,
-            painter: PintorGlobalEq(widget.bandas, cor: widget.cor, ativa: _ativa, ganhoGeral: widget.ganhoGeral),
+            painter: PintorGlobalEq(widget.bandas, cores: context.cores, cor: widget.cor, ativa: _ativa, ganhoGeral: widget.ganhoGeral),
           );
           if (widget.aoArrastar == null) return desenho;
           // arraste vertical e horizontal (não "pan"): assim o ponto vence o

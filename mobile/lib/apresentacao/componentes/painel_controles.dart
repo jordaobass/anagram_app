@@ -87,7 +87,7 @@ class _CabecalhoControles extends ConsumerWidget {
             child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: Medidas.alvoMinimo),
               child: Row(children: [
-                Icon(aberto ? Icons.expand_less : Icons.expand_more, color: Cores.aluminioClaro),
+                Icon(aberto ? Icons.expand_less : Icons.expand_more, color: context.cores.aluminioClaro),
                 const SizedBox(width: Espacos.s),
                 Flexible(child: Text(l.ctlTitulo.toUpperCase(), style: tema.labelLarge)),
                 const SizedBox(width: Espacos.m),
@@ -132,8 +132,8 @@ class CartaoControle extends ConsumerWidget {
           constraints: const BoxConstraints(minHeight: Medidas.alvoMinimo),
           padding: const EdgeInsets.all(Espacos.s),
           decoration: BoxDecoration(
-            color: atual == null ? null : Cores.painelElevado,
-            border: Border.all(color: Cores.filete, width: Medidas.filete),
+            color: atual == null ? null : context.cores.painelElevado,
+            border: Border.all(color: context.cores.filete, width: Medidas.filete),
             borderRadius: BorderRadius.circular(Raios.controle),
           ),
           child: _conteudo(context, ref, l, atual),
@@ -144,7 +144,7 @@ class CartaoControle extends ConsumerWidget {
 
   Widget _conteudo(BuildContext context, WidgetRef ref, AppLocalizations l, ControlePedaleira? atual) {
     final tema = Theme.of(context).textTheme;
-    final apoio = tema.bodySmall?.copyWith(color: Cores.textoSecundario);
+    final apoio = tema.bodySmall?.copyWith(color: context.cores.textoSecundario);
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
       IdentidadeControle(id: id),
       const SizedBox(height: Espacos.xs),
@@ -153,7 +153,7 @@ class CartaoControle extends ConsumerWidget {
       for (final alvo in atual?.alvos ?? const <AlvoControle>[]) ...[
         const SizedBox(height: Espacos.xs),
         FitaDoAlvo(
-            alvo: AlvoNaTela.de(ref, documento, alvo), estilo: tema.labelSmall?.copyWith(color: Cores.textoSecundario)),
+            alvo: AlvoNaTela.de(ref, documento, alvo), estilo: tema.labelSmall?.copyWith(color: context.cores.textoSecundario)),
       ],
     ]);
   }
@@ -169,7 +169,7 @@ class IdentidadeControle extends StatelessWidget {
   Widget build(BuildContext context) {
     final tema = Theme.of(context).textTheme;
     return Row(crossAxisAlignment: CrossAxisAlignment.baseline, textBaseline: TextBaseline.alphabetic, children: [
-      Text(AppLocalizations.of(context).siglaControle(id), style: tema.labelMedium?.copyWith(color: Cores.aluminioClaro)),
+      Text(AppLocalizations.of(context).siglaControle(id), style: tema.labelMedium?.copyWith(color: context.cores.aluminioClaro)),
       if (id.tipo != TipoControle.expressao) ...[
         const SizedBox(width: Espacos.xs),
         Text('${id.numero}', style: tema.displaySmall?.copyWith(fontSize: tema.titleLarge?.fontSize)),

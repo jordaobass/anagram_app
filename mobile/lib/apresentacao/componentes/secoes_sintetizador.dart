@@ -17,14 +17,16 @@ import 'controle_parametro.dart';
 import 'desenhos_sintetizador.dart';
 
 class SecoesSintetizador {
-  const SecoesSintetizador({required this.arranjo, required this.bloco, required this.definicao, required this.cena});
+  const SecoesSintetizador(
+      {required this.arranjo, required this.bloco, required this.definicao, required this.cena, required this.cores});
 
   final ArranjoSintetizador arranjo;
   final BlocoPreset bloco;
   final DefinicaoBloco definicao;
   final int cena;
+  final Paleta cores;
 
-  Color get _cor => Cores.daFamilia(definicao.familia);
+  Color get _cor => cores.daFamilia(definicao.familia);
 
   num _valor(String simbolo) {
     final p = definicao.parametro(simbolo);
@@ -54,10 +56,11 @@ class SecoesSintetizador {
   Widget? _desenho(SecaoSintetizador secao) => switch (secao) {
         SecaoSintetizador.filtro => CaixaDesenho(
             key: const ValueKey('ax-desenho-filtro'),
-            pintor: PintorFiltro(corte: _valor(arranjo.corte), ressonancia: _valor(arranjo.ressonancia), cor: _cor)),
+            pintor: PintorFiltro(cores: cores, corte: _valor(arranjo.corte), ressonancia: _valor(arranjo.ressonancia), cor: _cor)),
         SecaoSintetizador.envelope => CaixaDesenho(
             key: const ValueKey('ax-desenho-envelope'),
             pintor: PintorEnvelope(
+                cores: cores,
                 ataque: _valor(arranjo.ataque),
                 decaimento: _valor(arranjo.decaimento),
                 liberacao: _valor(arranjo.liberacao),
@@ -78,7 +81,7 @@ class SecoesSintetizador {
         Text(o.titulo.toUpperCase(), style: Theme.of(context).textTheme.labelLarge),
         const SizedBox(height: Espacos.xs),
         if (forma != null) ...[
-          CaixaDesenho(key: ValueKey('ax-onda-${o.onda}'), pintor: PintorOnda(forma: forma, cor: _cor)),
+          CaixaDesenho(key: ValueKey('ax-onda-${o.onda}'), pintor: PintorOnda(cores: cores, forma: forma, cor: _cor)),
           const SizedBox(height: Espacos.s),
         ],
         if (onda != null) _noPainel(onda, 'Wave', Medidas.larguraOsciladorSynth, seletor: true),

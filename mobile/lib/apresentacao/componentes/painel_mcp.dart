@@ -25,7 +25,7 @@ class PainelMcp extends ConsumerWidget {
       SwitchListTile(
         key: const ValueKey('mcp-permitir'),
         contentPadding: EdgeInsets.zero,
-        activeThumbColor: Cores.tally,
+        activeThumbColor: context.cores.tally,
         title: Text(l.mcpPermitir),
         subtitle: Text(l.mcpPermitirTexto),
         value: estado.configuracao.ativo,
@@ -42,7 +42,7 @@ class PainelMcp extends ConsumerWidget {
         _CopiarConfiguracao(endereco: _endereco(estado), token: token),
       ],
       const SizedBox(height: Espacos.l),
-      Text(l.mcpLimitacoes, style: tema.bodyMedium?.copyWith(color: Cores.textoSecundario)),
+      Text(l.mcpLimitacoes, style: tema.bodyMedium?.copyWith(color: context.cores.textoSecundario)),
     ]);
   }
 
@@ -62,17 +62,17 @@ class _SituacaoMcp extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final (cor, texto) = switch (situacao) {
-      McpDesligado() => (Cores.ledDesligado, l.mcpEstadoDesligado),
-      McpIniciando() => (Cores.tally, l.mcpEstadoIniciando),
-      final McpEscutando s => (Cores.ledLigado, l.mcpEstadoEscutando(s.endereco)),
-      McpPortaOcupada(:final porta) => (Cores.erro, l.mcpEstadoPortaOcupada(porta)),
+      McpDesligado() => (context.cores.ledDesligado, l.mcpEstadoDesligado),
+      McpIniciando() => (context.cores.tallyTinta, l.mcpEstadoIniciando),
+      final McpEscutando s => (context.cores.ledLigado, l.mcpEstadoEscutando(s.endereco)),
+      McpPortaOcupada(:final porta) => (context.cores.erro, l.mcpEstadoPortaOcupada(porta)),
     };
     return Semantics(
       liveRegion: true,
       child: Row(key: const ValueKey('mcp-situacao'), children: [
         Container(width: Medidas.led, height: Medidas.led, decoration: BoxDecoration(color: cor, shape: BoxShape.circle)),
         const SizedBox(width: Espacos.s),
-        Expanded(child: SelectableText(texto, style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: cor == Cores.erro ? cor : null))),
+        Expanded(child: SelectableText(texto, style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: cor == context.cores.erro ? cor : null))),
       ]),
     );
   }
@@ -96,7 +96,7 @@ class _EstadoToken extends ConsumerState<_Token> {
     final tema = Theme.of(context).textTheme;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(l.mcpToken, style: tema.titleSmall),
-      Text(l.mcpTokenTexto, style: tema.bodyMedium?.copyWith(color: Cores.textoSecundario)),
+      Text(l.mcpTokenTexto, style: tema.bodyMedium?.copyWith(color: context.cores.textoSecundario)),
       const SizedBox(height: Espacos.xs),
       Row(children: [
         Expanded(

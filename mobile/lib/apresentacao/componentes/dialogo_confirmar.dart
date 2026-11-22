@@ -50,7 +50,7 @@ class BotaoCancelarDialogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextButton(
-        style: TextButton.styleFrom(foregroundColor: Cores.texto),
+        style: TextButton.styleFrom(foregroundColor: context.cores.texto),
         onPressed: aoTocar,
         child: Text(rotulo),
       );
@@ -65,8 +65,8 @@ class BotaoConfirmarPerda extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => FilledButton(
-        style: FilledButton.styleFrom(backgroundColor: Cores.fitaAlerta, foregroundColor: Cores.sobreAlerta)
-            .copyWith(side: TemaApp.anelDeFoco(cor: Cores.sobreAlerta)),
+        style: FilledButton.styleFrom(backgroundColor: context.cores.fitaAlerta, foregroundColor: context.cores.sobreAlerta)
+            .copyWith(side: TemaApp.anelDeFoco(context.cores.sobreAlerta)),
         onPressed: aoTocar,
         child: Text(rotulo),
       );

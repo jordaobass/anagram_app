@@ -14,9 +14,9 @@ class FitaGaffer extends StatelessWidget {
   Widget build(BuildContext context) => Container(
         constraints: const BoxConstraints(minHeight: Medidas.alvoMinimo + Espacos.s),
         padding: const EdgeInsets.symmetric(horizontal: Espacos.l, vertical: Espacos.s),
-        decoration: const BoxDecoration(
-          color: Cores.fitaGaffer,
-          border: Border(bottom: BorderSide(color: Cores.fitaGafferSombra, width: Medidas.contornoSelecao)),
+        decoration: BoxDecoration(
+          color: context.cores.fitaGaffer,
+          border: Border(bottom: BorderSide(color: context.cores.fitaGafferSombra, width: Medidas.contornoSelecao)),
         ),
         child: child,
       );

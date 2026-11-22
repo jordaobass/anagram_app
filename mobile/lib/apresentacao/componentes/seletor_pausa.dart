@@ -22,7 +22,7 @@ class AjustePausaUsb extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(l.pausaUsbTitulo, style: tema.titleSmall),
       const SizedBox(height: Espacos.xs),
-      Text(l.pausaUsbTexto, style: tema.bodyMedium?.copyWith(color: Cores.textoSecundario)),
+      Text(l.pausaUsbTexto, style: tema.bodyMedium?.copyWith(color: context.cores.textoSecundario)),
       const SizedBox(height: Espacos.s),
       const SeletorPausa(),
     ]);

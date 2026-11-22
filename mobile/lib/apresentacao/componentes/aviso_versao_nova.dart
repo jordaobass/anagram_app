@@ -33,9 +33,9 @@ class _FaixaVersaoNova extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     final controlador = ref.read(versaoNovaProvider.notifier);
     return Row(mainAxisSize: MainAxisSize.min, children: [
-      const Icon(Icons.system_update_alt, size: Medidas.iconeAvisoVersao, color: Cores.aluminioClaro),
+      Icon(Icons.system_update_alt, size: Medidas.iconeAvisoVersao, color: context.cores.aluminioClaro),
       const SizedBox(width: Espacos.xs),
-      Text(l.versaoNovaNaBarra(release.versao), style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.texto)),
+      Text(l.versaoNovaNaBarra(release.versao), style: Theme.of(context).textTheme.labelMedium?.copyWith(color: context.cores.texto)),
       TextButton(
         key: const ValueKey('versao-nova-baixar'),
         onPressed: () => controlador.baixar(release),
@@ -65,7 +65,7 @@ class _MenuVersaoNova extends ConsumerWidget {
     return PopupMenuButton<_AcaoVersao>(
       key: const ValueKey('versao-nova-menu'),
       tooltip: l.versaoNovaNaBarra(release.versao),
-      icon: const Icon(Icons.system_update_alt, color: Cores.aluminioClaro),
+      icon: Icon(Icons.system_update_alt, color: context.cores.aluminioClaro),
       onSelected: (acao) => acao == _AcaoVersao.baixar ? controlador.baixar(release) : controlador.dispensar(),
       itemBuilder: (_) => [
         PopupMenuItem(value: _AcaoVersao.baixar, height: alturaItemDeMenu, child: Text(l.versaoNovaBaixar)),

@@ -36,7 +36,7 @@ class CasaArrastavel extends ConsumerWidget {
       onAcceptWithDetails: (d) => _soltar(context, ref, d.data, recusa(d.data)),
       builder: (context, candidatos, _) {
         final recusado = candidatos.any((de) => de != null && recusa(de) != null);
-        final alvo = _realcar(child, ativo: candidatos.isNotEmpty, recusado: recusado);
+        final alvo = _realcar(child, context.cores, ativo: candidatos.isNotEmpty, recusado: recusado);
         return bloco == null ? alvo : _alca(alvo);
       },
     );
@@ -70,12 +70,12 @@ class CasaArrastavel extends ConsumerWidget {
 
   /// Contorno no tally sobre a casa que vai receber o bloco; no vermelho de
   /// erro quando soltar ali seria recusado.
-  static Widget _realcar(Widget casa, {required bool ativo, required bool recusado}) => DecoratedBox(
+  static Widget _realcar(Widget casa, Paleta cores, {required bool ativo, required bool recusado}) => DecoratedBox(
         position: DecorationPosition.foreground,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Raios.controle),
           border: Border.all(
-              color: !ativo ? Colors.transparent : (recusado ? Cores.erro : Cores.tally), width: Medidas.contornoSelecao),
+              color: !ativo ? Colors.transparent : (recusado ? cores.erro : cores.tallyTinta), width: Medidas.contornoSelecao),
         ),
         child: casa,
       );

@@ -89,6 +89,6 @@ class TituloSecao extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(bottom: Espacos.s),
         child: Text(texto.toUpperCase(),
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Cores.aluminioClaro)),
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(color: context.cores.aluminioClaro)),
       );
 }

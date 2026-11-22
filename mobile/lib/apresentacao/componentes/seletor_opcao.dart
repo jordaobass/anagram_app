@@ -134,7 +134,7 @@ class _EstadoListaComBusca extends State<_ListaComBusca> {
       Padding(
         padding: const EdgeInsets.only(top: Espacos.s, bottom: Espacos.xs),
         child: Text(nome.toUpperCase(),
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.textoSecundario)),
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: context.cores.textoSecundario)),
       ),
       for (final (indice, opcao) in visiveis)
         ListTile(

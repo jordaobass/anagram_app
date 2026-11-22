@@ -99,9 +99,9 @@ class _CartaoControle extends StatelessWidget {
         constraints: BoxConstraints(minWidth: largura, maxWidth: largura, minHeight: Medidas.alturaCartaoUtilitario),
         padding: const EdgeInsets.all(Espacos.s),
         decoration: BoxDecoration(
-          color: Cores.painel,
+          color: context.cores.painel,
           borderRadius: BorderRadius.circular(Raios.painel),
-          border: Border.all(color: Cores.filete),
+          border: Border.all(color: context.cores.filete),
         ),
         child: Stack(alignment: Alignment.center, children: [
           filho,
@@ -120,9 +120,9 @@ class _Ajuda extends StatelessWidget {
         key: const ValueKey('ajuda-action'),
         message: texto,
         triggerMode: TooltipTriggerMode.tap,
-        child: const SizedBox.square(
+        child: SizedBox.square(
           dimension: Medidas.alvoMinimo,
-          child: Icon(Icons.help_outline, size: Medidas.iconeMenu, color: Cores.textoSecundario),
+          child: Icon(Icons.help_outline, size: Medidas.iconeMenu, color: context.cores.textoSecundario),
         ),
       );
 }
@@ -140,7 +140,7 @@ class _Saida extends StatelessWidget {
         const SizedBox(height: Espacos.s),
         Text(AppLocalizations.of(context).utSoNoVisor,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario)),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.textoSecundario)),
       ]);
 }
 

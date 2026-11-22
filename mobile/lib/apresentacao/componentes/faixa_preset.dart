@@ -69,17 +69,17 @@ class FaixaPreset extends ConsumerWidget {
                 ? rotulo
                 : Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
                     rotulo,
-                    _abrirPresets(l, tema),
+                    _abrirPresets(l, tema, context.cores),
                   ]),
           ),
         ),
       );
   }
 
-  static Widget _abrirPresets(AppLocalizations l, TextTheme tema) => ExcludeSemantics(
+  static Widget _abrirPresets(AppLocalizations l, TextTheme tema, Paleta cores) => ExcludeSemantics(
         child: Row(key: const ValueKey('rotulo-abrir-presets'), mainAxisSize: MainAxisSize.min, children: [
-          Text(l.uiPresets, style: tema.labelMedium?.copyWith(color: Cores.aluminioClaro)),
-          const Icon(Icons.arrow_drop_down, color: Cores.aluminioClaro),
+          Text(l.uiPresets, style: tema.labelMedium?.copyWith(color: cores.aluminioClaro)),
+          Icon(Icons.arrow_drop_down, color: cores.aluminioClaro),
         ]),
       );
 
@@ -105,7 +105,7 @@ class _Avisos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.erro);
+    final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(color: context.cores.erro);
     final l = AppLocalizations.of(context);
     final daFabrica = estado.area == PresetsDeFabrica.idArea;
     final avisos = [
@@ -117,7 +117,7 @@ class _Avisos extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: Espacos.xs),
           child: Text(l.fbAvisoPresetDeFabrica,
-              key: const ValueKey('aviso-preset-fabrica'), style: estilo?.copyWith(color: Cores.textoSecundario)),
+              key: const ValueKey('aviso-preset-fabrica'), style: estilo?.copyWith(color: context.cores.textoSecundario)),
         ),
       for (final aviso in avisos)
         Padding(padding: const EdgeInsets.only(top: Espacos.xs), child: Text(aviso, style: estilo)),
@@ -141,15 +141,15 @@ class _Fita extends StatelessWidget {
         // tocar a fita renomeia: o lápis diz isso sem competir com o nome
         Tooltip(
           message: AppLocalizations.of(context).uiRenomear,
-          child: const Icon(Icons.edit_outlined, size: Medidas.iconeLapis, color: Cores.aluminio),
+          child: Icon(Icons.edit_outlined, size: Medidas.iconeLapis, color: context.cores.aluminio),
         ),
         if (naoSalvo) ...[
           const SizedBox(width: Espacos.s),
           Container(
             key: const ValueKey('selo-nao-salvo'),
             padding: const EdgeInsets.symmetric(horizontal: Espacos.s, vertical: Espacos.xxs),
-            color: Cores.fitaAlerta,
-            child: Text(AppLocalizations.of(context).naoSalvo, style: tema.labelMedium?.copyWith(color: Cores.sobreAlerta)),
+            color: context.cores.fitaAlerta,
+            child: Text(AppLocalizations.of(context).naoSalvo, style: tema.labelMedium?.copyWith(color: context.cores.sobreAlerta)),
           ),
         ],
       ]),

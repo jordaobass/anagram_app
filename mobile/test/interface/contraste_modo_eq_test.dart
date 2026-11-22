@@ -34,7 +34,7 @@ void main() {
   testWidgets('should_reach_4_5_to_1_when_the_eq_mode_name_is_written_on_the_panel', (tester) async {
     for (final modo in ModoEq.values) {
       final cor = await _corDoNome(tester, modo);
-      for (final fundo in [Cores.painel, Cores.painelElevado]) {
+      for (final fundo in [Paleta.escura.painel, Paleta.escura.painelElevado]) {
         expect(contrasteWcag(cor, fundo), greaterThanOrEqualTo(4.5), reason: '${modo.name} sobre $fundo');
       }
     }
@@ -42,7 +42,7 @@ void main() {
 
   test('should_reach_4_5_to_1_when_the_value_is_written_on_the_mode_chip', () {
     for (final modo in ModoEq.values) {
-      expect(contrasteWcag(Cores.textoSobreModoEq, Cores.doModoEq(modo)), greaterThanOrEqualTo(4.5), reason: modo.name);
+      expect(contrasteWcag(Paleta.escura.textoSobreModoEq, Paleta.escura.doModoEq(modo)), greaterThanOrEqualTo(4.5), reason: modo.name);
     }
   });
 }

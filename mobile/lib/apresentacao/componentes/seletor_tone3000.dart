@@ -73,6 +73,6 @@ class SeletorTone3000 extends ConsumerWidget {
         padding: const EdgeInsets.only(bottom: Espacos.s),
         child: Text(texto,
             key: ValueKey(chave),
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario)),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.textoSecundario)),
       );
 }

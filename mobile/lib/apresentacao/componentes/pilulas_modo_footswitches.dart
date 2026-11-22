@@ -35,10 +35,10 @@ abstract final class MovimentoModo {
 }
 
 /// A cor do LED da pedaleira em cada modo.
-Color corDoModo(ModoFootswitches modo) => switch (modo) {
-      ModoFootswitches.preset => Cores.modoPreset,
-      ModoFootswitches.stomp => Cores.modoStomp,
-      ModoFootswitches.scene => Cores.modoScene,
+Color corDoModo(Paleta cores, ModoFootswitches modo) => switch (modo) {
+      ModoFootswitches.preset => cores.modoPreset,
+      ModoFootswitches.stomp => cores.modoStomp,
+      ModoFootswitches.scene => cores.modoScene,
     };
 
 enum _Efeito { pulso, tremor }
@@ -125,7 +125,7 @@ class _PilulasModoFootswitchesState extends ConsumerState<PilulasModoFootswitche
   }
 }
 
-/// Uma pílula: acesa na cor do modo com texto [Cores.sobreModo]; apagada só
+/// Uma pílula: acesa na cor do modo com texto [Paleta.sobreModo]; apagada só
 /// com o contorno de filete e texto secundário. O alvo tem 48 dp.
 class _Pilula extends StatelessWidget {
   const _Pilula({required this.modo, required this.acesa, required this.aoTocar, required this.pulso});
@@ -154,7 +154,7 @@ class _Pilula extends StatelessWidget {
           constraints: const BoxConstraints(minHeight: Medidas.alvoMinimo, minWidth: Medidas.alvoMinimo),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: Espacos.xxs),
-            child: Center(widthFactor: 1, child: _comPulso(_desenho(context, nome))),
+            child: Center(widthFactor: 1, child: _comPulso(context, _desenho(context, nome))),
           ),
         ),
       ),
@@ -162,7 +162,7 @@ class _Pilula extends StatelessWidget {
   }
 
   Widget _desenho(BuildContext context, String nome) {
-    final cor = corDoModo(modo);
+    final cor = corDoModo(context.cores, modo);
     final duracao = MediaQuery.disableAnimationsOf(context) ? Duration.zero : MovimentoModo.troca;
     final estilo = Theme.of(context).textTheme.labelSmall;
     return AnimatedContainer(
@@ -174,22 +174,22 @@ class _Pilula extends StatelessWidget {
       decoration: BoxDecoration(
         color: acesa ? cor : Colors.transparent,
         borderRadius: BorderRadius.circular(Medidas.alturaPilulaModo / 2),
-        border: Border.all(color: acesa ? cor : Cores.filete, width: Medidas.filete),
+        border: Border.all(color: acesa ? cor : context.cores.filete, width: Medidas.filete),
       ),
       child: AnimatedDefaultTextStyle(
         duration: duracao,
         curve: Curves.easeOut,
-        style: (estilo ?? const TextStyle()).copyWith(color: acesa ? Cores.sobreModo : Cores.textoSecundario),
+        style: (estilo ?? const TextStyle()).copyWith(color: acesa ? context.cores.sobreModo : context.cores.textoSecundario),
         child: Text(nome, maxLines: 1),
       ),
     );
   }
 
   /// O pulso: um brilho na cor do modo que cresce e some uma vez.
-  Widget _comPulso(Widget desenho) {
+  Widget _comPulso(BuildContext context, Widget desenho) {
     final animacao = pulso;
     if (animacao == null) return desenho;
-    final cor = corDoModo(modo);
+    final cor = corDoModo(context.cores, modo);
     return AnimatedBuilder(
       key: const ValueKey('pulso-modo-footswitches'),
       animation: animacao,
@@ -221,7 +221,7 @@ class AvisoErroModoFootswitches extends ConsumerWidget {
       padding: const EdgeInsets.only(top: Espacos.xs),
       child: Text(AppLocalizations.of(context).fmErro,
           key: const ValueKey('erro-modo-footswitches'),
-          style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.erro)),
+          style: Theme.of(context).textTheme.labelMedium?.copyWith(color: context.cores.erro)),
     );
   }
 }

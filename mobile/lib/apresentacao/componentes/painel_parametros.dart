@@ -137,7 +137,7 @@ class DicaMontarCadeia extends StatelessWidget {
           AppLocalizations.of(context).dicaMontarCadeiaPara(mouse: arrastoComMouse),
           key: const ValueKey('dica-montar-cadeia'),
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Cores.textoSecundario),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: context.cores.textoSecundario),
         ),
       );
 }

@@ -57,7 +57,7 @@ class _EstadoLinhaAlvo extends ConsumerState<LinhaAlvoControle> {
         ]),
         if (recusa != null)
           Text(recusa == RecusaFaixa.iguais ? l.ctlFaixaIguais : l.ctlFaixaFora,
-              style: tema.labelMedium?.copyWith(color: Cores.erro)),
+              style: tema.labelMedium?.copyWith(color: context.cores.erro)),
       ]),
     );
   }
@@ -69,7 +69,7 @@ class _EstadoLinhaAlvo extends ConsumerState<LinhaAlvoControle> {
           parametro: widget.alvo.parametro,
           rotulo: rotulo,
           valor: valor,
-          cor: widget.alvo.cor ?? Cores.aluminio,
+          cor: widget.alvo.cor(context.cores) ?? context.cores.aluminio,
           tamanho: Medidas.knobFaixaControle,
           aoMudar: (novo, {required arrastando}) {
             if (!arrastando) aoSoltar(novo);

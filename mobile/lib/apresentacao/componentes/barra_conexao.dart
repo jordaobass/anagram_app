@@ -25,13 +25,13 @@ class BarraConexao extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final conexao = ref.watch(conexaoProvider);
-    final (cor, texto) = _resumo(AppLocalizations.of(context), conexao);
+    final (cor, texto) = _resumo(AppLocalizations.of(context), context.cores, conexao);
     return Container(
       constraints: const BoxConstraints(minHeight: Medidas.barraConexaoAltura),
       padding: const EdgeInsets.symmetric(horizontal: Espacos.l),
-      decoration: const BoxDecoration(
-        color: Cores.painel,
-        border: Border(bottom: BorderSide(color: Cores.filete)),
+      decoration: BoxDecoration(
+        color: context.cores.painel,
+        border: Border(bottom: BorderSide(color: context.cores.filete)),
       ),
       child: Row(children: [
         Flexible(child: _Estado(cor: cor, texto: texto, linhas: compacta ? 2 : 1)),
@@ -77,15 +77,15 @@ class BarraConexao extends ConsumerWidget {
     ];
   }
 
-  static (Color, String) _resumo(AppLocalizations l, EstadoConexao estado) => switch (estado) {
-    SemConexao() => (Cores.ledDesligado, l.estadoSemConexao),
-    Conectando(demonstracao: true) => (Cores.tally, l.txEstadoAbrindoDemonstracao),
-    Conectando(automatica: true) => (Cores.tally, l.caProcurando),
-    Conectando(:final meio) => (Cores.tally, l.estadoConectando(TextosDoApp.meioVisivel(meio))),
-    Conectada(demonstracao: true) => (Cores.ledDemonstracao, l.estadoDemonstracao),
+  static (Color, String) _resumo(AppLocalizations l, Paleta cores, EstadoConexao estado) => switch (estado) {
+    SemConexao() => (cores.ledDesligado, l.estadoSemConexao),
+    Conectando(demonstracao: true) => (cores.tallyTinta, l.txEstadoAbrindoDemonstracao),
+    Conectando(automatica: true) => (cores.tallyTinta, l.caProcurando),
+    Conectando(:final meio) => (cores.tallyTinta, l.estadoConectando(TextosDoApp.meioVisivel(meio))),
+    Conectada(demonstracao: true) => (cores.ledDemonstracao, l.estadoDemonstracao),
     Conectada(:final meio, :final firmware) =>
-      (Cores.ledLigado, l.estadoConectada(TextosDoApp.meioVisivel(meio), firmware)),
-    FalhaDeConexao() => (Cores.erro, l.estadoFalha),
+      (cores.ledLigado, l.estadoConectada(TextosDoApp.meioVisivel(meio), firmware)),
+    FalhaDeConexao() => (cores.erro, l.estadoFalha),
   };
 }
 
@@ -102,7 +102,7 @@ class _VersaoNaBarra extends ConsumerWidget {
         AppLocalizations.of(context).versaoAppNaBarra(versao),
         key: const ValueKey('versao-app-barra'),
         maxLines: 1,
-        style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.textoSecundario),
+        style: Theme.of(context).textTheme.labelMedium?.copyWith(color: context.cores.textoSecundario),
       ),
     );
   }
@@ -159,14 +159,14 @@ class _AoVivo extends ConsumerWidget {
         Container(
           key: const ValueKey('rotulo-ao-vivo'),
           padding: const EdgeInsets.symmetric(horizontal: Espacos.s, vertical: Espacos.xxs),
-          color: aoVivo ? Colors.transparent : Cores.fitaAlerta,
+          color: aoVivo ? Colors.transparent : context.cores.fitaAlerta,
           child: Text(aoVivo ? l.aoVivo : l.aoVivoDesligado,
-              style: tema.labelLarge?.copyWith(color: aoVivo ? Cores.tally : Cores.sobreAlerta)),
+              style: tema.labelLarge?.copyWith(color: aoVivo ? context.cores.tallyTinta : context.cores.sobreAlerta)),
         ),
         Switch(
           key: const ValueKey('interruptor-ao-vivo'),
           value: aoVivo,
-          activeThumbColor: Cores.tally,
+          activeThumbColor: context.cores.tally,
           onChanged: ref.read(editorProvider.notifier).definirAoVivo,
         ),
       ],
@@ -188,10 +188,10 @@ class SeloMcp extends ConsumerWidget {
         key: const ValueKey('selo-mcp'),
         padding: const EdgeInsets.symmetric(horizontal: Espacos.s, vertical: Espacos.xxs),
         decoration: BoxDecoration(
-          border: Border.all(color: Cores.ledLigado),
+          border: Border.all(color: context.cores.ledLigado),
           borderRadius: BorderRadius.circular(Raios.canto),
         ),
-        child: Text(l.mcpAtivoNaBarra, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Cores.ledLigado)),
+        child: Text(l.mcpAtivoNaBarra, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: context.cores.ledLigado)),
       ),
     );
   }

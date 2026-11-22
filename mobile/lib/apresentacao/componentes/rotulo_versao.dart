@@ -23,7 +23,7 @@ class RotuloVersao extends ConsumerWidget {
       key: const ValueKey('versao-app'),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: estilo ?? Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.textoSecundario),
+      style: estilo ?? Theme.of(context).textTheme.labelSmall?.copyWith(color: context.cores.textoSecundario),
     );
   }
 }
