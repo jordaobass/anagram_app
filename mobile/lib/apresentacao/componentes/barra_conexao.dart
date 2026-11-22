@@ -26,8 +26,9 @@ class BarraConexao extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final conexao = ref.watch(conexaoProvider);
     final (cor, texto) = _resumo(AppLocalizations.of(context), context.cores, conexao);
-    return Container(
-      constraints: const BoxConstraints(minHeight: Medidas.barraConexaoAltura),
+    final medidas = MedidasDoTopo.daPlataforma;
+    return _semMargemDeToque(context, medidas, Container(
+      constraints: BoxConstraints(minHeight: medidas.barraConexao),
       padding: const EdgeInsets.symmetric(horizontal: Espacos.l),
       decoration: BoxDecoration(
         color: context.cores.painel,
@@ -45,8 +46,14 @@ class BarraConexao extends ConsumerWidget {
         const SeloMcp(),
         ..._navegacao(context),
       ]),
-    );
+    ));
   }
+
+  /// Com mouse, ícones, interruptor e botões da barra sem a margem de toque
+  /// de 48 dp: ficam com 40 px, e a barra com 48 (DECISOES BC1).
+  static Widget _semMargemDeToque(BuildContext context, MedidasDoTopo medidas, Widget barra) => medidas.comMouse
+      ? Theme(data: Theme.of(context).copyWith(materialTapTargetSize: MaterialTapTargetSize.shrinkWrap), child: barra)
+      : barra;
 
   /// Só com a pedaleira (ou a demonstração) do outro lado: ao vivo e desconectar.
   List<Widget> _conectada(BuildContext context, WidgetRef ref) => [

@@ -55,7 +55,8 @@ class FaixaPreset extends ConsumerWidget {
   Widget _slot(BuildContext context, EstadoEditor estado) {
     final l = AppLocalizations.of(context);
     final tema = Theme.of(context).textTheme;
-    final rotulo = Text(estado.slot?.rotulo ?? '--', style: tema.displaySmall);
+    final rotulo = Text(estado.slot?.rotulo ?? '--',
+        style: tema.displaySmall?.copyWith(fontSize: MedidasDoTopo.daPlataforma.slot));
     return Semantics(
         button: aoTocarSlot != null,
         label: '${l.slotSemantica(estado.slot?.rotulo ?? l.slotNovo)}${aoTocarSlot != null ? l.abrirListaSemantica : ''}',
@@ -135,9 +136,16 @@ class _Fita extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context).textTheme;
+    final medidas = MedidasDoTopo.daPlataforma;
     return FitaGaffer(
+      medidas: medidas,
       child: Row(children: [
-        Expanded(child: Text(nome, maxLines: linhas, overflow: TextOverflow.ellipsis, style: tema.headlineSmall)),
+        Expanded(
+          child: Text(nome,
+              maxLines: linhas,
+              overflow: TextOverflow.ellipsis,
+              style: tema.headlineSmall?.copyWith(fontSize: medidas.nomePreset)),
+        ),
         // tocar a fita renomeia: o lápis diz isso sem competir com o nome
         Tooltip(
           message: AppLocalizations.of(context).uiRenomear,

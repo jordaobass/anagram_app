@@ -2,6 +2,7 @@
 // fita gaffer creme com marcador, estêncil nos números e fitas de cor de
 // roadie codificando a família do bloco. Nenhuma cor ou medida fora daqui.
 // As cores ficam em paleta.dart, um jogo por tema.
+import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 
 export 'paleta.dart';
@@ -249,6 +250,79 @@ abstract final class Medidas {
   /// em espanhol estoura; 480 deixa folga (DECISOES K6).
   static const double larguraMinimaJanela = 480;
   static const double alturaMinimaJanela = 480;
+}
+
+/// A parte de cima do editor (barra de conexão, fita do preset, SALVAR/
+/// DESCARTAR, cenas e o modo dos footswitches) em dois tamanhos. Com mouse
+/// (Windows, macOS, Linux) ela é compacta: o ponteiro é preciso, e os 64 + 56
+/// + 56 px do toque empurravam a cadeia para baixo (relato no Reddit, DECISOES
+/// BC1); os alvos ficam entre 32 e 40 px. No toque, o mínimo de 48 dp.
+class MedidasDoTopo {
+  const MedidasDoTopo._({
+    required this.barraConexao,
+    required this.controle,
+    required this.fita,
+    required this.folgaFita,
+    required this.cena,
+    required this.alvoPilula,
+    required this.slot,
+    required this.nomePreset,
+    required this.entreFaixas,
+  });
+
+  /// Altura mínima da barra de conexão.
+  final double barraConexao;
+
+  /// Altura dos botões da faixa do preset (SALVAR, SALVAR COMO, DESCARTAR, menu).
+  final double controle;
+
+  /// Altura mínima da fita gaffer com o nome, e o respiro dentro dela.
+  final double fita;
+  final double folgaFita;
+
+  /// Altura mínima do botão de cena.
+  final double cena;
+
+  /// Alvo de cada pílula do modo dos footswitches (o desenho tem [Medidas.alturaPilulaModo]).
+  final double alvoPilula;
+
+  /// Corpo do estêncil do slot ("02A") e da letra do nome do preset.
+  final double slot;
+  final double nomePreset;
+
+  /// Espaço entre a fita, as cenas e a moldura da cadeia.
+  final double entreFaixas;
+
+  static const toque = MedidasDoTopo._(
+    barraConexao: 64,
+    controle: Medidas.alvoMinimo,
+    fita: Medidas.alvoMinimo + Espacos.s,
+    folgaFita: Espacos.s,
+    cena: Medidas.alvoMinimo + Espacos.s,
+    alvoPilula: Medidas.alvoMinimo,
+    slot: 40,
+    nomePreset: 26,
+    entreFaixas: Espacos.l,
+  );
+
+  static const mouse = MedidasDoTopo._(
+    barraConexao: Medidas.alvoMinimo,
+    controle: 40,
+    fita: 40,
+    folgaFita: Espacos.xs,
+    cena: 40,
+    alvoPilula: 32,
+    slot: 32,
+    nomePreset: 22,
+    entreFaixas: Espacos.s,
+  );
+
+  bool get comMouse => identical(this, mouse);
+
+  static MedidasDoTopo get daPlataforma => switch (defaultTargetPlatform) {
+        TargetPlatform.android || TargetPlatform.iOS || TargetPlatform.fuchsia => toque,
+        TargetPlatform.windows || TargetPlatform.macOS || TargetPlatform.linux => mouse,
+      };
 }
 
 abstract final class Quebras {

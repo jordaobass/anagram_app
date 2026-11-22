@@ -16,6 +16,7 @@ import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/provedores.dart';
 import '../../dados/arquivos_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
+import '../tema/tema_app.dart';
 import '../tema/tokens.dart';
 import 'fluxo_recarregar.dart';
 import 'fluxo_salvar.dart';
@@ -48,6 +49,7 @@ class AcoesPreset extends ConsumerWidget {
         if (!naFabrica)
           OutlinedButton(
             key: const ValueKey('botao-salvar-como'),
+            style: _estilo,
             onPressed: parado ? null : () => abrirEscolhaDeDestino(context, ref, listaEmOutraTela: listaEmOutraTela),
             child: Text(AppLocalizations.of(context).salvarComo),
           ),
@@ -65,13 +67,17 @@ class AcoesPreset extends ConsumerWidget {
     final icone = Icon(naFabrica ? Icons.copy_outlined : Icons.save_outlined);
     const chave = ValueKey('botao-salvar');
     return naoSalvo
-        ? FilledButton.icon(key: chave, onPressed: aoTocar, icon: icone, label: rotulo)
-        : OutlinedButton.icon(key: chave, onPressed: aoTocar, icon: icone, label: rotulo);
+        ? FilledButton.icon(key: chave, style: _estilo, onPressed: aoTocar, icon: icone, label: rotulo)
+        : OutlinedButton.icon(key: chave, style: _estilo, onPressed: aoTocar, icon: icone, label: rotulo);
   }
+
+  /// Compactos com mouse, como o resto do topo (DECISOES BC1).
+  static ButtonStyle get _estilo => TemaApp.controleDoTopo(MedidasDoTopo.daPlataforma);
 
   static Widget _descartar(BuildContext context, WidgetRef ref, {required bool naoSalvo, required bool parado}) =>
       OutlinedButton(
         key: const ValueKey('botao-descartar'),
+        style: _estilo,
         onPressed: naoSalvo && !parado ? ref.read(editorProvider.notifier).descartarEdicoes : null,
         child: Text(AppLocalizations.of(context).descartar),
       );
@@ -96,6 +102,7 @@ class _MenuArquivo extends ConsumerWidget {
     final comSlot = ref.watch(editorProvider.select((e) => e.slot != null));
     return PopupMenuButton<_AcaoArquivo>(
         key: const ValueKey('menu-preset'),
+        style: AcoesPreset._estilo,
         tooltip: comDescartar ? l.uiMaisAcoesPreset : l.uiMenuArquivo,
         enabled: !parado,
         // no celular, ⋯; no computador, a pasta de arquivo (o ⇅ não dizia o

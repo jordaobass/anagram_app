@@ -62,7 +62,7 @@ class _BotaoCena extends StatelessWidget {
       ativo: ativa,
       rotuloSemantico: l.cenaSemantica(numero, nome ?? l.cenaPadrao(numero)),
       aoTocar: aoTocar,
-      alturaMinima: Medidas.alvoMinimo + Espacos.s,
+      alturaMinima: MedidasDoTopo.daPlataforma.cena,
       filho: _rotulo(Theme.of(context).textTheme, BotaoTally.corDoTexto(context.cores, ativo: ativa), nome ?? l.uiCena),
     );
   }

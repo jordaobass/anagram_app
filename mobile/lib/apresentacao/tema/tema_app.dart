@@ -152,6 +152,15 @@ abstract final class TemaApp {
         textStyle: texto.labelLarge,
       ).copyWith(side: anelDeFoco(frente));
 
+  /// Botões da faixa do preset: com mouse, no tamanho compacto do topo e sem a
+  /// margem de toque de 48 dp em volta; no toque, o estilo do tema.
+  static ButtonStyle controleDoTopo(MedidasDoTopo medidas) => medidas.comMouse
+      ? ButtonStyle(
+          minimumSize: WidgetStatePropertyAll(Size(medidas.controle, medidas.controle)),
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        )
+      : const ButtonStyle();
+
   static const _figurasTabulares = [FontFeature.tabularFigures()];
 
   static TextTheme _texto(Paleta p) => TextTheme(

@@ -1,7 +1,7 @@
 // O modo dos footswitches na linha das cenas: três pílulas pequenas, PRESET /
 // STOMP / SCENE, com a do modo atual acesa na cor do LED da Anagram (branco,
 // roxo e azul-claro — exceção pedida pelo dono à regra do âmbar, DECISOES
-// FM8). O desenho é baixo; o alvo de toque tem 48 dp. Trocar acende a nova e
+// FM8). O desenho é baixo; o alvo tem 48 dp no toque e 32 px com mouse. Trocar acende a nova e
 // apaga a antiga; quando a releitura confirma, a nova pulsa; recusa volta ao
 // valor real com um tremor curto. Com "reduzir movimento", nada se mexe.
 import 'dart:async';
@@ -126,7 +126,8 @@ class _PilulasModoFootswitchesState extends ConsumerState<PilulasModoFootswitche
 }
 
 /// Uma pílula: acesa na cor do modo com texto [Paleta.sobreModo]; apagada só
-/// com o contorno de filete e texto secundário. O alvo tem 48 dp.
+/// com o contorno de filete e texto secundário. O alvo vem do topo da
+/// plataforma (48 dp no toque, 32 px com mouse).
 class _Pilula extends StatelessWidget {
   const _Pilula({required this.modo, required this.acesa, required this.aoTocar, required this.pulso});
 
@@ -136,6 +137,8 @@ class _Pilula extends StatelessWidget {
 
   /// Presente só enquanto a pílula pulsa.
   final Animation<double>? pulso;
+
+  static double get _alvo => MedidasDoTopo.daPlataforma.alvoPilula;
 
   @override
   Widget build(BuildContext context) {
@@ -149,9 +152,9 @@ class _Pilula extends StatelessWidget {
       child: InkWell(
         key: ValueKey('pilula-modo-${modo.valor}'),
         onTap: aoTocar,
-        borderRadius: BorderRadius.circular(Medidas.alvoMinimo / 2),
+        borderRadius: BorderRadius.circular(_alvo / 2),
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: Medidas.alvoMinimo, minWidth: Medidas.alvoMinimo),
+          constraints: BoxConstraints(minHeight: _alvo, minWidth: _alvo),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: Espacos.xxs),
             child: Center(widthFactor: 1, child: _comPulso(context, _desenho(context, nome))),
