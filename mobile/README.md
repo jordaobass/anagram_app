@@ -109,7 +109,16 @@ pngquant --quality=80-95 --strip --skip-if-larger --force --ext .png assets/bloc
 
 Com `--suite` e `--renderer`, a ferramenta grava também `fabrica.json`: os 36 presets de fábrica (01A a
 12C) que o Suite traz embutidos (Suite 6.11.4). Com esse arquivo, o seletor de área ganha a opção
-**Fábrica**, só leitura (DECISOES U18).
+**Fábrica**, só leitura (DECISOES U18). Traz ainda as fotos dos tons de fábrica do TONE3000
+(`t3k_*`, DECISOES A18); só elas: `python3 ferramentas/arte_tone3000.py --suite "<Suite>/assets"`.
+
+A arte dos plugins do Darkglass Marketplace (`mk_*`, DECISOES A17) vem da API pública da loja, sem o
+Suite:
+
+```bash
+python3 ferramentas/baixar_arte_marketplace.py
+pngquant --quality=80-95 --strip --skip-if-larger --force --ext .png assets/blocos_terceiros/mk_*.png
+```
 
 O script falha (código 1) sem a arte da pedaleira, com menos de 100 imagens dela ou com qualquer outro
 arquivo na pasta. No macOS com Xcode 27, o release só compila para arm64: acrescente `ARCHS = arm64` ao
@@ -149,4 +158,8 @@ Decisões e pendências: `../docs/DECISOES.md`.
   ligada e desligada, mais as fotos dos gabinetes e os presets de fábrica): **versionada** em
   `assets/blocos_terceiros/`, com autorização da Darkglass (DECISOES A16), regerada por
   `python3 ferramentas/baixar_arte_pedaleira.py`. O bloco em bypass mostra a imagem "desligado".
+- Arte dos plugins do Darkglass Marketplace: a imagem pública de cada produto da loja, com crédito
+  ao fabricante na tela Sobre (DECISOES A17). Fotos dos tons de fábrica do TONE3000: do Darkglass
+  Suite (DECISOES A18). Utilitários sem arte em fonte nenhuma (afinador, mixer, medidores, MIDI,
+  gerador, pedal de expressão, looper) têm ícone desenhado pelo app (DECISOES A19).
 - Fontes: Barlow e Saira Stencil (OFL), Permanent Marker (Apache 2.0) — licenças em `assets/fontes/`.
