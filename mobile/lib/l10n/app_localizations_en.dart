@@ -1358,4 +1358,42 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ctlDicaPedaleira => 'On the pedal, assigned pots only respond on the one-row preset screen; with the preset expanded, the knobs edit the selected block.';
+
+  @override
+  String get utBateria => 'Drums';
+
+  @override
+  String get utAcao => 'Action';
+
+  @override
+  String get utMetronomo => 'Metronome';
+
+  @override
+  String get utTreino => 'Practice';
+
+  @override
+  String get utDisparar => 'Trigger';
+
+  @override
+  String get utDispararSemAoVivo => 'Turn LIVE on to trigger from here.';
+
+  @override
+  String get utGestosAcao => 'One tap starts (with an intro) or plays a fill; two quick taps stop; holding for 1 s moves to the next part. Here, each TRIGGER is one tap.';
+
+  @override
+  String get utEstadoNoVisor => 'Whether the drums are playing or stopped shows only on the pedal screen.';
+
+  @override
+  String get utBater => 'Tap';
+
+  @override
+  String get utBaterSoNoFixo => 'Tap tempo works in Fixed Tempo mode only.';
+
+  @override
+  String get utPrecisaoNoVisor => 'How accurate your timing is (Accuracy) shows only on the pedal screen.';
+
+  @override
+  String utTemposDoCompasso(int tempos) {
+    return 'Bar of $tempos beats, beat 1 accented';
+  }
 }

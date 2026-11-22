@@ -2490,6 +2490,78 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Na pedaleira, os pots atribuídos só respondem na tela do preset em uma linha; com o preset expandido, os knobs mexem no bloco selecionado.'**
   String get ctlDicaPedaleira;
+
+  /// Cartão do Auto Drummer: estilo, nível e tempo
+  ///
+  /// In pt, this message translates to:
+  /// **'Bateria'**
+  String get utBateria;
+
+  /// Cartão do botão Action do Auto Drummer
+  ///
+  /// In pt, this message translates to:
+  /// **'Ação'**
+  String get utAcao;
+
+  /// Cartão principal do Cognate Metro
+  ///
+  /// In pt, this message translates to:
+  /// **'Metrônomo'**
+  String get utMetronomo;
+
+  /// Cartão do Gap Mode do Cognate Metro (compassos mudos para treinar)
+  ///
+  /// In pt, this message translates to:
+  /// **'Treino'**
+  String get utTreino;
+
+  /// Botão que dá um toque no Action do Auto Drummer
+  ///
+  /// In pt, this message translates to:
+  /// **'Disparar'**
+  String get utDisparar;
+
+  /// O toque só existe tocado na pedaleira: sem ao vivo não há o que enviar
+  ///
+  /// In pt, this message translates to:
+  /// **'Ligue o AO VIVO para disparar daqui.'**
+  String get utDispararSemAoVivo;
+
+  /// Gestos do Action do Auto Drummer (como num footswitch)
+  ///
+  /// In pt, this message translates to:
+  /// **'Um toque começa (com intro) ou faz uma virada; dois toques rápidos param; segurar 1 s passa para a próxima parte. Aqui, cada DISPARAR é um toque.'**
+  String get utGestosAcao;
+
+  /// O Status é saída do plugin e não chega pelo USB (P8)
+  ///
+  /// In pt, this message translates to:
+  /// **'Se a bateria está tocando ou parada, só o visor da pedaleira mostra.'**
+  String get utEstadoNoVisor;
+
+  /// Tap tempo calculado no app
+  ///
+  /// In pt, this message translates to:
+  /// **'Bater'**
+  String get utBater;
+
+  /// Por que o Bater está desabilitado em Follow Tempo e Global Tempo
+  ///
+  /// In pt, this message translates to:
+  /// **'Bater o tempo só vale no modo Fixed Tempo.'**
+  String get utBaterSoNoFixo;
+
+  /// Accuracy é saída do plugin e não chega pelo USB
+  ///
+  /// In pt, this message translates to:
+  /// **'A precisão do seu tempo (Accuracy) só aparece no visor da pedaleira.'**
+  String get utPrecisaoNoVisor;
+
+  /// Leitura dos pontos do compasso escolhido
+  ///
+  /// In pt, this message translates to:
+  /// **'Compasso de {tempos} tempos, o 1 acentuado'**
+  String utTemposDoCompasso(int tempos);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

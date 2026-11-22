@@ -94,6 +94,13 @@ final presetsDemonstracaoProvider = FutureProvider<Map<int, Map<String, dynamic>
 /// Cronômetro da latência ida e volta (os testes fixam o valor).
 final cronometroProvider = Provider<Stopwatch Function()>((ref) => Stopwatch.new);
 
+/// Relógio do "Bater" (tap tempo): o instante de cada toque, desde um
+/// início qualquer; os testes andam com ele à mão.
+final relogioDoToqueProvider = Provider<Duration Function()>((ref) {
+  final cronometro = Stopwatch()..start();
+  return () => cronometro.elapsed;
+});
+
 /// Pausa entre relatórios escolhida pela pessoa (null = a sugerida pelo transporte).
 final pausaRelatoriosProvider = NotifierProvider<PausaRelatorios, Duration?>(PausaRelatorios.new);
 

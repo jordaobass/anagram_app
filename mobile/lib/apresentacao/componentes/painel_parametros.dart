@@ -10,6 +10,7 @@ import '../../aplicacao/provedores.dart';
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/arranjo_parametros.dart';
 import '../../nucleo/catalogo/arranjo_sintetizador.dart';
+import '../../nucleo/catalogo/arranjo_utilitario.dart';
 import '../../nucleo/catalogo/curva_eq_parametrico.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/explicacoes_parametros.dart';
@@ -21,6 +22,7 @@ import 'explicacao_parametro.dart';
 import 'painel_eq_parametrico.dart';
 import 'painel_multibanda.dart';
 import 'painel_sintetizador.dart';
+import 'painel_utilitario.dart';
 import 'seletor_gabinete.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
@@ -59,7 +61,8 @@ class PainelParametros extends ConsumerWidget {
     );
   }
 
-  /// Os blocos com tela própria (multibanda, paramétrico, synth); o resto, knobs.
+  /// Os blocos com tela própria (multibanda, paramétrico, synth, bateria e
+  /// metrônomo); o resto, knobs.
   Widget _painelDoBloco(
       WidgetRef ref, List<DefinicaoParametro> parametros, BlocoPreset bloco, DefinicaoBloco definicao, int cena) {
     if (arranjoMultibanda(definicao.uri) case final arranjo?) {
@@ -70,6 +73,10 @@ class PainelParametros extends ConsumerWidget {
     }
     if (arranjoSintetizador(definicao.uri) case final arranjo?) {
       return PainelSintetizador(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros);
+    }
+    if (arranjoUtilitario(definicao.uri) case final arranjo?) {
+      return PainelUtilitario(
+          arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros, tamanhoKnob: tamanhoKnob);
     }
     return LayoutBuilder(
         builder: (context, restricoes) => _controles(context, ref, restricoes.maxWidth, parametros, bloco, definicao, cena));
