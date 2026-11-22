@@ -3,8 +3,11 @@
 // página da release, que também tem os arquivos.
 const API = 'https://api.github.com/repos/jordaobass/anagram_app/releases/latest';
 
+// O zip Intel também tem "macos" no nome: ele é conferido antes, senão o
+// botão principal do Mac entregaria a versão Intel a quem tem Apple Silicon.
 function sistemaDoArquivo(nome) {
   if (/windows/i.test(nome)) return 'windows';
+  if (/macos-intel/i.test(nome)) return 'macos-intel';
   if (/macos/i.test(nome)) return 'macos';
   return null;
 }
