@@ -28,10 +28,13 @@ abstract final class AcoesAnagram {
   static const trocarBancos = 'swap_anagram_banks';
   /// O app não pede mais; fica porque a pedaleira de demonstração responde a ela.
   static const infoBloco = 'get_plugin_info';
+  /// Só leitura dos tons do TONE3000 (DECISOES T3K1); nada de enviar nem apagar.
+  static const tonsDeFabrica = 'get_t3k_factory_tones';
+  static const tonsDoUsuario = 'get_t3k_tones_metadata';
 
   static const todas = {
     firmware, posicoes, lerPreset, salvar, excluir, tocarAoVivo, lerAjustes, gravarAjustes, trocarPresets,
-    trocarBancos, infoBloco,
+    trocarBancos, infoBloco, tonsDeFabrica, tonsDoUsuario,
   };
 }
 

@@ -1,0 +1,22 @@
+{
+ "acao": "get_t3k_tones_metadata",
+ "carga": {
+  "page": 1,
+  "itemsPerPage": 10
+ },
+ "ok": true,
+ "ms": 48,
+ "resposta": {
+  "success": 1,
+  "data": {
+   "info": {
+    "all_items_length": 0,
+    "items_length": 0,
+    "page": 1,
+    "items_per_page": 10
+   },
+   "t3k_data": []
+  },
+  "err_message": ""
+ }
+}
