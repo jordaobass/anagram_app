@@ -56,27 +56,31 @@ class SeletorOpcao extends StatelessWidget {
   }
 
   Future<void> _escolher(BuildContext context, int atual) async {
-    final escolhida = await (parametro.opcoes.length > Medidas.opcoesSemBusca
-        ? showDialog<int>(context: context, builder: (_) => _ListaComBusca(parametro: parametro, atual: atual))
-        : _menu(context, atual));
+    final escolhida = await escolherOpcao(context, parametro, atual);
     if (escolhida != null && escolhida != atual) aoMudar(parametro.valorDaOpcao(escolhida), arrastando: false);
   }
+}
 
-  /// Menu logo embaixo do botão, com a opção atual marcada.
-  Future<int?> _menu(BuildContext context, int atual) {
-    final caixa = context.findRenderObject()! as RenderBox;
-    final canto = caixa.localToGlobal(Offset(0, caixa.size.height));
-    return showMenu<int>(
-      context: context,
-      position: RelativeRect.fromLTRB(canto.dx, canto.dy, canto.dx + caixa.size.width, canto.dy),
-      constraints: BoxConstraints(minWidth: caixa.size.width),
-      items: [
-        for (var i = 0; i < parametro.opcoes.length; i++)
-          CheckedPopupMenuItem<int>(
-              key: ValueKey('opcao-${parametro.simbolo}-$i'), value: i, checked: i == atual, child: Text(parametro.opcoes[i])),
-      ],
-    );
-  }
+/// Todas as opções: poucas num menu logo embaixo de [context], com a atual
+/// marcada; muitas, numa lista com busca e grupos. Nulo se a pessoa desistir.
+Future<int?> escolherOpcao(BuildContext context, DefinicaoParametro parametro, int atual) =>
+    parametro.opcoes.length > Medidas.opcoesSemBusca
+        ? showDialog<int>(context: context, builder: (_) => _ListaComBusca(parametro: parametro, atual: atual))
+        : _menu(context, parametro, atual);
+
+Future<int?> _menu(BuildContext context, DefinicaoParametro parametro, int atual) {
+  final caixa = context.findRenderObject()! as RenderBox;
+  final canto = caixa.localToGlobal(Offset(0, caixa.size.height));
+  return showMenu<int>(
+    context: context,
+    position: RelativeRect.fromLTRB(canto.dx, canto.dy, canto.dx + caixa.size.width, canto.dy),
+    constraints: BoxConstraints(minWidth: caixa.size.width),
+    items: [
+      for (var i = 0; i < parametro.opcoes.length; i++)
+        CheckedPopupMenuItem<int>(
+            key: ValueKey('opcao-${parametro.simbolo}-$i'), value: i, checked: i == atual, child: Text(parametro.opcoes[i])),
+    ],
+  );
 }
 
 class _ListaComBusca extends StatefulWidget {

@@ -399,18 +399,9 @@
   "ctlAcaoAtribuir": "Assign to a pedal control",
   "ctlFechar": "CLOSE",
   "ctlDicaPedaleira": "On the pedal, assigned pots only respond on the one-row preset screen; with the preset expanded, the knobs edit the selected block.",
-  "utBateria": "Drums",
-  "utAcao": "Action",
-  "utMetronomo": "Metronome",
   "utTreino": "Practice",
-  "utDisparar": "Trigger",
-  "utDispararSemAoVivo": "Turn LIVE on to trigger from here.",
-  "utGestosAcao": "One tap starts (with an intro) or plays a fill; two quick taps stop; holding for 1 s moves to the next part. Here, each TRIGGER is one tap.",
-  "utEstadoNoVisor": "Whether the drums are playing or stopped shows only on the pedal screen.",
   "utBater": "Tap",
   "utBaterSoNoFixo": "Tap tempo works in Fixed Tempo mode only.",
-  "utPrecisaoNoVisor": "How accurate your timing is (Accuracy) shows only on the pedal screen.",
-  "utTemposDoCompasso": "Bar of {tempos} beats, beat 1 accented",
   "slotAlteradoForaTitulo": "{slot} changed on the pedal",
   "slotAlteradoForaTexto": "Slot {slot} was changed on the pedal since you opened it. Overwrite saves your version over what is there; reload discards your edits and shows the pedal's version.",
   "sobrescreverMesmoAssim": "OVERWRITE ANYWAY",
@@ -448,5 +439,7 @@
   "ctlRecolher": "Collapse the pedal controls",
   "sbSubstitui": "replaces {nome}",
   "sbSubstituirAqui": "Replace the preset in this slot",
-  "salvarReleituraDiferente": "the pedal confirmed, but the slot read back differs from what was sent. Your edit is still on screen; check the slot and save again."
+  "salvarReleituraDiferente": "the pedal confirmed, but the slot read back differs from what was sent. Your edit is still on screen; check the slot and save again.",
+  "utAcaoChave": "In the app, this switch is the pedal's Action. Per the plugin's manual: turning it on starts the rhythm with an intro; while it plays, triggering again plays a fill; a double trigger stops; holding moves to the next part. What the drums play in each case is up to the plugin.",
+  "utSoNoVisor": "Only on the pedal screen"
 }

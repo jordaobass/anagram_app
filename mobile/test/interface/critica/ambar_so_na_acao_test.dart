@@ -1,7 +1,6 @@
 // Âmbar só para seleção e ação principal: o LIGADO do bloco é estado, não
-// ação — vira contorno com o LED verde aceso (cinza quando desligado); o
-// DISPARAR da bateria é um toque ao vivo, não a ação principal da tela, e
-// também vira contorno. Nenhum dos dois pinta o fundo de âmbar.
+// ação — vira contorno com o LED verde aceso (cinza quando desligado), sem
+// pintar o fundo de âmbar.
 import 'package:anagram_app/apresentacao/tema/tokens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,7 +8,6 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../apoio/contraste.dart';
 import '../../apoio/demonstracao_na_tela.dart';
 
-const _bateria = 'https://falktx.com/plugins/auto-drummer';
 final _bypass = find.byKey(const ValueKey('bypass'));
 
 Color? _led(WidgetTester tester) {
@@ -29,12 +27,4 @@ void main() {
     expect(_led(tester), Cores.ledDesligado);
   });
 
-  testWidgets('should_draw_the_drum_trigger_as_an_outline_not_an_amber_fill', (tester) async {
-    await abrirComBloco(tester, _bateria);
-    final disparar = find.byWidgetPredicate((w) => w.key is ValueKey<String> && (w.key! as ValueKey<String>).value.startsWith('pulso-'));
-    await tester.ensureVisible(disparar);
-    await tester.pumpAndSettle();
-
-    expect(materialDoBotao(tester, disparar).color, isNot(Cores.tally));
-  });
 }

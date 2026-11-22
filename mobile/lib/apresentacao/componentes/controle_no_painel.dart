@@ -21,6 +21,10 @@ import 'controle_parametro.dart';
 import 'menu_atribuir.dart';
 import 'seletor_opcao.dart';
 
+/// Um controle desenhado pelo painel do bloco (a lista rolante, o rolo do
+/// compasso), com o valor da cena e a mudança pelo caminho comum.
+typedef ConstrutorControle = Widget Function(num valor, Color cor, AoMudarValor aoMudar);
+
 class ControleNoPainel extends ConsumerWidget {
   const ControleNoPainel({
     super.key,
@@ -33,7 +37,11 @@ class ControleNoPainel extends ConsumerWidget {
     this.forma,
     this.seletor = false,
     this.corChip,
+    this.construtor,
   });
+
+  /// Nulo: knob, chave, botões ou seletor, conforme o parâmetro.
+  final ConstrutorControle? construtor;
 
   /// O valor num chip dessa cor (modo do equalizador); nulo, o número comum.
   final Color? corChip;
@@ -107,6 +115,9 @@ class ControleNoPainel extends ConsumerWidget {
     final p = parametro;
     final cor = Cores.daFamilia(definicao.familia);
     final valor = valorNaCena(bloco, p, cena);
+    if (construtor case final desenhar?) {
+      return KeyedSubtree(key: ValueKey('param-${p.simbolo}'), child: desenhar(valor, cor, alterar(ref, p, bloco)));
+    }
     if (seletor) {
       return SeletorOpcao(
           key: ValueKey('param-${p.simbolo}'),

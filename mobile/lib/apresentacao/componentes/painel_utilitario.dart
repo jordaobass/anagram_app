@@ -1,7 +1,10 @@
-// Painel da bateria (Auto Drummer) e do metrônomo (Cognate Metro), na ordem
-// e no agrupamento da tela original de cada plugin, com o visual do app: um
-// cartão embaixo do outro, os controles do cartão numa fileira só quando cabem.
-// Parâmetro que o arranjo não conhece (firmware novo) cai em "Outros".
+// Painel da bateria (Auto Drummer) e do metrônomo (Cognate Metro) como a tela
+// da Anagram: um cartão por controle, lado a lado numa fileira, na ordem do
+// visor, com o visual do app. A página 2 do metrônomo vira a fileira de baixo
+// (Treino). Sem espaço, a fileira quebra. Parâmetro que o arranjo não conhece
+// (firmware novo) cai em "Outros".
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../l10n/app_localizations.dart';
@@ -35,35 +38,39 @@ class PainelUtilitario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(builder: (context, restricoes) {
-        final largura = restricoes.maxWidth;
         final controles = _ControlesDoBloco(bloco: bloco, definicao: definicao, cena: cena, tamanhoKnob: tamanhoKnob);
+        final largura = _larguraDoCartao(restricoes.maxWidth);
         return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          for (final s in arranjo.secoes) ...[_cartao(context, controles, s, largura), const SizedBox(height: Espacos.m)],
-          ..._outros(context, controles, largura),
+          for (final s in arranjo.secoes) ...[_fileira(context, controles, s, largura), const SizedBox(height: Espacos.m)],
+          ..._outros(context, controles),
         ]);
       });
 
-  Widget _cartao(BuildContext context, _ControlesDoBloco controles, SecaoUtil secao, double largura) {
-    final nota = _notaDa(AppLocalizations.of(context), secao.secao);
-    return CartaoSecaoSynth(
-      key: ValueKey('ut-${secao.secao.name}'),
-      titulo: tituloDaSecaoUtilitario(AppLocalizations.of(context), secao.secao),
-      largura: largura,
-      filhos: [
-        for (final c in secao.controles) ?controles.de(c),
-        if (nota != null) SizedBox(width: double.infinity, child: notaDoCartao(context, nota)),
+  /// No celular, dois cartões por fileira em vez de um sobrando espaço.
+  static double _larguraDoCartao(double disponivel) =>
+      math.min(Medidas.larguraCartaoUtilitario, math.max(Medidas.larguraMinimaCartaoUtilitario, (disponivel - Espacos.s) / 2));
+
+  /// Uma página do visor: os cartões lado a lado; o Treino leva o título.
+  Widget _fileira(BuildContext context, _ControlesDoBloco controles, SecaoUtil secao, double largura) {
+    final l = AppLocalizations.of(context);
+    return Column(key: ValueKey('ut-${secao.secao.name}'), crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      if (secao.secao == SecaoUtilitario.treino) ...[
+        Text(l.utTreino.toUpperCase(), style: Theme.of(context).textTheme.titleSmall),
+        const SizedBox(height: Espacos.s),
       ],
-    );
+      Wrap(alignment: WrapAlignment.center, spacing: Espacos.s, runSpacing: Espacos.s, children: [
+        for (final c in secao.controles)
+          if (controles.de(c) case final controle?)
+            _CartaoControle(
+                key: ValueKey('cartao-${c.simbolo}'), largura: largura, ajuda: _ajudaDe(l, c.simbolo), filho: controle),
+      ]),
+    ]);
   }
 
-  /// O que a tela original mostra e não chega pelo USB (saídas do plugin).
-  static String? _notaDa(AppLocalizations l, SecaoUtilitario secao) => switch (secao) {
-        SecaoUtilitario.acao => l.utEstadoNoVisor,
-        SecaoUtilitario.metronomo => l.utPrecisaoNoVisor,
-        _ => null,
-      };
+  /// O que o controle faz no plugin, quando o nome não basta (o Action).
+  static String? _ajudaDe(AppLocalizations l, String simbolo) => simbolo == 'action' ? l.utAcaoChave : null;
 
-  List<Widget> _outros(BuildContext context, _ControlesDoBloco controles, double largura) {
+  List<Widget> _outros(BuildContext context, _ControlesDoBloco controles) {
     final usados = arranjo.simbolos;
     final resto = [for (final p in parametros) if (!usados.contains(p.simbolo)) p];
     if (resto.isEmpty) return const [];
@@ -71,11 +78,70 @@ class PainelUtilitario extends StatelessWidget {
       CartaoSecaoSynth(
         key: const ValueKey('ut-outros'),
         titulo: AppLocalizations.of(context).axOutros,
-        largura: largura,
+        largura: double.infinity,
         filhos: [for (final p in resto) controles.noPainel(p, Medidas.knobSynth)],
       ),
     ];
   }
+}
+
+/// Um cartão do visor: o controle no meio, todos da mesma altura na fileira,
+/// e o "?" no canto quando há o que explicar.
+class _CartaoControle extends StatelessWidget {
+  const _CartaoControle({super.key, required this.largura, required this.filho, this.ajuda});
+
+  final double largura;
+  final Widget filho;
+  final String? ajuda;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        constraints: BoxConstraints(minWidth: largura, maxWidth: largura, minHeight: Medidas.alturaCartaoUtilitario),
+        padding: const EdgeInsets.all(Espacos.s),
+        decoration: BoxDecoration(
+          color: Cores.painel,
+          borderRadius: BorderRadius.circular(Raios.painel),
+          border: Border.all(color: Cores.filete),
+        ),
+        child: Stack(alignment: Alignment.center, children: [
+          filho,
+          if (ajuda case final texto?) Positioned(top: 0, right: 0, child: _Ajuda(texto: texto)),
+        ]),
+      );
+}
+
+class _Ajuda extends StatelessWidget {
+  const _Ajuda({required this.texto});
+
+  final String texto;
+
+  @override
+  Widget build(BuildContext context) => Tooltip(
+        key: const ValueKey('ajuda-action'),
+        message: texto,
+        triggerMode: TooltipTriggerMode.tap,
+        child: const SizedBox.square(
+          dimension: Medidas.alvoMinimo,
+          child: Icon(Icons.help_outline, size: Medidas.iconeMenu, color: Cores.textoSecundario),
+        ),
+      );
+}
+
+/// Saída do plugin (Status, Accuracy): o estado não chega pelo USB, então o
+/// cartão diz onde ver, sem inventar valor.
+class _Saida extends StatelessWidget {
+  const _Saida({required this.nome});
+
+  final String nome;
+
+  @override
+  Widget build(BuildContext context) => Column(mainAxisSize: MainAxisSize.min, children: [
+        Text(nome.toUpperCase(), style: Theme.of(context).textTheme.labelMedium),
+        const SizedBox(height: Espacos.s),
+        Text(AppLocalizations.of(context).utSoNoVisor,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario)),
+      ]);
 }
 
 /// Cada controle do arranjo no widget dele, lendo os valores da cena ativa.
@@ -95,8 +161,13 @@ class _ControlesDoBloco {
     return quem != null && regra!.apaga(_valor(quem));
   }
 
+  /// A saída não está no catálogo: o arranjo dá o nome do visor.
+  DefinicaoParametro? _parametro(ControleUtil c) =>
+      definicao.parametro(c.simbolo) ??
+      (c.nome == null ? null : DefinicaoParametro(simbolo: c.simbolo, nome: c.nome!, minimo: 0, maximo: 0, padrao: 0));
+
   Widget? de(ControleUtil c) {
-    final doCatalogo = definicao.parametro(c.simbolo);
+    final doCatalogo = _parametro(c);
     if (doCatalogo == null) return null;
     final p = c.unidade == null ? doCatalogo : doCatalogo.comUnidade(c.unidade!, inteiro: true);
     final apagado = _apagado(c);
@@ -105,15 +176,15 @@ class _ControlesDoBloco {
   }
 
   Widget _controle(ControleUtil c, DefinicaoParametro p, bool apagado) => switch (c.tipo) {
-        TipoControleUtil.lista => noPainel(p, Medidas.larguraSeletorSynth, seletor: true),
+        TipoControleUtil.lista => noPainel(p, Medidas.larguraCartaoUtilitario,
+            construtor: (valor, cor, aoMudar) => ListaRolante(parametro: p, valor: valor, cor: cor, aoMudar: aoMudar)),
+        TipoControleUtil.rolo => noPainel(p, Medidas.larguraCartaoUtilitario,
+            construtor: (valor, cor, aoMudar) => RoloOpcoes(parametro: p, valor: valor, cor: cor, aoMudar: aoMudar)),
         TipoControleUtil.knob => noPainel(p, Medidas.knobSynth),
         // a chave não tem knob: o tamanho só dá largura ao nome ("Use Host Tempo")
         TipoControleUtil.chave => noPainel(p, Medidas.knobAmplo),
         TipoControleUtil.knobGrande => _knobGrande(c, p, apagado),
-        TipoControleUtil.botoes =>
-          BotoesDeOpcao(parametro: p, bloco: bloco, valor: _valor(p), cor: Cores.daFamilia(definicao.familia)),
-        TipoControleUtil.pulso =>
-          SizedBox(width: Medidas.larguraAcaoUtilitario, child: BotaoPulso(parametro: p, bloco: bloco)),
+        TipoControleUtil.saida => _Saida(nome: p.nome),
       };
 
   /// O tempo: o knob maior e, no metrônomo, o BATER embaixo.
@@ -127,13 +198,6 @@ class _ControlesDoBloco {
     ]);
   }
 
-  Widget noPainel(DefinicaoParametro p, double tamanho, {bool seletor = false}) => ControleNoPainel(
-      parametro: p, bloco: bloco, definicao: definicao, cena: cena, tamanho: tamanho, seletor: seletor);
+  Widget noPainel(DefinicaoParametro p, double tamanho, {ConstrutorControle? construtor}) => ControleNoPainel(
+      parametro: p, bloco: bloco, definicao: definicao, cena: cena, tamanho: tamanho, construtor: construtor);
 }
-
-String tituloDaSecaoUtilitario(AppLocalizations l, SecaoUtilitario secao) => switch (secao) {
-      SecaoUtilitario.bateria => l.utBateria,
-      SecaoUtilitario.acao => l.utAcao,
-      SecaoUtilitario.metronomo => l.utMetronomo,
-      SecaoUtilitario.treino => l.utTreino,
-    };

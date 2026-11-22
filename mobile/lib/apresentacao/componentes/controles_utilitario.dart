@@ -1,11 +1,12 @@
-// Os controles próprios dos painéis da bateria e do metrônomo: a fileira de
-// botões (o compasso, com os tempos desenhados), o DISPARAR do Action e o
-// BATER do tap tempo. Todo valor gravado passa pelo ControleNoPainel.alterar,
-// o mesmo caminho dos knobs (ao vivo, cena, desfazer, "não salvo").
+// Os controles próprios dos painéis da bateria e do metrônomo, como na tela
+// da Anagram: a lista rolante (a marcada entre as vizinhas), o rolo do
+// compasso e o BATER do tap tempo. Todo valor gravado passa pelo
+// ControleNoPainel.alterar, o mesmo caminho dos knobs (ao vivo, cena,
+// desfazer, "não salvo").
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/provedores.dart';
 import '../../l10n/app_localizations.dart';
 import '../../nucleo/catalogo/arranjo_utilitario.dart';
@@ -13,109 +14,136 @@ import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/toque_de_tempo.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
+import 'botao_giratorio.dart' show AoMudarValor;
 import 'botao_opcao.dart';
 import 'controle_no_painel.dart';
 import 'explicacao_parametro.dart';
+import 'seletor_opcao.dart';
 
-/// As opções numa fileira de botões; num compasso ("6/8"), os tempos
-/// desenhados embaixo, com o 1 acentuado.
-class BotoesDeOpcao extends ConsumerWidget {
-  const BotoesDeOpcao({super.key, required this.parametro, required this.bloco, required this.valor, required this.cor});
+/// A lista do visor: a marcada (destacada) entre as vizinhas. Tocar numa
+/// vizinha escolhe; tocar na marcada abre todas as opções.
+class ListaRolante extends StatelessWidget {
+  const ListaRolante({super.key, required this.parametro, required this.valor, required this.cor, required this.aoMudar});
 
   final DefinicaoParametro parametro;
-  final BlocoPreset bloco;
   final num valor;
   final Color cor;
+  final AoMudarValor aoMudar;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final atual = parametro.indiceOpcao(valor);
-    // sem opções (catálogo novo, arquivo mexido) fica só o rótulo
-    final tempos = parametro.opcoes.isEmpty ? null : temposDoCompasso(parametro.opcoes[atual]);
-    return SizedBox(
-      width: Medidas.larguraBotoesUtilitario,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-        RotuloParametro(parametro: parametro, texto: parametro.nome),
-        const SizedBox(height: Espacos.xs),
-        Wrap(spacing: Espacos.xs, runSpacing: Espacos.xs, children: [
-          for (var i = 0; i < parametro.opcoes.length; i++)
-            SizedBox(
-              key: ValueKey('opcao-${parametro.simbolo}-$i'),
-              width: Medidas.larguraBotaoCompasso,
-              child: BotaoOpcao(
-                texto: parametro.opcoes[i],
-                marcada: i == atual,
-                cor: cor,
-                estreito: true,
-                aoTocar: () => ControleNoPainel.alterar(ref, parametro, bloco)(parametro.valorDaOpcao(i), arrastando: false),
-              ),
-            ),
-        ]),
-        if (tempos != null) ...[const SizedBox(height: Espacos.s), PontosDoCompasso(tempos: tempos, cor: cor)],
-      ]),
-    );
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
+      Center(child: RotuloParametro(parametro: parametro, texto: parametro.nome)),
+      const SizedBox(height: Espacos.xs),
+      for (final i in opcoesVisiveis(parametro.opcoes.length, atual)) _linha(context, i, atual),
+    ]);
   }
-}
 
-/// Um ponto por tempo, o acentuado maior e cheio. Ilustração do compasso
-/// escolhido, sem andar no tempo (a batida real só a pedaleira sabe).
-class PontosDoCompasso extends StatelessWidget {
-  const PontosDoCompasso({super.key, required this.tempos, required this.cor});
-
-  final List<bool> tempos;
-  final Color cor;
-
-  @override
-  Widget build(BuildContext context) => Semantics(
-        label: AppLocalizations.of(context).utTemposDoCompasso(tempos.length),
-        child: ExcludeSemantics(
-          child: Wrap(
-            key: const ValueKey('pontos-compasso'),
-            spacing: Espacos.s,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [for (final acento in tempos) _ponto(acento)],
-          ),
-        ),
+  Widget _linha(BuildContext context, int indice, int atual) {
+    final simbolo = parametro.simbolo;
+    if (indice == atual) {
+      return BotaoOpcao(
+        key: ValueKey('abrir-$simbolo'),
+        texto: parametro.opcoes[indice],
+        marcada: true,
+        cor: cor,
+        aoTocar: () => _abrir(context, atual),
       );
-
-  Widget _ponto(bool acento) {
-    final lado = acento ? Medidas.pontoCompassoAcento : Medidas.pontoCompasso;
-    return Container(
-      width: lado,
-      height: lado,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: acento ? cor : null,
-        border: Border.all(color: acento ? cor : Cores.aluminio, width: Medidas.contornoSelecao),
-      ),
+    }
+    return TextButton(
+      key: ValueKey('vizinha-$simbolo-$indice'),
+      onPressed: () => aoMudar(parametro.valorDaOpcao(indice), arrastando: false),
+      style: TextButton.styleFrom(foregroundColor: Cores.textoSecundario, minimumSize: const Size.fromHeight(Medidas.alvoMinimo)),
+      child: Text(parametro.opcoes[indice], maxLines: 1, overflow: TextOverflow.ellipsis),
     );
+  }
+
+  Future<void> _abrir(BuildContext context, int atual) async {
+    final escolhida = await escolherOpcao(context, parametro, atual);
+    if (escolhida != null && escolhida != atual) aoMudar(parametro.valorDaOpcao(escolhida), arrastando: false);
   }
 }
 
-/// O DISPARAR do Action: um toque ao vivo (1 e logo 0) que não entra no
-/// preset. Sem ao vivo não há o que tocar, e o botão diz por quê.
-class BotaoPulso extends ConsumerWidget {
-  const BotaoPulso({super.key, required this.parametro, required this.bloco});
+/// O rolo do compasso: a opção grande no meio ("4" sobre "4"), as vizinhas
+/// apagadas dos lados. Tocar numa vizinha ou girar a roda do mouse anda uma;
+/// tocar no meio abre todas.
+class RoloOpcoes extends StatelessWidget {
+  const RoloOpcoes({super.key, required this.parametro, required this.valor, required this.cor, required this.aoMudar});
 
   final DefinicaoParametro parametro;
-  final BlocoPreset bloco;
+  final num valor;
+  final Color cor;
+  final AoMudarValor aoMudar;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context);
-    final aoVivo = ref.watch(editorProvider.select((e) => e.aoVivo));
-    final editor = ref.read(editorProvider.notifier);
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
-      // um toque ao vivo, não a ação principal da tela: contorno, sem âmbar
-      OutlinedButton(
-        key: ValueKey('pulso-${parametro.simbolo}'),
-        onPressed: aoVivo ? () => editor.pulsar(bloco.posicao, parametro.simbolo) : null,
-        style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(Medidas.alvoMinimo)),
-        child: Text(l.utDisparar.toUpperCase()),
-      ),
-      const SizedBox(height: Espacos.s),
-      notaDoCartao(context, aoVivo ? l.utGestosAcao : l.utDispararSemAoVivo),
+  Widget build(BuildContext context) {
+    final atual = parametro.indiceOpcao(valor);
+    final temOpcoes = parametro.opcoes.isNotEmpty;
+    return Column(mainAxisSize: MainAxisSize.min, children: [
+      RotuloParametro(parametro: parametro, texto: parametro.nome),
+      const SizedBox(height: Espacos.xs),
+      if (temOpcoes)
+        Listener(
+          onPointerSignal: (evento) => _girar(evento, atual),
+          child: Row(children: [
+            _vizinha(atual - 1, 'anterior'),
+            Expanded(child: _centro(context, atual)),
+            _vizinha(atual + 1, 'proxima'),
+          ]),
+        ),
     ]);
+  }
+
+  void _escolher(int indice) {
+    if (indice >= 0 && indice < parametro.opcoes.length) aoMudar(parametro.valorDaOpcao(indice), arrastando: false);
+  }
+
+  void _girar(PointerSignalEvent evento, int atual) {
+    if (evento is PointerScrollEvent && evento.scrollDelta.dy != 0) _escolher(atual + evento.scrollDelta.dy.sign.toInt());
+  }
+
+  Widget _vizinha(int indice, String lado) {
+    final existe = indice >= 0 && indice < parametro.opcoes.length;
+    return SizedBox(
+      width: Medidas.alvoMinimo,
+      height: Medidas.alturaRoloUtilitario,
+      child: TextButton(
+        key: ValueKey('$lado-${parametro.simbolo}'),
+        onPressed: existe ? () => _escolher(indice) : null,
+        style: TextButton.styleFrom(foregroundColor: Cores.textoSecundario, padding: EdgeInsets.zero),
+        child: existe ? FittedBox(child: Text(parametro.opcoes[indice])) : const SizedBox.shrink(),
+      ),
+    );
+  }
+
+  Widget _centro(BuildContext context, int atual) {
+    final rotulo = parametro.opcoes[atual];
+    final partes = rotulo.split('/');
+    final estilo = Theme.of(context).textTheme.displaySmall;
+    return Semantics(
+      button: true,
+      label: parametro.nome,
+      value: rotulo,
+      child: InkWell(
+        key: ValueKey('abrir-${parametro.simbolo}'),
+        borderRadius: BorderRadius.circular(Raios.controle),
+        onTap: () => _abrir(context, atual),
+        child: SizedBox(
+          height: Medidas.alturaRoloUtilitario,
+          child: FittedBox(
+            child: ExcludeSemantics(
+              child: Column(mainAxisSize: MainAxisSize.min, children: [for (final p in partes) Text(p, style: estilo)]),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _abrir(BuildContext context, int atual) async {
+    final escolhida = await escolherOpcao(context, parametro, atual);
+    if (escolhida != null) _escolher(escolhida);
   }
 }
 
@@ -148,21 +176,14 @@ class _EstadoBotaoToque extends ConsumerState<BotaoToque> {
     final botao = OutlinedButton(
       key: ValueKey('toque-${widget.parametro.simbolo}'),
       onPressed: widget.habilitado ? _tocar : null,
-      style: OutlinedButton.styleFrom(minimumSize: const Size(Medidas.larguraBotaoCompasso, Medidas.alvoMinimo)),
+      style: OutlinedButton.styleFrom(minimumSize: const Size(Medidas.larguraBotaoBater, Medidas.alvoMinimo)),
       child: Text(l.utBater.toUpperCase()),
     );
-    if (widget.habilitado) return botao;
-    return SizedBox(
-      width: Medidas.larguraSeletorSynth,
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        botao,
-        const SizedBox(height: Espacos.xs),
-        notaDoCartao(context, l.utBaterSoNoFixo),
-      ]),
-    );
+    // fora do Fixed Tempo, o motivo fica no próprio botão, sem crescer o cartão
+    return widget.habilitado ? botao : Tooltip(message: l.utBaterSoNoFixo, child: botao);
   }
 }
 
-/// A frase discreta de apoio (o gesto, o motivo, o que só o visor mostra).
+/// A frase discreta de apoio (o que só o visor mostra).
 Widget notaDoCartao(BuildContext context, String texto) => Text(texto,
     style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario));

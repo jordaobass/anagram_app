@@ -1360,42 +1360,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get ctlDicaPedaleira => 'Na pedaleira, os pots atribuídos só respondem na tela do preset em uma linha; com o preset expandido, os knobs mexem no bloco selecionado.';
 
   @override
-  String get utBateria => 'Bateria';
-
-  @override
-  String get utAcao => 'Ação';
-
-  @override
-  String get utMetronomo => 'Metrônomo';
-
-  @override
   String get utTreino => 'Treino';
-
-  @override
-  String get utDisparar => 'Disparar';
-
-  @override
-  String get utDispararSemAoVivo => 'Ligue o AO VIVO para disparar daqui.';
-
-  @override
-  String get utGestosAcao => 'Um toque começa (com intro) ou faz uma virada; dois toques rápidos param; segurar 1 s passa para a próxima parte. Aqui, cada DISPARAR é um toque.';
-
-  @override
-  String get utEstadoNoVisor => 'Se a bateria está tocando ou parada, só o visor da pedaleira mostra.';
 
   @override
   String get utBater => 'Bater';
 
   @override
   String get utBaterSoNoFixo => 'Bater o tempo só vale no modo Fixed Tempo.';
-
-  @override
-  String get utPrecisaoNoVisor => 'A precisão do seu tempo (Accuracy) só aparece no visor da pedaleira.';
-
-  @override
-  String utTemposDoCompasso(int tempos) {
-    return 'Compasso de $tempos tempos, o 1 acentuado';
-  }
 
   @override
   String slotAlteradoForaTitulo(String slot) {
@@ -1552,4 +1523,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get salvarReleituraDiferente => 'a pedaleira confirmou, mas o slot relido é diferente do enviado. A edição continua na tela; confira o slot e salve de novo.';
+
+  @override
+  String get utAcaoChave => 'No app, esta chave é o Action da pedaleira. Pelo manual do plugin: ativar começa o ritmo com introdução; com o ritmo tocando, um novo acionamento faz uma virada; acionamento duplo para; segurar passa para a próxima parte. O que a bateria toca em cada caso é do plugin.';
+
+  @override
+  String get utSoNoVisor => 'Só no visor da pedaleira';
 }

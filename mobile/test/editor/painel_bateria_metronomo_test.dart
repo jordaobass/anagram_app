@@ -1,7 +1,8 @@
 // Painéis da bateria e do metrônomo na tela, ponta a ponta na demonstração:
-// trocar o estilo e o compasso muda o preset e o que a pedaleira toca; o
-// DISPARAR toca o Action em 1 e logo 0 sem mexer no preset; o BATER grava o
-// BPM só no modo Fixed Tempo; no celular os cartões empilham sem estourar.
+// uma fileira de cartões na ordem da tela da Anagram; trocar o estilo e o
+// compasso muda o preset e o que a pedaleira toca; o Action é uma chave
+// gravada no preset; o BATER grava o BPM só no modo Fixed Tempo; no celular
+// os cartões quebram em mais fileiras sem estourar.
 import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
@@ -14,7 +15,6 @@ import 'package:anagram_app/nucleo/catalogo/definicao_bloco.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
-import 'package:anagram_app/nucleo/protocolo/api_anagram.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -63,8 +63,26 @@ Future<void> _tocar(WidgetTester tester, Finder alvo) async {
 }
 
 void main() {
-  testWidgets('should_play_a_new_drum_style_picked_from_the_grouped_list', (tester) async {
+  testWidgets('should_lay_the_drum_cards_in_one_row_in_the_pedal_order', (tester) async {
+    await _comBloco(tester, _bateria);
+    final cantos = [
+      for (final s in ['style', 'level', 'action', 'status', 'useHostTempo', 'userTempo'])
+        tester.getTopLeft(find.byKey(ValueKey('cartao-$s'))),
+    ];
+
+    expect(cantos.map((c) => c.dy).toSet(), hasLength(1), reason: 'uma fileira só, como no visor');
+    expect([for (var i = 1; i < cantos.length; i++) cantos[i].dx > cantos[i - 1].dx], everyElement(isTrue));
+    expect(find.descendant(of: find.byKey(const ValueKey('cartao-status')), matching: find.text('Só no visor da pedaleira')),
+        findsOneWidget, reason: 'o estado não chega pelo USB: nada de valor inventado');
+    expect(find.byKey(const ValueKey('ut-outros')), findsNothing, reason: 'todo parâmetro tem lugar no painel');
+  });
+
+  testWidgets('should_play_a_drum_style_picked_from_the_neighbours_or_the_grouped_list', (tester) async {
     final c = await _comBloco(tester, _bateria);
+
+    await _tocar(tester, find.byKey(const ValueKey('vizinha-style-13')));
+    expect(_valor(c, 'style'), 13, reason: 'a vizinha de baixo do Rock vira a marcada');
+    expect(find.byKey(const ValueKey('vizinha-style-14')), findsOneWidget, reason: 'e a lista rola uma');
 
     await _tocar(tester, find.byKey(const ValueKey('abrir-style')));
     expect(find.text('JAZZ'), findsOneWidget, reason: 'os 17 estilos agrupados pela família');
@@ -72,23 +90,24 @@ void main() {
 
     expect(_valor(c, 'style'), 4);
     expect(_noTocado(_pedaleira(c).presetTocando, _bateria, 'style'), 4, reason: 'a pedaleira toca o Funk');
-    expect(find.byKey(const ValueKey('ut-outros')), findsNothing, reason: 'todo parâmetro tem lugar no painel');
   });
 
-  testWidgets('should_trigger_action_as_a_live_pulse_without_touching_the_preset', (tester) async {
+  testWidgets('should_switch_action_like_the_pedal_screen_and_keep_it_in_the_preset', (tester) async {
     final c = await _comBloco(tester, _bateria);
-    final antes = c.read(editorProvider).atual;
     final pedaleira = _pedaleira(c);
-    final enviosAntes = pedaleira.comandosRecebidos.length;
+    final chave = find.byKey(const ValueKey('chave-action'));
+    expect(find.descendant(of: find.byKey(const ValueKey('cartao-action')), matching: chave), findsOneWidget);
+    expect(find.byKey(const ValueKey('ajuda-action')), findsOneWidget, reason: 'o que o Action faz fica no "?"');
+    expect(find.text('DISPARAR'), findsNothing, reason: 'na pedaleira o Action é chave, não botão');
 
-    await _tocar(tester, find.byKey(const ValueKey('pulso-action')));
+    await _tocar(tester, chave);
+    expect(_noTocado(pedaleira.presetTocando, _bateria, 'action'), 1, reason: 'ligar soa na hora');
+    expect(_valor(c, 'action'), 1, reason: 'o preset guarda a chave, como a pedaleira');
+    expect(c.read(editorProvider).naoSalvo, isTrue);
 
-    final tocados = [
-      for (final m in pedaleira.comandosRecebidos.skip(enviosAntes))
-        if (m.acao == AcoesAnagram.tocarAoVivo) _noTocado(m.carga['presetData'] as Map<String, dynamic>?, _bateria, 'action'),
-    ];
-    expect(tocados, [1, 0], reason: 'aperta e solta');
-    expect(identical(c.read(editorProvider).atual, antes), isTrue, reason: 'o preset nunca guarda action=1');
+    await _tocar(tester, chave);
+    expect(_noTocado(pedaleira.presetTocando, _bateria, 'action'), 0, reason: 'desligar também');
+    expect(_valor(c, 'action'), 0);
   });
 
   testWidgets('should_dim_the_drum_tempo_while_it_follows_the_global_tempo', (tester) async {
@@ -104,17 +123,31 @@ void main() {
     expect(apagado(), findsOneWidget, reason: 'apagado, mas ajustável, como o arpejador desligado');
   });
 
-  testWidgets('should_play_a_new_time_signature_and_draw_its_beats', (tester) async {
+  testWidgets('should_roll_the_time_signature_and_play_it', (tester) async {
     final c = await _comBloco(tester, _metro);
-    Iterable<Container> pontos() => tester.widgetList<Container>(
-        find.descendant(of: find.byKey(const ValueKey('pontos-compasso')), matching: find.byType(Container)));
-    expect(pontos().length, 4, reason: 'o padrão é 4/4');
+    final rolo = find.byKey(const ValueKey('cartao-time_signature'));
+    expect(find.descendant(of: rolo, matching: find.text('3/4')), findsOneWidget, reason: 'a anterior, apagada');
+    expect(find.descendant(of: rolo, matching: find.text('5/4')), findsOneWidget, reason: 'a seguinte, apagada');
 
+    await _tocar(tester, find.byKey(const ValueKey('proxima-time_signature')));
+    expect(_valor(c, 'time_signature'), 3, reason: 'de 4/4 para 5/4');
+
+    await _tocar(tester, find.byKey(const ValueKey('abrir-time_signature')));
     await _tocar(tester, find.byKey(const ValueKey('opcao-time_signature-5')));
 
     expect(_valor(c, 'time_signature'), 5);
     expect(_noTocado(_pedaleira(c).presetTocando, _metro, 'time_signature'), 5, reason: 'a pedaleira toca 6/8');
-    expect(pontos().length, 6);
+    expect(find.descendant(of: rolo, matching: find.text('9/8')), findsOneWidget, reason: 'o rolo andou junto');
+  });
+
+  testWidgets('should_put_the_metronome_page_two_in_a_practice_row_below', (tester) async {
+    await _comBloco(tester, _metro);
+    final principal = [for (final s in ['tempo', 'mode', 'time_signature', 'sound', 'level']) tester.getTopLeft(find.byKey(ValueKey('cartao-$s')))];
+    final treino = [for (final s in ['gap_mode', 'accuracy']) tester.getTopLeft(find.byKey(ValueKey('cartao-$s')))];
+
+    expect(principal.map((c) => c.dy).toSet(), hasLength(1));
+    expect(treino.first.dy, greaterThan(principal.first.dy), reason: 'a página 2 do visor vira a fileira de baixo');
+    expect(find.text('TREINO'), findsOneWidget);
   });
 
   testWidgets('should_write_the_tapped_tempo_only_in_fixed_tempo_mode', (tester) async {
@@ -136,15 +169,15 @@ void main() {
     await tester.pumpAndSettle();
     await tocarAos([10000, 10400, 10800]);
     expect(_valor(c, 'tempo'), 120, reason: 'em Global Tempo o BATER não grava');
-    expect(find.text('Bater o tempo só vale no modo Fixed Tempo.'), findsOneWidget);
+    expect(find.byTooltip('Bater o tempo só vale no modo Fixed Tempo.'), findsOneWidget);
   });
 
-  for (final (uri, secoes) in [(_bateria, ['bateria', 'acao']), (_metro, ['metronomo', 'treino'])]) {
-    testWidgets('should_stack_the_${secoes.first}_panel_without_overflow_on_a_phone', (tester) async {
+  for (final (uri, cartoes) in [(_bateria, ['style', 'userTempo']), (_metro, ['tempo', 'level'])]) {
+    testWidgets('should_wrap_the_${cartoes.first}_row_without_overflow_on_a_phone', (tester) async {
       await _comBloco(tester, uri, tamanho: const Size(390, 2600));
 
-      final [primeira, segunda] = [for (final s in secoes) tester.getTopLeft(find.byKey(ValueKey('ut-$s')))];
-      expect(segunda.dy, greaterThan(primeira.dy), reason: 'no celular, um cartão embaixo do outro');
+      final [primeiro, ultimo] = [for (final s in cartoes) tester.getTopLeft(find.byKey(ValueKey('cartao-$s')))];
+      expect(ultimo.dy, greaterThan(primeiro.dy), reason: 'no celular, a fileira quebra');
       expect(tester.takeException(), isNull);
     });
   }

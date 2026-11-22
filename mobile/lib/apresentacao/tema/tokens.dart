@@ -317,14 +317,16 @@ abstract final class Medidas {
   static const double opacidadePreenchimentoSynth = 0.18;
   static const double knobSynth = 64;
 
-  /// Painéis da bateria e do metrônomo: a fileira de compassos (4 botões
-  /// por linha), cada botão, os pontos dos tempos (o 1 maior) e a coluna
-  /// do DISPARAR com o texto dos gestos.
-  static const double larguraBotoesUtilitario = 4 * larguraBotaoCompasso + 3 * Espacos.xs;
-  static const double larguraBotaoCompasso = 64;
-  static const double pontoCompasso = 10;
-  static const double pontoCompassoAcento = 16;
-  static const double larguraAcaoUtilitario = 360;
+  /// Painéis da bateria e do metrônomo, um cartão por controle como no
+  /// visor: seis cabem numa fileira do computador e dois no celular (encolhendo
+  /// até a mínima, em que o rolo e a lista ainda cabem); a altura
+  /// mínima iguala a fileira (o Tempo com o BATER, a mais alta); o
+  /// rolo do compasso tem a altura de dois algarismos grandes.
+  static const double larguraCartaoUtilitario = 168;
+  static const double larguraMinimaCartaoUtilitario = 144;
+  static const double alturaCartaoUtilitario = 232;
+  static const double alturaRoloUtilitario = 104;
+  static const double larguraBotaoBater = 64;
 
   /// Ícone à esquerda de cada item de menu.
   static const double iconeMenu = 20;
