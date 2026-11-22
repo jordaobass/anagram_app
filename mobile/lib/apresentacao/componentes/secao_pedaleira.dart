@@ -12,6 +12,7 @@ import '../tema/tokens.dart';
 import 'cartao_global_eq.dart';
 import 'cartao_secao_synth.dart';
 import 'controles_ajuste.dart';
+import 'seletor_modo_footswitches.dart';
 
 class SecaoPedaleira extends ConsumerStatefulWidget {
   const SecaoPedaleira({super.key});
@@ -65,6 +66,12 @@ class _SecaoPedaleiraState extends ConsumerState<SecaoPedaleira> {
   }
 
   List<Widget> _cartoes(AppLocalizations l, TextTheme tema) => [
+        CartaoSecaoSynth(
+          titulo: l.fmTitulo,
+          largura: double.infinity,
+          filhos: const [SizedBox(width: double.infinity, child: SeletorModoFootswitches(noCartao: true))],
+        ),
+        const SizedBox(height: Espacos.m),
         _CartaoGrupo(titulo: l.pdSaidas, grupo: GrupoAjuste.saidas, forma: FormaControle.fader, cor: Cores.mixerGlobal),
         const SizedBox(height: Espacos.m),
         CartaoGlobalEq(aoIrParaEntrada: _irParaEntrada),

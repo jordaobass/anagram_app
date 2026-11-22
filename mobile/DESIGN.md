@@ -275,6 +275,9 @@ Táteis e diretos, sempre ≥ 48dp, texto em Barlow Condensed caixa alta.
 ### Cenas
 Três botões de largura igual, altura 56px. Inativo: `painel-elevado` com borda de filete. Ativo: preenchido em âmbar. Número em estêncil + nome em caixa alta; cena sem nome mostra só o número e "CENA" (nunca "1 CENA 1").
 
+### Modo dos footswitches
+Logo abaixo das cenas: à esquerda o indicador ("FOOTSWITCHES" em label-medium `aluminio-claro` e, embaixo, o modo lido em label-large, ou "—" se desconhecido); à direita PRESET / STOMP / SCENE, três botões iguais aos de cena com 48px de altura, ativo em âmbar. Nomes em label-large, sem estêncil (não são números). A dica do Stomp fica no tooltip do indicador, no painel de Controles e no cartão "Footswitches" das Configurações (onde o indicador perde o rótulo, que já é o título do cartão). Firmware que não exporta o modo deixa os botões desabilitados, com texto `texto-secundario`.
+
 ### Fita do Preset (assinatura)
 Slot em estêncil de 40px à esquerda (no celular, com "PRESETS ▾" embaixo: tocar abre a lista), seguido da fita gaffer creme com o nome a marcador, um lápis discreto em alumínio (tocar a fita renomeia) e, se houver edição não salva, o selo vermelho "NÃO SALVO" no fim da fita. Os avisos sob a fita (ao vivo desligado, audição sem USB MIDI) usam `erro`, não âmbar.
 

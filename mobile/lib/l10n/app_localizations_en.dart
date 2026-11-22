@@ -1396,4 +1396,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String utTemposDoCompasso(int tempos) {
     return 'Bar of $tempos beats, beat 1 accented';
   }
+
+  @override
+  String get fmTitulo => 'Footswitches';
+
+  @override
+  String fmModo(String modo) {
+    String _temp0 = intl.Intl.selectLogic(
+      modo,
+      {
+        'preset': 'PRESET',
+        'stomp': 'STOMP',
+        'scene': 'SCENE',
+        'other': '—',
+      },
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fmSemantica(String modo) {
+    return 'Footswitches in $modo mode';
+  }
+
+  @override
+  String get fmDica => 'In Stomp mode, the footswitches follow this preset\'s pedal controls. The mode applies to every preset.';
+
+  @override
+  String get fmErro => 'The pedal did not confirm the mode change. The mode shown is the one it has now.';
+
+  @override
+  String get fmIndisponivel => 'This pedal does not report the footswitch mode.';
+
+  @override
+  String fmAvisoControles(String modo) {
+    return 'Assigned FOOTs only act in Stomp mode; the pedal is in $modo.';
+  }
 }

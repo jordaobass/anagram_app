@@ -13,6 +13,7 @@ import '../textos.dart';
 import 'alvo_do_controle.dart';
 import 'casa_arrastavel.dart' show arrastoComMouse;
 import 'dialogo_controle.dart';
+import 'seletor_modo_footswitches.dart' show AvisoModoNosControles;
 
 class PainelControles extends ConsumerWidget {
   const PainelControles({super.key, required this.compacto});
@@ -32,6 +33,7 @@ class PainelControles extends ConsumerWidget {
       Text(l.ctlDicaPara(mouse: arrastoComMouse), style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
       const SizedBox(height: Espacos.xs),
       Text(l.ctlDicaPedaleira, style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
+      const AvisoModoNosControles(),
       const SizedBox(height: Espacos.m),
       LayoutBuilder(builder: (context, restricoes) => _grupos(documento, _largura(restricoes.maxWidth))),
     ]);

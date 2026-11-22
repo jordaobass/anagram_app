@@ -410,5 +410,12 @@
   "utBater": "Marcar",
   "utBaterSoNoFixo": "Marcar el tempo solo funciona en el modo Fixed Tempo.",
   "utPrecisaoNoVisor": "La precisión de tu tempo (Accuracy) solo aparece en la pantalla del pedal.",
-  "utTemposDoCompasso": "Compás de {tempos} tiempos, el 1 acentuado"
+  "utTemposDoCompasso": "Compás de {tempos} tiempos, el 1 acentuado",
+  "fmTitulo": "Footswitches",
+  "fmModo": "{modo, select, preset{PRESET} stomp{STOMP} scene{SCENE} other{—}}",
+  "fmSemantica": "Footswitches en modo {modo}",
+  "fmDica": "En el modo Stomp, los footswitches siguen los controles del pedal de este preset. El modo vale para todos los presets.",
+  "fmErro": "El pedal no confirmó el cambio de modo. El modo mostrado es el que tiene ahora.",
+  "fmIndisponivel": "Este pedal no informa el modo de los footswitches.",
+  "fmAvisoControles": "Los FOOT asignados solo actúan en el modo Stomp; el pedal está en {modo}."
 }

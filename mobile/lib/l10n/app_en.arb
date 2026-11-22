@@ -410,5 +410,12 @@
   "utBater": "Tap",
   "utBaterSoNoFixo": "Tap tempo works in Fixed Tempo mode only.",
   "utPrecisaoNoVisor": "How accurate your timing is (Accuracy) shows only on the pedal screen.",
-  "utTemposDoCompasso": "Bar of {tempos} beats, beat 1 accented"
+  "utTemposDoCompasso": "Bar of {tempos} beats, beat 1 accented",
+  "fmTitulo": "Footswitches",
+  "fmModo": "{modo, select, preset{PRESET} stomp{STOMP} scene{SCENE} other{—}}",
+  "fmSemantica": "Footswitches in {modo} mode",
+  "fmDica": "In Stomp mode, the footswitches follow this preset's pedal controls. The mode applies to every preset.",
+  "fmErro": "The pedal did not confirm the mode change. The mode shown is the one it has now.",
+  "fmIndisponivel": "This pedal does not report the footswitch mode.",
+  "fmAvisoControles": "Assigned FOOTs only act in Stomp mode; the pedal is in {modo}."
 }
