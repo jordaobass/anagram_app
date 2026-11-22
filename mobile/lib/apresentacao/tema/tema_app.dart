@@ -16,6 +16,7 @@ abstract final class TemaApp {
         outlinedButtonTheme: OutlinedButtonThemeData(style: _botaoContornado()),
         textButtonTheme: TextButtonThemeData(style: ButtonStyle(side: anelDeFoco(), shape: _formaControle)),
         iconButtonTheme: IconButtonThemeData(style: ButtonStyle(side: anelDeFoco())),
+        appBarTheme: _barraDeTitulo,
         dialogTheme: _dialogo(),
         snackBarTheme: _aviso(),
         chipTheme: _chip(),
@@ -40,6 +41,19 @@ abstract final class TemaApp {
     error: Cores.erro,
     outline: Cores.filete,
     outlineVariant: Cores.filete,
+    // o Material 3 tinge superfícies elevadas com a primária: no case, o
+    // âmbar é só seleção e ação, nunca a cor de uma barra rolada
+    surfaceTint: Colors.transparent,
+  );
+
+  /// Barra de título no painel, rolada ou não, com o filete embaixo.
+  static const _barraDeTitulo = AppBarTheme(
+    backgroundColor: Cores.painel,
+    foregroundColor: Cores.texto,
+    surfaceTintColor: Colors.transparent,
+    elevation: 0,
+    scrolledUnderElevation: 0,
+    shape: Border(bottom: BorderSide(color: Cores.filete)),
   );
 
   static ButtonStyle _botaoContornado() => OutlinedButton.styleFrom(
