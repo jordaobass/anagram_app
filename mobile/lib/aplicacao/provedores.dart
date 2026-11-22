@@ -42,12 +42,19 @@ final catalogoProvider = FutureProvider<CatalogoBlocos>((ref) async {
 });
 
 /// Sem a pasta de miniaturas, índice vazio: todo bloco usa a arte própria.
+/// Índice malformado também: vale a arte própria, e o log diz a causa.
 final indiceMiniaturasProvider = FutureProvider<IndiceMiniaturas>((ref) async {
+  final String texto;
   try {
-    final texto = await ref.watch(pacoteAssetsProvider).loadString(CaminhosAssets.miniaturas);
-    return IndiceMiniaturas.doTexto(texto);
+    texto = await ref.watch(pacoteAssetsProvider).loadString(CaminhosAssets.miniaturas);
   } on FlutterError catch (erro) {
     registro.i('miniaturas de terceiros ausentes; usando arte própria (${erro.message})');
+    return IndiceMiniaturas.vazio();
+  }
+  try {
+    return IndiceMiniaturas.doTexto(texto);
+  } on Object catch (erro, pilha) {
+    registro.w('índice de miniaturas malformado; usando arte própria', error: erro, stackTrace: pilha);
     return IndiceMiniaturas.vazio();
   }
 });
