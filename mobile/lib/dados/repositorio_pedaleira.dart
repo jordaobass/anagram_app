@@ -35,9 +35,8 @@ class RepositorioPedaleira {
   Future<Resultado<AjustesPedaleira>> lerAjustesGlobais() =>
       _proteger('ler ajustes globais', _api.lerAjustesGlobais);
 
-  Future<Resultado<void>> gravarAjustesGlobais(Map<String, num> porChave) =>
-      _proteger('gravar ${porChave.keys.join(', ')}', () => _api.gravarAjustesGlobais(porChave));
-
+  /// Mixer, Global EQ e entrada não têm gravação: a pedaleira os aceita, mas
+  /// não muda o som (DECISOES AJ1). Do `edit_settings` saem só o modo e a área.
   Future<Resultado<void>> gravarModoFootswitches(ModoFootswitches modo) => _proteger(
       'gravar $chaveModoFootswitches=${modo.valor}',
       () => _api.gravarAjustesGlobais({chaveModoFootswitches: modo.valor}));

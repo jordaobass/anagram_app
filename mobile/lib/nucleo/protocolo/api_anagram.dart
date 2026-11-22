@@ -81,9 +81,9 @@ class ApiAnagram {
   Future<AjustesPedaleira> lerAjustesGlobais() async =>
       AjustesPedaleira.daResposta(await cliente.chamar(AcoesAnagram.lerAjustes, const {}, prazoAjustes));
 
-  /// [porChave]: chaves planas do protocolo (`mixer.headphones.vol`), provado
-  /// na v1.19.2.24; várias de uma vez valem (DECISOES PD1). Texto também vale:
-  /// `mode` = "scene" foi aceito na bancada de 2026-11-22 (DECISOES FM1).
+  /// [porChave]: chaves planas do protocolo; várias de uma vez valem. O app só
+  /// grava `mode` (DECISOES FM1): mixer, Global EQ e ganho de entrada são
+  /// aceitos e relidos, mas a pedaleira não os aplica ao som (DECISOES AJ1).
   Future<void> gravarAjustesGlobais(Map<String, Object> porChave) => cliente.chamar(
         AcoesAnagram.gravarAjustes,
         {'settings': porChave, 'reloadLvgl': true},

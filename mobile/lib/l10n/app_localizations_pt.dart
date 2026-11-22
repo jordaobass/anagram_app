@@ -1143,7 +1143,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pdSecao => 'Pedaleira';
 
   @override
-  String get pdDica => 'Ajustes globais da Anagram: valem para todos os presets e não entram no preset. Mudam na hora.';
+  String get pdDica => 'Ajustes globais da Anagram: valem para todos os presets e não entram no preset.';
 
   @override
   String get pdSaidas => 'Saídas';
@@ -1176,25 +1176,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pdEqReset => 'Reset';
 
   @override
-  String get pdEqResetTitulo => 'Voltar o Global EQ ao padrão?';
-
-  @override
-  String get pdEqResetTexto => 'As 6 bandas voltam a 35 Hz, 160 Hz, 397 Hz, 1,25 kHz, 2,5 kHz e 9,63 kHz, com ganho 0 e a largura de fábrica. Dá para desfazer logo depois.';
-
-  @override
   String get pdEqResetConfirmar => 'VOLTAR AO PADRÃO';
 
   @override
-  String get pdEqResetFeito => 'Global EQ de volta ao padrão.';
-
-  @override
-  String get pdEqDica => 'Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho. Os knobs mexem no que o modo escolhido mostra.';
+  String get pdEqDica => 'A curva e as bandas mostram o Global EQ que a pedaleira tem agora; o modo escolhe o que as bandas mostram.';
 
   @override
   String get pdEntrada => 'Entrada';
 
   @override
-  String get pdEntradaDica => 'Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; os outros cinco e os nomes entram quando o app conhecer as chaves deles.';
+  String get pdEntradaDica => 'Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; o app só lê o primeiro.';
 
   @override
   String get pdPlaca => 'Placa de som';
@@ -1213,12 +1204,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pdTentarDeNovo => 'Tentar de novo';
-
-  @override
-  String get pdErroGravar => 'A pedaleira não aceitou a última mudança. Os valores mostrados são os que ela tem agora.';
-
-  @override
-  String get pdPendentes => 'Ainda não dá para mudar pelo app: Master, Mute e Link do mixer e os nomes dos instrumentos.';
 
   @override
   String get registroSecao => 'Registro para suporte';
@@ -1552,4 +1537,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get salvarReleituraDiferente => 'a pedaleira confirmou, mas o slot relido é diferente do enviado. A edição continua na tela; confira o slot e salve de novo.';
+
+  @override
+  String get pdSemAcesso => 'Volume das saídas, Global EQ e ganho de entrada: o app não tem acesso a esses recursos da pedaleira. A Anagram aceita o valor enviado, mas não o aplica ao som. Ajuste nos knobs e telas da própria pedaleira; aqui você vê os valores atuais (toque em Atualizar depois de mudar).';
 }

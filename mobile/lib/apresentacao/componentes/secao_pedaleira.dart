@@ -1,6 +1,8 @@
 // A seção "Pedaleira" das Configurações: os ajustes globais da Anagram, que
-// valem para todos os presets. Relê ao abrir e no "Atualizar"; mostra só o
-// que o app sabe gravar e diz, numa linha, o que ainda falta (DECISOES PD2).
+// valem para todos os presets. Relê ao abrir e no "Atualizar". O modo dos
+// footswitches se troca aqui; saídas, Global EQ e entrada só se leem — a
+// pedaleira aceita esses valores pelo USB, mas não os aplica ao som, e o
+// aviso no topo diz isso antes de qualquer controle (DECISOES AJ1, AJ2).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -53,7 +55,9 @@ class _SecaoPedaleiraState extends ConsumerState<SecaoPedaleira> {
         ),
       ]),
       const SizedBox(height: Espacos.m),
-      if (estado.lidos == null) _semLeitura(l, estado) else ..._cartoes(l, tema),
+      _AvisoSemAcesso(texto: l.pdSemAcesso),
+      const SizedBox(height: Espacos.m),
+      if (estado.lidos == null) _semLeitura(l, estado) else ..._cartoes(l),
     ]);
   }
 
@@ -65,7 +69,7 @@ class _SecaoPedaleiraState extends ConsumerState<SecaoPedaleira> {
     ]);
   }
 
-  List<Widget> _cartoes(AppLocalizations l, TextTheme tema) => [
+  List<Widget> _cartoes(AppLocalizations l) => [
         CartaoSecaoSynth(
           titulo: l.fmTitulo,
           largura: double.infinity,
@@ -84,9 +88,6 @@ class _SecaoPedaleiraState extends ConsumerState<SecaoPedaleira> {
             dica: l.pdEntradaDica),
         const SizedBox(height: Espacos.m),
         const _CartaoPlaca(),
-        const SizedBox(height: Espacos.s),
-        Text(l.pdPendentes, key: const ValueKey('ajustes-pendentes'),
-            style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
       ];
 }
 
@@ -108,12 +109,34 @@ class _CartaoGrupo extends StatelessWidget {
       desenho: dica == null
           ? null
           : Text(dica!, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario)),
-      filhos: [
-        for (final a in ajustes) ControleAjuste(definicao: a, forma: forma, cor: cor),
-        AvisoErroAjustes(ids: {for (final a in ajustes) a.id}),
-      ],
+      filhos: [for (final a in ajustes) ControleAjuste(definicao: a, forma: forma, cor: cor)],
     );
   }
+}
+
+/// O que o app não consegue fazer com saídas, Global EQ e entrada, em
+/// destaque e antes dos controles: sem ele, o fader que não se mexe pareceria
+/// defeito.
+class _AvisoSemAcesso extends StatelessWidget {
+  const _AvisoSemAcesso({required this.texto});
+
+  final String texto;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        key: const ValueKey('aviso-sem-acesso-ajustes'),
+        padding: const EdgeInsets.all(Espacos.m),
+        decoration: BoxDecoration(
+          color: Cores.painelElevado,
+          border: Border.all(color: Cores.aluminio),
+          borderRadius: BorderRadius.circular(Raios.painel),
+        ),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Icon(Icons.info_outline, color: Cores.aluminioClaro),
+          const SizedBox(width: Espacos.s),
+          Expanded(child: Text(texto, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Cores.texto))),
+        ]),
+      );
 }
 
 /// A placa de som: só leitura, como texto (a pedaleira não responde a

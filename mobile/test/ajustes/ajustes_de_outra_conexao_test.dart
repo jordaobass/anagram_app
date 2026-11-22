@@ -8,12 +8,11 @@ import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
 import 'package:anagram_app/aplicacao/estado/estado_conexao.dart';
 import 'package:anagram_app/dados/repositorio_pedaleira.dart';
 import 'package:anagram_app/nucleo/ajustes/ajustes_pedaleira.dart';
-import 'package:anagram_app/nucleo/ajustes/mapa_ajustes.dart';
 import 'package:anagram_app/nucleo/resultado.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// Pedaleira cujas leituras e gravações de ajustes só voltam quando o teste manda.
+/// Pedaleira cujas leituras de ajustes só voltam quando o teste manda.
 class _PedaleiraSegurada implements RepositorioPedaleira {
   final leituras = <Completer<Resultado<AjustesPedaleira>>>[];
 
@@ -23,9 +22,6 @@ class _PedaleiraSegurada implements RepositorioPedaleira {
     leituras.add(leitura);
     return leitura.future;
   }
-
-  @override
-  Future<Resultado<void>> gravarAjustesGlobais(Map<String, num> porChave) async => const Sucesso(null);
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
@@ -56,12 +52,6 @@ const _lidoDaAnterior = Sucesso(AjustesPedaleira(ajustes: {'mixer.headphones.vol
   return (container, container.read(conexaoProvider.notifier) as _ConexaoDeTeste);
 }
 
-Future<void> _esperarAte(bool Function() condicao) async {
-  while (!condicao()) {
-    await Future<void>.delayed(const Duration(milliseconds: 1));
-  }
-}
-
 void main() {
   test('should_ignore_a_settings_read_that_returns_after_the_pedal_was_replaced', () async {
     final (container, conexao) = _app();
@@ -76,22 +66,5 @@ void main() {
     final estado = container.read(controladorAjustesProvider);
     expect(estado.lidos, isNull, reason: 'o valor é da pedaleira anterior');
     expect(estado.carregando, isFalse);
-  });
-
-  test('should_ignore_the_reread_after_a_change_when_it_returns_after_the_pedal_was_replaced', () async {
-    final (container, conexao) = _app();
-    final anterior = _PedaleiraSegurada();
-    conexao.ligar(anterior);
-    final ajustes = container.read(controladorAjustesProvider.notifier);
-    final fone = ajustePorIdOuChave('headphones')!;
-
-    ajustes.alterar(fone, 5);
-    final envio = ajustes.enviarAgora();
-    await _esperarAte(() => anterior.leituras.isNotEmpty);
-    conexao.ligar(_PedaleiraSegurada());
-    anterior.leituras.single.complete(_lidoDaAnterior);
-    await envio;
-
-    expect(container.read(controladorAjustesProvider).lidos, isNull, reason: 'a releitura é da pedaleira anterior');
   });
 }

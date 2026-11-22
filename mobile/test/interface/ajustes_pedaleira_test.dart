@@ -1,18 +1,17 @@
-// A seção "Pedaleira" das Configurações, ponta a ponta na demonstração:
-// mexer no controle manda `edit_settings` com a chave plana que a Anagram
-// real aceitou, o app relê e mostra o valor confirmado; a placa de som só
-// se lê; e um ajuste sem chave conhecida nunca sai para a pedaleira.
-import 'package:anagram_app/aplicacao/estado/controlador_ajustes.dart';
+// A seção "Pedaleira" das Configurações, ponta a ponta na demonstração. Na
+// bancada de 2026-11-22 a Anagram aceitou e releu mixer, Global EQ e ganho de
+// entrada, mas o som não mudou (DECISOES AJ1): a seção mostra o que a
+// pedaleira tem, avisa que o app não tem acesso a esses recursos e nenhum
+// gesto nos controles manda `edit_settings`. O modo dos footswitches continua
+// editável (modo_footswitches_test); a placa de som só se lê.
 import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
 import 'package:anagram_app/apresentacao/componentes/botao_giratorio.dart';
-import 'package:anagram_app/nucleo/ajustes/mapa_ajustes.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:anagram_app/nucleo/protocolo/api_anagram.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../apoio/conexao_demo.dart';
 import '../apoio/demonstracao_na_tela.dart';
 
 TransporteDemonstracao _pedaleira(ProviderContainer c) =>
@@ -30,106 +29,59 @@ Future<ProviderContainer> _abrirPedaleira(WidgetTester tester) async {
   return container;
 }
 
-/// Espera a pausa do envio, a gravação e a releitura.
-Future<void> _esperarEnvio(WidgetTester tester) async {
-  await tester.pump(ControladorAjustes.espera * 2);
-  await tester.pumpAndSettle();
-}
+Finder _valor(String id) => find.byKey(ValueKey('valor-$id'));
 
-Future<void> _digitar(WidgetTester tester, String id, String texto) async {
-  await tester.ensureVisible(find.byKey(ValueKey('valor-$id')));
-  await tester.tap(find.byKey(ValueKey('valor-$id')));
+/// Arrasta, segura e toca no número do controle [id], como quem tenta mudar.
+Future<void> _tentarMudar(WidgetTester tester, String id) async {
+  final controle = find.byKey(ValueKey('ajuste-$id'));
+  await tester.ensureVisible(controle);
   await tester.pumpAndSettle();
-  await tester.enterText(find.byKey(const ValueKey('digitar-valor')), texto);
-  await tester.testTextInput.receiveAction(TextInputAction.done);
+  await tester.drag(controle, const Offset(0, -80));
+  await tester.longPress(controle);
+  await tester.tap(_valor(id), warnIfMissed: false);
   await tester.pumpAndSettle();
 }
 
 void main() {
-  testWidgets('should_send_the_headphone_level_with_the_pedal_key_and_show_the_confirmed_value', (tester) async {
-    final container = await _abrirPedaleira(tester);
-    final pedaleira = _pedaleira(container);
+  testWidgets('should_explain_at_the_top_of_the_pedal_section_that_the_app_has_no_access_to_these_features',
+      (tester) async {
+    await _abrirPedaleira(tester);
+    final aviso = find.byKey(const ValueKey('aviso-sem-acesso-ajustes'));
 
-    await _digitar(tester, 'headphones', '-4');
-    await _esperarEnvio(tester);
-
-    expect(_gravacoes(pedaleira), [
-      {'mixer.headphones.vol': -4},
-    ]);
-    expect(pedaleira.ajustesGlobais['mixer.headphones.vol'], -4);
-    expect(container.read(controladorAjustesProvider).locais, isEmpty, reason: 'o que aparece é o relido');
-    expect(find.descendant(of: find.byKey(const ValueKey('valor-headphones')), matching: find.text('-4,0 dB')),
-        findsOneWidget);
+    expect(aviso, findsOneWidget);
+    expect(find.descendant(of: aviso, matching: find.textContaining('não tem acesso')), findsOneWidget);
+    expect(find.textContaining('Mudam na hora'), findsNothing, reason: 'a pedaleira não aplica ao som');
+    expect(tester.getTopLeft(aviso).dy, lessThan(tester.getTopLeft(find.byKey(const ValueKey('ajuste-headphones'))).dy),
+        reason: 'o aviso vem antes dos controles');
   });
 
-  testWidgets('should_change_the_low_shelf_when_its_point_is_dragged_down_on_the_curve', (tester) async {
+  testWidgets('should_show_the_values_read_from_the_pedal_without_the_speaker_fader', (tester) async {
+    await _abrirPedaleira(tester);
+
+    expect(find.descendant(of: _valor('headphones'), matching: find.text('6,0 dB')), findsOneWidget);
+    expect(find.byKey(const ValueKey('ajuste-speaker')), findsNothing, reason: 'o mixer do manual não tem Speaker');
+  });
+
+  testWidgets('should_not_send_edit_settings_when_outputs_eq_or_input_controls_are_touched', (tester) async {
     final container = await _abrirPedaleira(tester);
     final pedaleira = _pedaleira(container);
+
+    await _tentarMudar(tester, 'headphones');
+    await _tentarMudar(tester, 'input_gain_1');
+    await _tentarMudar(tester, 'eq_ls_gain');
     final curva = find.byKey(const ValueKey('curva-global-eq'));
     await tester.ensureVisible(curva);
     await tester.pumpAndSettle();
     final caixa = tester.getRect(curva);
     // o ponto do low shelf da demonstração: 35 Hz, −7,8 dB
-    final x = caixa.left + caixa.width * 0.0810;
-    final y = caixa.top + caixa.height / 2 * (1 + 7.8 / 15);
+    await tester.dragFrom(Offset(caixa.left + caixa.width * 0.0810, caixa.top + caixa.height / 2 * (1 + 7.8 / 15)),
+        const Offset(0, 30));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
 
-    await tester.dragFrom(Offset(x, y), const Offset(0, 30));
-    await _esperarEnvio(tester);
-
-    final ganho = pedaleira.ajustesGlobais['globaleq.ls.gain'] as num;
-    expect(ganho, lessThan(-7.8), reason: 'arrastar para baixo corta mais grave');
-    expect(_gravacoes(pedaleira).last.keys, containsAll(['globaleq.ls.freq', 'globaleq.ls.gain']));
-  });
-
-  testWidgets('should_send_the_band_2_frequency_when_it_is_changed_in_frequency_mode', (tester) async {
-    final container = await _abrirPedaleira(tester);
-    final pedaleira = _pedaleira(container);
-    await tester.ensureVisible(find.byKey(const ValueKey('modo-eq-freq')));
-    await tester.tap(find.byKey(const ValueKey('modo-eq-freq')));
-    await tester.pumpAndSettle();
-
-    await _digitar(tester, 'eq_2_freq', '700');
-    await _esperarEnvio(tester);
-
-    expect(_gravacoes(pedaleira).last, {'globaleq.2.freq': 700});
-    expect(pedaleira.ajustesGlobais['globaleq.2.freq'], 700);
-  });
-
-  testWidgets('should_send_the_band_3_width_when_it_is_changed_in_width_mode', (tester) async {
-    final container = await _abrirPedaleira(tester);
-    final pedaleira = _pedaleira(container);
-    await tester.ensureVisible(find.byKey(const ValueKey('modo-eq-width')));
-    await tester.tap(find.byKey(const ValueKey('modo-eq-width')));
-    await tester.pumpAndSettle();
-
-    await _digitar(tester, 'eq_3_width', '1,5');
-    await _esperarEnvio(tester);
-
-    expect(_gravacoes(pedaleira).last, {'globaleq.3.width': 1.5});
-  });
-
-  testWidgets('should_send_the_factory_values_on_reset_and_bring_the_old_ones_back_on_undo', (tester) async {
-    final container = await _abrirPedaleira(tester);
-    final pedaleira = _pedaleira(container);
-    await tester.ensureVisible(find.byKey(const ValueKey('eq-reset')));
-    await tester.tap(find.byKey(const ValueKey('eq-reset')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('confirmar-reset-eq')));
-    await tester.pumpAndSettle();
-    await _esperarEnvio(tester);
-
-    final reset = _gravacoes(pedaleira).last;
-    expect(reset, containsPair('globaleq.ls.gain', 0));
-    expect(reset, containsPair('globaleq.2.freq', 397));
-    expect(reset, containsPair('globaleq.hs.freq', 9630));
-    expect(reset, containsPair('globaleq.ls.width', 0.33));
-    expect(reset.length, 18);
-
-    await tester.tap(find.text('DESFAZER'));
-    await _esperarEnvio(tester);
-
-    expect(pedaleira.ajustesGlobais['globaleq.ls.gain'], -7.8);
-    expect(pedaleira.ajustesGlobais['globaleq.hs.freq'], 8000);
+    expect(_gravacoes(pedaleira), isEmpty);
+    expect(find.byKey(const ValueKey('digitar-valor')), findsNothing, reason: 'o número não abre o campo');
+    expect(find.byKey(const ValueKey('eq-reset')), findsNothing);
+    expect(find.descendant(of: _valor('headphones'), matching: find.text('6,0 dB')), findsOneWidget);
   });
 
   testWidgets('should_show_the_sound_card_as_text_without_any_control_to_change_it', (tester) async {
@@ -141,28 +93,13 @@ void main() {
     expect(find.descendant(of: placa, matching: find.byType(BotaoGiratorio)), findsNothing);
   });
 
-  testWidgets('should_explain_near_the_controls_when_the_pedal_does_not_accept_the_change', (tester) async {
+  testWidgets('should_show_the_new_value_after_refresh_when_it_was_changed_on_the_pedal', (tester) async {
     final container = await _abrirPedaleira(tester);
-    _pedaleira(container).naoResponder = AcoesAnagram.gravarAjustes;
+    _pedaleira(container).ajustesGlobais['mixer.headphones.vol'] = -4.0;
 
-    await _digitar(tester, 'out1', '-2');
-    await tester.pump(ControladorAjustes.espera);
-    await tester.pump(ApiAnagram.prazoAjustes + const Duration(seconds: 1));
+    await tester.tap(find.byKey(const ValueKey('atualizar-ajustes')));
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const ValueKey('erro-ajuste')), findsOneWidget);
-  });
-
-  test('should_never_send_a_setting_whose_pedal_key_is_still_unknown', () async {
-    final (container, pedaleira) = await conectarDemonstracao();
-    addTearDown(container.dispose);
-    final controlador = container.read(controladorAjustesProvider.notifier);
-
-    controlador.alterar(ajustePorIdOuChave('master')!, -6);
-    controlador.alterar(ajustePorIdOuChave('input_gain_3')!, 4);
-    await controlador.enviarAgora();
-
-    expect(_gravacoes(pedaleira), isEmpty);
-    expect(container.read(controladorAjustesProvider).locais, isEmpty);
+    expect(find.descendant(of: _valor('headphones'), matching: find.text('-4,0 dB')), findsOneWidget);
   });
 }
