@@ -17,6 +17,10 @@ import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 
+import 'package:anagram_app/aplicacao/conectar_ao_abrir.dart';
+import 'package:anagram_app/dados/preferencias_conexao.dart';
+import 'package:anagram_app/plataforma/acesso_entrada_mac.dart';
+
 import 'app_de_teste.dart';
 import 'fixtures.dart';
 import 'versao_falsa.dart';
@@ -40,7 +44,10 @@ Future<void> montarApp(WidgetTester tester,
     GithubFalso? github,
     PreferenciasVersao? preferenciasVersao,
     PreferenciasPausa? preferenciasPausa,
-    PreferenciasPaineis? preferenciasPaineis}) async {
+    PreferenciasPaineis? preferenciasPaineis,
+    PlataformaDeAbertura abertura = PlataformaDeAbertura.semTentativa,
+    PreferenciasConexao? preferenciasConexao,
+    ConsultaAcessoEntrada? acessoEntradaMac}) async {
   tester.view.physicalSize = tamanho * densidade;
   tester.view.devicePixelRatio = densidade;
   addTearDown(tester.view.reset);
@@ -54,7 +61,10 @@ Future<void> montarApp(WidgetTester tester,
       github: github,
       preferenciasVersao: preferenciasVersao,
       preferenciasPausa: preferenciasPausa,
-      preferenciasPaineis: preferenciasPaineis));
+      preferenciasPaineis: preferenciasPaineis,
+      abertura: abertura,
+      preferenciasConexao: preferenciasConexao,
+      acessoEntradaMac: acessoEntradaMac));
   await tester.pumpAndSettle();
 }
 

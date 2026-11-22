@@ -91,8 +91,10 @@ class PainelConectar extends ConsumerWidget {
     ];
   }
 
-  /// "Conectando (USB)…" enquanto o USB abre; o botão tocado é que diz.
+  /// "Conectando (USB)…" enquanto o USB abre; o botão tocado é que diz. Ao
+  /// abrir o app, sem toque, "Procurando a pedaleira…" (DECISOES CA2).
   static String? _conectandoUsb(AppLocalizations l, EstadoConexao conexao) => switch (conexao) {
+        Conectando(demonstracao: false, automatica: true) => l.caProcurando,
         Conectando(demonstracao: false, :final meio) => l.estadoConectando(TextosDoApp.meioVisivel(meio)),
         _ => null,
       };

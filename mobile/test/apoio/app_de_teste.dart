@@ -21,6 +21,9 @@ import 'package:anagram_app/plataforma/servidor_mcp.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
 import 'package:anagram_app/aplicacao/versao_nova.dart';
 import 'package:anagram_app/dados/preferencias_versao.dart';
+import 'package:anagram_app/aplicacao/conectar_ao_abrir.dart';
+import 'package:anagram_app/dados/preferencias_conexao.dart';
+import 'package:anagram_app/plataforma/acesso_entrada_mac.dart';
 import 'versao_falsa.dart';
 
 /// Latência fixa: a real varia de execução para execução e sujaria as capturas.
@@ -44,6 +47,8 @@ const versaoNasCapturas = '0.1.3';
 /// [fabrica]: os presets de fábrica (o padrão é nenhum, como no build sem a arte).
 /// [github]: a última release roteirizada; sem ele, a verificação de versão
 /// nova fica indisponível (como no celular) e nada aparece nas capturas.
+/// [abertura]: onde o app procura a pedaleira sozinho ao abrir; o padrão é
+/// não procurar (como no celular), para nenhum teste conectar sem pedir.
 Widget appDeTeste(
         {List<Override> overrides = const [],
         IdiomaApp? idioma = IdiomaApp.portugues,
@@ -54,7 +59,10 @@ Widget appDeTeste(
         GithubFalso? github,
         PreferenciasVersao? preferenciasVersao,
         PreferenciasPausa? preferenciasPausa,
-        PreferenciasPaineis? preferenciasPaineis}) =>
+        PreferenciasPaineis? preferenciasPaineis,
+        PlataformaDeAbertura abertura = PlataformaDeAbertura.semTentativa,
+        PreferenciasConexao? preferenciasConexao,
+        ConsultaAcessoEntrada? acessoEntradaMac}) =>
     ProviderScope(
       overrides: [
         ...overrides,
@@ -68,6 +76,10 @@ Widget appDeTeste(
         preferenciasVersaoProvider.overrideWithValue(preferenciasVersao ?? PreferenciasVersaoEmMemoria()),
         preferenciasPausaProvider.overrideWithValue(preferenciasPausa ?? PreferenciasPausaEmMemoria()),
         preferenciasPaineisProvider.overrideWithValue(preferenciasPaineis ?? PreferenciasPaineisEmMemoria()),
+        plataformaDeAberturaProvider.overrideWithValue(abertura),
+        preferenciasConexaoProvider.overrideWithValue(preferenciasConexao ?? PreferenciasConexaoEmMemoria()),
+        // nenhum teste chama o canal nativo do Mac
+        acessoEntradaMacProvider.overrideWithValue(acessoEntradaMac ?? () async => AcessoEntrada.desconhecido),
         cronometroProvider.overrideWithValue(CronometroFixo.new),
         catalogoProvider.overrideWith((ref) async => lerCatalogo()),
         explicacoesProvider.overrideWith((ref) async => lerExplicacoes()),
@@ -93,6 +105,19 @@ class PreferenciasIdiomaEmMemoria implements PreferenciasIdioma {
 
   @override
   Future<void> gravar(String? codigo) async => salvo = codigo;
+}
+
+/// Guarda o "conectar ao abrir" só em memória (ligado, como na primeira abertura).
+class PreferenciasConexaoEmMemoria implements PreferenciasConexao {
+  PreferenciasConexaoEmMemoria([this.ligado = true]);
+
+  bool ligado;
+
+  @override
+  Future<bool> lerConectarAoAbrir() async => ligado;
+
+  @override
+  Future<void> gravarConectarAoAbrir(bool ligado) async => this.ligado = ligado;
 }
 
 /// Guarda a pausa USB só em memória (o teste não toca no disco).

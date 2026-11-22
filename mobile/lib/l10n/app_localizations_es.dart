@@ -1517,4 +1517,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get utSoNoVisor => 'Solo en la pantalla del pedal';
+
+  @override
+  String get caProcurando => 'Buscando el pedal…';
+
+  @override
+  String get caConectarAoAbrir => 'Conectar al abrir';
+
+  @override
+  String get caConectarAoAbrirTexto => 'Al abrir, la app busca el pedal en el USB una vez. Conectar no toca nada; sin pedal, la pantalla de conectar queda como está.';
+
+  @override
+  String get caConectarAoAbrirMac => 'En macOS, solo después de permitir la Monitorización de entrada para Anagram App en Ajustes del Sistema › Privacidad y seguridad.';
 }

@@ -1,5 +1,6 @@
 // Abre e fecha a conversa com a pedaleira (real ou de demonstração) e
-// avisa quando o cabo sai.
+// avisa quando o cabo sai. A tentativa automática ao abrir o app (DECISOES
+// CA2) é a mesma conversa, mas não achar a pedaleira não vira erro na tela.
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,6 +26,9 @@ class ControladorConexao extends Notifier<EstadoConexao> {
   RepositorioPedaleira? _repositorio;
   ClienteAnagram? _cliente;
   int _tentativa = 0;
+
+  /// A tentativa em curso é a do app abrindo, não um clique.
+  bool _automatica = false;
   TransporteAnagram? _transporte;
   StreamSubscription<EstadoTransporte>? _vigia;
 
@@ -64,13 +68,18 @@ class ControladorConexao extends Notifier<EstadoConexao> {
     await _conectar(pedaleira, demonstracao: true, midi: midi);
   }
 
-  Future<void> conectarAparelho() async {
+  Future<void> conectarAparelho() => _conectarAparelho(automatica: false);
+
+  /// Uma tentativa só, ao abrir o app; sem pedaleira, a tela fica como estava.
+  Future<void> conectarAoAbrir() => _conectarAparelho(automatica: true);
+
+  Future<void> _conectarAparelho({required bool automatica}) async {
     final fabrica = ref.read(fabricaTransporteProvider);
     if (fabrica.suporte case AparelhoIndisponivel(:final motivo)) {
-      state = FalhaDeConexao(AvisoPlataformaIndisponivel(motivo));
+      if (!automatica) state = FalhaDeConexao(AvisoPlataformaIndisponivel(motivo));
       return;
     }
-    await _conectar(fabrica.criarAparelho(), demonstracao: false, midi: fabrica.criarMidi());
+    await _conectar(fabrica.criarAparelho(), demonstracao: false, midi: fabrica.criarMidi(), automatica: automatica);
   }
 
   /// Desiste da tentativa em curso; o que ela terminar depois é ignorado.
@@ -85,10 +94,12 @@ class ControladorConexao extends Notifier<EstadoConexao> {
     state = const SemConexao();
   }
 
-  Future<void> _conectar(TransporteAnagram transporte, {required bool demonstracao, SaidaMidiAnagram? midi}) async {
+  Future<void> _conectar(TransporteAnagram transporte,
+      {required bool demonstracao, SaidaMidiAnagram? midi, bool automatica = false}) async {
     await _soltar();
     final tentativa = ++_tentativa;
-    state = Conectando(transporte.descricao, demonstracao: demonstracao);
+    _automatica = automatica;
+    state = Conectando(transporte.descricao, demonstracao: demonstracao, automatica: automatica);
     if (!await _abrirTransporte(transporte, tentativa)) return;
     if (tentativa != _tentativa) return unawaited(_fecharSemFalhar(transporte.descricao, transporte.fechar));
     final cliente = ClienteAnagram(
@@ -112,27 +123,42 @@ class ControladorConexao extends Notifier<EstadoConexao> {
       await transporte.abrir();
       return true;
     } on ErroAnagram catch (erro) {
-      registro.e('conexão: não abriu ${transporte.descricao}', error: erro);
-      if (tentativa == _tentativa) state = FalhaDeConexao(AvisoConexao(erro));
+      if (tentativa == _tentativa) _falhar(AvisoConexao(erro), 'não abriu ${transporte.descricao}', erro);
     } on Object catch (erro, pilha) {
       // erro fora do protocolo (DOMException do WebHID bloqueado por política,
       // falha ao criar o isolate do hidapi): sem isto a tela ficaria em
       // "Conectando…" para sempre
-      registro.e('conexão: falha inesperada ao abrir ${transporte.descricao}', error: erro, stackTrace: pilha);
-      if (tentativa == _tentativa) state = FalhaDeConexao(AvisoFalhaInesperada(transporte.descricao));
+      if (tentativa == _tentativa) {
+        _falhar(AvisoFalhaInesperada(transporte.descricao), 'falha inesperada ao abrir ${transporte.descricao}', erro,
+            pilha);
+      }
     }
     return false;
   }
 
+  /// Clique: a tela mostra a falha. Ao abrir o app: não achar a pedaleira não
+  /// é erro, a tela fica como estava e o motivo vai só para o registro.
+  void _falhar(Aviso aviso, String oQue, Object erro, [StackTrace? pilha]) {
+    if (!_automatica) {
+      registro.e('conexão: $oQue', error: erro, stackTrace: pilha);
+      state = FalhaDeConexao(aviso);
+      return;
+    }
+    registro.i('conexão ao abrir: pedaleira não encontrada ($oQue: $erro); espera o clique');
+    state = const SemConexao();
+  }
+
   /// Aperto de mão curto (3 s): quem espera na tela pode desistir antes.
   Future<void> _confirmarFirmware(String meio, bool demonstracao, int tentativa) async {
-    final firmware = await _repositorio!.firmware(prazo: const Duration(seconds: 3));
+    final firmware = await _repositorio!.firmware(prazo: const Duration(seconds: 3), falhaEsperada: _automatica);
     if (tentativa != _tentativa) return;
-    state = switch (firmware) {
-      Sucesso(:final valor) => Conectada(meio: meio, firmware: valor, demonstracao: demonstracao),
-      Falha(:final erro) => FalhaDeConexao(AvisoConexao(erro)),
-    };
-    if (state is FalhaDeConexao) await _soltar();
+    switch (firmware) {
+      case Sucesso(:final valor):
+        state = Conectada(meio: meio, firmware: valor, demonstracao: demonstracao);
+      case Falha(:final erro):
+        _falhar(AvisoConexao(erro), 'aperto de mão por $meio falhou', erro);
+        await _soltar();
+    }
   }
 
   void _aoMudarTransporte(EstadoTransporte estado) {

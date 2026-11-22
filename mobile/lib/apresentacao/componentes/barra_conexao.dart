@@ -80,6 +80,7 @@ class BarraConexao extends ConsumerWidget {
   static (Color, String) _resumo(AppLocalizations l, EstadoConexao estado) => switch (estado) {
     SemConexao() => (Cores.ledDesligado, l.estadoSemConexao),
     Conectando(demonstracao: true) => (Cores.tally, l.txEstadoAbrindoDemonstracao),
+    Conectando(automatica: true) => (Cores.tally, l.caProcurando),
     Conectando(:final meio) => (Cores.tally, l.estadoConectando(TextosDoApp.meioVisivel(meio))),
     Conectada(demonstracao: true) => (Cores.ledDemonstracao, l.estadoDemonstracao),
     Conectada(:final meio, :final firmware) =>
