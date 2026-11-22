@@ -1520,4 +1520,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get t3kSemAutor => 'no author';
+
+  @override
+  String get salvarReleituraDiferente => 'the pedal confirmed, but the slot read back differs from what was sent. Your edit is still on screen; check the slot and save again.';
 }

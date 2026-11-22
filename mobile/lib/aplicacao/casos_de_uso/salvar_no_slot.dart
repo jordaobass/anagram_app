@@ -2,6 +2,7 @@
 // gravação só conta depois de relida do aparelho (como faz o cli.py de
 // referência).
 import '../../dados/repositorio_pedaleira.dart';
+import '../../nucleo/modelo/conferencia_gravacao.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../../nucleo/protocolo/erros_anagram.dart';
@@ -39,9 +40,12 @@ final class SlotAlteradoFora extends ResultadoSalvar {
 }
 
 class SalvarNoSlot {
-  const SalvarNoSlot(this._repositorio);
+  const SalvarNoSlot(this._repositorio, {this.esperaReleitura = const Duration(milliseconds: 500)});
 
   final RepositorioPedaleira _repositorio;
+
+  /// Pausa antes de reler de novo um slot que voltou diferente do enviado.
+  final Duration esperaReleitura;
 
   Future<ResultadoSalvar> executar(
     SlotPreset slot,
@@ -61,7 +65,7 @@ class SalvarNoSlot {
     }
     final gravacao = await _repositorio.salvar(slot, preset, area: area);
     if (gravacao case Falha(:final erro)) return FalhaAoSalvar(erro);
-    return _conferir(slot, area);
+    return _conferir(slot, area, preset);
   }
 
   /// Relê o slot e compara com o que o app abriu dele ([aberto]): a cena
@@ -75,10 +79,23 @@ class SalvarNoSlot {
     };
   }
 
-  Future<ResultadoSalvar> _conferir(SlotPreset slot, String? area) async {
+  /// A confirmação da pedaleira não basta: o slot relido tem de ter o que se
+  /// mandou (RN1, ver [gravacaoConfere]). Diferente, relê mais uma vez depois
+  /// de [esperaReleitura]; se continuar diferente, não conta como salvo.
+  Future<ResultadoSalvar> _conferir(SlotPreset slot, String? area, DocumentoPreset enviado) async {
+    final primeira = await _reler(slot, area, enviado);
+    if (primeira is! FalhaAoSalvar || primeira.erro is! ErroReleituraDiferente) return primeira;
+    await Future<void>.delayed(esperaReleitura);
+    return _reler(slot, area, enviado);
+  }
+
+  Future<ResultadoSalvar> _reler(SlotPreset slot, String? area, DocumentoPreset enviado) async {
     final releitura = await _repositorio.lerPreset(slot, area: area);
     return switch (releitura) {
-      Sucesso(valor: final DocumentoPreset relido) => PresetSalvo(slot, relido),
+      Sucesso(valor: final DocumentoPreset relido) when gravacaoConfere(relido, enviado) => PresetSalvo(slot, relido),
+      Sucesso(valor: DocumentoPreset()) => const FalhaAoSalvar(
+          ErroReleituraDiferente('A pedaleira confirmou, mas o slot relido é diferente do enviado.'),
+        ),
       Sucesso() => const FalhaAoSalvar(
           ErroRespostaInvalida('A pedaleira aceitou, mas o slot voltou vazio na releitura.'),
         ),

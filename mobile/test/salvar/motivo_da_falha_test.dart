@@ -27,4 +27,10 @@ void main() {
 
     expect(textosPt.falhaAoSalvar(falha), 'Não salvou: Espere a gravação em curso terminar.');
   });
+
+  test('should_say_the_slot_read_back_differs_when_the_pedal_confirmed_another_content', () {
+    const falha = FalhaAoSalvar(ErroReleituraDiferente('slot relido diferente'));
+
+    expect(textosPt.falhaAoSalvar(falha), contains('diferente do enviado'));
+  });
 }

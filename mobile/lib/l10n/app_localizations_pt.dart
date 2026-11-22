@@ -1520,4 +1520,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get t3kSemAutor => 'sem autor';
+
+  @override
+  String get salvarReleituraDiferente => 'a pedaleira confirmou, mas o slot relido é diferente do enviado. A edição continua na tela; confira o slot e salve de novo.';
 }

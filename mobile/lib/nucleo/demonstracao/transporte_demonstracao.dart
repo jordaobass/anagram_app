@@ -82,6 +82,9 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
   /// ação (resposta atrasada de uma chamada anterior que estourou o prazo).
   bool enviarRespostaAtrasadaAntes = false;
 
+  /// Falha injetada: a gravação é confirmada e a releitura ainda traz o antigo.
+  final gravacaoAtrasada = GravacaoAtrasada();
+
   /// Para os testes: alguém ainda espera resposta?
   bool get temOuvintesDeResposta => temOuvintesDeRelatorio;
 
@@ -157,8 +160,8 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
   Map<String, dynamic> _processar(MensagemAnagram m) => switch (m.acao) {
         AcoesAnagram.firmware => {'data': {'version': firmware}},
         AcoesAnagram.posicoes => {'data': {'files': posicoesDosSlots(_daArea(m))}},
-        AcoesAnagram.lerPreset => lerSlot(_daArea(m), m.carga['filename'] as String?),
-        AcoesAnagram.salvar => gravarSlots(_daArea(m), m.carga['presets']),
+        AcoesAnagram.lerPreset => lerSlot(gravacaoAtrasada.paraLer(_daArea(m)), m.carga['filename'] as String?),
+        AcoesAnagram.salvar => gravarSlots(gravacaoAtrasada.antesDeGravar(_daArea(m)), m.carga['presets']),
         AcoesAnagram.excluir => excluirSlot(_daArea(m), m.carga['filename'] as String?),
         AcoesAnagram.lerAjustes => _ajustes(),
         AcoesAnagram.gravarAjustes => _gravarAjustes(m.carga['settings']),

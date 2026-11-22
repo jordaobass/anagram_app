@@ -100,6 +100,7 @@ extension TextosDoApp on AppLocalizations {
   String falhaAoSalvar(FalhaAoSalvar falha) => naoSalvou(switch (falha.erro) {
         ErroDesconectado() => salvarDesconectada,
         ErroSemResposta() => salvarSemResposta,
+        ErroReleituraDiferente() => salvarReleituraDiferente,
         ErroRespostaInvalida() => salvarRespostaInvalida,
         ErroInterfaceOcupada() => salvarOcupada,
         ErroOperacaoEmCurso(:final mensagem) => erroOperacaoEmCurso(mensagem),

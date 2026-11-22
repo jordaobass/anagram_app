@@ -441,5 +441,6 @@
   "t3kResumo": "En la pedalera: {fabrica} de fábrica y {seus} enviados por ti",
   "t3kDetalheFabrica": "{autor} · licencia {licenca}",
   "t3kDetalheSeu": "{autor} · licencia {licenca} · tuyo, solo consulta",
-  "t3kSemAutor": "sin autor"
+  "t3kSemAutor": "sin autor",
+  "salvarReleituraDiferente": "la pedalera confirmó, pero el slot releído es distinto de lo enviado. La edición sigue en pantalla; revisa el slot y guarda de nuevo."
 }

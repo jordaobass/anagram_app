@@ -39,6 +39,11 @@ final class ErroRespostaInvalida extends ErroAnagram {
   const ErroRespostaInvalida(super.mensagem);
 }
 
+/// A pedaleira confirmou a gravação, mas o slot relido não é o que se mandou.
+final class ErroReleituraDiferente extends ErroRespostaInvalida {
+  const ErroReleituraDiferente(super.mensagem);
+}
+
 /// Pedido recusado pelo próprio app porque outra operação ainda está em curso.
 final class ErroOperacaoEmCurso extends ErroAnagram {
   const ErroOperacaoEmCurso(super.mensagem);

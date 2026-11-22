@@ -441,5 +441,6 @@
   "t3kResumo": "On the pedal: {fabrica} factory and {seus} uploaded by you",
   "t3kDetalheFabrica": "{autor} · {licenca} license",
   "t3kDetalheSeu": "{autor} · {licenca} license · yours, reference only",
-  "t3kSemAutor": "no author"
+  "t3kSemAutor": "no author",
+  "salvarReleituraDiferente": "the pedal confirmed, but the slot read back differs from what was sent. Your edit is still on screen; check the slot and save again."
 }
