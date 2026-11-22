@@ -21,6 +21,7 @@ abstract final class TemaApp {
         snackBarTheme: _aviso(),
         chipTheme: _chip(),
         segmentedButtonTheme: _segmentos(),
+        popupMenuTheme: _menu,
         dividerTheme: const DividerThemeData(color: Cores.filete, thickness: Medidas.filete, space: Medidas.filete),
         focusColor: Cores.tally.withValues(alpha: Opacidades.foco),
       );
@@ -85,6 +86,17 @@ abstract final class TemaApp {
         side: _contornoSelecao,
         labelStyle: _texto().labelMedium?.copyWith(color: Cores.texto),
       );
+
+  /// Todo menu (botão direito, ⋮, seletores) no tipo de item de menu: o
+  /// Material 3 usaria o labelLarge, que aqui é o rótulo de botão (condensada,
+  /// negrito, 17px) e deixava o menu pesado (DECISOES UI12).
+  static final _menu = PopupMenuThemeData(
+    textStyle: Tipos.itemMenu.copyWith(color: Cores.texto),
+    labelTextStyle: WidgetStateProperty.resolveWith((estados) => Tipos.itemMenu.copyWith(
+        color: estados.contains(WidgetState.disabled)
+            ? Cores.texto.withValues(alpha: Opacidades.itemIndisponivel)
+            : Cores.texto)),
+  );
 
   static SegmentedButtonThemeData _segmentos() => SegmentedButtonThemeData(
         style: ButtonStyle(

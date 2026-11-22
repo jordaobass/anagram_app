@@ -7,6 +7,7 @@ import '../../l10n/app_localizations.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/tipos_de_drive.dart';
 import '../tema/tokens.dart';
+import 'item_de_menu.dart';
 import 'botao_giratorio.dart' show AoMudarValor;
 
 class SeletorTipoDrive extends StatelessWidget {
@@ -115,7 +116,7 @@ class _BotaoMenu extends StatelessWidget {
       constraints: BoxConstraints(minWidth: caixa.size.width),
       items: [
         for (final o in opcoes)
-          CheckedPopupMenuItem<String>(key: ValueKey('$chave-$o'), value: o, checked: o == atual, child: Text(o)),
+          itemMarcado(o, key: ValueKey('$chave-$o'), rotulo: o, marcado: o == atual),
       ],
     );
     if (escolha != null && escolha != atual) aoEscolher?.call(escolha);

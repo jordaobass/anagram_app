@@ -326,8 +326,18 @@ abstract final class Medidas {
   static const double pontoCompassoAcento = 16;
   static const double larguraAcaoUtilitario = 360;
 
-  /// Ícone à esquerda de cada item de menu.
-  static const double iconeMenu = 20;
+  /// Ícone à esquerda de cada item de menu: um passo acima da letra de 15px,
+  /// como o ícone de 16px ao lado do texto de 14px no menu do Windows 11.
+  static const double iconeMenu = 18;
+
+  /// Giro de "conectando" no lugar do ícone do botão: o tamanho do ícone de
+  /// botão, independente do ícone de menu.
+  static const double giroNoBotao = 20;
+
+  /// Altura do item de menu com mouse (computador): o padrão dos menus de
+  /// contexto de desktop fica entre 32 e 40px; no toque vale [alvoMinimo]
+  /// (DECISOES UI12).
+  static const double alturaItemMenuComMouse = 40;
 
   /// Check da opção marcada em cor neutra (ver [Cores.pareceDesabilitada]).
   static const double iconeMarcaOpcao = 18;
@@ -382,6 +392,20 @@ abstract final class Fontes {
   static const rotulo = 'BarlowCondensed';
   static const estencil = 'SairaStencil';
   static const marcador = 'PermanentMarker';
+}
+
+/// Estilos de texto fora da escala do Material, cada um com um papel só.
+abstract final class Tipos {
+  /// Item de menu (botão direito, ⋮, menus suspensos): lido como menu do
+  /// sistema, não como botão. Barlow média, sem a condensada em negrito e o
+  /// espaçamento largo do rótulo de botão (DECISOES UI12).
+  static const itemMenu =
+      TextStyle(fontFamily: Fontes.ui, fontSize: 15, fontWeight: FontWeight.w500, letterSpacing: 0.1, height: 1.25);
+
+  /// O que fica à direita do item (o que o controle já move), como um atalho
+  /// de teclado: menor e em [Cores.textoSecundario].
+  static const detalheMenu =
+      TextStyle(fontFamily: Fontes.ui, fontSize: 13, fontWeight: FontWeight.w400, color: Cores.textoSecundario);
 }
 
 abstract final class Opacidades {

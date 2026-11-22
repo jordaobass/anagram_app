@@ -176,7 +176,7 @@ class _BotaoDeConexao extends StatelessWidget {
     final icone = andamento == null
         ? Icon(this.icone)
         : SizedBox.square(
-            dimension: Medidas.iconeMenu,
+            dimension: Medidas.giroNoBotao,
             child: CircularProgressIndicator(strokeWidth: Medidas.linhaSinal, color: frente),
           );
     final texto = Text(andamento ?? rotulo);
