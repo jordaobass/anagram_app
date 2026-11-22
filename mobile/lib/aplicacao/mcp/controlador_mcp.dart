@@ -17,6 +17,7 @@ import 'ferramenta_salvar.dart';
 import 'ferramentas_ajuste.dart';
 import 'ferramentas_ajustes_globais.dart';
 import 'ferramentas_cadeia.dart';
+import 'ferramentas_conhecimento.dart';
 import 'ferramentas_leitura.dart';
 import 'sessao_mcp.dart';
 
@@ -146,12 +147,16 @@ class ControladorMcp extends Notifier<EstadoMcp> {
     state = state.copiar(situacao: const McpDesligado());
   }
 
-  ProtocoloMcp _protocolo(String versaoApp) => ProtocoloMcp(ferramentasDoTimbre(_sessao, ref), versaoApp: versaoApp);
+  ProtocoloMcp _protocolo(String versaoApp) => ProtocoloMcp(ferramentasDoTimbre(_sessao, ref),
+      versaoApp: versaoApp, recursos: recursosDoConhecimento(ref), prompts: promptsDoTimbre);
 }
 
 List<FerramentaMcp> ferramentasDoTimbre(SessaoMcp sessao, Ref ref) => [
       LerPresetAtual(sessao),
       ListarTiposDeBloco(sessao),
+      LerGuiaDeBloco(sessao),
+      LerGuiaDeTimbre(sessao),
+      LerReceitaDeTimbre(sessao),
       MudarParametro(sessao),
       LigarDesligarBloco(sessao),
       EscolherCena(sessao),

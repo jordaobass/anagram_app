@@ -17,9 +17,9 @@ class SalvarPreset extends FerramentaMcp {
   String get nome => 'save_preset';
 
   @override
-  String get descricao => 'Ask the player to save the preset to its slot on the pedal. The app shows a '
-      'confirmation dialog; nothing is written unless the player confirms. Returns status '
-      '"confirmed", "declined", "timeout" or "needs_destination".';
+  String get descricao => 'Ask the player to save the preset to its slot on the pedal. Call it only after the '
+      'player said the tone is right. The app shows a confirmation dialog; nothing is written unless the '
+      'player confirms. Returns status "confirmed", "declined", "timeout" or "needs_destination".';
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto(const {});

@@ -27,6 +27,8 @@ Future<(ProviderContainer, String, String)> appComMcp() async {
     presetsDemonstracaoProvider.overrideWith((ref) async => lerPresetsDemonstracao()),
     catalogoProvider.overrideWith((ref) async => lerCatalogo()),
     indiceMiniaturasProvider.overrideWith((ref) async => lerIndiceMiniaturas()),
+    explicacoesProvider.overrideWith((ref) async => lerExplicacoes()),
+    conhecimentoProvider.overrideWith((ref) async => lerConhecimento()),
     versaoAppProvider.overrideWith((ref) async => '9.9.9'),
     preferenciasMcpProvider.overrideWithValue(PreferenciasMcpEmMemoria()),
     mcpDisponivelProvider.overrideWithValue(true),
@@ -87,7 +89,8 @@ void main() {
     final (status, semCorpo) = await chamar(endereco, token, 'notifications/initialized', null, true);
     expect((status, semCorpo), (HttpStatus.accepted, null), reason: 'notificação não leva resposta');
     final (_, lista) = await chamar(endereco, token, 'tools/list');
-    expect([for (final t in lista!['result']['tools'] as List) t['name']], containsAll(['set_parameter', 'save_preset']));
+    expect([for (final t in lista!['result']['tools'] as List) t['name']],
+        containsAll(['set_parameter', 'save_preset', 'get_block_guide', 'get_tone_building_guide', 'get_tone_recipe']));
 
     final enviosAntes = pedaleira.comandosRecebidos.where((c) => c.acao == AcoesAnagram.tocarAoVivo).length;
     final (erro, mudou) = await ferramenta(endereco, token, 'set_parameter',
@@ -106,6 +109,50 @@ void main() {
     final (erroUndo, _) = await ferramenta(endereco, token, 'undo');
     expect(erroUndo, isFalse);
     expect(container.read(editorProvider).atual!.bloco(limiar)!.valorBase('Threshold'), antes);
+  });
+
+  test('should_build_the_chain_a_tone_recipe_suggests_on_the_demo_pedal_when_the_ai_asks_for_a_player_tone',
+      () async {
+    final (container, endereco, token) = await appComMcp();
+    final pedaleira = container.read(conexaoProvider.notifier).transporte! as TransporteDemonstracao;
+    await chamar(endereco, token, 'initialize', {'protocolVersion': '2025-06-18'});
+
+    // a IA estuda: receita + guia do primeiro bloco da cadeia
+    final (erroReceita, receita) = await ferramenta(endereco, token, 'get_tone_recipe', {'query': 'Steve Harris tone'});
+    expect(erroReceita, isFalse, reason: '$receita');
+    final cadeia = ((receita! as Map)['chain'] as List).cast<Map<String, dynamic>>();
+    final (erroGuia, guia) = await ferramenta(endereco, token, 'get_block_guide', {'type': cadeia.first['type']});
+    expect(erroGuia, isFalse, reason: '$guia');
+    expect((guia! as Map)['role'], isNotEmpty);
+
+    // limpa o 01C e monta a cadeia sugerida, bloco a bloco, com os valores da receita
+    final (_, aberto) = await ferramenta(endereco, token, 'get_current_preset');
+    for (final linha in const ['1', '2']) {
+      for (final bloco in ((aberto! as Map)['rows'][linha] as List).cast<Map<String, dynamic>>().reversed) {
+        final (erro, _) = await ferramenta(endereco, token, 'remove_block', {'row': bloco['row'], 'column': bloco['column']});
+        expect(erro, isFalse);
+      }
+    }
+    final enviosAntes = pedaleira.comandosRecebidos.where((c) => c.acao == AcoesAnagram.tocarAoVivo).length;
+    for (final passo in cadeia) {
+      final posicao = {'row': passo['row'], 'column': passo['column']};
+      final (erroAdd, adicionado) = await ferramenta(endereco, token, 'add_block', {...posicao, 'type': passo['type']});
+      expect(erroAdd, isFalse, reason: '$adicionado');
+      for (final ajuste in ((passo['settings'] as Map?) ?? const {}).entries) {
+        final (erroSet, aplicado) =
+            await ferramenta(endereco, token, 'set_parameter', {...posicao, 'parameter': ajuste.key, 'value': ajuste.value});
+        expect(erroSet, isFalse, reason: '${passo['type']} ${ajuste.key}: $aplicado');
+        expect((aplicado! as Map)['clamped'], isFalse, reason: 'a receita só traz valores dentro da faixa');
+      }
+    }
+
+    final preset = container.read(editorProvider).atual!;
+    // o último set_parameter deixa um envio ao vivo em voo: drená-lo antes de fechar o container
+    await container.read(editorProvider.notifier).aplicarDocumento(preset);
+    expect([for (final b in preset.blocosDaLinha(1)) b.uri], [for (final p in cadeia) p['type']]);
+    expect(container.read(editorProvider).naoSalvo, isTrue, reason: 'montado ao vivo, nada gravado');
+    expect(pedaleira.comandosRecebidos.where((c) => c.acao == AcoesAnagram.tocarAoVivo).length, greaterThan(enviosAntes),
+        reason: 'cada passo soou na pedaleira de demonstração');
   });
 
   test('should_answer_401_and_change_nothing_when_the_token_is_missing_or_wrong', () async {

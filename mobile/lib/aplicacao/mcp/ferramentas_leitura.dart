@@ -15,7 +15,8 @@ class LerPresetAtual extends FerramentaMcp {
   @override
   String get descricao => 'Read the preset open in the app: its blocks in signal order (row/column), whether '
       'each is on, every adjustable parameter with current value, range, unit and options, the scenes '
-      'and the active one. Call this before changing anything and again after the player edits.';
+      'and the active one. Call this first, before changing anything, and again after the player edits. '
+      'To understand a block you see here, call get_block_guide with its "type".';
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto(const {});
@@ -37,8 +38,8 @@ class ListarTiposDeBloco extends FerramentaMcp {
 
   @override
   String get descricao => 'List the effect, amp and cabinet blocks that can be added to the chain. Filter by '
-      'family and/or text. Use the returned "type" in add_block. Set include_parameters to see each '
-      "block's parameters and ranges.";
+      'family and/or text. Use the returned "type" in add_block and in get_block_guide (which says what the '
+      'block does and how to set it). Set include_parameters to see each block\'s parameters and ranges.';
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto({
