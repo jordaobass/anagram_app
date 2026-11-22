@@ -85,6 +85,16 @@ typography:
     fontSize: "12px"
     fontWeight: 600
     letterSpacing: "0.8px"
+  item-menu:
+    fontFamily: "Barlow"
+    fontSize: "15px"
+    fontWeight: 500
+    lineHeight: 1.25
+    letterSpacing: "0.1px"
+  detalhe-menu:
+    fontFamily: "Barlow"
+    fontSize: "13px"
+    fontWeight: 400
 rounded:
   canto: "3px"
   controle: "6px"
@@ -157,6 +167,16 @@ components:
     textColor: "{colors.texto}"
     rounded: "{rounded.painel}"
     width: "440px"
+  item-menu:
+    backgroundColor: "{colors.painel-elevado}"
+    textColor: "{colors.texto}"
+    typography: "{typography.item-menu}"
+    padding: "0 12px"
+    height: "40px"
+  item-menu-toque:
+    height: "48px"
+  item-menu-destrutivo:
+    textColor: "{colors.erro}"
   aviso-snackbar:
     backgroundColor: "{colors.fita-gaffer}"
     textColor: "{colors.tinta-marcador}"
@@ -230,6 +250,7 @@ Casco preto neutro com alumínio frio, um único acento âmbar de ação e uma f
 - **Body** (Barlow 16 / 15 / 13px, 1.4–1.35): nome do preset na lista (16), instrução (15), "vazio" e metadados do bloco (13).
 - **Label Large** (Barlow Condensed 700, 17px, +0.8px, caixa alta): texto de botão e de cena, "AO VIVO".
 - **Label Medium** (Barlow Condensed 600, 14px, +0.7px): nome de parâmetro em caixa alta acima do knob, nome curto na casa, selo "NÃO SALVO", latência.
+- **Item de Menu** (Barlow 500, 15px, 1.25, +0.1px, caixa normal; `Tipos.itemMenu`): todo item de menu, do botão direito ao ⋮ e aos seletores. O que fica à direita do item vai em **Detalhe de Menu** (Barlow 400, 13px, `texto-secundario`; `Tipos.detalheMenu`). Menu não usa Label Large: condensada em negrito é voz de botão (DECISOES UI12).
 
 ### Named Rules
 **The Hand-Lettered Tape Rule.** Marcador só existe em cima de fita gaffer, e fita só existe onde há nome escrito à mão. Fora da fita do preset, nada de Permanent Marker.
@@ -271,6 +292,16 @@ Táteis e diretos, sempre ≥ 48dp, texto em Barlow Condensed caixa alta.
 - **Enquanto o Salvar como espera o destino**, os botões de cima ficam desabilitados: a ação está na lista. Na lista, o slot vazio mostra o ícone de gravar (`aluminio`); o ocupado, o ícone de substituir em `aluminio-claro` e, no lugar do nome, "substitui <nome>" em body-small (DECISOES UI8).
 - **Diálogo de confirmação:** cancelar em texto neutro (`texto`) à esquerda; confirmar à direita, sempre preenchido em `fita-alerta` com texto `sobre-alerta`, porque todo confirmar ali apaga ou sobrescreve algo.
 - **Ícone:** Material Icons via IconButton com tooltip (desconectar, créditos, copiar bloco). O menu do arquivo do preset tem ícone próprio (pasta de arquivo no computador, ⋯ no celular), para não se confundir com o ⋮ do bloco. Todo item de menu (preset, bloco, arquivo, atribuir) leva ícone à esquerda em `aluminio-claro`; "Limpar preset…" fica sozinho depois de um divisor, ícone e texto em `erro`. Cancelar de diálogo é sempre texto neutro (`texto`), nunca âmbar (DECISOES UI6).
+
+### Menus
+Menu de contexto (botão direito, toque longo, ⋮), menu de arquivo, idioma, versão nova e seletor de opção: um tipo só, vindo do tema (`popupMenuTheme`), lido como o menu do sistema e não como um painel de botões.
+- **Texto:** `item-menu` (Barlow 500, 15px, caixa normal) em `texto`; desabilitado a 38%. Referência: Windows 11 usa Segoe UI 14px regular, o macOS SF 13px regular; 15px compensa a leitura a um metro e o tema escuro, e o 500 é um passo de peso sobre o corpo, não o 700 de botão.
+- **Ícone:** 18px à esquerda, em `aluminio-claro`, a 12px do texto (o Windows usa 16px ao lado de 14px).
+- **Altura:** 40px com mouse (Windows, macOS, Linux); 48dp no toque (Android, iOS). Exceção consciente à regra de 48dp: no desktop o ponteiro é preciso e os menus do sistema ficam entre 22 e 32px; 40px é o meio-termo que mantém o menu compacto sem virar alvo miúdo (DECISOES UI12). A lista aberta do seletor de área fica em 48px: o DropdownButton não aceita item abaixo disso; só o tipo muda.
+- **Detalhe à direita** (o que cada controle já move): `detalhe-menu`, alinhado à direita, como atalho de teclado.
+- **Perigoso:** "Limpar preset…" sozinho depois de um divisor, ícone e texto em `erro`.
+- **Escolha única** (opção de parâmetro, tipo de drive): check de 18px em `tally` na coluna do ícone; as outras opções deixam a coluna vazia, alinhadas.
+- **Divisores:** filete de 1px entre grupos (ações, mover, footswitches, remover).
 
 ### Cenas
 Três botões de largura igual, altura 56px. Inativo: `painel-elevado` com borda de filete. Ativo: preenchido em âmbar. Número em estêncil + nome em caixa alta; cena sem nome mostra só o número e "CENA" (nunca "1 CENA 1").
