@@ -13,8 +13,9 @@ Com a instalação do Darkglass Suite (--suite, a pasta resources/assets, e
 --renderer, o dist/renderer.prod.js extraído do app.asar), também traz a foto
 de cada gabinete pelo arquivo de IR e a arte dos blocos que a tabela do site
 não tem (amp, pedal e misc neurais, gabinetes sem IR), e grava os presets de
-fábrica em fabrica.json (a área Fábrica do app, DECISOES U18). Ver
-ferramentas/arte_suite.py.
+fábrica em fabrica.json (a área Fábrica do app, DECISOES U18), e as fotos dos
+tons de fábrica do TONE3000 (DECISOES A18). Ver ferramentas/arte_suite.py e
+ferramentas/arte_tone3000.py.
 
 Uso:
   python3 ferramentas/baixar_arte_pedaleira.py [pasta-effects] [--suite ASSETS --renderer RENDERER_JS]
@@ -28,6 +29,7 @@ import sys
 import urllib.request
 
 import arte_suite
+import arte_tone3000
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 DESTINO = RAIZ / 'assets' / 'blocos_terceiros'
@@ -67,7 +69,8 @@ def completar_com_suite(blocos, fabrica, assets, renderer):
     """Gabinetes por IR e os blocos que só o Suite tem arte; devolve a seção "gabinetes"."""
     tabelas, modelos, uris = arte_suite.ler_regras(renderer)
     efeitos = assets / 'devices' / 'anagram' / 'effects'
-    ja_tem = {uri for bloco in blocos.values() for uri in bloco.get('uris', [])}
+    # a arte do Marketplace não impede a da pedaleira na mesma uri (esta vence)
+    ja_tem = {uri for bloco in blocos.values() if bloco.get('origem') != 'marketplace' for uri in bloco.get('uris', [])}
     for uri, (ligada, desligada) in uris.items():
         if uri in ja_tem or not (efeitos / ligada).exists():
             continue
@@ -104,11 +107,14 @@ def main(pasta_suite, assets=None, renderer=None):
                          'uris': [uri], 'origem': 'pedaleira'}
     if assets and renderer:
         indice['gabinetes'] = completar_com_suite(blocos, fabrica, assets, renderer)
+        indice['tone3000'] = arte_tone3000.montar_secao(assets)
         gravar_fabrica(renderer)
     # o crédito diz o que está de fato na pasta: num clone limpo (release, A12)
     # só há a arte da pedaleira; na pasta de trabalho pode haver também as
     # miniaturas de anagramanswers.com (A2)
-    misto = any(not chave.startswith(PREFIXO) for chave in blocos)
+    # a arte do Marketplace (A17) tem crédito próprio, na seção "marketplace"
+    misto = any(not chave.startswith(PREFIXO) and bloco.get('origem') != 'marketplace'
+                for chave, bloco in blocos.items())
     indice.update({'origem': 'Arte da pedaleira (Darkglass Suite)' + (' e fichas de anagramanswers.com' if misto else '') + '.',
                    'credito': CREDITO_MISTO if misto else CREDITO_PEDALEIRA, 'blocos': blocos})
     INDICE.write_text(json.dumps(indice, ensure_ascii=False, indent=1))

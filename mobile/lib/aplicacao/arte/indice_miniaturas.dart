@@ -8,7 +8,10 @@ import '../../nucleo/catalogo/catalogo_gabinetes.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/familia_bloco.dart';
 import '../../nucleo/catalogo/variantes_uri.dart';
+import '../../nucleo/catalogo/utilitario_bloco.dart';
 import '../../nucleo/modelo/json_util.dart';
+import '../../plataforma/fotos_suite.dart';
+import 'tons_tone3000.dart';
 
 sealed class ArteBloco {
   const ArteBloco();
@@ -23,16 +26,36 @@ final class ArteMiniatura extends ArteBloco {
   final String? caminhoDesligado;
 }
 
+/// Foto fora dos assets: a do tom que a pessoa baixou pelo Darkglass Suite.
+final class ArteFotoExterna extends ArteBloco {
+  const ArteFotoExterna(this.caminho);
+  final String caminho;
+}
+
 final class ArteDaFamilia extends ArteBloco {
   const ArteDaFamilia(this.familia);
   final FamiliaBloco familia;
 }
 
+/// Ícone próprio de utilitário interno (afinador, mixer, MIDI…), sem arte em fonte nenhuma.
+final class ArteUtilitario extends ArteBloco {
+  const ArteUtilitario(this.tipo);
+  final TipoUtilitario tipo;
+}
+
+/// A arte desenhada pelo app: o ícone do utilitário, senão a da família.
+ArteBloco arteDesenhada(DefinicaoBloco bloco) => switch (utilitarioDaUri(bloco.uri)) {
+      final TipoUtilitario tipo => ArteUtilitario(tipo),
+      null => ArteDaFamilia(bloco.familia),
+    };
+
 class IndiceMiniaturas {
   IndiceMiniaturas(this._porUri, this._porNome, this.credito,
       {this.temArteDaPedaleira = false,
       Map<String, (String, String?)> gabinetes = const {},
-      this.escolhasDeGabinete = const CatalogoGabinetes.vazio()})
+      this.escolhasDeGabinete = const CatalogoGabinetes.vazio(),
+      this.tons = TonsTone3000.vazio,
+      this.creditosAdicionais = const []})
       : _gabinetes = gabinetes;
 
   factory IndiceMiniaturas.doTexto(String texto) {
@@ -50,10 +73,18 @@ class IndiceMiniaturas {
       }
     }
     return IndiceMiniaturas(porUri, porNome, json['credito'] as String? ?? '',
-        temArteDaPedaleira: entradas.any((bloco) => _prioridade(bloco) == 1),
+        temArteDaPedaleira: entradas.any((bloco) => bloco['origem'] == 'pedaleira'),
         gabinetes: _lerGabinetes(json),
-        escolhasDeGabinete: CatalogoGabinetes.doJson(mapaOuVazio(json['gabinetes'])['escolhas']));
+        escolhasDeGabinete: CatalogoGabinetes.doJson(mapaOuVazio(json['gabinetes'])['escolhas']),
+        tons: TonsTone3000.doJson(json['tone3000']),
+        creditosAdicionais: _creditosAdicionais(json));
   }
+
+  /// Os créditos das outras fontes de imagem (TONE3000, Marketplace).
+  static List<String> _creditosAdicionais(Map<String, dynamic> json) => [
+        for (final secao in ['tone3000', 'marketplace'])
+          if (textoOuNulo(mapaOuVazio(json[secao])['credito']) case final String credito) credito,
+      ];
 
   /// "gabinetes.porArquivo": nome do arquivo de IR sem extensão -> [ligada, desligada].
   static Map<String, _Arquivos> _lerGabinetes(Map<String, dynamic> json) {
@@ -77,9 +108,20 @@ class IndiceMiniaturas {
   /// vazio sem ele, e aí o bloco não oferece a escolha.
   final CatalogoGabinetes escolhasDeGabinete;
 
-  /// Arte da pedaleira por último, para sobrescrever a de terceiros na mesma chave.
-  static int _prioridade(Map<String, dynamic> bloco) => bloco['origem'] == 'pedaleira' ? 1 : 0;
+  /// Título, tipo e foto dos tons de fábrica do TONE3000 (build com o Suite).
+  final TonsTone3000 tons;
+
+  /// Arte da pedaleira por último, para sobrescrever as outras na mesma chave;
+  /// a do Marketplace (autorizada, A17) antes dela e depois das de terceiros.
+  static int _prioridade(Map<String, dynamic> bloco) => switch (bloco['origem']) {
+        'pedaleira' => 2,
+        'marketplace' => 1,
+        _ => 0,
+      };
   final String credito;
+
+  /// Créditos das outras fontes de imagem, um por linha na tela Sobre.
+  final List<String> creditosAdicionais;
 
   bool get vazio => _porUri.isEmpty && _porNome.isEmpty;
 
@@ -89,12 +131,14 @@ class IndiceMiniaturas {
 
   /// Casa pela uri que a pedaleira informa (com ou sem sufixo de canal);
   /// senão pelo nome do bloco. Com [arquivoIr] (gabinete), a foto do modelo
-  /// daquele IR vence a genérica do bloco.
-  ArteBloco arteDe(DefinicaoBloco bloco, {String? arquivoIr}) {
+  /// daquele IR vence a genérica do bloco; no TONE3000, a foto do tom.
+  ArteBloco arteDe(DefinicaoBloco bloco, {String? arquivoIr, FotosDoSuite? fotosDoSuite}) {
+    final doTom = tons.arteDoTom(bloco.uri, arquivoIr, credito, fotosDoSuite);
+    if (doTom != null) return doTom;
     final arquivos = _gabineteDe(arquivoIr) ??
         buscarPorVariantes(_porUri, bloco.uri) ??
         _porNome[normalizarNome(bloco.nome)];
-    if (arquivos == null) return ArteDaFamilia(bloco.familia);
+    if (arquivos == null) return arteDesenhada(bloco);
     final (ligado, desligado) = arquivos;
     return ArteMiniatura(ligado, credito, caminhoDesligado: desligado);
   }

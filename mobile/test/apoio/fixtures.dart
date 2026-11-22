@@ -55,6 +55,11 @@ PresetsDeFabrica lerFabrica() {
       comMiniaturas && arquivo.existsSync() ? arquivo.readAsStringSync() : textoFabricaDeTeste());
 }
 
+/// O indice.json versionado (DECISOES A16), sem depender de COM_MINIATURAS:
+/// para conferir o casamento da arte real, não para capturas.
+IndiceMiniaturas lerIndiceVersionado() =>
+    IndiceMiniaturas.doTexto(File('assets/blocos_terceiros/indice.json').readAsStringSync());
+
 IndiceMiniaturas lerIndiceMiniaturas() => comMiniaturas
     ? IndiceMiniaturas.doTexto(File('assets/blocos_terceiros/indice.json').readAsStringSync())
     : IndiceMiniaturas.vazio();

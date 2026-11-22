@@ -166,6 +166,9 @@ the pedal shows on its screen). They live in `mobile/assets/blocos_terceiros/` a
 Darkglass's permission**. Images are downsized (max 256 px, compressed PNG) and regenerated from the
 Darkglass Suite by `mobile/ferramentas/baixar_arte_pedaleira.py`;
 `mobile/ferramentas/verificar_release.sh` rejects any file in that folder that isn't this art.
+Darkglass Marketplace plugins use each product's public store image, credited to its maker on the
+About screen (`mobile/ferramentas/baixar_arte_marketplace.py`); TONE3000 factory tones show their
+photo from the Suite. Internal utilities (tuner, mixer, meters, MIDI…) get icons drawn by the app.
 
 ## Contributing
 

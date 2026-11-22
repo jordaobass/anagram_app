@@ -16,6 +16,7 @@ import '../nucleo/midi/saida_midi.dart';
 import '../nucleo/modelo/presets_fabrica.dart';
 import '../nucleo/registro.dart';
 import '../plataforma/fabrica_transporte.dart';
+import '../plataforma/fotos_suite.dart';
 import 'arte/indice_miniaturas.dart';
 
 abstract final class CaminhosAssets {
@@ -48,6 +49,10 @@ final indiceMiniaturasProvider = FutureProvider<IndiceMiniaturas>((ref) async {
     return IndiceMiniaturas.vazio();
   }
 });
+
+/// A pasta do Darkglass Suite instalado (fotos dos tons TONE3000 da pessoa);
+/// null no celular, no navegador e sem o Suite.
+final fotosDoSuiteProvider = Provider<FotosDoSuite?>((ref) => fotosDoSuiteInstalado());
 
 /// Sem o arquivo da fábrica (build sem a arte do Suite), não há área Fábrica.
 final presetsFabricaProvider = FutureProvider<PresetsDeFabrica>((ref) async {

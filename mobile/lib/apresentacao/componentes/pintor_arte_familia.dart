@@ -14,9 +14,15 @@ class PintorArteFamilia extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final cor = Cores.daFamilia(familia);
-    final corpo = _corpo(size);
-    canvas.drawRRect(corpo, Paint()..color = cor);
+    final (area, traco) = pintarGabinete(canvas, size, familia);
+    _glifo(canvas, area, traco);
+  }
+
+  /// O gabinete na cor da [familia]; devolve onde vai o glifo e o traço dele.
+  /// Também é o corpo dos ícones de utilitário ([PintorArteUtilitario]).
+  static (Rect, Paint) pintarGabinete(Canvas canvas, Size size, FamiliaBloco familia) {
+    final corpo = _corpo(size, familia);
+    canvas.drawRRect(corpo, Paint()..color = Cores.daFamilia(familia));
     canvas.drawRRect(
       corpo.deflate(size.width * 0.06),
       Paint()
@@ -29,11 +35,11 @@ class PintorArteFamilia extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = size.width * 0.045
       ..strokeCap = StrokeCap.round;
-    _glifo(canvas, corpo.outerRect.deflate(size.width * 0.2), traco);
+    return (corpo.outerRect.deflate(size.width * 0.2), traco);
   }
 
   /// Amp e gabinete são "deitados"; pedais são "em pé".
-  RRect _corpo(Size size) {
+  static RRect _corpo(Size size, FamiliaBloco familia) {
     final deitado = familia == FamiliaBloco.amplificador || familia == FamiliaBloco.gabinete;
     final largura = size.width * (deitado ? 0.92 : 0.7);
     final altura = size.height * (deitado ? 0.7 : 0.92);

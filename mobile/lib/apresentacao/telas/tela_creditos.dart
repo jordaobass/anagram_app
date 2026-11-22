@@ -44,7 +44,7 @@ class TelaCreditos extends ConsumerWidget {
         (l.creditoProtocoloTitulo, l.creditoProtocolo),
         indice == null || indice.vazio
             ? (l.creditoArteTitulo, l.creditoArtePropria)
-            : (l.creditoImagensTitulo, l.creditoImagens(indice.credito)),
+            : (l.creditoImagensTitulo, [l.creditoImagens(indice.credito), ...indice.creditosAdicionais].join('\n')),
         (l.creditoFontesTitulo, l.creditoFontes),
         (l.creditoAvisoTitulo, l.creditoAviso),
       ];
