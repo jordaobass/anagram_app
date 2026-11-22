@@ -1049,6 +1049,1469 @@
     "urn:darkglass:neural:tone3000"
    ],
    "origem": "pedaleira"
+  },
+  "mk_mod_audio_plugins_neural_pedals_rocker83": {
+   "nome": "Rocker 83",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_mod_audio_plugins_neural_pedals_rocker83.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://mod.audio/plugins/neural-pedals/rocker83"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Colombo Audio"
+  },
+  "mk_mod_audio_plugins_neural_pedals_lead_trilogy": {
+   "nome": "Lead Trilogy",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_mod_audio_plugins_neural_pedals_lead_trilogy.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://mod.audio/plugins/neural-pedals/lead-trilogy"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Colombo Audio"
+  },
+  "mk_mod_audio_plugins_neural_pedals_plexi_breed": {
+   "nome": "Plexi Breed",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_mod_audio_plugins_neural_pedals_plexi_breed.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://mod.audio/plugins/neural-pedals/plexi-breed"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Colombo Audio"
+  },
+  "mk_urn_dogoodsound_oddones": {
+   "nome": "DoGood Odd Ones",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dogoodsound_oddones.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dogoodsound:oddones"
+   ],
+   "origem": "marketplace",
+   "fabricante": "DoGood Sound"
+  },
+  "mk_urn_dogoodsound_work": {
+   "nome": "DoGood Work",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dogoodsound_work.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dogoodsound:work"
+   ],
+   "origem": "marketplace",
+   "fabricante": "DoGood Sound"
+  },
+  "mk_urn_dogoodsound_paris": {
+   "nome": "DoGood Paris",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dogoodsound_paris.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dogoodsound:paris"
+   ],
+   "origem": "marketplace",
+   "fabricante": "DoGood Sound"
+  },
+  "mk_urn_dogoodsound_korea": {
+   "nome": "DoGood Korea",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dogoodsound_korea.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dogoodsound:korea"
+   ],
+   "origem": "marketplace",
+   "fabricante": "DoGood Sound"
+  },
+  "mk_urn_dogoodsound_80sgear": {
+   "nome": "DoGood 80s Gear",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dogoodsound_80sgear.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dogoodsound:80sgear"
+   ],
+   "origem": "marketplace",
+   "fabricante": "DoGood Sound"
+  },
+  "mk_urn_dogoodsound_bm7": {
+   "nome": "DoGood BM7",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dogoodsound_bm7.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dogoodsound:bm7"
+   ],
+   "origem": "marketplace",
+   "fabricante": "DoGood Sound"
+  },
+  "mk_urn_dogoodsound_dungeon": {
+   "nome": "DoGood Dungeon",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dogoodsound_dungeon.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dogoodsound:dungeon"
+   ],
+   "origem": "marketplace",
+   "fabricante": "DoGood Sound"
+  },
+  "mk_urn_dogoodsound_grainsilo": {
+   "nome": "DoGood Grain Silo",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dogoodsound_grainsilo.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dogoodsound:grainsilo"
+   ],
+   "origem": "marketplace",
+   "fabricante": "DoGood Sound"
+  },
+  "mk_urn_dogoodsound_springs": {
+   "nome": "DoGood Springs",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dogoodsound_springs.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dogoodsound:springs"
+   ],
+   "origem": "marketplace",
+   "fabricante": "DoGood Sound"
+  },
+  "mk_urn_dogoodsound_plate140": {
+   "nome": "DoGood Plate 140",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dogoodsound_plate140.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dogoodsound:plate140"
+   ],
+   "origem": "marketplace",
+   "fabricante": "DoGood Sound"
+  },
+  "mk_remastermediapro_com": {
+   "nome": "RMPro",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_remastermediapro_com.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://remastermediapro.com/"
+   ],
+   "origem": "marketplace",
+   "fabricante": "ReMasterMedia"
+  },
+  "mk_moddevices_com_plugins_forward_audio_mega_california_rectifier": {
+   "nome": "faIR MEGA California Recto",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_moddevices_com_plugins_forward_audio_mega_california_rectifier.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "http://moddevices.com/plugins/forward-audio/mega-california-rectifier"
+   ],
+   "origem": "marketplace",
+   "fabricante": "forward audio"
+  },
+  "mk_moddevices_com_plugins_forward_audio_marsh_1960_cabsim": {
+   "nome": "faIR Marsh 1960",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_moddevices_com_plugins_forward_audio_marsh_1960_cabsim.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "http://moddevices.com/plugins/forward-audio/marsh-1960-cabsim"
+   ],
+   "origem": "marketplace",
+   "fabricante": "forward audio"
+  },
+  "mk_moddevices_com_plugins_forward_audio_eng_212VH_cabsim": {
+   "nome": "faIR ENG 212",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_moddevices_com_plugins_forward_audio_eng_212VH_cabsim.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "http://moddevices.com/plugins/forward-audio/eng-212VH-cabsim"
+   ],
+   "origem": "marketplace",
+   "fabricante": "forward audio"
+  },
+  "mk_urn_maxgen_gaffa": {
+   "nome": "Gaffa",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_maxgen_gaffa.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:maxgen:gaffa"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Shiro"
+  },
+  "mk_urn_maxgen_phantom_zone": {
+   "nome": "Phantom Zone",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_urn_maxgen_phantom_zone.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:maxgen:phantom_zone"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Shiro"
+  },
+  "mk_overtonedsp_co_uk_lv2_wah1_lv2": {
+   "nome": "Overtone WAH-1",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_overtonedsp_co_uk_lv2_wah1_lv2.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "http://overtonedsp.co.uk/lv2/wah1.lv2"
+   ],
+   "origem": "marketplace",
+   "fabricante": "OverTone DSP"
+  },
+  "mk_overtonedsp_co_uk_lv2_ph1_lv2": {
+   "nome": "Overtone PH-1",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_overtonedsp_co_uk_lv2_ph1_lv2.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "http://overtonedsp.co.uk/lv2/ph1.lv2"
+   ],
+   "origem": "marketplace",
+   "fabricante": "OverTone DSP"
+  },
+  "mk_overtonedsp_co_uk_lv2_cr1_lv2": {
+   "nome": "Overtone CR-1",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_overtonedsp_co_uk_lv2_cr1_lv2.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "http://overtonedsp.co.uk/lv2/cr1.lv2"
+   ],
+   "origem": "marketplace",
+   "fabricante": "OverTone DSP"
+  },
+  "mk_urn_maxgen_shiroverb_mkII": {
+   "nome": "Shiroverb MKII",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_maxgen_shiroverb_mkII.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:maxgen:shiroverb_mkII"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Shiro"
+  },
+  "mk_overtonedsp_co_uk_lv2_dt1_lv2": {
+   "nome": "Overtone DT-1",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_overtonedsp_co_uk_lv2_dt1_lv2.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "http://overtonedsp.co.uk/lv2/dt1.lv2"
+   ],
+   "origem": "marketplace",
+   "fabricante": "OverTone DSP"
+  },
+  "mk_http_JHLM_com_plugins_mod_devel_faIR_cabsim": {
+   "nome": "faIR Modern Rock",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_http_JHLM_com_plugins_mod_devel_faIR_cabsim.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "http://http://JHLM.com/plugins/mod-devel/faIR-cabsim"
+   ],
+   "origem": "marketplace",
+   "fabricante": "forward audio"
+  },
+  "mk_urn_dogoodsound_reverbs": {
+   "nome": "DoGood Reverbs",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dogoodsound_reverbs.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dogoodsound:reverbs"
+   ],
+   "origem": "marketplace",
+   "fabricante": "DoGood Sound"
+  },
+  "mk_mod_audio_plugins_neural_pedals_pedal_taster": {
+   "nome": "Pedal Taster",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_mod_audio_plugins_neural_pedals_pedal_taster.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://mod.audio/plugins/neural-pedals/pedal-taster"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Colombo Audio"
+  },
+  "mk_clack_digital_anagram_tetraplopia_doubler": {
+   "nome": "Tetraplopia Doubler",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_clack_digital_anagram_tetraplopia_doubler.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://clack.digital/anagram-tetraplopia-doubler"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Clack Digital"
+  },
+  "mk_clack_digital_anagram_cosmic_milk_chorus": {
+   "nome": "Cosmic Milk Chorus",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_clack_digital_anagram_cosmic_milk_chorus.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://clack.digital/anagram-cosmic-milk-chorus"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Clack Digital"
+  },
+  "mk_clack_digital_anagram_amp_squeezer_overdrive": {
+   "nome": "Amp Squeezer Overdrive",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_clack_digital_anagram_amp_squeezer_overdrive.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://clack.digital/anagram-amp-squeezer-overdrive"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Clack Digital"
+  },
+  "mk_clack_digital_anagram_bassement_plague_distortion": {
+   "nome": "Bassement Plague Distortion",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_clack_digital_anagram_bassement_plague_distortion.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://clack.digital/anagram-bassement-plague-distortion"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Clack Digital"
+  },
+  "mk_bogrendigital_com_plugins_Bassknob_STD": {
+   "nome": "Bassknob STD",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_bogrendigital_com_plugins_Bassknob_STD.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://bogrendigital.com/plugins/Bassknob_STD"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Bogren Digital"
+  },
+  "mk_moddevices_com_plugins_forward_audio_post_grunge_cabsim": {
+   "nome": "faIR Post Grunge",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_moddevices_com_plugins_forward_audio_post_grunge_cabsim.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "http://moddevices.com/plugins/forward-audio/post-grunge-cabsim"
+   ],
+   "origem": "marketplace",
+   "fabricante": "forward audio"
+  },
+  "mk_bogrendigital_com_plugins_Ampknob_RevC": {
+   "nome": "Ampknob RevC",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_bogrendigital_com_plugins_Ampknob_RevC.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://bogrendigital.com/plugins/Ampknob_RevC"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Bogren Digital"
+  },
+  "mk_urn_nembriniaudio_hardball": {
+   "nome": "Hardball",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_hardball.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:hardball"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_black": {
+   "nome": "Black",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_black.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:black"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_clonminotaur": {
+   "nome": "Clon Minotaur",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_clonminotaur.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:clonminotaur"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_crunck": {
+   "nome": "Crunck V2",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_crunck.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:crunck"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_808": {
+   "nome": "808 Overdrive Pro",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_808.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:808"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_ninegates": {
+   "nome": "Nine Gates Diabolic Distortion",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_ninegates.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:ninegates"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_psa1000": {
+   "nome": "PSA1000 Analog Saturation Unit",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_psa1000.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:psa1000"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_501chorusecho": {
+   "nome": "501 Chorus Echo",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_501chorusecho.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:501chorusecho"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_dirty_boys_audio_plugins_pirkko": {
+   "nome": "Pirkko Chorus Deluxe",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dirty_boys_audio_plugins_pirkko.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dirty-boys-audio:plugins:pirkko"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Dirty Boys Audio"
+  },
+  "mk_urn_dirty_boys_audio_plugins_smultron": {
+   "nome": "SmulTron III Envelope Filter",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dirty_boys_audio_plugins_smultron.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dirty-boys-audio:plugins:smultron"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Dirty Boys Audio"
+  },
+  "mk_urn_nembriniaudio_bassdriver": {
+   "nome": "Bass Driver",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_bassdriver.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:bassdriver"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_basshammer": {
+   "nome": "Bass Hammer",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_basshammer.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:basshammer"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_falktx_com_plugins_auto_drummer": {
+   "nome": "Auto Drummer",
+   "categoria": "Utilities",
+   "arquivo": "assets/blocos_terceiros/mk_falktx_com_plugins_auto_drummer.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://falktx.com/plugins/auto-drummer"
+   ],
+   "origem": "marketplace",
+   "fabricante": "falkTX"
+  },
+  "mk_joecalderoneaudio_com_plugins_QuadBassAnagram": {
+   "nome": "QuadBass",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_joecalderoneaudio_com_plugins_QuadBassAnagram.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://joecalderoneaudio.com/plugins/QuadBassAnagram"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Joe Calderone Audio"
+  },
+  "mk_moddevices_com_plugins_forward_audio_modern_metal_cabsim": {
+   "nome": "faIR Modern Metal",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_moddevices_com_plugins_forward_audio_modern_metal_cabsim.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "http://moddevices.com/plugins/forward-audio/modern-metal-cabsim"
+   ],
+   "origem": "marketplace",
+   "fabricante": "forward audio"
+  },
+  "mk_fineclassicsplugins_com_plugins_Fine_Classics_Studio_Pre": {
+   "nome": "Studio Pre",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_fineclassicsplugins_com_plugins_Fine_Classics_Studio_Pre.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://fineclassicsplugins.com/plugins/Fine_Classics_Studio_Pre"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Fine Classics Plugins"
+  },
+  "mk_fineclassicsplugins_com_plugins_FC_Punk_Sans": {
+   "nome": "Punk Sans",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_fineclassicsplugins_com_plugins_FC_Punk_Sans.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://fineclassicsplugins.com/plugins/FC_Punk_Sans"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Fine Classics Plugins"
+  },
+  "mk_shedspaceapp_com_plugins_ShedSpace": {
+   "nome": "ShedSpace",
+   "categoria": "Utilities",
+   "arquivo": "assets/blocos_terceiros/mk_shedspaceapp_com_plugins_ShedSpace.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://shedspaceapp.com/plugins/ShedSpace"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Sprung Interactive"
+  },
+  "mk_joecalderoneaudio_com_plugins_DualCompAnagram": {
+   "nome": "DualComp",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_joecalderoneaudio_com_plugins_DualCompAnagram.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://joecalderoneaudio.com/plugins/DualCompAnagram"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Joe Calderone Audio"
+  },
+  "mk_joecalderoneaudio_com_plugins_DualGateAnagram": {
+   "nome": "DualGate",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_joecalderoneaudio_com_plugins_DualGateAnagram.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://joecalderoneaudio.com/plugins/DualGateAnagram"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Joe Calderone Audio"
+  },
+  "mk_cognate_audio_plugins_cognate_bitcrush": {
+   "nome": "Cognate Bitcrush",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_cognate_audio_plugins_cognate_bitcrush.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://cognate.audio/plugins/cognate-bitcrush"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Cognate Audio"
+  },
+  "mk_cognate_audio_plugins_cognate_chord": {
+   "nome": "Cognate Chord",
+   "categoria": "Utilities",
+   "arquivo": "assets/blocos_terceiros/mk_cognate_audio_plugins_cognate_chord.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://cognate.audio/plugins/cognate-chord"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Cognate Audio"
+  },
+  "mk_cognate_audio_plugins_cognate_hologram": {
+   "nome": "Cognate Hologram",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_cognate_audio_plugins_cognate_hologram.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://cognate.audio/plugins/cognate-hologram"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Cognate Audio"
+  },
+  "mk_cognate_audio_plugins_cognate_kinetic": {
+   "nome": "Cognate Kinetic",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_cognate_audio_plugins_cognate_kinetic.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://cognate.audio/plugins/cognate-kinetic"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Cognate Audio"
+  },
+  "mk_cognate_audio_plugins_cognate_pultrick": {
+   "nome": "Cognate Pultrick",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_cognate_audio_plugins_cognate_pultrick.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://cognate.audio/plugins/cognate-pultrick"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Cognate Audio"
+  },
+  "mk_cognate_audio_plugins_cognate_metro": {
+   "nome": "Cognate Metro",
+   "categoria": "Utilities",
+   "arquivo": "assets/blocos_terceiros/mk_cognate_audio_plugins_cognate_metro.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://cognate.audio/plugins/cognate-metro"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Cognate Audio"
+  },
+  "mk_cognate_audio_plugins_cognate_ringmod": {
+   "nome": "Cognate Ringmod",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_cognate_audio_plugins_cognate_ringmod.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://cognate.audio/plugins/cognate-ringmod"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Cognate Audio"
+  },
+  "mk_urn_nembriniaudio_autowah": {
+   "nome": "Auto Wah",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_autowah.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:autowah"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_autoswell": {
+   "nome": "Auto Swell",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_autoswell.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:autoswell"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_clack_digital_anagram_beer_belly_enhancer": {
+   "nome": "Beer Belly Enhancer",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_clack_digital_anagram_beer_belly_enhancer.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://clack.digital/anagram-beer-belly-enhancer"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Clack Digital"
+  },
+  "mk_urn_nembriniaudio_BassResonance": {
+   "nome": "Bass Resonance",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_BassResonance.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:BassResonance"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_cognate_audio_plugins_cognate_polymath": {
+   "nome": "Cognate Polymath",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_cognate_audio_plugins_cognate_polymath.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://cognate.audio/plugins/cognate-polymath"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Cognate Audio"
+  },
+  "mk_cognate_audio_plugins_cognate_aperture": {
+   "nome": "Cognate Aperture",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_cognate_audio_plugins_cognate_aperture.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://cognate.audio/plugins/cognate-aperture"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Cognate Audio"
+  },
+  "mk_joecalderoneaudio_com_plugins_SubGlowAnagram": {
+   "nome": "SubGlow",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_joecalderoneaudio_com_plugins_SubGlowAnagram.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://joecalderoneaudio.com/plugins/SubGlowAnagram"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Joe Calderone Audio"
+  },
+  "mk_urn_dirty_boys_audio_plugins_agricola": {
+   "nome": "Agricola ABC755 Bass Amplifier",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dirty_boys_audio_plugins_agricola.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dirty-boys-audio:plugins:agricola"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Dirty Boys Audio"
+  },
+  "mk_urn_dirty_boys_audio_plugins_iv4n": {
+   "nome": "IV-4N Tube Compressor",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dirty_boys_audio_plugins_iv4n.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dirty-boys-audio:plugins:iv4n"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Dirty Boys Audio"
+  },
+  "mk_clack_digital_anagram_ue_ue_wah": {
+   "nome": "Uè Uè Wah",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_clack_digital_anagram_ue_ue_wah.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://clack.digital/anagram-ue-ue-wah"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Clack Digital"
+  },
+  "mk_boxofrules_com_lv2_box_of_bass": {
+   "nome": "Box of Bass",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_boxofrules_com_lv2_box_of_bass.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://boxofrules.com/lv2/box-of-bass"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Box Of Rules"
+  },
+  "mk_atlantida_audio_com_plugins_Wool_Preamp": {
+   "nome": "Wool",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_atlantida_audio_com_plugins_Wool_Preamp.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://atlantida-audio.com/plugins/Wool_Preamp"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Atlantida Audio"
+  },
+  "mk_redplanetcreative_com_plugins_fourke": {
+   "nome": "4K-E",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_redplanetcreative_com_plugins_fourke.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://redplanetcreative.com/plugins/fourke"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Red Planet Creative"
+  },
+  "mk_redplanetcreative_com_plugins_sonicenh": {
+   "nome": "Sonic Enhancer",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_redplanetcreative_com_plugins_sonicenh.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://redplanetcreative.com/plugins/sonicenh"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Red Planet Creative"
+  },
+  "mk_urn_auroradsp_mammoth": {
+   "nome": "Mammoth",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_auroradsp_mammoth.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:auroradsp:mammoth"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Aurora DSP"
+  },
+  "mk_dustandcoil_com_plugins_big_red_button": {
+   "nome": "Big Red Mute Button",
+   "categoria": "Utilities",
+   "arquivo": "assets/blocos_terceiros/mk_dustandcoil_com_plugins_big_red_button.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://dustandcoil.com/plugins/big-red-button"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Dust & Coil"
+  },
+  "mk_urn_nembriniaudio_analograckdelay": {
+   "nome": "Analog Rack Delay",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_analograckdelay.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:analograckdelay"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_atlantida_audio_com_plugins_Groove_Preamp": {
+   "nome": "Groove",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_atlantida_audio_com_plugins_Groove_Preamp.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://atlantida-audio.com/plugins/Groove_Preamp"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Atlantida Audio"
+  },
+  "mk_urn_nembriniaudio_bass3500": {
+   "nome": "Bass 3500",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_bass3500.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:bass3500"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_moderntube": {
+   "nome": "Modern Tube",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_moderntube.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:moderntube"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_delay3000": {
+   "nome": "DELAY3000",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_delay3000.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:delay3000"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_doubler": {
+   "nome": "Doubler",
+   "categoria": "Utilities",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_doubler.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:doubler"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_shimmerhelay": {
+   "nome": "Shimmer Delay — Ambient Machine",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_shimmerhelay.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:shimmerhelay"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_atlantida_audio_com_plugins_Crusher": {
+   "nome": "Crusher",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_atlantida_audio_com_plugins_Crusher.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://atlantida-audio.com/plugins/Crusher"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Atlantida Audio"
+  },
+  "mk_dustandcoil_com_plugins_hold_it": {
+   "nome": "Hold It Infinite Sustain",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_dustandcoil_com_plugins_hold_it.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://dustandcoil.com/plugins/hold-it"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Dust & Coil"
+  },
+  "mk_atlantida_audio_com_plugins_Octa": {
+   "nome": "Octa",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_atlantida_audio_com_plugins_Octa.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://atlantida-audio.com/plugins/Octa"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Atlantida Audio"
+  },
+  "mk_atlantida_audio_com_plugins_PolyShim": {
+   "nome": "PolyShim",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_atlantida_audio_com_plugins_PolyShim.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://atlantida-audio.com/plugins/PolyShim"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Atlantida Audio"
+  },
+  "mk_clack_digital_anagram_biotremology_tremolo": {
+   "nome": "Biotremology Tremolo",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_clack_digital_anagram_biotremology_tremolo.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://clack.digital/anagram-biotremology-tremolo"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Clack Digital"
+  },
+  "mk_boxofrules_com_lv2_picking_fingers": {
+   "nome": "Picking Fingers",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_boxofrules_com_lv2_picking_fingers.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://boxofrules.com/lv2/picking-fingers"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Box Of Rules"
+  },
+  "mk_mercuriall_com_plugins_Dim_D_320": {
+   "nome": "Dim D-320",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_mercuriall_com_plugins_Dim_D_320.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://mercuriall.com/plugins/Dim_D_320"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Mercuriall Audio"
+  },
+  "mk_mercuriall_com_plugins_Braid_231": {
+   "nome": "Braid-231",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_mercuriall_com_plugins_Braid_231.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://mercuriall.com/plugins/Braid_231"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Mercuriall Audio"
+  },
+  "mk_mercuriall_com_plugins_Open_Drive": {
+   "nome": "Open Drive",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_mercuriall_com_plugins_Open_Drive.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://mercuriall.com/plugins/Open_Drive"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Mercuriall Audio"
+  },
+  "mk_mercuriall_com_plugins_Prime_Drive": {
+   "nome": "Prime Drive",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_mercuriall_com_plugins_Prime_Drive.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://mercuriall.com/plugins/Prime_Drive"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Mercuriall Audio"
+  },
+  "mk_mercuriall_com_plugins_RODENT_Distortion": {
+   "nome": "RODENT Distortion",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_mercuriall_com_plugins_RODENT_Distortion.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://mercuriall.com/plugins/RODENT_Distortion"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Mercuriall Audio"
+  },
+  "mk_mercuriall_com_plugins_Bright_800_Amp": {
+   "nome": "Bright-800 Amp",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_mercuriall_com_plugins_Bright_800_Amp.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://mercuriall.com/plugins/Bright_800_Amp"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Mercuriall Audio"
+  },
+  "mk_mercuriall_com_plugins_Spearion_Overdrive": {
+   "nome": "Spearion Overdrive",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_mercuriall_com_plugins_Spearion_Overdrive.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://mercuriall.com/plugins/Spearion_Overdrive"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Mercuriall Audio"
+  },
+  "mk_mercuriall_com_plugins_SUN100_Amp": {
+   "nome": "SUN-100 Amp",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_mercuriall_com_plugins_SUN100_Amp.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://mercuriall.com/plugins/SUN100_Amp"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Mercuriall Audio"
+  },
+  "mk_mercuriall_com_plugins_Ubersonic_Amp": {
+   "nome": "Ubersonic Amp",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_mercuriall_com_plugins_Ubersonic_Amp.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://mercuriall.com/plugins/Ubersonic_Amp"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Mercuriall Audio"
+  },
+  "mk_joecalderoneaudio_com_plugins_ArcadiaU7Anagram": {
+   "nome": "Arcadia U7",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_joecalderoneaudio_com_plugins_ArcadiaU7Anagram.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://joecalderoneaudio.com/plugins/ArcadiaU7Anagram"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Joe Calderone Audio"
+  },
+  "mk_urn_buffalo_one_bfo": {
+   "nome": "Buffalo One",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_buffalo_one_bfo.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:buffalo-one:bfo"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Optymyse Audio"
+  },
+  "mk_urn_darkglass_tapedelay": {
+   "nome": "Tape Delay",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_darkglass_tapedelay.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:darkglass:tapedelay"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Darkglass Electronics"
+  },
+  "mk_urn_darkglass_reversedelay": {
+   "nome": "Reverse Delay",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_darkglass_reversedelay.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:darkglass:reversedelay"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Darkglass Electronics"
+  },
+  "mk_urn_darkglass_pingpongdelay": {
+   "nome": "Ping Pong Delay",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_darkglass_pingpongdelay.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:darkglass:pingpongdelay"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Darkglass Electronics"
+  },
+  "mk_urn_darkglass_reversepingpong": {
+   "nome": "Ping Pong Reverse Delay",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_darkglass_reversepingpong.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:darkglass:reversepingpong"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Darkglass Electronics"
+  },
+  "mk_urn_nembriniaudio_acousticvoicepro": {
+   "nome": "Acoustic Voice Pro",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_acousticvoicepro.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:acousticvoicepro"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_libreaudio_org_plugins_adtDoubler": {
+   "nome": "ADT Doubler",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_libreaudio_org_plugins_adtDoubler.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://libreaudio.org/plugins/adtDoubler"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Libre Audio"
+  },
+  "mk_urn_nembriniaudio_voicedc30": {
+   "nome": "VOICE DC30",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_voicedc30.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:voicedc30"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_hariyamalab_dinah": {
+   "nome": "Dinah",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_urn_hariyamalab_dinah.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:hariyamalab:dinah"
+   ],
+   "origem": "marketplace",
+   "fabricante": "HariyamaLab"
+  },
+  "mk_boxofrules_com_lv2_br108": {
+   "nome": "BR108",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_boxofrules_com_lv2_br108.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://boxofrules.com/lv2/br108"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Box Of Rules"
+  },
+  "mk_urn_nembriniaudio_mp1pro": {
+   "nome": "MP1 Pro",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_mp1pro.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:mp1pro"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_mrh159": {
+   "nome": "MRH159 Brown Sound Amplifier",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_mrh159.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:mrh159"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_atlantida_audio_com_plugins_Bass_Cab_Ultimate": {
+   "nome": "Bass Cab Ultimate",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_atlantida_audio_com_plugins_Bass_Cab_Ultimate.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://atlantida-audio.com/plugins/Bass_Cab_Ultimate"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Atlantida Audio"
+  },
+  "mk_urn_nembriniaudio_jazzchorus": {
+   "nome": "Jazz Chorus",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_jazzchorus.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:jazzchorus"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_redplanetcreative_com_plugins_everdream": {
+   "nome": "Everdream",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_redplanetcreative_com_plugins_everdream.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://redplanetcreative.com/plugins/everdream"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Red Planet Creative"
+  },
+  "mk_urn_nembriniaudio_calireverb": {
+   "nome": "Cali Reverb",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_calireverb.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:calireverb"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_elmeri_dev_sp_custom_preamp": {
+   "nome": "SP Custom preamp",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_elmeri_dev_sp_custom_preamp.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://elmeri.dev/sp-custom-preamp"
+   ],
+   "origem": "marketplace",
+   "fabricante": "elmeri.dev"
+  },
+  "mk_urn_nembriniaudio_envelopefilter": {
+   "nome": "Envelope Filter",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_envelopefilter.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:envelopefilter"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_octaver": {
+   "nome": "Octaver",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_octaver.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:octaver"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_atlantida_audio_com_plugins_D_Wool": {
+   "nome": "D-Wool",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_atlantida_audio_com_plugins_D_Wool.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://atlantida-audio.com/plugins/D_Wool"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Atlantida Audio"
+  },
+  "mk_urn_dirty_boys_audio_plugins_lihis": {
+   "nome": "Lihis SubMarinade",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dirty_boys_audio_plugins_lihis.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dirty-boys-audio:plugins:lihis"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Dirty Boys Audio"
+  },
+  "mk_cognate_audio_plugins_cognate_cursive": {
+   "nome": "Cognate Cursive",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_cognate_audio_plugins_cognate_cursive.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://cognate.audio/plugins/cognate-cursive"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Cognate Audio"
+  },
+  "mk_cognate_audio_plugins_cognate_tuner": {
+   "nome": "Cognate Tuner",
+   "categoria": "Utilities",
+   "arquivo": "assets/blocos_terceiros/mk_cognate_audio_plugins_cognate_tuner.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://cognate.audio/plugins/cognate-tuner"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Cognate Audio"
+  },
+  "mk_modernmusicsolutions_com_products_atlas": {
+   "nome": "Atlas",
+   "categoria": "EQs, Filters & Dynamics",
+   "arquivo": "assets/blocos_terceiros/mk_modernmusicsolutions_com_products_atlas.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://modernmusicsolutions.com/products/atlas"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Modern Music Solutions"
+  },
+  "mk_modernmusicsolutions_com_products_s_drive": {
+   "nome": "S-Drive",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_modernmusicsolutions_com_products_s_drive.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://modernmusicsolutions.com/products/s-drive"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Modern Music Solutions"
+  },
+  "mk_stevesledge_de_plugins_red_crown": {
+   "nome": "Red Crown",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_stevesledge_de_plugins_red_crown.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://stevesledge.de/plugins/red-crown"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Steve Sledge"
+  },
+  "mk_shedspaceapp_com_plugins_ShedPocket": {
+   "nome": "ShedPocket",
+   "categoria": "Utilities",
+   "arquivo": "assets/blocos_terceiros/mk_shedspaceapp_com_plugins_ShedPocket.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://shedspaceapp.com/plugins/ShedPocket"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Sprung Interactive"
+  },
+  "mk_dustandcoil_com_plugins_sound_check": {
+   "nome": "Sound Check Auto Gain",
+   "categoria": "Utilities",
+   "arquivo": "assets/blocos_terceiros/mk_dustandcoil_com_plugins_sound_check.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://dustandcoil.com/plugins/sound-check"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Dust & Coil"
+  },
+  "mk_urn_dirty_boys_audio_plugins_lonkero": {
+   "nome": "Lonkero Granular Engine",
+   "categoria": "Delays & Reverbs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_dirty_boys_audio_plugins_lonkero.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:dirty-boys-audio:plugins:lonkero"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Dirty Boys Audio"
+  },
+  "mk_redplanetcreative_com_plugins_tropicalfuzz": {
+   "nome": "Tropical Fuzz",
+   "categoria": "Overdrive & Distortion",
+   "arquivo": "assets/blocos_terceiros/mk_redplanetcreative_com_plugins_tropicalfuzz.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://redplanetcreative.com/plugins/tropicalfuzz"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Red Planet Creative"
+  },
+  "mk_urn_nembriniaudio_hivolt103": {
+   "nome": "Hivolt 103 Custom",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_hivolt103.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:hivolt103"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_urn_nembriniaudio_bst100v2": {
+   "nome": "BST100 V2 Super Overdrive",
+   "categoria": "Amp & Cabs",
+   "arquivo": "assets/blocos_terceiros/mk_urn_nembriniaudio_bst100v2.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "urn:nembriniaudio:bst100v2"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Nembrini Audio"
+  },
+  "mk_cognate_audio_plugins_cognate_macro_synth": {
+   "nome": "Cognate Macro Synth",
+   "categoria": "Modulation & Pitch",
+   "arquivo": "assets/blocos_terceiros/mk_cognate_audio_plugins_cognate_macro_synth.png",
+   "arquivoDesligado": null,
+   "uris": [
+    "https://cognate.audio/plugins/cognate-macro-synth"
+   ],
+   "origem": "marketplace",
+   "fabricante": "Cognate Audio"
   }
  },
  "gabinetes": {
@@ -12074,5 +13537,38 @@
    "pedal": "assets/blocos_terceiros/t3k_gear_pedal.png",
    "space": "assets/blocos_terceiros/t3k_gear_space.png"
   }
+ },
+ "marketplace": {
+  "credito": "Imagens dos plugins do Darkglass Marketplace: Atlantida Audio, Aurora DSP, Bogren Digital, Box Of Rules, Clack Digital, Cognate Audio, Colombo Audio, Darkglass Electronics, Dirty Boys Audio, DoGood Sound, Dust & Coil, elmeri.dev, falkTX, Fine Classics Plugins, forward audio, HariyamaLab, Joe Calderone Audio, Libre Audio, Mercuriall Audio, Modern Music Solutions, Nembrini Audio, Optymyse Audio, OverTone DSP, Red Planet Creative, ReMasterMedia, Shiro, Sprung Interactive, Steve Sledge",
+  "fabricantes": [
+   "Atlantida Audio",
+   "Aurora DSP",
+   "Bogren Digital",
+   "Box Of Rules",
+   "Clack Digital",
+   "Cognate Audio",
+   "Colombo Audio",
+   "Darkglass Electronics",
+   "Dirty Boys Audio",
+   "DoGood Sound",
+   "Dust & Coil",
+   "elmeri.dev",
+   "falkTX",
+   "Fine Classics Plugins",
+   "forward audio",
+   "HariyamaLab",
+   "Joe Calderone Audio",
+   "Libre Audio",
+   "Mercuriall Audio",
+   "Modern Music Solutions",
+   "Nembrini Audio",
+   "Optymyse Audio",
+   "OverTone DSP",
+   "Red Planet Creative",
+   "ReMasterMedia",
+   "Shiro",
+   "Sprung Interactive",
+   "Steve Sledge"
+  ]
  }
 }

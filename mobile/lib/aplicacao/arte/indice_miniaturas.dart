@@ -41,7 +41,8 @@ class IndiceMiniaturas {
       {this.temArteDaPedaleira = false,
       Map<String, (String, String?)> gabinetes = const {},
       this.escolhasDeGabinete = const CatalogoGabinetes.vazio(),
-      this.tons = TonsTone3000.vazio})
+      this.tons = TonsTone3000.vazio,
+      this.creditosAdicionais = const []})
       : _gabinetes = gabinetes;
 
   factory IndiceMiniaturas.doTexto(String texto) {
@@ -59,11 +60,18 @@ class IndiceMiniaturas {
       }
     }
     return IndiceMiniaturas(porUri, porNome, json['credito'] as String? ?? '',
-        temArteDaPedaleira: entradas.any((bloco) => _prioridade(bloco) == 1),
+        temArteDaPedaleira: entradas.any((bloco) => bloco['origem'] == 'pedaleira'),
         gabinetes: _lerGabinetes(json),
         escolhasDeGabinete: CatalogoGabinetes.doJson(mapaOuVazio(json['gabinetes'])['escolhas']),
-        tons: TonsTone3000.doJson(json['tone3000']));
+        tons: TonsTone3000.doJson(json['tone3000']),
+        creditosAdicionais: _creditosAdicionais(json));
   }
+
+  /// Os créditos das outras fontes de imagem (TONE3000, Marketplace).
+  static List<String> _creditosAdicionais(Map<String, dynamic> json) => [
+        for (final secao in ['tone3000', 'marketplace'])
+          if (textoOuNulo(mapaOuVazio(json[secao])['credito']) case final String credito) credito,
+      ];
 
   /// "gabinetes.porArquivo": nome do arquivo de IR sem extensão -> [ligada, desligada].
   static Map<String, _Arquivos> _lerGabinetes(Map<String, dynamic> json) {
@@ -90,9 +98,17 @@ class IndiceMiniaturas {
   /// Título, tipo e foto dos tons de fábrica do TONE3000 (build com o Suite).
   final TonsTone3000 tons;
 
-  /// Arte da pedaleira por último, para sobrescrever a de terceiros na mesma chave.
-  static int _prioridade(Map<String, dynamic> bloco) => bloco['origem'] == 'pedaleira' ? 1 : 0;
+  /// Arte da pedaleira por último, para sobrescrever as outras na mesma chave;
+  /// a do Marketplace (autorizada, A17) antes dela e depois das de terceiros.
+  static int _prioridade(Map<String, dynamic> bloco) => switch (bloco['origem']) {
+        'pedaleira' => 2,
+        'marketplace' => 1,
+        _ => 0,
+      };
   final String credito;
+
+  /// Créditos das outras fontes de imagem, um por linha na tela Sobre.
+  final List<String> creditosAdicionais;
 
   bool get vazio => _porUri.isEmpty && _porNome.isEmpty;
 

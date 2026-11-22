@@ -19,7 +19,7 @@ class TomDeFabrica {
 }
 
 class TonsTone3000 {
-  const TonsTone3000(this._porId, {Map<String, String> porGear = const {}, this.credito})
+  const TonsTone3000(this._porId, {Map<String, String> porGear = const {}})
       : _porGear = porGear;
 
   static const vazio = TonsTone3000({});
@@ -28,8 +28,7 @@ class TonsTone3000 {
       porGear: {
         for (final MapEntry(:key, :value) in mapaOuVazio(mapaOuVazio(secao)['porGear']).entries)
           if (value is String) key: value,
-      },
-      credito: textoOuNulo(mapaOuVazio(secao)['credito']));
+      });
 
   static Map<int, TomDeFabrica> _tons(Object? secao) {
     final tons = mapaOuVazio(secao);
@@ -46,9 +45,6 @@ class TonsTone3000 {
 
   final Map<int, TomDeFabrica> _porId;
   final Map<String, String> _porGear;
-
-  /// "Fotos dos tons de fábrica: …", para a tela de créditos.
-  final String? credito;
 
   TomDeFabrica? deFabrica(int? id) => id == null ? null : _porId[id];
 
