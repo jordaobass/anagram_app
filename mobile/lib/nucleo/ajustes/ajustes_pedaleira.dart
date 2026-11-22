@@ -3,6 +3,7 @@
 // firmware mandar aninhado, achatamos para a mesma forma. `soundcard` é só
 // leitura: a pedaleira não responde a gravações nele (DECISOES PD1).
 import 'mapa_ajustes.dart';
+import 'modo_footswitches.dart';
 
 class AjustesPedaleira {
   const AjustesPedaleira({this.ajustes = const {}, this.placa = const {}});
@@ -22,6 +23,12 @@ class AjustesPedaleira {
     final valor = chave == null ? null : ajustes[chave];
     return valor is num ? valor : null;
   }
+
+  /// O modo dos footswitches; nulo = ausente ou valor que o app não conhece.
+  ModoFootswitches? get modo => ModoFootswitches.doValor(ajustes[chaveModoFootswitches]);
+
+  /// O firmware exporta o modo: só então o app o grava (nunca inventa a chave).
+  bool get temModo => ajustes.containsKey(chaveModoFootswitches);
 }
 
 /// `{"mixer": {"headphones": {"vol": 6}}}` e `{"mixer.headphones.vol": 6}`
