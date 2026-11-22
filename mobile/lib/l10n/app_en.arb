@@ -447,5 +447,6 @@
   "ctlMostrar": "Show the pedal controls",
   "ctlRecolher": "Collapse the pedal controls",
   "sbSubstitui": "replaces {nome}",
-  "sbSubstituirAqui": "Replace the preset in this slot"
+  "sbSubstituirAqui": "Replace the preset in this slot",
+  "salvarReleituraDiferente": "the pedal confirmed, but the slot read back differs from what was sent. Your edit is still on screen; check the slot and save again."
 }

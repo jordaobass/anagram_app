@@ -1549,4 +1549,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sbSubstituirAqui => 'Replace the preset in this slot';
+
+  @override
+  String get salvarReleituraDiferente => 'the pedal confirmed, but the slot read back differs from what was sent. Your edit is still on screen; check the slot and save again.';
 }

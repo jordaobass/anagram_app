@@ -447,5 +447,6 @@
   "ctlMostrar": "Mostrar los controles de la pedalera",
   "ctlRecolher": "Contraer los controles de la pedalera",
   "sbSubstitui": "reemplaza {nome}",
-  "sbSubstituirAqui": "Reemplazar el preset de este slot"
+  "sbSubstituirAqui": "Reemplazar el preset de este slot",
+  "salvarReleituraDiferente": "la pedalera confirmó, pero el slot releído es distinto de lo enviado. La edición sigue en pantalla; revisa el slot y guarda de nuevo."
 }

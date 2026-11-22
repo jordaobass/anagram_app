@@ -2,6 +2,8 @@
 // rola, então esconder parâmetro atrás de página só custava toques. O
 // Parametric EQ tem a tela do Global EQ (ver painel_eq_parametrico.dart) e
 // os blocos de 3 bandas, o painel próprio (ver painel_multibanda.dart).
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -157,15 +159,22 @@ List<DefinicaoParametro> parametrosVisiveis(DefinicaoBloco definicao, BlocoPrese
     return [for (final p in definicao.parametros) if (!_papeisSemControle.contains(p.papel) && !_simbolosSemControle.contains(p.simbolo)) p];
   }
   return [
-    for (final simbolo in bloco.simbolosGuardados)
-      DefinicaoParametro(
-        simbolo: simbolo,
-        nome: nomeEstimado(simbolo),
-        minimo: 0,
-        maximo: ((bloco.valorBase(simbolo) ?? 0).abs() * 2).clamp(10, 100000),
-        padrao: bloco.valorBase(simbolo) ?? 0,
-      ),
+    for (final simbolo in bloco.simbolosGuardados) _parametroEstimado(simbolo, bloco.valorBase(simbolo) ?? 0, nomeEstimado),
   ];
+}
+
+/// A faixa sai do valor guardado e sempre o contém: positivo vai de 0 ao
+/// dobro; negativo (um Level em −6 dB) fica simétrica em torno do zero.
+/// Cortar o valor faria o knob mostrar o limite e o 1º movimento saltar (RV3).
+DefinicaoParametro _parametroEstimado(String simbolo, num valor, String Function(String) nomeEstimado) {
+  final amplitude = max((valor.abs() * 2).clamp(10, 100000), valor.abs());
+  return DefinicaoParametro(
+    simbolo: simbolo,
+    nome: nomeEstimado(simbolo),
+    minimo: valor < 0 ? -amplitude : 0,
+    maximo: amplitude,
+    padrao: valor,
+  );
 }
 
 String _nomeEstimadoPadrao(String simbolo) => '$simbolo (faixa estimada)';

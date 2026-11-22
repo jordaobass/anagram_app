@@ -1443,5 +1443,9 @@
   "sbSubstituirAqui": "Substituir o preset deste slot",
   "@sbSubstituirAqui": {
     "description": "Leitor de tela no ícone de substituir do Salvar como"
+  },
+  "salvarReleituraDiferente": "a pedaleira confirmou, mas o slot relido é diferente do enviado. A edição continua na tela; confira o slot e salve de novo.",
+  "@salvarReleituraDiferente": {
+    "description": "Quando a releitura depois de salvar não confere com o que foi enviado"
   }
 }

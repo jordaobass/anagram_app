@@ -2784,6 +2784,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Substituir o preset deste slot'**
   String get sbSubstituirAqui;
+
+  /// Quando a releitura depois de salvar não confere com o que foi enviado
+  ///
+  /// In pt, this message translates to:
+  /// **'a pedaleira confirmou, mas o slot relido é diferente do enviado. A edição continua na tela; confira o slot e salve de novo.'**
+  String get salvarReleituraDiferente;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
