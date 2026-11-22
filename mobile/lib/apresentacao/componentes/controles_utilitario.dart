@@ -106,10 +106,11 @@ class BotaoPulso extends ConsumerWidget {
     final aoVivo = ref.watch(editorProvider.select((e) => e.aoVivo));
     final editor = ref.read(editorProvider.notifier);
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
-      FilledButton(
+      // um toque ao vivo, não a ação principal da tela: contorno, sem âmbar
+      OutlinedButton(
         key: ValueKey('pulso-${parametro.simbolo}'),
         onPressed: aoVivo ? () => editor.pulsar(bloco.posicao, parametro.simbolo) : null,
-        style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(Medidas.alvoMinimo)),
+        style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(Medidas.alvoMinimo)),
         child: Text(l.utDisparar.toUpperCase()),
       ),
       const SizedBox(height: Espacos.s),

@@ -114,6 +114,8 @@ class _BotaoMaisAcoes extends ConsumerWidget {
       );
 }
 
+/// Ligado é estado, não ação: contorno com o LED aceso em verde (cinza
+/// desligado), como o LED do pedal. Âmbar fica para seleção e ação (UI7).
 class _BotaoBypass extends StatelessWidget {
   const _BotaoBypass({required this.ligado, required this.aoTocar});
 
@@ -124,21 +126,19 @@ class _BotaoBypass extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     return Semantics(
-        toggled: ligado,
-        label: l.blocoLigadoSemantica,
-        child: ligado
-            ? FilledButton.icon(
-                key: const ValueKey('bypass'),
-                onPressed: aoTocar,
-                icon: const Icon(Icons.power_settings_new),
-                label: Text(l.ligado),
-              )
-            : OutlinedButton.icon(
-                key: const ValueKey('bypass'),
-                onPressed: aoTocar,
-                icon: const Icon(Icons.power_settings_new),
-                label: Text(l.desligado),
-              ),
-      );
+      toggled: ligado,
+      label: l.blocoLigadoSemantica,
+      child: OutlinedButton.icon(
+        key: const ValueKey('bypass'),
+        onPressed: aoTocar,
+        icon: Container(
+          key: const ValueKey('led-bypass'),
+          width: Medidas.led,
+          height: Medidas.led,
+          decoration: BoxDecoration(color: ligado ? Cores.ledLigado : Cores.ledDesligado, shape: BoxShape.circle),
+        ),
+        label: Text(ligado ? l.ligado : l.desligado),
+      ),
+    );
   }
 }

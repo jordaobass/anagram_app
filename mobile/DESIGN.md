@@ -187,7 +187,7 @@ Divergência entre direção e construído: o contrato pede "ABS preto texturiza
 Casco preto neutro com alumínio frio, um único acento âmbar de ação e uma família de dez cores de roadie restrita aos blocos.
 
 ### Primary
-- **Âmbar Tally** (`tally`): botão primário (SALVAR NO SLOT, LIGADO, CONECTAR), cena ativa, contorno de 2px da casa selecionada, filete esquerdo e rótulo do slot aberto na lista, anel de foco do knob, "AO VIVO" ligado e o interruptor. Texto sobre ele é sempre `sobre-tally`.
+- **Âmbar Tally** (`tally`): botão primário (SALVAR com edição, CONECTAR), cena ativa, contorno de 2px da casa selecionada, filete esquerdo e rótulo do slot aberto na lista, anel de foco do knob, "AO VIVO" ligado e o interruptor. Texto sobre ele é sempre `sobre-tally`.
 
 ### Secondary
 - **Fita Gaffer** (`fita-gaffer`, borda inferior `fita-gaffer-sombra`): o fundo do nome do preset e do snackbar; também o ponteiro do knob. Nunca em chip, segmento ou seleção: o tema deixa `secondary` em alumínio e a seleção de chip/segmento em `painel-elevado` com contorno âmbar. Texto sobre ela é sempre `tinta-marcador`.
@@ -264,8 +264,8 @@ Cantos quase retos: 3px em molduras de case, 6px em controles (botões, cenas, c
 ### Buttons
 Táteis e diretos, sempre ≥ 48dp, texto em Barlow Condensed caixa alta.
 - **Shape:** cantos de controle (6px).
-- **Primário:** âmbar tally, texto `sobre-tally`, 16px de lateral. Ex.: SALVAR (só com edição não salva, junto do selo NÃO SALVO; sem edição ele é contorno), CONECTAR, LIGADO.
-- **Contorno:** transparente, borda de 1px `aluminio`, texto `texto`. Ex.: SALVAR sem edição, SALVAR COMO, DESCARTAR, DESLIGADO, ABRIR DEMONSTRAÇÃO.
+- **Primário:** âmbar tally, texto `sobre-tally`, 16px de lateral. Ex.: SALVAR (só com edição não salva, junto do selo NÃO SALVO; sem edição ele é contorno), CONECTAR.
+- **Contorno:** transparente, borda de 1px `aluminio`, texto `texto`. Ex.: SALVAR sem edição, SALVAR COMO, DESCARTAR, ABRIR DEMONSTRAÇÃO, DISPARAR da bateria, e LIGADO/DESLIGADO do bloco, que é estado e não ação: contorno com LED de 10px em `led-ligado` (ou `led-desligado`) no lugar do ícone (DECISOES UI7).
 - **Foco:** contorno sólido de 2px em `tally` (acima de 3:1 sobre o case e os painéis); em botão já preenchido, o anel é da cor do texto dele (`sobre-tally` no âmbar). O realce âmbar a 24% fica só nas superfícies de toque sem contorno (linhas da lista) (DECISOES UI3).
 - **Descartar:** no computador fica à vista, desabilitado sem edição; no celular SALVAR, SALVAR COMO e um menu ⋯ (Descartar, Importar, Exportar) cabem numa linha.
 - **Enquanto o Salvar como espera o destino**, os botões de cima ficam desabilitados: a ação está na lista.
