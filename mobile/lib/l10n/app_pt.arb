@@ -1289,5 +1289,9 @@
         "type": "String"
       }
     }
+  },
+  "fmDesconhecido": "A pedaleira está num modo que o app não conhece. Troque o modo na própria pedaleira.",
+  "@fmDesconhecido": {
+    "description": "Tooltip do selo desabilitado quando o valor de mode não é preset, stomp nem scene"
   }
 }

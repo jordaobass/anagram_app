@@ -1432,4 +1432,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String fmAvisoControles(String modo) {
     return 'Los FOOT asignados solo actúan en el modo Stomp; el pedal está en $modo.';
   }
+
+  @override
+  String get fmDesconhecido => 'El pedal está en un modo que la app no conoce. Cambia el modo en el propio pedal.';
 }

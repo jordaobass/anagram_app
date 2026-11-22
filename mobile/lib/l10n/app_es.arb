@@ -417,5 +417,6 @@
   "fmDica": "En el modo Stomp, los footswitches siguen los controles del pedal de este preset. El modo vale para todos los presets.",
   "fmErro": "El pedal no confirmó el cambio de modo. El modo mostrado es el que tiene ahora.",
   "fmIndisponivel": "Este pedal no informa el modo de los footswitches.",
-  "fmAvisoControles": "Los FOOT asignados solo actúan en el modo Stomp; el pedal está en {modo}."
+  "fmAvisoControles": "Los FOOT asignados solo actúan en el modo Stomp; el pedal está en {modo}.",
+  "fmDesconhecido": "El pedal está en un modo que la app no conoce. Cambia el modo en el propio pedal."
 }

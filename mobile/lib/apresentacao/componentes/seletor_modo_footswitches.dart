@@ -1,7 +1,7 @@
 // O modo dos footswitches (PRESET / STOMP / SCENE), ajuste global da pedaleira:
 // o indicador diz o que a pedaleira tem agora e os três botões, como os de
-// cena, trocam na hora. Aparece no editor, sob as cenas, e no painel da
-// pedaleira das Configurações (DECISOES FM3).
+// cena, trocam na hora. Fica no cartão "Footswitches" da seção Pedaleira das
+// Configurações; no editor, o modo é o selo da faixa do preset (DECISOES FM7).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,12 +17,7 @@ import 'botao_tally.dart';
 String nomeDoModo(AppLocalizations l, ModoFootswitches? modo) => l.fmModo(modo?.valor ?? '');
 
 class SeletorModoFootswitches extends ConsumerStatefulWidget {
-  const SeletorModoFootswitches({super.key, this.noCartao = false});
-
-  /// Nas Configurações o cartão em volta já diz "Footswitches" e há espaço
-  /// para a dica; no editor, onde a altura é dos blocos, a dica fica no
-  /// toque longo/passar o mouse do indicador e no painel de Controles.
-  final bool noCartao;
+  const SeletorModoFootswitches({super.key});
 
   @override
   ConsumerState<SeletorModoFootswitches> createState() => _SeletorModoFootswitchesState();
@@ -43,42 +38,29 @@ class _SeletorModoFootswitchesState extends ConsumerState<SeletorModoFootswitche
     final disponivel = ref.watch(modoDisponivelProvider);
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Row(children: [
-        _Indicador(texto: nomeDoModo(l, modo), comRotulo: !widget.noCartao),
+        _Indicador(texto: nomeDoModo(l, modo)),
         const SizedBox(width: Espacos.m),
         for (final opcao in ModoFootswitches.values) ...[
           if (opcao != ModoFootswitches.values.first) const SizedBox(width: Espacos.s),
           Expanded(child: _BotaoModo(modo: opcao, ativo: modo == opcao, habilitado: disponivel)),
         ],
       ]),
-      _Rodape(disponivel: disponivel, comDica: widget.noCartao),
+      _Rodape(disponivel: disponivel),
     ]);
   }
 }
 
-/// "FOOTSWITCHES" em rótulo de painel e, embaixo, o modo lido (o indicador).
+/// O modo lido (o título do cartão já diz "Footswitches").
 class _Indicador extends StatelessWidget {
-  const _Indicador({required this.texto, required this.comRotulo});
+  const _Indicador({required this.texto});
 
   final String texto;
-  final bool comRotulo;
 
   @override
-  Widget build(BuildContext context) {
-    final tema = Theme.of(context).textTheme;
-    final l = AppLocalizations.of(context);
-    return Tooltip(
-      message: l.fmDica,
-      child: Column(
+  Widget build(BuildContext context) => KeyedSubtree(
         key: const ValueKey('indicador-modo-footswitches'),
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (comRotulo) Text(l.fmTitulo.toUpperCase(), style: tema.labelMedium?.copyWith(color: Cores.aluminioClaro)),
-          Text(texto, style: tema.labelLarge),
-        ],
-      ),
-    );
-  }
+        child: Text(texto, style: Theme.of(context).textTheme.labelLarge),
+      );
 }
 
 class _BotaoModo extends ConsumerWidget {
@@ -114,10 +96,9 @@ class _BotaoModo extends ConsumerWidget {
 
 /// A dica do Stomp; e, quando cabe, o aviso de recusa ou de modo indisponível.
 class _Rodape extends ConsumerWidget {
-  const _Rodape({required this.disponivel, required this.comDica});
+  const _Rodape({required this.disponivel});
 
   final bool disponivel;
-  final bool comDica;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -125,18 +106,13 @@ class _Rodape extends ConsumerWidget {
     final estilo = Theme.of(context).textTheme.bodySmall;
     final recusado = ref.watch(controladorModoProvider.select((e) => e.recusado));
     final lido = ref.watch(modoLidoProvider);
-    final linhas = [
-      if (comDica)
-        Text(l.fmDica,
-            key: const ValueKey('dica-modo-footswitches'), style: estilo?.copyWith(color: Cores.textoSecundario)),
-      if (recusado)
-        Text(l.fmErro, key: const ValueKey('erro-modo-footswitches'), style: estilo?.copyWith(color: Cores.erro)),
-      if (lido && !disponivel) Text(l.fmIndisponivel, style: estilo?.copyWith(color: Cores.textoSecundario)),
-    ];
-    if (linhas.isEmpty) return const SizedBox.shrink();
     return Padding(
       padding: const EdgeInsets.only(top: Espacos.xs),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: linhas),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(l.fmDica, style: estilo?.copyWith(color: Cores.textoSecundario)),
+        if (recusado) Text(l.fmErro, style: estilo?.copyWith(color: Cores.erro)),
+        if (lido && !disponivel) Text(l.fmIndisponivel, style: estilo?.copyWith(color: Cores.textoSecundario)),
+      ]),
     );
   }
 }

@@ -2604,6 +2604,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Os FOOT atribuídos só agem no modo Stomp; a pedaleira está em {modo}.'**
   String fmAvisoControles(String modo);
+
+  /// Tooltip do selo desabilitado quando o valor de mode não é preset, stomp nem scene
+  ///
+  /// In pt, this message translates to:
+  /// **'A pedaleira está num modo que o app não conhece. Troque o modo na própria pedaleira.'**
+  String get fmDesconhecido;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

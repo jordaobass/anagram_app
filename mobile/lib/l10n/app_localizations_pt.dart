@@ -1432,4 +1432,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String fmAvisoControles(String modo) {
     return 'Os FOOT atribuídos só agem no modo Stomp; a pedaleira está em $modo.';
   }
+
+  @override
+  String get fmDesconhecido => 'A pedaleira está num modo que o app não conhece. Troque o modo na própria pedaleira.';
 }

@@ -1,4 +1,4 @@
-// Corpo do editor: fita do preset, cenas, modo dos footswitches, cadeia de blocos, parâmetros e,
+// Corpo do editor: fita do preset, cenas, cadeia de blocos, parâmetros e,
 // no fim, os controles da pedaleira (o que se edita menos vai mais abaixo).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +13,6 @@ import 'moldura_case.dart';
 import 'painel_controles.dart';
 import 'painel_parametros.dart';
 import 'seletor_cenas.dart';
-import 'seletor_modo_footswitches.dart';
 
 class EditorPrincipal extends ConsumerWidget {
   const EditorPrincipal({super.key, required this.compacto, this.aoAbrirLista});
@@ -36,8 +35,6 @@ class EditorPrincipal extends ConsumerWidget {
         FaixaPreset(compacta: compacto, aoTocarSlot: aoAbrirLista),
         SizedBox(height: espaco),
         const SeletorCenas(),
-        const SizedBox(height: Espacos.s),
-        const SeletorModoFootswitches(),
         SizedBox(height: espaco),
         MolduraCase(
           preenchimento: const EdgeInsets.all(Espacos.m),

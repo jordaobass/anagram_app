@@ -69,7 +69,7 @@ class _SecaoPedaleiraState extends ConsumerState<SecaoPedaleira> {
         CartaoSecaoSynth(
           titulo: l.fmTitulo,
           largura: double.infinity,
-          filhos: const [SizedBox(width: double.infinity, child: SeletorModoFootswitches(noCartao: true))],
+          filhos: const [SizedBox(width: double.infinity, child: SeletorModoFootswitches())],
         ),
         const SizedBox(height: Espacos.m),
         _CartaoGrupo(titulo: l.pdSaidas, grupo: GrupoAjuste.saidas, forma: FormaControle.fader, cor: Cores.mixerGlobal),
