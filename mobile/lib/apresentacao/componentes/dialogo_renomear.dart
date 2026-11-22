@@ -6,6 +6,7 @@ import '../../aplicacao/estado/controlador_editor.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
+import 'dialogo_confirmar.dart';
 
 /// Nome curto o bastante para o visor da pedaleira (hipótese: ver DECISOES).
 const tamanhoMaximoNome = 24;
@@ -63,7 +64,7 @@ class _EstadoDialogoRenomear extends State<_DialogoRenomear> {
           onSubmitted: (_) => _confirmar(),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text(l.cancelar)),
+          BotaoCancelarDialogo(rotulo: l.cancelar, aoTocar: () => Navigator.pop(context)),
           FilledButton(onPressed: _confirmar, child: Text(l.renomear)),
         ],
       );

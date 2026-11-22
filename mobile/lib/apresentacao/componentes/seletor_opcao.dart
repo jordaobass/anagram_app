@@ -7,6 +7,7 @@ import '../../l10n/app_localizations.dart';
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../tema/tokens.dart';
+import 'dialogo_confirmar.dart';
 import 'botao_giratorio.dart' show AoMudarValor;
 
 class SeletorOpcao extends StatelessWidget {
@@ -117,7 +118,7 @@ class _EstadoListaComBusca extends State<_ListaComBusca> {
           Expanded(child: ListView(children: [for (final g in grupos.entries) ..._grupo(context, g.key, g.value)])),
         ]),
       ),
-      actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text(l.cancelar))],
+      actions: [BotaoCancelarDialogo(rotulo: l.cancelar, aoTocar: () => Navigator.pop(context))],
     );
   }
 

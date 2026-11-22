@@ -14,6 +14,7 @@ import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'alteracao_em_grupo.dart';
 import 'controle_no_painel.dart';
+import 'dialogo_confirmar.dart';
 
 class SeletorTemplates extends ConsumerWidget {
   const SeletorTemplates({super.key, required this.bloco, required this.definicao, required this.cena});
@@ -86,7 +87,7 @@ class _ListaTemplates extends StatelessWidget {
             ],
         ]),
       ),
-      actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text(l.cancelar))],
+      actions: [BotaoCancelarDialogo(rotulo: l.cancelar, aoTocar: () => Navigator.pop(context))],
     );
   }
 

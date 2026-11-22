@@ -19,6 +19,7 @@ import '../../nucleo/modelo/documento_preset.dart';
 import '../tema/tokens.dart';
 import 'fluxo_recarregar.dart';
 import 'fluxo_salvar.dart';
+import 'item_de_menu.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
 
@@ -79,7 +80,8 @@ class AcoesPreset extends ConsumerWidget {
 enum _AcaoArquivo { descartar, recarregar, importar, exportar }
 
 /// Recarregar da pedaleira, importar e exportar (e, no celular, Descartar).
-/// Ícone próprio, para não se confundir com o ⋮ do bloco logo abaixo.
+/// No computador, o ícone de pasta (o ⇅ sozinho não dizia o que era); no
+/// celular, ⋯. Nenhum se confunde com o ⋮ do bloco.
 class _MenuArquivo extends ConsumerWidget {
   const _MenuArquivo({required this.parado, required this.comDescartar, required this.naoSalvo});
 
@@ -96,7 +98,9 @@ class _MenuArquivo extends ConsumerWidget {
         key: const ValueKey('menu-preset'),
         tooltip: comDescartar ? l.uiMaisAcoesPreset : l.uiMenuArquivo,
         enabled: !parado,
-        icon: Icon(comDescartar ? Icons.more_horiz : Icons.import_export, color: Cores.texto),
+        // no celular, ⋯; no computador, a pasta de arquivo (o ⇅ não dizia o
+        // que era), do tamanho de um ícone para a fita do nome não apertar
+        icon: Icon(comDescartar ? Icons.more_horiz : Icons.folder_open_outlined, color: Cores.texto),
         onSelected: (acao) => switch (acao) {
           _AcaoArquivo.descartar => ref.read(editorProvider.notifier).descartarEdicoes(),
           _AcaoArquivo.recarregar => executarRecarregar(context, ref),
@@ -105,18 +109,12 @@ class _MenuArquivo extends ConsumerWidget {
         },
         itemBuilder: (_) => [
           if (comDescartar)
-            PopupMenuItem(
-                key: const ValueKey('menu-descartar'),
-                value: _AcaoArquivo.descartar,
-                enabled: naoSalvo,
-                child: Text(l.uiDescartarEdicoes)),
-          PopupMenuItem(
-              key: const ValueKey('menu-recarregar'),
-              value: _AcaoArquivo.recarregar,
-              enabled: comSlot,
-              child: Text(l.uiRecarregarDaPedaleira)),
-          PopupMenuItem(value: _AcaoArquivo.importar, child: Text(l.importarPreset)),
-          PopupMenuItem(value: _AcaoArquivo.exportar, child: Text(l.exportarPreset)),
+            itemDeMenu(_AcaoArquivo.descartar,
+                key: const ValueKey('menu-descartar'), icone: Icons.undo, rotulo: l.uiDescartarEdicoes, ativo: naoSalvo),
+          itemDeMenu(_AcaoArquivo.recarregar,
+              key: const ValueKey('menu-recarregar'), icone: Icons.refresh, rotulo: l.uiRecarregarDaPedaleira, ativo: comSlot),
+          itemDeMenu(_AcaoArquivo.importar, icone: Icons.file_open_outlined, rotulo: l.importarPreset),
+          itemDeMenu(_AcaoArquivo.exportar, icone: Icons.output, rotulo: l.exportarPreset),
         ],
       );
   }
@@ -153,3 +151,4 @@ class _MenuArquivo extends ConsumerWidget {
     if (texto != null) mensageiro.showSnackBar(SnackBar(content: Text(texto)));
   }
 }
+

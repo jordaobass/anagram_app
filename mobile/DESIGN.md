@@ -270,7 +270,7 @@ Táteis e diretos, sempre ≥ 48dp, texto em Barlow Condensed caixa alta.
 - **Descartar:** no computador fica à vista, desabilitado sem edição; no celular SALVAR, SALVAR COMO e um menu ⋯ (Descartar, Importar, Exportar) cabem numa linha.
 - **Enquanto o Salvar como espera o destino**, os botões de cima ficam desabilitados: a ação está na lista.
 - **Diálogo de confirmação:** cancelar em texto neutro (`texto`) à esquerda; confirmar à direita, sempre preenchido em `fita-alerta` com texto `sobre-alerta`, porque todo confirmar ali apaga ou sobrescreve algo.
-- **Ícone:** Material Icons via IconButton com tooltip (desconectar, créditos, copiar bloco). O menu do arquivo do preset tem ícone próprio (⇅ no computador, ⋯ no celular), para não se confundir com o ⋮ do bloco.
+- **Ícone:** Material Icons via IconButton com tooltip (desconectar, créditos, copiar bloco). O menu do arquivo do preset tem ícone próprio (pasta de arquivo no computador, ⋯ no celular), para não se confundir com o ⋮ do bloco. Todo item de menu (preset, bloco, arquivo, atribuir) leva ícone à esquerda em `aluminio-claro`; "Limpar preset…" fica sozinho depois de um divisor, ícone e texto em `erro`. Cancelar de diálogo é sempre texto neutro (`texto`), nunca âmbar (DECISOES UI6).
 
 ### Cenas
 Três botões de largura igual, altura 56px. Inativo: `painel-elevado` com borda de filete. Ativo: preenchido em âmbar. Número em estêncil + nome em caixa alta; cena sem nome mostra só o número e "CENA" (nunca "1 CENA 1").

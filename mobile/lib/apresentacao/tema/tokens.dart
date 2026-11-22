@@ -326,6 +326,9 @@ abstract final class Medidas {
   static const double pontoCompassoAcento = 16;
   static const double larguraAcaoUtilitario = 360;
 
+  /// Ícone à esquerda de cada item de menu.
+  static const double iconeMenu = 20;
+
   /// Check da opção marcada em cor neutra (ver [Cores.pareceDesabilitada]).
   static const double iconeMarcaOpcao = 18;
 

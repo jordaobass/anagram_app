@@ -13,23 +13,27 @@ import '../../nucleo/modelo/controles_pedaleira.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import 'acoes_roteamento.dart';
 import 'biblioteca_efeitos.dart';
+import 'item_de_menu.dart';
 import 'menu_atribuir.dart';
 import '../../l10n/app_localizations.dart';
 
 enum _AcaoMenu {
-  adicionar,
-  copiar,
-  colar,
-  bypass,
-  esquerda,
-  direita,
-  outraLinha,
-  foot1(IdControle.foot1),
-  foot2(IdControle.foot2),
-  foot3(IdControle.foot3),
-  remover;
+  adicionar(Icons.add),
+  copiar(Icons.copy_outlined),
+  colar(Icons.content_paste),
+  bypass(Icons.power_settings_new),
+  esquerda(Icons.arrow_back),
+  direita(Icons.arrow_forward),
+  outraLinha(Icons.swap_vert),
+  foot1(Icons.radio_button_checked, IdControle.foot1),
+  foot2(Icons.radio_button_checked, IdControle.foot2),
+  foot3(Icons.radio_button_checked, IdControle.foot3),
+  remover(Icons.delete_outline);
 
-  const _AcaoMenu([this.footswitch]);
+  const _AcaoMenu(this.icone, [this.footswitch]);
+
+  /// O ícone à esquerda do item, para o menu se ler de relance.
+  final IconData icone;
 
   /// O footswitch que esta ação põe no bloco.
   final IdControle? footswitch;
@@ -47,10 +51,10 @@ Future<void> abrirMenuBloco(BuildContext context, WidgetRef ref, PosicaoBloco po
     items: [
       ..._itens(AppLocalizations.of(context), documento, posicao, temCopia: estado.blocoCopiado != null),
       if (documento.bloco(posicao) != null) ..._itensFootswitch(context, documento, posicao),
-      PopupMenuItem(
-          value: _AcaoMenu.remover,
-          enabled: documento.bloco(posicao) != null,
-          child: Text(AppLocalizations.of(context).removerBloco)),
+      itemDeMenu(_AcaoMenu.remover,
+          icone: _AcaoMenu.remover.icone,
+          rotulo: AppLocalizations.of(context).removerBloco,
+          ativo: documento.bloco(posicao) != null),
     ],
   );
   if (acao == null || !context.mounted) return;
@@ -65,7 +69,7 @@ List<PopupMenuEntry<_AcaoMenu>> _itens(AppLocalizations l, DocumentoPreset docum
   // ou duplicá-los quebraria o roteamento sem a pessoa perceber
   final roteamento = bloco != null && ehBlocoDeRoteamento(bloco.uri);
   PopupMenuItem<_AcaoMenu> item(_AcaoMenu acao, String rotulo, {bool ativo = true}) =>
-      PopupMenuItem(value: acao, enabled: ativo, child: Text(rotulo));
+      itemDeMenu(acao, icone: acao.icone, rotulo: rotulo, ativo: ativo);
   bool podeIr(_AcaoMenu acao) => podeMover(documento, posicao, _destino(posicao, acao));
   return [
     if (!temBloco) item(_AcaoMenu.adicionar, l.adicionarEfeitoMenu),
@@ -92,6 +96,7 @@ List<PopupMenuEntry<_AcaoMenu>> _itensFootswitch(BuildContext context, Documento
           chave: 'menu-${acao.footswitch!.chave}',
           controle: controles[acao.footswitch],
           rotulo: l.ctlFootswitchLigaBloco(acao.footswitch!.numero),
+          icone: acao.icone,
           jaAqui: controles[acao.footswitch]?.alvos.any((a) => a.ehBypass && a.posicao == posicao) ?? false),
     const PopupMenuDivider(),
   ];
