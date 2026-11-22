@@ -20,7 +20,7 @@ class SecaoVersaoNova extends ConsumerWidget {
         contentPadding: EdgeInsets.zero,
         activeThumbColor: Cores.tally,
         title: Text(l.versaoNovaVerificar),
-        subtitle: Text(l.versaoNovaVerificarTexto),
+        subtitle: Text(l.versaoNovaConsultaTexto),
         value: estado.configuracao.verificarAoAbrir,
         onChanged: ref.read(versaoNovaProvider.notifier).definirVerificacao,
       ),

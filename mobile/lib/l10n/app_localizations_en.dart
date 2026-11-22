@@ -1396,4 +1396,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String utTemposDoCompasso(int tempos) {
     return 'Bar of $tempos beats, beat 1 accented';
   }
+
+  @override
+  String slotAlteradoForaTitulo(String slot) {
+    return '$slot changed on the pedal';
+  }
+
+  @override
+  String slotAlteradoForaTexto(String slot) {
+    return 'Slot $slot was changed on the pedal since you opened it. Overwrite saves your version over what is there; reload discards your edits and shows the pedal\'s version.';
+  }
+
+  @override
+  String get sobrescreverMesmoAssim => 'OVERWRITE ANYWAY';
+
+  @override
+  String get recarregarDaPedaleira => 'RELOAD FROM PEDAL';
+
+  @override
+  String get uiRecarregarDaPedaleira => 'Reload from pedal';
+
+  @override
+  String recarregarTitulo(String slot) {
+    return 'Reload $slot from the pedal?';
+  }
+
+  @override
+  String recarregarTexto(String nome) {
+    return 'The unsaved changes to \"$nome\" are lost and the editor shows what is saved in the slot.';
+  }
+
+  @override
+  String get recarregar => 'RELOAD';
+
+  @override
+  String get pausaUsbTitulo => 'Pause between USB packets';
+
+  @override
+  String get pausaUsbTexto => 'Lower = faster live changes; raise it if the pedal stops responding. Auto uses this computer\'s default.';
+
+  @override
+  String get versaoNovaConsultaTexto => 'On launch the app asks only GitHub which version is the latest one published. The request sends only the app\'s version (in the User-Agent header); as with any connection, GitHub sees your IP address. When off, the app does not go online.';
 }

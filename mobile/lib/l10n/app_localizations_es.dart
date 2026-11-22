@@ -1396,4 +1396,45 @@ class AppLocalizationsEs extends AppLocalizations {
   String utTemposDoCompasso(int tempos) {
     return 'Compás de $tempos tiempos, el 1 acentuado';
   }
+
+  @override
+  String slotAlteradoForaTitulo(String slot) {
+    return '$slot cambió en el pedal';
+  }
+
+  @override
+  String slotAlteradoForaTexto(String slot) {
+    return 'El slot $slot se modificó en el pedal desde que lo abriste. Sobrescribir guarda tu versión encima de lo que hay; recargar descarta tus cambios y muestra la versión del pedal.';
+  }
+
+  @override
+  String get sobrescreverMesmoAssim => 'SOBRESCRIBIR DE TODOS MODOS';
+
+  @override
+  String get recarregarDaPedaleira => 'RECARGAR DEL PEDAL';
+
+  @override
+  String get uiRecarregarDaPedaleira => 'Recargar del pedal';
+
+  @override
+  String recarregarTitulo(String slot) {
+    return '¿Recargar $slot del pedal?';
+  }
+
+  @override
+  String recarregarTexto(String nome) {
+    return 'Los cambios sin guardar de \"$nome\" se pierden y el editor muestra lo que está guardado en el slot.';
+  }
+
+  @override
+  String get recarregar => 'RECARGAR';
+
+  @override
+  String get pausaUsbTitulo => 'Pausa entre paquetes USB';
+
+  @override
+  String get pausaUsbTexto => 'Menor = cambios en vivo más rápidos; auméntala si el pedal deja de responder. Auto usa el valor por defecto de este ordenador.';
+
+  @override
+  String get versaoNovaConsultaTexto => 'Al abrir, la app consulta solo GitHub para saber cuál es la última versión publicada. La consulta envía solo la versión de la app (en la cabecera User-Agent); como en toda conexión, GitHub ve tu dirección IP. Desactivada, la app no se conecta a internet.';
 }

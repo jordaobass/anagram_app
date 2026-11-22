@@ -1,6 +1,8 @@
 // Gravar no slot é a única coisa que a IA não faz sozinha: ela pede, o app
 // mostra a pergunta e só a pessoa confirma. O que acontece depois é o mesmo
 // "Salvar" do botão (inclusive cair no "Salvar como" quando não há slot).
+// Slot mudado na pedaleira depois de aberto é recusado: sobrescrever é
+// decisão da pessoa, na tela, nunca da IA.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../nucleo/mcp/ferramenta_mcp.dart';
@@ -49,6 +51,9 @@ class SalvarPreset extends FerramentaMcp {
             'message': 'This preset has no slot of its own here; the player must pick one in the app.',
           }),
         SlotOcupado(:final slot) => ResultadoFerramenta.recusa('Slot ${slot.rotulo} is taken; the player must confirm in the app.'),
+        SlotAlteradoFora(:final slot) => ResultadoFerramenta.recusa('Slot ${slot.rotulo} was changed on the pedal '
+            'since it was opened in the app; nothing was saved. Ask the player to reload it from the pedal, or to '
+            'save from the app, where they can choose to overwrite it.'),
         FalhaAoSalvar(:final erro) => ResultadoFerramenta.recusa('Saving failed: ${erro.mensagem}'),
       };
 }

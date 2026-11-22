@@ -410,5 +410,16 @@
   "utBater": "Tap",
   "utBaterSoNoFixo": "Tap tempo works in Fixed Tempo mode only.",
   "utPrecisaoNoVisor": "How accurate your timing is (Accuracy) shows only on the pedal screen.",
-  "utTemposDoCompasso": "Bar of {tempos} beats, beat 1 accented"
+  "utTemposDoCompasso": "Bar of {tempos} beats, beat 1 accented",
+  "slotAlteradoForaTitulo": "{slot} changed on the pedal",
+  "slotAlteradoForaTexto": "Slot {slot} was changed on the pedal since you opened it. Overwrite saves your version over what is there; reload discards your edits and shows the pedal's version.",
+  "sobrescreverMesmoAssim": "OVERWRITE ANYWAY",
+  "recarregarDaPedaleira": "RELOAD FROM PEDAL",
+  "uiRecarregarDaPedaleira": "Reload from pedal",
+  "recarregarTitulo": "Reload {slot} from the pedal?",
+  "recarregarTexto": "The unsaved changes to \"{nome}\" are lost and the editor shows what is saved in the slot.",
+  "recarregar": "RELOAD",
+  "pausaUsbTitulo": "Pause between USB packets",
+  "pausaUsbTexto": "Lower = faster live changes; raise it if the pedal stops responding. Auto uses this computer's default.",
+  "versaoNovaConsultaTexto": "On launch the app asks only GitHub which version is the latest one published. The request sends only the app's version (in the User-Agent header); as with any connection, GitHub sees your IP address. When off, the app does not go online."
 }

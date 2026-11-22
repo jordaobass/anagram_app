@@ -1,4 +1,5 @@
-// Ações do preset aberto: salvar, salvar como, descartar, importar e exportar.
+// Ações do preset aberto: salvar, salvar como, descartar, recarregar da
+// pedaleira, importar e exportar.
 // SALVAR só fica em âmbar cheio quando há o que salvar (como o selo NÃO
 // SALVO); sem edição, contornado. Enquanto a lista escolhe o destino do
 // "Salvar como", os botões de cima ficam parados: a ação está na lista.
@@ -16,6 +17,7 @@ import '../../aplicacao/provedores.dart';
 import '../../dados/arquivos_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../tema/tokens.dart';
+import 'fluxo_recarregar.dart';
 import 'fluxo_salvar.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
@@ -74,10 +76,10 @@ class AcoesPreset extends ConsumerWidget {
       );
 }
 
-enum _AcaoArquivo { descartar, importar, exportar }
+enum _AcaoArquivo { descartar, recarregar, importar, exportar }
 
-/// Importar e exportar (e, no celular, Descartar). Ícone próprio, para não se
-/// confundir com o ⋮ do bloco logo abaixo.
+/// Recarregar da pedaleira, importar e exportar (e, no celular, Descartar).
+/// Ícone próprio, para não se confundir com o ⋮ do bloco logo abaixo.
 class _MenuArquivo extends ConsumerWidget {
   const _MenuArquivo({required this.parado, required this.comDescartar, required this.naoSalvo});
 
@@ -89,6 +91,7 @@ class _MenuArquivo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
+    final comSlot = ref.watch(editorProvider.select((e) => e.slot != null));
     return PopupMenuButton<_AcaoArquivo>(
         key: const ValueKey('menu-preset'),
         tooltip: comDescartar ? l.uiMaisAcoesPreset : l.uiMenuArquivo,
@@ -96,6 +99,7 @@ class _MenuArquivo extends ConsumerWidget {
         icon: Icon(comDescartar ? Icons.more_horiz : Icons.import_export, color: Cores.texto),
         onSelected: (acao) => switch (acao) {
           _AcaoArquivo.descartar => ref.read(editorProvider.notifier).descartarEdicoes(),
+          _AcaoArquivo.recarregar => executarRecarregar(context, ref),
           _AcaoArquivo.importar => _importar(context, ref),
           _AcaoArquivo.exportar => _exportar(context, ref),
         },
@@ -106,6 +110,11 @@ class _MenuArquivo extends ConsumerWidget {
                 value: _AcaoArquivo.descartar,
                 enabled: naoSalvo,
                 child: Text(l.uiDescartarEdicoes)),
+          PopupMenuItem(
+              key: const ValueKey('menu-recarregar'),
+              value: _AcaoArquivo.recarregar,
+              enabled: comSlot,
+              child: Text(l.uiRecarregarDaPedaleira)),
           PopupMenuItem(value: _AcaoArquivo.importar, child: Text(l.importarPreset)),
           PopupMenuItem(value: _AcaoArquivo.exportar, child: Text(l.exportarPreset)),
         ],

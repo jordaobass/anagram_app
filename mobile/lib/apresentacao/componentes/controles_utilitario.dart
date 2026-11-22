@@ -30,7 +30,8 @@ class BotoesDeOpcao extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final atual = parametro.indiceOpcao(valor);
-    final tempos = temposDoCompasso(parametro.opcoes[atual]);
+    // sem opções (catálogo novo, arquivo mexido) fica só o rótulo
+    final tempos = parametro.opcoes.isEmpty ? null : temposDoCompasso(parametro.opcoes[atual]);
     return SizedBox(
       width: Medidas.larguraBotoesUtilitario,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [

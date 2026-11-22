@@ -1,5 +1,6 @@
 // Atalhos do HX Edit que valem aqui: Ctrl/Cmd+S salva, Ctrl/Cmd+Shift+S salva
-// como, Ctrl/Cmd+C/V copiam e colam o bloco selecionado. Espaço (bypass do
+// como, Ctrl/Cmd+C/V copiam e colam o bloco selecionado, Ctrl/Cmd+R recarrega
+// o slot da pedaleira. Espaço (bypass do
 // bloco) e 1–3 (cena) só valem sem botão ou campo focado.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
+import 'fluxo_recarregar.dart';
 import 'fluxo_salvar.dart';
 
 class AtalhosEditor extends ConsumerWidget {
@@ -46,6 +48,7 @@ class AtalhosEditor extends ConsumerWidget {
             executarSalvar(context, ref, listaEmOutraTela: listaEmOutraTela),
         tecla(LogicalKeyboardKey.keyS, meta: meta, shift: true): () =>
             abrirEscolhaDeDestino(context, ref, listaEmOutraTela: listaEmOutraTela),
+        tecla(LogicalKeyboardKey.keyR, meta: meta): () => executarRecarregar(context, ref),
         tecla(LogicalKeyboardKey.keyC, meta: meta): () => _comSelecionado(ref, controlador.copiarBloco),
         tecla(LogicalKeyboardKey.keyV, meta: meta): () => _comSelecionado(ref, controlador.colarBloco),
       },

@@ -410,5 +410,16 @@
   "utBater": "Marcar",
   "utBaterSoNoFixo": "Marcar el tempo solo funciona en el modo Fixed Tempo.",
   "utPrecisaoNoVisor": "La precisión de tu tempo (Accuracy) solo aparece en la pantalla del pedal.",
-  "utTemposDoCompasso": "Compás de {tempos} tiempos, el 1 acentuado"
+  "utTemposDoCompasso": "Compás de {tempos} tiempos, el 1 acentuado",
+  "slotAlteradoForaTitulo": "{slot} cambió en el pedal",
+  "slotAlteradoForaTexto": "El slot {slot} se modificó en el pedal desde que lo abriste. Sobrescribir guarda tu versión encima de lo que hay; recargar descarta tus cambios y muestra la versión del pedal.",
+  "sobrescreverMesmoAssim": "SOBRESCRIBIR DE TODOS MODOS",
+  "recarregarDaPedaleira": "RECARGAR DEL PEDAL",
+  "uiRecarregarDaPedaleira": "Recargar del pedal",
+  "recarregarTitulo": "¿Recargar {slot} del pedal?",
+  "recarregarTexto": "Los cambios sin guardar de \"{nome}\" se pierden y el editor muestra lo que está guardado en el slot.",
+  "recarregar": "RECARGAR",
+  "pausaUsbTitulo": "Pausa entre paquetes USB",
+  "pausaUsbTexto": "Menor = cambios en vivo más rápidos; auméntala si el pedal deja de responder. Auto usa el valor por defecto de este ordenador.",
+  "versaoNovaConsultaTexto": "Al abrir, la app consulta solo GitHub para saber cuál es la última versión publicada. La consulta envía solo la versión de la app (en la cabecera User-Agent); como en toda conexión, GitHub ve tu dirección IP. Desactivada, la app no se conecta a internet."
 }

@@ -13,6 +13,7 @@ import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:anagram_app/aplicacao/mcp/controlador_mcp.dart';
 import 'package:anagram_app/dados/preferencias_idioma.dart';
 import 'package:anagram_app/dados/preferencias_mcp.dart';
+import 'package:anagram_app/dados/preferencias_pausa.dart';
 import 'package:anagram_app/nucleo/mcp/protocolo_mcp.dart';
 import 'package:anagram_app/plataforma/servidor_mcp.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
@@ -49,7 +50,8 @@ Widget appDeTeste(
         ServidorMcp? servidorMcp,
         bool mcpDisponivel = true,
         GithubFalso? github,
-        PreferenciasVersao? preferenciasVersao}) =>
+        PreferenciasVersao? preferenciasVersao,
+        PreferenciasPausa? preferenciasPausa}) =>
     ProviderScope(
       overrides: [
         ...overrides,
@@ -61,6 +63,7 @@ Widget appDeTeste(
         consultaHttpProvider.overrideWithValue(github ?? GithubFalso()),
         verificacaoVersaoDisponivelProvider.overrideWithValue(github != null),
         preferenciasVersaoProvider.overrideWithValue(preferenciasVersao ?? PreferenciasVersaoEmMemoria()),
+        preferenciasPausaProvider.overrideWithValue(preferenciasPausa ?? PreferenciasPausaEmMemoria()),
         cronometroProvider.overrideWithValue(CronometroFixo.new),
         catalogoProvider.overrideWith((ref) async => lerCatalogo()),
         explicacoesProvider.overrideWith((ref) async => lerExplicacoes()),
@@ -86,6 +89,17 @@ class PreferenciasIdiomaEmMemoria implements PreferenciasIdioma {
 
   @override
   Future<void> gravar(String? codigo) async => salvo = codigo;
+}
+
+/// Guarda a pausa USB só em memória (o teste não toca no disco).
+class PreferenciasPausaEmMemoria implements PreferenciasPausa {
+  int? salvo;
+
+  @override
+  Future<int?> ler() async => salvo;
+
+  @override
+  Future<void> gravar(int? milissegundos) async => salvo = milissegundos;
 }
 
 class PreferenciasMcpEmMemoria implements PreferenciasMcp {

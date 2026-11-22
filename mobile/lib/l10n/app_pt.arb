@@ -1246,5 +1246,44 @@
         "type": "int"
       }
     }
-  }
+  },
+  "slotAlteradoForaTitulo": "{slot} mudou na pedaleira",
+  "@slotAlteradoForaTitulo": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "slotAlteradoForaTexto": "O slot {slot} foi alterado na pedaleira desde que você abriu. Sobrescrever grava a sua versão por cima do que está lá; recarregar descarta as suas edições e mostra a versão da pedaleira.",
+  "@slotAlteradoForaTexto": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "sobrescreverMesmoAssim": "SOBRESCREVER MESMO ASSIM",
+  "recarregarDaPedaleira": "RECARREGAR DA PEDALEIRA",
+  "uiRecarregarDaPedaleira": "Recarregar da pedaleira",
+  "recarregarTitulo": "Recarregar {slot} da pedaleira?",
+  "@recarregarTitulo": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "recarregarTexto": "As mudanças não salvas de \"{nome}\" se perdem e o editor passa a mostrar o que está gravado no slot.",
+  "@recarregarTexto": {
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "recarregar": "RECARREGAR",
+  "pausaUsbTitulo": "Pausa entre pacotes USB",
+  "pausaUsbTexto": "Menor = ao vivo mais rápido; aumente se a pedaleira deixar de responder. Auto usa o padrão deste computador.",
+  "versaoNovaConsultaTexto": "Ao abrir, o app consulta só o GitHub para saber qual é a última versão publicada. A consulta envia apenas a versão do app (no cabeçalho User-Agent); como em toda conexão, o GitHub vê o seu endereço IP. Desligado, o app não acessa a internet."
 }

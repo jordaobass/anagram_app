@@ -87,9 +87,15 @@ class ControladorMcp extends Notifier<EstadoMcp> {
     return const EstadoMcp();
   }
 
+  /// Ligado sem token (preferência apagada pela metade): gera e guarda um
+  /// novo, como no primeiro "ligar", em vez de não abrir.
   Future<void> _carregar() async {
     final salvo = await ref.read(preferenciasMcpProvider).ler();
-    state = state.copiar(configuracao: salvo);
+    if (salvo.ativo && salvo.token == null) {
+      await _guardar(salvo.copiar(token: novoTokenMcp()));
+    } else {
+      state = state.copiar(configuracao: salvo);
+    }
     if (salvo.ativo) await _iniciar();
   }
 
