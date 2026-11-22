@@ -6,15 +6,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/arte/indice_miniaturas.dart';
+import '../../aplicacao/arte/tons_tone3000.dart';
+import '../../aplicacao/estado/tons_da_pedaleira.dart';
 import '../../aplicacao/provedores.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
+import '../../nucleo/catalogo/modelo_carregado.dart';
+import '../../nucleo/modelo/bloco_preset.dart';
+import '../../plataforma/fotos_suite.dart';
 import '../../l10n/app_localizations.dart';
 import '../tema/tokens.dart';
 import 'pintor_arte_familia.dart';
+import 'pintor_arte_utilitario.dart';
+
+/// O tom/arquivo que o bloco carrega (TONE3000, neural, IR do usuário): o
+/// título que a pedaleira informa, senão o de fábrica do índice, senão o
+/// nome do arquivo; nulo nos outros blocos. A lista da pedaleira só é pedida
+/// quando há bloco TONE3000 na tela.
+String? nomeDoModeloNoBloco(WidgetRef ref, BlocoPreset bloco) {
+  final daPedaleira = ehBlocoTone3000(bloco.uri)
+      ? ref.watch(tonsDaPedaleiraProvider).value?.doBloco(bloco.uri, bloco.arquivoDeIr)?.tom.titulo
+      : null;
+  return daPedaleira ??
+      nomeDoModeloCarregado(
+          bloco.uri, bloco.arquivoDeIr, ref.watch(indiceMiniaturasProvider).value?.tons ?? TonsTone3000.vazio);
+}
 
 class ArteBlocoWidget extends ConsumerWidget {
   const ArteBlocoWidget(
-      {super.key, required this.definicao, required this.tamanho, this.ligado = true, this.arquivoIr});
+      {super.key, required this.definicao, required this.tamanho, this.ligado = true, this.arquivoIr, this.gearDoTom});
 
   final DefinicaoBloco definicao;
   final double tamanho;
@@ -22,6 +41,9 @@ class ArteBlocoWidget extends ConsumerWidget {
 
   /// Gabinete: o IR escolhido no bloco decide a foto do modelo (Darkglass Suite).
   final String? arquivoIr;
+
+  /// TONE3000: o tipo do tom informado pela pedaleira (ícone quando não há foto).
+  final String? gearDoTom;
 
   static const _cinza = ColorFilter.matrix([
     0.33, 0.33, 0.33, 0, 0, //
@@ -33,7 +55,9 @@ class ArteBlocoWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final indice = ref.watch(indiceMiniaturasProvider).value;
-    final arte = indice?.arteDe(definicao, arquivoIr: arquivoIr) ?? ArteDaFamilia(definicao.familia);
+    final arte = indice?.arteDe(definicao,
+            arquivoIr: arquivoIr, fotosDoSuite: ref.watch(fotosDoSuiteProvider), gearDoTom: gearDoTom) ??
+        arteDesenhada(definicao);
     if (ligado) return SizedBox.square(dimension: tamanho, child: _desenho(arte));
     return SizedBox.square(
       dimension: tamanho,
@@ -55,15 +79,19 @@ class ArteBlocoWidget extends ConsumerWidget {
 
   Widget _desenho(ArteBloco arte) => switch (arte) {
         ArteMiniatura(:final caminhoAsset) => _imagem(caminhoAsset),
+        ArteFotoExterna(:final caminho) => _imagemDe(imagemDeArquivo(caminho)),
+        ArteUtilitario(:final tipo) => CustomPaint(painter: PintorArteUtilitario(tipo)),
         ArteDaFamilia(:final familia) => CustomPaint(painter: PintorArteFamilia(familia)),
       };
 
-  Widget _imagem(String caminho) => Image.asset(
-        caminho,
-        fit: BoxFit.contain,
-        filterQuality: FilterQuality.medium,
-        errorBuilder: (_, _, _) => CustomPaint(painter: PintorArteFamilia(definicao.familia)),
-      );
+  Widget _imagem(String caminho) => _imagemDe(AssetImage(caminho));
+
+  /// Imagem que falha (arquivo apagado, sem disco) vira a arte desenhada.
+  Widget _imagemDe(ImageProvider? imagem) {
+    final reserva = _desenho(arteDesenhada(definicao));
+    if (imagem == null) return reserva;
+    return Image(image: imagem, fit: BoxFit.contain, filterQuality: FilterQuality.medium, errorBuilder: (_, _, _) => reserva);
+  }
 }
 
 /// "OFF" como o LED apagado da pedaleira: o mesmo em toda arte desligada.

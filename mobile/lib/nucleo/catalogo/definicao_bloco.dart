@@ -16,6 +16,7 @@ class DefinicaoParametro {
     this.logaritmico = false,
     this.opcoes = const [],
     this.papel,
+    this.pontos = const {},
   });
 
   factory DefinicaoParametro.doJson(Map<String, dynamic> json) => DefinicaoParametro(
@@ -30,6 +31,10 @@ class DefinicaoParametro {
         logaritmico: json['log'] == true,
         opcoes: [for (final o in (json['options'] as List<dynamic>? ?? const [])) '$o'],
         papel: json['role'] as String?,
+        pontos: {
+          for (final p in (json['points'] as List<dynamic>? ?? const []))
+            (p as Map<String, dynamic>)['value'] as num: '${p['label']}',
+        },
       );
 
   final String simbolo;
@@ -43,6 +48,38 @@ class DefinicaoParametro {
   final bool logaritmico;
   final List<String> opcoes;
   final String? papel;
+
+  /// Valores com nome próprio no plugin, fora das opções ("Listening" no
+  /// tempo 0 do metrônomo, "-Inf" no mínimo do Level): o visor da pedaleira
+  /// mostra o nome, e o app também.
+  final Map<num, String> pontos;
+
+  /// O rótulo do valor que tem nome próprio, ou nulo.
+  String? rotuloDoPonto(num valor) {
+    for (final p in pontos.entries) {
+      if ((p.key - valor).abs() < _toleranciaDoPonto) return p.value;
+    }
+    return null;
+  }
+
+  static const _toleranciaDoPonto = 1e-4;
+
+  /// A mesma faixa com a unidade que o catálogo não traz (o "bpm" do tempo,
+  /// que a pedaleira não informa) e, se pedido, só valores inteiros.
+  DefinicaoParametro comUnidade(String unidade, {bool inteiro = false}) => DefinicaoParametro(
+        simbolo: simbolo,
+        nome: nome,
+        minimo: minimo,
+        maximo: maximo,
+        padrao: padrao,
+        unidade: unidade,
+        alternavel: alternavel,
+        inteiro: inteiro || this.inteiro,
+        logaritmico: logaritmico,
+        opcoes: opcoes,
+        papel: papel,
+        pontos: pontos,
+      );
 
   bool get ehDiscreto => alternavel || inteiro || opcoes.isNotEmpty;
 

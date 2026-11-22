@@ -1143,7 +1143,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pdSecao => 'Pedaleira';
 
   @override
-  String get pdDica => 'Ajustes globais da Anagram: valem para todos os presets e não entram no preset. Mudam na hora.';
+  String get pdDica => 'Ajustes globais da Anagram: valem para todos os presets e não entram no preset.';
 
   @override
   String get pdSaidas => 'Saídas';
@@ -1176,25 +1176,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pdEqReset => 'Reset';
 
   @override
-  String get pdEqResetTitulo => 'Voltar o Global EQ ao padrão?';
-
-  @override
-  String get pdEqResetTexto => 'As 6 bandas voltam a 35 Hz, 160 Hz, 397 Hz, 1,25 kHz, 2,5 kHz e 9,63 kHz, com ganho 0 e a largura de fábrica. Dá para desfazer logo depois.';
-
-  @override
   String get pdEqResetConfirmar => 'VOLTAR AO PADRÃO';
 
   @override
-  String get pdEqResetFeito => 'Global EQ de volta ao padrão.';
-
-  @override
-  String get pdEqDica => 'Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho. Os knobs mexem no que o modo escolhido mostra.';
+  String get pdEqDica => 'A curva e as bandas mostram o Global EQ que a pedaleira tem agora; o modo escolhe o que as bandas mostram.';
 
   @override
   String get pdEntrada => 'Entrada';
 
   @override
-  String get pdEntradaDica => 'Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; os outros cinco e os nomes entram quando o app conhecer as chaves deles.';
+  String get pdEntradaDica => 'Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; o app só lê o primeiro.';
 
   @override
   String get pdPlaca => 'Placa de som';
@@ -1213,12 +1204,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pdTentarDeNovo => 'Tentar de novo';
-
-  @override
-  String get pdErroGravar => 'A pedaleira não aceitou a última mudança. Os valores mostrados são os que ela tem agora.';
-
-  @override
-  String get pdPendentes => 'Ainda não dá para mudar pelo app: Master, Mute e Link do mixer e os nomes dos instrumentos.';
 
   @override
   String get registroSecao => 'Registro para suporte';
@@ -1358,4 +1343,190 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get ctlDicaPedaleira => 'Na pedaleira, os pots atribuídos só respondem na tela do preset em uma linha; com o preset expandido, os knobs mexem no bloco selecionado.';
+
+  @override
+  String get utTreino => 'Treino';
+
+  @override
+  String get utBater => 'Bater';
+
+  @override
+  String get utBaterSoNoFixo => 'Bater o tempo só vale no modo Fixed Tempo.';
+
+  @override
+  String slotAlteradoForaTitulo(String slot) {
+    return '$slot mudou na pedaleira';
+  }
+
+  @override
+  String slotAlteradoForaTexto(String slot) {
+    return 'O slot $slot foi alterado na pedaleira desde que você abriu. Sobrescrever grava a sua versão por cima do que está lá; recarregar descarta as suas edições e mostra a versão da pedaleira.';
+  }
+
+  @override
+  String get sobrescreverMesmoAssim => 'SOBRESCREVER MESMO ASSIM';
+
+  @override
+  String get recarregarDaPedaleira => 'RECARREGAR DA PEDALEIRA';
+
+  @override
+  String get uiRecarregarDaPedaleira => 'Recarregar da pedaleira';
+
+  @override
+  String recarregarTitulo(String slot) {
+    return 'Recarregar $slot da pedaleira?';
+  }
+
+  @override
+  String recarregarTexto(String nome) {
+    return 'As mudanças não salvas de \"$nome\" se perdem e o editor passa a mostrar o que está gravado no slot.';
+  }
+
+  @override
+  String get recarregar => 'RECARREGAR';
+
+  @override
+  String get pausaUsbTitulo => 'Pausa entre pacotes USB';
+
+  @override
+  String get pausaUsbTexto => 'Menor = ao vivo mais rápido; aumente se a pedaleira deixar de responder. Auto usa o padrão deste computador.';
+
+  @override
+  String get versaoNovaConsultaTexto => 'Ao abrir, o app consulta só o GitHub para saber qual é a última versão publicada. A consulta envia apenas a versão do app (no cabeçalho User-Agent); como em toda conexão, o GitHub vê o seu endereço IP. Desligado, o app não acessa a internet.';
+
+  @override
+  String get fmTitulo => 'Footswitches';
+
+  @override
+  String fmModo(String modo) {
+    String _temp0 = intl.Intl.selectLogic(
+      modo,
+      {
+        'preset': 'PRESET',
+        'stomp': 'STOMP',
+        'scene': 'SCENE',
+        'other': '—',
+      },
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fmSemantica(String modo) {
+    return 'Footswitches no modo $modo';
+  }
+
+  @override
+  String get fmDica => 'No modo Stomp, os footswitches seguem os controles da pedaleira deste preset. O modo vale para todos os presets.';
+
+  @override
+  String get fmErro => 'A pedaleira não confirmou a troca de modo. O modo mostrado é o que ela tem agora.';
+
+  @override
+  String get fmIndisponivel => 'Esta pedaleira não informa o modo dos footswitches.';
+
+  @override
+  String fmAvisoControles(String modo) {
+    return 'Os FOOT atribuídos só agem no modo Stomp; a pedaleira está em $modo.';
+  }
+
+  @override
+  String get fmDesconhecido => 'A pedaleira está num modo que o app não conhece. Troque o modo na própria pedaleira.';
+
+  @override
+  String get t3kTom => 'Tom';
+
+  @override
+  String get t3kModelo => 'Modelo';
+
+  @override
+  String get t3kLendo => 'Lendo os tons da pedaleira…';
+
+  @override
+  String get t3kFalhou => 'A pedaleira não mandou a lista de tons.';
+
+  @override
+  String get t3kTentarDeNovo => 'Tentar de novo';
+
+  @override
+  String t3kNaoEncontrado(String arquivo) {
+    return 'Não encontrado na pedaleira: $arquivo';
+  }
+
+  @override
+  String get t3kSoConsulta => 'Tom enviado por você: aparece só para consulta. Trocá-lo ainda não é possível pelo app.';
+
+  @override
+  String get t3kIrNaoConferido => 'O caminho dos IRs de fábrica ainda não foi conferido numa pedaleira: ouça antes de salvar.';
+
+  @override
+  String t3kResumo(int fabrica, int seus) {
+    return 'Na pedaleira: $fabrica de fábrica e $seus enviados por você';
+  }
+
+  @override
+  String t3kDetalheFabrica(String autor, String licenca) {
+    return '$autor · licença $licenca';
+  }
+
+  @override
+  String t3kDetalheSeu(String autor, String licenca) {
+    return '$autor · licença $licenca · seu, só para consulta';
+  }
+
+  @override
+  String get t3kSemAutor => 'sem autor';
+
+  @override
+  String get uiDicas => 'Dicas';
+
+  @override
+  String ctlResumo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n atribuídos',
+      one: '1 atribuído',
+      zero: 'nenhum atribuído',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ctlMostrar => 'Mostrar os controles da pedaleira';
+
+  @override
+  String get ctlRecolher => 'Recolher os controles da pedaleira';
+
+  @override
+  String sbSubstitui(String nome) {
+    return 'substitui $nome';
+  }
+
+  @override
+  String get sbSubstituirAqui => 'Substituir o preset deste slot';
+
+  @override
+  String get salvarReleituraDiferente => 'a pedaleira confirmou, mas o slot relido é diferente do enviado. A edição continua na tela; confira o slot e salve de novo.';
+
+  @override
+  String get pdSemAcesso => 'Volume das saídas, Global EQ e ganho de entrada: o app não tem acesso a esses recursos da pedaleira. A Anagram aceita o valor enviado, mas não o aplica ao som. Ajuste nos knobs e telas da própria pedaleira; aqui você vê os valores atuais (toque em Atualizar depois de mudar).';
+
+  @override
+  String get utAcaoChave => 'No app, esta chave é o Action da pedaleira. Pelo manual do plugin: ativar começa o ritmo com introdução; com o ritmo tocando, um novo acionamento faz uma virada; acionamento duplo para; segurar passa para a próxima parte. O que a bateria toca em cada caso é do plugin.';
+
+  @override
+  String get utSoNoVisor => 'Só no visor da pedaleira';
+
+  @override
+  String get caProcurando => 'Procurando a pedaleira…';
+
+  @override
+  String get caConectarAoAbrir => 'Conectar ao abrir';
+
+  @override
+  String get caConectarAoAbrirTexto => 'Ao abrir, o app procura a pedaleira no USB uma vez. Conectar não toca nada; sem pedaleira, a tela de conectar fica como está.';
+
+  @override
+  String get caConectarAoAbrirMac => 'No macOS, só depois de liberar o Monitoramento de Entrada para o Anagram App em Ajustes do Sistema › Privacidade e Segurança.';
 }

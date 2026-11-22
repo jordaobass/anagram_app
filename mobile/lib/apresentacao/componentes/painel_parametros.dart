@@ -2,6 +2,8 @@
 // rola, então esconder parâmetro atrás de página só custava toques. O
 // Parametric EQ tem a tela do Global EQ (ver painel_eq_parametrico.dart) e
 // os blocos de 3 bandas, o painel próprio (ver painel_multibanda.dart).
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,6 +12,7 @@ import '../../aplicacao/provedores.dart';
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/arranjo_parametros.dart';
 import '../../nucleo/catalogo/arranjo_sintetizador.dart';
+import '../../nucleo/catalogo/arranjo_utilitario.dart';
 import '../../nucleo/catalogo/curva_eq_parametrico.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/explicacoes_parametros.dart';
@@ -21,7 +24,9 @@ import 'explicacao_parametro.dart';
 import 'painel_eq_parametrico.dart';
 import 'painel_multibanda.dart';
 import 'painel_sintetizador.dart';
+import 'painel_utilitario.dart';
 import 'seletor_gabinete.dart';
+import 'seletor_tone3000.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
 import 'casa_arrastavel.dart' show arrastoComMouse;
@@ -54,12 +59,14 @@ class PainelParametros extends ConsumerWidget {
         CabecalhoBloco(bloco: bloco, definicao: definicao, cena: cena),
         const SizedBox(height: Espacos.m),
         SeletorGabinete(bloco: bloco, definicao: definicao),
+        SeletorTone3000(bloco: bloco, definicao: definicao),
         _painelDoBloco(ref, parametros, bloco, definicao, cena),
       ]),
     );
   }
 
-  /// Os blocos com tela própria (multibanda, paramétrico, synth); o resto, knobs.
+  /// Os blocos com tela própria (multibanda, paramétrico, synth, bateria e
+  /// metrônomo); o resto, knobs.
   Widget _painelDoBloco(
       WidgetRef ref, List<DefinicaoParametro> parametros, BlocoPreset bloco, DefinicaoBloco definicao, int cena) {
     if (arranjoMultibanda(definicao.uri) case final arranjo?) {
@@ -70,6 +77,10 @@ class PainelParametros extends ConsumerWidget {
     }
     if (arranjoSintetizador(definicao.uri) case final arranjo?) {
       return PainelSintetizador(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros);
+    }
+    if (arranjoUtilitario(definicao.uri) case final arranjo?) {
+      return PainelUtilitario(
+          arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, parametros: parametros, tamanhoKnob: tamanhoKnob);
     }
     return LayoutBuilder(
         builder: (context, restricoes) => _controles(context, ref, restricoes.maxWidth, parametros, bloco, definicao, cena));
@@ -148,15 +159,22 @@ List<DefinicaoParametro> parametrosVisiveis(DefinicaoBloco definicao, BlocoPrese
     return [for (final p in definicao.parametros) if (!_papeisSemControle.contains(p.papel) && !_simbolosSemControle.contains(p.simbolo)) p];
   }
   return [
-    for (final simbolo in bloco.simbolosGuardados)
-      DefinicaoParametro(
-        simbolo: simbolo,
-        nome: nomeEstimado(simbolo),
-        minimo: 0,
-        maximo: ((bloco.valorBase(simbolo) ?? 0).abs() * 2).clamp(10, 100000),
-        padrao: bloco.valorBase(simbolo) ?? 0,
-      ),
+    for (final simbolo in bloco.simbolosGuardados) _parametroEstimado(simbolo, bloco.valorBase(simbolo) ?? 0, nomeEstimado),
   ];
+}
+
+/// A faixa sai do valor guardado e sempre o contém: positivo vai de 0 ao
+/// dobro; negativo (um Level em −6 dB) fica simétrica em torno do zero.
+/// Cortar o valor faria o knob mostrar o limite e o 1º movimento saltar (RV3).
+DefinicaoParametro _parametroEstimado(String simbolo, num valor, String Function(String) nomeEstimado) {
+  final amplitude = max((valor.abs() * 2).clamp(10, 100000), valor.abs());
+  return DefinicaoParametro(
+    simbolo: simbolo,
+    nome: nomeEstimado(simbolo),
+    minimo: valor < 0 ? -amplitude : 0,
+    maximo: amplitude,
+    padrao: valor,
+  );
 }
 
 String _nomeEstimadoPadrao(String simbolo) => '$simbolo (faixa estimada)';

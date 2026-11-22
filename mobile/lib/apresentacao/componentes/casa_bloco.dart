@@ -68,7 +68,9 @@ class CasaBloco extends ConsumerWidget {
   /// O que o leitor de tela diz: a casa vazia pela posição, a ocupada pelo bloco.
   String _rotulo(AppLocalizations l, WidgetRef ref, BlocoPreset? atual) {
     if (atual == null) return l.adicionarEfeitoNaCasa(posicao.casa, posicao.linha);
-    final nome = l.nomeDoBloco(ref.watch(definicaoBlocoProvider(atual.uri)));
+    final modelo = nomeDoModeloNoBloco(ref, atual);
+    final bloco = l.nomeDoBloco(ref.watch(definicaoBlocoProvider(atual.uri)));
+    final nome = modelo == null ? bloco : '$bloco · $modelo';
     return ligado ? l.blocoLigado(nome) : l.blocoDesligado(nome);
   }
 
@@ -109,20 +111,23 @@ class CasaBloco extends ConsumerWidget {
         const SizedBox(height: Espacos.xs),
         Container(height: Medidas.fitaCategoria, color: Cores.daFita(definicao.uri, definicao.familia)),
         const SizedBox(height: Espacos.xxs),
-        SizedBox(height: Medidas.alturaRotuloCasa, child: _nomeEmbaixo(context, definicao)),
+        SizedBox(
+            height: Medidas.alturaRotuloCasa,
+            child: _nomeEmbaixo(context, definicao, nomeDoModeloNoBloco(ref, atual))),
       ],
     );
   }
 
-  /// O nome do bloco embaixo da arte, no maior tamanho em que cabe.
-  Widget _nomeEmbaixo(BuildContext context, DefinicaoBloco definicao) {
+  /// O nome do bloco embaixo da arte, no maior tamanho em que cabe. Bloco que
+  /// carrega arquivo (TONE3000, neural) mostra o tom: o tipo já está na arte.
+  Widget _nomeEmbaixo(BuildContext context, DefinicaoBloco definicao, String? modelo) {
     final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(
           color: ligado ? Cores.texto : Cores.textoSecundario,
           height: Medidas.entrelinhaRotuloCasa,
         );
     final l = AppLocalizations.of(context);
-    final (rotulo, estiloRotulo) = rotuloQueCabe(l.nomeCurtoDoBloco(definicao),
-        l.nomeCurtoDoBloco(definicao, abreviado: true), estilo, _interno, Directionality.of(context));
+    final (rotulo, estiloRotulo) = rotuloQueCabe(modelo ?? l.nomeCurtoDoBloco(definicao),
+        modelo ?? l.nomeCurtoDoBloco(definicao, abreviado: true), estilo, _interno, Directionality.of(context));
     return Text(rotulo, maxLines: 2, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center, style: estiloRotulo);
   }
 }

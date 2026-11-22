@@ -1,7 +1,7 @@
 // Capturas da área Fábrica (U18): o preset de fábrica aberto (aviso e botão
 // de copiar), a pergunta da área de destino, a lista da área pedindo o slot e
-// o celular. Prefixo "fb-". Com COM_MINIATURAS=1 saem com a arte e a fábrica
-// de verdade, na pasta ignorada pelo git.
+// o celular. Prefixo "fb-". Saem com a arte real e a fábrica de verdade
+// (SEM_MINIATURAS=1 tira a arte, na pasta ignorada pelo git).
 import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_biblioteca.dart';

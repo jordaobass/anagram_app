@@ -29,6 +29,15 @@ abstract final class Cores {
   static const ledDesligado = Color(0xFF6B7077);
   static const erro = Color(0xFFFF7A66);
 
+  /// O modo dos footswitches aceso nas cores dos LEDs da própria Anagram
+  /// (pedido do dono, DECISOES FM8): roxo no Stomp, branco no Preset e
+  /// azul-claro no Scene. EXCEÇÃO intencional à regra do âmbar só para ação e
+  /// seleção. O texto [sobreModo] passa de 4,5:1 sobre as três (teste).
+  static const modoStomp = Color(0xFF9B6CF0);
+  static const modoPreset = Color(0xFFFFFFFF);
+  static const modoScene = Color(0xFF6EC6F5);
+  static const sobreModo = Color(0xFF121014);
+
   /// O caminho da linha paralela: amarelo do Split até o fim da linha 2 e
   /// verde-água claro na volta ao Merge (pedido do usuário). O amarelo é mais
   /// claro e frio que o âmbar de ação ([tally]) para não parecer seleção; o
@@ -58,6 +67,12 @@ abstract final class Cores {
         FamiliaBloco.gabinete => const Color(0xFFB9A37C),
         FamiliaBloco.utilitario => const Color(0xFF8D949C),
       };
+
+  /// Cor de família quase sem matiz (utilitário, gabinete): preenchida num
+  /// botão, parece o cinza de desabilitado. Quem pinta seleção com a cor da
+  /// família troca, nesse caso, para o contorno âmbar (DECISOES UI1).
+  static bool pareceDesabilitada(Color cor) => HSLColor.fromColor(cor).saturation < _saturacaoMinimaDeSelecao;
+  static const _saturacaoMinimaDeSelecao = 0.4;
 
   /// As três bandas do Ignissor e do Entropia, na faixa de frequência e no
   /// topo da coluna: matizes distantes entre si e do âmbar de ação.
@@ -117,6 +132,12 @@ abstract final class Raios {
 
 abstract final class Medidas {
   static const double alvoMinimo = 48;
+
+  /// Pílula do modo dos footswitches: o desenho é baixo, o alvo continua de
+  /// [alvoMinimo]. Abaixo de [larguraCenasComModo] na linha das cenas, as
+  /// pílulas descem para uma linha fina sob elas.
+  static const double alturaPilulaModo = 26;
+  static const double larguraCenasComModo = 560;
   static const double filete = 1;
   static const double contornoSelecao = 2;
   static const double fitaCategoria = 4;
@@ -296,6 +317,33 @@ abstract final class Medidas {
   static const double opacidadePreenchimentoSynth = 0.18;
   static const double knobSynth = 64;
 
+  /// Painéis da bateria e do metrônomo, um cartão por controle como no
+  /// visor: seis cabem numa fileira do computador e dois no celular (encolhendo
+  /// até a mínima, em que o rolo e a lista ainda cabem); a altura
+  /// mínima iguala a fileira (o Tempo com o BATER, a mais alta); o
+  /// rolo do compasso tem a altura de dois algarismos grandes.
+  static const double larguraCartaoUtilitario = 168;
+  static const double larguraMinimaCartaoUtilitario = 144;
+  static const double alturaCartaoUtilitario = 232;
+  static const double alturaRoloUtilitario = 104;
+  static const double larguraBotaoBater = 64;
+
+  /// Ícone à esquerda de cada item de menu: um passo acima da letra de 15px,
+  /// como o ícone de 16px ao lado do texto de 14px no menu do Windows 11.
+  static const double iconeMenu = 18;
+
+  /// Giro de "conectando" no lugar do ícone do botão: o tamanho do ícone de
+  /// botão, independente do ícone de menu.
+  static const double giroNoBotao = 20;
+
+  /// Altura do item de menu com mouse (computador): o padrão dos menus de
+  /// contexto de desktop fica entre 32 e 40px; no toque vale [alvoMinimo]
+  /// (DECISOES UI12).
+  static const double alturaItemMenuComMouse = 40;
+
+  /// Check da opção marcada em cor neutra (ver [Cores.pareceDesabilitada]).
+  static const double iconeMarcaOpcao = 18;
+
   /// Cartão de um controle da pedaleira (FOOT, POT, EXP) e os knobs de
   /// mínimo e máximo de cada alvo no diálogo do controle.
   static const double larguraCartaoControle = 136;
@@ -336,6 +384,9 @@ abstract final class Duracoes {
 
   /// O mouse passa pelo rótulo a caminho do knob: só explica se parar nele.
   static const esperaExplicacao = Duration(milliseconds: 500);
+
+  /// Tempo para ler as dicas do "?" depois de um clique ou toque.
+  static const dicas = Duration(seconds: 8);
 }
 
 abstract final class Fontes {
@@ -343,6 +394,20 @@ abstract final class Fontes {
   static const rotulo = 'BarlowCondensed';
   static const estencil = 'SairaStencil';
   static const marcador = 'PermanentMarker';
+}
+
+/// Estilos de texto fora da escala do Material, cada um com um papel só.
+abstract final class Tipos {
+  /// Item de menu (botão direito, ⋮, menus suspensos): lido como menu do
+  /// sistema, não como botão. Barlow média, sem a condensada em negrito e o
+  /// espaçamento largo do rótulo de botão (DECISOES UI12).
+  static const itemMenu =
+      TextStyle(fontFamily: Fontes.ui, fontSize: 15, fontWeight: FontWeight.w500, letterSpacing: 0.1, height: 1.25);
+
+  /// O que fica à direita do item (o que o controle já move), como um atalho
+  /// de teclado: menor e em [Cores.textoSecundario].
+  static const detalheMenu =
+      TextStyle(fontFamily: Fontes.ui, fontSize: 13, fontWeight: FontWeight.w400, color: Cores.textoSecundario);
 }
 
 abstract final class Opacidades {

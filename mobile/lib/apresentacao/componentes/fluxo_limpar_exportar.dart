@@ -16,6 +16,7 @@ import '../../nucleo/modelo/documento_preset.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../../nucleo/resultado.dart';
 import '../textos.dart';
+import '../tema/tokens.dart';
 import 'dialogo_confirmar.dart';
 
 /// Exporta o preset como está gravado em [slot] (não a edição aberta).
@@ -84,6 +85,8 @@ Future<_EscolhaLimpar> _perguntar(BuildContext context, SlotPreset slot, String 
       void responder(_EscolhaLimpar escolha) => Navigator.pop(contexto, escolha);
       return AlertDialog(
         key: const ValueKey('dialogo-limpar-preset'),
+        // a largura dos diálogos (440): o texto longo esticava até 560
+        constraints: const BoxConstraints(maxWidth: Medidas.larguraDialogo),
         title: Text(l.mpLimparTitulo(slot.rotulo)),
         content: Text(l.mpLimparTexto(nome, slot.rotulo)),
         actions: [

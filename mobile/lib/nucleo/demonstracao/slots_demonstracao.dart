@@ -43,3 +43,23 @@ Map<String, dynamic> excluirSlot(Map<int, dynamic> slots, String? arquivo) {
 }
 
 int _numero(String? arquivo) => SlotPreset.numeroDoArquivo('$arquivo') ?? -1;
+
+/// Falha injetada: a pedaleira confirma a gravação, mas as próximas
+/// [releituras] leituras ainda devolvem os slots de antes de gravar.
+class GravacaoAtrasada {
+  int releituras = 0;
+  Map<int, dynamic>? _antes;
+
+  /// Guarda os slots como estavam; devolve os mesmos, para gravar neles.
+  Map<int, dynamic> antesDeGravar(Map<int, dynamic> slots) {
+    if (releituras > 0) _antes = {for (final e in slots.entries) e.key: jsonDecode(jsonEncode(e.value))};
+    return slots;
+  }
+
+  Map<int, dynamic> paraLer(Map<int, dynamic> slots) {
+    final antes = _antes;
+    if (antes == null || releituras == 0) return slots;
+    releituras--;
+    return antes;
+  }
+}

@@ -5,4 +5,7 @@ Imagens reduzidas: no máximo 256 px de lado, PNG comprimido com pngquant (quali
 Para regerar (firmware ou Suite novo):
   python3 ferramentas/baixar_arte_pedaleira.py --suite "<Suite>/assets" --renderer <renderer.prod.js>
   pngquant --quality=80-95 --strip --skip-if-larger --force --ext .png assets/blocos_terceiros/*.png
-Somente arte da pedaleira entra aqui: ferramentas/verificar_release.sh recusa qualquer outro arquivo.
+Também: mk_*.png, arte pública dos plugins do Darkglass Marketplace (DECISOES A17,
+  python3 ferramentas/baixar_arte_marketplace.py), e t3k_*, fotos dos tons de fábrica do TONE3000
+  e ícones por tipo, do Suite (DECISOES A18, ferramentas/arte_tone3000.py).
+Somente essas entram aqui: ferramentas/verificar_release.sh recusa qualquer outro arquivo.

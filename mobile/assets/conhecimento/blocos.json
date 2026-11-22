@@ -1,0 +1,1236 @@
+{
+  "version": 1,
+  "firmware": "v1.19.2.24",
+  "language": "en",
+  "sources": [
+    "Block names, parameters, ranges and defaults: blocks-factory.json, read from the pedal (firmware v1.19.2.24).",
+    "Per-control explanations: assets/explicacoes/parametros.json (the texts the app shows on each knob).",
+    "Starting points marked 'factory preset' come from the 36 Darkglass factory presets shipped in the Darkglass Suite; 'catalog defaults' are the block's own defaults.",
+    "What a block models: community attributions collected by the anagram-tone-maker project (basster6, MIT) from the TalkBass Anagram Block List; they are hints about voicing, never Darkglass statements.",
+    "Pitfalls and roles: curated for this app; where a behaviour was not verified on the pedal the text says so."
+  ],
+  "blocks": [
+    {
+      "uris": ["urn:darkglass:B3K"],
+      "role": "Darkglass Microtubes B3K-style overdrive: tight, modern, mid-forward grind with a clean blend. The go-to 'aggressive but defined' bass drive.",
+      "models": "Darkglass Microtubes B3K (Darkglass's own circuit).",
+      "key_parameters": {
+        "Drive": "0-10. Factory presets sit around 8; 4-6 is a crunchy edge, 8+ is saturated and compressed.",
+        "Grunt": "Toggle: feeds more lows into the distortion. On = heavier, fatter; off = tighter.",
+        "MidBoost": "Toggle: lifts the mids of the distorted signal so it cuts through guitars.",
+        "Tone": "0-10 high cut on the distorted signal: lower it first when the grind gets fizzy.",
+        "Level": "0-10 output of the block: match the volume with the block bypassed.",
+        "Blend": "0-100 % clean/distorted. 40-60 keeps the fundamental clean and tight; 90-100 is all grind."
+      },
+      "starting_point": {"Drive": 8, "Grunt": true, "MidBoost": false, "Tone": 8, "Level": 5, "Blend": 90},
+      "starting_point_source": "factory preset 'Microtubes B3K' (Darkglass); lower Blend to 50-60 for a mix-friendly tone",
+      "pitfalls": [
+        "Blend is what keeps the low end: if the bass gets loose or thin under distortion, lower Blend before touching the EQ.",
+        "Drive and Grunt add level; re-check Level and the block after it (amp, cab) for clipping.",
+        "Tone is a cut-only filter on the dirty signal: use it to tame fizz instead of adding a low-pass block."
+      ],
+      "pairs_with": ["urn:darkglass:FETComp", "urn:darkglass:Suppressor", "urn:darkglass:DarkglassGEQ"]
+    },
+    {
+      "uris": ["urn:darkglass:VMT"],
+      "role": "Darkglass Vintage Microtubes-style warm, tube-like overdrive. Era morphs from vintage (dark, woolly) to modern (open, brighter). Good for light grit that still reads as clean.",
+      "models": "Darkglass Vintage Microtubes (Darkglass's own circuit).",
+      "key_parameters": {
+        "Drive": "0-10. 2-4 is 'hair', 6-8 is a full vintage overdrive.",
+        "Era": "0-10 character: low = darker and warmer, high = brighter and more modern.",
+        "Level": "0-10 output; default 3 is quiet, factory presets use 3-5.5.",
+        "Blend": "0-100 % clean/driven; 30-50 for grit that keeps the fundamental intact."
+      },
+      "starting_point": {"Drive": 8, "Era": 6, "Level": 5.5, "Blend": 45},
+      "starting_point_source": "factory preset 'Vintage Microtubes' (Darkglass)",
+      "pitfalls": [
+        "High Drive compresses the dynamics; for fingerstyle rock keep Drive 3-5 and let the amp block do the rest.",
+        "Level default (3) is low: after adding the block, raise Level or the preset drops in volume."
+      ],
+      "pairs_with": ["urn:darkglass:JimBass", "urn:darkglass:HBO"]
+    },
+    {
+      "uris": ["urn:darkglass:AlphaOmicron"],
+      "role": "Darkglass Alpha·Omega-style distortion: Mod morphs between Alpha (rounder, controlled) and Omega (raw, aggressive). Growl and Bite switches shape the lows and high mids going in. The heaviest of the Darkglass drives.",
+      "models": "Darkglass Alpha·Omicron (Darkglass's own circuit).",
+      "key_parameters": {
+        "Drive": "0-10; factory 'Alpha-Omega' preset uses 9.",
+        "Mod": "0-10: 0 = Alpha character, 10 = Omega character.",
+        "Growl": "Toggle: boosts lows and low mids into the distortion (fatter).",
+        "Bite": "Toggle: boosts high mids into the distortion (more attack; can get harsh with bright cabs).",
+        "Level": "0-10 output of the block.",
+        "Blend": "0-100 % clean/distorted."
+      },
+      "starting_point": {"Drive": 9, "Growl": true, "Bite": true, "Mod": 0, "Level": 3.5, "Blend": 100},
+      "starting_point_source": "factory preset 'Alpha-Omega' (Darkglass); use Blend 50-70 when the low end must stay clean",
+      "pitfalls": [
+        "Blend 100 removes the clean lows; for riffs that need weight keep Blend 50-70 or run the drive only on the high band of a Split.",
+        "Bite on + high Drive + a bright cab mic is harsh: pull Bite or Drive before EQing."
+      ],
+      "pairs_with": ["urn:darkglass:FETComp", "urn:darkglass:Suppressor"]
+    },
+    {
+      "uris": ["urn:darkglass:Chinchilla"],
+      "role": "RAT-style distortion: fierce, mid-heavy, from crunch to fuzz-like at the top. Tone is a low-pass (lower = darker).",
+      "models": "Pro Co RAT (community attribution).",
+      "key_parameters": {
+        "Distortion": "0-10 amount; above 7 it behaves like fuzz.",
+        "Tone": "0-10 high cut: low values give a dark, synth-like texture (factory 'Velcro Synth' uses 1.5).",
+        "Blend": "0-100 % clean/distorted; keep 20-50 on bass so the fundamental stays.",
+        "Volume": "0-10 output."
+      },
+      "starting_point": {"Distortion": 3.3, "Tone": 5, "Blend": 50, "Volume": 5},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": [
+        "A RAT thins the low end: either keep Blend around 50 or put it on the high band of a Split with the lows clean.",
+        "Low Tone + high Distortion = fuzzy synth texture; add an octaver before it for synth-bass sounds."
+      ]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:microtubes-x"],
+      "role": "Microtubes X-style two-band drive in one block: the lows stay clean and compressed below low_pass, only the signal above high_pass is distorted. The fastest way to get aggressive grind without losing the fundamental.",
+      "models": "Darkglass Microtubes X / X Ultra (Darkglass's own design).",
+      "key_parameters": {
+        "low_pass": "50-500 Hz: how high the clean low band reaches (factory 150-440).",
+        "low_comp": "0-10 compression of the clean low band.",
+        "low_level": "0-10 level of the clean lows (the foundation).",
+        "high_pass": "100-1000 Hz: where the distorted band starts (factory 420-1000).",
+        "high_drive": "0-10 distortion of the high band; lots is fine because the lows stay clean.",
+        "high_level": "0-10 level of the distorted band; too high and fizz dominates."
+      },
+      "starting_point": {"low_pass": 150, "low_comp": 5, "low_level": 6, "high_level": 10, "high_drive": 5, "high_pass": 420},
+      "starting_point_source": "factory preset 'Microtubes X' (Darkglass)",
+      "pitfalls": [
+        "A gap between low_pass (e.g. 150) and high_pass (e.g. 420) scoops the low mids; move them closer for a fuller tone, apart for a modern scoop.",
+        "The block has no master level: balance low_level and high_level, then trim with the amp or a Gain block."
+      ],
+      "pairs_with": ["urn:darkglass:GenericGEQ", "urn:darkglass:neural-plugins:super-california"]
+    },
+    {
+      "uris": ["urn:darkglass:entropia"],
+      "role": "Three-band drive (Parallax-style): the low band stays clean with its own compressor, the mid and high bands each get a Darkglass drive circuit (B3K, VMT, Alpha, Omega, Chinchilla and Turbo variants) with their own drive amount, band edges and level. Use it instead of a drive + split when you want multiband distortion in one block.",
+      "models": "Neural DSP Parallax-style parallel multiband distortion built from Darkglass circuits (community attribution for the concept).",
+      "key_parameters": {
+        "mid_drive_typemode": "Option label such as 'B3K Grunt', 'VMT Flat', 'Alpha Growl', 'Chinchilla Midscoop' or 'Bypass' (clean band). Set it with set_parameter using the label.",
+        "hi_drive_typemode": "Same options for the high band; a different circuit from the mid band layers two saturation characters.",
+        "mid_drive_amount": "0-10 drive of the mid band: this is where the growl lives.",
+        "hi_drive_amount": "0-10 drive of the high band: attack and fizz; too much gets harsh.",
+        "lo_comp_amount": "0-10 compression of the clean low band (FET or SCI type via lo_comp_type).",
+        "lo_lp_freq": "40-20000 Hz top of the clean low band (default 250).",
+        "mid_hp_freq": "20-16000 Hz start of the mid band (default 250).",
+        "mid_lp_freq": "100-20000 Hz end of the mid band (default 800).",
+        "hi_hp_freq": "20-16000 Hz start of the high band (default 800).",
+        "hi_lp_freq": "1000-20000 Hz top of the high band: lower to 4000-6000 to remove fizz.",
+        "lo_level": "-24..12 dB level of the clean lows.",
+        "mid_level": "-24..12 dB level of the driven mids.",
+        "hi_level": "-24..12 dB level of the driven highs."
+      },
+      "starting_point": {"mid_drive_typemode": "VMT Midboost 2", "hi_drive_typemode": "B3K Turbo Midboost", "lo_comp_amount": 5, "mid_drive_amount": 5, "hi_drive_amount": 5, "lo_level": 0, "mid_level": 0, "hi_level": 0},
+      "starting_point_source": "catalog defaults (Darkglass template 'Glass Drive')",
+      "pitfalls": [
+        "lo_mute, mid_mute and hi_mute are for auditioning one band; leave all of them off in the final tone.",
+        "Band levels add up: three bands at +6 dB clip the next block. Raise one, lower another, or trim after the block.",
+        "The app ships Darkglass's Entropia templates (Hard Rock Bite, Tubey Tone, Modern Metal, Vintage Growl, Ultimate Fuzz...) that the player can apply from the block panel; name one instead of dialling 19 parameters when it fits.",
+        "'Bypass' as a drive type leaves that band clean: drive only the highs by setting mid_drive_typemode to 'Bypass'."
+      ],
+      "pairs_with": ["urn:darkglass:ignissor", "urn:darkglass:Suppressor"]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:duality-fuzz"],
+      "role": "Darkglass Duality Fuzz: two fuzz circuits balanced by 'duality', a tone filter, level in dB and a clean blend. Thick wall-of-fuzz textures; works best over clean lows.",
+      "models": "Darkglass Duality Fuzz (Darkglass's own pedal).",
+      "key_parameters": {
+        "duality": "0-10 balance between the two fuzz circuits; pick by ear.",
+        "filter": "0-10 tone: lower = darker and fatter, higher = brighter and fizzier.",
+        "level": "-12..12 dB output.",
+        "blend": "0-100 % clean/fuzz; 50-70 keeps the bass under the fuzz."
+      },
+      "starting_point": {"duality": 0, "filter": 2, "level": -6, "blend": 100},
+      "starting_point_source": "factory preset 'Duality Fuzz' (Darkglass); lower blend to 60 for a fuller low end",
+      "pitfalls": [
+        "Fuzz at blend 100 loses definition on fast lines; keep clean under it or run it on row 2 above a Split crossover.",
+        "Fuzz raises the noise floor: a Suppressor after the fuzz (threshold around -45 dB) cleans the gaps."
+      ],
+      "pairs_with": ["urn:darkglass:Suppressor", "urn:darkglass-anagram:split"]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:comic"],
+      "role": "SansAmp Bass Driver-style DI preamp/drive: amp-like saturation with Presence (upper fizz), a 2-position mid and bass shift and a clean blend. The classic 'DI rock' and 90s punk sound.",
+      "models": "Tech 21 SansAmp Bass Driver DI (community attribution).",
+      "key_parameters": {
+        "drive": "0-10 saturation.",
+        "pres": "0-10 presence (upper highs/fizz): pull it back first when it gets harsh.",
+        "mid_shift": "Option '500 Hz' or '1000 Hz': centre of the mid control.",
+        "mids": "0-10 mid level (the SansAmp is scooped by default; raise mids to cut through).",
+        "bass_shift": "Option '40 Hz' or '80 Hz': centre of the bass control.",
+        "blend": "0-100 % clean/driven.",
+        "level": "0-10 output."
+      },
+      "starting_point": {"drive": 5, "pres": 5, "blend": 50, "treb": 5, "mid_shift": "500 Hz", "mids": 5, "bass_shift": "40 Hz", "bass": 5, "level": 5},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": [
+        "The scooped character disappears in a dense mix: raise mids to 6-7 before adding another EQ.",
+        "Presence is the fizz region: cut it before lowering treble."
+      ]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:dreamer"],
+      "role": "Tube Screamer-style soft overdrive with a mid hump and a clean blend. Light grit, or a boost pushing an amp block (low drive, high level).",
+      "models": "Ibanez Tube Screamer (community attribution).",
+      "key_parameters": {
+        "drive": "0-10; 2-4 as a boost, 6+ as overdrive.",
+        "blend": "0-100 %: a Tube Screamer cuts lows by design, so 40-60 restores the fundamental.",
+        "level": "0-10 output; raise it to push the next block."
+      },
+      "starting_point": {"drive": 5, "blend": 50, "treb": 5, "bass": 5, "level": 5},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": ["Blend 100 thins the bass noticeably; this circuit was made for guitar."]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:pirate"],
+      "role": "Big Muff-style fuzz: huge, scooped, sustaining. tone_enabled off bypasses the tone stack for a rawer, fuller fuzz.",
+      "models": "Electro-Harmonix Big Muff Pi (community attribution).",
+      "key_parameters": {
+        "dist": "0-10 fuzz amount.",
+        "tone_enabled": "Toggle: off = unfiltered, fuller fuzz.",
+        "tone": "0-10 brightness when the tone stack is on.",
+        "blend": "0-100 % clean/fuzz."
+      },
+      "starting_point": {"dist": 5, "tone_enabled": true, "tone": 5, "level": 5, "blend": 50},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": ["Scooped mids vanish in a band: keep blend around 50 or add mids after it (Darkglass GEQ 500 Hz / 1.5 kHz)."]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:yellow"],
+      "role": "Boss ODB-3-style bass overdrive: clanky, aggressive, with separate low and high EQ and a clean balance. Nu-metal / 90s alt-rock grit.",
+      "models": "Boss ODB-3 Bass Overdrive (community attribution).",
+      "key_parameters": {
+        "gain": "0-10 drive.",
+        "blend": "0-100 % clean/driven.",
+        "low": "0-10 lows of the driven signal.",
+        "high": "0-10 highs; lower it to tame the typical ODB-3 fizz."
+      },
+      "starting_point": {"gain": 5, "blend": 50, "high": 5, "low": 5, "level": 5},
+      "starting_point_source": "catalog defaults"
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:mood"],
+      "role": "Bass fuzz with a 3-band EQ (bass/mid/treble) and a blend, so the fuzz keeps its low end. Note the blend here is 0-10, not percent.",
+      "models": "3Leaf Audio Doom 2 (community attribution).",
+      "key_parameters": {
+        "gain": "0-10 fuzz amount.",
+        "mid": "0-10 mids of the fuzz: this is what keeps it audible in a band.",
+        "blend": "0-10 (not %): 10 = fuzz only."
+      },
+      "starting_point": {"gain": 5, "bass": 5, "mid": 5, "high": 5, "level": 3.5, "blend": 10},
+      "starting_point_source": "catalog defaults"
+    },
+    {
+      "uris": ["urn:darkglass:HBO"],
+      "role": "Darkglass Harmonic Booster: clean boost / preamp with a 'Character' control that adds gentle harmonics, a sweepable mid and bass/treble. Use it as an always-on preamp colour or to push the next amp or drive.",
+      "models": "Darkglass Harmonic Booster (Darkglass's own pedal).",
+      "key_parameters": {
+        "Boost": "0-10 level lift; also how hard it pushes the next block.",
+        "Character": "0-10 harmonics: 0 = transparent boost, high = warm, lightly saturated.",
+        "MidGain": "0-10 boost/cut of the mids at MidFreq (5 = flat).",
+        "MidFreq": "0-10 centre of the mid control (low = body, high = attack)."
+      },
+      "starting_point": {"Boost": 5, "Character": 0, "MidGain": 5.7, "MidFreq": 6, "Bass": 6.6, "Treble": 3.7},
+      "starting_point_source": "factory preset 'The Ball & Chain' (Darkglass)",
+      "pitfalls": ["Boost raises the level into everything after it: lower the next block's input/gain or you get clipping that sounds like fizz."],
+      "pairs_with": ["urn:darkglass:VMT", "urn:darkglass:BUSComp"]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:peggy-bass"],
+      "role": "Ampeg SVT-style tube head (neural capture): rock grind and mid push, no gain knob. Ultra Lo scoops the mids and boosts the deep lows; Ultra Hi adds click. The 'classic rock / Motown-through-an-SVT' amp.",
+      "models": "Ampeg SVT 'Blueline' (community attribution).",
+      "key_parameters": {
+        "ultra_lo": "Toggle: 40 Hz boost + hard 500 Hz cut; changes the amp's identity, easy to get lost in a mix.",
+        "ultra_hi": "Toggle: upper-high boost for click and slap sparkle.",
+        "midrange": "0-10 mid level at the frequency chosen by mid_shift.",
+        "mid_shift": "Option '1', '2' or '3': mid centre, low to high.",
+        "level": "-12..12 dB block output: match volume here."
+      },
+      "starting_point": {"ultra_lo": false, "ultra_hi": false, "bass": 5, "midrange": 6, "mid_shift": "2", "treble": 5.6, "level": 0},
+      "starting_point_source": "factory preset 'Peggy Party' (Darkglass)",
+      "pitfalls": [
+        "No gain control: for grind, push it with a Harmonic Booster, Gain block or drive before it.",
+        "ultra_lo on sounds huge alone and disappears with a band; prefer bass 6-7 with ultra_lo off."
+      ],
+      "pairs_with": ["urn:darkglass-anagram:cabinet-bass", "urn:darkglass:FETComp"]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:peggycl"],
+      "role": "Ampeg SVT-CL-style head with a real gain stage: input pad, Gain (preamp drive), Master (power amp push) and a separate output level. Pick this Ampeg when the tone needs tube breakup.",
+      "models": "Ampeg SVT-CL (community attribution).",
+      "key_parameters": {
+        "input": "Option '0dB' (passive bass) or '-15dB' (active/hot bass).",
+        "gain": "0-10 preamp drive: character and breakup.",
+        "master": "0-10 power amp level: more = more push and compression.",
+        "output_lvl": "0-10 block output: match volume here, not with gain or master.",
+        "mid_freq": "Option '1'..'5': centre of the mid control, low to high.",
+        "ultra_lo": "Toggle deep-low boost / mid scoop.",
+        "ultra_hi": "Toggle upper-high boost."
+      },
+      "starting_point": {"input": "0dB", "gain": 3, "ultra_lo": false, "ultra_hi": false, "bass": 5, "mid": 5, "mid_freq": "3", "treble": 5, "master": 3, "output_lvl": 5},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": [
+        "Gain vs Master vs Level: gain = how dirty, master = how pushed, output_lvl = how loud. Raising gain for volume makes it dirtier, not louder in a useful way.",
+        "Active bass or hot pickups: set input to '-15dB' before judging the breakup."
+      ],
+      "pairs_with": ["urn:darkglass-anagram:cabinet-bass"]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:fliptop"],
+      "role": "Ampeg B-15 flip-top-style combo head (neural capture): warm, round, 60s studio bass. Volume is the tube breakup, Output Level the block volume. Motown, soul, jazz.",
+      "models": "Ampeg B-15 Portaflex (community attribution).",
+      "key_parameters": {
+        "vol": "0-10: more = more tube compression and breakup.",
+        "bass": "0-10.",
+        "treble": "0-10 (keep low for the classic dark B-15 sound).",
+        "output_lvl": "0-10 block output."
+      },
+      "starting_point": {"vol": 4, "bass": 6, "treble": 4, "output_lvl": 2.5},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": ["Default output_lvl 2.5 is quiet: raise it to 5-6 after adding the block."],
+      "pairs_with": ["urn:darkglass-anagram:cabinet-bass", "urn:dirty-boys-audio:plugins:iv4n"]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:super-california"],
+      "role": "Fender Super Bassman-style tube head (neural capture): round, vintage, full. 'volume' is the preamp in dB (-24..0), 'master' the output.",
+      "models": "Fender Super Bassman 300 (community attribution).",
+      "key_parameters": {
+        "volume": "-24..0 dB preamp: raise toward 0 for breakup.",
+        "master": "-12..12 dB output level.",
+        "bass": "0-10.",
+        "mid": "0-10.",
+        "treble": "0-10."
+      },
+      "starting_point": {"volume": -12, "bass": 5, "mid": 5, "treble": 5, "master": 0},
+      "starting_point_source": "factory presets 'Supercali' and 'Alpha-Omega' (Darkglass)",
+      "pitfalls": ["volume is in dB with 0 as maximum: -12 is clean, -4..0 is pushed."],
+      "pairs_with": ["urn:darkglass-anagram:cabinet-bass"]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:gallen-kallinen"],
+      "role": "Gallien-Krueger-style solid-state head (neural capture): punchy, fast, modern. Mid Contour on scoops the mids ('smiley' tone); off is the punchy rock voicing. Level in dB.",
+      "models": "Gallien-Krueger (community attribution).",
+      "key_parameters": {
+        "mid_contour": "Toggle: on = scooped modern, off = mid-forward punch.",
+        "lo_mid": "0-10 low mids (body).",
+        "hi_mid": "0-10 high mids (attack, growl).",
+        "level": "-12..12 dB block output."
+      },
+      "starting_point": {"mid_contour": true, "bass": 10, "lo_mid": 5, "hi_mid": 7, "treble": 6, "level": 0},
+      "starting_point_source": "factory preset 'Grona-Kulor' (Darkglass); bass 10 is extreme, 6-7 is a safer start",
+      "pitfalls": ["No gain knob: it stays clean. For GK-style grind add a drive (B3K, VMT) before it."],
+      "pairs_with": ["urn:darkglass-anagram:cabinet-bass", "urn:darkglass:BUSComp"]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:gentle"],
+      "role": "Boutique tube DI preamp (neural capture): subtle warmth and polish, not an amp and not a drive. Great as an always-on studio colour late in the chain.",
+      "models": "Noble Preamp/DI (community attribution).",
+      "key_parameters": {
+        "output_lvl": "-24..20 dB output (default -3).",
+        "bass": "0-10.",
+        "treble": "0-10.",
+        "low_cut": "Toggle: tighter, less muddy low end for pick playing or loud stages."
+      },
+      "starting_point": {"output_lvl": -3, "bass": 4, "treble": 2.5, "low_cut": false},
+      "starting_point_source": "factory preset 'Djentlemen' (row 2, Darkglass)",
+      "pitfalls": ["Expect polish, not character: if the player wants 'more amp', pick a head block instead."]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:markku"],
+      "role": "Markbass Little Mark-style head (neural capture): clean, warm, hi-fi-leaning. Vintage Filter rolls off highs like an old speaker; Modern Filter scoops mids and lifts lows and highs.",
+      "models": "Markbass Little Mark series (community attribution).",
+      "key_parameters": {
+        "gain": "0-10 input gain (stays mostly clean).",
+        "modernfilter": "0-10 mid scoop (VPF-like): small amounts, 1-3.",
+        "vintagefilter": "0-10 high roll-off (VLE-like): 2-4 for a rounder old-school tone.",
+        "level": "0-10 output."
+      },
+      "starting_point": {"gain": 5, "bass": 7, "midlow": 6, "midhigh": 5, "high": 6, "modernfilter": 2, "vintagefilter": 1, "level": 3.5},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": ["Both filters high at once hollow the tone out; use one or the other."]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:modern-california-cln", "urn:darkglass:neural-plugins:modern-california-od"],
+      "role": "Mesa Big Block-style head (neural capture), clean channel (-cln) and overdrive channel (-od): modern, aggressive, with a passive mid (voicing) plus an active mid at a sweepable frequency (220-2500 Hz).",
+      "models": "Mesa Boogie Big Block 750, clean and overdriven channels (community attribution).",
+      "key_parameters": {
+        "gain": "0-10 preamp gain.",
+        "passivemid": "0-10 voicing mid (cut-type, like a passive tone stack).",
+        "activemid": "0-10 boost/cut at midfreq (5 = flat).",
+        "midfreq": "220-2500 Hz centre of the active mid: 250-400 body, 800-1500 growl/attack.",
+        "volume": "0-10 block output."
+      },
+      "starting_point": {"gain": 5.5, "bass": 7, "passivemid": 7, "activemid": 3, "midfreq": 280, "treble": 6, "volume": 5},
+      "starting_point_source": "catalog defaults of the clean channel",
+      "pitfalls": ["Two mid controls: fix the passive mid first (voicing), then use the active mid for the problem frequency."]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:swe"],
+      "role": "EBS TD650-style hybrid head (neural capture): hi-fi, clean, Swedish voicing with a sweepable mid (57-4000 Hz), Bright, Tube mode and a switchable drive section. Slap, fusion, modern clean.",
+      "models": "EBS TD650 (community attribution).",
+      "key_parameters": {
+        "character": "Toggle: overall voicing; compare by ear.",
+        "middle": "0-10 at middlefreq.",
+        "middlefreq": "57-4000 Hz mid centre.",
+        "bright": "0-10 upper-high lift (default 7 is bright; 3-5 for fingerstyle).",
+        "tubemode": "Toggle warmer, more compressed response.",
+        "boostdrive": "Toggle: enables the drive section; 'drive' only acts when this is on.",
+        "level": "0-10 output."
+      },
+      "starting_point": {"character": true, "gain": 5, "bass": 6.5, "middle": 5, "middlefreq": 250, "treble": 5, "bright": 7, "tubemode": true, "boostdrive": false, "drive": 2, "level": 6.7},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": ["Changing 'drive' does nothing until boostdrive is on."]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:swirl"],
+      "role": "SWR SM-900-style head (neural capture): hi-fi, scooped, with semi-parametric low-mid / mid / hi-mid bands and an Aura Shaper (Aural Enhancer-like smile curve on one knob). The slap and fusion amp.",
+      "models": "SWR SM-900 (community attribution).",
+      "key_parameters": {
+        "aurashaper": "0-10 smile curve: high = scooped hi-fi slap, 2-4 for rock with mids.",
+        "lowmid": "0-10 at lowmidfreq (40-200 Hz).",
+        "mid": "0-10 at midfreq (280-1500 Hz).",
+        "himid": "0-10 at hiwmidfreq (1500-6000 Hz).",
+        "level": "0-10 output."
+      },
+      "starting_point": {"gain": 5, "aurashaper": 7, "bass": 7, "lowmid": 6, "lowmidfreq": 89, "mid": 2.5, "midfreq": 637, "himid": 4, "hiwmidfreq": 3750, "treble": 6, "level": 3},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": ["Default mid 2.5 is already scooped: raise mid to 5-6 when the bass must cut through guitars."]
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:fruity"],
+      "role": "Orange Terror Bass-style head (neural capture): gritty, British, mid-rich; the overdrive switch adds a dirty channel.",
+      "models": "Orange Terror Bass 500 (community attribution).",
+      "key_parameters": {
+        "gain": "0-10 preamp gain (breaks up early).",
+        "overdrive": "Toggle extra dirt.",
+        "level": "0-10 output."
+      },
+      "starting_point": {"gain": 5, "overdrive": false, "bass": 5, "mid": 5, "high": 5, "level": 3.5},
+      "starting_point_source": "catalog defaults"
+    },
+    {
+      "uris": ["urn:darkglass:neural-plugins:hifive103"],
+      "role": "Hiwatt DR103-style head (neural capture, new in 1.19): loud, clean-to-edge, with Presence. Classic British rock bass (Who/Floyd territory).",
+      "models": "Hiwatt DR103 (community attribution).",
+      "key_parameters": {
+        "gain": "0-10 preamp.",
+        "master": "0-10 power amp push.",
+        "presence": "0-10 upper highs.",
+        "output_lvl": "0-10 block output."
+      },
+      "starting_point": {"master": 3, "gain": 5, "bass": 6, "middle": 6, "treble": 4, "presence": 5, "output_lvl": 4},
+      "starting_point_source": "catalog defaults"
+    },
+    {
+      "uris": ["urn:darkglass:JimBass"],
+      "role": "Marshall bass-style tube head: Volume is the preamp (breakup), Master the output; mid-rich British rock voicing. Used in several Darkglass factory presets after a drive.",
+      "models": "Marshall bass head (community attribution).",
+      "key_parameters": {
+        "Volume": "0-10 preamp: more = breakup and compression.",
+        "Master": "0-10 output level.",
+        "Middle": "0-10 (factory presets run it 6.5-10: this amp lives on its mids)."
+      },
+      "starting_point": {"Volume": 5, "Master": 5, "Bass": 8, "Middle": 6.5, "Treble": 8},
+      "starting_point_source": "factory preset 'Microtubes B3K' (Darkglass)",
+      "pairs_with": ["urn:darkglass:VMT", "urn:darkglass:B3K", "urn:darkglass-anagram:cabinet-bass"]
+    },
+    {
+      "uris": ["urn:darkglass:LeoBass"],
+      "role": "Fender Bassman-style tube head: round, warm, vintage; Volume is the preamp, Master the output.",
+      "models": "Fender Bassman (community attribution).",
+      "key_parameters": {
+        "Volume": "0-10 preamp breakup.",
+        "Master": "0-10 output.",
+        "Treble": "0-10 (default 2.2: this amp is meant to be dark)."
+      },
+      "starting_point": {"Volume": 5.5, "Master": 4.4, "Bass": 5, "Middle": 5, "Treble": 2.2},
+      "starting_point_source": "catalog defaults",
+      "pairs_with": ["urn:darkglass-anagram:cabinet-bass"]
+    },
+    {
+      "uris": ["urn:darkglass:neural:amp"],
+      "role": "Loader for a .nam amp capture chosen by the player (Darkglass Suite / app). INPUT drives the model like the amp's gain, OUTPUT trims the level, and a 4-band EQ can sit before (PRE) or after (POST) the model.",
+      "key_parameters": {
+        "INPUT": "-20..20 dB into the model: more = more saturation.",
+        "OUTPUT": "-20..20 dB level out.",
+        "EQPOS": "Option 'Off', 'PRE' (shapes what saturates) or 'POST' (final tone).",
+        "LowMidFreq": "Option '250 Hz', '500 Hz', '1 kHz'.",
+        "HighMidFreq": "Option '750 Hz', '1.5 kHz', '3.0 kHz'.",
+        "SlimSize": "Option 'Lite' (less DSP) or 'Full'."
+      },
+      "pitfalls": [
+        "The capture file is a device-side property the tools cannot set: ask the player which model is loaded (the app shows its name on the block) before shaping it.",
+        "With no model loaded the block has no amp character; INPUT/OUTPUT then act as plain gain."
+      ],
+      "pairs_with": ["urn:darkglass-anagram:cabinet-bass"]
+    },
+    {
+      "uris": ["urn:darkglass:neural:pedal"],
+      "role": "Loader for a .nam pedal/preamp capture chosen by the player, with a clean Blend. Input drives the model, Output trims it.",
+      "key_parameters": {
+        "Input": "-20..20 dB into the model.",
+        "Output": "-20..20 dB out.",
+        "Blend": "0-100 % clean/model (parallel drive)."
+      },
+      "pitfalls": ["Ask which capture is loaded (the app shows its name on the block); the tools cannot change the file."]
+    },
+    {
+      "uris": ["urn:darkglass:neural:misc"],
+      "role": "General-purpose .nam loader (gain + model only), for captures that are neither amp nor pedal. Input drives, Output trims.",
+      "key_parameters": {"INPUT": "-20..20 dB.", "OUTPUT": "-20..20 dB."},
+      "pitfalls": ["The model file is chosen by the player; the tools cannot change it."]
+    },
+    {
+      "uris": ["urn:darkglass:neural:tone3000"],
+      "role": "Loader for a NAM capture from TONE3000 (tone3000.com), with a 6-band graphic EQ (100-3200 Hz) that can sit PRE or POST the model and a clean Blend.",
+      "key_parameters": {
+        "INPUT": "-20..20 dB into the model.",
+        "OUTPUT": "-20..20 dB out.",
+        "EQPOS": "Option 'Off', 'PRE' or 'POST'.",
+        "Blend": "0-100 % clean/model."
+      },
+      "pitfalls": ["The tone is picked in the Darkglass Suite / app and shows its name on the block; the tools cannot change it."]
+    },
+    {
+      "uris": ["urn:darkglass-anagram:cabinet-bass"],
+      "role": "Bass cabinet impulse response: the cabinet model, microphone and mic position are picked with choose_cabinet; Blend mixes IR against the direct signal and Level trims. Needed when the pedal feeds a PA, interface or FRFR speaker; skip it into a real bass amp + cab.",
+      "models": "Darkglass captures of real bass cabinets. Community attribution of the model names (hints, not Darkglass statements): Peggy = Ampeg SVT 8x10/4x10/1x15, Peggy Fliptop = Ampeg B-15, Vintage Peggy = SVT-810 Heritage, SWIRL = SWR Goliath/WorkingPro, Garden = Eden, Modern Bass = Mesa PowerHouse, Black & Yellow = Markbass, California Bass = Fender Bassman 410, Fruity = Orange OBC, Mountainino = Bergantino NV610, Darkglass Neo = DG212N/DG410N, SWE Nordline = EBS ProLine. Mic character (same source): Condenser 103 bright and detailed, Condenser 414 neutral, Condenser 67 vintage warm, Dynamic 112 deep lows/scooped, Dynamic 421 forward mids, Dynamic 52 hyped lows and presence, Dynamic 7 thick low mids.",
+      "key_parameters": {
+        "Blend": "0-100 % IR vs direct: 70-90 adds raw attack and sub under the cab (factory presets use 70-100).",
+        "Level": "-12..12 dB output trim."
+      },
+      "starting_point": {"Blend": 100, "Level": 0},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": [
+        "The mic is a tone control: change the microphone (choose_cabinet) before adding a treble or presence boost.",
+        "A cab IR removes the very top: EQ boosts above 5 kHz placed before the cab largely vanish.",
+        "One cab per path is enough; a second cab block in series doubles the roll-off.",
+        "Into a real bass amp and speaker, turn this block off (set_block_enabled false) instead of removing it, so the preset still works direct."
+      ]
+    },
+    {
+      "uris": ["urn:darkglass-anagram:cabinet-guitar"],
+      "role": "Guitar cabinet impulse response (4x12 / 2x12 models with guitar mics). Useful on the distorted high band of a Split, or for guitar-like upper voices; it cuts a lot of low end.",
+      "models": "Community attribution of model names: California combo 2x12 = Fender Twin, Fashionista 4x12 = Marshall 1960, Modern 4x12 = Mesa Rectifier, Panzer 4x12 = Diezel, Topper 2x12 = Vox AC30, Vintage London 4x12 = Marshall Greenbacks.",
+      "key_parameters": {"Blend": "0-100 % IR vs direct.", "Level": "-12..12 dB."},
+      "starting_point": {"Blend": 100, "Level": 0},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": ["Never the only cab on a full-range bass signal: it throws the fundamental away. Pair it with clean lows on the other row."]
+    },
+    {
+      "uris": ["urn:darkglass-anagram:cabinet-artists"],
+      "role": "Artist cabinet captures of a Darkglass DG410C by named engineers (Dave Hollingworth, Forrester Savell, Jon Stockman, Adam 'Nolly' Getgood). The capture names state their intent (Punch, Thick, Clear, Bitey, Monster, ScoopyDoo, AllTheMids...), so pick by the word.",
+      "key_parameters": {"Blend": "0-100 % IR vs direct.", "Level": "-12..12 dB."},
+      "starting_point": {"Blend": 100, "Level": 0},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": ["Fastest route to a mixed, finished sound: someone already made the mic decision for a purpose."]
+    },
+    {
+      "uris": ["urn:darkglass-anagram:cabinet-user"],
+      "role": "Impulse response uploaded by the player through the Darkglass Suite. Same Blend/Level controls as the other cabs.",
+      "key_parameters": {"Blend": "0-100 % IR vs direct.", "Level": "-12..12 dB."},
+      "pitfalls": ["The tools cannot upload or pick the IR file; ask the player which IR is loaded."]
+    },
+    {
+      "uris": ["urn:darkglass-anagram:cabinet-tone3000#stereo"],
+      "role": "Impulse response from TONE3000 (tone3000.com), chosen in the Darkglass Suite / app; the block shows the tone's name. Blend and Level as the other cabs.",
+      "key_parameters": {"Blend": "0-100 % IR vs direct.", "Level": "-12..12 dB."},
+      "pitfalls": ["The tools cannot change which tone is loaded."]
+    },
+    {
+      "uris": ["urn:darkglass:AmpEq"],
+      "role": "Amp-style 4-band EQ: Low, High and two semi-parametric mids with selectable centres (Low Mid 250/500/1k, High Mid 750/1.5k/3k), ±12 dB. Possibly the B7K EQ (community attribution). Put it after the drive/amp to place the bass in the mix.",
+      "key_parameters": {
+        "LowMidFreq": "Option '250 Hz', '500 Hz' or '1 kHz'.",
+        "LowMid": "-12..12 dB body (250-500) or honk (1k).",
+        "HighMidFreq": "Option '750 Hz', '1.5 kHz' or '3.0 kHz'.",
+        "HighMid": "-12..12 dB attack/growl: +2..4 at 1.5-3 kHz cuts through guitars.",
+        "Low": "-12..12 dB.",
+        "High": "-12..12 dB."
+      },
+      "pitfalls": ["±12 dB is a lot: move 2-4 dB at a time, and remember boosts raise the level into the next block."]
+    },
+    {
+      "uris": ["urn:darkglass:DarkglassGEQ"],
+      "role": "Darkglass 6-band graphic EQ (low shelf, 250, 500, 1.5k, 3k, high shelf) with a Level trim. The factory presets use it after the drive to cut the low shelf (-6) and lift 3 kHz for definition.",
+      "models": "Possibly the EQ of the Luminal Booster / Microtubes X Ultra / X7 (community attribution).",
+      "key_parameters": {
+        "LowShelf": "-12..12 dB everything below ~100 Hz: -3..-6 after a drive tightens the bottom.",
+        "S250Hz": "-12..12 dB low mids (mud or warmth).",
+        "S500Hz": "-12..12 dB body.",
+        "S1500Hz": "-12..12 dB presence/attack.",
+        "S3kHz": "-12..12 dB string definition; +3 is a common factory move.",
+        "HighShelf": "-12..12 dB air/fizz.",
+        "Level": "-12..12 dB makeup: raise after cuts, lower after boosts."
+      },
+      "starting_point": {"LowShelf": -6, "S250Hz": 0, "S500Hz": 0, "S1500Hz": 0, "S3kHz": 0, "HighShelf": 0, "Level": 3},
+      "starting_point_source": "factory presets 'Vintage Microtubes' and 'Microtubes B3K' (Darkglass)",
+      "pitfalls": ["Big boosts here are the usual source of clipping late in the chain; prefer cuts and use Level to compensate."]
+    },
+    {
+      "uris": ["urn:darkglass:GenericGEQ"],
+      "role": "6-band graphic EQ at 100/200/400/800/1600/3200 Hz with a Level trim: the general-purpose tone fixer with narrower, more surgical bands than the Darkglass GEQ.",
+      "key_parameters": {
+        "S100Hz": "-12..12 dB weight.",
+        "S200Hz": "-12..12 dB mud region: -2..-4 cleans a boomy tone.",
+        "S400Hz": "-12..12 dB boxiness / warmth.",
+        "S800Hz": "-12..12 dB honk / growl.",
+        "S1600Hz": "-12..12 dB attack.",
+        "S3200Hz": "-12..12 dB string click.",
+        "Level": "-12..12 dB makeup."
+      },
+      "starting_point": {"S100Hz": 3, "S200Hz": -3, "S400Hz": -3, "S800Hz": 0, "S1600Hz": 3, "S3200Hz": 3, "Level": 0},
+      "starting_point_source": "factory preset 'Microtubes X' (Darkglass): a modern scoop"
+    },
+    {
+      "uris": ["urn:darkglass:fil4#mono", "urn:darkglass:fil4#stereo"],
+      "role": "Full parametric EQ: high-pass and low-pass with resonance, a low shelf, four peaking sections with their own frequency ranges (sec1 20-320 Hz, sec2 80-1250, sec3 320-5000, sec4 1250-20000) and a high shelf, plus master gain. The precision tool when a graphic EQ's fixed bands don't land on the problem.",
+      "key_parameters": {
+        "HighPass": "Toggle: enables the high-pass at HPfreq (5-1250 Hz).",
+        "HPfreq": "Hz of the high-pass: 30-40 cleans sub rumble without touching the fundamental.",
+        "LSsec": "Toggle for the low shelf.",
+        "LSfreq": "25-300 Hz shelf corner.",
+        "LSgain": "-18..18 dB shelf gain.",
+        "sec2": "Toggle for section 2 (80-1250 Hz: mud and body).",
+        "freq2": "Hz of section 2.",
+        "gain2": "-18..18 dB.",
+        "width2": "0-1 bandwidth: smaller values focus the change on a narrower band (verify by ear).",
+        "sec3": "Toggle for section 3 (320-5000 Hz: presence and attack).",
+        "freq3": "Hz of section 3.",
+        "gain3": "-18..18 dB.",
+        "gain": "-18..18 dB master makeup."
+      },
+      "pitfalls": [
+        "Each section has an enable toggle (HighPass, LowPass, LSsec, sec1-sec4, HSsec): a gain does nothing while its section is off.",
+        "The mono (#mono) and stereo (#stereo) variants are separate block types with identical parameters; stereo only matters with stereo outputs or after a stereo effect."
+      ]
+    },
+    {
+      "uris": ["urn:darkglass:HPF"],
+      "role": "High-pass filter: removes everything below Frequency with a selectable slope. 30-40 Hz cleans sub rumble; 80-120 Hz before a drive or fuzz tightens the grind.",
+      "key_parameters": {
+        "Frequency": "20-20000 Hz (log). Keep at or below 35 Hz on a 5-string unless you mean to thin the low B (31 Hz).",
+        "Slope": "Option '-6 dB', '-12 dB', '-18 dB' or '-24 dB' per octave: steeper = cleaner cut."
+      },
+      "starting_point": {"Frequency": 35, "Slope": "-12 dB"},
+      "starting_point_source": "common sub-rumble clean-up; tune by ear",
+      "pitfalls": ["Don't add an octaver or sub before a high-pass set above ~60 Hz: you cancel your own low end."]
+    },
+    {
+      "uris": ["urn:darkglass:LPF"],
+      "role": "Low-pass filter: removes everything above Frequency. 3-6 kHz after a drive kills fizz; 400-600 Hz gives dub/reggae darkness (factory 'Boogie Boogie Honey' uses 533 Hz).",
+      "key_parameters": {
+        "Frequency": "20-20000 Hz (log).",
+        "Slope": "Option '-6 dB'..'-24 dB' per octave."
+      },
+      "starting_point": {"Frequency": 5000, "Slope": "-12 dB"},
+      "starting_point_source": "common fizz clean-up after distortion; tune by ear"
+    },
+    {
+      "uris": ["urn:darkglass:HPFLPF"],
+      "role": "High-pass and low-pass in one block (saves a slot): HPfreq/HPPslope and LPfreq/LPslope.",
+      "key_parameters": {
+        "HPfreq": "20-20000 Hz.",
+        "HPPslope": "Option '-6 dB'..'-24 dB'.",
+        "LPfreq": "20-20000 Hz.",
+        "LPslope": "Option '-6 dB'..'-24 dB'."
+      },
+      "starting_point": {"HPfreq": 35, "HPPslope": "-12 dB", "LPfreq": 6000, "LPslope": "-12 dB"},
+      "starting_point_source": "common band-limiting after distortion; tune by ear"
+    },
+    {
+      "uris": ["https://cognate.audio/plugins/cognate-aperture"],
+      "role": "Cognate Aperture: high-pass and low-pass with slopes up to 48 dB/oct, an 'emphasis' bump at each cutoff (resonance), a warmth control, polarity flip and output trim. A surgical band-limiter; its emphasis can restore punch right at the cut.",
+      "key_parameters": {
+        "hpf_freq": "10-300 Hz.",
+        "hpf_slope": "Option 'Off', '12 dB/oct', '24 dB/oct', '36 dB/oct', '48 dB/oct'.",
+        "hpf_emph": "-12..12 dB bump at the high-pass corner.",
+        "lpf_freq": "20-20000 Hz.",
+        "warmth": "0-100 % gentle saturation.",
+        "output": "-24..12 dB."
+      }
+    },
+    {
+      "uris": ["https://atlantida-audio.com/plugins/Groove_Preamp"],
+      "role": "Groove Preamp (Atlantida Audio): a preamp-style EQ with a Sub switch (Boost/Flat/Cut), bass, a sweepable mid (200-3200 Hz, ±15 dB), treble and volume. Shapes a DI tone before an amp or cab.",
+      "key_parameters": {
+        "sub": "Option 'Boost', 'Flat' or 'Cut' for the sub region.",
+        "midrange": "200-3200 Hz centre of the mid control.",
+        "mid": "-15..15 dB at midrange.",
+        "volume": "-12..12 dB output."
+      }
+    },
+    {
+      "uris": ["urn:darkglass:Gravitron"],
+      "role": "Envelope filter (auto-wah): the filter opens with your picking strength. Mode LP is fat with a low wah, BP is the classic funk 'quack', HP is thin and bright. Place it BEFORE compressors and drives, which flatten the dynamics it reads.",
+      "models": "Mu-Tron III / 3Leaf / Source Audio envelope filters (community attribution).",
+      "key_parameters": {
+        "Sensitivity": "0-10 how easily it opens; raise it for a light touch, lower it for a hard-picking player.",
+        "Attack": "0-10 how fast the filter opens.",
+        "Release": "0-10 how fast it closes.",
+        "CutoffFreq": "0-10 resting point of the filter: higher = brighter at rest.",
+        "Mode": "Option 'LP', 'BP' or 'HP'."
+      },
+      "starting_point": {"Sensitivity": 7, "Attack": 4.7, "Release": 2.5, "CutoffFreq": 8.9, "Mode": "LP"},
+      "starting_point_source": "factory preset 'Velcro Synth' (Darkglass); for funk start with Mode 'BP' and CutoffFreq around 4",
+      "pitfalls": ["A compressor before it kills the sweep; put the compressor after."],
+      "pairs_with": ["urn:darkglass:Subcitri", "urn:darkglass:Chinchilla"]
+    },
+    {
+      "uris": ["urn:darkglass:moerfer"],
+      "role": "Moog-style resonant low-pass filter with an envelope follower and a drive stage: from synthy filter sweeps to squelchy envelope funk. 4-pole is the classic steep Moog slope.",
+      "models": "Moogerfooger MF-101 low-pass filter (community attribution).",
+      "key_parameters": {
+        "FilterCutoff": "0-10 base cutoff.",
+        "FilterResonance": "0-10 peak at the cutoff (default 9 is very pronounced; 4-6 for subtle).",
+        "EnvAmount": "0-10 how far the envelope opens the filter.",
+        "EnvMix": "0-10 envelope vs static cutoff.",
+        "FilterPoles": "Option '4-Pole' (steep) or '2-Pole' (gentle).",
+        "EnvDecay": "Option 'Smooth' or 'Fast'."
+      },
+      "starting_point": {"EnvAmount": 4.5, "EnvMix": 7.5, "Drive": 5, "FilterCutoff": 2.5, "FilterResonance": 9, "FilterPoles": "4-Pole", "EnvDecay": "Fast"},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": ["Place before drives and compressors so the envelope reads real dynamics."]
+    },
+    {
+      "uris": ["urn:darkglass:wah"],
+      "role": "Wauwa wah: Position is meant for an expression pedal (0 = lows, 10 = highs); as a static block it is a fixed filter colour. BypassAt0 turns the wah off when the pedal is heel-down.",
+      "key_parameters": {
+        "Position": "0-10 pedal position; set it with set_parameter only for a fixed filter tone.",
+        "OutLvl": "-12..12 dB.",
+        "BypassAt0": "Toggle: auto-bypass at heel-down."
+      },
+      "pitfalls": ["Without an expression pedal plugged in, a wah block is just a filter; ask the player if they have one before adding it. Binding the pedal is done in the app, not through the tools."]
+    },
+    {
+      "uris": ["urn:darkglass:CompLim"],
+      "role": "Compressor/limiter with real units: Threshold in dB, Ratio options up to 100:1, Knee, Attack in ms, Release in ms, Output Gain and Blend. The one to use when you know the numbers you want; at 20:1-100:1 with a fast attack it is a peak limiter.",
+      "models": "dbx 160 / Boss LMB-3 / Keeley Bassist style (community attribution).",
+      "key_parameters": {
+        "Threshold": "-60..0 dB; -30 (default) compresses most notes, -18..-24 only the loud ones.",
+        "Ratio": "Option '2:1', '4:1', '8:1', '12:1', '20:1', '100:1'.",
+        "Attack": "0.01-100 ms: 1 ms clamps the pick, 15-30 ms lets slap/pick transients through.",
+        "Release": "1-2000 ms: 100-250 for even sustain, shorter for a livelier feel.",
+        "Knee": "0-10 dB softness around the threshold.",
+        "OutputGain": "-12..12 dB makeup.",
+        "Blend": "0-100 % compressed/dry (parallel compression)."
+      },
+      "starting_point": {"Threshold": -30, "Ratio": "4:1", "Knee": 1, "Attack": 1, "Release": 200, "OutputGain": 0, "Blend": 100},
+      "starting_point_source": "catalog defaults (also the demo presets); for percussive playing raise Attack to 20 ms",
+      "pitfalls": [
+        "Attack 1 ms (default) eats slap and pick transients: when 'the attack is the sound', use 15-30 ms.",
+        "As a safety limiter at the end of the chain: Threshold -6..-10, Ratio '20:1', Attack 0.1 ms."
+      ]
+    },
+    {
+      "uris": ["urn:darkglass:FETComp"],
+      "role": "1176-style FET compressor: fast and punchy, no threshold knob (more Input = more compression), Output makes up the level, ratios 4:1 to 'All' (very aggressive). Levels fingerstyle beautifully; wrong when the attack is the sound.",
+      "models": "Urei 1176 / Origin Cali76 (community attribution).",
+      "key_parameters": {
+        "Input": "0-10 drive into the fixed threshold: raise to compress more.",
+        "Output": "0-10 makeup: lower it by what Input added.",
+        "Attack": "0-10 scale (the pedal does not state ms or direction; check by ear).",
+        "Release": "0-10 scale (idem).",
+        "Ratio": "Option '4:1', '8:1', '12:1', '20:1' or 'All'.",
+        "Blend": "0-100 % compressed/dry."
+      },
+      "starting_point": {"Input": 7.1, "Output": 6.6, "Attack": 2.9, "Release": 7.2, "Ratio": "4:1", "Blend": 100},
+      "starting_point_source": "factory preset 'Peggy Pick' (Darkglass); the other factory presets run Input 5 / Output 5",
+      "pitfalls": [
+        "Input is both gain and threshold: raising it also raises the level into the next block; drop Output to compensate.",
+        "'All' ratio is the 1176 'all buttons in' effect: huge, distorted compression. Use on purpose only."
+      ]
+    },
+    {
+      "uris": ["urn:darkglass:BUSComp"],
+      "role": "SSL-style bus compressor: 'glue' that makes the tone cohesive without squashing it. Attack and release are real values (0.1-30 ms, 0.1-1.2 s). Darkglass factory presets start several chains with it.",
+      "models": "SSL G-series bus compressor (community attribution).",
+      "key_parameters": {
+        "Threshold": "-60..0 dB; factory presets sit at -20..-34.",
+        "Ratio": "Option '1.5:1', '2:1', '4:1', '10:1'.",
+        "Attack": "Option '.1 ms', '.3 ms', '1 ms', '3 ms', '10 ms', '30 ms': 10-30 keeps transients.",
+        "Release": "Option '0.1 s', '0.3 s', '0.6 s', '1.2 s'.",
+        "OutputGain": "-12..12 dB makeup.",
+        "Blend": "0-100 % compressed/dry."
+      },
+      "starting_point": {"Threshold": -24, "Ratio": "4:1", "Attack": "10 ms", "Release": "0.3 s", "OutputGain": 0, "Blend": 100},
+      "starting_point_source": "factory presets 'Grona-Kulor', 'Peggy Party' and 'Djentlemen' (Darkglass) use -20..-34 dB, 4:1, 10 ms",
+      "pitfalls": ["Pressure comes from parallel compression: Blend 50-70 with a heavier setting keeps the attack and adds density."]
+    },
+    {
+      "uris": ["urn:darkglass:ignissor"],
+      "role": "Darkglass three-band compressor: crossovers at 250 and 1500 Hz by default, each band with its own threshold, ratio, attack, release and level, plus a parallel mix (comp_level vs clean_level). Controls one band without squashing the others; the band levels double as a 3-band EQ.",
+      "models": "Darkglass original multiband compressor.",
+      "key_parameters": {
+        "lomid_xo_freq": "25-11000 Hz low/mid split (default 250).",
+        "midhi_xo_freq": "36-16000 Hz mid/high split (default 1500).",
+        "lo_threshold": "-60..0 dB: lower only this to tame boomy lows.",
+        "lo_ratio": "Option '2:1'..'100:1'.",
+        "lo_attack": "0.01-100 ms.",
+        "lo_release": "1-2000 ms.",
+        "lo_level": "-30..12 dB band level (EQ).",
+        "mid_threshold": "-60..0 dB.",
+        "mid_level": "-30..12 dB.",
+        "hi_threshold": "-60..0 dB: lower it with a fast hi_attack to catch slap pops.",
+        "hi_attack": "0.01-100 ms.",
+        "hi_level": "-30..12 dB.",
+        "comp_level": "-24..12 dB level of the compressed signal.",
+        "clean_level": "-24..12 dB uncompressed signal added back (default -24 = almost off): raise to -6..0 for NY-style parallel compression."
+      },
+      "starting_point": {"comp_level": 0, "clean_level": -24, "lomid_xo_freq": 250, "midhi_xo_freq": 1500, "lo_threshold": -30, "mid_threshold": -30, "hi_threshold": -30, "lo_level": 0, "mid_level": 0, "hi_level": 0},
+      "starting_point_source": "catalog defaults (Darkglass template 'Neutral Ground')",
+      "pitfalls": [
+        "lo_mute/mid_mute/hi_mute are for listening to one band; leave them off in the final tone.",
+        "The app ships Darkglass's Ignissor templates (Studio Glue, Slap 'n' Pop, Demudifier, Cordial, Pick Metal) and its own (Gentle and transparent, Slap and pop, Locked low end, Parallel NY style, Peak limiter); name one when it fits.",
+        "Set the crossovers first: the thresholds only mean something once the bands are where you want them."
+      ]
+    },
+    {
+      "uris": ["urn:dirty-boys-audio:plugins:iv4n"],
+      "role": "IV-4N tube compressor (LA-2A-style by its 'L2A' abbreviation): two knobs, Peak Reduction and Makeup Gain, slow and smooth optical-style behaviour. For soul, jazz and fingerstyle where the compression should be felt, not heard.",
+      "key_parameters": {
+        "peak_reduction": "0-100 amount of compression.",
+        "makeup_gain": "0-100 level recovery.",
+        "limit_mode": "Option 'Compress' (gentle) or 'Limit' (harder)."
+      },
+      "starting_point": {"peak_reduction": 40, "makeup_gain": 30, "limit_mode": "Compress"},
+      "starting_point_source": "catalog defaults"
+    },
+    {
+      "uris": ["urn:darkglass:Suppressor"],
+      "role": "Noise gate: cuts the signal below Threshold between notes. Put it after the drive or fuzz that makes the hiss. Factory presets use -40 dB with Amount 'More'.",
+      "models": "Boss NS-2 / ISP Decimator style (community attribution).",
+      "key_parameters": {
+        "Threshold": "-80..0 dB; -50..-40 is typical, higher chops note tails.",
+        "Amount": "Option 'Less' (attenuates) or 'More' (cuts almost everything)."
+      },
+      "starting_point": {"Threshold": -40, "Amount": "More"},
+      "starting_point_source": "Darkglass factory presets (most of them)",
+      "pitfalls": ["If sustained notes cut off early, lower Threshold toward -50 or choose 'Less'."]
+    },
+    {
+      "uris": ["urn:nembriniaudio:noisegate"],
+      "role": "NA Noise Gate (Nembrini): threshold in dB, Range (how much is attenuated) and Gate amount. Same job as the Suppressor with finer control over how hard it closes.",
+      "key_parameters": {
+        "Threshold": "-120..0 dB.",
+        "Range": "0-100 dB attenuation when closed.",
+        "Gate": "0-100 %."
+      }
+    },
+    {
+      "uris": ["urn:darkglass:Chorus", "urn:darkglass:ChorusStereo"],
+      "role": "Mint Chocolate Chorus (Boss CE-style): classic 80s bass chorus. The HPF option keeps the lows dry so only the upper harmonics shimmer. Stereo variant needs stereo outputs to matter.",
+      "models": "Boss CE-2 / CE-2B / CE-5 (community attribution).",
+      "key_parameters": {
+        "Depth": "0-10.",
+        "Rate": "0.1-10 Hz; 1-2 Hz is the classic slow chorus.",
+        "Blend": "0-100 %; 20-35 on bass (factory presets use 20-22).",
+        "HPF": "Option 'Low', 'Mid' or 'High': how much low end stays dry."
+      },
+      "starting_point": {"Depth": 5, "Rate": 1.9, "Blend": 20, "HPF": "Low"},
+      "starting_point_source": "factory preset 'Grona-Kulor' (Darkglass)",
+      "pitfalls": ["Chorus on the fundamental blurs the low end: set HPF to 'Mid' or 'High' before lowering Depth."]
+    },
+    {
+      "uris": ["urn:darkglass:Flanger", "urn:darkglass:FlangerStereo"],
+      "role": "Flamingo Flanger: jet-like sweep with Feedback for a metallic resonance; the HPF option keeps the lows dry.",
+      "models": "EHX Electric Mistress / MXR M117 (community attribution).",
+      "key_parameters": {
+        "Depth": "0-10.",
+        "Rate": "0.1-10 Hz.",
+        "Feedback": "0-10 metallic resonance.",
+        "Blend": "0-100 %; ~20 on bass.",
+        "HPF": "Option 'Low', 'Mid', 'High'."
+      },
+      "starting_point": {"Depth": 10, "Rate": 1, "Blend": 19, "HPF": "Low", "Feedback": 5},
+      "starting_point_source": "factory preset 'Peggy Pick' (Darkglass, block saved off)"
+    },
+    {
+      "uris": ["urn:darkglass:dark-phaser", "urn:darkglass:dark-phaser#stereo"],
+      "role": "Pharos Phaser: a generic phaser (Darkglass says it models no specific unit) with selectable stages, a Color (frequency region) option, feedback and stereo phase offset. Depth is in cents, so large numbers are normal.",
+      "key_parameters": {
+        "rate": "0.01-20 Hz (log).",
+        "depth": "0-10800 cents (default 3000).",
+        "Color": "Option '250 Hz', '500 Hz', '750 Hz', '1 kHz', '1.5 kHz' region the effect centres on.",
+        "stages": "Option '2', '4', '6', '8': more = stronger notches.",
+        "feedback": "0-10."
+      },
+      "starting_point": {"Color": "750 Hz", "depth": 3000, "rate": 0.2, "feedback": 7, "stages": "4"},
+      "starting_point_source": "catalog defaults"
+    },
+    {
+      "uris": ["urn:darkglass:pheral91"],
+      "role": "Pheral 91 Phaser (new in 1.19): MXR Phase 95-style with two modes (45 / 90), a 'dialogue' character switch and level. Simple classic phaser for funk and 70s rock.",
+      "models": "MXR Phase 95 (community attribution).",
+      "key_parameters": {
+        "speed": "0-10 sweep speed.",
+        "mode": "Option '45' or '90' (90 is deeper, by analogy with the Phase 90; not measured on the pedal).",
+        "dialogue": "Toggle character switch; effect not verified, choose by ear."
+      },
+      "starting_point": {"speed": 4, "mode": "90", "dialogue": true, "level": 6},
+      "starting_point_source": "catalog defaults"
+    },
+    {
+      "uris": ["urn:darkglass:dark-tremolo", "urn:darkglass:dark-tremolo#stereo"],
+      "role": "Tremora Tremolo: generic tremolo (no specific unit, per Darkglass) with rate, wave shape, depth in percent and stereo phase for a ping-pong feel on the stereo variant.",
+      "key_parameters": {"rate": "0.1-20 Hz.", "shape": "0-10 from smooth to choppy.", "depth": "0-100 %."},
+      "starting_point": {"rate": 5.5, "shape": 5, "depth": 80},
+      "starting_point_source": "catalog defaults"
+    },
+    {
+      "uris": ["urn:darkglass:dm-Vibrato"],
+      "role": "Vibralis Vibrato: generic pitch vibrato (no specific unit, per Darkglass) with rate, depth and Sine/Triangle shape.",
+      "key_parameters": {"rate": "0.1-20 Hz.", "depth": "0-100 %.", "shape": "Option 'Sine' or 'Triangle'."},
+      "starting_point": {"rate": 4.2, "depth": 30, "shape": "Sine"},
+      "starting_point_source": "catalog defaults"
+    },
+    {
+      "uris": ["urn:darkglass:Sublime"],
+      "role": "Sublime Octaver: analogue-style (OC-2-like) octave down, round and smooth, monophonic, lazy tracking. The vintage sub sound. Place it first in the chain, on a clean signal.",
+      "models": "Boss OC-2 / EBS OctaBass / Aguilar Octamizer style (community attribution).",
+      "key_parameters": {
+        "CleanLevel": "0-10 your dry signal.",
+        "OctaveLevel": "0-10 the octave below.",
+        "FilterCutoff": "0-10 brightness of the octave: lower = darker, rounder sub."
+      },
+      "starting_point": {"CleanLevel": 5, "OctaveLevel": 5, "FilterCutoff": 5},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": ["Monophonic trackers want single notes above the low E: chords and very low notes glitch. Keep it before any drive or compressor."]
+    },
+    {
+      "uris": ["urn:darkglass:Sublemon"],
+      "role": "Sublemon Octaver: wave-flipping octave (Blue Box-like), raspy and aggressive, keeps upper harmonics. The fuzz-octave / synth-stab sound rather than a clean sub.",
+      "models": "MXR Blue Box / Mu-Tron Octave Divider style (community attribution).",
+      "key_parameters": {
+        "CleanLevel": "0-10 dry signal.",
+        "OctaveLevel": "0-10 octave voice.",
+        "FilterCutoff": "0-10 brightness of the octave."
+      },
+      "starting_point": {"CleanLevel": 5, "OctaveLevel": 5, "FilterCutoff": 5},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": ["Monophonic: single notes, first in the chain."]
+    },
+    {
+      "uris": ["urn:darkglass:Subcitri"],
+      "role": "Subcitri Octaver: polyphonic octave down (POG / OC-5-like): tracks chords and low notes cleanly, accurate, can sound sterile. The safe choice for a sub under a riff; the factory 'Microtubes X' preset adds a little of it under the drive.",
+      "models": "EHX POG / Boss OC-5 / Sub'n'Up style (community attribution).",
+      "key_parameters": {
+        "CleanLevel": "0-10 dry signal.",
+        "OctaveLevel": "0-10 octave voice; 1.5-3 adds weight without becoming 'an octaver'.",
+        "FilterCutoff": "0-10 brightness of the octave (0 = pure sub)."
+      },
+      "starting_point": {"CleanLevel": 5, "OctaveLevel": 1.5, "FilterCutoff": 0},
+      "starting_point_source": "factory preset 'Microtubes X' (Darkglass)",
+      "pitfalls": ["Put it before the drive; after a gain stage any tracker chases harmonics."],
+      "pairs_with": ["urn:darkglass:neural-plugins:microtubes-x", "urn:darkglass:Gravitron"]
+    },
+    {
+      "uris": ["urn:darkglass:PitchShifter"],
+      "role": "Polyphonic pitch shifter: Semitone ±12 with fine Detune in cents, separate dry and wet levels and a filter on the shifted voice. -12 = sub octave, +12 = synth top, ±7 = fifths; Detune ±8 cents with dry 10 / wet 6 is a thickener.",
+      "models": "DigiTech Whammy / EHX Pitch Fork style (community attribution).",
+      "key_parameters": {
+        "Semitone": "-12..12.",
+        "Detune": "-50..50 cents.",
+        "DryLevel": "0-10 (default 0 = effect only!).",
+        "WetLevel": "0-10.",
+        "FilterCutoff": "0-10 brightness of the shifted voice."
+      },
+      "starting_point": {"Semitone": 12, "Detune": 0, "DryLevel": 10, "WetLevel": 7.4, "FilterCutoff": 4.5},
+      "starting_point_source": "factory preset 'Velcro Synth' (Darkglass, row 2)",
+      "pitfalls": ["DryLevel defaults to 0: adding the block replaces the bass with the shifted voice until you raise DryLevel.", "Place it before drives."]
+    },
+    {
+      "uris": ["urn:darkglass:PitchBender"],
+      "role": "Whammy-style pitch bend meant for an expression pedal: ShiftAmount sweeps from unison to the MaxShift interval (up to ±2 octaves).",
+      "key_parameters": {
+        "ShiftAmount": "0-10 how far toward MaxShift (expression-pedal target).",
+        "MaxShift": "Option '-2 oct', '-1 oct', '-5th', '-4th', '-2nd', '+2nd', '+4th', '+5th', '+1 oct', '+2 oct'.",
+        "OutLvl": "0-10 output."
+      },
+      "pitfalls": ["Without an expression pedal it is a fixed pitch shift; ask before adding it."]
+    },
+    {
+      "uris": ["urn:darkglass:axioma_synth"],
+      "role": "Darkglass Axioma: a real monophonic synth that tracks the note you play: two oscillators (saw/square/triangle) with tuning, a sub oscillator, a resonant filter with envelope, attack/decay/release, dry/wet blend and an arpeggiator. Use it for synth bass instead of faking one with pitch shifters and fuzz.",
+      "models": "Darkglass original (v1.18).",
+      "key_parameters": {
+        "instrument": "Option '4-String Bass', '5-String Bass', '6-String Bass', 'Guitar', 'Full Range': set it to the player's bass so tracking covers the right range.",
+        "sensitivity": "0-10 note trigger sensitivity.",
+        "osc1_wave": "Option 'Saw' (rich), 'Square' (hollow), 'Triangle' (soft).",
+        "osc2_semitone": "-12..12: +12 octave up, -12 octave down, +7 fifth.",
+        "sub_vol": "0-10 sub-octave weight.",
+        "cutoff": "0-10 filter cutoff.",
+        "reso": "0-10 filter resonance.",
+        "env": "0-10 how much the envelope opens the filter.",
+        "attack": "0-10 (0 = instant, high = pad-like swell).",
+        "release": "0-10 tail after the note stops.",
+        "blend": "0-10 dry/wet: 10 = synth only, lower keeps the bass under it.",
+        "level": "0-10 synth level."
+      },
+      "starting_point": {"instrument": "4-String Bass", "sensitivity": 4, "osc1_vol": 8, "osc1_wave": "Saw", "osc2_vol": 5, "osc2_wave": "Saw", "osc2_semitone": 12, "sub_vol": 0, "cutoff": 5.5, "reso": 4, "env": 5.5, "attack": 0, "decay": 3, "release": 0, "blend": 10, "level": 3},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": [
+        "Monophonic: single notes only. Put it FIRST in the chain so it tracks a clean signal.",
+        "blend 10 (default) replaces the bass entirely; 5-7 keeps the real bass under the synth.",
+        "The app has a dedicated Axioma panel that draws the oscillators, filter and envelope live: tell the player to open it to see what you changed."
+      ]
+    },
+    {
+      "uris": ["urn:darkglass:DigitalDelay"],
+      "role": "Clean digital delay: Time within a Range (10-100 ms slapback / 0.1-1 s / 1-2 s), tempo sync by Subdivision + TempoBPM, Feedback for repeats, Trails to let repeats ring when bypassed.",
+      "models": "Boss DD-7 / TC Flashback style (community attribution).",
+      "key_parameters": {
+        "Blend": "0-100 %; 20-35 on bass.",
+        "Range": "Option '0.01-0.1 s' (slapback), '0.1-1 s', '1-2 s'.",
+        "Time": "0-10 inside the Range (ignored when Subdivision is on).",
+        "Subdivision": "Option 'Tempo ctl off', '1/4', '1/8', '1/8 dot', '1/4 trip'... locks Time to TempoBPM.",
+        "TempoBPM": "40-300 BPM.",
+        "Feedback": "0-10 repeats; 2-3 for one or two echoes.",
+        "Trails": "Toggle: repeats keep ringing when the block is turned off."
+      },
+      "starting_point": {"Blend": 33, "Time": 1.6, "Range": "0.1-1 s", "Subdivision": "Tempo ctl off", "Feedback": 2, "Trails": false, "TempoBPM": 60},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": ["Ask the song's BPM and use Subdivision for rhythmic delays; dial Time only for slapback or ambience."]
+    },
+    {
+      "uris": ["urn:darkglass:AnalogDelay"],
+      "role": "Analogue-style delay: darker, softer repeats that degrade like a bucket-brigade pedal. Same Time/Range/Subdivision/Feedback/Trails controls as the Digital Delay.",
+      "models": "MXR Carbon Copy / EHX Memory Man style (community attribution).",
+      "key_parameters": {
+        "Blend": "0-100 %.",
+        "Range": "Option '0.01-0.1 s', '0.1-1 s', '1-2 s'.",
+        "Subdivision": "Option note values or 'Tempo ctl off'.",
+        "Feedback": "0-10."
+      },
+      "starting_point": {"Blend": 33, "Time": 4.4, "Range": "0.1-1 s", "Subdivision": "Tempo ctl off", "Feedback": 2, "Trails": false, "TempoBPM": 60},
+      "starting_point_source": "catalog defaults"
+    },
+    {
+      "uris": ["urn:darkglass:ModDelay"],
+      "role": "Modulation delay: a delay with low-pass and high-pass filters on the repeats and chorus-like modulation (ModDepth/ModRate). The HP cutoff keeps the low end out of the echoes, which is what makes delay usable on bass.",
+      "models": "Strymon Timeline / Boss DD-8 modulated delay style (community attribution).",
+      "key_parameters": {
+        "Blend": "0-100 %.",
+        "HPcutoff": "20-2000 Hz: raise to 150-250 so repeats don't muddy the bass.",
+        "LPcutoff": "200-20000 Hz: lower for darker tape-like repeats.",
+        "ModDepth": "0-10.",
+        "ModRate": "0.2-2 Hz.",
+        "Subdivision": "Option note values or 'Tempo ctl off'.",
+        "Feedback": "0-10."
+      },
+      "starting_point": {"Blend": 30, "Time": 5.9, "Range": "0.1-1 s", "Feedback": 4, "LPcutoff": 4200, "HPcutoff": 120, "ModDepth": 10, "ModRate": 0.7, "Trails": false, "Subdivision": "Tempo ctl off"},
+      "starting_point_source": "factory preset 'Velcro Synth' (Darkglass)"
+    },
+    {
+      "uris": ["urn:darkglass:RoomReverb", "urn:darkglass:RoomReverbStereo"],
+      "role": "Room reverb: short, natural space. Dry/Wet, Decay, Modulation, Damping (darker tail), HiCut, LoCut (keep the lows out of the tail) and Trails. The reverb most factory presets end with.",
+      "models": "TC Hall of Fame / Strymon BigSky room style (community attribution).",
+      "key_parameters": {
+        "Wet": "0-10; 2-4 on bass (factory 'Boogie Boogie Honey' uses 3.4).",
+        "Decay": "0-10.",
+        "LoCut": "0-10: raise to 3-6 so the tail doesn't blur the low end.",
+        "Damping": "0-10 darker tail.",
+        "Trails": "Toggle tail continues when bypassed."
+      },
+      "starting_point": {"Dry": 10, "Wet": 3.4, "Decay": 4, "Modulation": 5, "Damping": 5, "HiCut": 0, "LoCut": 0, "Trails": false},
+      "starting_point_source": "factory preset 'Boogie Boogie Honey' (Darkglass)",
+      "pitfalls": ["Reverb on the fundamental turns to mud: LoCut up before Wet down."]
+    },
+    {
+      "uris": ["urn:darkglass:PlateReverb", "urn:darkglass:PlateReverbStereo"],
+      "role": "Plate reverb: bright, dense studio plate. Same controls as the Room reverb. Suits clean, melodic and solo bass.",
+      "models": "Lexicon / TC plate style (community attribution).",
+      "key_parameters": {"Wet": "0-10.", "Decay": "0-10.", "LoCut": "0-10 keep lows out of the tail.", "Damping": "0-10."},
+      "starting_point": {"Dry": 10, "Wet": 3, "Decay": 4, "Modulation": 5, "Damping": 5, "HiCut": 0, "LoCut": 3, "Trails": false},
+      "starting_point_source": "catalog defaults with Wet and LoCut adjusted for bass; tune by ear"
+    },
+    {
+      "uris": ["urn:darkglass:HallReverb", "urn:darkglass:HallReverbStereo"],
+      "role": "Hall reverb: big, long space. Same controls as the Room reverb. For ambient and solo bass; keep LoCut up and Wet low in a band.",
+      "models": "Lexicon Hall / Strymon BigSky hall style (community attribution).",
+      "key_parameters": {"Wet": "0-10.", "Decay": "0-10 (long).", "LoCut": "0-10.", "Damping": "0-10."},
+      "starting_point": {"Dry": 10, "Wet": 3, "Decay": 5, "Modulation": 5, "Damping": 5, "HiCut": 0, "LoCut": 4, "Trails": true},
+      "starting_point_source": "catalog defaults with Wet, LoCut and Trails adjusted for bass; tune by ear"
+    },
+    {
+      "uris": ["urn:darkglass:ShimmerReverb", "urn:darkglass:ShimmerReverbStereo"],
+      "role": "Shimmer reverb: a hall with an octave-up voice in the tail (Pitch 'Dark' or 'Bright'). Ambient pads and synth-bass textures; Damping high keeps it soft.",
+      "models": "Strymon BigSky shimmer / Eventide Space style (community attribution).",
+      "key_parameters": {
+        "Wet": "0-10.",
+        "Decay": "0-10.",
+        "Pitch": "Option 'Dark' (softer) or 'Bright' (more ethereal).",
+        "Damping": "0-10.",
+        "LoCut": "0-10."
+      },
+      "starting_point": {"Dry": 10, "Wet": 5, "Decay": 3, "Modulation": 3, "Damping": 10, "HiCut": 0.4, "LoCut": 0, "Pitch": "Dark", "Trails": false},
+      "starting_point_source": "factory preset 'Velcro Synth' (Darkglass)"
+    },
+    {
+      "uris": ["urn:darkglass:spring-reverb"],
+      "role": "Spring reverb (mono): the amp-style 'boing'. length = tail, tension = tighter/more metallic, tone = brightness. Surf, dub and vintage flavours.",
+      "models": "Fender Twin / Roland Cube spring style (community attribution).",
+      "key_parameters": {"wet": "0-10 (default 2).", "length": "0-10 tail length.", "tension": "0-10 spring tension.", "tone": "0-10 brightness."},
+      "starting_point": {"dry": 10, "wet": 2, "length": 5, "tension": 8, "tone": 5, "modulation": 0, "trails": false},
+      "starting_point_source": "catalog defaults"
+    },
+    {
+      "uris": ["urn:darkglass:spring-reverb#stereo"],
+      "role": "Spring reverb (stereo variant). Same controls as the mono one, but the tail length symbol is spelled 'lenght' in this variant (as the pedal reports it).",
+      "models": "Fender Twin / Roland Cube spring style (community attribution).",
+      "key_parameters": {"wet": "0-10.", "lenght": "0-10 tail length (symbol spelled this way on the pedal).", "tension": "0-10.", "tone": "0-10."},
+      "starting_point": {"dry": 10, "wet": 2, "lenght": 5, "tension": 8, "tone": 5, "modulation": 0, "trails": false},
+      "starting_point_source": "catalog defaults"
+    },
+    {
+      "uris": ["urn:darkglass-anagram:split"],
+      "role": "Starts the parallel line: from this block on, row 2 also receives the signal until the Merge. Crossover 'Off' sends the full range to both rows (two voices from one bass); '1 Lo, 2 Hi' sends lows to row 1 and highs to row 2 at CrossoverFreq (multiband processing: drive only the highs, compress only the lows).",
+      "key_parameters": {
+        "Crossover": "Option 'Off', '1 Lo, 2 Hi' or '1 Hi, 2 Lo'.",
+        "CrossoverFreq": "20-20000 Hz (log); 100-250 Hz separates 'fundamental' from 'character' on a bass.",
+        "LevelRow1": "-24..6 dB into row 1.",
+        "LevelRow2": "-24..6 dB into row 2."
+      },
+      "starting_point": {"LevelRow1": 0, "LevelRow2": 0, "Crossover": "Off", "CrossoverFreq": 100},
+      "starting_point_source": "catalog defaults (also the Darkglass factory presets 'Djentlemen' and 'Velcro Synth')",
+      "pitfalls": [
+        "Use the built-in crossover instead of an HPF on one row and an LPF on the other: it is cleaner and saves two slots.",
+        "Row 2 only exists between the Split and the Merge: add the Split, then the Merge (both on row 1), then the row 2 blocks.",
+        "One Split and one Merge per preset."
+      ],
+      "pairs_with": ["urn:darkglass-anagram:merge"]
+    },
+    {
+      "uris": ["urn:darkglass-anagram:merge"],
+      "role": "Ends the parallel line: sums row 2 back into row 1. Blend sets the balance between rows (50 = equal; lower = more row 1), Level trims the sum.",
+      "key_parameters": {
+        "Blend": "0-100 %: 0 = only row 1, 100 = only row 2.",
+        "Level": "-24..6 dB of the summed signal."
+      },
+      "starting_point": {"Blend": 50, "Level": 0},
+      "starting_point_source": "catalog defaults; factory 'Djentlemen' uses Level -3",
+      "pitfalls": [
+        "Two rows summed can be up to 6 dB louder than one: set Level to -3..-6 if the blocks after it clip.",
+        "If the low end gets thin or hollow at the Merge, the rows are cancelling: put a Gain block on one row and turn on PolarityInversion, then compare."
+      ],
+      "pairs_with": ["urn:darkglass-anagram:split", "urn:darkglass:Gain"]
+    },
+    {
+      "uris": ["urn:darkglass:Gain"],
+      "role": "Clean level trim anywhere in the chain (-40..+20 dB) with a polarity flip. Use it to push a block, to match volume between presets at the end of the chain (factory 'Peggy Pick' ends with Gain -20), or to fix phase cancellation on a parallel row.",
+      "key_parameters": {
+        "Gain": "-40.1..20 dB.",
+        "PolarityInversion": "Toggle: flips the phase; try it when a parallel row thins the low end."
+      },
+      "starting_point": {"Gain": 0, "PolarityInversion": false},
+      "starting_point_source": "catalog defaults",
+      "pitfalls": ["+20 dB into a drive is a lot of boost; +3..+6 is a 'push'."]
+    },
+    {
+      "uris": ["urn:darkglass:VolumePedal"],
+      "role": "Volume pedal block: meant to be bound to an expression pedal in the app; as a plain block it is a static volume trim (0-10).",
+      "key_parameters": {"Volume": "0-10."},
+      "pitfalls": ["Binding to the expression pedal is done in the app, not through the tools."]
+    },
+    {
+      "uris": ["urn:darkglass-anagram:fxloop"],
+      "role": "Effects loop in one block (send + return): where the player's external pedals sit in the chain. SendLevel feeds them, Mix blends the return; FXloopIOconfig sets how the jacks are used.",
+      "key_parameters": {
+        "SendLevel": "-24..6 dB to the external gear.",
+        "Mix": "0-100 % return blend; wired as an insert, 100 % is normal operation, not 'fully wet'.",
+        "OutputLevel": "-24..6 dB.",
+        "RetPolInv": "Option 'Normal' or 'Inverted' return polarity.",
+        "FXloopIOconfig": "Option 'SendReturnMM', 'SendReturnMST', 'SendReturnSTST', 'InsertExp', 'Undefined'."
+      },
+      "pitfalls": ["Only useful if something is plugged into the loop; ask before adding it. Turning Mix down on an insert loop cuts the signal."]
+    },
+    {
+      "uris": ["urn:darkglass-anagram:send"],
+      "role": "Send half of the effects loop: SendLevel goes to the external gear, ThroughLevel continues down the chain. Pair with a Return block further on.",
+      "key_parameters": {"SendLevel": "-24..6 dB.", "ThroughLevel": "-24..6 dB.", "FXloopIOconfig": "Option, see FX loop."},
+      "pairs_with": ["urn:darkglass-anagram:return"]
+    },
+    {
+      "uris": ["urn:darkglass-anagram:return"],
+      "role": "Return half of the effects loop: brings the external gear back with Mix and OutputLevel.",
+      "key_parameters": {"Mix": "0-100 %.", "OutputLevel": "-24..6 dB.", "RetPolInv": "Option 'Normal' or 'Inverted'."},
+      "pairs_with": ["urn:darkglass-anagram:send"]
+    },
+    {
+      "uris": ["urn:darkglass-anagram:output"],
+      "role": "System block: which physical outputs this preset feeds (XLR 1/2, 1/4\" 3/4, headphones), each a toggle. Not a tone control.",
+      "key_parameters": {"xlrL": "Toggle out 1.", "xlrR": "Toggle out 2.", "jackL": "Toggle out 3.", "jackR": "Toggle out 4.", "headphones": "Toggle headphones."},
+      "pitfalls": ["Leave it as the player set it: turning off an output they use silences them."]
+    },
+    {
+      "uris": ["urn:darkglass-anagram:mixer"],
+      "role": "System block mirroring the pedal's output mixer (volumes, mutes, master links, Bluetooth routing). For pedal-wide levels use get_global_settings / set_global_setting instead of placing this in a chain.",
+      "key_parameters": {"MasterVol": "-30..6 dB.", "XlrLVol": "-30..6 dB.", "HpLVol": "-30..6 dB."},
+      "pitfalls": ["Not a tone block; usually not part of a preset chain."]
+    },
+    {
+      "uris": ["urn:darkglass-anagram:meters", "http://gareus.org/oss/lv2/modmeter", "http://gareus.org/oss/lv2/modspectre"],
+      "role": "Visual tools (input meters, level meter, spectrum analyzer): they show levels on the pedal's screen and do not change the sound. Useful to check gain staging, never part of the tone.",
+      "key_parameters": {}
+    },
+    {
+      "uris": ["urn:darkglass:Tuner"],
+      "role": "Darkglass tuner: Mute silences the output while tuning; Reference sets A (420-460 Hz). No effect on tone.",
+      "key_parameters": {"Mute": "Toggle output mute while tuning.", "Reference": "420-460 Hz (440 standard)."}
+    },
+    {
+      "uris": ["https://cognate.audio/plugins/cognate-tuner"],
+      "role": "Cognate Tuner: chromatic or preset tunings (bass 4/5/6, drop D, drop C...), reference pitch, pass/mute and response speed. No effect on tone.",
+      "key_parameters": {"tuning": "Option 'Chromatic', 'Bass 4 Std', 'Bass 5 Std', 'Drop D'...", "audio": "Option 'Pass' or 'Mute'.", "reference": "430-450 Hz."}
+    },
+    {
+      "uris": ["urn:darkglass-anagram:exp-pedal", "urn:darkglass-anagram:midi-cc-helper", "urn:darkglass-anagram:midi-pc-gen", "urn:darkglass-anagram:sine-gen"],
+      "role": "Control and test utilities: Expression Pedal range (min/max), MIDI CC helper inputs, MIDI Program Change trigger and a sine test tone. None of them shapes the bass tone; the sine generator is for checking outputs.",
+      "key_parameters": {}
+    },
+    {
+      "uris": ["http://looperlative.com/plugins/lp3-anagram"],
+      "role": "LP3 looper: record/dub, play/stop, undo/redo, wet and dry levels, loop slot. A practice and performance tool, not a tone block; its toggles are actions the player triggers with footswitches.",
+      "key_parameters": {"wetLevel": "-30..0 dB loop level.", "dryLevel": "0-1 live signal level."},
+      "pitfalls": ["Don't add it to a tone unless the player asks for a looper."]
+    },
+    {
+      "uris": ["https://falktx.com/plugins/auto-drummer"],
+      "role": "Auto Drummer: a drum machine with styles (blues, funk, jazz, rock...), level and tempo (own or the pedal's host tempo). Practice tool; the app has a dedicated panel for it.",
+      "key_parameters": {"style": "Option 'Blues', 'Funk', 'Jazz Ballad', 'Rock'... (see list_block_types include_parameters).", "level": "-30..0 dB.", "userTempo": "40-300 BPM.", "useHostTempo": "Toggle follow the pedal's tempo."},
+      "pitfalls": ["Only add it when the player wants to practise with drums; it plays over the bass."]
+    },
+    {
+      "uris": ["https://cognate.audio/plugins/cognate-metro"],
+      "role": "Cognate Metro: metronome with tempo, time signature, click sound, level and gap patterns (bars on/off for timing practice). Practice tool with its own panel in the app.",
+      "key_parameters": {"tempo": "0-300 BPM.", "time_signature": "Option '4/4', '3/4', '6/8'...", "sound": "Option 'Click', 'Woodblock', 'Clap', 'Shaker', 'Sticks'.", "level": "-40..12 dB."}
+    },
+    {
+      "uris": ["https://shedspaceapp.com/plugins/ShedSpace"],
+      "role": "ShedSpace: metronome plus a drone (root note, chord quality, sound) for intonation and groove practice. Practice tool, not a tone block.",
+      "key_parameters": {"bpm": "20-300 BPM.", "drone_on": "Toggle the drone.", "drone_note": "Option 'C'..'B'.", "drone_chord": "Option 'Single Note', 'Major', 'Minor', 'Dom7'..."}
+    },
+    {
+      "uris": ["urn:nembriniaudio:bassdriver"],
+      "role": "NA Bass Driver (Nembrini): a complete 3-band bass preamp with per-band gain, compression, blend and level, a 4-band EQ plus a 9-band graphic EQ, and its own cabinet/mic simulation and DI section. A whole rig in one block; its CabMode can bypass the internal cab when a cabinet block follows.",
+      "key_parameters": {
+        "OutLevel": "-120..12 dB master output.",
+        "CrossoverLow": "20-300 Hz low/mid split.",
+        "CrossoverHigh": "400-4000 Hz mid/high split.",
+        "GainLow": "0-10 drive of the low band.",
+        "GainMid": "0-10 drive of the mid band (the growl).",
+        "GainHigh": "0-10 drive of the high band.",
+        "BlendHigh": "0-100 % clean/driven highs (default 57).",
+        "CabMode": "Option 'Cabinet' or 'Bypass': bypass the internal cab when you use a cabinet block.",
+        "CabType": "Option 'SVT 8x10', 'SVT 4x10', 'B15 1x15', 'HRTK 4x10 TW5'.",
+        "Master": "0-10."
+      },
+      "pitfalls": ["With CabMode 'Cabinet' plus a cabinet block after it you get two cabs in series; pick one.", "46 parameters: change a few at a time and ask the player to listen between steps."]
+    }
+  ]
+}

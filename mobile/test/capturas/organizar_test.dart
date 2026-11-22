@@ -20,12 +20,12 @@ Future<void> _abrirMenuDo01A(WidgetTester tester) async {
 void main() {
   setUpAll(carregarFontes);
 
+  // no Windows, para o menu sair na densidade do mouse (DECISOES UI12)
   testWidgets('menu do preset aberto pelo botão da linha', (tester) async {
-    await preparar(tester, _desktop);
+    await preparar(tester, desktopWindows);
     await entrarNaDemonstracao(tester);
     await _abrirMenuDo01A(tester);
-    await assentarImagens(tester);
-    await _foto('01-menu-preset');
+    await capturar(tester, '$pasta/op-01-menu-preset.png');
   });
 
   testWidgets('lista pedindo o destino de "Mover para…"', (tester) async {

@@ -2,7 +2,8 @@
 // mover, clonar ou trocar de banco. Escolhida a operação, a lista passa a
 // pedir o slot de destino (faixa âmbar no topo), como no "Salvar como".
 // Na fábrica (só leitura) o menu só copia para uma área da pessoa.
-// Embaixo, separados: exportar o JSON do preset gravado e limpar o slot.
+// Embaixo, separados: exportar o JSON do preset gravado e, à parte e em
+// vermelho, limpar o slot. Todo item tem ícone.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,6 +16,7 @@ import '../textos.dart';
 import 'dialogo_confirmar.dart';
 import 'fluxo_copiar_fabrica.dart';
 import 'fluxo_limpar_exportar.dart';
+import 'item_de_menu.dart';
 
 enum _ItemMenu { mover, clonar, trocarBanco, copiar, exportar, limpar }
 
@@ -28,28 +30,31 @@ Future<void> abrirMenuPreset(BuildContext context, WidgetRef ref, SlotPreset slo
     items: [
       ...biblioteca.naFabrica ? _itensDaFabrica(l) : _itensDeOrganizar(l),
       const PopupMenuDivider(),
-      PopupMenuItem(value: _ItemMenu.exportar, key: const ValueKey('op-exportar'), child: Text(l.mpExportarJson)),
-      // vazio não chega aqui (a linha vazia não tem menu); a fábrica é só leitura
-      PopupMenuItem(
-        value: _ItemMenu.limpar,
-        key: const ValueKey('op-limpar'),
-        enabled: !biblioteca.naFabrica && biblioteca.resumo(slot) != null,
-        child: Text(biblioteca.naFabrica ? l.mpLimparFabrica : l.mpLimpar),
-      ),
+      itemDeMenu(_ItemMenu.exportar,
+          key: const ValueKey('op-exportar'), icone: Icons.output, rotulo: l.mpExportarJson),
+      // limpar apaga na pedaleira: separado e em vermelho, longe do exportar.
+      // Vazio não chega aqui (a linha vazia não tem menu); a fábrica é só leitura
+      const PopupMenuDivider(),
+      itemDeMenu(_ItemMenu.limpar,
+          key: const ValueKey('op-limpar'),
+          icone: Icons.delete_forever_outlined,
+          rotulo: biblioteca.naFabrica ? l.mpLimparFabrica : l.mpLimpar,
+          ativo: !biblioteca.naFabrica && biblioteca.resumo(slot) != null,
+          destrutivo: true),
     ],
   );
   if (escolha != null && context.mounted) await _executar(context, ref, escolha, slot);
 }
 
 List<PopupMenuEntry<_ItemMenu>> _itensDeOrganizar(AppLocalizations l) => [
-      PopupMenuItem(value: _ItemMenu.mover, key: const ValueKey('op-mover'), child: Text(l.opMoverPara)),
-      PopupMenuItem(value: _ItemMenu.clonar, key: const ValueKey('op-clonar'), child: Text(l.opClonarPara)),
-      PopupMenuItem(value: _ItemMenu.trocarBanco, key: const ValueKey('op-banco'), child: Text(l.opTrocarBanco)),
+      itemDeMenu(_ItemMenu.mover, key: const ValueKey('op-mover'), icone: Icons.drive_file_move_outlined, rotulo: l.opMoverPara),
+      itemDeMenu(_ItemMenu.clonar, key: const ValueKey('op-clonar'), icone: Icons.content_copy, rotulo: l.opClonarPara),
+      itemDeMenu(_ItemMenu.trocarBanco, key: const ValueKey('op-banco'), icone: Icons.swap_vert, rotulo: l.opTrocarBanco),
     ];
 
 /// Na fábrica (só leitura) não se organiza: copia-se para uma área da pessoa.
 List<PopupMenuEntry<_ItemMenu>> _itensDaFabrica(AppLocalizations l) => [
-      PopupMenuItem(value: _ItemMenu.copiar, key: const ValueKey('op-copiar'), child: Text(l.fbCopiarPara)),
+      itemDeMenu(_ItemMenu.copiar, key: const ValueKey('op-copiar'), icone: Icons.copy_all_outlined, rotulo: l.fbCopiarPara),
     ];
 
 Future<void> _executar(BuildContext context, WidgetRef ref, _ItemMenu item, SlotPreset slot) async {

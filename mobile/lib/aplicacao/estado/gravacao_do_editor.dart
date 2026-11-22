@@ -20,12 +20,15 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
   Future<bool> trocarSlotNaPedaleira(SlotPreset slot);
 
   /// Salvar (Cmd+S): grava no slot aberto, sem perguntar — é a origem.
+  /// Antes relê o slot: se ele mudou por fora desde que foi aberto, nada é
+  /// gravado e volta [SlotAlteradoFora] (a pessoa decide); [mesmoAlteradoFora]
+  /// é o "Sobrescrever mesmo assim".
   /// Sem slot (preset importado), ou com o slot de outra área que não a da
   /// tela (a lista trocou de área, ou reconectou na ativa), cai no "Salvar
   /// como": gravar direto poria o preset no mesmo número de outra área.
   /// Com a fábrica na tela, devolve null sem escolher destino: a cópia
   /// pergunta primeiro a área (a tela cuida disso).
-  Future<ResultadoSalvar?> salvar() async {
+  Future<ResultadoSalvar?> salvar({bool mesmoAlteradoFora = false}) async {
     if (_motivoParaNaoGravar() case final recusa?) return recusa;
     if (ref.read(bibliotecaProvider).naFabrica) return null;
     final slot = state.slot;
@@ -34,15 +37,19 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
       return null;
     }
     // importado (sem original) não é o que está no slot: pergunta antes
-    return _gravar(slot, confirmado: state.original != null);
+    final original = state.original;
+    return _gravar(slot, confirmado: original != null, aberto: mesmoAlteradoFora ? null : original);
   }
 
   /// Salvar como: slot ocupado e diferente da origem volta [SlotOcupado] até
-  /// vir a confirmação. Em outro slot o preset ganha uuid novo.
+  /// vir a confirmação; a própria origem é conferida como no [salvar]. Em
+  /// outro slot o preset ganha uuid novo.
   Future<ResultadoSalvar> salvarComo(SlotPreset slot, {bool confirmado = false}) async {
     if (_motivoParaNaoGravar() case final recusa?) return recusa;
-    final resultado = await _gravar(slot, confirmado: confirmado || (slot == state.slot && _slotNaAreaDaTela));
-    if (resultado is! SlotOcupado) state = state.copiar(escolhendoDestino: false);
+    final origem = slot == state.slot && _slotNaAreaDaTela;
+    final aberto = origem && !confirmado ? state.original : null;
+    final resultado = await _gravar(slot, confirmado: confirmado || origem, aberto: aberto);
+    if (resultado is! SlotOcupado && resultado is! SlotAlteradoFora) state = state.copiar(escolhendoDestino: false);
     return resultado;
   }
 
@@ -69,7 +76,9 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
 
   void cancelarSalvarComo() => state = state.copiar(escolhendoDestino: false);
 
-  Future<ResultadoSalvar> _gravar(SlotPreset slot, {required bool confirmado}) async {
+  /// [aberto]: o que o app leu do slot ao abrir; com ele, o slot é relido e
+  /// só é gravado se ainda tiver isso.
+  Future<ResultadoSalvar> _gravar(SlotPreset slot, {required bool confirmado, DocumentoPreset? aberto}) async {
     final repositorio = repositorioAtual;
     final atual = state.atual;
     if (repositorio == null || atual == null) {
@@ -84,7 +93,7 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
     state = state.copiar(salvando: true);
     try {
       final resultado = await SalvarNoSlot(repositorio)
-          .executar(slot, documento, sobrescreverConfirmado: confirmado, area: area);
+          .executar(slot, documento, sobrescreverConfirmado: confirmado, area: area, aberto: aberto);
       if (resultado case PresetSalvo(:final relido)) await _aplicarSalvo(slot, area, relido, gravado: atual);
       return resultado;
     } finally {

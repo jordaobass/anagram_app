@@ -19,6 +19,7 @@ void main() {
     addTearDown(() => saidasDoRegistro.remover(arquivo));
 
     registro.i('pedaleira: conectou pelo USB (hidapi)');
+    arquivo.descarregar();
 
     expect(File(arquivo.caminho).readAsStringSync(), contains('pedaleira: conectou pelo USB (hidapi)'));
   });
@@ -28,6 +29,7 @@ void main() {
     for (var linha = 0; linha < 40; linha++) {
       arquivo.gravar('linha $linha ${'x' * 20}');
     }
+    arquivo.descarregar();
 
     final nomes = pasta.listSync().map((item) => item.uri.pathSegments.last).toSet();
     expect(nomes, {'anagram-app.log', 'anagram-app.1.log', 'anagram-app.2.log'});
@@ -43,6 +45,23 @@ void main() {
     final ultimas = await arquivo.ultimasLinhas(5);
 
     expect(ultimas.split('\n'), ['linha 7', 'linha 8', 'linha 9', 'linha 10', 'linha 11']);
+  });
+
+  test('should_batch_lines_on_disk_within_the_flush_interval_and_write_warnings_at_once', () async {
+    final arquivo = ArquivoDeRegistro(pasta);
+    saidasDoRegistro.acrescentar(arquivo);
+    addTearDown(() => saidasDoRegistro.remover(arquivo));
+    String noDisco() => File(arquivo.caminho).existsSync() ? File(arquivo.caminho).readAsStringSync() : '';
+
+    for (var envio = 0; envio < 30; envio++) {
+      registro.i('anagram try_anagram_preset: ida e volta $envio ms');
+    }
+    expect(noDisco(), isNot(contains('ida e volta 29 ms')), reason: 'cada linha não abre e fecha o arquivo');
+    await Future<void>.delayed(const Duration(milliseconds: 400));
+    expect(noDisco(), contains('ida e volta 29 ms'), reason: 'o lote chega ao disco em pouco tempo');
+
+    registro.w('hidapi: falha de escrita no USB');
+    expect(noDisco(), contains('falha de escrita no USB'), reason: 'aviso e erro não esperam o lote: o app pode cair');
   });
 
   test('should_pick_the_log_folder_of_each_system_and_none_without_its_variable', () {

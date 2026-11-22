@@ -1,5 +1,6 @@
 // Salvar (no slot aberto) e Salvar como (destino escolhido na lista de
-// presets). Só pergunta quando o destino está ocupado e não é a origem.
+// presets). Só pergunta quando o destino está ocupado e não é a origem, ou
+// quando a origem mudou na pedaleira desde que foi aberta.
 // Com a fábrica na tela, o destino começa pela área (fluxo_copiar_fabrica).
 import 'dart:async';
 
@@ -13,6 +14,7 @@ import '../../nucleo/modelo/slot_preset.dart';
 import '../rotas.dart';
 import 'dialogo_confirmar.dart';
 import 'fluxo_copiar_fabrica.dart';
+import 'fluxo_recarregar.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
 
@@ -31,7 +33,30 @@ Future<void> executarSalvar(BuildContext context, WidgetRef ref, {bool listaEmOu
     _avisar(mensageiro, l, await controlador.salvarComo(slot, confirmado: true));
     return;
   }
+  if (resultado case SlotAlteradoFora(:final slot)) {
+    if (!context.mounted) return;
+    await _decidirSlotAlterado(context, ref, slot, () => controlador.salvar(mesmoAlteradoFora: true));
+    return;
+  }
   _avisar(mensageiro, l, resultado);
+}
+
+/// A origem mudou por fora: só grava se a pessoa mandar sobrescrever.
+Future<ResultadoSalvar?> _decidirSlotAlterado(
+    BuildContext context, WidgetRef ref, SlotPreset slot, Future<ResultadoSalvar?> Function() sobrescrever) async {
+  final mensageiro = ScaffoldMessenger.of(context);
+  final l = AppLocalizations.of(context);
+  final decisao = await perguntarSlotAlterado(context, slot);
+  switch (decisao) {
+    case DecisaoSlotAlterado.sobrescrever:
+      final resultado = await sobrescrever();
+      if (resultado != null) _avisar(mensageiro, l, resultado);
+      return resultado;
+    case DecisaoSlotAlterado.recarregar:
+      if (context.mounted) await executarRecarregar(context, ref);
+    case DecisaoSlotAlterado.cancelar:
+  }
+  return null;
 }
 
 /// Põe a lista em modo "escolher destino"; no celular a lista é outra tela.
@@ -56,6 +81,11 @@ Future<bool> salvarComoNoDestino(BuildContext context, WidgetRef ref, SlotPreset
     if (!await _confirmarSubstituicao(context, slot, nomeAtual)) return false;
     resultado = await controlador.salvarComo(slot, confirmado: true);
   }
+  if (resultado is SlotAlteradoFora) {
+    if (!context.mounted) return false;
+    final decidido = await _decidirSlotAlterado(context, ref, slot, () => controlador.salvarComo(slot, confirmado: true));
+    return decidido is PresetSalvo;
+  }
   _avisar(mensageiro, l, resultado);
   return resultado is PresetSalvo;
 }
@@ -64,7 +94,7 @@ void _avisar(ScaffoldMessengerState mensageiro, AppLocalizations l, ResultadoSal
   final texto = switch (resultado) {
     PresetSalvo(:final relido, :final slot) => l.presetSalvoEm(relido.nome, slot.rotulo),
     final FalhaAoSalvar falha => l.falhaAoSalvar(falha),
-    SlotOcupado() => null,
+    SlotOcupado() || SlotAlteradoFora() => null,
   };
   if (texto != null) mensageiro.showSnackBar(SnackBar(content: Text(texto)));
 }

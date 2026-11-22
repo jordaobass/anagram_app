@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../aplicacao/idioma.dart';
 import '../../l10n/app_localizations.dart';
 import '../tema/tokens.dart';
+import 'item_de_menu.dart';
 
 const _nomes = {
   IdiomaApp.portugues: 'Português',
@@ -52,8 +53,9 @@ class MenuIdioma extends ConsumerWidget {
       tooltip: l.idioma,
       onSelected: ref.read(idiomaProvider.notifier).escolher,
       itemBuilder: (_) => [
-        PopupMenuItem(value: null, child: Text(l.idiomaDoSistema)),
-        for (final MapEntry(key: idioma, value: nome) in _nomes.entries) PopupMenuItem(value: idioma, child: Text(nome)),
+        PopupMenuItem(value: null, height: alturaItemDeMenu, child: Text(l.idiomaDoSistema)),
+        for (final MapEntry(key: idioma, value: nome) in _nomes.entries)
+          PopupMenuItem(value: idioma, height: alturaItemDeMenu, child: Text(nome)),
       ],
       child: Row(mainAxisSize: MainAxisSize.min, children: [
         const Icon(Icons.language, color: Cores.textoSecundario),

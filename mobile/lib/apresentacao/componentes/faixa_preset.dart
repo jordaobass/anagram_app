@@ -9,6 +9,7 @@ import '../../nucleo/modelo/presets_fabrica.dart';
 import '../tema/tokens.dart';
 import 'acoes_preset.dart';
 import 'dialogo_renomear.dart';
+import 'fita_gaffer.dart';
 import '../../l10n/app_localizations.dart';
 
 class FaixaPreset extends ConsumerWidget {
@@ -134,13 +135,7 @@ class _Fita extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context).textTheme;
-    return Container(
-      constraints: const BoxConstraints(minHeight: Medidas.alvoMinimo + Espacos.s),
-      padding: const EdgeInsets.symmetric(horizontal: Espacos.l, vertical: Espacos.s),
-      decoration: const BoxDecoration(
-        color: Cores.fitaGaffer,
-        border: Border(bottom: BorderSide(color: Cores.fitaGafferSombra, width: Medidas.contornoSelecao)),
-      ),
+    return FitaGaffer(
       child: Row(children: [
         Expanded(child: Text(nome, maxLines: linhas, overflow: TextOverflow.ellipsis, style: tema.headlineSmall)),
         // tocar a fita renomeia: o lápis diz isso sem competir com o nome

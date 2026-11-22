@@ -32,8 +32,9 @@ One Flutter codebase for macOS, Windows, Linux, Android and the browser (Chrome/
 > manufacturer; the block art is used with Darkglass's permission.
 
 No ads and no telemetry. The app talks to the pedal over USB; its only network call is an optional
-check on launch (Windows, macOS and Linux) that asks GitHub for the latest release, sends none of
-your data and can be turned off in **Settings › Updates**.
+check on launch (Windows, macOS and Linux) that asks GitHub for the latest release. That request
+sends only the app's version (in the User-Agent header); as with any connection, GitHub sees your IP
+address. It can be turned off in **Settings › Updates**.
 
 The interface is in **English, Portuguese and Spanish** (it follows your system language; you can
 change it in **Settings**, the gear icon).
@@ -50,6 +51,13 @@ change it in **Settings**, the gear icon).
 
 Also: a parallel row with Split and Merge, move/clone/swap presets and banks, clear a preset, export
 and import JSON, the Factory area (36 Darkglass presets, read-only) and local AI via MCP.
+
+On the desktop the app connects to the pedal on launch (switch it off in **Settings**). The footswitch
+mode shows as **Stomp / Preset / Scene** pills on the scene row; the Auto Drummer and Cognate Metro
+blocks are laid out like the pedal's own screen, with tap tempo; a TONE3000 block can switch to another
+tone already on the pedal; menus have icons and are compact with a mouse; and live editing over USB is
+faster. Output levels, Global EQ and input gain are shown **read-only**: the Anagram accepts those values
+over USB but doesn't apply them to the sound, so adjust them on the pedal itself.
 
 ## How to install
 
@@ -85,7 +93,15 @@ Keep all the files together in the folder: `hidapi.dll` talks to the pedal over 
 2. Drag **Anagram App** to **Applications**.
 3. The first time, macOS blocks it because the app isn't notarized yet: open **System Settings ›
    Privacy & Security** and click **Open Anyway**. Or, in Terminal:
-   `xattr -dr com.apple.quarantine "/Applications/Anagram App.app"`.
+   `xattr -cr "/Applications/Anagram App.app"`.
+
+#### macOS: first launch
+
+- **"Apple could not verify…"**: the app isn't signed by Apple yet. Open **System Settings › Privacy &
+  Security** and click **Open Anyway** (or run `xattr -cr "/Applications/Anagram App.app"` in Terminal).
+- **Input Monitoring**: macOS treats the Anagram's USB access as Input Monitoring. If the app doesn't
+  connect, or keeps bouncing in the Dock, turn **Anagram App** on in **System Settings › Privacy &
+  Security › Input Monitoring** and open the app again.
 
 ### Linux
 
@@ -99,8 +115,8 @@ There's no ready-made build yet; build it from source (see [the app README](mobi
 2. On the pedal, open the **MIDI** settings and turn on **USB MIDI**. That's how the app switches slots
    when you click a preset; without it the app can only preview a preset while the pedal stays on its
    own slot.
-3. Connect the Anagram to your computer with the USB cable, open the app and click **Connect over USB**.
-   The top bar shows the firmware version once connected.
+3. Connect the Anagram to your computer with the USB cable, open the app and click **Connect over USB**
+   (on the desktop the app already tries once on launch: "Looking for the pedal…"). The top bar shows the firmware version once connected.
 4. Click a preset in the list to open it. To build the chain, use the **+** in an empty slot (it opens
    the effects library) and drag blocks to change their order. **Save** writes it to the slot.
 
@@ -135,9 +151,20 @@ preset and adjusts the blocks; every change is **heard immediately**, shows up o
 
 > **The AI can't hear the sound**: it adjusts based on what you describe, and you tell it whether it
 > got better. Small models tend to describe what they would do instead of calling the tools; prefer a
-> model with good tool calling. Tools: `get_current_preset`, `list_block_types`, `set_parameter`,
-> `set_block_enabled`, `select_scene`, `add_block`, `move_block`, `remove_block`, `choose_cabinet`,
-> `undo` and `save_preset`.
+> model with good tool calling. Tools: `get_current_preset`, `list_block_types`, `get_block_guide`,
+> `get_tone_building_guide`, `get_tone_recipe`, `set_parameter`, `set_block_enabled`, `select_scene`,
+> `add_block`, `move_block`, `remove_block`, `choose_cabinet`, `undo`, `save_preset`,
+> `get_global_settings` (read only) and `set_global_setting` (footswitch mode only).
+
+**The app teaches the AI the pedal.** It ships a tone-building knowledge base that the assistant reads
+through the same connection: what each of the 109 factory blocks does (role, key parameters with
+ranges, a starting point and pitfalls, via `get_block_guide`), how to build a bass chain (order, gain
+staging, the parallel line, EQ by frequency, compression, drive, cabinets, scenes, via
+`get_tone_building_guide`) and starting recipes by style or player reference ("funk slap", "modern
+metal", "Steve Harris", via `get_tone_recipe`). The connection also carries a recommended flow: read
+the preset, ask, propose, apply in small steps, let you listen, and only save when you say so. For
+Claude Desktop or Claude Code there is a ready-made skill in [`docs/ia/SKILL.md`](docs/ia/SKILL.md),
+which also has a system prompt to paste into LM Studio.
 
 ## Repository layout
 
@@ -166,6 +193,9 @@ the pedal shows on its screen). They live in `mobile/assets/blocos_terceiros/` a
 Darkglass's permission**. Images are downsized (max 256 px, compressed PNG) and regenerated from the
 Darkglass Suite by `mobile/ferramentas/baixar_arte_pedaleira.py`;
 `mobile/ferramentas/verificar_release.sh` rejects any file in that folder that isn't this art.
+Darkglass Marketplace plugins use each product's public store image, credited to its maker on the
+About screen (`mobile/ferramentas/baixar_arte_marketplace.py`); TONE3000 factory tones show their
+photo from the Suite. Internal utilities (tuner, mixer, meters, MIDI…) get icons drawn by the app.
 
 ## Contributing
 
@@ -175,6 +205,8 @@ Issues, ideas and pull requests are welcome, in English, Portuguese or Spanish. 
 ## Credits and license
 
 USB protocol, block catalog and example presets ported from
-[anagram-tone-maker](https://github.com/basster6/anagram-tone-maker) (MIT). Project license:
+[anagram-tone-maker](https://github.com/basster6/anagram-tone-maker) (MIT); the AI block guide also
+draws on the community block attributions that project collected (kept as hints, not as Darkglass
+statements). Project license:
 [MIT](LICENSE). The block art is © Darkglass Electronics, used with permission, and is not covered by
 the MIT license.

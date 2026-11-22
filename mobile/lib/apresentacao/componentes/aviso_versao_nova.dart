@@ -8,6 +8,7 @@ import '../../aplicacao/versao_nova.dart';
 import '../../l10n/app_localizations.dart';
 import '../../nucleo/versao/release_publicada.dart';
 import '../tema/tokens.dart';
+import 'item_de_menu.dart';
 
 class AvisoVersaoNova extends ConsumerWidget {
   const AvisoVersaoNova({super.key, required this.compacta});
@@ -67,8 +68,8 @@ class _MenuVersaoNova extends ConsumerWidget {
       icon: const Icon(Icons.system_update_alt, color: Cores.aluminioClaro),
       onSelected: (acao) => acao == _AcaoVersao.baixar ? controlador.baixar(release) : controlador.dispensar(),
       itemBuilder: (_) => [
-        PopupMenuItem(value: _AcaoVersao.baixar, child: Text(l.versaoNovaBaixar)),
-        PopupMenuItem(value: _AcaoVersao.lembrarDepois, child: Text(l.versaoNovaLembrarDepois)),
+        PopupMenuItem(value: _AcaoVersao.baixar, height: alturaItemDeMenu, child: Text(l.versaoNovaBaixar)),
+        PopupMenuItem(value: _AcaoVersao.lembrarDepois, height: alturaItemDeMenu, child: Text(l.versaoNovaLembrarDepois)),
       ],
     );
   }

@@ -1,6 +1,6 @@
 // Capturas do painel de parâmetros dos blocos de EQ, filtro e amp, no
 // computador: o bloco novo (valores padrão) na casa 4 do 01A, selecionado.
-// Prefixo "eq-". Com COM_MINIATURAS=1 saem com a arte, na pasta ignorada pelo git.
+// Prefixo "eq-". Saem com a arte real dos pedais.
 import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';

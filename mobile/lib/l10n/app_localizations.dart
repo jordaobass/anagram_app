@@ -2092,7 +2092,7 @@ abstract class AppLocalizations {
   /// No description provided for @pdDica.
   ///
   /// In pt, this message translates to:
-  /// **'Ajustes globais da Anagram: valem para todos os presets e não entram no preset. Mudam na hora.'**
+  /// **'Ajustes globais da Anagram: valem para todos os presets e não entram no preset.'**
   String get pdDica;
 
   /// No description provided for @pdSaidas.
@@ -2155,34 +2155,16 @@ abstract class AppLocalizations {
   /// **'Reset'**
   String get pdEqReset;
 
-  /// No description provided for @pdEqResetTitulo.
-  ///
-  /// In pt, this message translates to:
-  /// **'Voltar o Global EQ ao padrão?'**
-  String get pdEqResetTitulo;
-
-  /// No description provided for @pdEqResetTexto.
-  ///
-  /// In pt, this message translates to:
-  /// **'As 6 bandas voltam a 35 Hz, 160 Hz, 397 Hz, 1,25 kHz, 2,5 kHz e 9,63 kHz, com ganho 0 e a largura de fábrica. Dá para desfazer logo depois.'**
-  String get pdEqResetTexto;
-
   /// No description provided for @pdEqResetConfirmar.
   ///
   /// In pt, this message translates to:
   /// **'VOLTAR AO PADRÃO'**
   String get pdEqResetConfirmar;
 
-  /// No description provided for @pdEqResetFeito.
-  ///
-  /// In pt, this message translates to:
-  /// **'Global EQ de volta ao padrão.'**
-  String get pdEqResetFeito;
-
   /// No description provided for @pdEqDica.
   ///
   /// In pt, this message translates to:
-  /// **'Arraste os pontos: para os lados muda a frequência, para cima e para baixo o ganho. Os knobs mexem no que o modo escolhido mostra.'**
+  /// **'A curva e as bandas mostram o Global EQ que a pedaleira tem agora; o modo escolhe o que as bandas mostram.'**
   String get pdEqDica;
 
   /// No description provided for @pdEntrada.
@@ -2194,7 +2176,7 @@ abstract class AppLocalizations {
   /// No description provided for @pdEntradaDica.
   ///
   /// In pt, this message translates to:
-  /// **'Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; os outros cinco e os nomes entram quando o app conhecer as chaves deles.'**
+  /// **'Ganho de entrada do instrumento 1 (−12 a +12 dB). A Anagram guarda seis instrumentos; o app só lê o primeiro.'**
   String get pdEntradaDica;
 
   /// No description provided for @pdPlaca.
@@ -2232,18 +2214,6 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Tentar de novo'**
   String get pdTentarDeNovo;
-
-  /// No description provided for @pdErroGravar.
-  ///
-  /// In pt, this message translates to:
-  /// **'A pedaleira não aceitou a última mudança. Os valores mostrados são os que ela tem agora.'**
-  String get pdErroGravar;
-
-  /// No description provided for @pdPendentes.
-  ///
-  /// In pt, this message translates to:
-  /// **'Ainda não dá para mudar pelo app: Master, Mute e Link do mixer e os nomes dos instrumentos.'**
-  String get pdPendentes;
 
   /// Seção das Configurações com o arquivo de registro (log) do app, para relatar defeitos
   ///
@@ -2490,6 +2460,294 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Na pedaleira, os pots atribuídos só respondem na tela do preset em uma linha; com o preset expandido, os knobs mexem no bloco selecionado.'**
   String get ctlDicaPedaleira;
+
+  /// Cartão do Gap Mode do Cognate Metro (compassos mudos para treinar)
+  ///
+  /// In pt, this message translates to:
+  /// **'Treino'**
+  String get utTreino;
+
+  /// Tap tempo calculado no app
+  ///
+  /// In pt, this message translates to:
+  /// **'Bater'**
+  String get utBater;
+
+  /// Por que o Bater está desabilitado em Follow Tempo e Global Tempo
+  ///
+  /// In pt, this message translates to:
+  /// **'Bater o tempo só vale no modo Fixed Tempo.'**
+  String get utBaterSoNoFixo;
+
+  /// No description provided for @slotAlteradoForaTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'{slot} mudou na pedaleira'**
+  String slotAlteradoForaTitulo(String slot);
+
+  /// No description provided for @slotAlteradoForaTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'O slot {slot} foi alterado na pedaleira desde que você abriu. Sobrescrever grava a sua versão por cima do que está lá; recarregar descarta as suas edições e mostra a versão da pedaleira.'**
+  String slotAlteradoForaTexto(String slot);
+
+  /// No description provided for @sobrescreverMesmoAssim.
+  ///
+  /// In pt, this message translates to:
+  /// **'SOBRESCREVER MESMO ASSIM'**
+  String get sobrescreverMesmoAssim;
+
+  /// No description provided for @recarregarDaPedaleira.
+  ///
+  /// In pt, this message translates to:
+  /// **'RECARREGAR DA PEDALEIRA'**
+  String get recarregarDaPedaleira;
+
+  /// No description provided for @uiRecarregarDaPedaleira.
+  ///
+  /// In pt, this message translates to:
+  /// **'Recarregar da pedaleira'**
+  String get uiRecarregarDaPedaleira;
+
+  /// No description provided for @recarregarTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Recarregar {slot} da pedaleira?'**
+  String recarregarTitulo(String slot);
+
+  /// No description provided for @recarregarTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'As mudanças não salvas de \"{nome}\" se perdem e o editor passa a mostrar o que está gravado no slot.'**
+  String recarregarTexto(String nome);
+
+  /// No description provided for @recarregar.
+  ///
+  /// In pt, this message translates to:
+  /// **'RECARREGAR'**
+  String get recarregar;
+
+  /// No description provided for @pausaUsbTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Pausa entre pacotes USB'**
+  String get pausaUsbTitulo;
+
+  /// No description provided for @pausaUsbTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'Menor = ao vivo mais rápido; aumente se a pedaleira deixar de responder. Auto usa o padrão deste computador.'**
+  String get pausaUsbTexto;
+
+  /// No description provided for @versaoNovaConsultaTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ao abrir, o app consulta só o GitHub para saber qual é a última versão publicada. A consulta envia apenas a versão do app (no cabeçalho User-Agent); como em toda conexão, o GitHub vê o seu endereço IP. Desligado, o app não acessa a internet.'**
+  String get versaoNovaConsultaTexto;
+
+  /// Rótulo do seletor do modo dos footswitches (ajuste global da pedaleira)
+  ///
+  /// In pt, this message translates to:
+  /// **'Footswitches'**
+  String get fmTitulo;
+
+  /// Nome do modo dos footswitches como o Darkglass Suite (P, STP, SCN); other = valor que o app não conhece
+  ///
+  /// In pt, this message translates to:
+  /// **'{modo, select, preset{PRESET} stomp{STOMP} scene{SCENE} other{—}}'**
+  String fmModo(String modo);
+
+  /// Leitor de tela do botão de um modo
+  ///
+  /// In pt, this message translates to:
+  /// **'Footswitches no modo {modo}'**
+  String fmSemantica(String modo);
+
+  /// Dica curta sob o seletor do modo
+  ///
+  /// In pt, this message translates to:
+  /// **'No modo Stomp, os footswitches seguem os controles da pedaleira deste preset. O modo vale para todos os presets.'**
+  String get fmDica;
+
+  /// A troca de modo foi recusada, não respondeu ou a releitura mostrou outro valor
+  ///
+  /// In pt, this message translates to:
+  /// **'A pedaleira não confirmou a troca de modo. O modo mostrado é o que ela tem agora.'**
+  String get fmErro;
+
+  /// O export_settings não trouxe a chave mode: o seletor fica desabilitado
+  ///
+  /// In pt, this message translates to:
+  /// **'Esta pedaleira não informa o modo dos footswitches.'**
+  String get fmIndisponivel;
+
+  /// Aviso no painel de Controles quando o modo não é Stomp
+  ///
+  /// In pt, this message translates to:
+  /// **'Os FOOT atribuídos só agem no modo Stomp; a pedaleira está em {modo}.'**
+  String fmAvisoControles(String modo);
+
+  /// Tooltip do selo desabilitado quando o valor de mode não é preset, stomp nem scene
+  ///
+  /// In pt, this message translates to:
+  /// **'A pedaleira está num modo que o app não conhece. Troque o modo na própria pedaleira.'**
+  String get fmDesconhecido;
+
+  /// Cartão do tom do TONE3000 no painel do bloco
+  ///
+  /// In pt, this message translates to:
+  /// **'Tom'**
+  String get t3kTom;
+
+  /// Cartão do modelo (a2_model) do tom do TONE3000
+  ///
+  /// In pt, this message translates to:
+  /// **'Modelo'**
+  String get t3kModelo;
+
+  /// Enquanto get_t3k_factory_tones não volta (~2 s)
+  ///
+  /// In pt, this message translates to:
+  /// **'Lendo os tons da pedaleira…'**
+  String get t3kLendo;
+
+  /// get_t3k_factory_tones sem resposta
+  ///
+  /// In pt, this message translates to:
+  /// **'A pedaleira não mandou a lista de tons.'**
+  String get t3kFalhou;
+
+  /// Botão que relê a lista de tons
+  ///
+  /// In pt, this message translates to:
+  /// **'Tentar de novo'**
+  String get t3kTentarDeNovo;
+
+  /// O arquivo do bloco não está na lista de tons da pedaleira (tom removido, firmware diferente); o app não troca sozinho
+  ///
+  /// In pt, this message translates to:
+  /// **'Não encontrado na pedaleira: {arquivo}'**
+  String t3kNaoEncontrado(String arquivo);
+
+  /// Tom do usuário: a pedaleira não informa o nome do arquivo para montar o caminho (T3K4)
+  ///
+  /// In pt, this message translates to:
+  /// **'Tom enviado por você: aparece só para consulta. Trocá-lo ainda não é possível pelo app.'**
+  String get t3kSoConsulta;
+
+  /// Hipótese T3K3 no bloco de gabinete TONE3000
+  ///
+  /// In pt, this message translates to:
+  /// **'O caminho dos IRs de fábrica ainda não foi conferido numa pedaleira: ouça antes de salvar.'**
+  String get t3kIrNaoConferido;
+
+  /// Quantos tons do formato do bloco a pedaleira tem
+  ///
+  /// In pt, this message translates to:
+  /// **'Na pedaleira: {fabrica} de fábrica e {seus} enviados por você'**
+  String t3kResumo(int fabrica, int seus);
+
+  /// Linha do tom de fábrica na galeria
+  ///
+  /// In pt, this message translates to:
+  /// **'{autor} · licença {licenca}'**
+  String t3kDetalheFabrica(String autor, String licenca);
+
+  /// Linha do tom do usuário na galeria
+  ///
+  /// In pt, this message translates to:
+  /// **'{autor} · licença {licenca} · seu, só para consulta'**
+  String t3kDetalheSeu(String autor, String licenca);
+
+  /// Quando o tom não traz o username
+  ///
+  /// In pt, this message translates to:
+  /// **'sem autor'**
+  String get t3kSemAutor;
+
+  /// Botão ? que mostra as dicas de gesto do painel
+  ///
+  /// In pt, this message translates to:
+  /// **'Dicas'**
+  String get uiDicas;
+
+  /// Ao lado do título Controles da pedaleira: quantos controles têm algo atribuído
+  ///
+  /// In pt, this message translates to:
+  /// **'{n, plural, =0{nenhum atribuído} =1{1 atribuído} other{{n} atribuídos}}'**
+  String ctlResumo(int n);
+
+  /// Leitor de tela no cabeçalho recolhido
+  ///
+  /// In pt, this message translates to:
+  /// **'Mostrar os controles da pedaleira'**
+  String get ctlMostrar;
+
+  /// Leitor de tela no cabeçalho aberto
+  ///
+  /// In pt, this message translates to:
+  /// **'Recolher os controles da pedaleira'**
+  String get ctlRecolher;
+
+  /// Salvar como: na linha de um slot ocupado, o preset que será substituído
+  ///
+  /// In pt, this message translates to:
+  /// **'substitui {nome}'**
+  String sbSubstitui(String nome);
+
+  /// Leitor de tela no ícone de substituir do Salvar como
+  ///
+  /// In pt, this message translates to:
+  /// **'Substituir o preset deste slot'**
+  String get sbSubstituirAqui;
+
+  /// Quando a releitura depois de salvar não confere com o que foi enviado
+  ///
+  /// In pt, this message translates to:
+  /// **'a pedaleira confirmou, mas o slot relido é diferente do enviado. A edição continua na tela; confira o slot e salve de novo.'**
+  String get salvarReleituraDiferente;
+
+  /// Aviso no topo da seção Pedaleira: mixer, Global EQ e ganho de entrada são só leitura porque a pedaleira não aplica ao som o que o app envia
+  ///
+  /// In pt, this message translates to:
+  /// **'Volume das saídas, Global EQ e ganho de entrada: o app não tem acesso a esses recursos da pedaleira. A Anagram aceita o valor enviado, mas não o aplica ao som. Ajuste nos knobs e telas da própria pedaleira; aqui você vê os valores atuais (toque em Atualizar depois de mudar).'**
+  String get pdSemAcesso;
+
+  /// Ajuda do Action do Auto Drummer: a chave do app é o Action da pedaleira; os gestos são do manual do plugin
+  ///
+  /// In pt, this message translates to:
+  /// **'No app, esta chave é o Action da pedaleira. Pelo manual do plugin: ativar começa o ritmo com introdução; com o ritmo tocando, um novo acionamento faz uma virada; acionamento duplo para; segurar passa para a próxima parte. O que a bateria toca em cada caso é do plugin.'**
+  String get utAcaoChave;
+
+  /// Cartão de uma saída do plugin (Status, Accuracy): o valor não chega pelo USB (P8)
+  ///
+  /// In pt, this message translates to:
+  /// **'Só no visor da pedaleira'**
+  String get utSoNoVisor;
+
+  /// Barra e botão de conectar enquanto o app, ao abrir, procura a pedaleira no USB sozinho (DECISOES CA2)
+  ///
+  /// In pt, this message translates to:
+  /// **'Procurando a pedaleira…'**
+  String get caProcurando;
+
+  /// Interruptor nas Configurações: ao abrir, o app tenta uma vez conectar pelo USB (DECISOES CA1)
+  ///
+  /// In pt, this message translates to:
+  /// **'Conectar ao abrir'**
+  String get caConectarAoAbrir;
+
+  /// Explicação do interruptor Conectar ao abrir
+  ///
+  /// In pt, this message translates to:
+  /// **'Ao abrir, o app procura a pedaleira no USB uma vez. Conectar não toca nada; sem pedaleira, a tela de conectar fica como está.'**
+  String get caConectarAoAbrirTexto;
+
+  /// Linha extra do interruptor no macOS (DECISOES CA3)
+  ///
+  /// In pt, this message translates to:
+  /// **'No macOS, só depois de liberar o Monitoramento de Entrada para o Anagram App em Ajustes do Sistema › Privacidade e Segurança.'**
+  String get caConectarAoAbrirMac;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

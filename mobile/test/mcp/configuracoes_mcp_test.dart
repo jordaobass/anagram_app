@@ -14,8 +14,12 @@ import 'package:flutter_test/flutter_test.dart';
 import '../apoio/app_de_teste.dart';
 import '../apoio/demonstracao_na_tela.dart';
 
+/// Abre as Configurações já rolada até a seção da IA local.
 Future<void> abrirConfiguracoes(WidgetTester tester) async {
   await tester.tap(find.byKey(const ValueKey('botao-configuracoes')));
+  await tester.pumpAndSettle();
+  final secao = find.byKey(const ValueKey('mcp-permitir'));
+  if (secao.evaluate().isNotEmpty) await tester.ensureVisible(secao);
   await tester.pumpAndSettle();
 }
 

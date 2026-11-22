@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
+import 'package:anagram_app/aplicacao/provedores.dart' show indiceMiniaturasProvider;
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 import 'package:flutter/foundation.dart';
@@ -19,8 +20,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'demonstracao_na_tela.dart';
 import 'fixtures.dart';
 
-/// Com miniaturas de terceiros, as capturas vão para uma pasta ignorada pelo git.
-final pasta = comMiniaturas ? 'goldens_terceiros' : 'goldens';
+/// As capturas versionadas têm a arte real; sem ela (SEM_MINIATURAS=1), vão
+/// para uma pasta ignorada pelo git.
+final pasta = comMiniaturas ? 'goldens' : 'goldens_sem_arte';
 
 class Tamanho {
   const Tamanho(this.nome, this.largura, this.altura, this.densidade, {this.plataforma});
@@ -60,7 +62,18 @@ Future<void> carregarFontes() async {
   await (FontLoader('MaterialIcons')..addFont(Future.value(ByteData.sublistView(icones.readAsBytesSync())))).load();
 }
 
+/// Espera o índice de miniaturas resolver (provedor assíncrono): antes dele,
+/// o bloco desenha a arte da família, e a captura sairia sem a foto do pedal.
+Future<void> esperarIndiceDeArte(WidgetTester tester) async {
+  final app = find.byType(MaterialApp);
+  if (app.evaluate().isEmpty) return;
+  final container = ProviderScope.containerOf(tester.element(app.first));
+  await tester.runAsync(() => container.read(indiceMiniaturasProvider.future));
+  await tester.pump();
+}
+
 Future<void> assentarImagens(WidgetTester tester) async {
+  await esperarIndiceDeArte(tester);
   await tester.runAsync(() async {
     for (final elemento in find.byType(Image).evaluate()) {
       final imagem = elemento.widget as Image;
@@ -81,7 +94,7 @@ Future<void> preparar(WidgetTester tester, Tamanho t,
       densidade: t.densidade,
       overrides: overrides,
       idioma: idioma ?? IdiomaApp.doCodigo(Platform.environment['CAPTURAS_IDIOMA']) ?? IdiomaApp.portugues,
-      indice: indice,
+      indice: indice ?? lerIndiceDasCapturas(),
       fabrica: fabrica);
 }
 

@@ -4,6 +4,7 @@
 // de um preset que a pessoa acabou de mandar apagar. Regravado (um clone
 // foi para ele): o editor reabre o slot, senão o "original" seria o preset
 // substituído e o Salvar gravaria ele de volta por cima do clone.
+// Recarregar da pedaleira é o mesmo reabrir, pedido pela pessoa.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../nucleo/modelo/slot_preset.dart';
@@ -21,6 +22,13 @@ mixin LimpezaDoEditor on Notifier<EstadoEditor> {
   /// [slot] de [area] recebeu outro preset; só mexe no editor se for o aberto.
   Future<void> aoRegravarSlot(SlotPreset slot, {required String? area}) async {
     if (_estaAberto(slot, area)) await abrirSlot(slot);
+  }
+
+  /// Relê da pedaleira o slot aberto (mudou por fora, ou a pessoa quer a
+  /// versão gravada): as edições não salvas se perdem, e a tela confirma antes.
+  Future<void> recarregarDaPedaleira() async {
+    final slot = state.slot;
+    if (slot != null) await abrirSlot(slot);
   }
 
   bool _estaAberto(SlotPreset slot, String? area) => state.slot == slot && state.area == area;

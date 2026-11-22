@@ -1,4 +1,4 @@
-// Versão, créditos, avisos e diagnóstico; o idioma fica em Configurações.
+// Versão, créditos e avisos; o idioma e a pausa USB ficam em Configurações.
 // A versão fica só aqui (a barra de cima já tem o essencial) e diz se o
 // build traz a arte da pedaleira.
 import 'package:flutter/material.dart';
@@ -9,7 +9,6 @@ import '../../aplicacao/provedores.dart';
 import '../../l10n/app_localizations.dart';
 import '../app_anagram.dart';
 import '../componentes/rotulo_versao.dart';
-import '../componentes/seletor_pausa.dart';
 import '../tema/tokens.dart';
 
 class TelaCreditos extends ConsumerWidget {
@@ -29,11 +28,6 @@ class TelaCreditos extends ConsumerWidget {
           RotuloVersao(estilo: tema.bodyMedium?.copyWith(color: Cores.textoSecundario)),
           const SizedBox(height: Espacos.xl),
           for (final (titulo, texto) in itens) ..._secao(tema, titulo, Text(texto, style: tema.bodyLarge)),
-          Text(l.diagnosticoPausa, style: _estiloTitulo(tema)),
-          const SizedBox(height: Espacos.xs),
-          Text(l.diagnosticoPausaTexto, style: tema.bodyMedium),
-          const SizedBox(height: Espacos.s),
-          const Align(alignment: Alignment.centerLeft, child: SeletorPausa()),
         ],
       ),
     );
@@ -44,7 +38,7 @@ class TelaCreditos extends ConsumerWidget {
         (l.creditoProtocoloTitulo, l.creditoProtocolo),
         indice == null || indice.vazio
             ? (l.creditoArteTitulo, l.creditoArtePropria)
-            : (l.creditoImagensTitulo, l.creditoImagens(indice.credito)),
+            : (l.creditoImagensTitulo, [l.creditoImagens(indice.credito), ...indice.creditosAdicionais].join('\n')),
         (l.creditoFontesTitulo, l.creditoFontes),
         (l.creditoAvisoTitulo, l.creditoAviso),
       ];

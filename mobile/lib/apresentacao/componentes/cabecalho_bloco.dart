@@ -7,6 +7,7 @@ import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'arte_bloco.dart';
+import 'botao_dicas.dart';
 import 'casa_arrastavel.dart';
 import 'menu_bloco.dart';
 import 'toque_duplo.dart';
@@ -47,28 +48,37 @@ class CabecalhoBloco extends ConsumerWidget {
             definicao: definicao, tamanho: Medidas.artePainelBloco, ligado: ligado, arquivoIr: bloco.arquivoDeIr),
       ),
       const SizedBox(width: Espacos.m),
-      Expanded(child: _textos(context, ligado: ligado)),
+      Expanded(child: _textos(context, ligado: ligado, modelo: nomeDoModeloNoBloco(ref, bloco))),
     ]);
   }
 
-  /// Nome, onde o bloco está e as dicas de gesto do aparelho em uso.
-  Widget _textos(BuildContext context, {required bool ligado}) {
+  /// Nome (com o "?" das dicas de gesto), o tom carregado e onde o bloco está.
+  Widget _textos(BuildContext context, {required bool ligado, String? modelo}) {
     final tema = Theme.of(context).textTheme;
     final l = AppLocalizations.of(context);
-    final dica = tema.bodySmall?.copyWith(color: Cores.textoSecundario);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(l.nomeDoBloco(definicao), style: tema.titleLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
+      Row(children: [
+        Flexible(child: Text(l.nomeDoBloco(definicao), style: tema.titleLarge, maxLines: 1, overflow: TextOverflow.ellipsis)),
+        BotaoDicas(key: const ValueKey('dicas-bloco'), dicas: _dicas(l)),
+      ]),
+      if (modelo != null)
+        Text(modelo,
+            key: const ValueKey('nome-do-modelo'),
+            style: tema.titleSmall?.copyWith(color: Cores.aluminioClaro),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis),
       Text(l.blocoPosicao(l.familia(definicao.familia), bloco.posicao.linha, bloco.posicao.casa), style: tema.bodySmall),
-      Text(arrastoComMouse ? l.arrasteComMouse : l.arrasteNoToque, style: dica),
-      Text(arrastoComMouse ? l.uiDicaDuploClique : l.uiDicaToqueDuplo, style: dica),
-      // o balão dos parâmetros não se descobre olhando: a dica fica aqui,
-      // não num "?" em cada rótulo (cortava nomes que cabiam)
-      Text(arrastoComMouse ? l.ttDicaMouse : l.ttDicaToque, key: const ValueKey('dica-explicacao'), style: dica),
       if (bloco.bypassSoNaCena(cena))
         Text(ligado ? l.ligadoSoNaCena(cena) : l.desligadoSoNaCena(cena),
             style: tema.labelSmall?.copyWith(color: Cores.aluminioClaro)),
     ]);
   }
+
+  /// Arrastar, ligar pelo pedal e o balão dos parâmetros: o balão não se
+  /// descobre olhando, então a dica dele vai junto das outras.
+  static List<String> _dicas(AppLocalizations l) => arrastoComMouse
+      ? [l.arrasteComMouse, l.uiDicaDuploClique, l.ttDicaMouse]
+      : [l.arrasteNoToque, l.uiDicaToqueDuplo, l.ttDicaToque];
 
   Widget _acoes(BuildContext context, WidgetRef ref) {
     final controlador = ref.read(editorProvider.notifier);
@@ -104,6 +114,8 @@ class _BotaoMaisAcoes extends ConsumerWidget {
       );
 }
 
+/// Ligado é estado, não ação: contorno com o LED aceso em verde (cinza
+/// desligado), como o LED do pedal. Âmbar fica para seleção e ação (UI7).
 class _BotaoBypass extends StatelessWidget {
   const _BotaoBypass({required this.ligado, required this.aoTocar});
 
@@ -114,21 +126,19 @@ class _BotaoBypass extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     return Semantics(
-        toggled: ligado,
-        label: l.blocoLigadoSemantica,
-        child: ligado
-            ? FilledButton.icon(
-                key: const ValueKey('bypass'),
-                onPressed: aoTocar,
-                icon: const Icon(Icons.power_settings_new),
-                label: Text(l.ligado),
-              )
-            : OutlinedButton.icon(
-                key: const ValueKey('bypass'),
-                onPressed: aoTocar,
-                icon: const Icon(Icons.power_settings_new),
-                label: Text(l.desligado),
-              ),
-      );
+      toggled: ligado,
+      label: l.blocoLigadoSemantica,
+      child: OutlinedButton.icon(
+        key: const ValueKey('bypass'),
+        onPressed: aoTocar,
+        icon: Container(
+          key: const ValueKey('led-bypass'),
+          width: Medidas.led,
+          height: Medidas.led,
+          decoration: BoxDecoration(color: ligado ? Cores.ledLigado : Cores.ledDesligado, shape: BoxShape.circle),
+        ),
+        label: Text(ligado ? l.ligado : l.desligado),
+      ),
+    );
   }
 }

@@ -12,7 +12,9 @@ const _indice = '''
   "dg_chorus": {"nome": "", "origem": "pedaleira", "arquivo": "assets/blocos_terceiros/dg_Chorus.png",
     "uris": ["urn:darkglass:Chorus"]},
   "dg_t3k": {"nome": "", "origem": "pedaleira", "arquivo": "assets/blocos_terceiros/dg_T3K.png",
-    "uris": ["urn:darkglass-anagram:cabinet-tone3000#stereo"]}
+    "uris": ["urn:darkglass-anagram:cabinet-tone3000#stereo"]},
+  "dg_mono": {"nome": "", "origem": "pedaleira", "arquivo": "assets/blocos_terceiros/dg_Mono.png",
+    "uris": ["urn:teste:so-mono#mono"]}
 }}''';
 
 String? _arquivo(ArteBloco arte) => arte is ArteMiniatura ? arte.caminhoAsset : null;
@@ -30,6 +32,12 @@ void main() {
     final bloco = DefinicaoBloco.desconhecido('urn:darkglass-anagram:cabinet-tone3000');
 
     expect(_arquivo(indice.arteDe(bloco)), 'assets/blocos_terceiros/dg_T3K.png');
+  });
+
+  test('should_find_the_art_when_only_the_mono_variant_is_in_the_index', () {
+    final bloco = DefinicaoBloco.desconhecido('urn:teste:so-mono');
+
+    expect(_arquivo(indice.arteDe(bloco)), 'assets/blocos_terceiros/dg_Mono.png');
   });
 
   test('should_name_the_block_from_the_catalog_when_the_uri_has_a_channel_suffix', () {

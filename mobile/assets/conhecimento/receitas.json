@@ -1,0 +1,462 @@
+{
+  "version": 1,
+  "language": "en",
+  "how_to_apply": "Every recipe is a STARTING POINT in Anagram blocks. Apply the chain in the given order with add_block (Split before Merge, row 2 after both), then set_parameter for each setting, 2-4 at a time, asking the player to play between steps. Where a cabinet is listed, ask first whether the pedal feeds a PA/interface (keep it) or a real bass amp (skip or disable it). Gear named in 'idea' is a description of the sound, not a claim about what the artist used.",
+  "recipes": [
+    {
+      "id": "rock_classic",
+      "name": "Classic rock",
+      "kind": "style",
+      "aliases": ["rock", "classic rock", "hard rock", "70s rock", "blues rock", "tube amp rock"],
+      "idea": "Fingers or pick into a lightly pushed tube head: compressor for consistency, a warm overdrive at low blend for hair, an Ampeg/Marshall-style head carrying the mids, a cut below 100 Hz to tighten, a 4x10/8x10 cabinet.",
+      "confidence": "Chain and values based on the Darkglass factory preset 'Vintage Microtubes' with the drive turned down; tune by ear.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:FETComp", "settings": {"Input": 5, "Output": 5, "Ratio": "4:1", "Blend": 100}, "note": "Even fingerstyle without killing the attack."},
+        {"row": 1, "column": 2, "type": "urn:darkglass:VMT", "settings": {"Drive": 4, "Era": 4, "Level": 5, "Blend": 45}, "note": "Hair, not distortion; raise Drive toward 7-8 for a dirtier rock tone."},
+        {"row": 1, "column": 3, "type": "urn:darkglass:JimBass", "settings": {"Volume": 5, "Master": 5, "Bass": 7, "Middle": 7, "Treble": 6}, "note": "Marshall-style mids; Volume up for breakup."},
+        {"row": 1, "column": 4, "type": "urn:darkglass:Suppressor", "settings": {"Threshold": -45, "Amount": "More"}},
+        {"row": 1, "column": 5, "type": "urn:darkglass:DarkglassGEQ", "settings": {"LowShelf": -4, "S250Hz": 0, "S500Hz": 0, "S1500Hz": 0, "S3kHz": 2, "HighShelf": 0, "Level": 2}, "note": "Tighten below 100 Hz, a little definition at 3 kHz."},
+        {"row": 1, "column": 6, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 80, "Level": 0}, "note": "Pick an Ampeg-style (Peggy) 8x10 or 4x10 with a Dynamic 421 mic via choose_cabinet."}
+      ],
+      "ask": ["Does the pedal feed a PA/interface (keep the cabinet) or a real bass amp (disable it)?", "Fingers or pick? Pick players usually want Treble 7 and the low shelf cut deeper.", "How much dirt: hair, crunch or distortion?"],
+      "scenes": ["Scene 2: VMT Drive 7, Blend 60 for the chorus.", "Scene 3: VMT off for clean verses."],
+      "notes": ["If the low end gets loose, lower VMT Blend before touching the EQ."]
+    },
+    {
+      "id": "modern_metal",
+      "name": "Modern metal / djent",
+      "kind": "style",
+      "aliases": ["metal", "modern metal", "djent", "metalcore", "progressive metal", "heavy", "low tuning", "8 string"],
+      "idea": "Two voices in parallel: a clean, compressed, full low end on one row and a tight high-band grind on the other, gated, with the top fizz shelved off. Clear pick attack, no mud, works with low tunings.",
+      "confidence": "Chain and values taken from the Darkglass factory preset 'Djentlemen' (crossover off, dirty row 1, clean row 2 with the cabinet). Strong starting point for this style.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass-anagram:split", "settings": {"LevelRow1": 0, "LevelRow2": 0, "Crossover": "Off", "CrossoverFreq": 100}, "note": "Both rows get the full range; row 1 is the dirty voice, row 2 the clean one."},
+        {"row": 1, "column": 8, "type": "urn:darkglass-anagram:merge", "settings": {"Blend": 50, "Level": -3}},
+        {"row": 1, "column": 2, "type": "urn:darkglass:BUSComp", "settings": {"Threshold": -33, "Ratio": "4:1", "Attack": "10 ms", "Release": "0.3 s", "OutputGain": 0, "Blend": 100}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:neural-plugins:microtubes-x", "settings": {"low_pass": 438, "low_comp": 3, "low_level": 5, "high_level": 7, "high_drive": 9.3, "high_pass": 1000}},
+        {"row": 1, "column": 5, "type": "urn:darkglass:B3K", "settings": {"Drive": 8.4, "Grunt": true, "MidBoost": false, "Tone": 5, "Level": 5, "Blend": 50}},
+        {"row": 1, "column": 6, "type": "urn:darkglass:Suppressor", "settings": {"Threshold": -32, "Amount": "More"}},
+        {"row": 1, "column": 7, "type": "urn:darkglass:DarkglassGEQ", "settings": {"LowShelf": 0, "S250Hz": 0, "S500Hz": 0, "S1500Hz": 0, "S3kHz": 2.3, "HighShelf": 4.2, "Level": 0}},
+        {"row": 2, "column": 1, "type": "urn:darkglass:FETComp", "settings": {"Input": 5.9, "Output": 5, "Attack": 5, "Release": 7, "Ratio": "12:1", "Blend": 100}},
+        {"row": 2, "column": 2, "type": "urn:darkglass:VMT", "settings": {"Drive": 3, "Era": 2.9, "Level": 3, "Blend": 100}, "note": "Warm, barely driven clean voice."},
+        {"row": 2, "column": 3, "type": "urn:darkglass:DarkglassGEQ", "settings": {"LowShelf": 6.2, "S250Hz": 0.7, "S500Hz": 0, "S1500Hz": 0, "S3kHz": -4, "HighShelf": -5.1, "Level": 0}, "note": "The clean row owns the lows: boost the shelf, cut the top."},
+        {"row": 2, "column": 4, "type": "urn:darkglass:neural-plugins:gentle", "settings": {"output_lvl": -3, "bass": 4, "treble": 2.5, "low_cut": false}},
+        {"row": 2, "column": 5, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 47, "Level": 0}, "note": "Cabinet on the clean row only; the dirty row stays direct."}
+      ],
+      "ask": ["Tuning and number of strings? For B standard or lower, raise microtubes-x low_pass and the Split stays full range.", "Pick or fingers? Pick players may want B3K MidBoost on.", "Does the pedal feed a PA/interface or a real amp?"],
+      "scenes": ["Scene 2: B3K off for a cleaner verse.", "Scene 3: Merge Blend 70 for more clean voice under solos."],
+      "notes": ["Entropia alone (mid 'B3K Midboost', high 'Alpha Bite', clean compressed lows) gives a similar result in one block when slots are tight.", "Fizz: lower DarkglassGEQ HighShelf on row 1 first, then B3K Tone."]
+    },
+    {
+      "id": "punk",
+      "name": "Punk / DI rock",
+      "kind": "style",
+      "aliases": ["punk", "punk rock", "pop punk", "hardcore", "sansamp", "di rock", "garage"],
+      "idea": "Pick, fast and bright: a SansAmp-style DI preamp with moderate drive and presence, mids pushed so it cuts next to loud guitars, a compressor that lets the pick through, a 4x10 cabinet or none.",
+      "confidence": "Chain from common DI-rock practice (SansAmp-style block + compressor); values are catalog defaults adjusted by the block guide. Tune by ear.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:CompLim", "settings": {"Threshold": -24, "Ratio": "4:1", "Attack": 20, "Release": 150, "OutputGain": 2, "Blend": 100}, "note": "Slow attack keeps the pick click."},
+        {"row": 1, "column": 2, "type": "urn:darkglass:neural-plugins:comic", "settings": {"drive": 6, "pres": 5, "blend": 70, "treb": 6, "mid_shift": "1000 Hz", "mids": 7, "bass_shift": "80 Hz", "bass": 5, "level": 5}, "note": "Mids up: the SansAmp scoop disappears in a band."},
+        {"row": 1, "column": 3, "type": "urn:darkglass:Suppressor", "settings": {"Threshold": -45, "Amount": "More"}},
+        {"row": 1, "column": 4, "type": "urn:darkglass:GenericGEQ", "settings": {"S100Hz": 0, "S200Hz": -3, "S400Hz": 0, "S800Hz": 2, "S1600Hz": 2, "S3200Hz": 0, "Level": 0}},
+        {"row": 1, "column": 5, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 90, "Level": 0}, "note": "A 4x10 with a Dynamic 421 (forward mids)."}
+      ],
+      "ask": ["PA/interface or a real amp?", "How dirty: crunchy or full distortion (drive 8 with blend 90)?"],
+      "notes": ["Presence (pres) is the fizz control: lower it before treble if it gets harsh."]
+    },
+    {
+      "id": "funk_slap",
+      "name": "Funk / slap",
+      "kind": "style",
+      "aliases": ["funk", "slap", "slap bass", "pop", "thumb", "fusion", "hi-fi", "modern hi-fi", "scooped"],
+      "idea": "Hi-fi and scooped: a slow-attack compressor so the thumb and pop transients pass, an SWR/EBS-style head with the aural-enhancer smile curve, a mild 500 Hz cut and a high shelf for sparkle, a bright condenser mic on the cabinet.",
+      "confidence": "Chain from common slap practice; compressor attack/ratio are standard slap values, amp values are catalog defaults. The Darkglass Ignissor template 'Slap 'n' Pop' is an alternative for the compressor.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:CompLim", "settings": {"Threshold": -24, "Ratio": "4:1", "Attack": 25, "Release": 120, "OutputGain": 2, "Blend": 100}, "note": "25 ms attack: the slap transient gets through, the sustain is evened."},
+        {"row": 1, "column": 2, "type": "urn:darkglass:neural-plugins:swirl", "settings": {"gain": 5, "aurashaper": 8, "bass": 7, "lowmid": 6, "mid": 3, "himid": 5, "treble": 7, "level": 4}, "note": "SWR-style hi-fi; aurashaper is the one-knob smile curve."},
+        {"row": 1, "column": 3, "type": "urn:darkglass:DarkglassGEQ", "settings": {"LowShelf": 2, "S250Hz": 0, "S500Hz": -3, "S1500Hz": 0, "S3kHz": 2, "HighShelf": 3, "Level": 0}},
+        {"row": 1, "column": 4, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 85, "Level": 0}, "note": "SWR-style (SWIRL) 4x10 with a Condenser 103 for the top end."}
+      ],
+      "ask": ["Active or passive bass? Active basses are already bright: lower treble and HighShelf.", "PA/interface or a real amp?", "Is the scoop too much in the band? Then raise mid to 5 and S500Hz to 0."],
+      "scenes": ["Scene 2: Gravitron (envelope filter, Mode BP) added at column 5 and enabled only here for funk lines."],
+      "notes": ["For an Ignissor instead of CompLim: fast attack and lower threshold on the high band catches pops while the lows stay free."]
+    },
+    {
+      "id": "jazz_fingerstyle",
+      "name": "Jazz / clean fingerstyle",
+      "kind": "style",
+      "aliases": ["jazz", "fingerstyle", "clean", "warm clean", "upright-like", "ballad", "studio clean"],
+      "idea": "Warm, even and quiet: a gentle optical-style compressor, a clean studio DI preamp for polish, a touch of low mids at 400-800 Hz for the note to speak, a dark microphone on a 1x15 or 2x10 cabinet, no drive.",
+      "confidence": "Chain from common clean-bass practice with catalog defaults; a conservative starting point.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:dirty-boys-audio:plugins:iv4n", "settings": {"peak_reduction": 45, "makeup_gain": 35, "limit_mode": "Compress"}, "note": "Slow, smooth compression you feel rather than hear."},
+        {"row": 1, "column": 2, "type": "urn:darkglass:neural-plugins:gentle", "settings": {"output_lvl": 0, "bass": 5, "treble": 3, "low_cut": false}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:GenericGEQ", "settings": {"S100Hz": 0, "S200Hz": -2, "S400Hz": 1, "S800Hz": 2, "S1600Hz": 0, "S3200Hz": -2, "Level": 0}},
+        {"row": 1, "column": 4, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 90, "Level": 0}, "note": "A 1x15 with a Condenser 67 (vintage, rolled-off top)."}
+      ],
+      "ask": ["Fretted or fretless? Fretless likes S800Hz +3 and a touch of chorus.", "PA/interface or a real amp?"],
+      "notes": ["Add Mint Chocolate Chorus (Blend 20, HPF Mid) after the EQ for the 80s fretless sound."]
+    },
+    {
+      "id": "motown_soul",
+      "name": "Motown / soul",
+      "kind": "style",
+      "aliases": ["motown", "soul", "r&b", "rnb", "60s", "flatwound", "old school", "vintage"],
+      "idea": "Round, dark and fat like a P-bass with flatwounds into a B-15 flip-top: tube combo breakup, no highs above 3 kHz, gentle compression, a 1x15 cabinet with a warm mic.",
+      "confidence": "Chain from the classic recording setup as described by players; values are catalog defaults adjusted by the block guide. Tune by ear.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:dirty-boys-audio:plugins:iv4n", "settings": {"peak_reduction": 40, "makeup_gain": 35, "limit_mode": "Compress"}},
+        {"row": 1, "column": 2, "type": "urn:darkglass:neural-plugins:fliptop", "settings": {"vol": 6, "bass": 6, "treble": 3, "output_lvl": 5}, "note": "Ampeg B-15-style; vol up for a little tube compression."},
+        {"row": 1, "column": 3, "type": "urn:darkglass:LPF", "settings": {"Frequency": 3500, "Slope": "-12 dB"}, "note": "Flatwound darkness."},
+        {"row": 1, "column": 4, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 100, "Level": 0}, "note": "Peggy Fliptop 1x15 with a Condenser 67 or Dynamic 7."}
+      ],
+      "ask": ["Roundwound or flatwound strings? With rounds, lower the LPF to 2500 Hz.", "PA/interface or a real amp?"],
+      "notes": ["Palm muting and foam at the bridge do more for this sound than any block."]
+    },
+    {
+      "id": "reggae",
+      "name": "Reggae / dub",
+      "kind": "style",
+      "aliases": ["reggae", "dub", "ska", "roots", "deep bass", "sub heavy"],
+      "idea": "Deep, dark and dominant: bass and low mids forward, everything above 500-800 Hz rolled off, steady compression so every note weighs the same, a big 8x10 or 1x15 cabinet; dub adds a spring reverb or delay in a scene.",
+      "confidence": "Chain from common reggae practice; the LPF value follows the Darkglass factory preset 'Boogie Boogie Honey' (533 Hz). Tune by ear.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:CompLim", "settings": {"Threshold": -28, "Ratio": "8:1", "Attack": 5, "Release": 200, "OutputGain": 3, "Blend": 100}},
+        {"row": 1, "column": 2, "type": "urn:darkglass:neural-plugins:peggy-bass", "settings": {"ultra_lo": false, "ultra_hi": false, "bass": 7, "midrange": 5, "mid_shift": "1", "treble": 2, "level": 0}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:LPF", "settings": {"Frequency": 600, "Slope": "-12 dB"}, "note": "Lower toward 400 Hz for pure dub."},
+        {"row": 1, "column": 4, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 100, "Level": 0}, "note": "Peggy 8x10 or 1x15 with a Dynamic 112 (deep lows)."}
+      ],
+      "ask": ["Reggae (keep some 500-800 Hz) or dub (roll off lower)?", "PA/interface or a real amp?"],
+      "scenes": ["Scene 2: Spring Reverb (wet 3, lenght/length 6) or Analog Delay (Blend 30, Feedback 5) for dub drops."],
+      "notes": ["A high-pass at 35 Hz before the compressor keeps the sub clean on loud PAs."]
+    },
+    {
+      "id": "synth_bass",
+      "name": "Synth bass",
+      "kind": "style",
+      "aliases": ["synth", "synth bass", "synthwave", "moog", "electronic", "keyboard bass", "octave synth"],
+      "idea": "A real monophonic synth that follows the note: saw oscillators with an octave-up second oscillator, a resonant filter opened by the envelope, blended with the real bass, then a gate and a touch of chorus. Not a fuzz pretending to be a synth.",
+      "confidence": "Chain built around the Axioma Mono Synth (Darkglass) with its catalog defaults adjusted; the factory 'Velcro Synth' preset is the fuzz/octave alternative. Tune by ear.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:axioma_synth", "settings": {"instrument": "4-String Bass", "sensitivity": 5, "osc1_wave": "Saw", "osc1_vol": 8, "osc2_wave": "Square", "osc2_vol": 5, "osc2_semitone": 12, "sub_vol": 4, "cutoff": 5, "reso": 5, "env": 6, "attack": 0, "decay": 4, "release": 1, "blend": 7, "level": 4}, "note": "First in the chain, single notes. Set instrument to the player's bass."},
+        {"row": 1, "column": 2, "type": "urn:darkglass:Suppressor", "settings": {"Threshold": -50, "Amount": "Less"}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:Chorus", "settings": {"Depth": 4, "Rate": 1, "Blend": 25, "HPF": "Mid"}},
+        {"row": 1, "column": 4, "type": "urn:darkglass:CompLim", "settings": {"Threshold": -20, "Ratio": "4:1", "Attack": 10, "Release": 150, "OutputGain": 0, "Blend": 100}, "note": "Keeps the synth level even."}
+      ],
+      "ask": ["4, 5 or 6 strings? (instrument option)", "Synth only or synth under the bass? blend 10 = synth only, 5-7 = both.", "Does the song want the arpeggiator (arp_enable, TempoBPM)?"],
+      "scenes": ["Scene 2: cutoff 7, reso 7 for a brighter lead sound.", "Scene 3: Axioma off for the real bass."],
+      "notes": ["For a dirtier 'fuzz synth' use the factory recipe: Subcitri + Chinchilla (Distortion 10, Tone 1.5, Blend 20) + Gravitron.", "The app has an Axioma panel that draws oscillators, filter and envelope live."]
+    },
+    {
+      "id": "fuzz_wall",
+      "name": "Fuzz wall (two-piece band)",
+      "kind": "style",
+      "aliases": ["fuzz", "fuzz wall", "stoner", "doom", "two piece", "royal blood", "sludge", "wall of sound"],
+      "idea": "Clean, compressed lows on row 1 and a fuzz-and-guitar-cab voice on row 2 above a crossover, so the riff sounds like bass and guitar at once; a gate after the fuzz, an octave-up option for the guitar illusion.",
+      "confidence": "Chain follows the Darkglass factory presets 'Regal Blood' and 'DOOM' (parallel fuzz with a guitar cabinet); values from those presets and the block guide. Tune by ear.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:FETComp", "settings": {"Input": 6, "Output": 5, "Ratio": "4:1", "Blend": 100}},
+        {"row": 1, "column": 2, "type": "urn:darkglass-anagram:split", "settings": {"LevelRow1": 0, "LevelRow2": 0, "Crossover": "1 Lo, 2 Hi", "CrossoverFreq": 180}, "note": "Lows stay on row 1, highs go to the fuzz on row 2."},
+        {"row": 1, "column": 6, "type": "urn:darkglass-anagram:merge", "settings": {"Blend": 50, "Level": -3}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:neural-plugins:peggy-bass", "settings": {"ultra_lo": false, "ultra_hi": false, "bass": 6, "midrange": 6, "mid_shift": "2", "treble": 4, "level": 0}},
+        {"row": 1, "column": 4, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 100, "Level": 0}},
+        {"row": 2, "column": 1, "type": "urn:darkglass:neural-plugins:duality-fuzz", "settings": {"duality": 3, "filter": 5, "level": 0, "blend": 100}},
+        {"row": 2, "column": 2, "type": "urn:darkglass:Suppressor", "settings": {"Threshold": -42, "Amount": "More"}},
+        {"row": 2, "column": 3, "type": "urn:darkglass-anagram:cabinet-guitar", "settings": {"Blend": 100, "Level": -2}, "note": "A 4x12 with a Dynamic 57 for the guitar illusion."}
+      ],
+      "ask": ["PA/interface or a real amp (then disable both cabinets)?", "Should the fuzz voice sit an octave up? Add a Pitch Shifter (Semitone 12, DryLevel 10, WetLevel 6) at row 2 column 1 before the fuzz.", "How much fuzz vs clean? Adjust Merge Blend."],
+      "scenes": ["Scene 2: Duality Fuzz off for a clean/compressed verse."],
+      "notes": ["If the low end thins at the Merge, add a Gain block on row 2 with PolarityInversion on and compare."]
+    },
+    {
+      "id": "pop_clean_modern",
+      "name": "Modern clean (pop / worship / session)",
+      "kind": "style",
+      "aliases": ["pop", "modern clean", "worship", "session", "church", "clean di", "polished", "mix ready", "studio"],
+      "idea": "Polished, even and present: bus compression for glue, a sub-clean high-pass, a hi-fi head with a touch of low mids, a tube DI colour, a 4x10 with a neutral condenser.",
+      "confidence": "Chain from common session practice; compressor values follow the Darkglass factory presets that start with the BUS Compressor. Tune by ear.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:HPF", "settings": {"Frequency": 35, "Slope": "-12 dB"}},
+        {"row": 1, "column": 2, "type": "urn:darkglass:BUSComp", "settings": {"Threshold": -24, "Ratio": "4:1", "Attack": "10 ms", "Release": "0.3 s", "OutputGain": 2, "Blend": 100}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:neural-plugins:markku", "settings": {"gain": 5, "bass": 6, "midlow": 6, "midhigh": 5, "high": 5, "modernfilter": 1, "vintagefilter": 1, "level": 4}},
+        {"row": 1, "column": 4, "type": "urn:darkglass:neural-plugins:gentle", "settings": {"output_lvl": -3, "bass": 5, "treble": 3, "low_cut": false}},
+        {"row": 1, "column": 5, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 85, "Level": 0}, "note": "Black & Yellow or Darkglass Neo 4x10 with a Condenser 414."}
+      ],
+      "ask": ["PA/interface or a real amp?", "Active or passive bass?", "In-ears or wedges? In-ears usually want the cabinet Blend at 100."]
+    },
+    {
+      "id": "ambient",
+      "name": "Ambient / solo bass",
+      "kind": "style",
+      "aliases": ["ambient", "solo bass", "atmospheric", "pad", "shoegaze", "post rock", "swell"],
+      "idea": "A clean, compressed bass into a modulated delay with the lows filtered out of the repeats, a long hall or shimmer reverb with trails, optional octave-up shimmer; chords and swells rather than grooves.",
+      "confidence": "Chain follows the Darkglass factory presets 'Angelic Choir' and 'Synthy Shimmer'; values from the block guide. Tune by ear.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:CompLim", "settings": {"Threshold": -24, "Ratio": "4:1", "Attack": 10, "Release": 200, "OutputGain": 2, "Blend": 100}},
+        {"row": 1, "column": 2, "type": "urn:darkglass:neural-plugins:gentle", "settings": {"output_lvl": -3, "bass": 5, "treble": 4, "low_cut": false}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:ModDelay", "settings": {"Blend": 35, "Range": "0.1-1 s", "Time": 6, "Feedback": 5, "HPcutoff": 200, "LPcutoff": 4000, "ModDepth": 4, "ModRate": 0.6, "Trails": true, "Subdivision": "Tempo ctl off"}},
+        {"row": 1, "column": 4, "type": "urn:darkglass:ShimmerReverb", "settings": {"Dry": 10, "Wet": 5, "Decay": 6, "Modulation": 3, "Damping": 7, "HiCut": 1, "LoCut": 4, "Pitch": "Dark", "Trails": true}},
+        {"row": 1, "column": 5, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 80, "Level": 0}}
+      ],
+      "ask": ["Song BPM? Then set the delay Subdivision to '1/4 dot' or '1/8' with TempoBPM.", "Stereo outputs? Use the Stereo reverb and delay variants.", "PA/interface or a real amp?"],
+      "scenes": ["Scene 2: ShimmerReverb Wet 8, Decay 8 for swells.", "Scene 3: delay and reverb off for the groove parts."]
+    },
+    {
+      "id": "steve_harris",
+      "name": "Steve Harris (Iron Maiden) - starting point",
+      "kind": "player",
+      "aliases": ["steve harris", "iron maiden", "maiden", "galloping", "gallop", "nwobhm", "clanky metal"],
+      "idea": "Clean but very aggressive: hard fingerstyle with flatwound strings, almost no distortion, treble and upper mids pushed hard so every note clanks, lows controlled, a big 4x10/8x10 cabinet. The attack is the sound, so compression must be slow or light.",
+      "confidence": "Starting point. Describes the well-known clanky, bright, mostly clean Maiden bass sound; the exact amps, cabinets and settings he uses are not claimed here. Values from the block guide and catalog defaults.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:CompLim", "settings": {"Threshold": -20, "Ratio": "4:1", "Attack": 30, "Release": 120, "OutputGain": 2, "Blend": 100}, "note": "Slow attack: the finger clank passes untouched."},
+        {"row": 1, "column": 2, "type": "urn:darkglass:HBO", "settings": {"Boost": 5, "Character": 2, "MidGain": 7, "MidFreq": 7, "Bass": 5, "Treble": 7}, "note": "Pushes the upper mids into the amp."},
+        {"row": 1, "column": 3, "type": "urn:darkglass:neural-plugins:peggy-bass", "settings": {"ultra_lo": false, "ultra_hi": true, "bass": 5, "midrange": 7, "mid_shift": "3", "treble": 7, "level": 0}, "note": "SVT-style head, Ultra Hi on for the click."},
+        {"row": 1, "column": 4, "type": "urn:darkglass:GenericGEQ", "settings": {"S100Hz": -1, "S200Hz": -3, "S400Hz": 0, "S800Hz": 2, "S1600Hz": 4, "S3200Hz": 3, "Level": 0}, "note": "Clear the mud, lift 1.6 and 3.2 kHz for the clank."},
+        {"row": 1, "column": 5, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 85, "Level": 0}, "note": "Peggy 8x10 with a Condenser 103 (bright, detailed)."}
+      ],
+      "ask": ["Flatwound or roundwound strings? Rounds already clank: lower S3200Hz to 1.", "PA/interface or a real amp?", "Should it stay totally clean, or do you want a hair of grind (add VMT Drive 2, Blend 30 after the compressor)?"],
+      "scenes": ["Scene 2: GenericGEQ S1600Hz 6 and HBO Boost 7 for the galloping parts."],
+      "notes": ["Most of this tone is in the right hand: hard attack near the bridge pickup. Say so to the player."]
+    },
+    {
+      "id": "geddy_lee",
+      "name": "Geddy Lee (Rush) - starting point",
+      "kind": "player",
+      "aliases": ["geddy lee", "geddy", "rush", "prog rock", "progressive rock", "growl clean", "rickenbacker growl", "jazz bass growl"],
+      "idea": "Growling clean-with-edge: a DI-style preamp drive in parallel with a clean path, strong 500-1000 Hz growl, bright top, controlled lows. Two voices (clean + driven) summed, not a single distortion.",
+      "confidence": "Starting point. Describes the familiar growly, parallel clean/dirty character of his later tone without claiming his exact rig. Values from the block guide and catalog defaults.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:CompLim", "settings": {"Threshold": -24, "Ratio": "4:1", "Attack": 15, "Release": 150, "OutputGain": 1, "Blend": 100}},
+        {"row": 1, "column": 2, "type": "urn:darkglass-anagram:split", "settings": {"LevelRow1": 0, "LevelRow2": 0, "Crossover": "Off", "CrossoverFreq": 100}, "note": "Full range to both rows: clean on row 1, driven on row 2."},
+        {"row": 1, "column": 5, "type": "urn:darkglass-anagram:merge", "settings": {"Blend": 50, "Level": -3}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:neural-plugins:gentle", "settings": {"output_lvl": -2, "bass": 5, "treble": 4, "low_cut": false}},
+        {"row": 1, "column": 6, "type": "urn:darkglass:GenericGEQ", "settings": {"S100Hz": 0, "S200Hz": -2, "S400Hz": 0, "S800Hz": 3, "S1600Hz": 2, "S3200Hz": 2, "Level": 0}, "note": "The growl: 800 Hz up."},
+        {"row": 1, "column": 7, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 85, "Level": 0}},
+        {"row": 2, "column": 1, "type": "urn:darkglass:neural-plugins:comic", "settings": {"drive": 6, "pres": 5, "blend": 100, "treb": 6, "mid_shift": "1000 Hz", "mids": 7, "bass_shift": "80 Hz", "bass": 4, "level": 5}, "note": "SansAmp-style driven voice; row 1 keeps the clean lows."}
+      ],
+      "ask": ["PA/interface or a real amp?", "How much of the driven voice? Merge Blend 40 = cleaner, 60 = growlier.", "Pick or fingers?"],
+      "scenes": ["Scene 2: Merge Blend 70 and comic drive 8 for the heavy sections."]
+    },
+    {
+      "id": "flea",
+      "name": "Flea (Red Hot Chili Peppers) - starting point",
+      "kind": "player",
+      "aliases": ["flea", "red hot chili peppers", "rhcp", "chili peppers", "funk rock", "punchy slap", "gk slap"],
+      "idea": "Punchy, dry and in-your-face: fast solid-state head voicing with mids kept (contour off), a compressor with slow attack for slap, little or no reverb, a 4x10 with a mid-forward dynamic mic. Funk rock rather than hi-fi slap.",
+      "confidence": "Starting point. Describes his punchy funk-rock character; the exact amps and settings are not claimed. Values from the block guide and the factory 'Grona-Kulor' preset (GK-style head).",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:CompLim", "settings": {"Threshold": -22, "Ratio": "4:1", "Attack": 20, "Release": 120, "OutputGain": 2, "Blend": 100}},
+        {"row": 1, "column": 2, "type": "urn:darkglass:neural-plugins:gallen-kallinen", "settings": {"mid_contour": false, "bass": 6, "lo_mid": 6, "hi_mid": 7, "treble": 6, "level": 0}, "note": "GK-style punch with the mids in."},
+        {"row": 1, "column": 3, "type": "urn:darkglass:DarkglassGEQ", "settings": {"LowShelf": 0, "S250Hz": -2, "S500Hz": 1, "S1500Hz": 2, "S3kHz": 1, "HighShelf": 0, "Level": 0}},
+        {"row": 1, "column": 4, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 90, "Level": 0}, "note": "A 4x10 with a Dynamic 421."}
+      ],
+      "ask": ["Slap-heavy or fingerstyle funk? For slap raise HighShelf to 3.", "PA/interface or a real amp?", "Any dirt? Add B3K Drive 4, Blend 40 after the compressor for the rockier songs."],
+      "scenes": ["Scene 2: Gravitron (Mode BP, Sensitivity 6) enabled for envelope-filter funk."]
+    },
+    {
+      "id": "jaco_pastorius",
+      "name": "Jaco Pastorius - starting point",
+      "kind": "player",
+      "aliases": ["jaco", "jaco pastorius", "fretless", "fretless jazz", "weather report", "mwah", "singing fretless"],
+      "idea": "Singing fretless: bridge-pickup bite with strong 800 Hz-1.5 kHz mids ('mwah'), clean with a little natural compression, a chorus for the famous doubled sound, bright but not clanky.",
+      "confidence": "Starting point. Describes the bright, mid-forward fretless character; the exact gear is not claimed. Values from the block guide and catalog defaults.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:CompLim", "settings": {"Threshold": -24, "Ratio": "4:1", "Attack": 15, "Release": 150, "OutputGain": 2, "Blend": 100}},
+        {"row": 1, "column": 2, "type": "urn:darkglass:neural-plugins:gentle", "settings": {"output_lvl": 0, "bass": 4, "treble": 5, "low_cut": false}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:GenericGEQ", "settings": {"S100Hz": -1, "S200Hz": -2, "S400Hz": 0, "S800Hz": 3, "S1600Hz": 3, "S3200Hz": 1, "Level": 0}, "note": "The mwah lives at 800-1600 Hz."},
+        {"row": 1, "column": 4, "type": "urn:darkglass:Chorus", "settings": {"Depth": 5, "Rate": 0.8, "Blend": 30, "HPF": "Mid"}},
+        {"row": 1, "column": 5, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 85, "Level": 0}, "note": "A 4x10 or 2x12 with a Condenser 414 (neutral)."}
+      ],
+      "ask": ["Is the bass fretless? On a fretted bass this is a bright jazz tone; lower S1600Hz to 1.", "PA/interface or a real amp?", "Chorus always on, or only in a scene?"],
+      "scenes": ["Scene 2: Chorus off; Scene 3: Digital Delay (Range 0.1-1 s, Blend 25, Feedback 3) for solos."]
+    },
+    {
+      "id": "james_jamerson",
+      "name": "James Jamerson (Motown) - starting point",
+      "kind": "player",
+      "aliases": ["james jamerson", "jamerson", "motown bass", "funk brothers", "p-bass flatwounds", "precision flatwound"],
+      "idea": "The Motown sound: a Precision with old flatwounds, played with one finger, into a tube flip-top combo and a console compressor; dark, round, every note the same weight, no highs.",
+      "confidence": "Starting point. Follows the widely described recording setup (P-bass, flatwounds, B-15-style amp, console compression) without claiming exact settings. Values from the block guide and catalog defaults.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:dirty-boys-audio:plugins:iv4n", "settings": {"peak_reduction": 50, "makeup_gain": 40, "limit_mode": "Compress"}, "note": "Smooth optical-style levelling."},
+        {"row": 1, "column": 2, "type": "urn:darkglass:neural-plugins:fliptop", "settings": {"vol": 6, "bass": 6, "treble": 2, "output_lvl": 5}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:LPF", "settings": {"Frequency": 3000, "Slope": "-12 dB"}},
+        {"row": 1, "column": 4, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 100, "Level": 0}, "note": "Peggy Fliptop 1x15 with a Condenser 67."}
+      ],
+      "ask": ["Flatwound strings? With rounds lower the LPF to 2200 Hz.", "PA/interface or a real amp?"],
+      "notes": ["Foam under the strings at the bridge gives the thump no block can."]
+    },
+    {
+      "id": "cliff_burton",
+      "name": "Cliff Burton (Metallica) - starting point",
+      "kind": "player",
+      "aliases": ["cliff burton", "burton", "early metallica", "anesthesia", "pulling teeth", "lead bass", "distorted wah bass"],
+      "idea": "Lead bass with heavy fuzz-distortion and a wah, played like a guitar: big scooped fuzz, a mid push so it still cuts, a wah set as a fixed filter (or on the expression pedal), a pushed tube head.",
+      "confidence": "Starting point. Describes the distorted, wah-driven lead-bass character; exact gear is not claimed. Values from the block guide and catalog defaults.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:wah", "settings": {"Position": 4, "OutLvl": 0, "BypassAt0": false}, "note": "Fixed filter colour; bind it to the expression pedal in the app if there is one."},
+        {"row": 1, "column": 2, "type": "urn:darkglass:neural-plugins:pirate", "settings": {"dist": 7, "tone_enabled": true, "tone": 5, "level": 5, "blend": 70}, "note": "Big Muff-style fuzz with clean under it."},
+        {"row": 1, "column": 3, "type": "urn:darkglass:neural-plugins:peggycl", "settings": {"input": "0dB", "gain": 6, "master": 6, "bass": 6, "mid": 7, "mid_freq": "3", "treble": 5, "output_lvl": 5}},
+        {"row": 1, "column": 4, "type": "urn:darkglass:Suppressor", "settings": {"Threshold": -42, "Amount": "More"}},
+        {"row": 1, "column": 5, "type": "urn:darkglass:DarkglassGEQ", "settings": {"LowShelf": -2, "S250Hz": 0, "S500Hz": 2, "S1500Hz": 2, "S3kHz": 0, "HighShelf": -2, "Level": 0}},
+        {"row": 1, "column": 6, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 90, "Level": 0}}
+      ],
+      "ask": ["Is an expression pedal plugged in for the wah?", "PA/interface or a real amp?", "Lead sound (this) or his rhythm sound (fuzz off, gain 5)?"],
+      "scenes": ["Scene 2: fuzz off for rhythm parts.", "Scene 3: wah Position 7 and pirate blend 100 for the solo."]
+    },
+    {
+      "id": "justin_chancellor",
+      "name": "Justin Chancellor (Tool) - starting point",
+      "kind": "player",
+      "aliases": ["justin chancellor", "chancellor", "tool", "tool bass", "schism", "pick grind", "chorus grind"],
+      "idea": "Mid-forward pick grind with a clean foundation: two voices in parallel, a clean compressed low path and a driven path with chorus, strong 500-1000 Hz, controlled top. The chorus on the dirty voice is part of the signature.",
+      "confidence": "Starting point. Describes the parallel clean/grind-with-chorus character; exact amps are not claimed. Values from the block guide and the factory 'Djentlemen' parallel layout.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:BUSComp", "settings": {"Threshold": -26, "Ratio": "4:1", "Attack": "10 ms", "Release": "0.3 s", "OutputGain": 0, "Blend": 100}},
+        {"row": 1, "column": 2, "type": "urn:darkglass-anagram:split", "settings": {"LevelRow1": 0, "LevelRow2": 0, "Crossover": "Off", "CrossoverFreq": 100}},
+        {"row": 1, "column": 5, "type": "urn:darkglass-anagram:merge", "settings": {"Blend": 55, "Level": -3}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:neural-plugins:modern-california-cln", "settings": {"gain": 5, "bass": 7, "passivemid": 6, "activemid": 5, "midfreq": 400, "treble": 5, "volume": 5}, "note": "Clean Mesa-style foundation on row 1."},
+        {"row": 1, "column": 6, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 85, "Level": 0}},
+        {"row": 2, "column": 1, "type": "urn:darkglass:B3K", "settings": {"Drive": 6, "Grunt": false, "MidBoost": true, "Tone": 5, "Level": 5, "Blend": 100}, "note": "The grind voice; MidBoost for the honk."},
+        {"row": 2, "column": 2, "type": "urn:darkglass:Chorus", "settings": {"Depth": 6, "Rate": 1.2, "Blend": 35, "HPF": "Low"}},
+        {"row": 2, "column": 3, "type": "urn:darkglass:HPF", "settings": {"Frequency": 120, "Slope": "-12 dB"}, "note": "Keep the dirty voice out of the sub; row 1 owns the lows."}
+      ],
+      "ask": ["Pick? This recipe assumes a pick near the bridge.", "PA/interface or a real amp?", "More grind or more clean? Merge Blend 65 / 45."],
+      "scenes": ["Scene 2: B3K Drive 8 and Merge Blend 65 for the heavy riffs.", "Scene 3: row 2 blocks off for the clean sections."]
+    },
+    {
+      "id": "marcus_miller",
+      "name": "Marcus Miller - starting point",
+      "kind": "player",
+      "aliases": ["marcus miller", "marcus", "active jazz bass slap", "hi-fi slap", "jazz funk slap", "fusion slap"],
+      "idea": "Hi-fi slap from an active Jazz bass: deep, scooped mids, very bright top, compression that lets the thumb through and controls the pop, an SWR-style head with the aural enhancer, a bright condenser on a 4x10.",
+      "confidence": "Starting point. Describes the hi-fi scooped slap character; his exact rig and settings are not claimed. Values from the block guide and catalog defaults.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:ignissor", "settings": {"comp_level": 0, "clean_level": -24, "lomid_xo_freq": 250, "midhi_xo_freq": 1500, "lo_threshold": -24, "lo_ratio": "4:1", "lo_attack": 20, "lo_release": 200, "lo_level": 1, "mid_threshold": -28, "mid_ratio": "4:1", "mid_attack": 20, "mid_release": 200, "mid_level": -2, "hi_threshold": -30, "hi_ratio": "8:1", "hi_attack": 1, "hi_release": 150, "hi_level": 2}, "note": "Pops caught on the high band, lows free, mids slightly scooped."},
+        {"row": 1, "column": 2, "type": "urn:darkglass:neural-plugins:swirl", "settings": {"gain": 5, "aurashaper": 8, "bass": 7, "lowmid": 6, "mid": 2.5, "himid": 5, "treble": 7, "level": 4}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:DarkglassGEQ", "settings": {"LowShelf": 2, "S250Hz": 0, "S500Hz": -3, "S1500Hz": 0, "S3kHz": 2, "HighShelf": 4, "Level": 0}},
+        {"row": 1, "column": 4, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 85, "Level": 0}, "note": "SWIRL 4x10 with a Condenser 103."}
+      ],
+      "ask": ["Active bass with the preamp boosted? Then lower HighShelf to 2 and treble to 5.", "PA/interface or a real amp?"],
+      "notes": ["The Darkglass Ignissor template 'Slap 'n' Pop' (in the app) is an alternative to the compressor settings above."]
+    },
+    {
+      "id": "lemmy",
+      "name": "Lemmy (Motörhead) - starting point",
+      "kind": "player",
+      "aliases": ["lemmy", "motorhead", "motörhead", "rickenbacker distortion", "marshall bass distortion", "chord bass", "overdriven marshall"],
+      "idea": "A bass amp cranked into a Marshall-style head with the mids all the way up and bass and treble pulled down, playing chords with a pick: amp distortion rather than a pedal, huge mids, ragged top.",
+      "confidence": "Starting point. Describes the famous mids-up, bass-and-treble-down overdriven Marshall-style character; exact amps and settings are not claimed. Values from the block guide and catalog defaults.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:HPF", "settings": {"Frequency": 60, "Slope": "-12 dB"}, "note": "Chords stay clear without the sub."},
+        {"row": 1, "column": 2, "type": "urn:darkglass:JimBass", "settings": {"Volume": 9, "Master": 6, "Bass": 2, "Middle": 10, "Treble": 3}, "note": "Marshall-style head pushed hard: Volume is the breakup."},
+        {"row": 1, "column": 3, "type": "urn:darkglass:B3K", "settings": {"Drive": 5, "Grunt": false, "MidBoost": true, "Tone": 4, "Level": 5, "Blend": 60}, "note": "Extra grind if the amp alone is not ragged enough; otherwise disable it."},
+        {"row": 1, "column": 4, "type": "urn:darkglass:Suppressor", "settings": {"Threshold": -45, "Amount": "More"}},
+        {"row": 1, "column": 5, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 90, "Level": 0}, "note": "A 4x12-style guitar cab is also fair game here (cabinet-guitar with a Dynamic 57)."}
+      ],
+      "ask": ["PA/interface or a real amp?", "Pick and chords, or single notes? For single notes raise Bass to 4.", "Amp distortion only (B3K off) or more?"],
+      "scenes": ["Scene 2: B3K off, JimBass Volume 7 for the quieter songs."]
+    },
+    {
+      "id": "chris_squire",
+      "name": "Chris Squire (Yes) - starting point",
+      "kind": "player",
+      "aliases": ["chris squire", "squire", "yes", "rickenbacker bi-amp", "bi-amp", "biamp", "treble distortion", "prog bass"],
+      "idea": "Bi-amped Rickenbacker: the lows clean and solid, the highs sent to a driven guitar-style amp, so it growls and clanks on top of a full bottom. A crossover Split is exactly this.",
+      "confidence": "Starting point. Describes the well-known bi-amped clean-low / driven-high character; exact gear is not claimed. Values from the block guide and catalog defaults.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:CompLim", "settings": {"Threshold": -24, "Ratio": "4:1", "Attack": 20, "Release": 150, "OutputGain": 1, "Blend": 100}},
+        {"row": 1, "column": 2, "type": "urn:darkglass-anagram:split", "settings": {"LevelRow1": 0, "LevelRow2": 0, "Crossover": "1 Lo, 2 Hi", "CrossoverFreq": 300}, "note": "Lows on row 1, highs to the driven row 2."},
+        {"row": 1, "column": 5, "type": "urn:darkglass-anagram:merge", "settings": {"Blend": 50, "Level": -2}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:neural-plugins:super-california", "settings": {"volume": -12, "bass": 6, "mid": 5, "treble": 4, "master": 0}, "note": "Clean Fender-style low path."},
+        {"row": 1, "column": 4, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 100, "Level": 0}},
+        {"row": 2, "column": 1, "type": "urn:darkglass:VMT", "settings": {"Drive": 6, "Era": 7, "Level": 5, "Blend": 100}, "note": "Driven, bright voice on the highs."},
+        {"row": 2, "column": 2, "type": "urn:darkglass-anagram:cabinet-guitar", "settings": {"Blend": 100, "Level": 0}, "note": "Guitar cab on the high band only."}
+      ],
+      "ask": ["PA/interface or a real amp (then disable both cabinets)?", "Pick? This assumes a pick.", "How much top growl? Merge Blend 60 = more."],
+      "scenes": ["Scene 2: VMT Drive 8 for the solos."]
+    },
+    {
+      "id": "duff_mckagan",
+      "name": "Duff McKagan (Guns N' Roses) - starting point",
+      "kind": "player",
+      "aliases": ["duff mckagan", "duff", "guns n roses", "guns n' roses", "gnr", "chorus rock bass", "80s rock chorus"],
+      "idea": "Clean, punchy solid-state rock bass with an always-on chorus: GK-style head with the contour giving a slight scoop, a touch of chorus for width, pick attack kept by a slow compressor.",
+      "confidence": "Starting point. Describes the famous clean-with-chorus 80s rock character; exact gear is not claimed. Values from the block guide and the factory 'Grona-Kulor' preset (GK-style head + chorus).",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:BUSComp", "settings": {"Threshold": -22, "Ratio": "4:1", "Attack": "10 ms", "Release": "0.3 s", "OutputGain": 1, "Blend": 100}},
+        {"row": 1, "column": 2, "type": "urn:darkglass:Chorus", "settings": {"Depth": 5, "Rate": 1.9, "Blend": 25, "HPF": "Low"}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:neural-plugins:gallen-kallinen", "settings": {"mid_contour": true, "bass": 7, "lo_mid": 5, "hi_mid": 7, "treble": 6, "level": 0}},
+        {"row": 1, "column": 4, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 100, "Level": -3}, "note": "A 4x10 with a Dynamic 421."}
+      ],
+      "ask": ["Pick? Yes for this sound.", "PA/interface or a real amp?", "Chorus always on or only on some songs (scene)?"],
+      "scenes": ["Scene 2: Chorus off."]
+    },
+    {
+      "id": "john_entwistle",
+      "name": "John Entwistle (The Who) - starting point",
+      "kind": "player",
+      "aliases": ["john entwistle", "entwistle", "the who", "who", "typewriter", "trebly bass", "lead bass clean", "hiwatt bass"],
+      "idea": "Loud, trebly, lead-style clean bass with a lot of string noise and attack: a British clean head on the edge of breakup, treble and presence up, lows kept moderate, a bright condenser on the cabinet, light compression only.",
+      "confidence": "Starting point. Describes the bright, aggressive 'lead bass' character; exact amps and settings are not claimed. Values from the block guide and catalog defaults.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:CompLim", "settings": {"Threshold": -18, "Ratio": "2:1", "Attack": 30, "Release": 100, "OutputGain": 1, "Blend": 100}, "note": "Barely there: the dynamics are the point."},
+        {"row": 1, "column": 2, "type": "urn:darkglass:neural-plugins:hifive103", "settings": {"master": 6, "gain": 6, "bass": 5, "middle": 6, "treble": 7, "presence": 7, "output_lvl": 4}, "note": "Hiwatt-style head on the edge."},
+        {"row": 1, "column": 3, "type": "urn:darkglass:GenericGEQ", "settings": {"S100Hz": -2, "S200Hz": -2, "S400Hz": 0, "S800Hz": 1, "S1600Hz": 3, "S3200Hz": 3, "Level": 0}},
+        {"row": 1, "column": 4, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 85, "Level": 0}, "note": "A 4x10 or 8x10 with a Condenser 103."}
+      ],
+      "ask": ["Roundwound strings and a hard attack? Both are part of the sound.", "PA/interface or a real amp?", "A hair of amp breakup (gain 8) or clean (gain 4)?"]
+    },
+    {
+      "id": "pino_palladino",
+      "name": "Pino Palladino - starting point",
+      "kind": "player",
+      "aliases": ["pino palladino", "pino", "neo soul", "neo-soul", "d'angelo", "dangelo", "voodoo", "fretless octave 80s", "behind the beat"],
+      "idea": "Two eras. Neo-soul (this chain): a Precision with flatwounds, deep, dark and compressed, no highs, played behind the beat. 80s fretless: the same clean path with a round analogue octave down (Sublime) and a chorus; add them from the notes.",
+      "confidence": "Starting point. Describes the dark neo-soul character and the 80s fretless-with-octaver sound in general terms; exact gear and settings are not claimed. Values from the block guide and catalog defaults.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:dirty-boys-audio:plugins:iv4n", "settings": {"peak_reduction": 55, "makeup_gain": 40, "limit_mode": "Compress"}},
+        {"row": 1, "column": 2, "type": "urn:darkglass:neural-plugins:fliptop", "settings": {"vol": 5, "bass": 7, "treble": 2, "output_lvl": 5}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:DarkglassGEQ", "settings": {"LowShelf": 2, "S250Hz": 1, "S500Hz": 0, "S1500Hz": -2, "S3kHz": -4, "HighShelf": -6, "Level": 0}},
+        {"row": 1, "column": 4, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 100, "Level": 0}, "note": "Peggy Fliptop 1x15 with a Dynamic 7 (thick low mids)."}
+      ],
+      "ask": ["Neo-soul (this) or the 80s fretless sound? For the latter add Sublime Octaver (CleanLevel 5, OctaveLevel 6, FilterCutoff 3) at column 1 after moving the compressor, and a Chorus (Blend 25).", "Flatwound strings?", "PA/interface or a real amp?"]
+    },
+    {
+      "id": "les_claypool",
+      "name": "Les Claypool (Primus) - starting point",
+      "kind": "player",
+      "aliases": ["les claypool", "claypool", "primus", "envelope filter slap", "tapping bass", "quirky funk", "whammy bass"],
+      "idea": "Percussive slap, strum and tap with a vocal envelope filter, a fast compressor to even the technique, an SVT-style head with mids, and a bright top so every pop and tap reads.",
+      "confidence": "Starting point. Describes the percussive, envelope-filter-heavy character; exact gear is not claimed. Values from the block guide and the factory 'Velcro Synth' Gravitron settings adapted to BP mode.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:Gravitron", "settings": {"Sensitivity": 6, "Attack": 4, "Release": 4, "CutoffFreq": 4, "Mode": "BP"}, "note": "Before the compressor so it reads the dynamics."},
+        {"row": 1, "column": 2, "type": "urn:darkglass:FETComp", "settings": {"Input": 6.5, "Output": 5.5, "Attack": 3, "Release": 6, "Ratio": "8:1", "Blend": 100}},
+        {"row": 1, "column": 3, "type": "urn:darkglass:neural-plugins:peggy-bass", "settings": {"ultra_lo": false, "ultra_hi": true, "bass": 6, "midrange": 7, "mid_shift": "2", "treble": 6, "level": 0}},
+        {"row": 1, "column": 4, "type": "urn:darkglass:GenericGEQ", "settings": {"S100Hz": 0, "S200Hz": -2, "S400Hz": 0, "S800Hz": 2, "S1600Hz": 2, "S3200Hz": 3, "Level": 0}},
+        {"row": 1, "column": 5, "type": "urn:darkglass-anagram:cabinet-bass", "settings": {"Blend": 85, "Level": 0}}
+      ],
+      "ask": ["Envelope filter always on, or only in a scene?", "PA/interface or a real amp?", "Fretless or fretted? Fretless wants S800Hz 3 and the filter Sensitivity 7."],
+      "scenes": ["Scene 2: Gravitron off for straight slap.", "Scene 3: Pitch Bender added at column 6 (MaxShift '+1 oct') if an expression pedal is plugged in."]
+    },
+    {
+      "id": "nolly_getgood",
+      "name": "Adam 'Nolly' Getgood (Periphery) - starting point",
+      "kind": "player",
+      "aliases": ["nolly", "adam getgood", "nolly getgood", "periphery", "darkglass metal", "b7k tone", "produced metal bass"],
+      "idea": "Produced modern metal bass: clean compressed lows, Darkglass-style multiband grind on mids and highs, gated, with an engineer's cabinet capture doing the final shaping. He is a Darkglass artist, so the Entropia and the Artists Cabinet (which includes his captures) are the natural blocks.",
+      "confidence": "Starting point. The Artists Cabinet block ships Nolly captures (community/Darkglass naming); the drive settings are catalog defaults adjusted by the block guide, not his settings.",
+      "chain": [
+        {"row": 1, "column": 1, "type": "urn:darkglass:BUSComp", "settings": {"Threshold": -28, "Ratio": "4:1", "Attack": "10 ms", "Release": "0.3 s", "OutputGain": 0, "Blend": 100}},
+        {"row": 1, "column": 2, "type": "urn:darkglass:entropia", "settings": {"mid_drive_typemode": "B3K Midboost", "hi_drive_typemode": "Alpha Bite", "lo_comp_amount": 6, "lo_lp_freq": 200, "mid_hp_freq": 200, "mid_lp_freq": 900, "hi_hp_freq": 900, "hi_lp_freq": 6000, "mid_drive_amount": 6, "hi_drive_amount": 5, "lo_level": 0, "mid_level": 0, "hi_level": -2}, "note": "Clean compressed lows, B3K mids, Alpha bite on top, fizz shelved at 6 kHz."},
+        {"row": 1, "column": 3, "type": "urn:darkglass:Suppressor", "settings": {"Threshold": -42, "Amount": "More"}},
+        {"row": 1, "column": 4, "type": "urn:darkglass:DarkglassGEQ", "settings": {"LowShelf": 0, "S250Hz": -2, "S500Hz": 0, "S1500Hz": 1, "S3kHz": 2, "HighShelf": 0, "Level": 0}},
+        {"row": 1, "column": 5, "type": "urn:darkglass-anagram:cabinet-artists", "settings": {"Blend": 100, "Level": 0}, "note": "Pick a Nolly capture ('Blend', 'AllTheMids', 'ScoopyDoo'...) via choose_cabinet."}
+      ],
+      "ask": ["Tuning? For drop tunings lower lo_lp_freq and mid_hp_freq to 150.", "PA/interface or a real amp?", "Which Nolly capture name shows in choose_cabinet's list? Pick 'Blend' first."],
+      "scenes": ["Scene 2: mid_drive_amount 8, hi_drive_amount 7 for the heavy parts."],
+      "notes": ["The app's Entropia templates by Darkglass (Modern Metal, Hard Rock Bite) are alternatives to the drive settings above."]
+    }
+  ]
+}

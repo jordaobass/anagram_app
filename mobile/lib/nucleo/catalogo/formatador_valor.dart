@@ -9,6 +9,7 @@ abstract final class FormatadorValor {
       {String separadorDecimal = ',', String ligado = 'Ligado', String desligado = 'Desligado'}) {
     if (parametro.opcoes.isNotEmpty) return _opcao(parametro, valor);
     if (parametro.alternavel) return DefinicaoParametro.estaLigado(valor) ? ligado : desligado;
+    if (parametro.rotuloDoPonto(valor) case final rotulo?) return rotulo;
     final sep = separadorDecimal;
     return switch (parametro.unidade) {
       'dB' => '${_decimal(valor, 1, sep)} dB',
@@ -16,6 +17,7 @@ abstract final class FormatadorValor {
       '%' => '${_decimal(valor, 0, sep)} %',
       'ms' => '${_decimal(valor, 0, sep)} ms',
       'ct' => '${_decimal(valor, 0, sep)} ct',
+      'bpm' => '${valor.round()} bpm',
       _ => parametro.inteiro ? '${valor.round()}' : _decimal(valor, _casasSemUnidade(parametro), sep),
     };
   }

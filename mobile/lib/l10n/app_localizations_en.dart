@@ -1143,7 +1143,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pdSecao => 'Pedal';
 
   @override
-  String get pdDica => 'Global Anagram settings: they apply to every preset and are not stored in the preset. Changes are immediate.';
+  String get pdDica => 'Global Anagram settings: they apply to every preset and are not stored in the preset.';
 
   @override
   String get pdSaidas => 'Outputs';
@@ -1176,25 +1176,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pdEqReset => 'Reset';
 
   @override
-  String get pdEqResetTitulo => 'Reset the Global EQ?';
-
-  @override
-  String get pdEqResetTexto => 'The 6 bands go back to 35 Hz, 160 Hz, 397 Hz, 1.25 kHz, 2.5 kHz and 9.63 kHz, with 0 gain and the factory width. You can undo it right after.';
-
-  @override
   String get pdEqResetConfirmar => 'RESET';
 
   @override
-  String get pdEqResetFeito => 'Global EQ back to default.';
-
-  @override
-  String get pdEqDica => 'Drag the points: sideways changes the frequency, up and down the gain. The knobs change what the selected mode shows.';
+  String get pdEqDica => 'The curve and the bands show the Global EQ the pedal has now; the mode picks what the bands show.';
 
   @override
   String get pdEntrada => 'Input';
 
   @override
-  String get pdEntradaDica => 'Input gain for instrument 1 (−12 to +12 dB). The Anagram stores six instruments; the other five and their names will come once the app knows their keys.';
+  String get pdEntradaDica => 'Input gain for instrument 1 (−12 to +12 dB). The Anagram stores six instruments; the app only reads the first.';
 
   @override
   String get pdPlaca => 'Sound card';
@@ -1213,12 +1204,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pdTentarDeNovo => 'Try again';
-
-  @override
-  String get pdErroGravar => 'The pedal did not accept the last change. The values shown are the ones it has now.';
-
-  @override
-  String get pdPendentes => 'Not yet adjustable from the app: mixer Master, Mute and Link, and the instrument names.';
 
   @override
   String get registroSecao => 'Log for support';
@@ -1358,4 +1343,190 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ctlDicaPedaleira => 'On the pedal, assigned pots only respond on the one-row preset screen; with the preset expanded, the knobs edit the selected block.';
+
+  @override
+  String get utTreino => 'Practice';
+
+  @override
+  String get utBater => 'Tap';
+
+  @override
+  String get utBaterSoNoFixo => 'Tap tempo works in Fixed Tempo mode only.';
+
+  @override
+  String slotAlteradoForaTitulo(String slot) {
+    return '$slot changed on the pedal';
+  }
+
+  @override
+  String slotAlteradoForaTexto(String slot) {
+    return 'Slot $slot was changed on the pedal since you opened it. Overwrite saves your version over what is there; reload discards your edits and shows the pedal\'s version.';
+  }
+
+  @override
+  String get sobrescreverMesmoAssim => 'OVERWRITE ANYWAY';
+
+  @override
+  String get recarregarDaPedaleira => 'RELOAD FROM PEDAL';
+
+  @override
+  String get uiRecarregarDaPedaleira => 'Reload from pedal';
+
+  @override
+  String recarregarTitulo(String slot) {
+    return 'Reload $slot from the pedal?';
+  }
+
+  @override
+  String recarregarTexto(String nome) {
+    return 'The unsaved changes to \"$nome\" are lost and the editor shows what is saved in the slot.';
+  }
+
+  @override
+  String get recarregar => 'RELOAD';
+
+  @override
+  String get pausaUsbTitulo => 'Pause between USB packets';
+
+  @override
+  String get pausaUsbTexto => 'Lower = faster live changes; raise it if the pedal stops responding. Auto uses this computer\'s default.';
+
+  @override
+  String get versaoNovaConsultaTexto => 'On launch the app asks only GitHub which version is the latest one published. The request sends only the app\'s version (in the User-Agent header); as with any connection, GitHub sees your IP address. When off, the app does not go online.';
+
+  @override
+  String get fmTitulo => 'Footswitches';
+
+  @override
+  String fmModo(String modo) {
+    String _temp0 = intl.Intl.selectLogic(
+      modo,
+      {
+        'preset': 'PRESET',
+        'stomp': 'STOMP',
+        'scene': 'SCENE',
+        'other': '—',
+      },
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fmSemantica(String modo) {
+    return 'Footswitches in $modo mode';
+  }
+
+  @override
+  String get fmDica => 'In Stomp mode, the footswitches follow this preset\'s pedal controls. The mode applies to every preset.';
+
+  @override
+  String get fmErro => 'The pedal did not confirm the mode change. The mode shown is the one it has now.';
+
+  @override
+  String get fmIndisponivel => 'This pedal does not report the footswitch mode.';
+
+  @override
+  String fmAvisoControles(String modo) {
+    return 'Assigned FOOTs only act in Stomp mode; the pedal is in $modo.';
+  }
+
+  @override
+  String get fmDesconhecido => 'The pedal is in a mode this app does not know. Change the mode on the pedal itself.';
+
+  @override
+  String get t3kTom => 'Tone';
+
+  @override
+  String get t3kModelo => 'Model';
+
+  @override
+  String get t3kLendo => 'Reading the tones on the pedal…';
+
+  @override
+  String get t3kFalhou => 'The pedal did not send the tone list.';
+
+  @override
+  String get t3kTentarDeNovo => 'Try again';
+
+  @override
+  String t3kNaoEncontrado(String arquivo) {
+    return 'Not found on the pedal: $arquivo';
+  }
+
+  @override
+  String get t3kSoConsulta => 'Tone you uploaded: shown for reference only. The app cannot switch it yet.';
+
+  @override
+  String get t3kIrNaoConferido => 'The path of factory IRs has not been checked on a pedal yet: listen before saving.';
+
+  @override
+  String t3kResumo(int fabrica, int seus) {
+    return 'On the pedal: $fabrica factory and $seus uploaded by you';
+  }
+
+  @override
+  String t3kDetalheFabrica(String autor, String licenca) {
+    return '$autor · $licenca license';
+  }
+
+  @override
+  String t3kDetalheSeu(String autor, String licenca) {
+    return '$autor · $licenca license · yours, reference only';
+  }
+
+  @override
+  String get t3kSemAutor => 'no author';
+
+  @override
+  String get uiDicas => 'Tips';
+
+  @override
+  String ctlResumo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n assigned',
+      one: '1 assigned',
+      zero: 'none assigned',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ctlMostrar => 'Show the pedal controls';
+
+  @override
+  String get ctlRecolher => 'Collapse the pedal controls';
+
+  @override
+  String sbSubstitui(String nome) {
+    return 'replaces $nome';
+  }
+
+  @override
+  String get sbSubstituirAqui => 'Replace the preset in this slot';
+
+  @override
+  String get salvarReleituraDiferente => 'the pedal confirmed, but the slot read back differs from what was sent. Your edit is still on screen; check the slot and save again.';
+
+  @override
+  String get pdSemAcesso => 'Output levels, Global EQ and input gain: the app has no access to these pedal features. The Anagram accepts a value sent to it, but does not apply it to the sound. Adjust them with the pedal\'s own knobs and screens; here you see the current values (tap Refresh after changing them).';
+
+  @override
+  String get utAcaoChave => 'In the app, this switch is the pedal\'s Action. Per the plugin\'s manual: turning it on starts the rhythm with an intro; while it plays, triggering again plays a fill; a double trigger stops; holding moves to the next part. What the drums play in each case is up to the plugin.';
+
+  @override
+  String get utSoNoVisor => 'Only on the pedal screen';
+
+  @override
+  String get caProcurando => 'Looking for the pedal…';
+
+  @override
+  String get caConectarAoAbrir => 'Connect on launch';
+
+  @override
+  String get caConectarAoAbrirTexto => 'On launch the app looks for the pedal on USB once. Connecting plays nothing; with no pedal, the connect screen stays as it is.';
+
+  @override
+  String get caConectarAoAbrirMac => 'On macOS, only after you allow Input Monitoring for Anagram App in System Settings › Privacy & Security.';
 }

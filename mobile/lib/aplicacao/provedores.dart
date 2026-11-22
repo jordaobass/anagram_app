@@ -1,5 +1,6 @@
 // Provedores de infraestrutura: catálogo, presets de demonstração e
 // fábrica de transporte. Os testes sobrepõem estes.
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -7,15 +8,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../dados/arquivos_preset.dart';
+import '../dados/preferencias_pausa.dart';
 import '../nucleo/catalogo/catalogo_blocos.dart';
 import '../nucleo/catalogo/definicao_bloco.dart';
 import '../nucleo/catalogo/explicacoes_parametros.dart';
 import '../nucleo/catalogo/templates_bloco.dart';
+import '../nucleo/conhecimento/base_conhecimento.dart';
 import '../nucleo/demonstracao/transporte_demonstracao.dart';
 import '../nucleo/midi/saida_midi.dart';
 import '../nucleo/modelo/presets_fabrica.dart';
 import '../nucleo/registro.dart';
 import '../plataforma/fabrica_transporte.dart';
+import '../plataforma/fotos_suite.dart';
 import 'arte/indice_miniaturas.dart';
 
 abstract final class CaminhosAssets {
@@ -27,6 +31,10 @@ abstract final class CaminhosAssets {
   static const demonstracao = 'assets/demonstracao/presets.json';
   static const explicacoes = 'assets/explicacoes/parametros.json';
   static const templates = 'assets/templates/blocos.json';
+  /// Conhecimento de timbre que o MCP entrega à IA (DECISOES IC1).
+  static const conhecimentoBlocos = 'assets/conhecimento/blocos.json';
+  static const conhecimentoTimbre = 'assets/conhecimento/guia_timbre.json';
+  static const conhecimentoReceitas = 'assets/conhecimento/receitas.json';
   static const exemplos = [1, 2, 13, 41];
   static String exemplo(int n) => 'assets/referencia/exemplos/$n.json';
 }
@@ -39,15 +47,26 @@ final catalogoProvider = FutureProvider<CatalogoBlocos>((ref) async {
 });
 
 /// Sem a pasta de miniaturas, índice vazio: todo bloco usa a arte própria.
+/// Índice malformado também: vale a arte própria, e o log diz a causa.
 final indiceMiniaturasProvider = FutureProvider<IndiceMiniaturas>((ref) async {
+  final String texto;
   try {
-    final texto = await ref.watch(pacoteAssetsProvider).loadString(CaminhosAssets.miniaturas);
-    return IndiceMiniaturas.doTexto(texto);
+    texto = await ref.watch(pacoteAssetsProvider).loadString(CaminhosAssets.miniaturas);
   } on FlutterError catch (erro) {
     registro.i('miniaturas de terceiros ausentes; usando arte própria (${erro.message})');
     return IndiceMiniaturas.vazio();
   }
+  try {
+    return IndiceMiniaturas.doTexto(texto);
+  } on Object catch (erro, pilha) {
+    registro.w('índice de miniaturas malformado; usando arte própria', error: erro, stackTrace: pilha);
+    return IndiceMiniaturas.vazio();
+  }
 });
+
+/// A pasta do Darkglass Suite instalado (fotos dos tons TONE3000 da pessoa);
+/// null no celular, no navegador e sem o Suite.
+final fotosDoSuiteProvider = Provider<FotosDoSuite?>((ref) => fotosDoSuiteInstalado());
 
 /// Sem o arquivo da fábrica (build sem a arte do Suite), não há área Fábrica.
 final presetsFabricaProvider = FutureProvider<PresetsDeFabrica>((ref) async {
@@ -80,6 +99,43 @@ final templatesProvider = FutureProvider<TemplatesBlocos>((ref) async {
   }
 });
 
+/// O conhecimento de timbre lido pela IA (DECISOES IC1). Cada arquivo que
+/// faltar deixa só a sua parte vazia: as ferramentas de ajuste não dependem dele.
+final conhecimentoProvider = FutureProvider<BaseConhecimento>((ref) async {
+  final pacote = ref.watch(pacoteAssetsProvider);
+  Future<String?> ler(String caminho) async {
+    try {
+      return await pacote.loadString(caminho);
+    } on FlutterError catch (erro) {
+      registro.w('conhecimento de timbre ausente: $caminho (${erro.message})');
+      return null;
+    }
+  }
+
+  final (blocos, timbre, receitas) = await (
+    ler(CaminhosAssets.conhecimentoBlocos),
+    ler(CaminhosAssets.conhecimentoTimbre),
+    ler(CaminhosAssets.conhecimentoReceitas),
+  ).wait;
+  return BaseConhecimento(
+    guiaBlocos: blocos == null ? GuiaBlocos.vazio : GuiaBlocos.doTexto(blocos),
+    guiaTimbre: timbre == null ? GuiaTimbre.vazio : GuiaTimbre.doTexto(timbre),
+    receitas: receitas == null ? ReceitasTimbre.vazio : ReceitasTimbre.doTexto(receitas),
+  );
+});
+
+/// Nomes corrigidos na demonstração: o exemplo real 1 veio da pedaleira com
+/// erro de digitação ("My faorite tone"); o arquivo de referência fica como
+/// foi gravado e só a pedaleira simulada mostra o nome certo.
+const _nomesNaDemonstracao = {1: 'My favorite tone'};
+
+/// O exemplo real [n] como a pedaleira simulada o mostra.
+Map<String, dynamic> exemploNaDemonstracao(int n, Map<String, dynamic> exemplo) {
+  final nome = _nomesNaDemonstracao[n];
+  if (nome != null) (exemplo['preset'] as Map<String, dynamic>)['name'] = nome;
+  return exemplo;
+}
+
 /// Presets da pedaleira simulada: os autorais + os exemplos reais.
 final presetsDemonstracaoProvider = FutureProvider<Map<int, Map<String, dynamic>>>((ref) async {
   final pacote = ref.watch(pacoteAssetsProvider);
@@ -87,21 +143,37 @@ final presetsDemonstracaoProvider = FutureProvider<Map<int, Map<String, dynamic>
   return {
     for (final e in autorais.entries) int.parse(e.key): e.value as Map<String, dynamic>,
     for (final n in CaminhosAssets.exemplos)
-      n: jsonDecode(await pacote.loadString(CaminhosAssets.exemplo(n))) as Map<String, dynamic>,
+      n: exemploNaDemonstracao(n, jsonDecode(await pacote.loadString(CaminhosAssets.exemplo(n))) as Map<String, dynamic>),
   };
 });
 
 /// Cronômetro da latência ida e volta (os testes fixam o valor).
 final cronometroProvider = Provider<Stopwatch Function()>((ref) => Stopwatch.new);
 
+/// Relógio do "Bater" (tap tempo): o instante de cada toque, desde um
+/// início qualquer; os testes andam com ele à mão.
+final relogioDoToqueProvider = Provider<Duration Function()>((ref) {
+  final cronometro = Stopwatch()..start();
+  return () => cronometro.elapsed;
+});
+
+final preferenciasPausaProvider = Provider<PreferenciasPausa>((ref) => PreferenciasPausaLocais());
+
+/// A pausa guardada ao abrir o app; o main lê antes da primeira tela.
+final pausaSalvaProvider = Provider<Duration?>((ref) => null);
+
 /// Pausa entre relatórios escolhida pela pessoa (null = a sugerida pelo transporte).
 final pausaRelatoriosProvider = NotifierProvider<PausaRelatorios, Duration?>(PausaRelatorios.new);
 
 class PausaRelatorios extends Notifier<Duration?> {
   @override
-  Duration? build() => null;
+  Duration? build() => ref.read(pausaSalvaProvider);
 
-  void definir(Duration? pausa) => state = pausa;
+  /// Vale na próxima mensagem e fica guardada para a próxima abertura.
+  void definir(Duration? pausa) {
+    state = pausa;
+    unawaited(ref.read(preferenciasPausaProvider).gravar(pausa?.inMilliseconds));
+  }
 }
 
 /// A demonstração simula também o USB MIDI (os testes trocam: sem MIDI, MIDI lento).

@@ -15,6 +15,7 @@ import '../protocolo/transporte_anagram.dart';
 import 'ajustes_globais_demonstracao.dart';
 import 'organizacao_demonstracao.dart';
 import 'slots_demonstracao.dart';
+import 'tons_demonstracao.dart';
 
 class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagram {
   TransporteDemonstracao({
@@ -49,6 +50,9 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
   /// sem trocar de área, ou não informa qual área está ativa.
   bool ignorarTrocaDeArea = false;
   bool semAreaAtiva = false;
+
+  /// Falha injetada: firmware sem a capacidade `t3k` (recusa as ações dos tons).
+  bool semTone3000 = false;
   final Duration latencia;
   final String firmware;
   final _montador = MontadorQuadros();
@@ -77,6 +81,9 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
   /// Falha injetada: antes da resposta certa chega um quadro completo de OUTRA
   /// ação (resposta atrasada de uma chamada anterior que estourou o prazo).
   bool enviarRespostaAtrasadaAntes = false;
+
+  /// Falha injetada: a gravação é confirmada e a releitura ainda traz o antigo.
+  final gravacaoAtrasada = GravacaoAtrasada();
 
   /// Para os testes: alguém ainda espera resposta?
   bool get temOuvintesDeResposta => temOuvintesDeRelatorio;
@@ -153,8 +160,8 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
   Map<String, dynamic> _processar(MensagemAnagram m) => switch (m.acao) {
         AcoesAnagram.firmware => {'data': {'version': firmware}},
         AcoesAnagram.posicoes => {'data': {'files': posicoesDosSlots(_daArea(m))}},
-        AcoesAnagram.lerPreset => lerSlot(_daArea(m), m.carga['filename'] as String?),
-        AcoesAnagram.salvar => gravarSlots(_daArea(m), m.carga['presets']),
+        AcoesAnagram.lerPreset => lerSlot(gravacaoAtrasada.paraLer(_daArea(m)), m.carga['filename'] as String?),
+        AcoesAnagram.salvar => gravarSlots(gravacaoAtrasada.antesDeGravar(_daArea(m)), m.carga['presets']),
         AcoesAnagram.excluir => excluirSlot(_daArea(m), m.carga['filename'] as String?),
         AcoesAnagram.lerAjustes => _ajustes(),
         AcoesAnagram.gravarAjustes => _gravarAjustes(m.carga['settings']),
@@ -162,6 +169,8 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
         AcoesAnagram.trocarPresets => trocarSlots(_daArea(m), m.carga['fromIndex'], m.carga['toIndex']),
         AcoesAnagram.trocarBancos => trocarBancosDeSlots(_daArea(m), m.carga['positions']),
         AcoesAnagram.infoBloco => {'data': {'name': '${m.carga['uri']}'.split(':').last}},
+        AcoesAnagram.tonsDeFabrica when !semTone3000 => {'success': 1, 'data': {'tones': tonsDeFabricaDemonstracao}},
+        AcoesAnagram.tonsDoUsuario when !semTone3000 => paginaDeTonsDemonstracao(m.carga['page'], m.carga['itemsPerPage']),
         _ => {'error': 'Ação desconhecida: ${m.acao}'},
       };
 

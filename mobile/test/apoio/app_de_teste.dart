@@ -13,11 +13,17 @@ import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:anagram_app/aplicacao/mcp/controlador_mcp.dart';
 import 'package:anagram_app/dados/preferencias_idioma.dart';
 import 'package:anagram_app/dados/preferencias_mcp.dart';
+import 'package:anagram_app/dados/preferencias_pausa.dart';
+import 'package:anagram_app/dados/preferencias_paineis.dart';
+import 'package:anagram_app/aplicacao/estado/paineis_recolhidos.dart';
 import 'package:anagram_app/nucleo/mcp/protocolo_mcp.dart';
 import 'package:anagram_app/plataforma/servidor_mcp.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
 import 'package:anagram_app/aplicacao/versao_nova.dart';
 import 'package:anagram_app/dados/preferencias_versao.dart';
+import 'package:anagram_app/aplicacao/conectar_ao_abrir.dart';
+import 'package:anagram_app/dados/preferencias_conexao.dart';
+import 'package:anagram_app/plataforma/acesso_entrada_mac.dart';
 import 'versao_falsa.dart';
 
 /// Latência fixa: a real varia de execução para execução e sujaria as capturas.
@@ -41,6 +47,8 @@ const versaoNasCapturas = '0.1.3';
 /// [fabrica]: os presets de fábrica (o padrão é nenhum, como no build sem a arte).
 /// [github]: a última release roteirizada; sem ele, a verificação de versão
 /// nova fica indisponível (como no celular) e nada aparece nas capturas.
+/// [abertura]: onde o app procura a pedaleira sozinho ao abrir; o padrão é
+/// não procurar (como no celular), para nenhum teste conectar sem pedir.
 Widget appDeTeste(
         {List<Override> overrides = const [],
         IdiomaApp? idioma = IdiomaApp.portugues,
@@ -49,7 +57,12 @@ Widget appDeTeste(
         ServidorMcp? servidorMcp,
         bool mcpDisponivel = true,
         GithubFalso? github,
-        PreferenciasVersao? preferenciasVersao}) =>
+        PreferenciasVersao? preferenciasVersao,
+        PreferenciasPausa? preferenciasPausa,
+        PreferenciasPaineis? preferenciasPaineis,
+        PlataformaDeAbertura abertura = PlataformaDeAbertura.semTentativa,
+        PreferenciasConexao? preferenciasConexao,
+        ConsultaAcessoEntrada? acessoEntradaMac}) =>
     ProviderScope(
       overrides: [
         ...overrides,
@@ -61,6 +74,12 @@ Widget appDeTeste(
         consultaHttpProvider.overrideWithValue(github ?? GithubFalso()),
         verificacaoVersaoDisponivelProvider.overrideWithValue(github != null),
         preferenciasVersaoProvider.overrideWithValue(preferenciasVersao ?? PreferenciasVersaoEmMemoria()),
+        preferenciasPausaProvider.overrideWithValue(preferenciasPausa ?? PreferenciasPausaEmMemoria()),
+        preferenciasPaineisProvider.overrideWithValue(preferenciasPaineis ?? PreferenciasPaineisEmMemoria()),
+        plataformaDeAberturaProvider.overrideWithValue(abertura),
+        preferenciasConexaoProvider.overrideWithValue(preferenciasConexao ?? PreferenciasConexaoEmMemoria()),
+        // nenhum teste chama o canal nativo do Mac
+        acessoEntradaMacProvider.overrideWithValue(acessoEntradaMac ?? () async => AcessoEntrada.desconhecido),
         cronometroProvider.overrideWithValue(CronometroFixo.new),
         catalogoProvider.overrideWith((ref) async => lerCatalogo()),
         explicacoesProvider.overrideWith((ref) async => lerExplicacoes()),
@@ -86,6 +105,40 @@ class PreferenciasIdiomaEmMemoria implements PreferenciasIdioma {
 
   @override
   Future<void> gravar(String? codigo) async => salvo = codigo;
+}
+
+/// Guarda o "conectar ao abrir" só em memória (ligado, como na primeira abertura).
+class PreferenciasConexaoEmMemoria implements PreferenciasConexao {
+  PreferenciasConexaoEmMemoria([this.ligado = true]);
+
+  bool ligado;
+
+  @override
+  Future<bool> lerConectarAoAbrir() async => ligado;
+
+  @override
+  Future<void> gravarConectarAoAbrir(bool ligado) async => this.ligado = ligado;
+}
+
+/// Guarda a pausa USB só em memória (o teste não toca no disco).
+class PreferenciasPausaEmMemoria implements PreferenciasPausa {
+  int? salvo;
+
+  @override
+  Future<int?> ler() async => salvo;
+
+  @override
+  Future<void> gravar(int? milissegundos) async => salvo = milissegundos;
+}
+
+class PreferenciasPaineisEmMemoria implements PreferenciasPaineis {
+  bool? controlesAbertos;
+
+  @override
+  Future<bool?> lerControlesAbertos() async => controlesAbertos;
+
+  @override
+  Future<void> gravarControlesAbertos(bool abertos) async => controlesAbertos = abertos;
 }
 
 class PreferenciasMcpEmMemoria implements PreferenciasMcp {

@@ -1,8 +1,8 @@
 // A tela de um equalizador como a da Anagram, a mesma no Global EQ e no bloco
 // Parametric EQ (é o mesmo DSP, DECISOES EQ11): o seletor de modo (com as
-// ações ao lado, quando há), a curva somada com os pontos arrastáveis, uma
-// dica opcional e as bandas lado a lado. Quem usa decide o que é cada banda
-// e para onde vai cada mudança.
+// ações ao lado, quando há), a curva somada com os pontos (arrastáveis no
+// bloco; no Global EQ, só leitura), uma dica opcional e as bandas lado a
+// lado. Quem usa decide o que é cada banda e para onde vai cada mudança.
 import 'package:flutter/material.dart';
 
 import '../../l10n/app_localizations.dart';
@@ -19,7 +19,7 @@ class TelaEq extends StatelessWidget {
     required this.aoEscolherModo,
     required this.chaveCurva,
     required this.bandasDaCurva,
-    required this.aoArrastar,
+    this.aoArrastar,
     required this.bandas,
     this.ganhoGeral = 0,
     this.acoes,
@@ -31,7 +31,9 @@ class TelaEq extends StatelessWidget {
   final ValueChanged<ModoEq> aoEscolherModo;
   final Key chaveCurva;
   final List<BandaGlobalEq> bandasDaCurva;
-  final AoArrastarBanda aoArrastar;
+
+  /// Nulo = curva só de leitura (o Global EQ).
+  final AoArrastarBanda? aoArrastar;
 
   /// Um controle por banda, na ordem da curva.
   final List<Widget> bandas;

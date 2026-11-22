@@ -17,8 +17,12 @@ final _abridorFalso = abridorDeLinkProvider.overrideWithValue((endereco) async {
   return true;
 });
 
+/// Abre as Configurações já rolada até a seção de versão nova.
 Future<void> _abrirConfiguracoes(WidgetTester tester) async {
   await tester.tap(find.byKey(const ValueKey('botao-configuracoes')));
+  await tester.pumpAndSettle();
+  await tester.scrollUntilVisible(find.byKey(const ValueKey('versao-nova-verificar')), 200,
+      scrollable: find.byType(Scrollable).first);
   await tester.pumpAndSettle();
 }
 
@@ -87,7 +91,7 @@ void main() {
     final interruptor = find.byKey(const ValueKey('versao-nova-verificar'));
     await tester.ensureVisible(interruptor);
     expect(find.text('Você está na versão mais recente.'), findsOneWidget);
-    expect(find.textContaining('Nenhum dado seu é enviado'), findsOneWidget);
+    expect(find.textContaining('A consulta envia apenas a versão do app (no cabeçalho User-Agent)'), findsOneWidget);
 
     await tester.tap(interruptor);
     await tester.pumpAndSettle();

@@ -2,13 +2,15 @@
 // idioma da interface (português, inglês ou espanhol; o do sistema por
 // padrão). O roteador nasce uma vez por app, no estado, para não perder a
 // pilha de telas a cada reconstrução. Depois do primeiro quadro, a consulta
-// de versão nova (DECISOES AV1) corre em segundo plano.
+// de versão nova (DECISOES AV1) corre em segundo plano e, no computador, o app
+// procura a pedaleira uma vez (DECISOES CA1).
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../aplicacao/conectar_ao_abrir.dart';
 import '../aplicacao/idioma.dart';
 import '../aplicacao/versao_nova.dart';
 import '../l10n/app_localizations.dart';
@@ -31,8 +33,10 @@ class _AppAnagramState extends ConsumerState<AppAnagram> {
   void initState() {
     super.initState();
     // depois do primeiro quadro, em segundo plano: a consulta nunca atrasa a abertura
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => unawaited(ref.read(versaoNovaProvider.notifier).verificarAoAbrir()));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(ref.read(versaoNovaProvider.notifier).verificarAoAbrir());
+      unawaited(ref.read(conectarAoAbrirProvider.notifier).aoAbrir());
+    });
   }
 
   @override

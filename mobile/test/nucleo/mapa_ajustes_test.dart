@@ -1,7 +1,6 @@
 // O mapa dos ajustes globais é a ponte entre a tela e as chaves que a Anagram
-// v1.19.2.24 aceitou de verdade (2026-11-21). Uma chave errada aqui faz o
-// fader mexer e a pedaleira ignorar; um ajuste pendente enviado escreveria
-// uma chave que a pedaleira não conhece.
+// v1.19.2.24 exporta (2026-11-21). Uma chave errada aqui mostra outro valor
+// que não o da pedaleira; um ajuste pendente apareceria sem valor real.
 import 'package:anagram_app/nucleo/ajustes/ajustes_pedaleira.dart';
 import 'package:anagram_app/nucleo/ajustes/curva_global_eq.dart';
 import 'package:anagram_app/nucleo/ajustes/mapa_ajustes.dart';
@@ -17,8 +16,7 @@ void main() {
       'mixer.xlr.left.vol',
       'mixer.xlr.right.vol',
       'mixer.headphones.vol',
-      'mixer.speaker.vol',
-    ]);
+    ], reason: 'mixer.speaker.vol vem no export, mas o mixer do manual não tem alto-falante');
     expect(ajustePorIdOuChave('eq_ls_gain')!.chave, 'globaleq.ls.gain');
     expect(ajustePorIdOuChave('eq_hs_freq')!.chave, 'globaleq.hs.freq');
     expect(ajustePorIdOuChave('input_gain_1')!.chave, 'input-gain-preset0.db');
@@ -61,11 +59,10 @@ void main() {
     expect(ajustePorIdOuChave('eq_2_freq')!.padrao, 397, reason: 'o padrão real da banda 2, não os 400 da tela');
   });
 
-  test('should_accept_minus_18_db_on_the_global_eq_since_the_pedal_stored_it', () {
+  test('should_show_the_global_eq_gain_up_to_18_db_since_the_pedal_stored_it', () {
     final ganho = ajustePorIdOuChave('eq_hs_gain')!;
 
-    expect(ganho.limitar(-18), -18);
-    expect(ganho.limitar(-30), -18);
+    expect((ganho.minimo, ganho.maximo), (-18, 18));
   });
 
   test('should_widen_the_range_to_hold_a_value_the_pedal_returned_outside_it', () {
@@ -74,7 +71,6 @@ void main() {
     final alargada = largura.abrangendo(6.5);
 
     expect(alargada.maximo, 6.5);
-    expect(alargada.limitar(6.5), 6.5);
     expect(largura.abrangendo(1).maximo, largura.maximo, reason: 'valor dentro da faixa não muda nada');
   });
 

@@ -1,0 +1,28 @@
+{
+ "origem": "MONTADO, não capturado: a pedaleira do dono não tem tom próprio. Formato de t3k_data[] {data, metadata} tirado do Darkglass Suite 6.11.4; o tom é inventado.",
+ "acao": "get_t3k_tones_metadata",
+ "carga": {"page": 1, "itemsPerPage": 50},
+ "resposta": {
+  "success": 1,
+  "data": {
+   "info": {"all_items_length": 1, "items_length": 1, "page": 1, "items_per_page": 50},
+   "t3k_data": [
+    {
+     "data": {
+      "id": 77001,
+      "title": "Meu Darkglass B7K",
+      "format": "nam",
+      "gear": "pedal",
+      "license": "t3k",
+      "user": {"username": "alguem"},
+      "a2_models": [
+       {"id": 88001, "tone_id": 77001, "name": "B7K Blend 50", "model_url": "https://www.tone3000.com/api/v1/models/88001/download/abc.nam", "architecture_version": "2", "size": null}
+      ]
+     },
+     "metadata": {"id": 3, "t3k_tone_id": 77001, "models": [{"id": 5, "t3k_model_id": 88001, "visible": true}], "added_at": "2026-11-20T10:00:00Z"}
+    }
+   ]
+  },
+  "err_message": ""
+ }
+}

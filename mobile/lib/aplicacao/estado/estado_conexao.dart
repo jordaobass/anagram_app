@@ -13,8 +13,12 @@ final class SemConexao extends EstadoConexao {
 }
 
 final class Conectando extends EstadoConexao {
-  const Conectando(this.meio, {this.demonstracao = false});
+  const Conectando(this.meio, {this.demonstracao = false, this.automatica = false});
   final String meio;
+
+  /// O app abrindo procura a pedaleira sozinho: a tela diz "procurando",
+  /// não "conectando", porque ninguém pediu (DECISOES CA2).
+  final bool automatica;
 
   /// Abrindo a pedaleira simulada: a tela diz "abrindo a demonstração", não
   /// "conectando" a um USB que não existe.

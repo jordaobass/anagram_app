@@ -67,7 +67,8 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
     await aplicarDocumento(documento!);
   }
 
-  /// Gabinete: o IR do modelo/microfone/posição escolhido (ao vivo, desfazer).
+  /// O arquivo do bloco: o IR do gabinete (modelo/microfone/posição) ou o
+  /// tom/modelo do TONE3000 (ao vivo, desfazer, não salvo).
   Future<void> escolherIrDoGabinete(PosicaoBloco posicao, String caminho) async {
     final atual = state.atual;
     if (atual == null || atual.bloco(posicao) == null) return;

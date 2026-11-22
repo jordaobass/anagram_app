@@ -33,7 +33,8 @@ lista de presets por banco, cadeia de blocos com a arte da pedaleira, knobs gran
 
 Sem anúncios e sem telemetria. O app conversa com a pedaleira pelo USB; a única chamada de rede é
 uma verificação opcional ao abrir (Windows, macOS e Linux) que pergunta ao GitHub qual é a última
-versão, não envia nenhum dado seu e pode ser desligada em **Configurações › Atualizações**.
+versão. Essa consulta envia apenas a versão do app (no cabeçalho User-Agent); como em toda conexão,
+o GitHub vê o seu endereço IP. Ela pode ser desligada em **Configurações › Atualizações**.
 
 Interface em **português, inglês e espanhol** (segue o idioma do sistema; dá para trocar em
 **Configurações**, na engrenagem).
@@ -50,6 +51,14 @@ Interface em **português, inglês e espanhol** (segue o idioma do sistema; dá 
 
 Também: linha paralela com Split e Merge, mover/clonar/trocar presets e bancos, limpar preset,
 exportar e importar JSON, área Fábrica (36 presets da Darkglass, só leitura) e IA local via MCP.
+
+No computador o app conecta na pedaleira ao abrir (dá para desligar em **Configurações**). O modo dos
+footswitches aparece em pílulas **Stomp / Preset / Scene** na linha das cenas; os blocos Auto Drummer e
+Cognate Metro ficam dispostos como na tela da própria pedaleira, com tap tempo; um bloco TONE3000 troca
+para outro tom que já está na pedaleira; os menus têm ícones e ficam compactos com mouse; e a edição ao
+vivo pelo USB ficou mais rápida. Volume das saídas, Global EQ e ganho de entrada aparecem **só para
+leitura**: a Anagram aceita esses valores pelo USB, mas não os aplica ao som, então ajuste na própria
+pedaleira.
 
 ## Como instalar
 
@@ -83,7 +92,16 @@ Mantenha todos os arquivos juntos na pasta: a `hidapi.dll` é quem fala com a pe
 2. Arraste **Anagram App** para **Aplicativos**.
 3. Na primeira vez, o macOS bloqueia porque o app ainda não é notarizado: abra **Ajustes do Sistema ›
    Privacidade e Segurança** e clique em **Abrir Mesmo Assim**. Ou, no Terminal:
-   `xattr -dr com.apple.quarantine "/Applications/Anagram App.app"`.
+   `xattr -cr "/Applications/Anagram App.app"`.
+
+#### macOS: primeira abertura
+
+- **"A Apple não pôde verificar…"**: o app ainda não é assinado pela Apple. Abra **Ajustes do Sistema ›
+  Privacidade e Segurança** e clique em **Abrir Mesmo Assim** (ou rode
+  `xattr -cr "/Applications/Anagram App.app"` no Terminal).
+- **Monitoramento de Entrada**: o macOS trata o acesso USB da Anagram como Monitoramento de Entrada. Se o
+  app não conectar, ou ficar pulando no Dock, ligue o **Anagram App** em **Ajustes do Sistema ›
+  Privacidade e Segurança › Monitoramento de Entrada** e abra o app de novo.
 
 ### Linux
 
@@ -96,8 +114,8 @@ Ainda não há build pronto; compile pelo [README do app](mobile/README.md#desen
    fala com ela.
 2. Na pedaleira, abra os ajustes de **MIDI** e ligue o **USB MIDI**. É por ele que o app troca de slot
    quando você toca num preset; sem ele, o app só deixa ouvir o preset sem a pedaleira mudar de slot.
-3. Ligue a Anagram no computador pelo cabo USB, abra o app e clique em **Conectar pelo USB**. A barra de
-   cima mostra o firmware quando conecta.
+3. Ligue a Anagram no computador pelo cabo USB, abra o app e clique em **Conectar pelo USB**
+   (no computador o app já tenta uma vez ao abrir: "Procurando a pedaleira…"). A barra de cima mostra o firmware quando conecta.
 4. Toque num preset da lista para abrir. Para montar a cadeia, use o **+** de uma casa vazia (abre a
    biblioteca de efeitos) e arraste os blocos para mudar a ordem. **Salvar** grava no slot.
 
@@ -135,9 +153,21 @@ na pedaleira só acontece se você confirmar no app.
 
 > **A IA não ouve o som**: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos
 > costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a
-> ferramentas (*tool calling*). Ferramentas: `get_current_preset`, `list_block_types`, `set_parameter`,
-> `set_block_enabled`, `select_scene`, `add_block`, `move_block`, `remove_block`, `choose_cabinet`,
-> `undo` e `save_preset` (decisões IA1–IA6 em `docs/DECISOES.md`).
+> ferramentas (*tool calling*). Ferramentas: `get_current_preset`, `list_block_types`, `get_block_guide`,
+> `get_tone_building_guide`, `get_tone_recipe`, `set_parameter`, `set_block_enabled`, `select_scene`,
+> `add_block`, `move_block`, `remove_block`, `choose_cabinet`, `undo`, `save_preset`,
+> `get_global_settings` (só leitura) e `set_global_setting` (só o modo dos footswitches) (decisões IA1–IA6 e IC1–IC9 em `docs/DECISOES.md`).
+
+**O app ensina a pedaleira à IA.** Ele traz uma base de conhecimento de timbre que o assistente lê pela
+mesma conexão: o que cada um dos 109 blocos de fábrica faz (papel, parâmetros que importam com faixas,
+ponto de partida e armadilhas, por `get_block_guide`), como montar uma cadeia de baixo (ordem, gain
+staging, linha paralela, EQ por frequência, compressão, drive, gabinetes, cenas, por
+`get_tone_building_guide`) e receitas de partida por estilo ou baixista de referência ("slap", "metal
+moderno", "Steve Harris", por `get_tone_recipe`). A conexão também leva o fluxo recomendado: ler o
+preset, perguntar, propor, aplicar em passos pequenos, deixar você ouvir e só gravar quando você disser.
+Para Claude Desktop ou Claude Code há uma skill pronta em [`docs/ia/SKILL.md`](docs/ia/SKILL.md), que
+também traz um prompt de sistema para colar no LM Studio. O conteúdo é em inglês de propósito: é o
+idioma em que os modelos seguem melhor as ferramentas.
 
 ## Organização do repositório
 
@@ -174,5 +204,7 @@ Issues, ideias e pull requests são bem-vindos, em português, inglês ou espanh
 ## Créditos e licença
 
 Protocolo USB, catálogo de blocos e presets de exemplo portados do
-[anagram-tone-maker](https://github.com/basster6/anagram-tone-maker) (MIT). Licença do projeto:
+[anagram-tone-maker](https://github.com/basster6/anagram-tone-maker) (MIT); o guia de blocos da IA
+também aproveita as atribuições da comunidade que esse projeto reuniu (como pistas, não como afirmação
+da Darkglass). Licença do projeto:
 [MIT](LICENSE).

@@ -39,7 +39,10 @@ Map<String, Object?> placaDeSomInicial() => {
       'FX/Exp': 0,
     };
 
-/// Aplica um `edit_settings`: chaves planas viram valores; `selected-preset-area`
+/// Guarda um `edit_settings` como a Anagram real: o valor volta na releitura.
+/// Guardar não é tocar — na real, mixer, Global EQ e entrada voltam relidos e o
+/// som não muda (DECISOES AJ1); por isso o app não os envia e os testes
+/// conferem que nada sai, não que a demonstração guardou. `selected-preset-area`
 /// fica com quem cuida das áreas.
 void gravarAjustesGlobais(Map<String, Object?> ajustes, Map<String, dynamic> pedido) {
   pedido.forEach((chave, valor) {

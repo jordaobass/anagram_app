@@ -15,8 +15,7 @@ import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'arte_bloco.dart';
-import 'cartao_escolha.dart';
-import 'galeria_escolha.dart';
+import 'cartoes_de_opcoes.dart';
 import 'pintor_microfone.dart';
 
 /// Quantos cartões cabem na linha: com menos escolhas, os que há não esticam.
@@ -38,27 +37,10 @@ class SeletorGabinete extends ConsumerWidget {
       padding: const EdgeInsets.only(bottom: Espacos.l),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         if (catalogo.doArquivo(tipo, bloco.arquivoDeIr) == null && bloco.arquivoDeIr != null) _irProprio(context),
-        LayoutBuilder(
-          builder: (context, restricoes) =>
-              restricoes.maxWidth >= Medidas.larguraGabineteLadoALado ? _lado(cartoes) : _empilhados(cartoes),
-        ),
+        FileiraDeCartoes(cartoes: cartoes, vagas: _cartoesNaLinha),
       ]),
     );
   }
-
-  Widget _lado(List<Widget> cartoes) => Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        for (var i = 0; i < _cartoesNaLinha; i++) ...[
-          if (i > 0) const SizedBox(width: Espacos.m),
-          Expanded(child: i < cartoes.length ? cartoes[i] : const SizedBox.shrink()),
-        ],
-      ]);
-
-  Widget _empilhados(List<Widget> cartoes) => Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        for (var i = 0; i < cartoes.length; i++) ...[
-          if (i > 0) const SizedBox(height: Espacos.s),
-          cartoes[i],
-        ],
-      ]);
 
   /// IR que não está na tabela (do usuário): mostra o arquivo; o modelo ainda pode ser escolhido.
   Widget _irProprio(BuildContext context) => Padding(
@@ -102,7 +84,7 @@ class _Escolhas {
   Widget _modelo(OpcaoGabinete? escolhido) {
     void escolher(String modelo) => _gravar(
         catalogo.escolher(tipo, modelo, microfone: escolhido?.microfone, posicao: escolhido?.posicao));
-    return _cartao(
+    return CartaoDeOpcoes(
       chave: 'gabinete',
       rotulo: l.cbGabinete,
       opcoes: catalogo.modelos(tipo),
@@ -119,7 +101,7 @@ class _Escolhas {
   Widget _microfone(OpcaoGabinete escolhido) {
     Widget icone(String mic, double tamanho) =>
         IconeMicrofone(tipo: TipoMicrofone.doNome(mic), cor: Cores.aluminioClaro, tamanho: tamanho);
-    return _cartao(
+    return CartaoDeOpcoes(
       chave: 'microfone',
       rotulo: l.cbMicrofone,
       opcoes: catalogo.microfones(tipo, escolhido.modelo),
@@ -131,7 +113,7 @@ class _Escolhas {
     );
   }
 
-  Widget _posicao(OpcaoGabinete escolhido, List<String> posicoes) => _cartao(
+  Widget _posicao(OpcaoGabinete escolhido, List<String> posicoes) => CartaoDeOpcoes(
         chave: 'posicao',
         rotulo: l.cbPosicao,
         opcoes: posicoes,
@@ -140,34 +122,4 @@ class _Escolhas {
         aoEscolher: (pos) =>
             _gravar(catalogo.escolher(tipo, escolhido.modelo, microfone: escolhido.microfone, posicao: pos)),
       );
-
-  Widget _cartao({
-    required String chave,
-    required String rotulo,
-    required List<String> opcoes,
-    required String? atual,
-    required Widget noCartao,
-    required void Function(String) aoEscolher,
-    Widget Function(String)? visual,
-    bool emGrade = false,
-  }) {
-    final i = opcoes.indexOf(atual ?? '');
-    VoidCallback? passo(int destino) =>
-        destino >= 0 && destino < opcoes.length && destino != i ? () => aoEscolher(opcoes[destino]) : null;
-    Future<void> abrir() async {
-      final escolhida = await abrirGaleriaDeEscolha(context,
-          titulo: rotulo, opcoes: opcoes, atual: atual, visual: visual, emGrade: emGrade);
-      if (escolhida != null && escolhida != atual) aoEscolher(escolhida);
-    }
-
-    return CartaoEscolha(
-      chave: chave,
-      rotulo: rotulo,
-      nome: atual ?? l.cbEscolher,
-      visual: noCartao,
-      aoAbrir: abrir,
-      aoAnterior: i < 0 ? null : passo(i - 1),
-      aoProximo: i < 0 ? passo(0) : passo(i + 1),
-    );
-  }
 }

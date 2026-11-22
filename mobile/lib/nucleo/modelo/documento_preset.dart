@@ -127,7 +127,7 @@ class DocumentoPreset {
 
   DocumentoPreset comUuid(String uuid) => _editar((p) => p['uuid'] = uuid);
 
-  /// Troca o arquivo de IR do gabinete (modelo, microfone e posição escolhidos).
+  /// Troca o arquivo do bloco: IR do gabinete ou tom/modelo do TONE3000.
   DocumentoPreset comArquivoDeIr(PosicaoBloco posicao, String caminho) =>
       _editarBloco(posicao, (bloco) => gravarArquivoDeIr(bloco, caminho));
 
@@ -164,9 +164,14 @@ class DocumentoPreset {
   /// substituindo o que houver.
   /// Colar por cima de um bloco o substitui: os controles que mexiam nele
   /// são soltos, como ao remover, senão passariam a mexer no bloco colado.
+  /// O bloco copiado traz o som da cena em que foi copiado: ele vira a foto
+  /// da cena ativa daqui, senão a tela mostraria a foto antiga desta cena
+  /// enquanto a pedaleira toca a outra (DECISOES RV1).
   DocumentoPreset comBlocoColado(PosicaoBloco posicao, Map<String, dynamic> bloco) => _editar((p) {
         if (blocosBrutos(p, posicao.linha).containsKey('${posicao.casa}')) soltarVinculos(p, posicao);
-        colocarBloco(p, posicao, copiaProfunda(bloco));
+        final copia = copiaProfunda(bloco);
+        guardarFotoDaCena(copia, cenaAtiva);
+        colocarBloco(p, posicao, copia);
       });
 
   /// Muda o bloco de casa; com a casa ocupada, os dois trocam de lugar.

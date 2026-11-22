@@ -7,6 +7,8 @@ import '../../l10n/app_localizations.dart';
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../tema/tokens.dart';
+import 'item_de_menu.dart';
+import 'dialogo_confirmar.dart';
 import 'botao_giratorio.dart' show AoMudarValor;
 
 class SeletorOpcao extends StatelessWidget {
@@ -55,27 +57,31 @@ class SeletorOpcao extends StatelessWidget {
   }
 
   Future<void> _escolher(BuildContext context, int atual) async {
-    final escolhida = await (parametro.opcoes.length > Medidas.opcoesSemBusca
-        ? showDialog<int>(context: context, builder: (_) => _ListaComBusca(parametro: parametro, atual: atual))
-        : _menu(context, atual));
+    final escolhida = await escolherOpcao(context, parametro, atual);
     if (escolhida != null && escolhida != atual) aoMudar(parametro.valorDaOpcao(escolhida), arrastando: false);
   }
+}
 
-  /// Menu logo embaixo do botão, com a opção atual marcada.
-  Future<int?> _menu(BuildContext context, int atual) {
-    final caixa = context.findRenderObject()! as RenderBox;
-    final canto = caixa.localToGlobal(Offset(0, caixa.size.height));
-    return showMenu<int>(
-      context: context,
-      position: RelativeRect.fromLTRB(canto.dx, canto.dy, canto.dx + caixa.size.width, canto.dy),
-      constraints: BoxConstraints(minWidth: caixa.size.width),
-      items: [
-        for (var i = 0; i < parametro.opcoes.length; i++)
-          CheckedPopupMenuItem<int>(
-              key: ValueKey('opcao-${parametro.simbolo}-$i'), value: i, checked: i == atual, child: Text(parametro.opcoes[i])),
-      ],
-    );
-  }
+/// Todas as opções: poucas num menu logo embaixo de [context], com a atual
+/// marcada; muitas, numa lista com busca e grupos. Nulo se a pessoa desistir.
+Future<int?> escolherOpcao(BuildContext context, DefinicaoParametro parametro, int atual) =>
+    parametro.opcoes.length > Medidas.opcoesSemBusca
+        ? showDialog<int>(context: context, builder: (_) => _ListaComBusca(parametro: parametro, atual: atual))
+        : _menu(context, parametro, atual);
+
+Future<int?> _menu(BuildContext context, DefinicaoParametro parametro, int atual) {
+  final caixa = context.findRenderObject()! as RenderBox;
+  final canto = caixa.localToGlobal(Offset(0, caixa.size.height));
+  return showMenu<int>(
+    context: context,
+    position: RelativeRect.fromLTRB(canto.dx, canto.dy, canto.dx + caixa.size.width, canto.dy),
+    constraints: BoxConstraints(minWidth: caixa.size.width),
+    items: [
+      for (var i = 0; i < parametro.opcoes.length; i++)
+        itemMarcado(i,
+            key: ValueKey('opcao-${parametro.simbolo}-$i'), rotulo: parametro.opcoes[i], marcado: i == atual),
+    ],
+  );
 }
 
 class _ListaComBusca extends StatefulWidget {
@@ -117,7 +123,7 @@ class _EstadoListaComBusca extends State<_ListaComBusca> {
           Expanded(child: ListView(children: [for (final g in grupos.entries) ..._grupo(context, g.key, g.value)])),
         ]),
       ),
-      actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text(l.cancelar))],
+      actions: [BotaoCancelarDialogo(rotulo: l.cancelar, aoTocar: () => Navigator.pop(context))],
     );
   }
 

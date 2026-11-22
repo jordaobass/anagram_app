@@ -1,0 +1,14 @@
+{
+ "acao": "get_t3k_tone_metadata",
+ "carga": {
+  "toneId": 28202,
+  "withModelsMetadata": true
+ },
+ "ok": true,
+ "ms": 55,
+ "resposta": {
+  "success": 1,
+  "data": null,
+  "err_message": ""
+ }
+}

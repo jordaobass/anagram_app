@@ -1,20 +1,24 @@
-// Configurações do app: idioma, os ajustes globais da pedaleira conectada e,
+// Configurações do app: idioma, os ajustes globais da pedaleira conectada (e a
+// pausa entre pacotes USB, que vale mesmo sem pedaleira) e,
 // no computador, a IA local pelo MCP, as atualizações e o registro para
 // suporte. Abre pela engrenagem da barra de cima, conectado ou não; no
 // celular, onde a barra não tem lugar para o "i", é por aqui que se chega ao Sobre.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../aplicacao/conectar_ao_abrir.dart';
 import '../../aplicacao/diagnostico.dart';
 import '../../aplicacao/estado/controlador_conexao.dart';
 import '../../aplicacao/estado/estado_conexao.dart';
 import '../../aplicacao/mcp/controlador_mcp.dart';
 import '../../aplicacao/versao_nova.dart';
 import '../../l10n/app_localizations.dart';
+import '../componentes/interruptor_conectar_ao_abrir.dart';
 import '../componentes/painel_mcp.dart';
 import '../componentes/secao_pedaleira.dart';
 import '../componentes/secao_registro.dart';
 import '../componentes/secao_versao_nova.dart';
+import '../componentes/seletor_pausa.dart';
 import '../componentes/seletor_idioma.dart';
 import '../rotas.dart';
 import '../tema/tokens.dart';
@@ -40,8 +44,12 @@ class TelaConfiguracoes extends ConsumerWidget {
       // o idioma vem antes de tudo: quem caiu num idioma que não lê precisa achá-lo
       TituloSecao(l.idioma),
       const Align(alignment: Alignment.centerLeft, child: SeletorIdioma()),
-      // os ajustes globais só existem com uma pedaleira (ou a demonstração) do outro lado
-      if (ref.watch(conexaoProvider) is Conectada) ..._secao(l.pdSecao, const SecaoPedaleira()),
+      ..._secao(
+          l.pdSecao,
+          _pedaleira(
+            conectada: ref.watch(conexaoProvider) is Conectada,
+            procuraAoAbrir: ref.watch(plataformaDeAberturaProvider) != PlataformaDeAbertura.semTentativa,
+          )),
       if (ref.watch(mcpDisponivelProvider)) ..._secao(l.mcpSecao, const PainelMcp()),
       if (ref.watch(verificacaoVersaoDisponivelProvider)) ..._secao(l.versaoNovaSecao, const SecaoVersaoNova()),
       if (ref.watch(registroEmArquivoProvider) case final arquivo?) ..._secao(l.registroSecao, SecaoRegistro(arquivo)),
@@ -56,6 +64,16 @@ class TelaConfiguracoes extends ConsumerWidget {
       ),
     ];
   }
+
+  /// Os ajustes globais só existem com uma pedaleira (ou a demonstração) do
+  /// outro lado; a pausa USB e o conectar ao abrir (só no computador) valem
+  /// também antes de conectar.
+  static Widget _pedaleira({required bool conectada, required bool procuraAoAbrir}) =>
+      Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        if (conectada) ...[const SecaoPedaleira(), const SizedBox(height: Espacos.l)],
+        const AjustePausaUsb(),
+        if (procuraAoAbrir) ...[const SizedBox(height: Espacos.m), const InterruptorConectarAoAbrir()],
+      ]);
 
   static List<Widget> _secao(String titulo, Widget conteudo) =>
       [const SizedBox(height: Espacos.xxl), TituloSecao(titulo), conteudo];

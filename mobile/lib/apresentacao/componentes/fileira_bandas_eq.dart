@@ -1,7 +1,7 @@
 // As 6 bandas do Global EQ lado a lado, como na tela da Anagram: em cima o
 // rótulo da banda (a frequência; no modo Frequency, o ganho) e o valor do
-// modo num chip na cor dele, que se toca para digitar; o knob de cada banda
-// mexe só no atributo do modo, como os 6 knobs da pedaleira. Abaixo de
+// modo num chip na cor dele; o knob de cada banda mostra só o atributo do
+// modo, como os 6 knobs da pedaleira. Só leitura (DECISOES AJ1). Abaixo de
 // [Medidas.larguraEqEmLinha] as bandas viram duas linhas de 3.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -17,8 +17,9 @@ class AdicionarBloco extends FerramentaMcp {
 
   @override
   String get descricao => 'Put a new block (with default settings) in an EMPTY position. Get "type" from '
-      'list_block_types. A Split on row 1 sends the signal also to row 2 (from its column 1); a Merge after '
-      'it on row 1 joins row 2 (from its column 12) back. One Split and one Merge per preset.';
+      'list_block_types, get_block_guide or a get_tone_recipe chain. Signal flows left to right on row 1. '
+      'A Split on row 1 sends the signal also to row 2 (from its column 1); a Merge after it on row 1 joins '
+      'row 2 (from its column 12) back. One Split and one Merge per preset; add both before any row 2 block.';
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto(

@@ -10,6 +10,7 @@ import '../../l10n/app_localizations.dart';
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
+import '../tema/tema_app.dart';
 import '../tema/tokens.dart';
 import '../textos.dart';
 import 'alteracao_em_grupo.dart';
@@ -68,6 +69,9 @@ class BotoesBanda extends ConsumerWidget {
         texto: l.mbSolo,
         ligado: solo,
         cor: cor,
+        // as cores de banda são claras demais para o branco (2,03 a 3,51:1):
+        // o Solo aceso escreve em tinta de marcador, acima de 4,5:1 em todas
+        corTexto: Cores.tintaMarcador,
         aoTocar: () => _alternarSolo(context, ref, mutadas, emSolo: solo),
       ),
       // o Mute pinta de alerta quando corta a banda: é o estado que mais se
@@ -77,6 +81,7 @@ class BotoesBanda extends ConsumerWidget {
         texto: l.mbMudo,
         ligado: muda,
         cor: Cores.fitaAlerta,
+        corTexto: Cores.sobreAlerta,
         aoTocar: () => ControleNoPainel.alterar(ref, mudo, bloco)(muda ? 0 : 1, arrastando: false),
       ),
     ]);
@@ -94,7 +99,12 @@ class BotoesBanda extends ConsumerWidget {
   }
 
   Widget _alternar(
-          {required String chave, required String texto, required bool ligado, required Color cor, required VoidCallback aoTocar}) =>
+          {required String chave,
+          required String texto,
+          required bool ligado,
+          required Color cor,
+          required Color corTexto,
+          required VoidCallback aoTocar}) =>
       Semantics(
         toggled: ligado,
         label: texto,
@@ -102,7 +112,8 @@ class BotoesBanda extends ConsumerWidget {
             ? FilledButton(
                 key: ValueKey(chave),
                 onPressed: aoTocar,
-                style: FilledButton.styleFrom(backgroundColor: cor, foregroundColor: Cores.sobreAlerta),
+                style: FilledButton.styleFrom(backgroundColor: cor, foregroundColor: corTexto)
+                    .copyWith(side: TemaApp.anelDeFoco(cor: corTexto)),
                 child: Text(texto),
               )
             : OutlinedButton(key: ValueKey(chave), onPressed: aoTocar, child: Text(texto)),
