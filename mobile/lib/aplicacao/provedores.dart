@@ -11,6 +11,7 @@ import '../nucleo/catalogo/catalogo_blocos.dart';
 import '../nucleo/catalogo/definicao_bloco.dart';
 import '../nucleo/catalogo/explicacoes_parametros.dart';
 import '../nucleo/catalogo/templates_bloco.dart';
+import '../nucleo/conhecimento/base_conhecimento.dart';
 import '../nucleo/demonstracao/transporte_demonstracao.dart';
 import '../nucleo/midi/saida_midi.dart';
 import '../nucleo/modelo/presets_fabrica.dart';
@@ -28,6 +29,10 @@ abstract final class CaminhosAssets {
   static const demonstracao = 'assets/demonstracao/presets.json';
   static const explicacoes = 'assets/explicacoes/parametros.json';
   static const templates = 'assets/templates/blocos.json';
+  /// Conhecimento de timbre que o MCP entrega à IA (DECISOES IC1).
+  static const conhecimentoBlocos = 'assets/conhecimento/blocos.json';
+  static const conhecimentoTimbre = 'assets/conhecimento/guia_timbre.json';
+  static const conhecimentoReceitas = 'assets/conhecimento/receitas.json';
   static const exemplos = [1, 2, 13, 41];
   static String exemplo(int n) => 'assets/referencia/exemplos/$n.json';
 }
@@ -83,6 +88,31 @@ final templatesProvider = FutureProvider<TemplatesBlocos>((ref) async {
     registro.w('templates de bloco ausentes (${erro.message})');
     return TemplatesBlocos.vazio;
   }
+});
+
+/// O conhecimento de timbre lido pela IA (DECISOES IC1). Cada arquivo que
+/// faltar deixa só a sua parte vazia: as ferramentas de ajuste não dependem dele.
+final conhecimentoProvider = FutureProvider<BaseConhecimento>((ref) async {
+  final pacote = ref.watch(pacoteAssetsProvider);
+  Future<String?> ler(String caminho) async {
+    try {
+      return await pacote.loadString(caminho);
+    } on FlutterError catch (erro) {
+      registro.w('conhecimento de timbre ausente: $caminho (${erro.message})');
+      return null;
+    }
+  }
+
+  final (blocos, timbre, receitas) = await (
+    ler(CaminhosAssets.conhecimentoBlocos),
+    ler(CaminhosAssets.conhecimentoTimbre),
+    ler(CaminhosAssets.conhecimentoReceitas),
+  ).wait;
+  return BaseConhecimento(
+    guiaBlocos: blocos == null ? GuiaBlocos.vazio : GuiaBlocos.doTexto(blocos),
+    guiaTimbre: timbre == null ? GuiaTimbre.vazio : GuiaTimbre.doTexto(timbre),
+    receitas: receitas == null ? ReceitasTimbre.vazio : ReceitasTimbre.doTexto(receitas),
+  );
 });
 
 /// Presets da pedaleira simulada: os autorais + os exemplos reais.

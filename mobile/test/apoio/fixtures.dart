@@ -7,6 +7,7 @@ import 'package:anagram_app/aplicacao/provedores.dart' show CaminhosAssets;
 import 'package:anagram_app/nucleo/catalogo/catalogo_blocos.dart';
 import 'package:anagram_app/nucleo/catalogo/explicacoes_parametros.dart';
 import 'package:anagram_app/nucleo/catalogo/templates_bloco.dart';
+import 'package:anagram_app/nucleo/conhecimento/base_conhecimento.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
 
 Map<String, dynamic> lerExemplo(String nome) =>
@@ -20,6 +21,15 @@ TemplatesBlocos lerTemplates() => TemplatesBlocos.doTexto(File(CaminhosAssets.te
 
 ExplicacoesParametros lerExplicacoes() =>
     ExplicacoesParametros.doTexto(File(CaminhosAssets.explicacoes).readAsStringSync());
+
+GuiaBlocos lerGuiaBlocos() => GuiaBlocos.doTexto(File(CaminhosAssets.conhecimentoBlocos).readAsStringSync());
+
+GuiaTimbre lerGuiaTimbre() => GuiaTimbre.doTexto(File(CaminhosAssets.conhecimentoTimbre).readAsStringSync());
+
+ReceitasTimbre lerReceitas() => ReceitasTimbre.doTexto(File(CaminhosAssets.conhecimentoReceitas).readAsStringSync());
+
+BaseConhecimento lerConhecimento() =>
+    BaseConhecimento(guiaBlocos: lerGuiaBlocos(), guiaTimbre: lerGuiaTimbre(), receitas: lerReceitas());
 
 Map<int, Map<String, dynamic>> lerPresetsDemonstracao() {
   final bruto = jsonDecode(File('assets/demonstracao/presets.json').readAsStringSync())
