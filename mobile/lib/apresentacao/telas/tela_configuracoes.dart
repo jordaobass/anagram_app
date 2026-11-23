@@ -1,12 +1,14 @@
-// Configurações do app: idioma, tema (sistema, escuro ou claro), os ajustes globais da pedaleira conectada (e a
-// pausa entre pacotes USB, que vale mesmo sem pedaleira) e,
-// no computador, a IA local pelo MCP, as atualizações e o registro para
-// suporte. Abre pela engrenagem da barra de cima, conectado ou não; no
-// celular, onde a barra não tem lugar para o "i", é por aqui que se chega ao Sobre.
+// Configurações do app, nesta ordem: idioma, aparência (sistema, escuro ou
+// claro), a pedaleira (ajustes globais da conectada, a pausa entre pacotes
+// USB e o conectar ao abrir) e, no computador, o backup dos presets, a IA
+// local pelo MCP, as atualizações e o registro para suporte; por último, o
+// Sobre. Abre pela engrenagem da barra de cima, conectado ou não; no celular,
+// onde a barra não tem lugar para o "i", é por aqui que se chega ao Sobre.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/conectar_ao_abrir.dart';
+import '../../aplicacao/copias/copia_automatica.dart';
 import '../../aplicacao/diagnostico.dart';
 import '../../aplicacao/estado/controlador_conexao.dart';
 import '../../aplicacao/estado/estado_conexao.dart';
@@ -15,6 +17,7 @@ import '../../aplicacao/versao_nova.dart';
 import '../../l10n/app_localizations.dart';
 import '../componentes/interruptor_conectar_ao_abrir.dart';
 import '../componentes/painel_mcp.dart';
+import '../componentes/secao_copias.dart';
 import '../componentes/secao_pedaleira.dart';
 import '../componentes/secao_registro.dart';
 import '../componentes/secao_versao_nova.dart';
@@ -52,6 +55,8 @@ class TelaConfiguracoes extends ConsumerWidget {
             conectada: ref.watch(conexaoProvider) is Conectada,
             procuraAoAbrir: ref.watch(plataformaDeAberturaProvider) != PlataformaDeAbertura.semTentativa,
           )),
+      // o backup vem logo depois da pedaleira: é a rede de segurança de quem grava nela
+      if (ref.watch(pastaDeCopiasProvider) case final pasta?) ..._secao(l.bkSecao, SecaoCopias(pasta)),
       if (ref.watch(mcpDisponivelProvider)) ..._secao(l.mcpSecao, const PainelMcp()),
       if (ref.watch(verificacaoVersaoDisponivelProvider)) ..._secao(l.versaoNovaSecao, const SecaoVersaoNova()),
       if (ref.watch(registroEmArquivoProvider) case final arquivo?) ..._secao(l.registroSecao, SecaoRegistro(arquivo)),
