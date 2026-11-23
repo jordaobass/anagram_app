@@ -16,14 +16,17 @@ import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 import 'package:anagram_app/nucleo/protocolo/api_anagram.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/app_de_teste.dart' show PreferenciasMcpEmMemoria;
 import '../apoio/fixtures.dart';
 
 /// App conectado à demonstração com o 01C aberto e o MCP escutando numa porta livre.
-Future<(ProviderContainer, String, String)> appComMcp() async {
+/// [extras]: sobreposições a mais (a pasta de backups, por exemplo).
+Future<(ProviderContainer, String, String)> appComMcp({List<Override> extras = const []}) async {
   final container = ProviderContainer(overrides: [
+    ...extras,
     presetsDemonstracaoProvider.overrideWith((ref) async => lerPresetsDemonstracao()),
     catalogoProvider.overrideWith((ref) async => lerCatalogo()),
     indiceMiniaturasProvider.overrideWith((ref) async => lerIndiceMiniaturas()),

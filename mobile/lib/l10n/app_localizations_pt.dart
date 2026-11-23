@@ -1529,4 +1529,101 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get caConectarAoAbrirMac => 'No macOS, só depois de liberar o Monitoramento de Entrada para o Anagram App em Ajustes do Sistema › Privacidade e Segurança.';
+
+  @override
+  String salvarCopiaFalhou(String pasta) {
+    return 'o backup do preset que está no slot não foi gravado em $pasta, então nada foi para a pedaleira. A causa está no registro; se o disco não tiver jeito, desligue o backup automático nas Configurações.';
+  }
+
+  @override
+  String bkErroCopia(String pasta) {
+    return 'O backup do preset que está no slot não foi gravado em $pasta, então nada mudou na pedaleira. A causa está no registro; se o disco não tiver jeito, desligue o backup automático nas Configurações.';
+  }
+
+  @override
+  String get bkPastaDesconhecida => 'a pasta de dados do app (o sistema não informou qual é)';
+
+  @override
+  String get bkSecao => 'Backup dos presets';
+
+  @override
+  String get bkAutomatico => 'Backup automático antes de gravar';
+
+  @override
+  String get bkAutomaticoTexto => 'Antes de substituir, mover ou limpar um preset na pedaleira, o app guarda o que estava no slot, como um JSON que o Importar abre. Se o backup falhar, nada é gravado. Ficam os últimos 30 dias, até 500 arquivos.';
+
+  @override
+  String get bkOnde => 'Os backups ficam nesta pasta, só neste computador:';
+
+  @override
+  String get bkAbrirPasta => 'Abrir pasta de backups';
+
+  @override
+  String get bkPastaNaoAbriu => 'O sistema não abriu a pasta. O caminho está acima, para copiar.';
+
+  @override
+  String get bkCompleto => 'Fazer backup de todos os presets agora';
+
+  @override
+  String get bkCompletoTexto => 'Lê todas as áreas e todos os slots ocupados, um de cada vez, e guarda cada preset numa pasta com a data. O app não apaga os backups completos.';
+
+  @override
+  String get bkSemPedaleira => 'Conecte a pedaleira (ou abra a demonstração) para fazer o backup completo e abrir um backup no editor.';
+
+  @override
+  String get bkCompletoTitulo => 'Backup de todos os presets';
+
+  @override
+  String get bkCompletoListando => 'Lendo a lista de presets de cada área…';
+
+  @override
+  String bkCompletoProgresso(int feitos, int total) {
+    return '$feitos de $total presets guardados';
+  }
+
+  @override
+  String bkCompletoConcluido(int quantos, String pasta) {
+    return 'Backup completo: $quantos presets guardados em $pasta.';
+  }
+
+  @override
+  String bkCompletoCancelado(int feitos, int total) {
+    return 'Backup cancelado: $feitos de $total presets guardados. O que já foi gravado fica na pasta.';
+  }
+
+  @override
+  String bkCompletoFalhou(int feitos, String motivo) {
+    return 'Backup interrompido depois de $feitos presets: $motivo';
+  }
+
+  @override
+  String get bkRestaurar => 'Restaurar de um backup…';
+
+  @override
+  String get bkRestaurarTexto => 'Abre o preset guardado no editor, sem slot, para ouvir antes. Para pôr na pedaleira, use Salvar como.';
+
+  @override
+  String get bkNenhum => 'Nenhum backup ainda.';
+
+  @override
+  String get bkAbrirNoEditor => 'Abrir no editor';
+
+  @override
+  String bkAbertoNoEditor(String nome) {
+    return '\"$nome\" aberto no editor, sem slot. Use Salvar como para gravar.';
+  }
+
+  @override
+  String bkCompletoGrupo(String hora, int quantos) {
+    return 'Backup completo · $hora · $quantos presets';
+  }
+
+  @override
+  String get bkAreaUnica => 'Área única';
+
+  @override
+  String get bkFechar => 'FECHAR';
+
+  @override
+  String get bkRestaurarTitulo => 'Restaurar de um backup';
 }

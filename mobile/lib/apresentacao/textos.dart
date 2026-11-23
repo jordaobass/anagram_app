@@ -84,6 +84,7 @@ extension TextosDoApp on AppLocalizations {
         ErroPlataformaSemSuporte() => erroSemSuporte,
         ErroOperacaoEmCurso(:final mensagem) => erroOperacaoEmCurso(mensagem),
         ErroRespostaInvalida() => conexaoRespostaInvalida,
+        ErroCopiaDeSeguranca(:final pasta) => bkErroCopia(_pastaDeCopias(pasta)),
       };
 
   /// Erro de uma operação já conectada (ler, tocar, listar).
@@ -94,6 +95,7 @@ extension TextosDoApp on AppLocalizations {
         ErroRespostaInvalida() => erroRespostaInvalida,
         ErroOperacaoEmCurso(:final mensagem) => erroOperacaoEmCurso(mensagem),
         ErroPlataformaSemSuporte() => erroSemSuporte,
+        ErroCopiaDeSeguranca(:final pasta) => bkErroCopia(_pastaDeCopias(pasta)),
       };
 
   /// "Não salvou: …", sem nome de ação do protocolo nem tipo de exceção.
@@ -105,7 +107,11 @@ extension TextosDoApp on AppLocalizations {
         ErroInterfaceOcupada() => salvarOcupada,
         ErroOperacaoEmCurso(:final mensagem) => erroOperacaoEmCurso(mensagem),
         ErroPlataformaSemSuporte() => erroSemSuporte,
+        ErroCopiaDeSeguranca(:final pasta) => salvarCopiaFalhou(_pastaDeCopias(pasta)),
       });
+
+  /// A pasta de backups na frase do erro; vazia = o sistema não disse qual é.
+  String _pastaDeCopias(String pasta) => pasta.isEmpty ? bkPastaDesconhecida : pasta;
 
   String indisponivel(MotivoIndisponivel motivo) => switch (motivo) {
         MotivoIndisponivel.ios => indisponivelIos,
