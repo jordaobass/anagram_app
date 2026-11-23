@@ -19,12 +19,12 @@ void main() {
   testWidgets('should_show_the_block_power_as_an_outline_with_a_green_led_that_goes_grey_when_off', (tester) async {
     await abrirComBloco(tester, 'urn:darkglass:ignissor');
 
-    expect(materialDoBotao(tester, _bypass).color, isNot(Cores.tally));
-    expect(_led(tester), Cores.ledLigado);
+    expect(materialDoBotao(tester, _bypass).color, isNot(Paleta.escura.tally));
+    expect(_led(tester), Paleta.escura.ledLigado);
 
     await tester.tap(_bypass);
     await tester.pumpAndSettle();
-    expect(_led(tester), Cores.ledDesligado);
+    expect(_led(tester), Paleta.escura.ledDesligado);
   });
 
 }

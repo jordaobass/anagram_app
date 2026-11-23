@@ -55,8 +55,8 @@ class _BandaEq extends ConsumerWidget {
       key: ValueKey('banda-eq-${banda.codigo}'),
       definicao: ajustePorIdOuChave(banda.id(modo))!,
       rotulo: _rotulo(AppLocalizations.of(context), estado),
-      cor: Cores.doModoEq(modo),
-      corChip: Cores.doModoEq(modo),
+      cor: context.cores.doModoEq(modo),
+      corChip: context.cores.doModoEq(modo),
     );
   }
 }

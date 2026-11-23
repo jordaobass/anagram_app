@@ -550,6 +550,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get idiomaDoSistema => 'Do sistema';
 
   @override
+  String get temaSecao => 'Aparência';
+
+  @override
+  String get temaSistema => 'Do sistema';
+
+  @override
+  String get temaEscuro => 'Escuro';
+
+  @override
+  String get temaClaro => 'Claro';
+
+  @override
   String get separadorDecimal => ',';
 
   @override

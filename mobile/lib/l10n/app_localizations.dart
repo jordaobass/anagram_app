@@ -988,6 +988,30 @@ abstract class AppLocalizations {
   /// **'Do sistema'**
   String get idiomaDoSistema;
 
+  /// Título da seção de tema nas Configurações
+  ///
+  /// In pt, this message translates to:
+  /// **'Aparência'**
+  String get temaSecao;
+
+  /// No description provided for @temaSistema.
+  ///
+  /// In pt, this message translates to:
+  /// **'Do sistema'**
+  String get temaSistema;
+
+  /// No description provided for @temaEscuro.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escuro'**
+  String get temaEscuro;
+
+  /// No description provided for @temaClaro.
+  ///
+  /// In pt, this message translates to:
+  /// **'Claro'**
+  String get temaClaro;
+
   /// No description provided for @separadorDecimal.
   ///
   /// In pt, this message translates to:

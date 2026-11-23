@@ -63,7 +63,7 @@ class _EstadoCampoPorta extends State<CampoPortaMcp> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(top: Espacos.m, left: Espacos.s),
-            child: Text(l.mcpPortaInvalida, style: const TextStyle(color: Cores.erro)),
+            child: Text(l.mcpPortaInvalida, style: TextStyle(color: context.cores.erro)),
           ),
         ),
     ]);

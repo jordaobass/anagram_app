@@ -24,7 +24,7 @@ class CartaoBanda extends StatelessWidget {
         padding: const EdgeInsets.all(Espacos.m),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Raios.painel),
-          border: Border.all(color: Cores.filete),
+          border: Border.all(color: context.cores.filete),
         ),
         child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
           if (titulo != null || chave != null)

@@ -18,9 +18,9 @@ class CaixaDesenho extends StatelessWidget {
         width: largura,
         height: Medidas.alturaDesenhoSynth,
         decoration: BoxDecoration(
-          color: Cores.fundoCase,
+          color: context.cores.fundoCase,
           borderRadius: BorderRadius.circular(Raios.controle),
-          border: Border.all(color: Cores.filete),
+          border: Border.all(color: context.cores.filete),
         ),
         clipBehavior: Clip.antiAlias,
         child: CustomPaint(painter: pintor),
@@ -35,13 +35,15 @@ Paint _traco(Color cor) => Paint()
 
 Paint _preenchimento(Color cor) => Paint()..color = cor.withValues(alpha: Medidas.opacidadePreenchimentoSynth);
 
-final _guia = Paint()
-  ..color = Cores.filete
+Paint _guia(Paleta cores) => Paint()
+  ..color = cores.filete
   ..strokeWidth = Medidas.filete;
 
 /// A onda escolhida, dois ciclos, em volta da linha de centro.
 class PintorOnda extends CustomPainter {
-  const PintorOnda({required this.forma, required this.cor});
+  const PintorOnda({required this.cores, required this.forma, required this.cor});
+
+  final Paleta cores;
 
   final FormaOnda forma;
   final Color cor;
@@ -49,7 +51,7 @@ class PintorOnda extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final meio = size.height / 2;
-    canvas.drawLine(Offset(0, meio), Offset(size.width, meio), _guia);
+    canvas.drawLine(Offset(0, meio), Offset(size.width, meio), _guia(cores));
     final margem = Espacos.s;
     final amplitude = meio - margem;
     final pontos = [
@@ -60,13 +62,15 @@ class PintorOnda extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(PintorOnda antigo) => antigo.forma != forma || antigo.cor != cor;
+  bool shouldRepaint(PintorOnda antigo) => antigo.cores != cores || antigo.forma != forma || antigo.cor != cor;
 }
 
 /// O passa-baixas: 0 dB no terço de cima, o pico da ressonância acima dele,
 /// a queda depois do corte; preenchido por baixo como na tela de um synth.
 class PintorFiltro extends CustomPainter {
-  const PintorFiltro({required this.corte, required this.ressonancia, required this.cor});
+  const PintorFiltro({required this.cores, required this.corte, required this.ressonancia, required this.cor});
+
+  final Paleta cores;
 
   final num corte;
   final num ressonancia;
@@ -81,7 +85,7 @@ class PintorFiltro extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final zero = _y(0, size);
-    canvas.drawLine(Offset(0, zero), Offset(size.width, zero), _guia);
+    canvas.drawLine(Offset(0, zero), Offset(size.width, zero), _guia(cores));
     final pontos = [
       for (final (x, db) in respostaDoFiltro(corte: corte, ressonancia: ressonancia)) Offset(x * size.width, _y(db, size)),
     ];
@@ -96,12 +100,14 @@ class PintorFiltro extends CustomPainter {
 
   @override
   bool shouldRepaint(PintorFiltro antigo) =>
-      antigo.corte != corte || antigo.ressonancia != ressonancia || antigo.cor != cor;
+      antigo.cores != cores || antigo.corte != corte || antigo.ressonancia != ressonancia || antigo.cor != cor;
 }
 
 /// Attack, Decay, a nota segurada e o Release, do silêncio ao silêncio.
 class PintorEnvelope extends CustomPainter {
-  const PintorEnvelope({required this.ataque, required this.decaimento, required this.liberacao, required this.cor});
+  const PintorEnvelope({required this.cores, required this.ataque, required this.decaimento, required this.liberacao, required this.cor});
+
+  final Paleta cores;
 
   final num ataque;
   final num decaimento;
@@ -117,12 +123,12 @@ class PintorEnvelope extends CustomPainter {
         Offset(margem + x * (size.width - margem * 2), margem + (1 - y) * altura),
     ];
     final base = margem + altura;
-    canvas.drawLine(Offset(0, base), Offset(size.width, base), _guia);
+    canvas.drawLine(Offset(0, base), Offset(size.width, base), _guia(cores));
     canvas.drawPath(Path()..addPolygon([...pontos, Offset(pontos.first.dx, base)], true), _preenchimento(cor));
     canvas.drawPath(Path()..addPolygon(pontos, false), _traco(cor));
   }
 
   @override
   bool shouldRepaint(PintorEnvelope antigo) =>
-      antigo.ataque != ataque || antigo.decaimento != decaimento || antigo.liberacao != liberacao || antigo.cor != cor;
+      antigo.cores != cores || antigo.ataque != ataque || antigo.decaimento != decaimento || antigo.liberacao != liberacao || antigo.cor != cor;
 }

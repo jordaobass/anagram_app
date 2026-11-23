@@ -16,19 +16,19 @@ class FaixaEscolherDestino extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     return Container(
       key: const ValueKey('faixa-escolher-destino'),
-      color: Cores.tally,
+      color: context.cores.tally,
       padding: const EdgeInsets.only(left: Espacos.m),
       child: Row(children: [
         Expanded(
           child: Text(l.salvarComoEscolhaDestino,
-              style: tema.labelLarge?.copyWith(color: Cores.sobreTally)),
+              style: tema.labelLarge?.copyWith(color: context.cores.sobreTally)),
         ),
         TextButton(
           onPressed: () {
             ref.read(editorProvider.notifier).cancelarSalvarComo();
             voltarSePuder(context);
           },
-          style: TextButton.styleFrom(foregroundColor: Cores.sobreTally),
+          style: TextButton.styleFrom(foregroundColor: context.cores.sobreTally),
           child: Text(l.cancelar),
         ),
       ]),

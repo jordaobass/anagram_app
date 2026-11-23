@@ -116,7 +116,7 @@ class PainelConectar extends ConsumerWidget {
       _ => (null, false),
     };
     if (aviso == null) return const [];
-    final cor = erro ? Cores.erro : Cores.textoSecundario;
+    final cor = erro ? context.cores.erro : context.cores.textoSecundario;
     return [
       Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Icon(erro ? Icons.error_outline : Icons.info_outline, color: cor),
@@ -124,7 +124,7 @@ class PainelConectar extends ConsumerWidget {
         Expanded(
           child: Text(l.aviso(aviso),
               key: const ValueKey('aviso-conexao'),
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: erro ? cor : Cores.texto)),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: erro ? cor : context.cores.texto)),
         ),
       ]),
       const SizedBox(height: Espacos.l),
@@ -174,7 +174,7 @@ class _BotaoDeConexao extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final andamento = emAndamento;
-    final frente = principal ? Cores.sobreTally : Cores.texto;
+    final frente = principal ? context.cores.sobreTally : context.cores.texto;
     final icone = andamento == null
         ? Icon(this.icone)
         : SizedBox.square(
@@ -186,7 +186,7 @@ class _BotaoDeConexao extends StatelessWidget {
     final estilo = andamento == null
         ? null
         : (principal
-            ? FilledButton.styleFrom(disabledBackgroundColor: Cores.tally, disabledForegroundColor: frente)
+            ? FilledButton.styleFrom(disabledBackgroundColor: context.cores.tally, disabledForegroundColor: frente)
             : OutlinedButton.styleFrom(disabledForegroundColor: frente));
     return principal
         ? FilledButton.icon(key: chave, onPressed: aoTocar, style: estilo, icon: icone, label: texto)

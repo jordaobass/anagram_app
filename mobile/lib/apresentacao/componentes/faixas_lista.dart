@@ -24,13 +24,13 @@ class FaixaOrganizar extends ConsumerWidget {
     };
     return Container(
       key: const ValueKey('faixa-organizar'),
-      color: Cores.tally,
+      color: context.cores.tally,
       padding: const EdgeInsets.only(left: Espacos.m),
       child: Row(children: [
-        Expanded(child: Text(texto, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Cores.sobreTally))),
+        Expanded(child: Text(texto, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: context.cores.sobreTally))),
         TextButton(
           onPressed: ref.read(organizarProvider.notifier).cancelar,
-          style: TextButton.styleFrom(foregroundColor: Cores.sobreTally),
+          style: TextButton.styleFrom(foregroundColor: context.cores.sobreTally),
           child: Text(l.cancelar),
         ),
       ]),
@@ -47,8 +47,8 @@ class FaixaErroLista extends StatelessWidget {
   Widget build(BuildContext context) => Container(
         key: const ValueKey('erro-lista'),
         width: double.infinity,
-        color: Cores.painelElevado,
+        color: context.cores.painelElevado,
         padding: const EdgeInsets.symmetric(horizontal: Espacos.m, vertical: Espacos.s),
-        child: Text(texto, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.erro)),
+        child: Text(texto, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.erro)),
       );
 }

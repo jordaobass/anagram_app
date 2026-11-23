@@ -28,7 +28,7 @@ class _BotaoDicasState extends State<BotaoDicas> {
           showDuration: Duracoes.dicas,
           constraints: const BoxConstraints(maxWidth: Medidas.larguraExplicacao),
           child: IconButton(
-            icon: const Icon(Icons.help_outline, color: Cores.aluminioClaro),
+            icon: Icon(Icons.help_outline, color: context.cores.aluminioClaro),
             onPressed: () => _balao.currentState?.ensureTooltipVisible(),
           ),
         ),

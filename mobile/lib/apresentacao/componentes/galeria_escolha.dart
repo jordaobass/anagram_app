@@ -21,7 +21,7 @@ Future<String?> abrirGaleriaDeEscolha(
     showDialog<String>(
       context: context,
       builder: (_) => Dialog(
-        backgroundColor: Cores.painelElevado,
+        backgroundColor: context.cores.painelElevado,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: Medidas.larguraBiblioteca, maxHeight: Medidas.alturaBiblioteca),
           child: _GaleriaEscolha(
@@ -119,11 +119,11 @@ class _EstadoGaleriaEscolha extends State<_GaleriaEscolha> {
   }
 
   Widget _cartaoDaGrade(String opcao, bool marcada) => Material(
-        color: marcada ? Cores.painel : Colors.transparent,
+        color: marcada ? context.cores.painel : Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Raios.controle),
           side: BorderSide(
-              color: marcada ? Cores.tally : Cores.filete,
+              color: marcada ? context.cores.tallyTinta : context.cores.filete,
               width: marcada ? Medidas.contornoSelecao : Medidas.filete),
         ),
         child: InkWell(
@@ -154,7 +154,7 @@ class _EstadoGaleriaEscolha extends State<_GaleriaEscolha> {
             title: Text(o),
             subtitle: switch (widget.detalhe?.call(o)) { final linha? => Text(linha), null => null },
             selected: o == widget.atual,
-            selectedColor: Cores.tally,
+            selectedColor: context.cores.tallyTinta,
             enabled: _pode(o),
             onTap: () => Navigator.of(context).pop(o),
           ),

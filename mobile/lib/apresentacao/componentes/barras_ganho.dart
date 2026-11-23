@@ -126,7 +126,7 @@ class _EstadoBarraGanho extends State<BarraGanho> {
           onVerticalDragEnd: (_) => _soltar(),
           onVerticalDragCancel: _soltar,
           onTap: _digitar,
-          child: CustomPaint(painter: _PintorTraco(widget.traco.cor, focado: _foco.hasFocus)),
+          child: CustomPaint(painter: _PintorTraco(widget.traco.cor, cores: context.cores, focado: _foco.hasFocus)),
         ),
       );
 }
@@ -136,7 +136,9 @@ double topoDoTraco(num valorDb, double alturaFaixa, EscalaGanho escala) =>
     escala.altura(valorDb.toDouble()) * alturaFaixa - Medidas.alvoTracoGanho / 2;
 
 class _PintorTraco extends CustomPainter {
-  const _PintorTraco(this.cor, {required this.focado});
+  const _PintorTraco(this.cor, {required this.cores, required this.focado});
+
+  final Paleta cores;
   final Color cor;
 
   /// Com o foco do teclado, o alvo inteiro ganha o realce de foco do app.
@@ -144,7 +146,7 @@ class _PintorTraco extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (focado) canvas.drawRect(Offset.zero & size, Paint()..color = Cores.tally.withValues(alpha: Opacidades.foco));
+    if (focado) canvas.drawRect(Offset.zero & size, Paint()..color = cores.tallyTinta.withValues(alpha: Opacidades.foco));
     final y = size.height / 2;
     canvas.drawLine(Offset(0, y), Offset(size.width, y), Paint()
       ..color = cor
@@ -153,5 +155,5 @@ class _PintorTraco extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_PintorTraco antigo) => antigo.cor != cor || antigo.focado != focado;
+  bool shouldRepaint(_PintorTraco antigo) => antigo.cores != cores || antigo.cor != cor || antigo.focado != focado;
 }

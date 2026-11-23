@@ -37,7 +37,7 @@ class GradeCompacta extends ConsumerWidget {
       return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         for (final linha in const [1, 2])
           ..._linha(context, ref, documento, linha, _Fileiras(porFileira, largura,
-              comFio: linha == 1 || comSplit, cor: linha == 1 ? Cores.aluminio : Cores.sinalSplit)),
+              comFio: linha == 1 || comSplit, cor: linha == 1 ? context.cores.aluminio : context.cores.sinalSplit)),
       ]);
     });
   }

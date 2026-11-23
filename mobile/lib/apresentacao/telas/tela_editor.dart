@@ -69,15 +69,15 @@ class _Aviso extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     return Container(
       key: const ValueKey('aviso-editor'),
-      color: Cores.fitaAlerta,
+      color: context.cores.fitaAlerta,
       padding: const EdgeInsets.symmetric(horizontal: Espacos.l),
       child: Row(children: [
         Expanded(
-          child: Text(l.aviso(aviso), style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Cores.sobreAlerta)),
+          child: Text(l.aviso(aviso), style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: context.cores.sobreAlerta)),
         ),
         IconButton(
           tooltip: l.fecharAviso,
-          color: Cores.sobreAlerta,
+          color: context.cores.sobreAlerta,
           icon: const Icon(Icons.close),
           onPressed: ref.read(editorProvider.notifier).limparAviso,
         ),

@@ -94,7 +94,7 @@ class _ListaTemplates extends StatelessWidget {
   Widget _cabecalho(BuildContext context, String texto) => Padding(
         padding: const EdgeInsets.fromLTRB(Espacos.l, Espacos.m, Espacos.l, Espacos.xs),
         child: Text(texto.toUpperCase(),
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.textoSecundario)),
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: context.cores.textoSecundario)),
       );
 
   Widget _item(BuildContext context, TemplateBloco t) {

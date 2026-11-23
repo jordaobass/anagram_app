@@ -57,7 +57,7 @@ PopupMenuItem<T> itemDeControle<T>(BuildContext context, T valor,
       child: Row(children: [
         Expanded(child: Text(rotulo)),
         const SizedBox(width: Espacos.l),
-        Text(situacao, style: Tipos.detalheMenu),
+        DetalheDeMenu(situacao),
       ]),
     ),
   );

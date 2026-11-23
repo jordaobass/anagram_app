@@ -100,7 +100,7 @@ class _Escolhas {
 
   Widget _microfone(OpcaoGabinete escolhido) {
     Widget icone(String mic, double tamanho) =>
-        IconeMicrofone(tipo: TipoMicrofone.doNome(mic), cor: Cores.aluminioClaro, tamanho: tamanho);
+        IconeMicrofone(tipo: TipoMicrofone.doNome(mic), cor: context.cores.aluminioClaro, tamanho: tamanho);
     return CartaoDeOpcoes(
       chave: 'microfone',
       rotulo: l.cbMicrofone,
@@ -118,7 +118,7 @@ class _Escolhas {
         rotulo: l.cbPosicao,
         opcoes: posicoes,
         atual: escolhido.posicao,
-        noCartao: const Icon(Icons.track_changes, size: Medidas.iconeNoCartaoGabinete, color: Cores.aluminioClaro),
+        noCartao: Icon(Icons.track_changes, size: Medidas.iconeNoCartaoGabinete, color: context.cores.aluminioClaro),
         aoEscolher: (pos) =>
             _gravar(catalogo.escolher(tipo, escolhido.modelo, microfone: escolhido.microfone, posicao: pos)),
       );

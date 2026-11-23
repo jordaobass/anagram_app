@@ -136,7 +136,7 @@ class _BandaDoBloco extends StatelessWidget {
             cena: painel.cena,
             tamanho: Medidas.knobCompacto,
             forma: FormaControle.knob,
-            corChip: Cores.doModoEq(modo),
+            corChip: context.cores.doModoEq(modo),
           ),
         ),
     ]);

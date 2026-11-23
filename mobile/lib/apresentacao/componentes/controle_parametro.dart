@@ -150,7 +150,7 @@ class ChaveParametro extends StatelessWidget {
                   key: chave,
                   value: ligado,
                   onChanged: aoMudar,
-                  activeThumbColor: Cores.tintaMarcador,
+                  activeThumbColor: context.cores.tintaMarcador,
                   activeTrackColor: cor,
                 ),
                 const SizedBox(width: Espacos.xs, height: Espacos.xs),
@@ -162,5 +162,5 @@ class ChaveParametro extends StatelessWidget {
       );
 
   TextStyle? _estiloTexto(BuildContext context) =>
-      Theme.of(context).textTheme.titleMedium?.copyWith(color: ligado ? Cores.texto : Cores.textoSecundario);
+      Theme.of(context).textTheme.titleMedium?.copyWith(color: ligado ? context.cores.texto : context.cores.textoSecundario);
 }

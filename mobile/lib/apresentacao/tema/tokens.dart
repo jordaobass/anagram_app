@@ -1,117 +1,11 @@
 // Tokens do mundo "case de estrada": ABS preto, arestas de alumínio,
 // fita gaffer creme com marcador, estêncil nos números e fitas de cor de
 // roadie codificando a família do bloco. Nenhuma cor ou medida fora daqui.
+// As cores ficam em paleta.dart, um jogo por tema.
+import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 
-import '../../nucleo/ajustes/mapa_ajustes.dart';
-import '../../nucleo/catalogo/arranjo_multibanda.dart';
-import '../../nucleo/catalogo/familia_bloco.dart';
-import '../../nucleo/catalogo/linha_paralela.dart';
-
-abstract final class Cores {
-  static const fundoCase = Color(0xFF131416);
-  static const painel = Color(0xFF1B1C1F);
-  static const painelElevado = Color(0xFF24262A);
-  static const filete = Color(0xFF34373C);
-  static const aluminio = Color(0xFF8E949B);
-  static const aluminioClaro = Color(0xFFC9CDD2);
-  static const texto = Color(0xFFEDEDEB);
-  static const textoSecundario = Color(0xFFA7ACB2);
-  static const fitaGaffer = Color(0xFFE8E1CD);
-  static const fitaGafferSombra = Color(0xFFCFC6AE);
-  static const tintaMarcador = Color(0xFF17171A);
-  static const tally = Color(0xFFF0B429);
-  static const sobreTally = Color(0xFF1A1405);
-  static const fitaAlerta = Color(0xFFC2361F);
-  static const sobreAlerta = Color(0xFFFFFFFF);
-  static const ledLigado = Color(0xFF41D68A);
-  static const ledDemonstracao = Color(0xFF5AA9F0);
-  static const ledDesligado = Color(0xFF6B7077);
-  static const erro = Color(0xFFFF7A66);
-
-  /// O modo dos footswitches aceso nas cores dos LEDs da própria Anagram
-  /// (pedido do dono, DECISOES FM8): roxo no Stomp, branco no Preset e
-  /// azul-claro no Scene. EXCEÇÃO intencional à regra do âmbar só para ação e
-  /// seleção. O texto [sobreModo] passa de 4,5:1 sobre as três (teste).
-  static const modoStomp = Color(0xFF9B6CF0);
-  static const modoPreset = Color(0xFFFFFFFF);
-  static const modoScene = Color(0xFF6EC6F5);
-  static const sobreModo = Color(0xFF121014);
-
-  /// O caminho da linha paralela: amarelo do Split até o fim da linha 2 e
-  /// verde-água claro na volta ao Merge (pedido do usuário). O amarelo é mais
-  /// claro e frio que o âmbar de ação ([tally]) para não parecer seleção; o
-  /// verde-água é mais claro que a família de modulação. Os dois passam de
-  /// 10:1 sobre [fundoCase].
-  static const sinalSplit = Color(0xFFF5E05A);
-  static const sinalMerge = Color(0xFF8FEADB);
-
-  /// A fita da casa: Split e Merge levam a cor do trecho que abrem e fecham,
-  /// para ligar o bloco ao fio; os demais, a da família.
-  static Color daFita(String uri, FamiliaBloco familia) {
-    if (uri == uriSplit) return sinalSplit;
-    if (uri == uriMerge) return sinalMerge;
-    return daFamilia(familia);
-  }
-
-  static Color daFamilia(FamiliaBloco familia) => switch (familia) {
-        FamiliaBloco.drive => const Color(0xFFE8772E),
-        // verde-limão: o amarelo antigo (E2C23A) se confundia com o âmbar de ação
-        FamiliaBloco.compressor => const Color(0xFFB5D334),
-        FamiliaBloco.equalizador => const Color(0xFF3BB7D6),
-        FamiliaBloco.filtro => const Color(0xFF9B78E3),
-        FamiliaBloco.modulacao => const Color(0xFF34C3A0),
-        FamiliaBloco.delay => const Color(0xFF5585EE),
-        FamiliaBloco.reverb => const Color(0xFFD46BB3),
-        FamiliaBloco.amplificador => const Color(0xFFE0563F),
-        FamiliaBloco.gabinete => const Color(0xFFB9A37C),
-        FamiliaBloco.utilitario => const Color(0xFF8D949C),
-      };
-
-  /// Cor de família quase sem matiz (utilitário, gabinete): preenchida num
-  /// botão, parece o cinza de desabilitado. Quem pinta seleção com a cor da
-  /// família troca, nesse caso, para o contorno âmbar (DECISOES UI1).
-  static bool pareceDesabilitada(Color cor) => HSLColor.fromColor(cor).saturation < _saturacaoMinimaDeSelecao;
-  static const _saturacaoMinimaDeSelecao = 0.4;
-
-  /// As três bandas do Ignissor e do Entropia, na faixa de frequência e no
-  /// topo da coluna: matizes distantes entre si e do âmbar de ação.
-  static Color daBanda(BandaMultibanda banda, [PaletaBandas paleta = PaletaBandas.ignissor]) => switch ((paleta, banda)) {
-        (PaletaBandas.ignissor, BandaMultibanda.graves) => const Color(0xFF5585EE),
-        (PaletaBandas.ignissor, BandaMultibanda.medios) => const Color(0xFF34C3A0),
-        (PaletaBandas.ignissor, BandaMultibanda.agudos) => const Color(0xFFD46BB3),
-        (PaletaBandas.entropia, BandaMultibanda.graves) => const Color(0xFF3FC9C0),
-        (PaletaBandas.entropia, BandaMultibanda.medios) => const Color(0xFF9B7BEA),
-        (PaletaBandas.entropia, BandaMultibanda.agudos) => const Color(0xFFF0A23C),
-      };
-
-  /// As linhas da tela principal da pedaleira: Threshold em rosa, Level em verde.
-  static const linhaThreshold = Color(0xFFF26FA8);
-  static const linhaLevel = Color(0xFF7BD86A);
-
-  /// Faders do mixer global: azul de painel, fora das cores de família (um
-  /// ajuste da pedaleira não é bloco) e longe do âmbar de ação.
-  static const mixerGlobal = Color(0xFF7FB2E5);
-
-  /// O modo do Global EQ, com as cores da tela da Anagram: ganho em verde,
-  /// frequência em roxo, largura em laranja.
-  static Color doModoEq(ModoEq modo) => switch (modo) {
-        ModoEq.gain => const Color(0xFF5FCF7E),
-        ModoEq.freq => const Color(0xFF8A6CF2),
-        ModoEq.width => const Color(0xFFF2A531),
-      };
-
-  /// O nome do modo escrito na cor dele sobre o painel. O roxo da pedaleira
-  /// dá 4,47:1 como texto (abaixo dos 4,5 da WCAG AA): o texto usa um roxo
-  /// mais claro, e o chip, o ícone e a curva continuam na cor da pedaleira.
-  static Color textoDoModoEq(ModoEq modo) => switch (modo) {
-        ModoEq.freq => const Color(0xFF9B84F5),
-        _ => doModoEq(modo),
-      };
-
-  /// Texto sobre o chip colorido do modo: escuro, para contraste com as três.
-  static const textoSobreModoEq = Color(0xFF101114);
-}
+export 'paleta.dart';
 
 abstract final class Espacos {
   static const double xxs = 2;
@@ -345,7 +239,7 @@ abstract final class Medidas {
   /// (DECISOES UI12).
   static const double alturaItemMenuComMouse = 40;
 
-  /// Check da opção marcada em cor neutra (ver [Cores.pareceDesabilitada]).
+  /// Check da opção marcada em cor neutra (ver [Paleta.pareceDesabilitada]).
   static const double iconeMarcaOpcao = 18;
 
   /// Cartão de um controle da pedaleira (FOOT, POT, EXP) e os knobs de
@@ -360,6 +254,79 @@ abstract final class Medidas {
   /// em espanhol estoura; 480 deixa folga (DECISOES K6).
   static const double larguraMinimaJanela = 480;
   static const double alturaMinimaJanela = 480;
+}
+
+/// A parte de cima do editor (barra de conexão, fita do preset, SALVAR/
+/// DESCARTAR, cenas e o modo dos footswitches) em dois tamanhos. Com mouse
+/// (Windows, macOS, Linux) ela é compacta: o ponteiro é preciso, e os 64 + 56
+/// + 56 px do toque empurravam a cadeia para baixo (relato no Reddit, DECISOES
+/// BC1); os alvos ficam entre 32 e 40 px. No toque, o mínimo de 48 dp.
+class MedidasDoTopo {
+  const MedidasDoTopo._({
+    required this.barraConexao,
+    required this.controle,
+    required this.fita,
+    required this.folgaFita,
+    required this.cena,
+    required this.alvoPilula,
+    required this.slot,
+    required this.nomePreset,
+    required this.entreFaixas,
+  });
+
+  /// Altura mínima da barra de conexão.
+  final double barraConexao;
+
+  /// Altura dos botões da faixa do preset (SALVAR, SALVAR COMO, DESCARTAR, menu).
+  final double controle;
+
+  /// Altura mínima da fita gaffer com o nome, e o respiro dentro dela.
+  final double fita;
+  final double folgaFita;
+
+  /// Altura mínima do botão de cena.
+  final double cena;
+
+  /// Alvo de cada pílula do modo dos footswitches (o desenho tem [Medidas.alturaPilulaModo]).
+  final double alvoPilula;
+
+  /// Corpo do estêncil do slot ("02A") e da letra do nome do preset.
+  final double slot;
+  final double nomePreset;
+
+  /// Espaço entre a fita, as cenas e a moldura da cadeia.
+  final double entreFaixas;
+
+  static const toque = MedidasDoTopo._(
+    barraConexao: 64,
+    controle: Medidas.alvoMinimo,
+    fita: Medidas.alvoMinimo + Espacos.s,
+    folgaFita: Espacos.s,
+    cena: Medidas.alvoMinimo + Espacos.s,
+    alvoPilula: Medidas.alvoMinimo,
+    slot: 40,
+    nomePreset: 24,
+    entreFaixas: Espacos.l,
+  );
+
+  static const mouse = MedidasDoTopo._(
+    barraConexao: Medidas.alvoMinimo,
+    controle: 40,
+    fita: 40,
+    folgaFita: Espacos.xs,
+    cena: 40,
+    alvoPilula: 32,
+    slot: 32,
+    nomePreset: 22,
+    entreFaixas: Espacos.s,
+  );
+
+  bool get comMouse => identical(this, mouse);
+
+  static MedidasDoTopo get daPlataforma => switch (defaultTargetPlatform) {
+        TargetPlatform.android || TargetPlatform.iOS || TargetPlatform.fuchsia => toque,
+        TargetPlatform.windows || TargetPlatform.macOS || TargetPlatform.linux => mouse,
+      };
 }
 
 abstract final class Quebras {
@@ -402,6 +369,17 @@ abstract final class Fontes {
 
 /// Estilos de texto fora da escala do Material, cada um com um papel só.
 abstract final class Tipos {
+  /// O nome do preset na fita gaffer: dado do usuário, lido a um metro. A
+  /// condensada de rótulo do case em semibold, na caixa em que a pessoa
+  /// escreveu; o marcador ficou só no nome fixo do app (DECISOES BC2). O
+  /// corpo vem de [MedidasDoTopo.nomePreset].
+  static const nomePreset =
+      TextStyle(fontFamily: Fontes.rotulo, fontWeight: FontWeight.w600, letterSpacing: 0.3, height: 1.15);
+
+  /// O nome do preset na lista: o corpo do texto, um passo mais firme que a
+  /// frase comum, para a coluna de nomes se ler de relance.
+  static const nomeNaLista = FontWeight.w500;
+
   /// Item de menu (botão direito, ⋮, menus suspensos): lido como menu do
   /// sistema, não como botão. Barlow média, sem a condensada em negrito e o
   /// espaçamento largo do rótulo de botão (DECISOES UI12).
@@ -409,9 +387,8 @@ abstract final class Tipos {
       TextStyle(fontFamily: Fontes.ui, fontSize: 15, fontWeight: FontWeight.w500, letterSpacing: 0.1, height: 1.25);
 
   /// O que fica à direita do item (o que o controle já move), como um atalho
-  /// de teclado: menor e em [Cores.textoSecundario].
-  static const detalheMenu =
-      TextStyle(fontFamily: Fontes.ui, fontSize: 13, fontWeight: FontWeight.w400, color: Cores.textoSecundario);
+  /// de teclado: menor e em `textoSecundario` (a cor vem do tema, onde se usa).
+  static const detalheMenu = TextStyle(fontFamily: Fontes.ui, fontSize: 13, fontWeight: FontWeight.w400);
 }
 
 abstract final class Opacidades {

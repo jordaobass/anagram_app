@@ -7,7 +7,9 @@ import 'package:flutter/rendering.dart';
 import '../tema/tokens.dart';
 
 class PintorKnob extends CustomPainter {
-  const PintorKnob({required this.fracao, required this.cor, required this.focado, this.origem = 0});
+  const PintorKnob({required this.cores, required this.fracao, required this.cor, required this.focado, this.origem = 0});
+
+  final Paleta cores;
 
   final double fracao;
 
@@ -24,22 +26,22 @@ class PintorKnob extends CustomPainter {
     final centro = size.center(Offset.zero);
     final raio = size.shortestSide / 2 - Medidas.espessuraArco;
     final arco = Rect.fromCircle(center: centro, radius: raio);
-    canvas.drawArc(arco, _inicio, _varredura, false, _traco(Cores.filete));
+    canvas.drawArc(arco, _inicio, _varredura, false, _traco(cores.filete));
     canvas.drawArc(arco, _inicio + _varredura * origem, _varredura * (fracao - origem), false, _traco(cor));
     final corpo = raio - Medidas.espessuraArco * Medidas.folgaCorpoKnob;
-    canvas.drawCircle(centro, corpo, Paint()..color = Cores.painelElevado);
+    canvas.drawCircle(centro, corpo, Paint()..color = cores.corpoKnob);
     canvas.drawCircle(
       centro,
       corpo,
       Paint()
-        ..color = focado ? Cores.tally : Cores.aluminio
+        ..color = focado ? cores.tallyTinta : cores.aluminio
         ..style = PaintingStyle.stroke
         ..strokeWidth = focado ? Medidas.contornoSelecao : Medidas.filete,
     );
     final angulo = _inicio + _varredura * fracao;
     final ponta = centro + Offset(cos(angulo), sin(angulo)) * corpo * Medidas.pontaPonteiroKnob;
     final base = centro + Offset(cos(angulo), sin(angulo)) * corpo * Medidas.basePonteiroKnob;
-    canvas.drawLine(base, ponta, _traco(Cores.fitaGaffer)..strokeWidth = Medidas.espessuraArco * Medidas.espessuraPonteiroKnob);
+    canvas.drawLine(base, ponta, _traco(cores.fitaGaffer)..strokeWidth = Medidas.espessuraArco * Medidas.espessuraPonteiroKnob);
   }
 
   Paint _traco(Color cor) => Paint()
@@ -49,5 +51,5 @@ class PintorKnob extends CustomPainter {
     ..strokeCap = StrokeCap.round;
 
   @override
-  bool shouldRepaint(PintorKnob antigo) => antigo.fracao != fracao || antigo.origem != origem || antigo.cor != cor || antigo.focado != focado;
+  bool shouldRepaint(PintorKnob antigo) => antigo.cores != cores || antigo.fracao != fracao || antigo.origem != origem || antigo.cor != cor || antigo.focado != focado;
 }

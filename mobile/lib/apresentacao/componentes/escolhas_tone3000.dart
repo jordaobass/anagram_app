@@ -91,8 +91,8 @@ class EscolhasTone3000 {
       opcoes: porNome.keys.toList(),
       // arquivo que não é um dos modelos listados: mostra o nome dele, sem trocar
       atual: _rotuloDe(porNome, achado.modelo) ?? modeloCarregadoDe(bloco.uri, bloco.arquivoDeIr)?.nomeDoArquivo,
-      noCartao: Icon(icone, size: Medidas.iconeNoCartaoGabinete, color: Cores.aluminioClaro),
-      visual: (_) => Icon(icone, size: Medidas.iconeMicrofone, color: Cores.aluminioClaro),
+      noCartao: Icon(icone, size: Medidas.iconeNoCartaoGabinete, color: context.cores.aluminioClaro),
+      visual: (_) => Icon(icone, size: Medidas.iconeMicrofone, color: context.cores.aluminioClaro),
       habilitada: (_) => !achado.tom.doUsuario,
       aoEscolher: (nome) => _gravar(achado.tom, porNome[nome]),
     );

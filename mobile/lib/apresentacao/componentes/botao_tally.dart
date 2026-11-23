@@ -25,9 +25,9 @@ class BotaoTally extends StatelessWidget {
   final Widget filho;
 
   /// A cor do texto de quem monta o [filho].
-  static Color corDoTexto({required bool ativo, bool habilitado = true}) {
-    if (ativo) return Cores.sobreTally;
-    return habilitado ? Cores.texto : Cores.textoSecundario;
+  static Color corDoTexto(Paleta cores, {required bool ativo, bool habilitado = true}) {
+    if (ativo) return cores.sobreTally;
+    return habilitado ? cores.texto : cores.textoSecundario;
   }
 
   @override
@@ -38,10 +38,10 @@ class BotaoTally extends StatelessWidget {
       button: true,
       label: rotuloSemantico,
       child: Material(
-        color: ativo ? Cores.tally : Cores.painelElevado,
+        color: ativo ? context.cores.tally : context.cores.painelElevado,
         shape: RoundedRectangleBorder(
           borderRadius: raio,
-          side: BorderSide(color: ativo ? Cores.tally : Cores.filete),
+          side: BorderSide(color: ativo ? context.cores.tallyTinta : context.cores.filete),
         ),
         child: InkWell(
           key: chave,

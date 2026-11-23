@@ -80,5 +80,5 @@ anagram-tone-maker. Nenhum depoimento, métrica de uso ou teste com aparelho rea
 
 ## Accessibility & Inclusion
 
-Alvos de toque ≥ 48 dp; contraste AA em tema escuro; controles de knob também operáveis por
+Alvos de toque ≥ 48 dp (com mouse, 32 a 40 px no topo do editor); contraste AA medido nos temas escuro e claro; controles de knob também operáveis por
 teclado e por slider. **(inferido)**

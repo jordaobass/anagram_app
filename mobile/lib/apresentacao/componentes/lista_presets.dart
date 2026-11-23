@@ -64,7 +64,7 @@ class ListaPresets extends ConsumerWidget {
         aberto: aberto,
         escolhendo: escolhendo,
         naPedaleira: naPedaleira,
-        corLed: demonstracao ? Cores.ledDemonstracao : Cores.ledLigado,
+        corLed: demonstracao ? context.cores.ledDemonstracao : context.cores.ledLigado,
         aoEscolher: salvando ? null : (slot) => _abrir(context, ref, slot),
         // o menu só existe fora de outra escolha de destino (salvar ou organizar)
         aoMenu: semMenu ? null : (slot, onde) => abrirMenuPreset(context, ref, slot, onde),
@@ -122,7 +122,7 @@ class _Banco extends StatelessWidget {
   Widget build(BuildContext context) {
     final inicio = (banco - 1) * SlotPreset.porBanco + 1;
     return DecoratedBox(
-      decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Cores.filete))),
+      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: context.cores.filete))),
       child: Column(children: [
         for (var n = inicio; n < inicio + SlotPreset.porBanco; n++) _linha(context, SlotPreset(n)),
       ]),
@@ -131,12 +131,12 @@ class _Banco extends StatelessWidget {
 
   /// Modo destino: "ORIGEM" no slot aberto; nos outros, gravar (vazio) ou
   /// substituir (ocupado). Fora dele: onde a pedaleira está.
-  Widget? _marca(AppLocalizations l, TextTheme tema, SlotPreset slot) {
+  Widget? _marca(AppLocalizations l, TextTheme tema, Paleta cores, SlotPreset slot) {
     if (escolhendo) {
-      if (slot == aberto) return Text(l.origem, style: tema.labelSmall?.copyWith(color: Cores.tally));
+      if (slot == aberto) return Text(l.origem, style: tema.labelSmall?.copyWith(color: cores.tallyTinta));
       return biblioteca.resumo(slot) == null
-          ? Icon(Icons.save_alt, color: Cores.aluminio, semanticLabel: l.gravarAqui)
-          : Icon(Icons.find_replace, color: Cores.aluminioClaro, semanticLabel: l.sbSubstituirAqui);
+          ? Icon(Icons.save_alt, color: cores.aluminio, semanticLabel: l.gravarAqui)
+          : Icon(Icons.find_replace, color: cores.aluminioClaro, semanticLabel: l.sbSubstituirAqui);
     }
     // slot vazio (preset novo ainda não gravado) não tem o que tocar
     if (slot != naPedaleira || biblioteca.resumo(slot) == null) return null;
@@ -147,7 +147,7 @@ class _Banco extends StatelessWidget {
     final ativo = slot == aberto;
     final escolher = aoEscolher;
     return Material(
-      color: ativo ? Cores.painelElevado : Colors.transparent,
+      color: ativo ? context.cores.painelElevado : Colors.transparent,
       child: InkWell(
         key: ValueKey('slot-${slot.rotulo}'),
         onTap: escolher == null ? null : () => escolher(slot),
@@ -157,23 +157,23 @@ class _Banco extends StatelessWidget {
           constraints: const BoxConstraints(minHeight: Medidas.alvoMinimo),
           padding: const EdgeInsets.symmetric(horizontal: Espacos.m),
           decoration: BoxDecoration(
-            border: Border(left: BorderSide(color: ativo ? Cores.tally : Colors.transparent, width: Medidas.contornoSelecao)),
+            border: Border(left: BorderSide(color: ativo ? context.cores.tallyTinta : Colors.transparent, width: Medidas.contornoSelecao)),
           ),
-          child: _conteudo(AppLocalizations.of(context), Theme.of(context).textTheme, slot, ativo: ativo),
+          child: _conteudo(AppLocalizations.of(context), Theme.of(context).textTheme, context.cores, slot, ativo: ativo),
         ),
       ),
     );
   }
 
-  Widget _conteudo(AppLocalizations l, TextTheme tema, SlotPreset slot, {required bool ativo}) {
+  Widget _conteudo(AppLocalizations l, TextTheme tema, Paleta cores, SlotPreset slot, {required bool ativo}) {
     final resumo = biblioteca.resumo(slot);
     return Row(children: [
       SizedBox(
         width: Espacos.xxxl,
-        child: Text(slot.rotulo, style: tema.titleSmall?.copyWith(color: ativo ? Cores.tally : Cores.aluminioClaro)),
+        child: Text(slot.rotulo, style: tema.titleSmall?.copyWith(color: ativo ? cores.tallyTinta : cores.aluminioClaro)),
       ),
       Expanded(child: _nome(l, tema, slot, resumo?.nome)),
-      ?_marca(l, tema, slot),
+      ?_marca(l, tema, cores, slot),
       if (aoMenu != null && resumo != null) _botaoMenu(l, slot),
     ]);
   }
@@ -184,7 +184,7 @@ class _Banco extends StatelessWidget {
     final substitui = escolhendo && nome != null && slot != aberto;
     final texto = nome == null ? l.slotVazio : (substitui ? l.sbSubstitui(nome) : nome);
     return Text(texto,
-        maxLines: 1, overflow: TextOverflow.ellipsis, style: nome == null || substitui ? tema.bodySmall : tema.bodyLarge);
+        maxLines: 1, overflow: TextOverflow.ellipsis, style: nome == null || substitui ? tema.bodySmall : tema.bodyLarge?.copyWith(fontWeight: Tipos.nomeNaLista));
   }
 
   /// O menu só vale para slot com preset; o vazio não tem o que mover.
@@ -203,7 +203,7 @@ class _Banco extends StatelessWidget {
         builder: (contexto) => IconButton(
           key: ValueKey('menu-preset-${slot.rotulo}'),
           tooltip: l.opAcoesPreset,
-          icon: const Icon(Icons.more_vert, color: Cores.textoSecundario),
+          icon: Icon(Icons.more_vert, color: contexto.cores.textoSecundario),
           onPressed: () => _menuNoCentro(contexto, slot),
         ),
       );

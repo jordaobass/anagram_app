@@ -61,10 +61,10 @@ class _EstadoCartaoEscolha extends State<CartaoEscolha> {
           height: Medidas.alturaCartaoGabinete,
           padding: const EdgeInsets.all(Espacos.s),
           decoration: BoxDecoration(
-            color: Cores.painel,
+            color: context.cores.painel,
             borderRadius: BorderRadius.circular(Raios.painel),
             border: Border.all(
-                color: _emFoco ? Cores.tally : Cores.filete,
+                color: _emFoco ? context.cores.tallyTinta : context.cores.filete,
                 width: _emFoco ? Medidas.contornoSelecao : Medidas.filete),
           ),
           child: _conteudo(context),
@@ -90,7 +90,7 @@ class _EstadoCartaoEscolha extends State<CartaoEscolha> {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: texto.bodyMedium?.copyWith(color: Cores.texto)),
+            style: texto.bodyMedium?.copyWith(color: context.cores.texto)),
       ),
     ]);
   }

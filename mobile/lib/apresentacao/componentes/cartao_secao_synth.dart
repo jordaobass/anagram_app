@@ -33,9 +33,9 @@ class CartaoSecaoSynth extends StatelessWidget {
         width: largura,
         padding: const EdgeInsets.all(Espacos.m),
         decoration: BoxDecoration(
-          color: Cores.painel,
+          color: context.cores.painel,
           borderRadius: BorderRadius.circular(Raios.painel),
-          border: Border.all(color: Cores.filete),
+          border: Border.all(color: context.cores.filete),
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
           Row(children: [

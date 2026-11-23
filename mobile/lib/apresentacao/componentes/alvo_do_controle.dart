@@ -31,7 +31,7 @@ class AlvoNaTela {
   num get maximo => alvo.maximo ?? parametro.maximo;
 
   /// A fita da família só existe onde há bloco.
-  Color? get cor => bloco == null ? null : Cores.daFamilia(bloco!.familia);
+  Color? cor(Paleta cores) => bloco == null ? null : cores.daFamilia(bloco!.familia);
 
   /// "Wah · Position", ou a casa vazia.
   String descricao(AppLocalizations l) {
@@ -70,7 +70,7 @@ class FitaDoAlvo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cor = alvo.cor;
+    final cor = alvo.cor(context.cores);
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
       if (cor != null) Container(height: Medidas.fitaCategoria, color: cor),
       const SizedBox(height: Espacos.xxs),

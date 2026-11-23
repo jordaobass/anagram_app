@@ -194,7 +194,7 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
         fontFeatures: const [FontFeature.tabularFigures()],
         decoration: widget.aoMudar == null ? null : TextDecoration.underline,
         decorationStyle: TextDecorationStyle.dotted,
-        decorationColor: Cores.textoSecundario,
+        decorationColor: context.cores.textoSecundario,
       ));
 
   Widget _chip(String texto, TextTheme tema, Color cor) => Container(
@@ -203,7 +203,7 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
         child: Text(texto,
             maxLines: 1,
             style: tema.labelLarge?.copyWith(
-                color: Cores.textoSobreModoEq, fontFeatures: const [FontFeature.tabularFigures()])),
+                color: context.cores.textoSobreModoEq, fontFeatures: const [FontFeature.tabularFigures()])),
       );
 
   Widget _desenho() {
@@ -213,12 +213,12 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
         width: Medidas.larguraFader,
         height: widget.tamanho * Medidas.alturaFaderPorKnob,
         child: CustomPaint(
-            painter: PintorFader(fracao: _fracao, origem: origem, cor: widget.cor, focado: _foco.hasFocus)),
+            painter: PintorFader(cores: context.cores, fracao: _fracao, origem: origem, cor: widget.cor, focado: _foco.hasFocus)),
       );
     }
     return SizedBox.square(
       dimension: widget.tamanho,
-      child: CustomPaint(painter: PintorKnob(fracao: _fracao, origem: origem, cor: widget.cor, focado: _foco.hasFocus)),
+      child: CustomPaint(painter: PintorKnob(cores: context.cores, fracao: _fracao, origem: origem, cor: widget.cor, focado: _foco.hasFocus)),
     );
   }
 
