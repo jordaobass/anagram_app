@@ -1619,6 +1619,110 @@ class AppLocalizationsEs extends AppLocalizations {
       'En macOS, solo después de permitir la Monitorización de entrada para Anagram App en Ajustes del Sistema › Privacidad y seguridad.';
 
   @override
+  String salvarCopiaFalhou(String pasta) {
+    return 'la copia de seguridad del preset que está en el slot no se grabó en $pasta, así que nada fue al pedal. La causa está en el registro; si el disco no tiene arreglo, desactiva la copia automática en Configuración.';
+  }
+
+  @override
+  String bkErroCopia(String pasta) {
+    return 'La copia de seguridad del preset que está en el slot no se grabó en $pasta, así que nada cambió en el pedal. La causa está en el registro; si el disco no tiene arreglo, desactiva la copia automática en Configuración.';
+  }
+
+  @override
+  String get bkPastaDesconhecida =>
+      'la carpeta de datos de la app (el sistema no dijo cuál es)';
+
+  @override
+  String get bkSecao => 'Copias de seguridad de los presets';
+
+  @override
+  String get bkAutomatico => 'Copia automática antes de grabar';
+
+  @override
+  String get bkAutomaticoTexto =>
+      'Antes de sustituir, mover o borrar un preset en el pedal, la app guarda lo que había en el slot, como un JSON que Importar abre. Si la copia falla, no se graba nada. Se guardan los últimos 30 días, hasta 500 archivos.';
+
+  @override
+  String get bkOnde =>
+      'Las copias quedan en esta carpeta, solo en este ordenador:';
+
+  @override
+  String get bkAbrirPasta => 'Abrir carpeta de copias';
+
+  @override
+  String get bkPastaNaoAbriu =>
+      'El sistema no abrió la carpeta. La ruta está arriba, para copiar.';
+
+  @override
+  String get bkCompleto => 'Copiar todos los presets ahora';
+
+  @override
+  String get bkCompletoTexto =>
+      'Lee todas las áreas y todos los slots ocupados, uno a la vez, y guarda cada preset en una carpeta con la fecha. La app no borra las copias completas.';
+
+  @override
+  String get bkSemPedaleira =>
+      'Conecta el pedal (o abre la demostración) para hacer la copia completa y abrir una copia en el editor.';
+
+  @override
+  String get bkCompletoTitulo => 'Copia de todos los presets';
+
+  @override
+  String get bkCompletoListando => 'Leyendo la lista de presets de cada área…';
+
+  @override
+  String bkCompletoProgresso(int feitos, int total) {
+    return '$feitos de $total presets guardados';
+  }
+
+  @override
+  String bkCompletoConcluido(int quantos, String pasta) {
+    return 'Copia completa: $quantos presets guardados en $pasta.';
+  }
+
+  @override
+  String bkCompletoCancelado(int feitos, int total) {
+    return 'Copia cancelada: $feitos de $total presets guardados. Lo que ya se grabó queda en la carpeta.';
+  }
+
+  @override
+  String bkCompletoFalhou(int feitos, String motivo) {
+    return 'Copia interrumpida después de $feitos presets: $motivo';
+  }
+
+  @override
+  String get bkRestaurar => 'Restaurar desde una copia…';
+
+  @override
+  String get bkRestaurarTexto =>
+      'Abre el preset guardado en el editor, sin slot, para escucharlo antes. Para ponerlo en el pedal, usa Guardar como.';
+
+  @override
+  String get bkNenhum => 'Todavía no hay copias.';
+
+  @override
+  String get bkAbrirNoEditor => 'Abrir en el editor';
+
+  @override
+  String bkAbertoNoEditor(String nome) {
+    return '\"$nome\" abierto en el editor, sin slot. Usa Guardar como para grabarlo.';
+  }
+
+  @override
+  String bkCompletoGrupo(String hora, int quantos) {
+    return 'Copia completa · $hora · $quantos presets';
+  }
+
+  @override
+  String get bkAreaUnica => 'Área única';
+
+  @override
+  String get bkFechar => 'CERRAR';
+
+  @override
+  String get bkRestaurarTitulo => 'Restaurar desde una copia';
+
+  @override
   String get caMonitoramentoNegado =>
       'macOS todavía no deja que Anagram App hable con el pedal. En Ajustes del Sistema › Privacidad y seguridad › Monitorización de entrada, activa Anagram App.';
 

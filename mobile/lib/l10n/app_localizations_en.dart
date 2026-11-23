@@ -1611,6 +1611,110 @@ class AppLocalizationsEn extends AppLocalizations {
       'On macOS, only after you allow Input Monitoring for Anagram App in System Settings › Privacy & Security.';
 
   @override
+  String salvarCopiaFalhou(String pasta) {
+    return 'the backup of the preset in the slot was not written to $pasta, so nothing went to the pedal. The cause is in the log; if the disk cannot be fixed, turn off the automatic backup in Settings.';
+  }
+
+  @override
+  String bkErroCopia(String pasta) {
+    return 'The backup of the preset in the slot was not written to $pasta, so nothing changed on the pedal. The cause is in the log; if the disk cannot be fixed, turn off the automatic backup in Settings.';
+  }
+
+  @override
+  String get bkPastaDesconhecida =>
+      'the app\'s data folder (the system did not say which one)';
+
+  @override
+  String get bkSecao => 'Preset backups';
+
+  @override
+  String get bkAutomatico => 'Automatic backup before writing';
+
+  @override
+  String get bkAutomaticoTexto =>
+      'Before replacing, moving or clearing a preset on the pedal, the app keeps what was in the slot as a JSON file that Import opens. If the backup fails, nothing is written. The last 30 days are kept, up to 500 files.';
+
+  @override
+  String get bkOnde =>
+      'Backups are kept in this folder, on this computer only:';
+
+  @override
+  String get bkAbrirPasta => 'Open backups folder';
+
+  @override
+  String get bkPastaNaoAbriu =>
+      'The system did not open the folder. The path is above, to copy.';
+
+  @override
+  String get bkCompleto => 'Back up all presets now';
+
+  @override
+  String get bkCompletoTexto =>
+      'Reads every area and every used slot, one at a time, and keeps each preset in a dated folder. The app never deletes full backups.';
+
+  @override
+  String get bkSemPedaleira =>
+      'Connect the pedal (or open the demo) to make a full backup and to open a backup in the editor.';
+
+  @override
+  String get bkCompletoTitulo => 'Backing up all presets';
+
+  @override
+  String get bkCompletoListando => 'Reading the preset list of each area…';
+
+  @override
+  String bkCompletoProgresso(int feitos, int total) {
+    return '$feitos of $total presets saved';
+  }
+
+  @override
+  String bkCompletoConcluido(int quantos, String pasta) {
+    return 'Full backup: $quantos presets saved to $pasta.';
+  }
+
+  @override
+  String bkCompletoCancelado(int feitos, int total) {
+    return 'Backup cancelled: $feitos of $total presets saved. What was already written stays in the folder.';
+  }
+
+  @override
+  String bkCompletoFalhou(int feitos, String motivo) {
+    return 'Backup stopped after $feitos presets: $motivo';
+  }
+
+  @override
+  String get bkRestaurar => 'Restore from a backup…';
+
+  @override
+  String get bkRestaurarTexto =>
+      'Opens the saved preset in the editor, with no slot, so you can hear it first. To put it on the pedal, use Save as.';
+
+  @override
+  String get bkNenhum => 'No backups yet.';
+
+  @override
+  String get bkAbrirNoEditor => 'Open in editor';
+
+  @override
+  String bkAbertoNoEditor(String nome) {
+    return '\"$nome\" opened in the editor, with no slot. Use Save as to write it.';
+  }
+
+  @override
+  String bkCompletoGrupo(String hora, int quantos) {
+    return 'Full backup · $hora · $quantos presets';
+  }
+
+  @override
+  String get bkAreaUnica => 'Single area';
+
+  @override
+  String get bkFechar => 'CLOSE';
+
+  @override
+  String get bkRestaurarTitulo => 'Restore from a backup';
+
+  @override
   String get caMonitoramentoNegado =>
       'macOS doesn\'t let Anagram App talk to the pedal yet. In System Settings › Privacy & Security › Input Monitoring, turn on Anagram App.';
 

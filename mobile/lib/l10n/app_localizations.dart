@@ -2776,6 +2776,168 @@ abstract class AppLocalizations {
   /// **'No macOS, só depois de liberar o Monitoramento de Entrada para o Anagram App em Ajustes do Sistema › Privacidade e Segurança.'**
   String get caConectarAoAbrirMac;
 
+  /// Motivo do "Não salvou: …" quando o backup antes de gravar falhou (DECISOES BK1)
+  ///
+  /// In pt, this message translates to:
+  /// **'o backup do preset que está no slot não foi gravado em {pasta}, então nada foi para a pedaleira. A causa está no registro; se o disco não tiver jeito, desligue o backup automático nas Configurações.'**
+  String salvarCopiaFalhou(String pasta);
+
+  /// Aviso quando o backup antes de limpar, mover ou trocar falhou (DECISOES BK1)
+  ///
+  /// In pt, this message translates to:
+  /// **'O backup do preset que está no slot não foi gravado em {pasta}, então nada mudou na pedaleira. A causa está no registro; se o disco não tiver jeito, desligue o backup automático nas Configurações.'**
+  String bkErroCopia(String pasta);
+
+  /// Entra no lugar da pasta quando o sistema não informou onde ficam os backups
+  ///
+  /// In pt, this message translates to:
+  /// **'a pasta de dados do app (o sistema não informou qual é)'**
+  String get bkPastaDesconhecida;
+
+  /// Seção das Configurações com os backups locais (DECISOES BK)
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup dos presets'**
+  String get bkSecao;
+
+  /// Interruptor das Configurações (DECISOES BK5)
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup automático antes de gravar'**
+  String get bkAutomatico;
+
+  /// Explicação do interruptor do backup automático (DECISOES BK1, BK3)
+  ///
+  /// In pt, this message translates to:
+  /// **'Antes de substituir, mover ou limpar um preset na pedaleira, o app guarda o que estava no slot, como um JSON que o Importar abre. Se o backup falhar, nada é gravado. Ficam os últimos 30 dias, até 500 arquivos.'**
+  String get bkAutomaticoTexto;
+
+  /// Antes do caminho da pasta de backups (D9: nada sai do computador)
+  ///
+  /// In pt, this message translates to:
+  /// **'Os backups ficam nesta pasta, só neste computador:'**
+  String get bkOnde;
+
+  /// Botão que abre a pasta de backups no gerenciador de arquivos
+  ///
+  /// In pt, this message translates to:
+  /// **'Abrir pasta de backups'**
+  String get bkAbrirPasta;
+
+  /// Aviso quando o gerenciador de arquivos não abriu
+  ///
+  /// In pt, this message translates to:
+  /// **'O sistema não abriu a pasta. O caminho está acima, para copiar.'**
+  String get bkPastaNaoAbriu;
+
+  /// Botão do backup completo (DECISOES BK4)
+  ///
+  /// In pt, this message translates to:
+  /// **'Fazer backup de todos os presets agora'**
+  String get bkCompleto;
+
+  /// Explicação do backup completo (DECISOES BK4)
+  ///
+  /// In pt, this message translates to:
+  /// **'Lê todas as áreas e todos os slots ocupados, um de cada vez, e guarda cada preset numa pasta com a data. O app não apaga os backups completos.'**
+  String get bkCompletoTexto;
+
+  /// Sem pedaleira, os botões de backup completo e restaurar ficam parados
+  ///
+  /// In pt, this message translates to:
+  /// **'Conecte a pedaleira (ou abra a demonstração) para fazer o backup completo e abrir um backup no editor.'**
+  String get bkSemPedaleira;
+
+  /// Título do diálogo de progresso do backup completo
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup de todos os presets'**
+  String get bkCompletoTitulo;
+
+  /// Progresso antes de saber quantos presets há
+  ///
+  /// In pt, this message translates to:
+  /// **'Lendo a lista de presets de cada área…'**
+  String get bkCompletoListando;
+
+  /// Progresso do backup completo
+  ///
+  /// In pt, this message translates to:
+  /// **'{feitos} de {total} presets guardados'**
+  String bkCompletoProgresso(int feitos, int total);
+
+  /// Aviso no fim do backup completo
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup completo: {quantos} presets guardados em {pasta}.'**
+  String bkCompletoConcluido(int quantos, String pasta);
+
+  /// Aviso quando a pessoa cancela o backup completo
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup cancelado: {feitos} de {total} presets guardados. O que já foi gravado fica na pasta.'**
+  String bkCompletoCancelado(int feitos, int total);
+
+  /// Aviso quando o backup completo parou por um erro
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup interrompido depois de {feitos} presets: {motivo}'**
+  String bkCompletoFalhou(int feitos, String motivo);
+
+  /// Botão que abre a lista de backups (DECISOES BK6)
+  ///
+  /// In pt, this message translates to:
+  /// **'Restaurar de um backup…'**
+  String get bkRestaurar;
+
+  /// Explicação no topo da lista de backups (DECISOES BK6)
+  ///
+  /// In pt, this message translates to:
+  /// **'Abre o preset guardado no editor, sem slot, para ouvir antes. Para pôr na pedaleira, use Salvar como.'**
+  String get bkRestaurarTexto;
+
+  /// Lista de backups vazia
+  ///
+  /// In pt, this message translates to:
+  /// **'Nenhum backup ainda.'**
+  String get bkNenhum;
+
+  /// Ação de cada backup da lista
+  ///
+  /// In pt, this message translates to:
+  /// **'Abrir no editor'**
+  String get bkAbrirNoEditor;
+
+  /// Aviso depois de abrir um backup no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'\"{nome}\" aberto no editor, sem slot. Use Salvar como para gravar.'**
+  String bkAbertoNoEditor(String nome);
+
+  /// Grupo de um backup completo na lista de restaurar
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup completo · {hora} · {quantos} presets'**
+  String bkCompletoGrupo(String hora, int quantos);
+
+  /// Firmware sem áreas, na lista de backups
+  ///
+  /// In pt, this message translates to:
+  /// **'Área única'**
+  String get bkAreaUnica;
+
+  /// Fecha a lista de backups
+  ///
+  /// In pt, this message translates to:
+  /// **'FECHAR'**
+  String get bkFechar;
+
+  /// Título da lista de backups (DECISOES BK6)
+  ///
+  /// In pt, this message translates to:
+  /// **'Restaurar de um backup'**
+  String get bkRestaurarTitulo;
+
   /// Tela de conectar no macOS sem Monitoramento de Entrada: o USB não foi aberto (DECISOES CA5)
   ///
   /// In pt, this message translates to:

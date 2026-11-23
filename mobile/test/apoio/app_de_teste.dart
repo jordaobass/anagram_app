@@ -28,6 +28,8 @@ import 'package:anagram_app/aplicacao/versao_nova.dart';
 import 'package:anagram_app/dados/preferencias_versao.dart';
 import 'package:anagram_app/aplicacao/conectar_ao_abrir.dart';
 import 'package:anagram_app/dados/preferencias_conexao.dart';
+import 'package:anagram_app/aplicacao/copias/copia_automatica.dart';
+import 'package:anagram_app/dados/preferencias_copias.dart';
 import 'package:anagram_app/plataforma/acesso_entrada_mac.dart';
 import 'package:anagram_app/aplicacao/liberacao_entrada_mac.dart';
 import 'versao_falsa.dart';
@@ -88,6 +90,8 @@ Widget appDeTeste(
         preferenciasCenasProvider.overrideWithValue(preferenciasCenas ?? PreferenciasCenasEmMemoria()),
         plataformaDeAberturaProvider.overrideWithValue(abertura),
         preferenciasConexaoProvider.overrideWithValue(preferenciasConexao ?? PreferenciasConexaoEmMemoria()),
+        // o interruptor do backup não lê o disco; a pasta só existe no teste que a passa
+        preferenciasCopiasProvider.overrideWithValue(PreferenciasCopiasEmMemoria()),
         // nenhum teste chama o canal nativo do Mac
         acessoEntradaMacProvider.overrideWithValue(acessoEntradaMac ?? () async => AcessoEntrada.desconhecido),
         pedidoAcessoEntradaMacProvider
@@ -144,6 +148,19 @@ class PreferenciasConexaoEmMemoria implements PreferenciasConexao {
 
   @override
   Future<void> gravarConectarAoAbrir(bool ligado) async => this.ligado = ligado;
+}
+
+/// Guarda o "backup automático" só em memória (ligado, como na primeira abertura).
+class PreferenciasCopiasEmMemoria implements PreferenciasCopias {
+  PreferenciasCopiasEmMemoria([this.ligada = true]);
+
+  bool ligada;
+
+  @override
+  Future<bool> lerAutomatica() async => ligada;
+
+  @override
+  Future<void> gravarAutomatica(bool ligada) async => this.ligada = ligada;
 }
 
 /// Guarda a pausa USB só em memória (o teste não toca no disco).

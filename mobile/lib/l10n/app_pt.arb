@@ -1445,6 +1445,169 @@
   "@caConectarAoAbrirMac": {
     "description": "Linha extra do interruptor no macOS (DECISOES CA3)"
   },
+  "salvarCopiaFalhou": "o backup do preset que está no slot não foi gravado em {pasta}, então nada foi para a pedaleira. A causa está no registro; se o disco não tiver jeito, desligue o backup automático nas Configurações.",
+  "@salvarCopiaFalhou": {
+    "description": "Motivo do \"Não salvou: …\" quando o backup antes de gravar falhou (DECISOES BK1)",
+    "placeholders": {
+      "pasta": {
+        "type": "String"
+      }
+    }
+  },
+  "bkErroCopia": "O backup do preset que está no slot não foi gravado em {pasta}, então nada mudou na pedaleira. A causa está no registro; se o disco não tiver jeito, desligue o backup automático nas Configurações.",
+  "@bkErroCopia": {
+    "description": "Aviso quando o backup antes de limpar, mover ou trocar falhou (DECISOES BK1)",
+    "placeholders": {
+      "pasta": {
+        "type": "String"
+      }
+    }
+  },
+  "bkPastaDesconhecida": "a pasta de dados do app (o sistema não informou qual é)",
+  "@bkPastaDesconhecida": {
+    "description": "Entra no lugar da pasta quando o sistema não informou onde ficam os backups"
+  },
+  "bkSecao": "Backup dos presets",
+  "@bkSecao": {
+    "description": "Seção das Configurações com os backups locais (DECISOES BK)"
+  },
+  "bkAutomatico": "Backup automático antes de gravar",
+  "@bkAutomatico": {
+    "description": "Interruptor das Configurações (DECISOES BK5)"
+  },
+  "bkAutomaticoTexto": "Antes de substituir, mover ou limpar um preset na pedaleira, o app guarda o que estava no slot, como um JSON que o Importar abre. Se o backup falhar, nada é gravado. Ficam os últimos 30 dias, até 500 arquivos.",
+  "@bkAutomaticoTexto": {
+    "description": "Explicação do interruptor do backup automático (DECISOES BK1, BK3)"
+  },
+  "bkOnde": "Os backups ficam nesta pasta, só neste computador:",
+  "@bkOnde": {
+    "description": "Antes do caminho da pasta de backups (D9: nada sai do computador)"
+  },
+  "bkAbrirPasta": "Abrir pasta de backups",
+  "@bkAbrirPasta": {
+    "description": "Botão que abre a pasta de backups no gerenciador de arquivos"
+  },
+  "bkPastaNaoAbriu": "O sistema não abriu a pasta. O caminho está acima, para copiar.",
+  "@bkPastaNaoAbriu": {
+    "description": "Aviso quando o gerenciador de arquivos não abriu"
+  },
+  "bkCompleto": "Fazer backup de todos os presets agora",
+  "@bkCompleto": {
+    "description": "Botão do backup completo (DECISOES BK4)"
+  },
+  "bkCompletoTexto": "Lê todas as áreas e todos os slots ocupados, um de cada vez, e guarda cada preset numa pasta com a data. O app não apaga os backups completos.",
+  "@bkCompletoTexto": {
+    "description": "Explicação do backup completo (DECISOES BK4)"
+  },
+  "bkSemPedaleira": "Conecte a pedaleira (ou abra a demonstração) para fazer o backup completo e abrir um backup no editor.",
+  "@bkSemPedaleira": {
+    "description": "Sem pedaleira, os botões de backup completo e restaurar ficam parados"
+  },
+  "bkCompletoTitulo": "Backup de todos os presets",
+  "@bkCompletoTitulo": {
+    "description": "Título do diálogo de progresso do backup completo"
+  },
+  "bkCompletoListando": "Lendo a lista de presets de cada área…",
+  "@bkCompletoListando": {
+    "description": "Progresso antes de saber quantos presets há"
+  },
+  "bkCompletoProgresso": "{feitos} de {total} presets guardados",
+  "@bkCompletoProgresso": {
+    "description": "Progresso do backup completo",
+    "placeholders": {
+      "feitos": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "bkCompletoConcluido": "Backup completo: {quantos} presets guardados em {pasta}.",
+  "@bkCompletoConcluido": {
+    "description": "Aviso no fim do backup completo",
+    "placeholders": {
+      "quantos": {
+        "type": "int"
+      },
+      "pasta": {
+        "type": "String"
+      }
+    }
+  },
+  "bkCompletoCancelado": "Backup cancelado: {feitos} de {total} presets guardados. O que já foi gravado fica na pasta.",
+  "@bkCompletoCancelado": {
+    "description": "Aviso quando a pessoa cancela o backup completo",
+    "placeholders": {
+      "feitos": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "bkCompletoFalhou": "Backup interrompido depois de {feitos} presets: {motivo}",
+  "@bkCompletoFalhou": {
+    "description": "Aviso quando o backup completo parou por um erro",
+    "placeholders": {
+      "feitos": {
+        "type": "int"
+      },
+      "motivo": {
+        "type": "String"
+      }
+    }
+  },
+  "bkRestaurar": "Restaurar de um backup…",
+  "@bkRestaurar": {
+    "description": "Botão que abre a lista de backups (DECISOES BK6)"
+  },
+  "bkRestaurarTexto": "Abre o preset guardado no editor, sem slot, para ouvir antes. Para pôr na pedaleira, use Salvar como.",
+  "@bkRestaurarTexto": {
+    "description": "Explicação no topo da lista de backups (DECISOES BK6)"
+  },
+  "bkNenhum": "Nenhum backup ainda.",
+  "@bkNenhum": {
+    "description": "Lista de backups vazia"
+  },
+  "bkAbrirNoEditor": "Abrir no editor",
+  "@bkAbrirNoEditor": {
+    "description": "Ação de cada backup da lista"
+  },
+  "bkAbertoNoEditor": "\"{nome}\" aberto no editor, sem slot. Use Salvar como para gravar.",
+  "@bkAbertoNoEditor": {
+    "description": "Aviso depois de abrir um backup no editor",
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "bkCompletoGrupo": "Backup completo · {hora} · {quantos} presets",
+  "@bkCompletoGrupo": {
+    "description": "Grupo de um backup completo na lista de restaurar",
+    "placeholders": {
+      "hora": {
+        "type": "String"
+      },
+      "quantos": {
+        "type": "int"
+      }
+    }
+  },
+  "bkAreaUnica": "Área única",
+  "@bkAreaUnica": {
+    "description": "Firmware sem áreas, na lista de backups"
+  },
+  "bkFechar": "FECHAR",
+  "@bkFechar": {
+    "description": "Fecha a lista de backups"
+  },
+  "bkRestaurarTitulo": "Restaurar de um backup",
+  "@bkRestaurarTitulo": {
+    "description": "Título da lista de backups (DECISOES BK6)"
+  },
   "caMonitoramentoNegado": "O macOS ainda não deixa o Anagram App falar com a pedaleira. Em Ajustes do Sistema › Privacidade e Segurança › Monitoramento de Entrada, ligue o Anagram App.",
   "@caMonitoramentoNegado": {
     "description": "Tela de conectar no macOS sem Monitoramento de Entrada: o USB não foi aberto (DECISOES CA5)"

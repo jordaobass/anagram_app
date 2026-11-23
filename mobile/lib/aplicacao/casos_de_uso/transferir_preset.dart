@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import '../../dados/arquivos_preset.dart';
+import '../../nucleo/modelo/copia_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../../nucleo/registro.dart';
 
@@ -79,7 +80,7 @@ class TransferirPreset {
   /// [nome]: o nome sugerido do arquivo, se não for o do preset (a lista
   /// sugere "01A Nome", para o arquivo dizer de que slot veio).
   Future<ResultadoExportacao> exportar(DocumentoPreset documento, {String? nome}) async {
-    final texto = const JsonEncoder.withIndent(' ').convert(documento.paraJson());
+    final texto = textoDoPreset(documento);
     try {
       return PresetExportado(await _arquivos.gravar(nomeDeArquivo(nome ?? documento.nome), texto));
     } on Exception catch (erro, pilha) {
@@ -88,10 +89,10 @@ class TransferirPreset {
     }
   }
 
-  /// Só letras, dígitos, espaço, hífen e sublinhado: o nome do preset é livre
-  /// e pode ter barra ou dois-pontos, que o sistema de arquivos recusa.
-  static String nomeDeArquivo(String nome) {
-    final limpo = nome.replaceAll(RegExp(r'[^\w\- ]'), '').trim();
-    return limpo.isEmpty ? nomePadrao : limpo;
-  }
+  /// O JSON do arquivo exportado; o backup grava o mesmo, para o importar
+  /// abrir os dois (DECISOES BK2).
+  static String textoDoPreset(DocumentoPreset documento) =>
+      const JsonEncoder.withIndent(' ').convert(documento.paraJson());
+
+  static String nomeDeArquivo(String nome) => nomeSeguroDeArquivo(nome, padrao: nomePadrao);
 }
