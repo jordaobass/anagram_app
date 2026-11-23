@@ -1,6 +1,10 @@
 // Capturas das Configurações: no computador com o MCP ligado (escutando e
-// porta ocupada) e no celular, onde só há idioma e o caminho para o Sobre.
+// porta ocupada), o backup dos presets e a lista para restaurar, e no
+// celular, onde só há idioma e o caminho para o Sobre.
 // Gerar/atualizar: flutter test test/capturas --update-goldens
+import 'package:anagram_app/aplicacao/copias/copia_automatica.dart';
+import 'package:anagram_app/nucleo/modelo/copia_preset.dart';
+import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,6 +13,7 @@ import '../apoio/app_de_teste.dart';
 import '../apoio/capturas_apoio.dart';
 import '../apoio/demonstracao_na_tela.dart';
 import '../apoio/fixtures.dart' show lerIndiceDasCapturas;
+import '../apoio/pasta_copias_falsa.dart';
 
 Future<void> _abrirComMcp(WidgetTester tester, Tamanho t, {bool ocupada = false, bool disponivel = true}) async {
   debugDefaultTargetPlatformOverride = t.plataforma;
@@ -48,6 +53,20 @@ void main() {
     await capturar(tester, '$pasta/pd-01-desktop-saidas.png');
   });
 
+  testWidgets('captura desktop: backup dos presets nas configurações', (tester) async {
+    await _abrirBackups(tester);
+    await capturar(tester, '$pasta/bk-01-desktop-backup.png');
+  });
+
+  testWidgets('captura desktop: restaurar de um backup', (tester) async {
+    await _abrirBackups(tester);
+    await tester.tap(find.byKey(const ValueKey('backup-restaurar')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('backup-completo-completo_143100')));
+    await tester.pumpAndSettle();
+    await capturar(tester, '$pasta/bk-02-desktop-restaurar.png');
+  });
+
   for (final (modo, numero) in [('gain', '02'), ('freq', '03'), ('width', '04')]) {
     testWidgets('captura desktop: Global EQ no modo $modo', (tester) async {
       await _abrirPedaleira(tester, desktopWindows);
@@ -63,6 +82,39 @@ void main() {
       await capturar(tester, '$pasta/pd-$numero-celular-global-eq-$modo.png');
     });
   }
+}
+
+/// Configurações conectado à demonstração, rolado até "Backup dos presets",
+/// com dois backups automáticos e um completo de 3 presets na pasta.
+Future<void> _abrirBackups(WidgetTester tester) async {
+  debugDefaultTargetPlatformOverride = TargetPlatform.windows;
+  await abrirDemonstracao(tester,
+      tamanho: Size(desktopWindows.largura, desktopWindows.altura),
+      indice: lerIndiceDasCapturas(),
+      overrides: [pastaDeCopiasProvider.overrideWithValue(_pastaComBackups())]);
+  await tester.tap(find.byKey(const ValueKey('botao-configuracoes')));
+  await tester.pumpAndSettle();
+  final secao = find.byKey(const ValueKey('backup-automatico'));
+  await tester.scrollUntilVisible(secao, 300, scrollable: find.byType(Scrollable).first);
+  await Scrollable.ensureVisible(tester.element(secao));
+  await tester.pumpAndSettle();
+}
+
+PastaDeCopiasFalsa _pastaComBackups() {
+  CopiaGuardada copia(String rotulo, String? area, String nome, DateTime quando, {String? completa}) => CopiaGuardada(
+      caminho: '$caminhoNasCapturas\\${pastaDoDia(quando)}\\$rotulo-$nome-${completa ?? ''}.json',
+      quando: quando,
+      origem: OrigemDaCopia(slot: SlotPreset.doRotulo(rotulo), area: area, nome: nome),
+      completa: completa);
+  final hoje = DateTime(2026, 11, 22, 14, 30, 5);
+  final completo = DateTime(2026, 11, 22, 14, 31);
+  return PastaDeCopiasFalsa(iniciais: [
+    copia('01A', 'user', 'My favorite tone', hoje),
+    copia('02B', 'user-2', 'Slap devagar', DateTime(2026, 11, 22, 11, 2, 40)),
+    for (final (rotulo, area, nome) in [('01A', 'user', 'My favorite tone'), ('01B', 'user', 'FILTER TONE'), ('01A', 'user-3', 'Show sábado')])
+      copia(rotulo, area, nome, completo, completa: 'completo_143100'),
+    copia('14C', 'user', 'Ensaio banda', DateTime(2026, 11, 20, 20, 15, 12)),
+  ]..sort((a, b) => b.quando.compareTo(a.quando)));
 }
 
 /// Rola até o Global EQ e escolhe o modo (o cartão inteiro na tela).
