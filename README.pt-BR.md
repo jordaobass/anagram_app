@@ -53,7 +53,9 @@ Também: linha paralela com Split e Merge, mover/clonar/trocar presets e bancos,
 exportar e importar JSON, área Fábrica (36 presets da Darkglass, só leitura) e IA local via MCP.
 
 No computador o app conecta na pedaleira ao abrir (dá para desligar em **Configurações**). O modo dos
-footswitches aparece em pílulas **Stomp / Preset / Scene** na linha das cenas; os blocos Auto Drummer e
+footswitches aparece em pílulas **Stomp / Preset / Scene** na linha das cenas, ao lado da chave
+**Controlar: Todas as cenas / Só a cena ativa** (como o botão do modo Scene da pedaleira: knobs e
+liga/desliga do bloco mudam todas as cenas ou só a ativa); os blocos Auto Drummer e
 Cognate Metro ficam dispostos como na tela da própria pedaleira, com tap tempo; um bloco TONE3000 troca
 para outro tom que já está na pedaleira; os menus têm ícones e ficam compactos com mouse; e a edição ao
 vivo pelo USB ficou mais rápida. Volume das saídas, Global EQ e ganho de entrada aparecem **só para
@@ -154,8 +156,8 @@ na pedaleira só acontece se você confirmar no app.
 > **A IA não ouve o som**: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos
 > costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a
 > ferramentas (*tool calling*). Ferramentas: `get_current_preset`, `list_block_types`, `get_block_guide`,
-> `get_tone_building_guide`, `get_tone_recipe`, `set_parameter` (com `scope`: só a cena ativa ou todas
-> as cenas), `set_block_enabled`, `select_scene`, `add_block`, `move_block`, `remove_block`,
+> `get_tone_building_guide`, `get_tone_recipe`, `set_parameter` e `set_block_enabled` (com `scope`: só a
+> cena ativa ou todas as cenas; sem ele, vale a chave Controlar do app), `select_scene`, `add_block`, `move_block`, `remove_block`,
 > `choose_cabinet`, `get_controls`, `assign_control` e `release_control` (footswitches, pots e pedal de
 > expressão; os footswitches obedecem no modo Stomp), `rename` (preset ou controle), `list_slots`,
 > `read_slot` (sem abrir), `open_slot` (recusa por cima de edição não salva, a menos que a IA diga para
