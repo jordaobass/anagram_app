@@ -99,9 +99,11 @@ Mantenha todos os arquivos juntos na pasta: a `hidapi.dll` é quem fala com a pe
 - **"A Apple não pôde verificar…"**: o app ainda não é assinado pela Apple. Abra **Ajustes do Sistema ›
   Privacidade e Segurança** e clique em **Abrir Mesmo Assim** (ou rode
   `xattr -cr "/Applications/Anagram App.app"` no Terminal).
-- **Monitoramento de Entrada**: o macOS trata o acesso USB da Anagram como Monitoramento de Entrada. Se o
-  app não conectar, ou ficar pulando no Dock, ligue o **Anagram App** em **Ajustes do Sistema ›
-  Privacidade e Segurança › Monitoramento de Entrada** e abra o app de novo.
+- **Monitoramento de Entrada**: o macOS trata o acesso USB da Anagram como Monitoramento de Entrada. Na
+  primeira vez que você clica em **Conectar pelo USB**, o macOS pede essa permissão; o app só abre o USB
+  depois de liberado. Se não estiver, a tela de conectar avisa e traz o botão **Abrir Ajustes**: ligue o
+  **Anagram App** em **Ajustes do Sistema › Privacidade e Segurança › Monitoramento de Entrada** e depois
+  feche e reabra o app (o macOS só aplica na próxima abertura).
 
 ### Linux
 
@@ -126,8 +128,8 @@ Sem pedaleira, **Abrir demonstração** simula uma Anagram em memória para voc�
 
 ## IA local via MCP (opcional, só no computador)
 
-O app pode receber pedidos de um assistente de IA que roda no seu computador (LM Studio, Claude Desktop ou
-outro cliente com suporte a MCP): *"deixa o grave mais encorpado"*, *"monta um timbre de slap"*. A IA lê o
+O app pode receber pedidos de um assistente de IA que roda no seu computador (LM Studio, Claude Desktop,
+VS Code com GitHub Copilot ou outro cliente com suporte a MCP): *"deixa o grave mais encorpado"*, *"monta um timbre de slap"*. A IA lê o
 preset aberto e mexe nos blocos; cada mudança **soa na hora**, aparece na tela e fica **não salva**. Gravar
 na pedaleira só acontece se você confirmar no app.
 
@@ -149,6 +151,29 @@ na pedaleira só acontece se você confirmar no app.
 
    No Claude Desktop, que só fala stdio, a configuração copiada usa a ponte
    `npx -y mcp-remote <url> --transport http-only --header "Authorization: Bearer <token>"`.
+
+   **VS Code + GitHub Copilot**: a configuração copiada vai em `~/.copilot/mcp-config.json` (ou em
+   **Chat: Open Customizations › MCP Servers › Copilot Global**), no formato da
+   [referência de MCP do VS Code](https://code.visualstudio.com/docs/copilot/reference/mcp-configuration):
+
+   ```json
+   {
+     "mcpServers": {
+       "anagram": {
+         "type": "http",
+         "url": "http://127.0.0.1:8765/mcp",
+         "headers": { "Authorization": "Bearer <token das Configurações>" },
+         "tools": ["*"]
+       }
+     }
+   }
+   ```
+
+   O app Copilot do Windows e o Microsoft 365 Copilot não têm onde colar um servidor MCP local: use o
+   GitHub Copilot dentro do VS Code.
+
+   **Outro cliente**: transporte Streamable HTTP, a URL acima e o cabeçalho
+   `Authorization: Bearer <token>` (é o que **Outro cliente** copia).
 3. Abra um preset no app e converse com a IA.
 
 > **A IA não ouve o som**: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos
@@ -156,7 +181,7 @@ na pedaleira só acontece se você confirmar no app.
 > ferramentas (*tool calling*). Ferramentas: `get_current_preset`, `list_block_types`, `get_block_guide`,
 > `get_tone_building_guide`, `get_tone_recipe`, `set_parameter`, `set_block_enabled`, `select_scene`,
 > `add_block`, `move_block`, `remove_block`, `choose_cabinet`, `undo`, `save_preset`,
-> `get_global_settings` (só leitura) e `set_global_setting` (só o modo dos footswitches) (decisões IA1–IA6 e IC1–IC9 em `docs/DECISOES.md`).
+> `get_global_settings` (só leitura) e `set_global_setting` (só o modo dos footswitches) (decisões IA1–IA7 e IC1–IC9 em `docs/DECISOES.md`).
 
 **O app ensina a pedaleira à IA.** Ele traz uma base de conhecimento de timbre que o assistente lê pela
 mesma conexão: o que cada um dos 109 blocos de fábrica faz (papel, parâmetros que importam com faixas,
