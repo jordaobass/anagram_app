@@ -28,7 +28,7 @@ class CaminhoMonitoramentoEntrada extends ConsumerWidget {
         const SizedBox(height: Espacos.s),
         Text(l.caReabraDepois,
             key: const ValueKey('reabra-depois-de-ligar'),
-            style: tema.bodyMedium?.copyWith(color: Cores.textoSecundario)),
+            style: tema.bodyMedium?.copyWith(color: context.cores.textoSecundario)),
       ]),
     );
   }

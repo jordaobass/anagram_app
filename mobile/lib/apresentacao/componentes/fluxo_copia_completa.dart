@@ -50,7 +50,7 @@ class _DialogoProgresso extends ConsumerWidget {
       title: Text(l.bkCompletoTitulo),
       constraints: const BoxConstraints(maxWidth: Medidas.larguraDialogo),
       content: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        LinearProgressIndicator(value: total == null || total == 0 ? null : feitos / total, color: Cores.aluminioClaro),
+        LinearProgressIndicator(value: total == null || total == 0 ? null : feitos / total, color: context.cores.aluminioClaro),
         const SizedBox(height: Espacos.m),
         Semantics(
           liveRegion: true,

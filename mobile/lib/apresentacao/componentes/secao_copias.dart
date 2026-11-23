@@ -28,7 +28,7 @@ class SecaoCopias extends ConsumerWidget {
       SwitchListTile(
         key: const ValueKey('backup-automatico'),
         contentPadding: EdgeInsets.zero,
-        activeThumbColor: Cores.tally,
+        activeThumbColor: context.cores.tally,
         title: Text(l.bkAutomatico),
         subtitle: Text(l.bkAutomaticoTexto),
         value: ref.watch(copiaAutomaticaProvider),
@@ -38,7 +38,7 @@ class SecaoCopias extends ConsumerWidget {
       Text(l.bkOnde, style: textos.bodyMedium),
       const SizedBox(height: Espacos.xs),
       SelectableText(pasta.caminho.isEmpty ? l.bkPastaDesconhecida : pasta.caminho,
-          key: const ValueKey('backup-pasta'), style: textos.bodySmall?.copyWith(color: Cores.textoSecundario)),
+          key: const ValueKey('backup-pasta'), style: textos.bodySmall?.copyWith(color: context.cores.textoSecundario)),
       const SizedBox(height: Espacos.m),
       OutlinedButton.icon(
         key: const ValueKey('backup-abrir-pasta'),
@@ -52,7 +52,7 @@ class SecaoCopias extends ConsumerWidget {
       _Acoes(conectada: conectada),
       if (!conectada) ...[
         const SizedBox(height: Espacos.s),
-        Text(l.bkSemPedaleira, style: textos.bodySmall?.copyWith(color: Cores.textoSecundario)),
+        Text(l.bkSemPedaleira, style: textos.bodySmall?.copyWith(color: context.cores.textoSecundario)),
       ],
     ]);
   }

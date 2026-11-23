@@ -140,7 +140,7 @@ class _CopiarConfiguracao extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
-    final nota = Theme.of(context).textTheme.bodyMedium?.copyWith(color: Cores.textoSecundario);
+    final nota = Theme.of(context).textTheme.bodyMedium?.copyWith(color: context.cores.textoSecundario);
     final rotulos = {
       ClienteMcp.lmStudio: l.mcpClienteLmStudio,
       ClienteMcp.claudeDesktop: l.mcpClienteClaudeDesktop,

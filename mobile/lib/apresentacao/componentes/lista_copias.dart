@@ -112,7 +112,7 @@ class _CabecalhoDia extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: Espacos.m, bottom: Espacos.xs),
-        child: Text(dia, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Cores.aluminioClaro)),
+        child: Text(dia, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: context.cores.aluminioClaro)),
       );
 }
 
@@ -129,9 +129,9 @@ class _GrupoCompleto extends StatelessWidget {
       key: ValueKey('backup-completo-${copias.first.completa}'),
       tilePadding: EdgeInsets.zero,
       // o âmbar é de seleção e ação (DESIGN.md): abrir o grupo não é nenhum dos dois
-      iconColor: Cores.aluminioClaro,
-      collapsedIconColor: Cores.aluminioClaro,
-      leading: const Icon(Icons.inventory_2_outlined, color: Cores.aluminioClaro),
+      iconColor: context.cores.aluminioClaro,
+      collapsedIconColor: context.cores.aluminioClaro,
+      leading: Icon(Icons.inventory_2_outlined, color: context.cores.aluminioClaro),
       title: Text(l.bkCompletoGrupo(_hora(copias.first.quando), copias.length)),
       children: [for (final copia in copias) _LinhaCopia(copia, comHora: false)],
     );
@@ -154,10 +154,10 @@ class _LinhaCopia extends ConsumerWidget {
       contentPadding: EdgeInsets.zero,
       title: Text('${origem.slot.rotulo} · ${origem.nome}', maxLines: 1, overflow: TextOverflow.ellipsis),
       subtitle: Text(comHora ? '${_hora(copia.quando)} · $area' : area,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario)),
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.textoSecundario)),
       trailing: TextButton(
         key: ValueKey('abrir-backup-${copia.caminho}'),
-        style: TextButton.styleFrom(foregroundColor: Cores.texto),
+        style: TextButton.styleFrom(foregroundColor: context.cores.texto),
         onPressed: () => Navigator.pop(context, copia),
         child: Text(l.bkAbrirNoEditor),
       ),
