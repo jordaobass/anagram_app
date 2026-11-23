@@ -1,8 +1,11 @@
-// Capturas das Configurações: no computador com o MCP ligado (escutando e
-// porta ocupada), o backup dos presets e a lista para restaurar, e no
-// celular, onde só há idioma e o caminho para o Sobre.
+// Capturas das Configurações: a tela inteira com todas as seções nos dois
+// temas, no computador com o MCP ligado (escutando e porta ocupada), o backup
+// dos presets (escuro e claro) e a lista para restaurar, e no celular, onde só
+// há idioma e o caminho para o Sobre.
 // Gerar/atualizar: flutter test test/capturas --update-goldens
+import 'package:anagram_app/aplicacao/conectar_ao_abrir.dart';
 import 'package:anagram_app/aplicacao/copias/copia_automatica.dart';
+import 'package:anagram_app/aplicacao/tema.dart';
 import 'package:anagram_app/nucleo/modelo/copia_preset.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 import 'package:flutter/foundation.dart';
@@ -33,6 +36,13 @@ Future<void> _abrirComMcp(WidgetTester tester, Tamanho t, {bool ocupada = false,
 void main() {
   setUpAll(carregarFontes);
 
+  for (final (tema, nome) in [(EscolhaTema.escuro, 'cf-01'), (EscolhaTema.claro, 'tc-10')]) {
+    testWidgets('captura desktop: configurações inteiras no tema ${tema.name}', (tester) async {
+      await _abrirConfiguracoesCompletas(tester, tema);
+      await capturar(tester, '$pasta/$nome-desktop-configuracoes-completas.png');
+    });
+  }
+
   testWidgets('captura desktop: configurações com a IA local escutando', (tester) async {
     await _abrirComMcp(tester, desktopWindows);
     await capturar(tester, '$pasta/mcp-01-desktop-configuracoes.png');
@@ -56,6 +66,11 @@ void main() {
   testWidgets('captura desktop: backup dos presets nas configurações', (tester) async {
     await _abrirBackups(tester);
     await capturar(tester, '$pasta/bk-01-desktop-backup.png');
+  });
+
+  testWidgets('captura desktop: backup dos presets no tema claro', (tester) async {
+    await _abrirBackups(tester, tema: EscolhaTema.claro);
+    await capturar(tester, '$pasta/tc-11-desktop-backup.png');
   });
 
   testWidgets('captura desktop: restaurar de um backup', (tester) async {
@@ -86,17 +101,35 @@ void main() {
 
 /// Configurações conectado à demonstração, rolado até "Backup dos presets",
 /// com dois backups automáticos e um completo de 3 presets na pasta.
-Future<void> _abrirBackups(WidgetTester tester) async {
+Future<void> _abrirBackups(WidgetTester tester, {EscolhaTema tema = EscolhaTema.escuro}) async {
   debugDefaultTargetPlatformOverride = TargetPlatform.windows;
   await abrirDemonstracao(tester,
       tamanho: Size(desktopWindows.largura, desktopWindows.altura),
       indice: lerIndiceDasCapturas(),
+      tema: tema,
       overrides: [pastaDeCopiasProvider.overrideWithValue(_pastaComBackups())]);
   await tester.tap(find.byKey(const ValueKey('botao-configuracoes')));
   await tester.pumpAndSettle();
   final secao = find.byKey(const ValueKey('backup-automatico'));
   await tester.scrollUntilVisible(secao, 300, scrollable: find.byType(Scrollable).first);
   await Scrollable.ensureVisible(tester.element(secao));
+  await tester.pumpAndSettle();
+}
+
+/// Configurações no Windows, conectado à demonstração, numa janela alta o
+/// bastante para caber tudo: idioma, aparência, pedaleira (com o conectar ao
+/// abrir), backup, IA local e o Sobre.
+Future<void> _abrirConfiguracoesCompletas(WidgetTester tester, EscolhaTema tema) async {
+  debugDefaultTargetPlatformOverride = TargetPlatform.windows;
+  await montarApp(tester,
+      tamanho: const Size(1440, 3000),
+      tema: tema,
+      indice: lerIndiceDasCapturas(),
+      abertura: PlataformaDeAbertura.computador,
+      preferenciasConexao: PreferenciasConexaoEmMemoria(false),
+      overrides: [pastaDeCopiasProvider.overrideWithValue(_pastaComBackups())]);
+  await entrarNaDemonstracao(tester);
+  await tester.tap(find.byKey(const ValueKey('botao-configuracoes')));
   await tester.pumpAndSettle();
 }
 

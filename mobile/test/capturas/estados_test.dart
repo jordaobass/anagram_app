@@ -8,6 +8,7 @@ import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/aplicacao/estado/estado_conexao.dart';
 import 'package:anagram_app/aplicacao/provedores.dart';
+import 'package:anagram_app/aplicacao/tema.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:anagram_app/nucleo/midi/saida_midi.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
@@ -206,16 +207,28 @@ void main() {
   });
 
   testWidgets('macOS sem Monitoramento de Entrada: explicação e Abrir Ajustes', (tester) async {
-    debugDefaultTargetPlatformOverride = desktopMac.plataforma;
-    await montarApp(tester,
-        tamanho: Size(desktopMac.largura, desktopMac.altura),
-        overrides: [fabricaTransporteProvider.overrideWithValue(const _Fabrica(AparelhoDisponivel('USB (IOKit)')))],
-        indice: lerIndiceDasCapturas(),
-        abertura: PlataformaDeAbertura.macOS,
-        preferenciasConexao: PreferenciasConexaoEmMemoria(false),
-        acessoEntradaMac: () async => AcessoEntrada.negado);
-    await tester.tap(find.byKey(const ValueKey('botao-conectar')));
-    await tester.pumpAndSettle();
+    await _macSemMonitoramento(tester, EscolhaTema.escuro);
     await foto(tester, '17-mac-monitoramento-entrada');
   });
+
+  testWidgets('macOS sem Monitoramento de Entrada no tema claro', (tester) async {
+    await _macSemMonitoramento(tester, EscolhaTema.claro);
+    await capturar(tester, '$pasta/tc-12-desktop-macos-monitoramento-entrada.png');
+  });
+}
+
+/// Mac com a Anagram no cabo e o Monitoramento de Entrada negado, depois do
+/// clique em CONECTAR: a explicação e o Abrir Ajustes.
+Future<void> _macSemMonitoramento(WidgetTester tester, EscolhaTema tema) async {
+  debugDefaultTargetPlatformOverride = desktopMac.plataforma;
+  await montarApp(tester,
+      tamanho: Size(desktopMac.largura, desktopMac.altura),
+      tema: tema,
+      overrides: [fabricaTransporteProvider.overrideWithValue(const _Fabrica(AparelhoDisponivel('USB (IOKit)')))],
+      indice: lerIndiceDasCapturas(),
+      abertura: PlataformaDeAbertura.macOS,
+      preferenciasConexao: PreferenciasConexaoEmMemoria(false),
+      acessoEntradaMac: () async => AcessoEntrada.negado);
+  await tester.tap(find.byKey(const ValueKey('botao-conectar')));
+  await tester.pumpAndSettle();
 }
