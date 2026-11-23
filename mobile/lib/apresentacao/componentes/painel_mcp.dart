@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/mcp/controlador_mcp.dart';
 import '../../aplicacao/mcp/trechos_configuracao.dart';
+import '../../aplicacao/versao_nova.dart';
 import '../../l10n/app_localizations.dart';
 import '../tema/tokens.dart';
 import 'campo_porta_mcp.dart';
@@ -130,18 +131,20 @@ class _EstadoToken extends ConsumerState<_Token> {
   }
 }
 
-class _CopiarConfiguracao extends StatelessWidget {
+class _CopiarConfiguracao extends ConsumerWidget {
   const _CopiarConfiguracao({required this.endereco, required this.token});
 
   final String endereco;
   final String token;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
+    final nota = Theme.of(context).textTheme.bodyMedium?.copyWith(color: Cores.textoSecundario);
     final rotulos = {
       ClienteMcp.lmStudio: l.mcpClienteLmStudio,
       ClienteMcp.claudeDesktop: l.mcpClienteClaudeDesktop,
+      ClienteMcp.vsCodeCopilot: l.mcpClienteVsCode,
       ClienteMcp.generico: l.mcpClienteGenerico,
     };
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -156,6 +159,16 @@ class _CopiarConfiguracao extends StatelessWidget {
             onPressed: () => copiarComAviso(context, trechoConfiguracao(cliente, endereco: endereco, token: token)),
           ),
       ]),
+      const SizedBox(height: Espacos.s),
+      // o Copilot é o que mais confunde: dois produtos com o mesmo nome (DECISOES IA7)
+      Text(l.mcpVsCodeOnde, style: nota),
+      const SizedBox(height: Espacos.xs),
+      Text(l.mcpCopilotComum, style: nota),
+      TextButton(
+        key: const ValueKey('mcp-documentacao-vscode'),
+        onPressed: () => ref.read(abridorDeLinkProvider)(documentacaoMcpVsCode),
+        child: Text(l.mcpDocVsCode),
+      ),
     ]);
   }
 }

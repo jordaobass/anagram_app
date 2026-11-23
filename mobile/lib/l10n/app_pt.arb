@@ -1441,5 +1441,21 @@
   "caReabraDepois": "Depois de ligar, feche e reabra o Anagram App: o macOS só libera na próxima abertura.",
   "@caReabraDepois": {
     "description": "Abaixo do botão Abrir Ajustes: a permissão só vale reabrindo o app (DECISOES CA5)"
+  },
+  "mcpClienteVsCode": "VS Code + Copilot",
+  "@mcpClienteVsCode": {
+    "description": "Botão que copia a configuração para o GitHub Copilot no VS Code (DECISOES IA7)"
+  },
+  "mcpVsCodeOnde": "VS Code + GitHub Copilot: cole em ~/.copilot/mcp-config.json (ou em Chat: Open Customizations › MCP Servers › Copilot Global) e peça numa conversa do Copilot.",
+  "@mcpVsCodeOnde": {
+    "description": "Onde colar a configuração do VS Code + Copilot (formato mcpServers do Copilot, DECISOES IA7)"
+  },
+  "mcpCopilotComum": "O app Copilot do Windows e o Microsoft 365 Copilot não têm onde colar um servidor MCP local: use o GitHub Copilot dentro do VS Code.",
+  "@mcpCopilotComum": {
+    "description": "Frase honesta: o Copilot comum não conecta servidores MCP locais (DECISOES IA7)"
+  },
+  "mcpDocVsCode": "Documentação do VS Code",
+  "@mcpDocVsCode": {
+    "description": "Link para a referência de configuração MCP do VS Code"
   }
 }

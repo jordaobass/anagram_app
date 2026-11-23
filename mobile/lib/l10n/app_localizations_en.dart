@@ -1538,4 +1538,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get caReabraDepois => 'After turning it on, quit and reopen Anagram App: macOS only applies it the next time the app opens.';
+
+  @override
+  String get mcpClienteVsCode => 'VS Code + Copilot';
+
+  @override
+  String get mcpVsCodeOnde => 'VS Code + GitHub Copilot: paste into ~/.copilot/mcp-config.json (or Chat: Open Customizations › MCP Servers › Copilot Global) and ask in a Copilot chat.';
+
+  @override
+  String get mcpCopilotComum => 'The Copilot app on Windows and Microsoft 365 Copilot have no place to add a local MCP server: use GitHub Copilot inside VS Code.';
+
+  @override
+  String get mcpDocVsCode => 'VS Code documentation';
 }
