@@ -192,6 +192,13 @@ class ControladorEditor extends Notifier<EstadoEditor>
     if (antes != null && depois != null && antes != depois) _soltarDoSlot();
   }
 
+  /// Um preset de backup (DECISOES BK6): abre como o importado, mas sem slot,
+  /// para nenhum "Salvar" o pôr de volta sem passar pelo "Salvar como".
+  Future<void> abrirSemSlot(DocumentoPreset documento) async {
+    _soltarDoSlot();
+    await carregarDocumento(documento);
+  }
+
   /// Outra área na tela: o preset aberto era de um slot da área anterior e não
   /// pode continuar sob o mesmo rótulo. Ele fica na tela sem slot, como um
   /// importado: o "Salvar" vira "Salvar como" e pergunta o destino na área
