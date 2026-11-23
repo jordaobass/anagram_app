@@ -18,9 +18,11 @@ class MudarParametro extends FerramentaMcp {
   String get descricao => 'Change one parameter of a block; it is heard immediately (not saved). The value is a '
       'number in the parameter unit, or an option label for option parameters, or true/false for toggles. '
       'Out-of-range values are clamped and the applied value is returned. Scenes: scope "scene" changes ONLY the '
-      'active scene (the others keep what they had); "all_scenes" sets the same value in all three scenes. '
-      'Without "scope" it follows the "Control" switch the player chose in the app (only the active scene by '
-      'default), like turning the knob. The result says which scope was applied. Change 2-4 parameters, then ask the player how it sounds before '
+      'active scene (the others keep what they had). "all_scenes" ERASES the per-scene values of this parameter: '
+      'the three scenes end up with the same value and the difference between them is lost. Without "scope" it '
+      'follows the "Control" switch the player chose in the app, which may be set to all scenes. Always send '
+      'scope "scene" explicitly; use "all_scenes" only when the player asks for the same value in every scene. '
+      'The result says which scope was applied. Change 2-4 parameters, then ask the player how it sounds before '
       'going on; you cannot hear the result.';
 
   @override
@@ -34,8 +36,9 @@ class MudarParametro extends FerramentaMcp {
         'scope': {
           'type': 'string',
           'enum': [for (final e in _escopos.keys) e],
-          'description': '"scene" = only the active scene; "all_scenes" = the same value in every scene. '
-              'Omit to follow the app "Control" switch.',
+          'description': '"scene" (recommended) = only the active scene; "all_scenes" = the same value in every '
+              'scene, ERASING the per-scene values of this parameter (only when the player asks). Omitted = the app '
+              '"Control" switch, which may be set to all scenes.',
         },
       }, obrigatorias: const ['row', 'column', 'parameter', 'value']);
 
@@ -113,7 +116,9 @@ class LigarDesligarBloco extends FerramentaMcp {
 
   @override
   String get descricao => 'Turn a block on or off (bypass); heard immediately. Scenes work like set_parameter: '
-      'scope "scene" = only the active scene, "all_scenes" = every scene; without it, the app "Control" switch.';
+      'scope "scene" = only the active scene; "all_scenes" = every scene, ERASING the per-scene on/off of this '
+      'block; without "scope", the app "Control" switch, which may be set to all scenes. Always send scope '
+      '"scene" explicitly; use "all_scenes" only when the player asks for it in every scene.';
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto({
@@ -122,7 +127,8 @@ class LigarDesligarBloco extends FerramentaMcp {
         'scope': {
           'type': 'string',
           'enum': [for (final e in _escopos.keys) e],
-          'description': '"scene" = only the active scene; "all_scenes" = every scene. Omit to follow the app switch.',
+          'description': '"scene" (recommended) = only the active scene; "all_scenes" = every scene, ERASING the '
+              'per-scene on/off (only when the player asks). Omitted = the app "Control" switch.',
         },
       }, obrigatorias: const ['row', 'column', 'enabled']);
 
