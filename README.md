@@ -36,7 +36,7 @@ check on launch (Windows, macOS and Linux) that asks GitHub for the latest relea
 sends only the app's version (in the User-Agent header); as with any connection, GitHub sees your IP
 address. It can be turned off in **Settings › Updates**.
 
-The interface is in **English, Portuguese and Spanish** (it follows your system language; you can
+The interface is in **English, Portuguese, Spanish and French** (it follows your system language; you can
 change it in **Settings**, the gear icon).
 
 ## What you can do

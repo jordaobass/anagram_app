@@ -36,7 +36,7 @@ uma verificação opcional ao abrir (Windows, macOS e Linux) que pergunta ao Git
 versão. Essa consulta envia apenas a versão do app (no cabeçalho User-Agent); como em toda conexão,
 o GitHub vê o seu endereço IP. Ela pode ser desligada em **Configurações › Atualizações**.
 
-Interface em **português, inglês e espanhol** (segue o idioma do sistema; dá para trocar em
+Interface em **português, inglês, espanhol e francês** (segue o idioma do sistema; dá para trocar em
 **Configurações**, na engrenagem).
 
 ## O que dá para fazer
