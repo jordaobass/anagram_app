@@ -42,7 +42,7 @@ Future<AcessoEntrada> pedirAcessoEntradaMac() async {
     final resposta = _traduzir(await _canal.invokeMethod<String>('pedirAcessoEntrada').timeout(_prazoPedido));
     return resposta == AcessoEntrada.desconhecido ? AcessoEntrada.naoDecidido : resposta;
   } on MissingPluginException catch (erro) {
-    // build nativo sem o método: segue como antes, o próprio abrir pede ao sistema
+    // build nativo sem o método: sem como pedir, o clique não abre o USB às cegas
     registro.i('Monitoramento de Entrada: pedido indisponível neste build', error: erro);
     return AcessoEntrada.desconhecido;
   } on Object catch (erro) {

@@ -125,4 +125,14 @@ void main() {
     expect(containerDaTela(tester).read(conexaoProvider), isA<Conectada>());
     expect(find.byKey(const ValueKey('abrir-ajustes-monitoramento')), findsNothing);
   });
+
+  testWidgets('should_ask_the_system_and_keep_usb_closed_when_the_permission_query_fails', (tester) async {
+    // a consulta que falha ou estoura o prazo de 3 s vira "desconhecido"
+    final linha = await _abrirNoMac(tester, acesso: AcessoEntrada.desconhecido);
+
+    await _tocarConectar(tester);
+
+    expect(linha.eventos, ['pedido-ao-sistema'], reason: 'sem saber a permissão, pede antes; sem resposta, não abre');
+    expect(find.byKey(const ValueKey('abrir-ajustes-monitoramento')), findsOneWidget);
+  });
 }

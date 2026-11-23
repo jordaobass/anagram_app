@@ -17,15 +17,17 @@ final liberacaoEntradaMacProvider = Provider<Future<bool> Function()>((ref) => (
 Future<bool> _liberarParaClique(Ref ref) async {
   if (ref.read(plataformaDeAberturaProvider) != PlataformaDeAbertura.macOS) return true;
   final atual = await ref.read(acessoEntradaMacProvider)();
-  final acesso = atual == AcessoEntrada.naoDecidido ? await _pedir(ref) : atual;
-  // desconhecido = build nativo sem a consulta: abre como antes
-  if (acesso == AcessoEntrada.concedido || acesso == AcessoEntrada.desconhecido) return true;
+  // desconhecido = a consulta falhou ou estourou o prazo: vale como ainda não
+  // decidido, e o USB só abre se o pedido voltar concedido
+  final semDecisao = atual == AcessoEntrada.naoDecidido || atual == AcessoEntrada.desconhecido;
+  final acesso = semDecisao ? await _pedir(ref) : atual;
+  if (acesso == AcessoEntrada.concedido) return true;
   registro.i('conexão: Monitoramento de Entrada ${acesso.name}; USB não aberto, a tela explica o caminho nos Ajustes');
   return false;
 }
 
 Future<AcessoEntrada> _pedir(Ref ref) async {
-  registro.i('conexão: Monitoramento de Entrada não decidido; pedindo ao macOS antes de abrir o USB');
+  registro.i('conexão: Monitoramento de Entrada não decidido (ou não consultado); pedindo ao macOS antes de abrir o USB');
   final depois = await ref.read(pedidoAcessoEntradaMacProvider)();
   registro.i('conexão: pedido de Monitoramento de Entrada respondeu ${depois.name}');
   return depois;
