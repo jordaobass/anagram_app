@@ -55,28 +55,31 @@ void main() {
             }));
   }
 
-  testWidgets('should_fit_the_editor_when_the_window_is_at_its_minimum_size',
-      (tester) => _noWindows(() async {
-            await _editorComEq(
-                tester, const Size(Medidas.larguraMinimaJanela, Medidas.alturaMinimaJanela), IdiomaApp.espanhol);
-
-            expect(find.byKey(const ValueKey('casa-1-4')), findsOneWidget);
-          }));
-
-  for (final largura in [Quebras.amplo, Quebras.amplo + 40]) {
-    testWidgets('should_fit_the_connection_bar_when_the_wide_window_is_just_above_the_breakpoint_$largura',
-        (tester) => _noWindows(() => _editorComEq(tester, Size(largura, 900), IdiomaApp.espanhol)));
-  }
-
-  for (final largura in [Quebras.amplo, Quebras.barraComAvisoVersao]) {
-    testWidgets('should_fit_the_connection_bar_with_the_new_version_notice_at_$largura',
+  // espanhol e francês têm as frases mais longas
+  for (final idioma in [IdiomaApp.espanhol, IdiomaApp.frances]) {
+    testWidgets('should_fit_the_editor_when_the_window_is_at_its_minimum_size_${idioma.name}',
         (tester) => _noWindows(() async {
-              await montarApp(tester,
-                  tamanho: Size(largura, 900), idioma: IdiomaApp.espanhol, github: GithubFalso(tag: 'v10.10.10'));
-              await entrarNaDemonstracao(tester);
+              await _editorComEq(tester, const Size(Medidas.larguraMinimaJanela, Medidas.alturaMinimaJanela), idioma);
 
-              final emMenu = largura < Quebras.barraComAvisoVersao;
-              expect(find.byKey(const ValueKey('versao-nova-menu')), emMenu ? findsOneWidget : findsNothing);
+              expect(find.byKey(const ValueKey('casa-1-4')), findsOneWidget);
             }));
+
+    for (final largura in [Quebras.amplo, Quebras.amplo + 40]) {
+      testWidgets(
+          'should_fit_the_connection_bar_when_the_wide_window_is_just_above_the_breakpoint_${largura}_${idioma.name}',
+          (tester) => _noWindows(() => _editorComEq(tester, Size(largura, 900), idioma)));
+    }
+
+    for (final largura in [Quebras.amplo, Quebras.barraComAvisoVersao]) {
+      testWidgets('should_fit_the_connection_bar_with_the_new_version_notice_at_${largura}_${idioma.name}',
+          (tester) => _noWindows(() async {
+                await montarApp(tester,
+                    tamanho: Size(largura, 900), idioma: idioma, github: GithubFalso(tag: 'v10.10.10'));
+                await entrarNaDemonstracao(tester);
+
+                final emMenu = largura < Quebras.barraComAvisoVersao;
+                expect(find.byKey(const ValueKey('versao-nova-menu')), emMenu ? findsOneWidget : findsNothing);
+              }));
+    }
   }
 }

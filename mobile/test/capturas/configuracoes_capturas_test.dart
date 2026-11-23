@@ -5,6 +5,7 @@
 // Gerar/atualizar: flutter test test/capturas --update-goldens
 import 'package:anagram_app/aplicacao/conectar_ao_abrir.dart';
 import 'package:anagram_app/aplicacao/copias/copia_automatica.dart';
+import 'package:anagram_app/aplicacao/idioma.dart';
 import 'package:anagram_app/aplicacao/tema.dart';
 import 'package:anagram_app/nucleo/modelo/copia_preset.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
@@ -42,6 +43,12 @@ void main() {
       await capturar(tester, '$pasta/$nome-desktop-configuracoes-completas.png');
     });
   }
+
+  // o francês tem as frases mais longas: a tela inteira, seção por seção
+  testWidgets('captura fr: configurações inteiras', (tester) async {
+    await _abrirConfiguracoesCompletas(tester, EscolhaTema.escuro, idioma: IdiomaApp.frances);
+    await capturar(tester, '$pasta/idiomas/fr-desktop-configuracoes-completas.png');
+  });
 
   testWidgets('captura desktop: configurações com a IA local escutando', (tester) async {
     await _abrirComMcp(tester, desktopWindows);
@@ -119,10 +126,12 @@ Future<void> _abrirBackups(WidgetTester tester, {EscolhaTema tema = EscolhaTema.
 /// Configurações no Windows, conectado à demonstração, numa janela alta o
 /// bastante para caber tudo: idioma, aparência, pedaleira (com o conectar ao
 /// abrir), backup, IA local e o Sobre.
-Future<void> _abrirConfiguracoesCompletas(WidgetTester tester, EscolhaTema tema) async {
+Future<void> _abrirConfiguracoesCompletas(WidgetTester tester, EscolhaTema tema,
+    {IdiomaApp idioma = IdiomaApp.portugues}) async {
   debugDefaultTargetPlatformOverride = TargetPlatform.windows;
   await montarApp(tester,
       tamanho: const Size(1440, 3000),
+      idioma: idioma,
       tema: tema,
       indice: lerIndiceDasCapturas(),
       abertura: PlataformaDeAbertura.computador,

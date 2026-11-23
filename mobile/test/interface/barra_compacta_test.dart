@@ -1,7 +1,7 @@
 // A parte de cima do editor (barra de conexão, fita do preset, Salvar/
 // Descartar, cenas e modo) era alta demais no computador (relato no Reddit).
 // Com mouse ela fica compacta, com alvos de 32 a 40 px; no toque continua no
-// mínimo de 48 dp. Na janela mínima, nos três idiomas, nada pode estourar.
+// mínimo de 48 dp. Na janela mínima, nos quatro idiomas, nada pode estourar.
 import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
