@@ -5,7 +5,7 @@ import 'package:anagram_app/aplicacao/mcp/avisos_mcp.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'mcp_ponta_a_ponta_test.dart' show appComMcp, ferramenta;
+import '../apoio/app_com_mcp.dart';
 
 void main() {
   test('should_refuse_to_save_when_the_slot_was_changed_on_the_pedal_after_opening', () async {

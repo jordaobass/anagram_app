@@ -9,6 +9,7 @@ import 'package:anagram_app/plataforma/servidor_mcp.dart';
 import 'package:anagram_app/dados/preferencias_pausa.dart';
 import 'package:anagram_app/dados/preferencias_versao.dart';
 import 'package:anagram_app/dados/preferencias_paineis.dart';
+import 'package:anagram_app/dados/preferencias_cenas.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -45,6 +46,7 @@ Future<void> montarApp(WidgetTester tester,
     PreferenciasVersao? preferenciasVersao,
     PreferenciasPausa? preferenciasPausa,
     PreferenciasPaineis? preferenciasPaineis,
+    PreferenciasCenas? preferenciasCenas,
     PlataformaDeAbertura abertura = PlataformaDeAbertura.semTentativa,
     PreferenciasConexao? preferenciasConexao,
     ConsultaAcessoEntrada? acessoEntradaMac}) async {
@@ -62,6 +64,7 @@ Future<void> montarApp(WidgetTester tester,
       preferenciasVersao: preferenciasVersao,
       preferenciasPausa: preferenciasPausa,
       preferenciasPaineis: preferenciasPaineis,
+      preferenciasCenas: preferenciasCenas,
       abertura: abertura,
       preferenciasConexao: preferenciasConexao,
       acessoEntradaMac: acessoEntradaMac));

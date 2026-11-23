@@ -13,7 +13,6 @@ import '../tema/tokens.dart';
 import '../textos.dart';
 import 'alvo_do_controle.dart';
 import 'atribuir_do_bloco.dart';
-import 'dialogo_renomear.dart' show tamanhoMaximoNome;
 import 'linha_alvo_controle.dart';
 
 Future<void> abrirEdicaoControle(BuildContext context, WidgetRef ref, IdControle id) =>

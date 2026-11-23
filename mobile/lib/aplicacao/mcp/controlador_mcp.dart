@@ -18,7 +18,9 @@ import 'ferramentas_ajuste.dart';
 import 'ferramentas_ajustes_globais.dart';
 import 'ferramentas_cadeia.dart';
 import 'ferramentas_conhecimento.dart';
+import 'ferramentas_controles.dart';
 import 'ferramentas_leitura.dart';
+import 'ferramentas_slots.dart';
 import 'sessao_mcp.dart';
 
 sealed class SituacaoMcp {
@@ -170,6 +172,13 @@ List<FerramentaMcp> ferramentasDoTimbre(SessaoMcp sessao, Ref ref) => [
       MoverBloco(sessao),
       RemoverBloco(sessao),
       EscolherGabinete(sessao),
+      LerControles(sessao),
+      AtribuirControle(sessao),
+      SoltarControle(sessao),
+      Renomear(sessao),
+      ListarSlots(sessao, ref),
+      LerSlot(sessao, ref),
+      AbrirSlot(sessao, ref),
       Desfazer(sessao),
       SalvarPreset(sessao, ref),
       LerAjustesGlobais(ref),

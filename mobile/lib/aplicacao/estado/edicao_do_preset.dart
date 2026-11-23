@@ -7,16 +7,18 @@ import '../../nucleo/catalogo/linha_paralela.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
+import 'escopo_cenas.dart';
 import 'estado_editor.dart';
 
 mixin EdicaoDoPreset on Notifier<EstadoEditor> {
   Future<void> aplicarDocumento(DocumentoPreset documento);
 
+  /// Nas cenas da chave "Controlar" ([escopoCenasProvider]).
   Future<void> alternarBypass(PosicaoBloco posicao) async {
     final bloco = state.atual?.bloco(posicao);
     if (bloco == null) return;
     final ligado = bloco.habilitadoNaCena(state.atual!.cenaAtiva);
-    await aplicarDocumento(state.atual!.comBlocoHabilitado(posicao, !ligado));
+    await aplicarDocumento(state.atual!.comBlocoHabilitado(posicao, !ligado, escopo: ref.read(escopoCenasProvider)));
   }
 
   Future<void> escolherCena(int cena) async {
@@ -55,14 +57,16 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
   }
 
   /// Vários parâmetros do mesmo bloco numa alteração só (template, solo da
-  /// banda): cada um vale como o knob (bloco e cena ativa), mas a pedaleira
-  /// recebe um envio só, sem passar pelos estados intermediários.
+  /// banda): cada um vale como o knob (nas cenas da chave "Controlar"), mas a
+  /// pedaleira recebe um envio só, sem passar pelos estados intermediários.
   Future<void> alterarParametros(PosicaoBloco posicao, Map<String, num> valores,
-      {Map<String, String> nomes = const {}}) async {
+      {Map<String, String> nomes = const {}, Map<String, num> padroes = const {}}) async {
     var documento = state.atual;
     if (documento == null || documento.bloco(posicao) == null || valores.isEmpty) return;
+    final escopo = ref.read(escopoCenasProvider);
     for (final MapEntry(key: simbolo, value: valor) in valores.entries) {
-      documento = documento!.comParametro(posicao, simbolo, valor, nomeExibicao: nomes[simbolo]);
+      documento = documento!.comParametro(posicao, simbolo, valor,
+          nomeExibicao: nomes[simbolo], escopo: escopo, valorAntes: padroes[simbolo]);
     }
     await aplicarDocumento(documento!);
   }

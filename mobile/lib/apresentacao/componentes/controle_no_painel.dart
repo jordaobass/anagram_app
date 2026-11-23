@@ -67,7 +67,8 @@ class ControleNoPainel extends ConsumerWidget {
   static AoMudarValor alterar(WidgetRef ref, DefinicaoParametro p, BlocoPreset bloco) =>
       (valor, {required arrastando}) => ref
           .read(editorProvider.notifier)
-          .alterarParametro(p.simbolo, valor, arrastando: arrastando, nome: p.nome, posicao: bloco.posicao);
+          .alterarParametro(p.simbolo, valor,
+              arrastando: arrastando, nome: p.nome, posicao: bloco.posicao, padrao: p.padrao);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -86,7 +87,7 @@ class ControleNoPainel extends ConsumerWidget {
           _controle(ref),
           // como o valor "atribuído ao snapshot" do HX: esta cena sobrepõe
           // (neutro: o âmbar é da ação e da seleção, não de marca informativa)
-          if (bloco.sobreposicaoDaCena(parametro.simbolo, cena) != null) Text(l.soNaCena(cena), style: marca),
+          if (bloco.valorSoNaCena(parametro.simbolo, cena)) Text(l.soNaCena(cena), style: marca),
           if (controles.isNotEmpty)
             Semantics(
               label: l.ctlAtribuidoA(controles),

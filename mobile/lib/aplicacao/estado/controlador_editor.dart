@@ -25,6 +25,7 @@ import 'controlador_conexao.dart';
 import 'controles_do_editor.dart';
 import 'edicao_do_preset.dart';
 import 'estado_conexao.dart';
+import 'escopo_cenas.dart';
 import 'estado_editor.dart';
 import 'gravacao_do_editor.dart';
 import 'limpeza_do_editor.dart';
@@ -160,12 +161,15 @@ class ControladorEditor extends Notifier<EstadoEditor>
 
   /// `arrastando`: ainda no gesto (envio com vazão limitada); ao soltar, final.
   /// `posicao`: o bloco do controle (o Desfazer pode chegar com outro selecionado).
+  /// `padrao`: o do catálogo, que as outras cenas tocavam se o bloco não o guarda.
+  /// As cenas que mudam são as da chave "Controlar" ([escopoCenasProvider]).
   void alterarParametro(String simbolo, num valor,
-      {required bool arrastando, String? nome, PosicaoBloco? posicao}) {
+      {required bool arrastando, String? nome, PosicaoBloco? posicao, num? padrao}) {
     final atual = state.atual;
     posicao ??= state.selecionado;
     if (atual == null || posicao == null) return;
-    final editado = atual.comParametro(posicao, simbolo, valor, nomeExibicao: nome);
+    final editado = atual.comParametro(posicao, simbolo, valor,
+        nomeExibicao: nome, escopo: ref.read(escopoCenasProvider), valorAntes: padrao);
     state = state.copiar(atual: editado);
     if (!state.aoVivo) return;
     arrastando ? agendarAoVivo(editado) : unawaited(enviarAoVivo(editado));

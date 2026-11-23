@@ -78,7 +78,7 @@ class _PainelEqParametricoState extends ConsumerState<PainelEqParametrico> {
       final p = parametroDoModo(grupo, modo)?.parametro;
       if (p == null) return;
       editor.alterarParametro(p.simbolo, p.limitar(valor),
-          arrastando: arrastando, nome: p.nome, posicao: widget.bloco.posicao);
+          arrastando: arrastando, nome: p.nome, posicao: widget.bloco.posicao, padrao: p.padrao);
     }
 
     mudar(ModoEq.freq, frequencia);

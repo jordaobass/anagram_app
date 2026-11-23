@@ -8,9 +8,6 @@ import '../../l10n/app_localizations.dart';
 import '../textos.dart';
 import 'dialogo_confirmar.dart';
 
-/// Nome curto o bastante para o visor da pedaleira (hipótese: ver DECISOES).
-const tamanhoMaximoNome = 24;
-
 Future<void> renomearPreset(BuildContext context, WidgetRef ref) async {
   final atual = ref.read(editorProvider).atual?.nome ?? '';
   final nome = await showDialog<String>(context: context, builder: (_) => _DialogoRenomear(atual));

@@ -16,6 +16,9 @@ import 'package:anagram_app/dados/preferencias_mcp.dart';
 import 'package:anagram_app/dados/preferencias_pausa.dart';
 import 'package:anagram_app/dados/preferencias_paineis.dart';
 import 'package:anagram_app/aplicacao/estado/paineis_recolhidos.dart';
+import 'package:anagram_app/aplicacao/estado/escopo_cenas.dart';
+import 'package:anagram_app/dados/preferencias_cenas.dart';
+import 'package:anagram_app/nucleo/modelo/cenas_do_bloco.dart';
 import 'package:anagram_app/nucleo/mcp/protocolo_mcp.dart';
 import 'package:anagram_app/plataforma/servidor_mcp.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
@@ -60,6 +63,7 @@ Widget appDeTeste(
         PreferenciasVersao? preferenciasVersao,
         PreferenciasPausa? preferenciasPausa,
         PreferenciasPaineis? preferenciasPaineis,
+        PreferenciasCenas? preferenciasCenas,
         PlataformaDeAbertura abertura = PlataformaDeAbertura.semTentativa,
         PreferenciasConexao? preferenciasConexao,
         ConsultaAcessoEntrada? acessoEntradaMac}) =>
@@ -76,6 +80,7 @@ Widget appDeTeste(
         preferenciasVersaoProvider.overrideWithValue(preferenciasVersao ?? PreferenciasVersaoEmMemoria()),
         preferenciasPausaProvider.overrideWithValue(preferenciasPausa ?? PreferenciasPausaEmMemoria()),
         preferenciasPaineisProvider.overrideWithValue(preferenciasPaineis ?? PreferenciasPaineisEmMemoria()),
+        preferenciasCenasProvider.overrideWithValue(preferenciasCenas ?? PreferenciasCenasEmMemoria()),
         plataformaDeAberturaProvider.overrideWithValue(abertura),
         preferenciasConexaoProvider.overrideWithValue(preferenciasConexao ?? PreferenciasConexaoEmMemoria()),
         // nenhum teste chama o canal nativo do Mac
@@ -139,6 +144,17 @@ class PreferenciasPaineisEmMemoria implements PreferenciasPaineis {
 
   @override
   Future<void> gravarControlesAbertos(bool abertos) async => controlesAbertos = abertos;
+}
+
+/// Guarda a chave "Controlar" das cenas só em memória (nada guardado = padrão).
+class PreferenciasCenasEmMemoria implements PreferenciasCenas {
+  EscopoCenas? salvo;
+
+  @override
+  Future<EscopoCenas?> lerEscopo() async => salvo;
+
+  @override
+  Future<void> gravarEscopo(EscopoCenas escopo) async => salvo = escopo;
 }
 
 class PreferenciasMcpEmMemoria implements PreferenciasMcp {

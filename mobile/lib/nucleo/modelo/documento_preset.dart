@@ -131,10 +131,17 @@ class DocumentoPreset {
   DocumentoPreset comArquivoDeIr(PosicaoBloco posicao, String caminho) =>
       _editarBloco(posicao, (bloco) => gravarArquivoDeIr(bloco, caminho));
 
-  /// Liga/desliga o bloco na cena ativa: no próprio bloco (é o que a pedaleira
-  /// toca ao vivo) e na foto da cena; as outras cenas não mudam.
-  DocumentoPreset comBlocoHabilitado(PosicaoBloco posicao, bool habilitado) =>
+  /// Liga/desliga o bloco no próprio bloco (é o que a pedaleira toca ao vivo)
+  /// e nas fotos de cena conforme o [escopo] (DECISOES CE1): só na cena ativa,
+  /// as outras guardam o que tinham; em todas, as fotos largam o liga/desliga
+  /// e as três cenas passam a seguir o bloco.
+  DocumentoPreset comBlocoHabilitado(PosicaoBloco posicao, bool habilitado,
+          {EscopoCenas escopo = EscopoCenas.soNaCena}) =>
       _editarBloco(posicao, (bloco) {
+        if (escopo == EscopoCenas.todasAsCenas) {
+          bloco['enabled'] = habilitado;
+          return tirarLigaDasFotos(bloco);
+        }
         // as outras cenas guardam o liga/desliga que tinham antes: senão,
         // sem registro, passariam a seguir o bloco, que vai mudar agora
         fixarLigaNasOutrasCenas(bloco, cenaAtiva);
@@ -145,17 +152,25 @@ class DocumentoPreset {
         cena['enabled'] = habilitado;
       });
 
-  /// Muda um parâmetro no bloco (o que soa) e, se a cena ativa tem valor
-  /// próprio para ele, também na foto dela; as outras cenas não mudam.
+  /// Muda um parâmetro no bloco (o que soa) e nas fotos de cena conforme o
+  /// [escopo] (DECISOES CE1). Só na cena ativa, [valorAntes] é o valor que as
+  /// outras cenas sem registro tinham, quando o bloco não guarda o parâmetro
+  /// (o padrão do catálogo).
   DocumentoPreset comParametro(
     PosicaoBloco posicao,
     String simbolo,
     num valor, {
     String? nomeExibicao,
+    EscopoCenas escopo = EscopoCenas.soNaCena,
+    num? valorAntes,
   }) =>
       _editarBloco(posicao, (bloco) {
-        if (!mudarSobreposicaoDaCena(bloco, cenaAtiva, simbolo, valor)) {
-          gravarNaCenaAtiva(bloco, cenaAtiva, simbolo, valor);
+        switch (escopo) {
+          case EscopoCenas.soNaCena:
+            fixarValorNasOutrasCenas(bloco, cenaAtiva, simbolo, valorNoBloco(bloco, simbolo) ?? valorAntes ?? valor);
+            gravarNaFotoDaCena(bloco, cenaAtiva, simbolo, valor);
+          case EscopoCenas.todasAsCenas:
+            tirarDasFotos(bloco, simbolo);
         }
         mudarValorBase(bloco, simbolo, valor, nomeExibicao ?? simbolo);
       });
@@ -219,6 +234,9 @@ void _recusarMarcadorDeQuadro(Map<String, dynamic> json) {
     }
   }
 }
+
+/// Nome curto o bastante para o visor da pedaleira (hipótese: ver DECISOES).
+const tamanhoMaximoNome = 24;
 
 /// Id novo no formato do aparelho: 56 hexadecimais em grupos 16-8-8-24.
 String novoUuidPreset([Random? aleatorio]) {

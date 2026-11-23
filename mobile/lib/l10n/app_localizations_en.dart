@@ -50,16 +50,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aoVivoDesligado => 'LIVE OFF';
 
   @override
-  String get conexaoPermissaoNegada => 'The system denied access to the Anagram USB. On Android, tap Connect again and accept the request; on macOS, check Privacy & Security settings.';
+  String get conexaoPermissaoNegada =>
+      'The system denied access to the Anagram USB. On Android, tap Connect again and accept the request; on macOS, check Privacy & Security settings.';
 
   @override
-  String get conexaoOcupada => 'The Anagram is plugged in, but another program is holding it. Close Darkglass Suite and any browser tab connected to the pedal.';
+  String get conexaoOcupada =>
+      'The Anagram is plugged in, but another program is holding it. Close Darkglass Suite and any browser tab connected to the pedal.';
 
   @override
-  String get conexaoSemAnagram => 'No Anagram found on USB. Check the cable and that the pedal is on.';
+  String get conexaoSemAnagram =>
+      'No Anagram found on USB. Check the cable and that the pedal is on.';
 
   @override
-  String get conexaoSemResposta => 'The Anagram didn\'t answer. Unplug and replug the cable and try again.';
+  String get conexaoSemResposta =>
+      'The Anagram didn\'t answer. Unplug and replug the cable and try again.';
 
   @override
   String get conexaoRespostaInvalida => 'Unexpected reply from the pedal.';
@@ -74,7 +78,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get erroSemResposta => 'The pedal didn\'t answer in time.';
 
   @override
-  String get erroRespostaInvalida => 'The pedal refused or sent an unexpected reply.';
+  String get erroRespostaInvalida =>
+      'The pedal refused or sent an unexpected reply.';
 
   @override
   String erroOperacaoEmCurso(String detalhe) {
@@ -93,10 +98,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get avisoPedaleiraDesconectada => 'The pedal was disconnected. Connect again to pick up where you left off.';
+  String get avisoPedaleiraDesconectada =>
+      'The pedal was disconnected. Connect again to pick up where you left off.';
 
   @override
-  String get avisoFormatoMaisNovo => 'This preset uses a newer format than this app: unknown fields are kept.';
+  String get avisoFormatoMaisNovo =>
+      'This preset uses a newer format than this app: unknown fields are kept.';
 
   @override
   String avisoPresetAtualizado(String slot) {
@@ -117,25 +124,31 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get salvarDesconectada => 'the pedal is disconnected. Connect it and try again.';
+  String get salvarDesconectada =>
+      'the pedal is disconnected. Connect it and try again.';
 
   @override
-  String get salvarSemResposta => 'the pedal didn\'t answer in time. The slot may not have been written; check it before trying again.';
+  String get salvarSemResposta =>
+      'the pedal didn\'t answer in time. The slot may not have been written; check it before trying again.';
 
   @override
-  String get salvarRespostaInvalida => 'the pedal refused or sent an unexpected reply.';
+  String get salvarRespostaInvalida =>
+      'the pedal refused or sent an unexpected reply.';
 
   @override
   String get salvarOcupada => 'another program is holding the pedal.';
 
   @override
-  String get indisponivelIos => 'iPhone and iPad don\'t let regular apps open the Anagram\'s USB control interface: that needs a DriverKit driver with special permission from Apple, which this app doesn\'t have yet. Use the demo here, or edit from a Mac, PC, Android or Chrome.';
+  String get indisponivelIos =>
+      'iPhone and iPad don\'t let regular apps open the Anagram\'s USB control interface: that needs a DriverKit driver with special permission from Apple, which this app doesn\'t have yet. Use the demo here, or edit from a Mac, PC, Android or Chrome.';
 
   @override
-  String get indisponivelNavegador => 'This browser doesn\'t have WebHID. Use Chrome or Edge on a computer, or the demo.';
+  String get indisponivelNavegador =>
+      'This browser doesn\'t have WebHID. Use Chrome or Edge on a computer, or the demo.';
 
   @override
-  String get indisponivelSemUsb => 'This platform can\'t reach the pedal over USB.';
+  String get indisponivelSemUsb =>
+      'This platform can\'t reach the pedal over USB.';
 
   @override
   String get importacaoIlegivel => 'Couldn\'t read the file.';
@@ -193,7 +206,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get conecteTitulo => 'Connect the Anagram over USB';
 
   @override
-  String get conecteFecheSuite => 'Close Darkglass Suite first: only one program at a time can control the pedal.';
+  String get conecteFecheSuite =>
+      'Close Darkglass Suite first: only one program at a time can control the pedal.';
 
   @override
   String get abrirDemonstracao => 'OPEN DEMO';
@@ -257,7 +271,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get areaInativa => 'This area isn\'t active on the pedal: opening a preset only plays it, without switching the pedal\'s slot.';
+  String get areaInativa =>
+      'This area isn\'t active on the pedal: opening a preset only plays it, without switching the pedal\'s slot.';
 
   @override
   String get tornarAtiva => 'MAKE ACTIVE';
@@ -329,10 +344,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get avisoAoVivoDesligado => 'LIVE OFF — edits stay in the app, the pedal doesn\'t change.';
+  String get avisoAoVivoDesligado =>
+      'LIVE OFF — edits stay in the app, the pedal doesn\'t change.';
 
   @override
-  String get avisoAudicao => 'PREVIEW — the pedal stays on its own slot (no USB MIDI).';
+  String get avisoAudicao =>
+      'PREVIEW — the pedal stays on its own slot (no USB MIDI).';
 
   @override
   String get naoSalvo => 'NOT SAVED';
@@ -346,10 +363,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get escolhaUmPresetTexto => 'Opening it makes the pedal play it. Changes sound right away and are only stored when you save.';
+  String get escolhaUmPresetTexto =>
+      'Opening it makes the pedal play it. Changes sound right away and are only stored when you save.';
 
   @override
-  String get slotVazioTexto => 'Create a preset here. To bring blocks from another preset, use the copy icon in the block panel, then hold an empty position in the grid to paste.';
+  String get slotVazioTexto =>
+      'Create a preset here. To bring blocks from another preset, use the copy icon in the block panel, then hold an empty position in the grid to paste.';
 
   @override
   String get criarPresetAqui => 'CREATE PRESET HERE';
@@ -434,7 +453,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get dicaMontarCadeia => 'Tap a + in the grid to add an effect. Tap a block to adjust it; hold and drag it to move it.';
+  String get dicaMontarCadeia =>
+      'Tap a + in the grid to add an effect. Tap a block to adjust it; hold and drag it to move it.';
 
   @override
   String faixaEstimada(String simbolo) {
@@ -472,13 +492,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get creditoAutorTitulo => 'Author';
 
   @override
-  String get creditoAutor => 'jordao_bass · free software, MIT license. Free of charge, no ads, no in-app purchases and no data collection.';
+  String get creditoAutor =>
+      'jordao_bass · free software, MIT license. Free of charge, no ads, no in-app purchases and no data collection.';
 
   @override
   String get creditoProtocoloTitulo => 'USB protocol and block catalog';
 
   @override
-  String get creditoProtocolo => 'Ported from the anagram-tone-maker project by basster6 — MIT license (github.com/basster6/anagram-tone-maker).';
+  String get creditoProtocolo =>
+      'Ported from the anagram-tone-maker project by basster6 — MIT license (github.com/basster6/anagram-tone-maker).';
 
   @override
   String get creditoArteTitulo => 'Block art';
@@ -498,19 +520,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get creditoFontesTitulo => 'Fonts';
 
   @override
-  String get creditoFontes => 'Barlow and Saira Stencil (SIL Open Font License) · Permanent Marker (Apache 2.0).';
+  String get creditoFontes =>
+      'Barlow and Saira Stencil (SIL Open Font License) · Permanent Marker (Apache 2.0).';
 
   @override
   String get creditoAvisoTitulo => 'Notice';
 
   @override
-  String get creditoAviso => 'Unofficial app, not affiliated with Darkglass Electronics. Anagram is a trademark of its maker.';
+  String get creditoAviso =>
+      'Unofficial app, not affiliated with Darkglass Electronics. Anagram is a trademark of its maker.';
 
   @override
   String get diagnosticoPausa => 'DIAGNOSTICS · PAUSE BETWEEN USB REPORTS';
 
   @override
-  String get diagnosticoPausaTexto => 'Compare 0, 2 and 10 ms and watch the \"round trip\" in the bar and in the log.';
+  String get diagnosticoPausaTexto =>
+      'Compare 0, 2 and 10 ms and watch the \"round trip\" in the bar and in the log.';
 
   @override
   String get idioma => 'Language';
@@ -576,16 +601,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get presets => 'Presets';
 
   @override
-  String get txDicaMontarCadeiaMouse => 'Click a + in the grid to add an effect. Click a block to adjust it and drag it to move it.';
+  String get txDicaMontarCadeiaMouse =>
+      'Click a + in the grid to add an effect. Click a block to adjust it and drag it to move it.';
 
   @override
-  String get txSlotVazioMouse => 'Create a preset here. To bring blocks from another preset, use the copy icon in the block panel, then right-click an empty position in the grid to paste.';
+  String get txSlotVazioMouse =>
+      'Create a preset here. To bring blocks from another preset, use the copy icon in the block panel, then right-click an empty position in the grid to paste.';
 
   @override
   String get txModoDemonstracaoTitulo => 'Demo mode';
 
   @override
-  String get txSemUsbAquiCurto => 'Here the app can\'t reach the pedal over USB. Explore everything in demo mode.';
+  String get txSemUsbAquiCurto =>
+      'Here the app can\'t reach the pedal over USB. Explore everything in demo mode.';
 
   @override
   String get txPorQue => 'WHY?';
@@ -770,10 +798,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fbSoLeitura => 'READ ONLY';
 
   @override
-  String get fbAreaSoLeitura => 'Darkglass factory presets: opening one only plays it. To keep one, copy it to one of your areas.';
+  String get fbAreaSoLeitura =>
+      'Darkglass factory presets: opening one only plays it. To keep one, copy it to one of your areas.';
 
   @override
-  String get fbAvisoPresetDeFabrica => 'FACTORY PRESET — plays only. Copy it to one of your areas to keep it.';
+  String get fbAvisoPresetDeFabrica =>
+      'FACTORY PRESET — plays only. Copy it to one of your areas to keep it.';
 
   @override
   String get fbCopiarParaMinhaArea => 'COPY TO MY AREA…';
@@ -835,13 +865,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mbOutros => 'Others';
 
   @override
-  String get mbExplicaMisturaLimpa => 'Comp Level is the volume of the three compressed bands. Clean Level blends the dry, uncompressed signal in parallel: at the minimum (−24 dB) you hear almost only the compressed sound; turning it up brings back the natural attack of the string.';
+  String get mbExplicaMisturaLimpa =>
+      'Comp Level is the volume of the three compressed bands. Clean Level blends the dry, uncompressed signal in parallel: at the minimum (−24 dB) you hear almost only the compressed sound; turning it up brings back the natural attack of the string.';
 
   @override
   String get mbBuscarOpcao => 'Search (e.g. turbo grunt)';
 
   @override
-  String get smOrdemInvalida => 'The Split has to stay before the Merge on row 1.';
+  String get smOrdemInvalida =>
+      'The Split has to stay before the Merge on row 1.';
 
   @override
   String get smSoNaLinha1 => 'Split and Merge stay on row 1.';
@@ -886,7 +918,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpPermitir => 'Allow AI via MCP';
 
   @override
-  String get mcpPermitirTexto => 'An AI assistant on your computer (LM Studio, Claude Desktop…) can read the open preset and adjust the tone. Changes are heard right away and only go to the pedal if you save.';
+  String get mcpPermitirTexto =>
+      'An AI assistant on your computer (LM Studio, Claude Desktop…) can read the open preset and adjust the tone. Changes are heard right away and only go to the pedal if you save.';
 
   @override
   String get mcpEstadoDesligado => 'Off: no program can talk to the app.';
@@ -917,7 +950,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpToken => 'Access token';
 
   @override
-  String get mcpTokenTexto => 'The AI client sends this token with every request. Without it, the app does not obey.';
+  String get mcpTokenTexto =>
+      'The AI client sends this token with every request. Without it, the app does not obey.';
 
   @override
   String get mcpMostrarToken => 'Show token';
@@ -935,7 +969,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpGerarNovoTitulo => 'Generate a new token?';
 
   @override
-  String get mcpGerarNovoTexto => 'The current token stops working right away: the AI client will need the new one.';
+  String get mcpGerarNovoTexto =>
+      'The current token stops working right away: the AI client will need the new one.';
 
   @override
   String get mcpCopiarConfiguracao => 'Copy configuration for';
@@ -953,7 +988,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpCopiado => 'Copied to the clipboard.';
 
   @override
-  String get mcpLimitacoes => 'The AI cannot hear the sound: it adjusts from what you describe, and you tell it if it got better. Small models often describe what they would do instead of calling the tools; prefer a model with good tool support.';
+  String get mcpLimitacoes =>
+      'The AI cannot hear the sound: it adjusts from what you describe, and you tell it if it got better. Small models often describe what they would do instead of calling the tools; prefer a model with good tool support.';
 
   @override
   String get mcpAtivoNaBarra => 'AI';
@@ -986,10 +1022,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpAgoraNao => 'NOT NOW';
 
   @override
-  String get ttDicaMouse => 'Rest the mouse on a control\'s name to see what it does to the sound';
+  String get ttDicaMouse =>
+      'Rest the mouse on a control\'s name to see what it does to the sound';
 
   @override
-  String get ttDicaToque => 'Tap a control\'s name to see what it does to the sound';
+  String get ttDicaToque =>
+      'Tap a control\'s name to see what it does to the sound';
 
   @override
   String get smUmSplit => 'This preset already has a Split (one per preset).';
@@ -998,22 +1036,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get smUmMerge => 'This preset already has a Merge (one per preset).';
 
   @override
-  String get smMergeSemSplit => 'Add the Split first: the Merge joins row 2, which only exists with a Split.';
+  String get smMergeSemSplit =>
+      'Add the Split first: the Merge joins row 2, which only exists with a Split.';
 
   @override
-  String get smLinha2SemSplit => 'With no Split on row 1, this row gets no signal yet.';
+  String get smLinha2SemSplit =>
+      'With no Split on row 1, this row gets no signal yet.';
 
   @override
   String get lpCriar => 'ADD PARALLEL ROW';
 
   @override
-  String get lpCriarDica => 'Splits the signal after the selected row 1 block: row 2 plays in parallel and the Merge joins both before the output.';
+  String get lpCriarDica =>
+      'Splits the signal after the selected row 1 block: row 2 plays in parallel and the Merge joins both before the output.';
 
   @override
   String get lpRemover => 'REMOVE PARALLEL ROW';
 
   @override
-  String get lpSemEspaco => 'Row 1 needs two free positions for the Split and the Merge.';
+  String get lpSemEspaco =>
+      'Row 1 needs two free positions for the Split and the Merge.';
 
   @override
   String get smFaixaCriar => '+ Add parallel row · Split, row 2 and Merge';
@@ -1022,10 +1064,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get smItemBiblioteca => 'Split + Merge (parallel row)';
 
   @override
-  String get smItemBibliotecaDica => 'Splits the signal at this position: row 2 plays in parallel and the Merge joins both.';
+  String get smItemBibliotecaDica =>
+      'Splits the signal at this position: row 2 plays in parallel and the Merge joins both.';
 
   @override
-  String get smJaTemLinhaParalela => 'This preset already has a parallel row (one Split and one Merge per preset).';
+  String get smJaTemLinhaParalela =>
+      'This preset already has a parallel row (one Split and one Merge per preset).';
 
   @override
   String get smDividirDepois => 'Split the signal after this block';
@@ -1143,7 +1187,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pdSecao => 'Pedal';
 
   @override
-  String get pdDica => 'Global Anagram settings: they apply to every preset and are not stored in the preset.';
+  String get pdDica =>
+      'Global Anagram settings: they apply to every preset and are not stored in the preset.';
 
   @override
   String get pdSaidas => 'Outputs';
@@ -1167,7 +1212,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eqbResetTitulo => 'Reset the Parametric EQ?';
 
   @override
-  String get eqbResetTexto => 'All bands, the cuts and the gain go back to the block defaults. You can undo it right after.';
+  String get eqbResetTexto =>
+      'All bands, the cuts and the gain go back to the block defaults. You can undo it right after.';
 
   @override
   String get eqbResetFeito => 'Parametric EQ back to defaults.';
@@ -1179,19 +1225,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pdEqResetConfirmar => 'RESET';
 
   @override
-  String get pdEqDica => 'The curve and the bands show the Global EQ the pedal has now; the mode picks what the bands show.';
+  String get pdEqDica =>
+      'The curve and the bands show the Global EQ the pedal has now; the mode picks what the bands show.';
 
   @override
   String get pdEntrada => 'Input';
 
   @override
-  String get pdEntradaDica => 'Input gain for instrument 1 (−12 to +12 dB). The Anagram stores six instruments; the app only reads the first.';
+  String get pdEntradaDica =>
+      'Input gain for instrument 1 (−12 to +12 dB). The Anagram stores six instruments; the app only reads the first.';
 
   @override
   String get pdPlaca => 'Sound card';
 
   @override
-  String get pdPlacaDica => 'Read only: the pedal does not accept changing these over USB.';
+  String get pdPlacaDica =>
+      'Read only: the pedal does not accept changing these over USB.';
 
   @override
   String get pdAtualizar => 'Refresh';
@@ -1209,13 +1258,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get registroSecao => 'Log for support';
 
   @override
-  String get registroOnde => 'The app keeps a log of what happens in this file:';
+  String get registroOnde =>
+      'The app keeps a log of what happens in this file:';
 
   @override
   String get registroCopiar => 'Copy log';
 
   @override
-  String get registroCopiado => 'Log copied. Paste it in the GitHub issue along with what happened.';
+  String get registroCopiado =>
+      'Log copied. Paste it in the GitHub issue along with what happened.';
 
   @override
   String versaoNovaNaBarra(String versao) {
@@ -1235,7 +1286,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get versaoNovaVerificar => 'Check for a new version on launch';
 
   @override
-  String get versaoNovaVerificarTexto => 'On launch the app asks only GitHub which version is the latest one published. None of your data is sent. When off, the app does not go online.';
+  String get versaoNovaVerificarTexto =>
+      'On launch the app asks only GitHub which version is the latest one published. None of your data is sent. When off, the app does not go online.';
 
   @override
   String get versaoNovaEmDia => 'You are on the latest version.';
@@ -1246,16 +1298,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get versaoNovaSemResposta => 'Could not check right now; the app will try again next time it opens.';
+  String get versaoNovaSemResposta =>
+      'Could not check right now; the app will try again next time it opens.';
 
   @override
   String get ctlTitulo => 'Pedal controls';
 
   @override
-  String get ctlDicaMouse => 'Click a control to edit it. Right-click a knob to assign its parameter to a pot or the pedal; the block menu puts a footswitch on it.';
+  String get ctlDicaMouse =>
+      'Click a control to edit it. Right-click a knob to assign its parameter to a pot or the pedal; the block menu puts a footswitch on it.';
 
   @override
-  String get ctlDicaToque => 'Tap a control to edit it or assign a parameter of the open block; the block menu puts a footswitch on it.';
+  String get ctlDicaToque =>
+      'Tap a control to edit it or assign a parameter of the open block; the block menu puts a footswitch on it.';
 
   @override
   String get ctlSiglaFoot => 'FOOT';
@@ -1314,13 +1369,15 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get ctlSemBlocoAberto => 'Open a block in the chain to assign one of its parameters.';
+  String get ctlSemBlocoAberto =>
+      'Open a block in the chain to assign one of its parameters.';
 
   @override
   String get ctlSemAlvos => 'No parameter on this control.';
 
   @override
-  String get ctlFaixaIguais => 'Equal minimum and maximum leave the control without travel.';
+  String get ctlFaixaIguais =>
+      'Equal minimum and maximum leave the control without travel.';
 
   @override
   String get ctlFaixaFora => 'Outside the parameter range.';
@@ -1342,7 +1399,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ctlFechar => 'CLOSE';
 
   @override
-  String get ctlDicaPedaleira => 'On the pedal, assigned pots only respond on the one-row preset screen; with the preset expanded, the knobs edit the selected block.';
+  String get ctlDicaPedaleira =>
+      'On the pedal, assigned pots only respond on the one-row preset screen; with the preset expanded, the knobs edit the selected block.';
 
   @override
   String get utTreino => 'Practice';
@@ -1389,25 +1447,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pausaUsbTitulo => 'Pause between USB packets';
 
   @override
-  String get pausaUsbTexto => 'Lower = faster live changes; raise it if the pedal stops responding. Auto uses this computer\'s default.';
+  String get pausaUsbTexto =>
+      'Lower = faster live changes; raise it if the pedal stops responding. Auto uses this computer\'s default.';
 
   @override
-  String get versaoNovaConsultaTexto => 'On launch the app asks only GitHub which version is the latest one published. The request sends only the app\'s version (in the User-Agent header); as with any connection, GitHub sees your IP address. When off, the app does not go online.';
+  String get versaoNovaConsultaTexto =>
+      'On launch the app asks only GitHub which version is the latest one published. The request sends only the app\'s version (in the User-Agent header); as with any connection, GitHub sees your IP address. When off, the app does not go online.';
 
   @override
   String get fmTitulo => 'Footswitches';
 
   @override
   String fmModo(String modo) {
-    String _temp0 = intl.Intl.selectLogic(
-      modo,
-      {
-        'preset': 'PRESET',
-        'stomp': 'STOMP',
-        'scene': 'SCENE',
-        'other': '—',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(modo, {
+      'preset': 'PRESET',
+      'stomp': 'STOMP',
+      'scene': 'SCENE',
+      'other': '—',
+    });
     return '$_temp0';
   }
 
@@ -1417,13 +1474,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get fmDica => 'In Stomp mode, the footswitches follow this preset\'s pedal controls. The mode applies to every preset.';
+  String get fmDica =>
+      'In Stomp mode, the footswitches follow this preset\'s pedal controls. The mode applies to every preset.';
 
   @override
-  String get fmErro => 'The pedal did not confirm the mode change. The mode shown is the one it has now.';
+  String get fmErro =>
+      'The pedal did not confirm the mode change. The mode shown is the one it has now.';
 
   @override
-  String get fmIndisponivel => 'This pedal does not report the footswitch mode.';
+  String get fmIndisponivel =>
+      'This pedal does not report the footswitch mode.';
 
   @override
   String fmAvisoControles(String modo) {
@@ -1431,7 +1491,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get fmDesconhecido => 'The pedal is in a mode this app does not know. Change the mode on the pedal itself.';
+  String get fmDesconhecido =>
+      'The pedal is in a mode this app does not know. Change the mode on the pedal itself.';
 
   @override
   String get t3kTom => 'Tone';
@@ -1454,10 +1515,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get t3kSoConsulta => 'Tone you uploaded: shown for reference only. The app cannot switch it yet.';
+  String get t3kSoConsulta =>
+      'Tone you uploaded: shown for reference only. The app cannot switch it yet.';
 
   @override
-  String get t3kIrNaoConferido => 'The path of factory IRs has not been checked on a pedal yet: listen before saving.';
+  String get t3kIrNaoConferido =>
+      'The path of factory IRs has not been checked on a pedal yet: listen before saving.';
 
   @override
   String t3kResumo(int fabrica, int seus) {
@@ -1507,13 +1570,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sbSubstituirAqui => 'Replace the preset in this slot';
 
   @override
-  String get salvarReleituraDiferente => 'the pedal confirmed, but the slot read back differs from what was sent. Your edit is still on screen; check the slot and save again.';
+  String get salvarReleituraDiferente =>
+      'the pedal confirmed, but the slot read back differs from what was sent. Your edit is still on screen; check the slot and save again.';
 
   @override
-  String get pdSemAcesso => 'Output levels, Global EQ and input gain: the app has no access to these pedal features. The Anagram accepts a value sent to it, but does not apply it to the sound. Adjust them with the pedal\'s own knobs and screens; here you see the current values (tap Refresh after changing them).';
+  String get pdSemAcesso =>
+      'Output levels, Global EQ and input gain: the app has no access to these pedal features. The Anagram accepts a value sent to it, but does not apply it to the sound. Adjust them with the pedal\'s own knobs and screens; here you see the current values (tap Refresh after changing them).';
 
   @override
-  String get utAcaoChave => 'In the app, this switch is the pedal\'s Action. Per the plugin\'s manual: turning it on starts the rhythm with an intro; while it plays, triggering again plays a fill; a double trigger stops; holding moves to the next part. What the drums play in each case is up to the plugin.';
+  String get utAcaoChave =>
+      'In the app, this switch is the pedal\'s Action. Per the plugin\'s manual: turning it on starts the rhythm with an intro; while it plays, triggering again plays a fill; a double trigger stops; holding moves to the next part. What the drums play in each case is up to the plugin.';
 
   @override
   String get utSoNoVisor => 'Only on the pedal screen';
@@ -1525,8 +1591,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get caConectarAoAbrir => 'Connect on launch';
 
   @override
-  String get caConectarAoAbrirTexto => 'On launch the app looks for the pedal on USB once. Connecting plays nothing; with no pedal, the connect screen stays as it is.';
+  String get caConectarAoAbrirTexto =>
+      'On launch the app looks for the pedal on USB once. Connecting plays nothing; with no pedal, the connect screen stays as it is.';
 
   @override
-  String get caConectarAoAbrirMac => 'On macOS, only after you allow Input Monitoring for Anagram App in System Settings › Privacy & Security.';
+  String get caConectarAoAbrirMac =>
+      'On macOS, only after you allow Input Monitoring for Anagram App in System Settings › Privacy & Security.';
+
+  @override
+  String get ceControlar => 'CONTROL';
+
+  @override
+  String get ceTodas => 'ALL SCENES';
+
+  @override
+  String get ceAtiva => 'ACTIVE SCENE ONLY';
+
+  @override
+  String get ceTodasDica =>
+      'Knob, value and on/off change all 3 scenes: the value stops varying between them.';
+
+  @override
+  String get ceAtivaDica =>
+      'Knob, value and on/off change only the active scene; the others stay as they were.';
 }
