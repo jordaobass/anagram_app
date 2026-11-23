@@ -23,7 +23,7 @@ class ChaveControlarCenas extends ConsumerWidget {
     final escolhido = ref.watch(escopoCenasProvider);
     final rotulo = ExcludeSemantics(
       child: Text(l.ceControlar,
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.textoSecundario)),
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: context.cores.textoSecundario)),
     );
     _Opcao opcao(EscopoCenas escopo) => _Opcao(
           escopo: escopo,
@@ -70,7 +70,7 @@ class _Opcao extends StatelessWidget {
       EscopoCenas.todasAsCenas => (l.ceTodas, l.ceTodasDica),
       EscopoCenas.soNaCena => (l.ceAtiva, l.ceAtivaDica),
     };
-    final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(color: BotaoTally.corDoTexto(ativo: ativa));
+    final estilo = Theme.of(context).textTheme.labelMedium?.copyWith(color: BotaoTally.corDoTexto(context.cores, ativo: ativa));
     return Tooltip(
       message: dica,
       child: BotaoTally(
@@ -78,7 +78,7 @@ class _Opcao extends StatelessWidget {
         ativo: ativa,
         rotuloSemantico: '${l.ceControlar}: $nome. $dica',
         aoTocar: aoTocar,
-        alturaMinima: Medidas.alvoMinimo,
+        alturaMinima: MedidasDoTopo.daPlataforma.alvoPilula,
         filho: Padding(
           padding: const EdgeInsets.symmetric(horizontal: Espacos.m),
           child: Center(widthFactor: 1, child: Text(nome, textAlign: TextAlign.center, style: estilo)),
