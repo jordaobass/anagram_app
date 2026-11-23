@@ -2,8 +2,8 @@
 // tablet, iOS, créditos), com arte própria. Os nomes dos PNGs mantêm o prefixo
 // "rodada2-" de quando foram criados.
 import 'dart:async';
-import 'dart:typed_data';
 
+import 'package:anagram_app/aplicacao/conectar_ao_abrir.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/aplicacao/estado/estado_conexao.dart';
@@ -14,12 +14,17 @@ import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:anagram_app/nucleo/protocolo/api_anagram.dart';
 import 'package:anagram_app/nucleo/protocolo/erros_anagram.dart';
 import 'package:anagram_app/nucleo/protocolo/transporte_anagram.dart';
+import 'package:anagram_app/plataforma/acesso_entrada_mac.dart';
 import 'package:anagram_app/plataforma/fabrica_transporte.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../apoio/app_de_teste.dart';
 import '../apoio/capturas_apoio.dart';
+import '../apoio/demonstracao_na_tela.dart';
+import '../apoio/fixtures.dart' show lerIndiceDasCapturas;
 
 const desktop = desktopWindows;
 const celular = Tamanho('celular-retrato', 390, 844, 2);
@@ -198,5 +203,19 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('casa-1-4')));
     await tester.pumpAndSettle();
     await foto(tester, '16-biblioteca-efeitos');
+  });
+
+  testWidgets('macOS sem Monitoramento de Entrada: explicação e Abrir Ajustes', (tester) async {
+    debugDefaultTargetPlatformOverride = desktopMac.plataforma;
+    await montarApp(tester,
+        tamanho: Size(desktopMac.largura, desktopMac.altura),
+        overrides: [fabricaTransporteProvider.overrideWithValue(const _Fabrica(AparelhoDisponivel('USB (IOKit)')))],
+        indice: lerIndiceDasCapturas(),
+        abertura: PlataformaDeAbertura.macOS,
+        preferenciasConexao: PreferenciasConexaoEmMemoria(false),
+        acessoEntradaMac: () async => AcessoEntrada.negado);
+    await tester.tap(find.byKey(const ValueKey('botao-conectar')));
+    await tester.pumpAndSettle();
+    await foto(tester, '17-mac-monitoramento-entrada');
   });
 }

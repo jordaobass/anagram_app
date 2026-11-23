@@ -39,6 +39,12 @@ final class AvisoPlataformaIndisponivel extends Aviso {
   final MotivoIndisponivel motivo;
 }
 
+/// macOS sem Monitoramento de Entrada para o app (DECISOES CA5): a tela de
+/// conectar explica, leva aos Ajustes e pede para reabrir o app depois.
+final class AvisoMonitoramentoEntrada extends Aviso {
+  const AvisoMonitoramentoEntrada();
+}
+
 final class AvisoFormatoMaisNovo extends Aviso {
   const AvisoFormatoMaisNovo();
 }

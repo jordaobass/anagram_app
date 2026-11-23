@@ -1529,4 +1529,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get caConectarAoAbrirMac => 'No macOS, só depois de liberar o Monitoramento de Entrada para o Anagram App em Ajustes do Sistema › Privacidade e Segurança.';
+
+  @override
+  String get caMonitoramentoNegado => 'O macOS ainda não deixa o Anagram App falar com a pedaleira. Em Ajustes do Sistema › Privacidade e Segurança › Monitoramento de Entrada, ligue o Anagram App.';
+
+  @override
+  String get caAbrirAjustes => 'ABRIR AJUSTES';
+
+  @override
+  String get caReabraDepois => 'Depois de ligar, feche e reabra o Anagram App: o macOS só libera na próxima abertura.';
 }

@@ -1529,4 +1529,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get caConectarAoAbrirMac => 'On macOS, only after you allow Input Monitoring for Anagram App in System Settings › Privacy & Security.';
+
+  @override
+  String get caMonitoramentoNegado => 'macOS doesn\'t let Anagram App talk to the pedal yet. In System Settings › Privacy & Security › Input Monitoring, turn on Anagram App.';
+
+  @override
+  String get caAbrirAjustes => 'OPEN SYSTEM SETTINGS';
+
+  @override
+  String get caReabraDepois => 'After turning it on, quit and reopen Anagram App: macOS only applies it the next time the app opens.';
 }

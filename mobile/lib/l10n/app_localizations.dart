@@ -2748,6 +2748,24 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'No macOS, só depois de liberar o Monitoramento de Entrada para o Anagram App em Ajustes do Sistema › Privacidade e Segurança.'**
   String get caConectarAoAbrirMac;
+
+  /// Tela de conectar no macOS sem Monitoramento de Entrada: o USB não foi aberto (DECISOES CA5)
+  ///
+  /// In pt, this message translates to:
+  /// **'O macOS ainda não deixa o Anagram App falar com a pedaleira. Em Ajustes do Sistema › Privacidade e Segurança › Monitoramento de Entrada, ligue o Anagram App.'**
+  String get caMonitoramentoNegado;
+
+  /// Botão da tela de conectar que abre Ajustes › Privacidade e Segurança › Monitoramento de Entrada (DECISOES CA5)
+  ///
+  /// In pt, this message translates to:
+  /// **'ABRIR AJUSTES'**
+  String get caAbrirAjustes;
+
+  /// Abaixo do botão Abrir Ajustes: a permissão só vale reabrindo o app (DECISOES CA5)
+  ///
+  /// In pt, this message translates to:
+  /// **'Depois de ligar, feche e reabra o Anagram App: o macOS só libera na próxima abertura.'**
+  String get caReabraDepois;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

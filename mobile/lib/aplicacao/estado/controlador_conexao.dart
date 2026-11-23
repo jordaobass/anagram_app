@@ -17,6 +17,7 @@ import '../../nucleo/registro.dart';
 import '../../nucleo/resultado.dart';
 import '../../plataforma/fabrica_transporte.dart';
 import '../avisos.dart';
+import '../liberacao_entrada_mac.dart';
 import '../provedores.dart';
 import 'estado_conexao.dart';
 
@@ -75,11 +76,26 @@ class ControladorConexao extends Notifier<EstadoConexao> {
 
   Future<void> _conectarAparelho({required bool automatica}) async {
     final fabrica = ref.read(fabricaTransporteProvider);
-    if (fabrica.suporte case AparelhoIndisponivel(:final motivo)) {
-      if (!automatica) state = FalhaDeConexao(AvisoPlataformaIndisponivel(motivo));
-      return;
+    switch (fabrica.suporte) {
+      case AparelhoIndisponivel(:final motivo):
+        if (!automatica) state = FalhaDeConexao(AvisoPlataformaIndisponivel(motivo));
+        return;
+      // ao abrir, a CA3 já conferiu; no clique, o Mac pode pedir ou recusar (CA5)
+      case AparelhoDisponivel(:final meio) when !automatica:
+        if (!await _liberadoNoMac(meio)) return;
+      case AparelhoDisponivel():
     }
     await _conectar(fabrica.criarAparelho(), demonstracao: false, midi: fabrica.criarMidi(), automatica: automatica);
+  }
+
+  /// Enquanto o macOS mostra o pedido, a tela já diz "Conectando" e aceita CANCELAR.
+  Future<bool> _liberadoNoMac(String meio) async {
+    final tentativa = ++_tentativa;
+    state = Conectando(meio);
+    final liberado = await ref.read(liberacaoEntradaMacProvider)();
+    if (tentativa != _tentativa) return false;
+    if (!liberado) state = const FalhaDeConexao(AvisoMonitoramentoEntrada());
+    return liberado;
   }
 
   /// Desiste da tentativa em curso; o que ela terminar depois é ignorado.

@@ -1429,5 +1429,17 @@
   "caConectarAoAbrirMac": "No macOS, só depois de liberar o Monitoramento de Entrada para o Anagram App em Ajustes do Sistema › Privacidade e Segurança.",
   "@caConectarAoAbrirMac": {
     "description": "Linha extra do interruptor no macOS (DECISOES CA3)"
+  },
+  "caMonitoramentoNegado": "O macOS ainda não deixa o Anagram App falar com a pedaleira. Em Ajustes do Sistema › Privacidade e Segurança › Monitoramento de Entrada, ligue o Anagram App.",
+  "@caMonitoramentoNegado": {
+    "description": "Tela de conectar no macOS sem Monitoramento de Entrada: o USB não foi aberto (DECISOES CA5)"
+  },
+  "caAbrirAjustes": "ABRIR AJUSTES",
+  "@caAbrirAjustes": {
+    "description": "Botão da tela de conectar que abre Ajustes › Privacidade e Segurança › Monitoramento de Entrada (DECISOES CA5)"
+  },
+  "caReabraDepois": "Depois de ligar, feche e reabra o Anagram App: o macOS só libera na próxima abertura.",
+  "@caReabraDepois": {
+    "description": "Abaixo do botão Abrir Ajustes: a permissão só vale reabrindo o app (DECISOES CA5)"
   }
 }

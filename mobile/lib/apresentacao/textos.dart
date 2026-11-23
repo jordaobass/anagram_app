@@ -68,6 +68,7 @@ extension TextosDoApp on AppLocalizations {
         AvisoFalhaInesperada(:final meio) => avisoFalhaInesperada(meioVisivel(meio)),
         AvisoPedaleiraDesconectada() => avisoPedaleiraDesconectada,
         AvisoPlataformaIndisponivel(:final motivo) => indisponivel(motivo),
+        AvisoMonitoramentoEntrada() => caMonitoramentoNegado,
         AvisoFormatoMaisNovo() => avisoFormatoMaisNovo,
         AvisoPresetTrocado(:final slot) => avisoPresetTrocado(slot),
         AvisoPresetAtualizado(:final slot) => avisoPresetAtualizado(slot),
