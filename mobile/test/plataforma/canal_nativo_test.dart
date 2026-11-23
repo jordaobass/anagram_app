@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:anagram_app/nucleo/protocolo/erros_anagram.dart';
 import 'package:anagram_app/nucleo/protocolo/transporte_anagram.dart';
 import 'package:anagram_app/plataforma/saida_midi_nativa.dart';
@@ -47,6 +49,27 @@ void main() {
     await Future<void>.delayed(Duration.zero);
 
     expect(estados, [EstadoTransporte.abrindo, EstadoTransporte.fechado]);
+  });
+
+  test('should_give_up_and_close_when_the_mac_native_side_never_answers_open', () async {
+    final chamadas = <String>[];
+    final mensageiro = TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+    mensageiro.setMockMethodCallHandler(const MethodChannel('anagram_app/hid'), (chamada) {
+      chamadas.add(chamada.method);
+      // abrir preso (IOKit esperando o sistema): nunca responde
+      return chamada.method == 'abrir' ? Completer<Object?>().future : Future.value();
+    });
+    final transporte =
+        TransporteCanalNativo('USB (IOKit)', pausaSugerida: Duration.zero, prazoAbrir: const Duration(milliseconds: 50));
+    final estados = <EstadoTransporte>[];
+    transporte.estados.listen(estados.add);
+
+    await expectLater(transporte.abrir(), throwsA(isA<ErroSemResposta>()));
+    await Future<void>.delayed(Duration.zero);
+
+    expect(chamadas, ['abrir', 'fechar'], reason: 'o lado nativo descarta a abertura atrasada');
+    expect(estados, [EstadoTransporte.abrindo, EstadoTransporte.fechado]);
+    expect(transporte.aberto, isFalse);
   });
 
   test('should_not_throw_when_the_native_midi_port_fails_to_close', () async {
