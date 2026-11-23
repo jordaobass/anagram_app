@@ -9,14 +9,15 @@ import '../dados/preferencias_idioma.dart';
 enum IdiomaApp {
   portugues('pt'),
   ingles('en'),
-  espanhol('es');
+  espanhol('es'),
+  frances('fr');
 
   const IdiomaApp(this.codigo);
   final String codigo;
 
   static IdiomaApp? doCodigo(String? codigo) => values.where((i) => i.codigo == codigo).firstOrNull;
 
-  /// O do sistema, se for um dos três; qualquer outro cai no inglês.
+  /// O do sistema, se for um dos quatro; qualquer outro cai no inglês.
   static IdiomaApp doSistema(String codigoSistema) =>
       doCodigo(codigoSistema.toLowerCase().split(RegExp('[-_]')).first) ?? ingles;
 }

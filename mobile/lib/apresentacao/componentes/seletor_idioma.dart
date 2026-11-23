@@ -14,6 +14,7 @@ const _nomes = {
   IdiomaApp.portugues: 'Português',
   IdiomaApp.ingles: 'English',
   IdiomaApp.espanhol: 'Español',
+  IdiomaApp.frances: 'Français',
 };
 
 class SeletorIdioma extends ConsumerWidget {

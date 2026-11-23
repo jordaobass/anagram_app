@@ -1,5 +1,5 @@
 // Raiz do app: tema do sistema, escuro ou claro (DESIGN.md), rotas tipadas do go_router e
-// idioma da interface (português, inglês ou espanhol; o do sistema por
+// idioma da interface (português, inglês, espanhol ou francês; o do sistema por
 // padrão). O roteador nasce uma vez por app, no estado, para não perder a
 // pilha de telas a cada reconstrução. Depois do primeiro quadro, a consulta
 // de versão nova (DECISOES AV1) corre em segundo plano e, no computador, o app

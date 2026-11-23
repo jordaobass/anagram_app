@@ -1,4 +1,4 @@
-# Textos da interface em ARB: português (modelo), inglês e espanhol.
+# Textos da interface em ARB: português (modelo), inglês, espanhol e francês.
 arb-dir: lib/l10n
 template-arb-file: app_pt.arb
 output-localization-file: app_localizations.dart
