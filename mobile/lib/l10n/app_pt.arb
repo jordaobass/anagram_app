@@ -75,7 +75,11 @@
   "avisoPresetAtualizado": "O {slot} mudou fora do app; a lista foi relida e a versão atual foi aberta.",
   "@avisoPresetAtualizado": {
     "description": "Slot alterado fora do app e reaberto depois de reler a lista",
-    "placeholders": { "slot": { "type": "String" } }
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
   },
   "avisoPresetTrocado": "A pedaleira devolveu outro preset para {slot} (id diferente da lista). A lista foi relida; abra de novo.",
   "@avisoPresetTrocado": {
@@ -139,7 +143,11 @@
   "versaoAppNaBarra": "App v{versao}",
   "@versaoAppNaBarra": {
     "description": "Versão do app na barra de cima, ao lado do firmware",
-    "placeholders": { "versao": { "type": "String" } }
+    "placeholders": {
+      "versao": {
+        "type": "String"
+      }
+    }
   },
   "versaoApp": "v{versao}",
   "@versaoApp": {
@@ -396,7 +404,9 @@
   "idioma": "Idioma",
   "idiomaDoSistema": "Do sistema",
   "temaSecao": "Aparência",
-  "@temaSecao": {"description": "Título da seção de tema nas Configurações"},
+  "@temaSecao": {
+    "description": "Título da seção de tema nas Configurações"
+  },
   "temaSistema": "Do sistema",
   "temaEscuro": "Escuro",
   "temaClaro": "Claro",
@@ -1434,6 +1444,34 @@
   "caConectarAoAbrirMac": "No macOS, só depois de liberar o Monitoramento de Entrada para o Anagram App em Ajustes do Sistema › Privacidade e Segurança.",
   "@caConectarAoAbrirMac": {
     "description": "Linha extra do interruptor no macOS (DECISOES CA3)"
+  },
+  "caMonitoramentoNegado": "O macOS ainda não deixa o Anagram App falar com a pedaleira. Em Ajustes do Sistema › Privacidade e Segurança › Monitoramento de Entrada, ligue o Anagram App.",
+  "@caMonitoramentoNegado": {
+    "description": "Tela de conectar no macOS sem Monitoramento de Entrada: o USB não foi aberto (DECISOES CA5)"
+  },
+  "caAbrirAjustes": "ABRIR AJUSTES",
+  "@caAbrirAjustes": {
+    "description": "Botão da tela de conectar que abre Ajustes › Privacidade e Segurança › Monitoramento de Entrada (DECISOES CA5)"
+  },
+  "caReabraDepois": "Depois de ligar, feche e reabra o Anagram App: o macOS só libera na próxima abertura.",
+  "@caReabraDepois": {
+    "description": "Abaixo do botão Abrir Ajustes: a permissão só vale reabrindo o app (DECISOES CA5)"
+  },
+  "mcpClienteVsCode": "VS Code + Copilot",
+  "@mcpClienteVsCode": {
+    "description": "Botão que copia a configuração para o GitHub Copilot no VS Code (DECISOES IA7)"
+  },
+  "mcpVsCodeOnde": "VS Code + GitHub Copilot: cole em ~/.copilot/mcp-config.json (ou em Chat: Open Customizations › MCP Servers › Copilot Global) e peça numa conversa do Copilot.",
+  "@mcpVsCodeOnde": {
+    "description": "Onde colar a configuração do VS Code + Copilot (formato mcpServers do Copilot, DECISOES IA7)"
+  },
+  "mcpCopilotComum": "O app Copilot do Windows e o Microsoft 365 Copilot não têm onde colar um servidor MCP local: use o GitHub Copilot dentro do VS Code.",
+  "@mcpCopilotComum": {
+    "description": "Frase honesta: o Copilot comum não conecta servidores MCP locais (DECISOES IA7)"
+  },
+  "mcpDocVsCode": "Documentação do VS Code",
+  "@mcpDocVsCode": {
+    "description": "Link para a referência de configuração MCP do VS Code"
   },
   "ceControlar": "CONTROLAR",
   "@ceControlar": {

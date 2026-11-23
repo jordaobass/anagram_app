@@ -29,6 +29,7 @@ import 'package:anagram_app/dados/preferencias_versao.dart';
 import 'package:anagram_app/aplicacao/conectar_ao_abrir.dart';
 import 'package:anagram_app/dados/preferencias_conexao.dart';
 import 'package:anagram_app/plataforma/acesso_entrada_mac.dart';
+import 'package:anagram_app/aplicacao/liberacao_entrada_mac.dart';
 import 'versao_falsa.dart';
 
 /// Latência fixa: a real varia de execução para execução e sujaria as capturas.
@@ -69,7 +70,8 @@ Widget appDeTeste(
         PreferenciasCenas? preferenciasCenas,
         PlataformaDeAbertura abertura = PlataformaDeAbertura.semTentativa,
         PreferenciasConexao? preferenciasConexao,
-        ConsultaAcessoEntrada? acessoEntradaMac}) =>
+        ConsultaAcessoEntrada? acessoEntradaMac,
+        ConsultaAcessoEntrada? pedidoAcessoEntradaMac}) =>
     ProviderScope(
       overrides: [
         ...overrides,
@@ -88,6 +90,8 @@ Widget appDeTeste(
         preferenciasConexaoProvider.overrideWithValue(preferenciasConexao ?? PreferenciasConexaoEmMemoria()),
         // nenhum teste chama o canal nativo do Mac
         acessoEntradaMacProvider.overrideWithValue(acessoEntradaMac ?? () async => AcessoEntrada.desconhecido),
+        pedidoAcessoEntradaMacProvider
+            .overrideWithValue(pedidoAcessoEntradaMac ?? () async => AcessoEntrada.desconhecido),
         cronometroProvider.overrideWithValue(CronometroFixo.new),
         catalogoProvider.overrideWith((ref) async => lerCatalogo()),
         explicacoesProvider.overrideWith((ref) async => lerExplicacoes()),

@@ -95,6 +95,7 @@ In the app: Settings (gear) › *Allow AI via MCP* › copy the configuration fo
 
 - **LM Studio** (`mcp.json`): `{"mcpServers":{"anagram":{"url":"http://127.0.0.1:8765/mcp","headers":{"Authorization":"Bearer <token>"}}}}`
 - **Claude Desktop / Claude Code**: `npx -y mcp-remote http://127.0.0.1:8765/mcp --transport http-only --header "Authorization: Bearer <token>"`
+- **VS Code + GitHub Copilot** (`~/.copilot/mcp-config.json`): `{"mcpServers":{"anagram":{"type":"http","url":"http://127.0.0.1:8765/mcp","headers":{"Authorization":"Bearer <token>"},"tools":["*"]}}}`
 
 ## System prompt for clients without skills (LM Studio and similar)
 

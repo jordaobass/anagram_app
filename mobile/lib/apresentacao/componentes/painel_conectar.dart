@@ -14,6 +14,7 @@ import '../../nucleo/suporte_aparelho.dart';
 import '../tema/tokens.dart';
 import '../textos.dart';
 import '../app_anagram.dart';
+import 'caminho_monitoramento_entrada.dart';
 import 'fita_gaffer.dart';
 import 'seletor_idioma.dart';
 
@@ -127,6 +128,7 @@ class PainelConectar extends ConsumerWidget {
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: erro ? cor : context.cores.texto)),
         ),
       ]),
+      if (aviso is AvisoMonitoramentoEntrada) const CaminhoMonitoramentoEntrada(),
       const SizedBox(height: Espacos.l),
     ];
   }

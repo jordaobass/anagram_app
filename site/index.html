@@ -188,7 +188,7 @@
     <section class="secao" id="ai" aria-labelledby="t-ia">
       <div class="conteudo">
         <h2 id="t-ia">Describe the tone. Hear the chain.</h2>
-        <p class="intro">Connect an AI assistant running on your computer (Claude Desktop, LM Studio or any MCP client).
+        <p class="intro">Connect an AI assistant running on your computer (Claude Desktop, LM Studio, VS Code with GitHub Copilot or any MCP client).
           It reads the open preset and changes it through the app, so every step is heard on the pedal and shows on screen.
           It never writes to a slot unless you confirm in the app.</p>
         <p class="intro">The app teaches the assistant the pedal: what each of the 109 factory blocks does and how to set it,
@@ -215,7 +215,8 @@
       "headers": { "Authorization": "Bearer &lt;token&gt;" }
     }
   }
-}</code></pre></div></li>
+}</code></pre>
+              <p class="nota">VS Code + GitHub Copilot: the app copies the <code>mcpServers</code> entry with <code>"type": "http"</code> for <code>~/.copilot/mcp-config.json</code> (<a href="https://code.visualstudio.com/docs/copilot/reference/mcp-configuration">VS Code docs</a>). The Copilot app on Windows and Microsoft 365 Copilot can't add a local MCP server.</p></div></li>
             <li><div><strong>Open a preset and talk.</strong> "Tighter low end", "split the drive at 250 Hz", "a slap tone for funk".</div></li>
           </ol>
         </div>
@@ -241,7 +242,7 @@
           <details id="macos">
             <summary>macOS: first launch</summary>
             <p>The app isn't signed by Apple yet, so the first time macOS blocks it: open System Settings › Privacy &amp; Security and click <em>Open Anyway</em> (or run <code>xattr -cr "/Applications/Anagram App.app"</code> in Terminal).</p>
-            <p>macOS treats the Anagram's USB access as <em>Input Monitoring</em>. If the app doesn't connect, or keeps bouncing in the Dock, turn Anagram App on in System Settings › Privacy &amp; Security › <em>Input Monitoring</em> and open the app again.</p>
+            <p>macOS treats the Anagram's USB access as <em>Input Monitoring</em>. The first time you click <em>Connect over USB</em>, macOS asks for it, and the app doesn't open the USB until it's allowed. If it isn't, the connect screen has an <em>Open System Settings</em> button: turn Anagram App on under Privacy &amp; Security › <em>Input Monitoring</em>, then quit and reopen the app.</p>
           </details>
           <details>
             <summary>Why can't I change the Global EQ, output levels or input gain?</summary>

@@ -101,9 +101,11 @@ Keep all the files together in the folder: `hidapi.dll` talks to the pedal over 
 
 - **"Apple could not verify…"**: the app isn't signed by Apple yet. Open **System Settings › Privacy &
   Security** and click **Open Anyway** (or run `xattr -cr "/Applications/Anagram App.app"` in Terminal).
-- **Input Monitoring**: macOS treats the Anagram's USB access as Input Monitoring. If the app doesn't
-  connect, or keeps bouncing in the Dock, turn **Anagram App** on in **System Settings › Privacy &
-  Security › Input Monitoring** and open the app again.
+- **Input Monitoring**: macOS treats the Anagram's USB access as Input Monitoring. The first time you
+  click **Connect over USB**, macOS asks for it; the app doesn't open the USB until it is allowed. If it
+  isn't, the connect screen says so and has an **Open System Settings** button: turn **Anagram App** on in
+  **System Settings › Privacy & Security › Input Monitoring**, then quit and reopen the app (macOS only
+  applies it on the next launch).
 
 ### Linux
 
@@ -126,8 +128,8 @@ No pedal? **Open demo** simulates an Anagram in memory so you can explore the ap
 
 ## Local AI via MCP (optional, desktop only)
 
-The app can take requests from an AI assistant running on your own computer (LM Studio, Claude Desktop
-or any other MCP client): *"make the low end fuller"*, *"build me a slap tone"*. The AI reads the open
+The app can take requests from an AI assistant running on your own computer (LM Studio, Claude Desktop,
+VS Code with GitHub Copilot or any other MCP client): *"make the low end fuller"*, *"build me a slap tone"*. The AI reads the open
 preset and adjusts the blocks; every change is **heard immediately**, shows up on screen and stays
 **unsaved**. Nothing is written to the pedal unless you confirm it in the app.
 
@@ -149,6 +151,29 @@ preset and adjusts the blocks; every change is **heard immediately**, shows up o
 
    Claude Desktop only speaks stdio, so the copied configuration uses the bridge
    `npx -y mcp-remote <url> --transport http-only --header "Authorization: Bearer <token>"`.
+
+   **VS Code + GitHub Copilot**: the copied configuration goes into `~/.copilot/mcp-config.json` (or
+   **Chat: Open Customizations › MCP Servers › Copilot Global**), in the format of the
+   [VS Code MCP reference](https://code.visualstudio.com/docs/copilot/reference/mcp-configuration):
+
+   ```json
+   {
+     "mcpServers": {
+       "anagram": {
+         "type": "http",
+         "url": "http://127.0.0.1:8765/mcp",
+         "headers": { "Authorization": "Bearer <token from Settings>" },
+         "tools": ["*"]
+       }
+     }
+   }
+   ```
+
+   The Copilot app on Windows and Microsoft 365 Copilot have no place to add a local MCP server: use
+   GitHub Copilot inside VS Code.
+
+   **Any other client**: Streamable HTTP transport, the URL above and the header
+   `Authorization: Bearer <token>` (that's what **Other client** copies).
 3. Open a preset in the app and talk to the AI.
 
 > **The AI can't hear the sound**: it adjusts based on what you describe, and you tell it whether it

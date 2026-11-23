@@ -36,7 +36,9 @@ class FabricaIo implements FabricaTransporte {
   @override
   TransporteAnagram criarAparelho() {
     // IOKit: SetReport síncrono → sem pausa. Android: bulkTransfer com prazo → 10 ms como a referência
-    if (Platform.isMacOS) return TransporteCanalNativo('USB (IOKit)', pausaSugerida: Duration.zero);
+    if (Platform.isMacOS) {
+      return TransporteCanalNativo('USB (IOKit)', pausaSugerida: Duration.zero, prazoAbrir: const Duration(seconds: 8));
+    }
     if (Platform.isAndroid) {
       return TransporteCanalNativo('USB Host', pausaSugerida: const Duration(milliseconds: 10));
     }
