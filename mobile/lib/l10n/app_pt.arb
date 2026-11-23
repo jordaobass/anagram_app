@@ -1429,5 +1429,25 @@
   "caConectarAoAbrirMac": "No macOS, só depois de liberar o Monitoramento de Entrada para o Anagram App em Ajustes do Sistema › Privacidade e Segurança.",
   "@caConectarAoAbrirMac": {
     "description": "Linha extra do interruptor no macOS (DECISOES CA3)"
+  },
+  "ceControlar": "CONTROLAR",
+  "@ceControlar": {
+    "description": "Rótulo da chave que escolhe quais cenas uma edição muda (DECISOES CE1)"
+  },
+  "ceTodas": "TODAS AS CENAS",
+  "@ceTodas": {
+    "description": "Opção: a edição muda as três cenas (Controlling All Scenes da pedaleira)"
+  },
+  "ceAtiva": "SÓ A CENA ATIVA",
+  "@ceAtiva": {
+    "description": "Opção: a edição muda só a cena ativa (Controlling Active Scene da pedaleira)"
+  },
+  "ceTodasDica": "Knob, valor e liga/desliga mudam as 3 cenas: o valor deixa de variar entre elas.",
+  "@ceTodasDica": {
+    "description": "Tooltip da opção Todas as cenas"
+  },
+  "ceAtivaDica": "Knob, valor e liga/desliga mudam só a cena ativa; as outras ficam como estavam.",
+  "@ceAtivaDica": {
+    "description": "Tooltip da opção Só a cena ativa"
   }
 }

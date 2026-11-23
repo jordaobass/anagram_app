@@ -441,5 +441,10 @@
   "caProcurando": "Buscando el pedal…",
   "caConectarAoAbrir": "Conectar al abrir",
   "caConectarAoAbrirTexto": "Al abrir, la app busca el pedal en el USB una vez. Conectar no toca nada; sin pedal, la pantalla de conectar queda como está.",
-  "caConectarAoAbrirMac": "En macOS, solo después de permitir la Monitorización de entrada para Anagram App en Ajustes del Sistema › Privacidad y seguridad."
+  "caConectarAoAbrirMac": "En macOS, solo después de permitir la Monitorización de entrada para Anagram App en Ajustes del Sistema › Privacidad y seguridad.",
+  "ceControlar": "CONTROLAR",
+  "ceTodas": "TODAS LAS ESCENAS",
+  "ceAtiva": "SOLO LA ESCENA ACTIVA",
+  "ceTodasDica": "Knob, valor y encendido cambian las 3 escenas: el valor deja de variar entre ellas.",
+  "ceAtivaDica": "Knob, valor y encendido cambian solo la escena activa; las demás quedan como estaban."
 }

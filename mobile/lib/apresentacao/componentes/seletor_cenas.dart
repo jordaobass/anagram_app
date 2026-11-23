@@ -1,5 +1,6 @@
 // Cenas 1–3 como os snapshots do HX: trocar de cena soa na hora. À direita
-// delas, as pílulas do modo dos footswitches; sem largura, logo abaixo.
+// delas, as pílulas do modo dos footswitches; sem largura, logo abaixo. Por
+// último, a chave "Controlar" (quais cenas a edição muda).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,6 +8,7 @@ import '../../aplicacao/estado/controlador_editor.dart';
 import '../tema/tokens.dart';
 import '../../l10n/app_localizations.dart';
 import 'botao_tally.dart';
+import 'chave_controlar_cenas.dart';
 import 'pilulas_modo_footswitches.dart';
 
 class SeletorCenas extends ConsumerWidget {
@@ -37,6 +39,8 @@ class SeletorCenas extends ConsumerWidget {
           if (aoLado) const PilulasModoFootswitches(espacoAntes: Espacos.m),
         ]),
         if (!aoLado) const Align(alignment: Alignment.centerRight, child: PilulasModoFootswitches()),
+        const SizedBox(height: Espacos.xs),
+        const Align(alignment: Alignment.centerLeft, child: ChaveControlarCenas()),
         const AvisoErroModoFootswitches(),
       ]);
     });

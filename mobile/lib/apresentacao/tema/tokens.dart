@@ -138,6 +138,10 @@ abstract final class Medidas {
   /// pílulas descem para uma linha fina sob elas.
   static const double alturaPilulaModo = 26;
   static const double larguraCenasComModo = 560;
+
+  /// Chave "Controlar" numa linha (rótulo e as duas opções lado a lado); com
+  /// menos largura, o rótulo sobe e as opções dividem a linha inteira.
+  static const double larguraChaveControlarEmLinha = 480;
   static const double filete = 1;
   static const double contornoSelecao = 2;
   static const double fitaCategoria = 4;

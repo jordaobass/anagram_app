@@ -306,6 +306,9 @@ Menu de contexto (botão direito, toque longo, ⋮), menu de arquivo, idioma, ve
 ### Cenas
 Três botões de largura igual, altura 56px. Inativo: `painel-elevado` com borda de filete. Ativo: preenchido em âmbar. Número em estêncil + nome em caixa alta; cena sem nome mostra só o número e "CENA" (nunca "1 CENA 1").
 
+### Chave "Controlar"
+Sob as cenas (e sob as pílulas do modo, quando elas descem): rótulo CONTROLAR em label-small `texto-secundario` e duas opções, TODAS AS CENAS e SÓ A CENA ATIVA, desenhadas como os botões de cena (`BotaoTally`: escolhida em âmbar, a outra em `painel-elevado` com filete), em label-medium e 48dp de alto. Com 480px ou mais, rótulo e opções numa linha; abaixo disso o rótulo sobe e as opções dividem a largura. Cada opção tem tooltip curto dizendo o que muda. Espelha o botão do modo Scene da pedaleira (DECISOES CE1).
+
 ### Modo dos footswitches
 Na linha das cenas, à direita dos três botões: PRESET / STOMP / SCENE em pílulas pequenas lado a lado (desenho de 26px de altura, raio inteiro, label-small; alvo de toque de 48dp por pílula — empilhadas, três alvos de 48dp não caberiam na altura de 56px de uma cena). Abaixo de 560px de largura na linha (celular, janela estreita), as pílulas descem para uma linha fina logo abaixo das cenas, alinhadas à direita.
 
