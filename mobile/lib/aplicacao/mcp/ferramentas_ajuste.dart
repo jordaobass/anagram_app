@@ -17,11 +17,10 @@ class MudarParametro extends FerramentaMcp {
   @override
   String get descricao => 'Change one parameter of a block; it is heard immediately (not saved). The value is a '
       'number in the parameter unit, or an option label for option parameters, or true/false for toggles. '
-      'Out-of-range values are clamped and the applied value is returned. Scenes: by default (no "scope") it '
-      'works like turning the knob in the app: if the parameter already has its own value in the active scene, '
-      'only that scene changes; otherwise the change reaches every scene. Use scope "scene" to change ONLY the '
-      'active scene (the others keep what they had), or "all_scenes" to set the same value in all three. The '
-      'result says which scope was applied. Change 2-4 parameters, then ask the player how it sounds before '
+      'Out-of-range values are clamped and the applied value is returned. Scenes: scope "scene" changes ONLY the '
+      'active scene (the others keep what they had); "all_scenes" sets the same value in all three scenes. '
+      'Without "scope" it follows the "Control" switch the player chose in the app (only the active scene by '
+      'default), like turning the knob. The result says which scope was applied. Change 2-4 parameters, then ask the player how it sounds before '
       'going on; you cannot hear the result.';
 
   @override
@@ -35,8 +34,8 @@ class MudarParametro extends FerramentaMcp {
         'scope': {
           'type': 'string',
           'enum': [for (final e in _escopos.keys) e],
-          'description': 'Omit to behave like the app knob. "scene" = only the active scene; '
-              '"all_scenes" = the same value in every scene.',
+          'description': '"scene" = only the active scene; "all_scenes" = the same value in every scene. '
+              'Omit to follow the app "Control" switch.',
         },
       }, obrigatorias: const ['row', 'column', 'parameter', 'value']);
 
@@ -46,8 +45,8 @@ class MudarParametro extends FerramentaMcp {
     final definicao = sessao.definicao(bloco.uri);
     final parametro = parametroDoBloco(definicao, bloco, argumentos.textoObrigatorio('parameter'));
     final aplicado = parametro.limitar(valorPedido(parametro, argumentos['value']));
-    final escopo = _escopo(argumentos['scope']);
-    // a mesma regra do knob (comParametro), esperando o envio ao vivo: quando
+    final escopo = escopoPedido(sessao, argumentos['scope']);
+    // o mesmo caminho do knob (comParametro), esperando o envio ao vivo: quando
     // a resposta volta, o valor já está soando
     final editado = sessao.presetAberto().comParametro(bloco.posicao, parametro.simbolo, aplicado,
         nomeExibicao: parametro.nome, escopo: escopo, valorAntes: parametro.padrao);
@@ -59,23 +58,8 @@ class MudarParametro extends FerramentaMcp {
       'applied': aplicado,
       'display': DescricaoPreset.exibir(parametro, aplicado),
       'clamped': argumentos['value'] is num && argumentos['value'] != aplicado,
-      'scope': _escopoAplicado(escopo, bloco.posicao, parametro.simbolo),
+      'scope': nomeDoEscopo(escopo),
     });
-  }
-
-  static const _escopos = {'scene': EscopoParametro.soNaCena, 'all_scenes': EscopoParametro.todasAsCenas};
-
-  static EscopoParametro _escopo(Object? pedido) {
-    if (pedido == null) return EscopoParametro.comoNoKnob;
-    return _escopos[pedido] ?? (throw const RecusaFerramenta('"scope" must be "scene" or "all_scenes" (or omitted).'));
-  }
-
-  /// Na regra do knob, vale só na cena quando a cena ativa ficou com valor próprio.
-  String _escopoAplicado(EscopoParametro escopo, PosicaoBloco posicao, String simbolo) {
-    if (escopo != EscopoParametro.comoNoKnob) return _escopos.entries.firstWhere((e) => e.value == escopo).key;
-    final documento = sessao.presetAberto();
-    final soNaCena = documento.bloco(posicao)?.sobreposicaoDaCena(simbolo, documento.cenaAtiva) != null;
-    return soNaCena ? 'scene' : 'all_scenes';
   }
 
   /// Pelo símbolo ou pelo nome, sem caixa; bloco fora do catálogo aceita os
@@ -93,6 +77,16 @@ class MudarParametro extends FerramentaMcp {
     throw RecusaFerramenta('"${definicao.nome}" has no parameter "$pedido". Valid: $validos.');
   }
 }
+
+const _escopos = {'scene': EscopoCenas.soNaCena, 'all_scenes': EscopoCenas.todasAsCenas};
+
+/// O `scope` pedido pela IA; sem ele, o da chave "Controlar" da tela.
+EscopoCenas escopoPedido(SessaoMcp sessao, Object? pedido) {
+  if (pedido == null) return sessao.escopoDaTela;
+  return _escopos[pedido] ?? (throw const RecusaFerramenta('"scope" must be "scene" or "all_scenes" (or omitted).'));
+}
+
+String nomeDoEscopo(EscopoCenas escopo) => _escopos.entries.firstWhere((e) => e.value == escopo).key;
 
 /// O valor pedido no tipo do parâmetro: número, rótulo de opção ou liga/desliga.
 num valorPedido(DefinicaoParametro parametro, Object? valor) {
@@ -118,12 +112,18 @@ class LigarDesligarBloco extends FerramentaMcp {
   String get nome => 'set_block_enabled';
 
   @override
-  String get descricao => 'Turn a block on or off (bypass) in the active scene; heard immediately.';
+  String get descricao => 'Turn a block on or off (bypass); heard immediately. Scenes work like set_parameter: '
+      'scope "scene" = only the active scene, "all_scenes" = every scene; without it, the app "Control" switch.';
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto({
         ...SessaoMcp.esquemaPosicao(),
         'enabled': {'type': 'boolean', 'description': 'true = on, false = bypassed.'},
+        'scope': {
+          'type': 'string',
+          'enum': [for (final e in _escopos.keys) e],
+          'description': '"scene" = only the active scene; "all_scenes" = every scene. Omit to follow the app switch.',
+        },
       }, obrigatorias: const ['row', 'column', 'enabled']);
 
   @override
@@ -131,11 +131,17 @@ class LigarDesligarBloco extends FerramentaMcp {
     final bloco = sessao.bloco(argumentos);
     final ligar = argumentos['enabled'];
     if (ligar is! bool) throw const RecusaFerramenta('"enabled" must be true or false.');
+    final escopo = escopoPedido(sessao, argumentos['scope']);
     final nome = sessao.definicao(bloco.uri).nome;
-    if (bloco.habilitadoNaCena(sessao.presetAberto().cenaAtiva) != ligar) {
-      await sessao.mudar('$nome: ${ligar ? 'on' : 'off'}', () => sessao.editor.alternarBypass(bloco.posicao));
-    }
-    return ResultadoFerramenta.dados({'block': nome, 'enabled': ligar});
+    final documento = sessao.presetAberto();
+    final cena = documento.cenaAtiva;
+    // nada a mudar: já está assim na cena (e, em todas, nenhuma cena difere)
+    final jaEsta = bloco.habilitadoNaCena(cena) == ligar &&
+        (escopo == EscopoCenas.soNaCena || !bloco.bypassSoNaCena(cena));
+    if (jaEsta) return ResultadoFerramenta.dados({'block': nome, 'enabled': ligar, 'scope': nomeDoEscopo(escopo)});
+    final editado = documento.comBlocoHabilitado(bloco.posicao, ligar, escopo: escopo);
+    await sessao.mudar('$nome: ${ligar ? 'on' : 'off'}', () => sessao.editor.aplicarDocumento(editado));
+    return ResultadoFerramenta.dados({'block': nome, 'enabled': ligar, 'scope': nomeDoEscopo(escopo)});
   }
 }
 

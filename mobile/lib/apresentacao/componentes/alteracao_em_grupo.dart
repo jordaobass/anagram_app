@@ -31,11 +31,13 @@ Future<void> alterarEmGrupo(
   }
   final antes = {for (final p in validos.keys) p.simbolo: ControleNoPainel.valorNaCena(bloco, p, cena)};
   final nomes = {for (final p in validos.keys) p.simbolo: p.nome};
-  await editor.alterarParametros(bloco.posicao, {for (final e in validos.entries) e.key.simbolo: e.value}, nomes: nomes);
+  final padroes = {for (final p in validos.keys) p.simbolo: p.padrao};
+  await editor.alterarParametros(bloco.posicao, {for (final e in validos.entries) e.key.simbolo: e.value},
+      nomes: nomes, padroes: padroes);
   mensageiro
     ?..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(
       content: Text(aviso),
-      action: SnackBarAction(label: desfazer, onPressed: () => editor.alterarParametros(bloco.posicao, antes, nomes: nomes)),
+      action: SnackBarAction(label: desfazer, onPressed: () => editor.alterarParametros(bloco.posicao, antes, nomes: nomes, padroes: padroes)),
     ));
 }

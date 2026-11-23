@@ -1,4 +1,5 @@
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
+import 'package:anagram_app/nucleo/modelo/cenas_do_bloco.dart';
 import 'package:anagram_app/nucleo/modelo/documento_preset.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -15,7 +16,10 @@ void main() {
   test('should_keep_unknown_fields_when_changing_one_value', () {
     final original = lerExemplo('1');
     const posicao = PosicaoBloco(1, 3);
-    final editado = DocumentoPreset.doJson(original).comParametro(posicao, 'Gain', 9.5).paraJson();
+    // em todas as cenas, Gain (que nenhuma cena registra) só muda no bloco
+    final editado = DocumentoPreset.doJson(original)
+        .comParametro(posicao, 'Gain', 9.5, escopo: EscopoCenas.todasAsCenas)
+        .paraJson();
 
     final blocoEditado = editado['preset']['chains']['1']['blocks']['3'] as Map<String, dynamic>;
     expect(blocoEditado['parameters']['4'], {'name': 'Gain', 'symbol': 'Gain', 'value': 9.5});

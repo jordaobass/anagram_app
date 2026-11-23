@@ -27,21 +27,6 @@ void colocarBloco(Map<String, dynamic> preset, PosicaoBloco posicao, Map<String,
     ..addAll(outras);
 }
 
-/// Muda o valor que a cena [cena] guarda para [simbolo]; falso se a cena não
-/// sobrepõe esse parâmetro.
-bool mudarSobreposicaoDaCena(Map<String, dynamic> bloco, int cena, String simbolo, num valor) {
-  final foto = mapaOuVazio(bloco['scenes'])['$cena'];
-  final lista = foto is Map<String, dynamic> ? foto['parameters'] : null;
-  if (lista is! List) return false;
-  for (final item in lista) {
-    if (item is Map<String, dynamic> && item['symbol'] == simbolo) {
-      item['value'] = valor;
-      return true;
-    }
-  }
-  return false;
-}
-
 /// Muda o valor do parâmetro no bloco, criando a entrada se ele não existir.
 void mudarValorBase(Map<String, dynamic> bloco, String simbolo, num valor, String nome) {
   final parametros = bloco.putIfAbsent('parameters', () => <String, dynamic>{}) as Map<String, dynamic>;

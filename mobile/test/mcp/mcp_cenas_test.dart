@@ -3,6 +3,7 @@
 // pediu. Caso real da bancada: Blend do B3K mudado na cena 2 aparecia nas
 // cenas 1 e 3 (DECISOES IM1, IM2).
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
+import 'package:anagram_app/aplicacao/estado/escopo_cenas.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:anagram_app/nucleo/modelo/cenas_do_bloco.dart';
 import 'package:anagram_app/nucleo/modelo/json_util.dart';
@@ -58,7 +59,7 @@ void main() {
       await editor.aplicarDocumento(container
           .read(editorProvider)
           .atual!
-          .comParametro(_b3k, 'Blend', 80, escopo: EscopoParametro.soNaCena));
+          .comParametro(_b3k, 'Blend', 80, escopo: EscopoCenas.soNaCena));
       await ferramenta(endereco, token, 'select_scene', {'scene': 1});
 
       final (erro, resposta) = await ferramenta(endereco, token, 'set_parameter',
@@ -68,16 +69,34 @@ void main() {
       expect([for (final cena in const [1, 2, 3]) _naCena(container, _b3k, 'Blend', cena)], [20, 20, 20]);
     });
 
-    test('should_report_that_a_change_without_scope_follows_the_app_knob_and_reaches_every_scene', () async {
+    test('should_follow_the_app_control_switch_when_the_ai_sends_no_scope', () async {
       final (container, endereco, token) = await appComMcp();
       await ferramenta(endereco, token, 'select_scene', {'scene': 2});
 
-      final (erro, resposta) = await ferramenta(endereco, token, 'set_parameter',
+      final (_, soAtiva) = await ferramenta(endereco, token, 'set_parameter',
           {'row': 1, 'column': 4, 'parameter': 'LowShelf', 'value': 4});
+      expect((soAtiva! as Map)['scope'], 'scene', reason: 'padrão da tela: só a cena ativa (DECISOES CE1)');
+      expect(_naCena(container, _geq, 'LowShelf', 1), isNot(4));
+
+      container.read(escopoCenasProvider.notifier).definir(EscopoCenas.todasAsCenas);
+      final (erro, todas) = await ferramenta(endereco, token, 'set_parameter',
+          {'row': 1, 'column': 4, 'parameter': 'LowShelf', 'value': 5});
+
+      expect(erro, isFalse, reason: '$todas');
+      expect((todas! as Map)['scope'], 'all_scenes', reason: 'a IA fica sabendo onde a mudança valeu');
+      expect([for (final cena in const [1, 2, 3]) _naCena(container, _geq, 'LowShelf', cena)], [5, 5, 5]);
+    });
+
+    test('should_switch_the_block_off_in_every_scene_when_the_ai_asks_for_all_scenes', () async {
+      final (container, endereco, token) = await appComMcp();
+      await ferramenta(endereco, token, 'select_scene', {'scene': 2});
+
+      final (erro, resposta) = await ferramenta(endereco, token, 'set_block_enabled',
+          {'row': 1, 'column': 4, 'enabled': false, 'scope': 'all_scenes'});
 
       expect(erro, isFalse, reason: '$resposta');
-      expect((resposta! as Map)['scope'], 'all_scenes', reason: 'a IA fica sabendo onde a mudança valeu');
-      expect(_naCena(container, _geq, 'LowShelf', 1), 4, reason: 'como o knob da tela (DECISOES C1)');
+      final bloco = container.read(editorProvider).atual!.bloco(_geq)!;
+      expect([for (final cena in const [1, 2, 3]) bloco.habilitadoNaCena(cena)], [false, false, false]);
     });
   });
 }

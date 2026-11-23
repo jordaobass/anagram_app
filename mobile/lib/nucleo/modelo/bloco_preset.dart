@@ -54,14 +54,20 @@ class BlocoPreset {
     return habilitado;
   }
 
-  /// Valor que soa na cena: a sobreposição da cena, senão o valor base.
-  /// `null` quando o preset não guarda o parâmetro (vale o padrão do bloco).
-  /// A cena liga/desliga o bloco diferente da base (selo "SÓ NA CENA").
   /// O liga/desliga desta cena difere de outra cena do preset (o bloco em si
   /// sempre acompanha a cena ativa, então a comparação é entre as cenas).
   bool bypassSoNaCena(int cena) =>
       [1, 2, 3].any((outra) => outra != cena && habilitadoNaCena(outra) != habilitadoNaCena(cena));
 
+  /// O valor desta cena difere do de outra cena (selo "SÓ NA CENA"): editar
+  /// só na cena ativa grava o parâmetro nas três, e o selo só aparece onde o
+  /// som de fato muda de uma cena para outra.
+  bool valorSoNaCena(String simbolo, int cena) =>
+      sobreposicaoDaCena(simbolo, cena) != null &&
+      [1, 2, 3].any((outra) => outra != cena && valorNaCena(simbolo, outra) != valorNaCena(simbolo, cena));
+
+  /// Valor que soa na cena: a sobreposição da cena, senão o valor base.
+  /// `null` quando o preset não guarda o parâmetro (vale o padrão do bloco).
   num? valorNaCena(String simbolo, int cena) =>
       sobreposicaoDaCena(simbolo, cena) ?? valorBase(simbolo);
 

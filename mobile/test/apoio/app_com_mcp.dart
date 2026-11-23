@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
+import 'package:anagram_app/aplicacao/estado/escopo_cenas.dart';
 import 'package:anagram_app/aplicacao/mcp/avisos_mcp.dart';
 import 'package:anagram_app/aplicacao/mcp/controlador_mcp.dart';
 import 'package:anagram_app/aplicacao/provedores.dart';
@@ -14,12 +15,13 @@ import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'app_de_teste.dart' show PreferenciasMcpEmMemoria;
+import 'app_de_teste.dart' show PreferenciasCenasEmMemoria, PreferenciasMcpEmMemoria;
 import 'fixtures.dart';
 
 /// App conectado à demonstração com o [slot] aberto e o MCP escutando numa porta livre.
 Future<(ProviderContainer, String, String)> appComMcp({String slot = '01C'}) async {
   final container = ProviderContainer(overrides: [
+    preferenciasCenasProvider.overrideWithValue(PreferenciasCenasEmMemoria()),
     presetsDemonstracaoProvider.overrideWith((ref) async => lerPresetsDemonstracao()),
     catalogoProvider.overrideWith((ref) async => lerCatalogo()),
     indiceMiniaturasProvider.overrideWith((ref) async => lerIndiceMiniaturas()),

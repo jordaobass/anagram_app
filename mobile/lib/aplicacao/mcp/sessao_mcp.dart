@@ -13,12 +13,14 @@ import '../../nucleo/catalogo/explicacoes_parametros.dart';
 import '../../nucleo/conhecimento/base_conhecimento.dart';
 import '../../nucleo/mcp/ferramenta_mcp.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
+import '../../nucleo/modelo/cenas_do_bloco.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../estado/controlador_ajustes.dart';
 import '../estado/controlador_conexao.dart';
 import '../estado/controlador_editor.dart';
 import '../estado/controlador_modo_footswitches.dart';
 import '../estado/estado_conexao.dart';
+import '../estado/escopo_cenas.dart';
 import '../estado/estado_editor.dart';
 import '../provedores.dart';
 import 'avisos_mcp.dart';
@@ -44,6 +46,9 @@ class SessaoMcp {
 
   ControladorEditor get editor => _ref.read(editorProvider.notifier);
   EstadoEditor get estado => _ref.read(editorProvider);
+
+  /// A chave "Controlar" da tela: o `scope` quando a IA não manda um.
+  EscopoCenas get escopoDaTela => _ref.read(escopoCenasProvider);
 
   /// O preset aberto, ou a recusa que explica à IA o que falta.
   DocumentoPreset presetAberto() {

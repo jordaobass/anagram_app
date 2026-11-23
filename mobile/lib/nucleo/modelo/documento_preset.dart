@@ -131,10 +131,17 @@ class DocumentoPreset {
   DocumentoPreset comArquivoDeIr(PosicaoBloco posicao, String caminho) =>
       _editarBloco(posicao, (bloco) => gravarArquivoDeIr(bloco, caminho));
 
-  /// Liga/desliga o bloco na cena ativa: no próprio bloco (é o que a pedaleira
-  /// toca ao vivo) e na foto da cena; as outras cenas não mudam.
-  DocumentoPreset comBlocoHabilitado(PosicaoBloco posicao, bool habilitado) =>
+  /// Liga/desliga o bloco no próprio bloco (é o que a pedaleira toca ao vivo)
+  /// e nas fotos de cena conforme o [escopo] (DECISOES CE1): só na cena ativa,
+  /// as outras guardam o que tinham; em todas, as fotos largam o liga/desliga
+  /// e as três cenas passam a seguir o bloco.
+  DocumentoPreset comBlocoHabilitado(PosicaoBloco posicao, bool habilitado,
+          {EscopoCenas escopo = EscopoCenas.soNaCena}) =>
       _editarBloco(posicao, (bloco) {
+        if (escopo == EscopoCenas.todasAsCenas) {
+          bloco['enabled'] = habilitado;
+          return tirarLigaDasFotos(bloco);
+        }
         // as outras cenas guardam o liga/desliga que tinham antes: senão,
         // sem registro, passariam a seguir o bloco, que vai mudar agora
         fixarLigaNasOutrasCenas(bloco, cenaAtiva);
@@ -146,29 +153,24 @@ class DocumentoPreset {
       });
 
   /// Muda um parâmetro no bloco (o que soa) e nas fotos de cena conforme o
-  /// [escopo]. O padrão é a regra do knob (DECISOES C1): se a cena ativa tem
-  /// valor próprio para ele, muda também na foto dela; as outras cenas não
-  /// mudam. Em [EscopoParametro.soNaCena], [valorAntes] é o valor que as outras
-  /// cenas sem registro tinham (o padrão do catálogo, se o bloco não o guarda).
+  /// [escopo] (DECISOES CE1). Só na cena ativa, [valorAntes] é o valor que as
+  /// outras cenas sem registro tinham, quando o bloco não guarda o parâmetro
+  /// (o padrão do catálogo).
   DocumentoPreset comParametro(
     PosicaoBloco posicao,
     String simbolo,
     num valor, {
     String? nomeExibicao,
-    EscopoParametro escopo = EscopoParametro.comoNoKnob,
+    EscopoCenas escopo = EscopoCenas.soNaCena,
     num? valorAntes,
   }) =>
       _editarBloco(posicao, (bloco) {
         switch (escopo) {
-          case EscopoParametro.comoNoKnob:
-            if (!mudarSobreposicaoDaCena(bloco, cenaAtiva, simbolo, valor)) {
-              gravarNaCenaAtiva(bloco, cenaAtiva, simbolo, valor);
-            }
-          case EscopoParametro.soNaCena:
+          case EscopoCenas.soNaCena:
             fixarValorNasOutrasCenas(bloco, cenaAtiva, simbolo, valorNoBloco(bloco, simbolo) ?? valorAntes ?? valor);
             gravarNaFotoDaCena(bloco, cenaAtiva, simbolo, valor);
-          case EscopoParametro.todasAsCenas:
-            mudarEmTodasAsFotos(bloco, simbolo, valor);
+          case EscopoCenas.todasAsCenas:
+            tirarDasFotos(bloco, simbolo);
         }
         mudarValorBase(bloco, simbolo, valor, nomeExibicao ?? simbolo);
       });
