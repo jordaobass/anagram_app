@@ -2,9 +2,13 @@
 // interface e com a pedaleira de demonstração: girar o knob e ligar/desligar
 // o bloco na cena 2 do 02A, e conferir o que cada cena toca na pedaleira.
 // No 02A o Microtubes tem high_drive 5 no bloco e 8.5 só na cena 3.
+import 'dart:async';
+
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
+import 'package:anagram_app/aplicacao/estado/escopo_cenas.dart';
 import 'package:anagram_app/nucleo/modelo/cenas_do_bloco.dart';
+import 'package:anagram_app/nucleo/modelo/documento_preset.dart';
 import 'package:anagram_app/nucleo/modelo/json_util.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../apoio/app_com_mcp.dart' show pedaleiraDe;
 import '../apoio/app_de_teste.dart';
 import '../apoio/demonstracao_na_tela.dart';
+import '../apoio/fixtures.dart';
 
 const _microtubes = PosicaoBloco(1, 3);
 const _compressor = PosicaoBloco(1, 2);
@@ -128,5 +133,33 @@ void main() {
     final novo = await _girarHighDrive(tester, container);
 
     expect(await _naPedaleiraPorCena(tester, container, _microtubes, _highDrive), [novo, novo, novo]);
+  });
+
+  testWidgets('should_restore_every_scene_when_undoing_a_reset_to_default_with_all_scenes', (tester) async {
+    // exemplo 1: o Bass do basshammer (1·3) é 7.5 nas cenas 1 e 3 e 6.12 na 2
+    const basshammer = PosicaoBloco(1, 3);
+    await montarApp(tester, tamanho: const Size(1440, 2400));
+    final container = await entrarNaDemonstracao(tester);
+    unawaited(container.read(editorProvider.notifier).carregarDocumento(DocumentoPreset.doJson(lerExemplo('1'))));
+    await tester.pumpAndSettle();
+    container.read(escopoCenasProvider.notifier).definir(EscopoCenas.todasAsCenas);
+    await tester.pumpAndSettle();
+    num? bass(BlocoPreset bloco) => bloco.valorBase('Bass');
+    final antes = await _naPedaleiraPorCena(tester, container, basshammer, bass);
+    expect(antes.toSet().length, greaterThan(1), reason: 'premissa: o Bass varia entre as cenas');
+
+    await _tocarCena(tester, 2);
+    await _selecionar(tester, basshammer);
+    final knob = find.byKey(const ValueKey('param-Bass'));
+    await tester.ensureVisible(knob);
+    await tester.longPress(knob);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('DESFAZER'));
+    await tester.pumpAndSettle();
+
+    final aberto = container.read(editorProvider).atual!.bloco(basshammer)!;
+    expect([for (final cena in _cenas) aberto.valorNaCena('Bass', cena)], antes,
+        reason: 'o desfazer devolve a variação entre as cenas que o "todas" apagou');
+    expect(await _naPedaleiraPorCena(tester, container, basshammer, bass), antes);
   });
 }

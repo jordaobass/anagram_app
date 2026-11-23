@@ -1,5 +1,7 @@
 // Edições do documento aberto (bloco, cena, nome). Cada uma passa por
 // [aplicarDocumento], que atualiza o estado e toca ao vivo se ligado.
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../nucleo/catalogo/biblioteca_blocos.dart';
@@ -9,9 +11,28 @@ import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import 'escopo_cenas.dart';
 import 'estado_editor.dart';
+import 'ponto_desfazer.dart';
 
 mixin EdicaoDoPreset on Notifier<EstadoEditor> {
   Future<void> aplicarDocumento(DocumentoPreset documento);
+
+  /// Faz a [mudanca] e devolve como voltar ao documento de antes dela (nulo
+  /// se nada mudou). Ver [PontoDesfazer].
+  Future<PontoDesfazer?> comDesfazer(FutureOr<void> Function() mudanca) async {
+    final antes = state.atual;
+    await mudanca();
+    final depois = state.atual;
+    if (antes == null || depois == null || identical(antes, depois)) return null;
+    return PontoDesfazer(antes, depois);
+  }
+
+  /// Volta ao documento de antes do [ponto], se o preset ainda é o que ele
+  /// deixou; devolve se voltou. Soa ao vivo, como qualquer edição.
+  Future<bool> desfazer(PontoDesfazer ponto) async {
+    if (!ponto.valeEm(state.atual)) return false;
+    await aplicarDocumento(ponto.antes);
+    return true;
+  }
 
   /// Nas cenas da chave "Controlar" ([escopoCenasProvider]).
   Future<void> alternarBypass(PosicaoBloco posicao) async {

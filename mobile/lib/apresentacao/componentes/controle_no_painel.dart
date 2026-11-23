@@ -16,7 +16,7 @@ import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/controles_pedaleira.dart';
 import '../tema/tokens.dart';
 import '../textos.dart';
-import 'botao_giratorio.dart' show AoMudarValor;
+import 'botao_giratorio.dart' show AoMudarValor, MudancaDesfazivel;
 import 'controle_parametro.dart';
 import 'menu_atribuir.dart';
 import 'seletor_opcao.dart';
@@ -69,6 +69,14 @@ class ControleNoPainel extends ConsumerWidget {
           .read(editorProvider.notifier)
           .alterarParametro(p.simbolo, valor,
               arrastando: arrastando, nome: p.nome, posicao: bloco.posicao, padrao: p.padrao);
+
+  /// O desfazer de uma mudança do editor: volta o preset inteiro de antes,
+  /// com a variação entre as cenas que "Todas as cenas" apaga.
+  static MudancaDesfazivel desfazivel(WidgetRef ref) => (mudanca) async {
+        final editor = ref.read(editorProvider.notifier);
+        final ponto = await editor.comDesfazer(mudanca);
+        return ponto == null ? null : () => editor.desfazer(ponto);
+      };
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -139,6 +147,7 @@ class ControleNoPainel extends ConsumerWidget {
       cor: cor,
       tamanho: tamanho,
       aoMudar: alterar(ref, p, bloco),
+      desfazivel: desfazivel(ref),
     );
   }
 }

@@ -59,7 +59,6 @@ class SeletorTemplates extends ConsumerWidget {
     await alterarEmGrupo(context, ref,
         bloco: bloco,
         definicao: definicao,
-        cena: cena,
         valores: escolhido.valores!,
         aviso: l.ppAplicado(escolhido.nome.em(Localizations.localeOf(context).languageCode)));
   }

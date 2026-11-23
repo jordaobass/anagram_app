@@ -21,7 +21,11 @@ class ControleParametro extends StatelessWidget {
     this.rotulo,
     this.forma = FormaControle.knob,
     this.corChip,
+    this.desfazivel,
   });
+
+  /// Ver [BotaoGiratorio.desfazivel].
+  final MudancaDesfazivel? desfazivel;
 
   static const maximoSegmentos = 3;
 
@@ -52,7 +56,8 @@ class ControleParametro extends StatelessWidget {
         aoMudar: aoMudar,
         rotulo: rotulo,
         forma: forma,
-        corChipValor: corChip);
+        corChipValor: corChip,
+        desfazivel: desfazivel);
   }
 
   Widget _comTitulo(BuildContext context, Widget controle) => SizedBox(

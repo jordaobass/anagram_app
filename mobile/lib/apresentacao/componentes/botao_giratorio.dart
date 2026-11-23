@@ -2,6 +2,8 @@
 // segurar volta ao padrão; clicar no número embaixo dele abre o campo para
 // digitar o valor. Durante o arraste avisa "arrastando"; ao soltar, o valor final.
 // Sem [BotaoGiratorio.aoMudar] é só leitura: desenha o valor e nada o mexe.
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,10 @@ import '../textos.dart';
 
 typedef AoMudarValor = void Function(num valor, {required bool arrastando});
 
+/// Faz a [mudanca] e devolve o que a desfaz (nulo: nada mudou). É como o
+/// controle do editor volta o preset inteiro de antes ([PontoDesfazer]).
+typedef MudancaDesfazivel = Future<Future<void> Function()?> Function(void Function() mudanca);
+
 class BotaoGiratorio extends StatefulWidget {
   const BotaoGiratorio({
     super.key,
@@ -32,9 +38,13 @@ class BotaoGiratorio extends StatefulWidget {
     this.rotulo,
     this.forma = FormaControle.knob,
     this.corChipValor,
+    this.desfazivel,
   });
 
   final DefinicaoParametro parametro;
+
+  /// Como o voltar ao padrão oferece o DESFAZER; nulo = reenvia o valor de antes.
+  final MudancaDesfazivel? desfazivel;
 
   /// Nome mostrado em cima, quando o grupo já diz o resto ("Gain" na banda 1);
   /// o aviso de voltar ao padrão continua com o nome inteiro.
@@ -83,15 +93,23 @@ class _BotaoGiratorioState extends State<BotaoGiratorio> {
   }
 
   /// Segurar volta ao padrão, com Desfazer (que também vai ao vivo).
-  void _voltarAoPadrao() {
+  Future<void> _voltarAoPadrao() async {
     final anterior = widget.valor;
     final aoMudar = widget.aoMudar!;
-    HapticFeedback.mediumImpact();
-    aoMudar(widget.parametro.padrao, arrastando: false);
     final l = AppLocalizations.of(context);
-    ScaffoldMessenger.maybeOf(context)?.showSnackBar(SnackBar(
+    final mensageiro = ScaffoldMessenger.maybeOf(context);
+    unawaited(HapticFeedback.mediumImpact());
+    void zerar() => aoMudar(widget.parametro.padrao, arrastando: false);
+    Future<void> Function()? desfazer;
+    if (widget.desfazivel case final desfazivel?) {
+      desfazer = await desfazivel(zerar);
+    } else {
+      zerar();
+      desfazer = () async => aoMudar(anterior, arrastando: false);
+    }
+    mensageiro?.showSnackBar(SnackBar(
       content: Text(l.voltouAoPadrao(widget.parametro.nome)),
-      action: SnackBarAction(label: l.desfazer, onPressed: () => aoMudar(anterior, arrastando: false)),
+      action: desfazer == null ? null : SnackBarAction(label: l.desfazer, onPressed: desfazer),
     ));
   }
 

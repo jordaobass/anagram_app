@@ -93,7 +93,6 @@ class BotoesBanda extends ConsumerWidget {
     alterarEmGrupo(context, ref,
         bloco: bloco,
         definicao: definicao,
-        cena: cena,
         valores: mutesDoSolo(banda, mutes, mutadas),
         aviso: emSolo ? l.mbSoloDesligado : l.mbSoloLigado(l.mbNomeDaBanda(banda)));
   }

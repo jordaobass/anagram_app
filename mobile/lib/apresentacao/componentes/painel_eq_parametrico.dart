@@ -98,7 +98,6 @@ class _PainelEqParametricoState extends ConsumerState<PainelEqParametrico> {
     await alterarEmGrupo(context, ref,
         bloco: widget.bloco,
         definicao: widget.definicao,
-        cena: widget.cena,
         valores: {for (final p in widget.parametros) p.simbolo: p.padrao},
         aviso: l.eqbResetFeito);
   }

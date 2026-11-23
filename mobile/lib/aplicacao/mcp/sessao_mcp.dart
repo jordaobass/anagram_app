@@ -22,6 +22,7 @@ import '../estado/controlador_modo_footswitches.dart';
 import '../estado/estado_conexao.dart';
 import '../estado/escopo_cenas.dart';
 import '../estado/estado_editor.dart';
+import '../estado/ponto_desfazer.dart';
 import '../provedores.dart';
 import 'avisos_mcp.dart';
 
@@ -37,10 +38,7 @@ class SessaoMcp {
   SessaoMcp(this._ref);
 
   final Ref _ref;
-  final List<DocumentoPreset> _historico = [];
-
-  /// O documento que a última mudança da IA deixou na tela.
-  DocumentoPreset? _deixadoPelaIa;
+  final List<PontoDesfazer> _historico = [];
 
   static const _limiteHistorico = 50;
 
@@ -115,14 +113,12 @@ class SessaoMcp {
   /// abriu outro preset), o histórico anterior é descartado: voltar a ele
   /// apagaria a edição da pessoa ou poria outro preset dentro deste slot.
   Future<void> mudar(String resumo, Future<void> Function() acao) async {
-    final antes = presetAberto();
-    await acao();
-    final depois = estado.atual;
-    if (depois == null || identical(depois, antes)) return;
-    if (!identical(antes, _deixadoPelaIa)) _historico.clear();
-    _historico.add(antes);
+    presetAberto();
+    final ponto = await editor.comDesfazer(acao);
+    if (ponto == null) return;
+    if (_historico.isNotEmpty && !_historico.last.valeEm(ponto.antes)) _historico.clear();
+    _historico.add(ponto);
     if (_historico.length > _limiteHistorico) _historico.removeAt(0);
-    _deixadoPelaIa = depois;
     avisar(resumo);
   }
 
@@ -130,14 +126,12 @@ class SessaoMcp {
   Future<int> desfazer() async {
     final atual = presetAberto();
     if (_historico.isEmpty) throw const RecusaFerramenta('Nothing to undo: no change was made through MCP.');
-    if (!identical(atual, _deixadoPelaIa)) {
+    if (!_historico.last.valeEm(atual)) {
       _historico.clear();
       throw const RecusaFerramenta('The player changed the preset in the app after your last change; '
           'undo was refused so their edit is kept. Read the preset again.');
     }
-    final anterior = _historico.removeLast();
-    await editor.aplicarDocumento(anterior);
-    _deixadoPelaIa = estado.atual;
+    await editor.desfazer(_historico.removeLast());
     avisar('undo');
     return _historico.length;
   }
