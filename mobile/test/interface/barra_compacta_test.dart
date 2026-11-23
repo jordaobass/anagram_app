@@ -37,6 +37,21 @@ Future<void> _presetEditado(WidgetTester tester, Size tamanho, IdiomaApp idioma)
   await tester.pumpAndSettle();
 }
 
+/// As duas opções da chave "Controlar" sob as cenas (DECISOES CE1).
+const _chaveControlar = ['controlar-todasAsCenas', 'controlar-soNaCena'];
+
+/// Onde começa a cadeia de blocos (a primeira casa) num editor de [tamanho].
+Future<double> _topoDaCadeia(WidgetTester tester, TargetPlatform plataforma, Size tamanho) async {
+  var topo = 0.0;
+  await _naPlataforma(plataforma, () async {
+    await _presetEditado(tester, tamanho, IdiomaApp.portugues);
+    topo = tester.getTopLeft(find.byKey(const ValueKey('casa-1-1'))).dy;
+    // desmonta o app para a próxima medida nascer do zero
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+  return topo;
+}
+
 double _altura(WidgetTester tester, String chave) => tester.getSize(find.byKey(ValueKey(chave))).height;
 
 void main() {
@@ -50,26 +65,28 @@ void main() {
               await _presetEditado(tester, const Size(Medidas.larguraMinimaJanela, Medidas.alturaMinimaJanela), idioma);
 
               expect(tester.getSize(find.byType(BarraConexao)).height, lessThanOrEqualTo(48));
-              for (final chave in ['botao-salvar', 'botao-salvar-como', 'cena-1', 'cena-2', 'cena-3']) {
+              for (final chave in ['botao-salvar', 'botao-salvar-como', 'cena-1', 'cena-2', 'cena-3', ..._chaveControlar]) {
                 expect(_altura(tester, chave), inInclusiveRange(_alvoMinimoComMouse, 40), reason: chave);
               }
               expect(_altura(tester, 'fita-nome'), lessThanOrEqualTo(44));
             }));
   }
 
-  testWidgets('should_bring_the_block_chain_up_on_a_desktop_window',
-      (tester) => _naPlataforma(TargetPlatform.windows, () async {
-            await _presetEditado(tester, const Size(1440, 900), IdiomaApp.portugues);
+  testWidgets('should_bring_the_block_chain_up_on_a_desktop_window', (tester) async {
+    const janela = Size(1440, 900);
+    final noToque = await _topoDaCadeia(tester, TargetPlatform.android, janela);
+    final comMouse = await _topoDaCadeia(tester, TargetPlatform.windows, janela);
 
-            // antes: 64 da barra + 16 + 56 da fita + 16 + 56 das cenas + 16 = 224 até a cadeia
-            expect(tester.getTopLeft(find.byKey(const ValueKey('casa-1-1'))).dy, lessThan(190));
-          }));
+    // o mesmo topo (barra, fita, cenas e a chave Controlar) com alvos de toque
+    // e com mouse: a versão compacta sobe a cadeia pelo menos 50 px
+    expect(comMouse, lessThanOrEqualTo(noToque - 50), reason: 'toque $noToque, mouse $comMouse');
+  });
 
   testWidgets('should_keep_touch_targets_of_48_dp_on_a_tablet',
       (tester) => _naPlataforma(TargetPlatform.android, () async {
             await _presetEditado(tester, const Size(1366, 1024), IdiomaApp.portugues);
 
-            for (final chave in ['botao-salvar', 'botao-salvar-como', 'cena-1']) {
+            for (final chave in ['botao-salvar', 'botao-salvar-como', 'cena-1', ..._chaveControlar]) {
               expect(_altura(tester, chave), greaterThanOrEqualTo(Medidas.alvoMinimo), reason: chave);
             }
           }));
