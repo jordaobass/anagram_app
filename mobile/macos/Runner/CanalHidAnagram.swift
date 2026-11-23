@@ -10,11 +10,12 @@ import IOKit.hid
 /// resposta ao Flutter volta para a principal. Fechar passa pela mesma fila,
 /// para nunca fechar o aparelho no meio de um envio.
 ///
-/// Abrir e as consultas de permissão também saem da thread principal
-/// (DECISOES CA5): sem Monitoramento de Entrada, o IOHIDManagerOpen pode ficar
-/// esperando o sistema, e na principal isso deixava o app "pulando no Dock".
-/// Uma abertura que termina depois de um fechar (o Dart desistiu pelo prazo)
-/// é descartada pela geração.
+/// Só a consulta e o pedido de Monitoramento de Entrada saem da thread
+/// principal (DECISOES CA5): o pedido espera a pessoa no aviso do sistema.
+/// Abrir fica na principal, como na 0.1.19: o IOHIDManager é agendado na run
+/// loop dela ANTES do IOHIDManagerOpen, e fora de uma run loop o open e o
+/// CopyDevices não têm garantia de achar o aparelho. O clique só abre o USB
+/// com a permissão já concedida, então o open não espera o sistema.
 final class CanalHidAnagram: NSObject, FlutterStreamHandler {
   private static let tamanhoRelatorio = 64
   private static let paginasFornecedor: Set<Int> = [0xFF00, 0xFF]
@@ -24,9 +25,6 @@ final class CanalHidAnagram: NSObject, FlutterStreamHandler {
   private let metodos: FlutterMethodChannel
   private let eventos: FlutterEventChannel
   private let filaEnvio = DispatchQueue(label: "anagram_app.hid.envio")
-  private let filaAbertura = DispatchQueue(label: "anagram_app.hid.abertura")
-  /// Só mexida na thread principal: cada abrir e cada fechar avançam.
-  private var geracao = 0
   private var emissor: FlutterEventSink?
   private var gerente: IOHIDManager?
   private var dispositivo: IOHIDDevice?
@@ -56,8 +54,8 @@ final class CanalHidAnagram: NSObject, FlutterStreamHandler {
     switch chamada.method {
     case "abrir":
       let argumentos = chamada.arguments as? [String: Any] ?? [:]
-      abrir(fornecedor: argumentos["idFornecedor"] as? Int ?? Self.fornecedorDarkglass,
-            produto: argumentos["idProduto"] as? Int ?? Self.produtoAnagram, resultado)
+      resultado(abrir(fornecedor: argumentos["idFornecedor"] as? Int ?? Self.fornecedorDarkglass,
+                      produto: argumentos["idProduto"] as? Int ?? Self.produtoAnagram))
     case "enviar":
       guard let dados = chamada.arguments as? FlutterStandardTypedData else {
         resultado(FlutterError(code: "argumento", message: "Relatório ausente", details: nil))
@@ -103,67 +101,35 @@ final class CanalHidAnagram: NSObject, FlutterStreamHandler {
     return concedido ? "concedido" : acessoEntrada()
   }
 
-  private enum Abertura {
-    case aberta(IOHIDManager, IOHIDDevice)
-    case falhou(FlutterError)
-  }
-
-  private func abrir(fornecedor: Int, produto: Int, _ resultado: @escaping FlutterResult) {
+  private func abrir(fornecedor: Int, produto: Int) -> Any? {
     fechar()
-    let minha = geracao
-    NSLog("anagram_app: abrindo o HID fora da thread principal")
-    filaAbertura.async { [weak self] in
-      let abertura = Self.abrirAparelho(fornecedor: fornecedor, produto: produto)
-      DispatchQueue.main.async { self?.concluir(abertura, geracao: minha, resultado) }
-    }
-  }
-
-  private func concluir(_ abertura: Abertura, geracao minha: Int, _ resultado: @escaping FlutterResult) {
-    switch abertura {
-    case .falhou(let erro):
-      resultado(erro)
-    case .aberta(let gerente, let escolhido) where minha != geracao:
-      // o Dart já desistiu (prazo ou CANCELAR): não fica com o aparelho
-      NSLog("anagram_app: abertura do HID chegou depois de fechar; descartada")
-      filaEnvio.async { Self.fecharAparelho(escolhido, gerente) }
-      resultado(FlutterError(code: "cancelado", message: "Abertura descartada.", details: nil))
-    case .aberta(let gerente, let escolhido):
-      self.gerente = gerente
-      dispositivo = escolhido
-      IOHIDManagerScheduleWithRunLoop(gerente, CFRunLoopGetMain(), CFRunLoopMode.defaultMode.rawValue)
-      registrarCallbacks(gerente: gerente, dispositivo: escolhido)
-      NSLog("anagram_app: HID aberto")
-      resultado(nil)
-    }
-  }
-
-  /// Fora da principal: pode esperar pelo sistema (TCC) sem travar a janela.
-  private static func abrirAparelho(fornecedor: Int, produto: Int) -> Abertura {
     let gerente = IOHIDManagerCreate(kCFAllocatorDefault, IOOptionBits(kIOHIDOptionsTypeNone))
     let filtro = [kIOHIDVendorIDKey: fornecedor, kIOHIDProductIDKey: produto] as CFDictionary
     IOHIDManagerSetDeviceMatching(gerente, filtro)
+    IOHIDManagerScheduleWithRunLoop(gerente, CFRunLoopGetMain(), CFRunLoopMode.defaultMode.rawValue)
+    self.gerente = gerente
     // sem conferir, a recusa do sistema aparecia como "Nenhuma Anagram no USB"
     let aberturaGerente = IOHIDManagerOpen(gerente, IOOptionBits(kIOHIDOptionsTypeNone))
     if aberturaGerente == kIOReturnNotPermitted {
       NSLog("anagram_app: IOHIDManagerOpen negado 0x%08x", aberturaGerente)
-      return .falhou(FlutterError(code: "sem_permissao",
-                                  message: "O macOS negou acesso ao USB (sandbox ou permissão do sistema).", details: nil))
+      return FlutterError(code: "sem_permissao",
+                          message: "O macOS negou acesso ao USB (sandbox ou permissão do sistema).", details: nil)
     }
     if aberturaGerente != kIOReturnSuccess {
       NSLog("anagram_app: IOHIDManagerOpen devolveu 0x%08x; segue procurando o aparelho", aberturaGerente)
     }
-    guard let escolhido = escolherInterface(gerente) else {
-      IOHIDManagerClose(gerente, IOOptionBits(kIOHIDOptionsTypeNone))
-      return .falhou(FlutterError(code: "nao_encontrado", message: "Nenhuma Anagram no USB.", details: nil))
+    guard let escolhido = Self.escolherInterface(gerente) else {
+      return FlutterError(code: "nao_encontrado", message: "Nenhuma Anagram no USB.", details: nil)
     }
     let aberto = IOHIDDeviceOpen(escolhido, IOOptionBits(kIOHIDOptionsTypeNone))
     if aberto != kIOReturnSuccess {
       NSLog("anagram_app: IOHIDDeviceOpen falhou 0x%08x", aberto)
-      IOHIDManagerClose(gerente, IOOptionBits(kIOHIDOptionsTypeNone))
       let codigo = aberto == kIOReturnNotPermitted ? "sem_permissao" : "ocupado"
-      return .falhou(FlutterError(code: codigo, message: String(format: "IOHIDDeviceOpen 0x%08x", aberto), details: nil))
+      return FlutterError(code: codigo, message: String(format: "IOHIDDeviceOpen 0x%08x", aberto), details: nil)
     }
-    return .aberta(gerente, escolhido)
+    dispositivo = escolhido
+    registrarCallbacks(gerente: gerente, dispositivo: escolhido)
+    return nil
   }
 
   /// Interface de fornecedor (usage page 0xFF00) primeiro; senão a primeira.
@@ -216,18 +182,14 @@ final class CanalHidAnagram: NSObject, FlutterStreamHandler {
   }
 
   private func fechar() {
-    geracao += 1
     let dispositivo = self.dispositivo
     let gerente = self.gerente
     self.dispositivo = nil
     self.gerente = nil
-    // espera os envios já enfileirados terminarem antes de fechar o aparelho;
-    // uma abertura em curso fica na outra fila e não segura a principal
-    filaEnvio.sync { Self.fecharAparelho(dispositivo, gerente) }
-  }
-
-  private static func fecharAparelho(_ dispositivo: IOHIDDevice?, _ gerente: IOHIDManager?) {
-    if let dispositivo = dispositivo { IOHIDDeviceClose(dispositivo, IOOptionBits(kIOHIDOptionsTypeNone)) }
-    if let gerente = gerente { IOHIDManagerClose(gerente, IOOptionBits(kIOHIDOptionsTypeNone)) }
+    // espera os envios já enfileirados terminarem antes de fechar o aparelho
+    filaEnvio.sync {
+      if let dispositivo = dispositivo { IOHIDDeviceClose(dispositivo, IOOptionBits(kIOHIDOptionsTypeNone)) }
+      if let gerente = gerente { IOHIDManagerClose(gerente, IOOptionBits(kIOHIDOptionsTypeNone)) }
+    }
   }
 }

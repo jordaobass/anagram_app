@@ -47,7 +47,7 @@ class TransporteCanalNativo with FluxosDoTransporte implements TransporteAnagram
       anunciarEstado(EstadoTransporte.fechado);
       throw _traduzir(erro);
     } on TimeoutException {
-      // o lado nativo descarta a abertura que terminar depois deste fechar
+      // o fechar entra na fila da principal depois da abertura em curso e a desfaz
       unawaited(_metodos.invokeMethod<void>('fechar').catchError((Object _) {}));
       anunciarEstado(EstadoTransporte.fechado);
       registro.w('$descricao: o lado nativo não abriu em ${prazoAbrir!.inSeconds}s');

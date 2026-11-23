@@ -31,6 +31,11 @@ class ControladorConexao extends Notifier<EstadoConexao> {
   /// A tentativa em curso é a do app abrindo, não um clique.
   bool _automatica = false;
   TransporteAnagram? _transporte;
+
+  /// O transporte cuja abertura ainda não respondeu. O lado nativo do USB é um
+  /// só para o app: o CANCELAR o fecha na hora, e a abertura que terminar
+  /// depois não fecha de novo (seria o aparelho da tentativa seguinte).
+  TransporteAnagram? _abrindo;
   StreamSubscription<EstadoTransporte>? _vigia;
 
   /// MIDI da pedaleira, quando há (Program Change para trocar de slot).
@@ -101,6 +106,7 @@ class ControladorConexao extends Notifier<EstadoConexao> {
   /// Desiste da tentativa em curso; o que ela terminar depois é ignorado.
   Future<void> cancelarConexao() async {
     _tentativa++;
+    await _largarAbertura();
     await _soltar();
     state = const SemConexao();
   }
@@ -112,12 +118,21 @@ class ControladorConexao extends Notifier<EstadoConexao> {
 
   Future<void> _conectar(TransporteAnagram transporte,
       {required bool demonstracao, SaidaMidiAnagram? midi, bool automatica = false}) async {
+    await _largarAbertura();
     await _soltar();
     final tentativa = ++_tentativa;
     _automatica = automatica;
     state = Conectando(transporte.descricao, demonstracao: demonstracao, automatica: automatica);
-    if (!await _abrirTransporte(transporte, tentativa)) return;
-    if (tentativa != _tentativa) return unawaited(_fecharSemFalhar(transporte.descricao, transporte.fechar));
+    _abrindo = transporte;
+    final abriu = await _abrirTransporte(transporte, tentativa);
+    // largada pelo CANCELAR (ou por outra tentativa): ela já fechou o lado nativo
+    final largada = !identical(_abrindo, transporte);
+    if (!largada) _abrindo = null;
+    if (!abriu) return;
+    if (tentativa != _tentativa) {
+      if (!largada) unawaited(_fecharSemFalhar(transporte.descricao, transporte.fechar));
+      return;
+    }
     final cliente = ClienteAnagram(
       transporte,
       pausaEntreRelatorios: () => ref.read(pausaRelatoriosProvider) ?? transporte.pausaSugerida,
@@ -200,6 +215,13 @@ class ControladorConexao extends Notifier<EstadoConexao> {
     // depois do transporte: com ele fechado, nenhuma resposta nova gera medição
     if (cliente != null) unawaited(cliente.encerrar());
     if (midi != null && midi.aberta) await _fecharSemFalhar(midi.descricao, midi.fechar);
+  }
+
+  /// Fecha o transporte que ainda está abrindo (ver [_abrindo]).
+  Future<void> _largarAbertura() async {
+    final abrindo = _abrindo;
+    _abrindo = null;
+    if (abrindo != null) await _fecharSemFalhar(abrindo.descricao, abrindo.fechar);
   }
 
   /// Fechar é arrumação: uma falha aqui (canal nativo que já sumiu) vai para o
