@@ -62,6 +62,30 @@ void gravarNaFotoDaCena(Map<String, dynamic> bloco, int cena, String simbolo, nu
   _gravarNaCena(foto, simbolo, valor);
 }
 
+/// Ao abrir um preset: o que alguma foto de cena registra (parâmetro ou
+/// liga/desliga) passa a estar nas três, e as que não o tinham recebem o
+/// valor do bloco no arquivo (DECISOES CE2). Sem isso a cena sem registro
+/// tocava o que a última cena visitada deixou no bloco, sem "NÃO SALVO".
+/// Preset em que toda foto registra o mesmo que as outras não muda.
+void completarFotosParciais(Map<String, dynamic> bloco) {
+  final cenas = bloco['scenes'];
+  if (cenas is! Map<String, dynamic> || cenas.isEmpty) return;
+  final comLiga = cenas.values.any((c) => mapaOuVazio(c).containsKey('enabled'));
+  final simbolos = _simbolosQueVariam(cenas);
+  for (final cena in const [1, 2, 3]) {
+    if (comLiga) _fotoDaCena(cenas, cena).putIfAbsent('enabled', () => bloco['enabled'] ?? true);
+    for (final simbolo in simbolos) {
+      // o bloco não guarda o parâmetro: a cena segue o padrão do catálogo
+      final valor = valorNoBloco(bloco, simbolo);
+      if (valor == null || _registra(mapaOuVazio(cenas['$cena']), simbolo)) continue;
+      _gravarNaCena(_fotoDaCena(cenas, cena), simbolo, valor);
+    }
+  }
+}
+
+Map<String, dynamic> _fotoDaCena(Map<String, dynamic> cenas, int cena) =>
+    cenas.putIfAbsent('$cena', () => <String, dynamic>{'parameters': <dynamic>[]}) as Map<String, dynamic>;
+
 /// Tira [simbolo] de todas as fotos de cena: as cenas voltam a seguir o bloco.
 void tirarDasFotos(Map<String, dynamic> bloco, String simbolo) {
   for (final foto in _fotos(bloco)) {

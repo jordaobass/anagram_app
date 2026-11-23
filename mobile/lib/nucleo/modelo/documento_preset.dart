@@ -35,11 +35,13 @@ class DocumentoPreset {
   /// A pedaleira grava o bloco com os valores da cena ativa (é o que ela
   /// toca). Preset que não segue isso (escrito à mão, de outro editor) é
   /// acertado ao abrir, com os valores que a tela já mostra para a cena; num
-  /// preset da pedaleira nada muda.
+  /// preset da pedaleira nada muda. Antes, as fotos de cena parciais ficam
+  /// completas com o valor do bloco ([completarFotosParciais]).
   static Map<String, dynamic> _comCenaAtivaNoBloco(Map<String, dynamic> json) {
     final preset = json['preset'] as Map<String, dynamic>;
     final ativa = (numeroOuNulo(preset['scene'])?.toInt() ?? 0) + 1;
     for (final bloco in todosOsBlocos(preset)) {
+      completarFotosParciais(bloco);
       carregarCena(bloco, ativa);
     }
     return json;

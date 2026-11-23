@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
+import 'package:anagram_app/apresentacao/componentes/controle_parametro.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:anagram_app/aplicacao/estado/escopo_cenas.dart';
 import 'package:anagram_app/nucleo/modelo/cenas_do_bloco.dart';
@@ -161,5 +162,21 @@ void main() {
     expect([for (final cena in _cenas) aberto.valorNaCena('Bass', cena)], antes,
         reason: 'o desfazer devolve a variação entre as cenas que o "todas" apagou');
     expect(await _naPedaleiraPorCena(tester, container, basshammer, bass), antes);
+  });
+
+  testWidgets('should_keep_the_block_value_in_scene_2_after_visiting_scene_3_that_alone_registers_it', (tester) async {
+    final container = await _abrir02ANaCena2(tester, PreferenciasCenasEmMemoria());
+    await _selecionar(tester, _microtubes);
+
+    await _tocarCena(tester, 3);
+    expect(_highDrive(_tocando(container, _microtubes)), 8.5, reason: 'a cena 3 tem o 8.5 próprio');
+    await _tocarCena(tester, 2);
+
+    final knob = tester.widget<ControleParametro>(find.byKey(const ValueKey('param-high_drive')));
+    expect(knob.valor, 5, reason: 'a cena 2 não registra o high_drive: segue o 5 do bloco, não o 8.5 da cena 3');
+    expect(_highDrive(_tocando(container, _microtubes)), 5, reason: 'e é o 5 que a pedaleira toca');
+    expect(container.read(editorProvider).naoSalvo, isFalse, reason: 'trocar de cena não é editar');
+    await _tocarCena(tester, 3);
+    expect(_highDrive(_tocando(container, _microtubes)), 8.5, reason: 'a cena 3 continua com o dela');
   });
 }
