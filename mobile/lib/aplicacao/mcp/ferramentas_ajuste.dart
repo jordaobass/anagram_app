@@ -143,7 +143,7 @@ class LigarDesligarBloco extends FerramentaMcp {
     final cena = documento.cenaAtiva;
     // nada a mudar: já está assim na cena (e, em todas, nenhuma cena difere)
     final jaEsta = bloco.habilitadoNaCena(cena) == ligar &&
-        (escopo == EscopoCenas.soNaCena || !bloco.bypassSoNaCena(cena));
+        (escopo == EscopoCenas.soNaCena || !bloco.ligaVariaEntreCenas(cena));
     if (jaEsta) return ResultadoFerramenta.dados({'block': nome, 'enabled': ligar, 'scope': nomeDoEscopo(escopo)});
     final editado = documento.comBlocoHabilitado(bloco.posicao, ligar, escopo: escopo);
     await sessao.mudar('$nome: ${ligar ? 'on' : 'off'}', () => sessao.editor.aplicarDocumento(editado));

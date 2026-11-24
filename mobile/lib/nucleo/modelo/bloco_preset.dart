@@ -60,17 +60,31 @@ class BlocoPreset {
     return habilitado;
   }
 
-  /// O liga/desliga desta cena difere de outra cena do preset (o bloco em si
-  /// sempre acompanha a cena ativa, então a comparação é entre as cenas).
-  bool bypassSoNaCena(int cena) =>
-      _todasAsCenas.any((outra) => outra != cena && habilitadoNaCena(outra) != habilitadoNaCena(cena));
+  /// O liga/desliga varia entre as cenas do preset (o bloco em si sempre
+  /// acompanha a cena ativa, então a comparação é entre as cenas).
+  bool ligaVariaEntreCenas(int cena) => cenasComOMesmoLiga(cena) != null;
 
-  /// O valor desta cena difere do de outra cena (selo "SÓ NA CENA"): editar
-  /// só na cena ativa grava o parâmetro em todas, e o selo só aparece onde o
-  /// som de fato muda de uma cena para outra.
-  bool valorSoNaCena(String simbolo, int cena) =>
-      sobreposicaoDaCena(simbolo, cena) != null &&
-      _todasAsCenas.any((outra) => outra != cena && valorNaCena(simbolo, outra) != valorNaCena(simbolo, cena));
+  /// As cenas em que o bloco está ligado/desligado como na [cena] (ela
+  /// inclusa), ou nulo quando o estado é o mesmo em todas. É o que o rótulo
+  /// do cabeçalho diz: "desligado só na cena 2" era mentira com o bloco
+  /// desligado também na 3 (issue #39).
+  List<int>? cenasComOMesmoLiga(int cena) =>
+      _iguaisOuNulo([for (final outra in _todasAsCenas) if (habilitadoNaCena(outra) == habilitadoNaCena(cena)) outra]);
+
+  /// O valor varia entre as cenas e esta registra o seu (selo do knob):
+  /// editar só na cena ativa grava o parâmetro em todas, e o selo só aparece
+  /// onde o som de fato muda de uma cena para outra.
+  bool valorVariaEntreCenas(String simbolo, int cena) => cenasComOMesmoValor(simbolo, cena) != null;
+
+  /// As cenas que tocam o mesmo valor que a [cena] (ela inclusa), ou nulo
+  /// quando o valor não varia ou a cena não registra o seu.
+  List<int>? cenasComOMesmoValor(String simbolo, int cena) {
+    if (sobreposicaoDaCena(simbolo, cena) == null) return null;
+    final valor = valorNaCena(simbolo, cena);
+    return _iguaisOuNulo([for (final outra in _todasAsCenas) if (valorNaCena(simbolo, outra) == valor) outra]);
+  }
+
+  List<int>? _iguaisOuNulo(List<int> iguais) => iguais.length == quantidadeCenas ? null : iguais;
 
   /// Valor que soa na cena: a sobreposição da cena, senão o valor base.
   /// `null` quando o preset não guarda o parâmetro (vale o padrão do bloco).

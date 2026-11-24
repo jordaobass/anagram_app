@@ -453,6 +453,32 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String ligadoNasCenas(String cenas) {
+    return 'ON IN SCENES $cenas';
+  }
+
+  @override
+  String desligadoNasCenas(String cenas) {
+    return 'OFF IN SCENES $cenas';
+  }
+
+  @override
+  String get ligadoVariaEntreCenas =>
+      'ON IN THIS SCENE · VARIES BETWEEN SCENES';
+
+  @override
+  String get desligadoVariaEntreCenas =>
+      'OFF IN THIS SCENE · VARIES BETWEEN SCENES';
+
+  @override
+  String nasCenas(String cenas) {
+    return 'IN SCENES $cenas';
+  }
+
+  @override
+  String get variaEntreCenas => 'VARIES BETWEEN SCENES';
+
+  @override
   String get dicaMontarCadeia =>
       'Tap a + in the grid to add an effect. Tap a block to adjust it; hold and drag it to move it.';
 

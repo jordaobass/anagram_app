@@ -10,6 +10,7 @@ import 'arte_bloco.dart';
 import 'botao_dicas.dart';
 import 'casa_arrastavel.dart';
 import 'menu_bloco.dart';
+import 'rotulos_por_cena.dart';
 import 'toque_duplo.dart';
 import '../../l10n/app_localizations.dart';
 import '../textos.dart';
@@ -68,9 +69,8 @@ class CabecalhoBloco extends ConsumerWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis),
       Text(l.blocoPosicao(l.familia(definicao.familia), bloco.posicao.linha, bloco.posicao.casa), style: tema.bodySmall),
-      if (bloco.bypassSoNaCena(cena))
-        Text(ligado ? l.ligadoSoNaCena(cena) : l.desligadoSoNaCena(cena),
-            style: tema.labelSmall?.copyWith(color: context.cores.aluminioClaro)),
+      if (rotuloLigaPorCena(l, ligado: ligado, iguais: bloco.cenasComOMesmoLiga(cena)) case final rotulo?)
+        Text(rotulo, style: tema.labelSmall?.copyWith(color: context.cores.aluminioClaro)),
     ]);
   }
 

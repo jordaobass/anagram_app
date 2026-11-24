@@ -19,6 +19,7 @@ import '../textos.dart';
 import 'botao_giratorio.dart' show AoMudarValor, MudancaDesfazivel;
 import 'controle_parametro.dart';
 import 'menu_atribuir.dart';
+import 'rotulos_por_cena.dart';
 import 'seletor_opcao.dart';
 
 /// Um controle desenhado pelo painel do bloco (a lista rolante, o rolo do
@@ -95,7 +96,8 @@ class ControleNoPainel extends ConsumerWidget {
           _controle(context, ref),
           // como o valor "atribuído ao snapshot" do HX: esta cena sobrepõe
           // (neutro: o âmbar é da ação e da seleção, não de marca informativa)
-          if (bloco.valorSoNaCena(parametro.simbolo, cena)) Text(l.soNaCena(cena), style: marca),
+          if (rotuloValorPorCena(l, iguais: bloco.cenasComOMesmoValor(parametro.simbolo, cena)) case final selo?)
+            Text(selo, key: ValueKey('selo-cena-${parametro.simbolo}'), style: marca),
           if (controles.isNotEmpty)
             Semantics(
               label: l.ctlAtribuidoA(controles),

@@ -840,6 +840,42 @@ abstract class AppLocalizations {
   /// **'SÓ NA CENA {cena}'**
   String soNaCena(int cena);
 
+  /// Cabeçalho do bloco: ligado na cena ativa e nestas outras (lista curta, ex.: "2, 3")
+  ///
+  /// In pt, this message translates to:
+  /// **'LIGADO NAS CENAS {cenas}'**
+  String ligadoNasCenas(String cenas);
+
+  /// Cabeçalho do bloco: desligado na cena ativa e nestas outras (lista curta)
+  ///
+  /// In pt, this message translates to:
+  /// **'DESLIGADO NAS CENAS {cenas}'**
+  String desligadoNasCenas(String cenas);
+
+  /// Cabeçalho do bloco: ligado na cena ativa; o estado varia entre cenas demais para listar
+  ///
+  /// In pt, this message translates to:
+  /// **'LIGADO NESTA CENA · VARIA ENTRE AS CENAS'**
+  String get ligadoVariaEntreCenas;
+
+  /// Cabeçalho do bloco: desligado na cena ativa; o estado varia entre cenas demais para listar
+  ///
+  /// In pt, this message translates to:
+  /// **'DESLIGADO NESTA CENA · VARIA ENTRE AS CENAS'**
+  String get desligadoVariaEntreCenas;
+
+  /// Selo do knob: o valor mostrado vale nestas cenas (lista curta, ex.: "1, 2")
+  ///
+  /// In pt, this message translates to:
+  /// **'NAS CENAS {cenas}'**
+  String nasCenas(String cenas);
+
+  /// Selo do knob: o valor varia entre cenas demais para listar
+  ///
+  /// In pt, this message translates to:
+  /// **'VARIA ENTRE AS CENAS'**
+  String get variaEntreCenas;
+
   /// No description provided for @dicaMontarCadeia.
   ///
   /// In pt, this message translates to:

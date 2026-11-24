@@ -28,7 +28,7 @@ void main() {
     final bloco = na2.bloco(posicao)!;
     expect(bloco.habilitado, isFalse, reason: 'o bloco acompanha a cena ativa: é o que a pedaleira toca');
     expect([bloco.habilitadoNaCena(1), bloco.habilitadoNaCena(2), bloco.habilitadoNaCena(3)], [true, false, true]);
-    expect(bloco.bypassSoNaCena(2), isTrue);
+    expect(bloco.ligaVariaEntreCenas(2), isTrue);
 
     final criada = semCenas.comCena(3).comBlocoHabilitado(posicao, false).bloco(posicao)!;
     expect(criada.habilitadoNaCena(3), isFalse);

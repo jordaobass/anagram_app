@@ -457,6 +457,32 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String ligadoNasCenas(String cenas) {
+    return 'ACTIF DANS LES SCÈNES $cenas';
+  }
+
+  @override
+  String desligadoNasCenas(String cenas) {
+    return 'COUPÉ DANS LES SCÈNES $cenas';
+  }
+
+  @override
+  String get ligadoVariaEntreCenas =>
+      'ACTIF DANS CETTE SCÈNE · VARIE ENTRE LES SCÈNES';
+
+  @override
+  String get desligadoVariaEntreCenas =>
+      'COUPÉ DANS CETTE SCÈNE · VARIE ENTRE LES SCÈNES';
+
+  @override
+  String nasCenas(String cenas) {
+    return 'DANS LES SCÈNES $cenas';
+  }
+
+  @override
+  String get variaEntreCenas => 'VARIE ENTRE LES SCÈNES';
+
+  @override
   String get dicaMontarCadeia =>
       'Touchez un + dans la grille pour ajouter un effet. Touchez un bloc pour le régler ; maintenez-le et faites-le glisser pour le déplacer.';
 

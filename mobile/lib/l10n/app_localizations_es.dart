@@ -457,6 +457,32 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String ligadoNasCenas(String cenas) {
+    return 'ENCENDIDO EN LAS ESCENAS $cenas';
+  }
+
+  @override
+  String desligadoNasCenas(String cenas) {
+    return 'APAGADO EN LAS ESCENAS $cenas';
+  }
+
+  @override
+  String get ligadoVariaEntreCenas =>
+      'ENCENDIDO EN ESTA ESCENA · VARÍA ENTRE ESCENAS';
+
+  @override
+  String get desligadoVariaEntreCenas =>
+      'APAGADO EN ESTA ESCENA · VARÍA ENTRE ESCENAS';
+
+  @override
+  String nasCenas(String cenas) {
+    return 'EN LAS ESCENAS $cenas';
+  }
+
+  @override
+  String get variaEntreCenas => 'VARÍA ENTRE ESCENAS';
+
+  @override
   String get dicaMontarCadeia =>
       'Toca un + de la cuadrícula para agregar un efecto. Toca un bloque para ajustarlo; mantenlo pulsado y arrástralo para moverlo.';
 

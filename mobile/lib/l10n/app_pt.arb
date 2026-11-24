@@ -337,6 +337,45 @@
       }
     }
   },
+  "ligadoNasCenas": "LIGADO NAS CENAS {cenas}",
+  "@ligadoNasCenas": {
+    "placeholders": {
+      "cenas": {
+        "type": "String"
+      }
+    },
+    "description": "Cabeçalho do bloco: ligado na cena ativa e nestas outras (lista curta, ex.: \"2, 3\")"
+  },
+  "desligadoNasCenas": "DESLIGADO NAS CENAS {cenas}",
+  "@desligadoNasCenas": {
+    "placeholders": {
+      "cenas": {
+        "type": "String"
+      }
+    },
+    "description": "Cabeçalho do bloco: desligado na cena ativa e nestas outras (lista curta)"
+  },
+  "ligadoVariaEntreCenas": "LIGADO NESTA CENA · VARIA ENTRE AS CENAS",
+  "@ligadoVariaEntreCenas": {
+    "description": "Cabeçalho do bloco: ligado na cena ativa; o estado varia entre cenas demais para listar"
+  },
+  "desligadoVariaEntreCenas": "DESLIGADO NESTA CENA · VARIA ENTRE AS CENAS",
+  "@desligadoVariaEntreCenas": {
+    "description": "Cabeçalho do bloco: desligado na cena ativa; o estado varia entre cenas demais para listar"
+  },
+  "nasCenas": "NAS CENAS {cenas}",
+  "@nasCenas": {
+    "placeholders": {
+      "cenas": {
+        "type": "String"
+      }
+    },
+    "description": "Selo do knob: o valor mostrado vale nestas cenas (lista curta, ex.: \"1, 2\")"
+  },
+  "variaEntreCenas": "VARIA ENTRE AS CENAS",
+  "@variaEntreCenas": {
+    "description": "Selo do knob: o valor varia entre cenas demais para listar"
+  },
   "dicaMontarCadeia": "Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar; segure e arraste para mudar de lugar.",
   "faixaEstimada": "{simbolo} (faixa estimada)",
   "@faixaEstimada": {

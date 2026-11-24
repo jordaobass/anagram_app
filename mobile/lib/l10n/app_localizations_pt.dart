@@ -458,6 +458,32 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String ligadoNasCenas(String cenas) {
+    return 'LIGADO NAS CENAS $cenas';
+  }
+
+  @override
+  String desligadoNasCenas(String cenas) {
+    return 'DESLIGADO NAS CENAS $cenas';
+  }
+
+  @override
+  String get ligadoVariaEntreCenas =>
+      'LIGADO NESTA CENA · VARIA ENTRE AS CENAS';
+
+  @override
+  String get desligadoVariaEntreCenas =>
+      'DESLIGADO NESTA CENA · VARIA ENTRE AS CENAS';
+
+  @override
+  String nasCenas(String cenas) {
+    return 'NAS CENAS $cenas';
+  }
+
+  @override
+  String get variaEntreCenas => 'VARIA ENTRE AS CENAS';
+
+  @override
   String get dicaMontarCadeia =>
       'Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar; segure e arraste para mudar de lugar.';
 
