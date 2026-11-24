@@ -63,6 +63,10 @@ void main() {
 
     final cancelar = find.widgetWithText(TextButton, textosPt.cancelar);
     final estilo = tester.widget<TextButton>(cancelar).style;
-    expect(estilo?.foregroundColor?.resolve({}), Paleta.escura.texto);
+    // o diálogo abre do painel do Ignissor e herda o tema dele (DECISOES PT):
+    // neutro é o texto DESSE tema, nunca o âmbar de ação
+    final cores = tester.element(cancelar).cores;
+    expect(estilo?.foregroundColor?.resolve({}), cores.texto);
+    expect(estilo?.foregroundColor?.resolve({}), isNot(cores.tallyTinta));
   });
 }

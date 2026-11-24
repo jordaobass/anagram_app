@@ -9,6 +9,7 @@ import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/arranjo_parametros.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
+import '../tema/tema_painel.dart';
 import '../tema/tokens.dart';
 import '../textos.dart';
 import 'botoes_banda.dart';
@@ -51,10 +52,7 @@ class ColunaBanda extends ConsumerWidget {
     return Container(
       key: ValueKey('coluna-${arranjo.banda.name}'),
       width: largura,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Raios.painel),
-        border: Border.all(color: context.cores.filete),
-      ),
+      decoration: decoracaoCartao(context),
       clipBehavior: Clip.antiAlias,
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
         Container(height: Medidas.fitaCategoria, color: context.cores.daBanda(arranjo.banda, arranjo.paleta)),

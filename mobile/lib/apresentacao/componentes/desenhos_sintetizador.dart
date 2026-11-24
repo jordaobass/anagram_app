@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 
 import '../../nucleo/catalogo/desenho_sintetizador.dart';
+import '../tema/tema_painel.dart';
 import '../tema/tokens.dart';
 
 /// A caixa onde cada desenho mora: fundo do case, filete e a linha de centro.
@@ -17,11 +18,7 @@ class CaixaDesenho extends StatelessWidget {
   Widget build(BuildContext context) => Container(
         width: largura,
         height: Medidas.alturaDesenhoSynth,
-        decoration: BoxDecoration(
-          color: context.cores.fundoCase,
-          borderRadius: BorderRadius.circular(Raios.controle),
-          border: Border.all(color: context.cores.filete),
-        ),
+        decoration: decoracaoCartao(context, cor: context.cores.fundoCase, raio: Raios.controle),
         clipBehavior: Clip.antiAlias,
         child: CustomPaint(painter: pintor),
       );

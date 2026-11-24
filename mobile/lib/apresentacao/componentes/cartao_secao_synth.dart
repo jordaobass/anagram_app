@@ -3,6 +3,7 @@
 // desligada continua ajustável, só apagada, como a banda desligada do EQ.
 import 'package:flutter/material.dart';
 
+import '../tema/tema_painel.dart';
 import '../tema/tokens.dart';
 
 class CartaoSecaoSynth extends StatelessWidget {
@@ -28,20 +29,27 @@ class CartaoSecaoSynth extends StatelessWidget {
   final bool alinharTopo;
   final List<Widget> filhos;
 
+  /// No neon, o friso magenta sob o título, como as barras da tela do Axioma.
+  Widget? _friso(BuildContext context) {
+    final tema = context.temaPainel;
+    if (tema == null || !tema.ehNeon) return null;
+    return Padding(
+      padding: const EdgeInsets.only(top: Espacos.xs),
+      child: Container(height: Medidas.contornoSelecao, color: tema.friso),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => Container(
         width: largura,
         padding: const EdgeInsets.all(Espacos.m),
-        decoration: BoxDecoration(
-          color: context.cores.painel,
-          borderRadius: BorderRadius.circular(Raios.painel),
-          border: Border.all(color: context.cores.filete),
-        ),
+        decoration: decoracaoCartao(context, cor: context.cores.painel),
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
           Row(children: [
             Expanded(child: Text(titulo.toUpperCase(), style: Theme.of(context).textTheme.titleSmall)),
             ?chave,
           ]),
+          ?_friso(context),
           const SizedBox(height: Espacos.s),
           Opacity(
             opacity: apagada ? Medidas.opacidadeBandaDesligada : 1,
