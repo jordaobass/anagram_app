@@ -483,6 +483,6 @@
   "ceControlar": "CONTRÔLER",
   "ceTodas": "TOUTES LES SCÈNES",
   "ceAtiva": "SCÈNE ACTIVE SEULEMENT",
-  "ceTodasDica": "Potard, valeur et on/off changent les 3 scènes : la valeur ne varie plus entre elles.",
+  "ceTodasDica": "Potard, valeur et on/off changent toutes les scènes : la valeur ne varie plus entre elles.",
   "ceAtivaDica": "Potard, valeur et on/off ne changent que la scène active ; les autres restent comme elles étaient."
 }

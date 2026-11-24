@@ -23,10 +23,16 @@ class PosicaoBloco {
 }
 
 class BlocoPreset {
-  const BlocoPreset(this.posicao, this.bruto);
+  const BlocoPreset(this.posicao, this.bruto, {this.quantidadeCenas = 3});
 
   final PosicaoBloco posicao;
   final Map<String, dynamic> bruto;
+
+  /// Quantas cenas o preset tem (o bloco sozinho não sabe: a cena sem foto
+  /// segue o bloco, ver [DocumentoPreset.quantidadeCenas]).
+  final int quantidadeCenas;
+
+  Iterable<int> get _todasAsCenas => [for (var cena = 1; cena <= quantidadeCenas; cena++) cena];
 
   // O JSON vem do aparelho ou de arquivo importado: campo com tipo inesperado
   // vale como ausente, em vez de derrubar a tela com TypeError.
@@ -45,7 +51,7 @@ class BlocoPreset {
   Map<String, dynamic> get _parametros => mapaOuVazio(bruto['parameters']);
   Map<String, dynamic> get _cenas => mapaOuVazio(bruto['scenes']);
 
-  /// Habilitado na cena (1–3). Sem registro da cena, vale o do bloco.
+  /// Habilitado na cena (a partir de 1). Sem registro da cena, vale o do bloco.
   bool habilitadoNaCena(int cena) {
     final registro = _cenas['$cena'];
     if (registro is Map<String, dynamic> && registro['enabled'] is bool) {
@@ -57,14 +63,14 @@ class BlocoPreset {
   /// O liga/desliga desta cena difere de outra cena do preset (o bloco em si
   /// sempre acompanha a cena ativa, então a comparação é entre as cenas).
   bool bypassSoNaCena(int cena) =>
-      [1, 2, 3].any((outra) => outra != cena && habilitadoNaCena(outra) != habilitadoNaCena(cena));
+      _todasAsCenas.any((outra) => outra != cena && habilitadoNaCena(outra) != habilitadoNaCena(cena));
 
   /// O valor desta cena difere do de outra cena (selo "SÓ NA CENA"): editar
-  /// só na cena ativa grava o parâmetro nas três, e o selo só aparece onde o
+  /// só na cena ativa grava o parâmetro em todas, e o selo só aparece onde o
   /// som de fato muda de uma cena para outra.
   bool valorSoNaCena(String simbolo, int cena) =>
       sobreposicaoDaCena(simbolo, cena) != null &&
-      [1, 2, 3].any((outra) => outra != cena && valorNaCena(simbolo, outra) != valorNaCena(simbolo, cena));
+      _todasAsCenas.any((outra) => outra != cena && valorNaCena(simbolo, outra) != valorNaCena(simbolo, cena));
 
   /// Valor que soa na cena: a sobreposição da cena, senão o valor base.
   /// `null` quando o preset não guarda o parâmetro (vale o padrão do bloco).

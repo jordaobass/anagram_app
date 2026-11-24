@@ -61,11 +61,16 @@ class AtalhosEditor extends ConsumerWidget {
     final controlador = ref.read(editorProvider.notifier);
     return {
       LogicalKeyboardKey.space: () => _comSelecionado(ref, controlador.alternarBypass),
-      LogicalKeyboardKey.digit1: () => controlador.escolherCena(1),
-      LogicalKeyboardKey.digit2: () => controlador.escolherCena(2),
-      LogicalKeyboardKey.digit3: () => controlador.escolherCena(3),
+      // 1–9 trocam de cena; a tecla de uma cena que o preset não tem não faz nada
+      for (final (indice, tecla) in _teclasDasCenas.indexed) tecla: () => controlador.escolherCena(indice + 1),
     };
   }
+
+  static const _teclasDasCenas = [
+    LogicalKeyboardKey.digit1, LogicalKeyboardKey.digit2, LogicalKeyboardKey.digit3,
+    LogicalKeyboardKey.digit4, LogicalKeyboardKey.digit5, LogicalKeyboardKey.digit6,
+    LogicalKeyboardKey.digit7, LogicalKeyboardKey.digit8, LogicalKeyboardKey.digit9,
+  ];
 
   static void _comSelecionado(WidgetRef ref, void Function(PosicaoBloco posicao) acao) {
     final posicao = ref.read(editorProvider).selecionado;

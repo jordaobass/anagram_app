@@ -7,10 +7,12 @@ import 'package:anagram_app/aplicacao/estado/escopo_cenas.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
 import 'package:anagram_app/nucleo/modelo/cenas_do_bloco.dart';
 import 'package:anagram_app/nucleo/modelo/json_util.dart';
+import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/app_com_mcp.dart';
+import '../apoio/cinco_cenas.dart';
 
 const _b3k = PosicaoBloco(1, 4);
 const _geq = PosicaoBloco(1, 4);
@@ -97,6 +99,31 @@ void main() {
       expect(erro, isFalse, reason: '$resposta');
       final bloco = container.read(editorProvider).atual!.bloco(_geq)!;
       expect([for (final cena in const [1, 2, 3]) bloco.habilitadoNaCena(cena)], [false, false, false]);
+    });
+  });
+
+  group('presets com mais de três cenas', () {
+    test('should_list_and_select_scene_5_of_a_five_scene_preset_and_refuse_scene_6', () async {
+      final (container, endereco, token) = await appComMcp();
+      pedaleiraDe(container).substituirSlot(3, presetCincoCenas());
+      await container.read(editorProvider.notifier).abrirSlot(SlotPreset.doRotulo('01C'));
+
+      final (_, lido) = await ferramenta(endereco, token, 'get_current_preset');
+      expect([for (final c in (lido! as Map)['scenes'] as List) c['name']], ['LIMPO', 'GRAVE', 'SUJO', 'SOLO', 'FINAL']);
+      final (erro, resposta) = await ferramenta(endereco, token, 'select_scene', {'scene': 5});
+      expect(erro, isFalse, reason: '$resposta');
+      expect(_tocando(container, const PosicaoBloco(1, 1), 'high_drive'), 7, reason: 'a pedaleira toca a cena 5');
+      final (recusou, _) = await ferramenta(endereco, token, 'select_scene', {'scene': 6});
+      expect(recusou, isTrue, reason: 'o preset não tem cena 6');
+    });
+
+    test('should_refuse_scene_4_when_the_preset_has_three_scenes', () async {
+      final (_, endereco, token) = await appComMcp();
+
+      final (recusou, resposta) = await ferramenta(endereco, token, 'select_scene', {'scene': 4});
+
+      expect(recusou, isTrue);
+      expect('$resposta', contains('1 to 3'));
     });
   });
 }

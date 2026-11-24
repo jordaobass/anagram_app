@@ -42,9 +42,10 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
     await aplicarDocumento(state.atual!.comBlocoHabilitado(posicao, !ligado, escopo: ref.read(escopoCenasProvider)));
   }
 
+  /// Cena que o preset não tem é ignorada (atalho 9 num preset de três).
   Future<void> escolherCena(int cena) async {
     final atual = state.atual;
-    if (atual != null) await aplicarDocumento(atual.comCena(cena));
+    if (atual != null && cena >= 1 && cena <= atual.quantidadeCenas) await aplicarDocumento(atual.comCena(cena));
   }
 
   void copiarBloco(PosicaoBloco posicao) {

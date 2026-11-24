@@ -32,7 +32,7 @@ class DescricaoPreset {
         'name': documento.nome,
         'active_scene': documento.cenaAtiva,
         'scenes': [
-          for (var cena = 1; cena <= 3; cena++) {'number': cena, 'name': documento.nomeDaCena(cena) ?? 'Scene $cena'},
+          for (final cena in documento.cenas) {'number': cena, 'name': documento.nomeDaCena(cena) ?? 'Scene $cena'},
         ],
         'layout': 'Signal flows left to right on row 1 (columns 1-12). Row 2 is a parallel line that '
             'only exists between a Split and a Merge block on row 1.',
@@ -80,7 +80,7 @@ class DescricaoPreset {
   /// Parâmetro com valor próprio em alguma cena: o valor de cada uma, para a
   /// IA ver o que difere sem trocar de cena (sem registro, vale o do bloco).
   static Map<String, dynamic> _porCena(BlocoPreset bloco, DefinicaoParametro p) {
-    final cenas = [1, 2, 3];
+    final cenas = [for (var cena = 1; cena <= bloco.quantidadeCenas; cena++) cena];
     if (cenas.every((c) => bloco.sobreposicaoDaCena(p.simbolo, c) == null)) return const {};
     return {
       'scene_values': {for (final c in cenas) '$c': bloco.valorNaCena(p.simbolo, c) ?? p.padrao},

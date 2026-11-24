@@ -483,6 +483,6 @@
   "ceControlar": "CONTROL",
   "ceTodas": "ALL SCENES",
   "ceAtiva": "ACTIVE SCENE ONLY",
-  "ceTodasDica": "Knob, value and on/off change all 3 scenes: the value stops varying between them.",
+  "ceTodasDica": "Knob, value and on/off change every scene: the value stops varying between them.",
   "ceAtivaDica": "Knob, value and on/off change only the active scene; the others stay as they were."
 }

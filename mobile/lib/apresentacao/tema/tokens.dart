@@ -33,6 +33,10 @@ abstract final class Medidas {
   static const double alturaPilulaModo = 26;
   static const double larguraCenasComModo = 560;
 
+  /// Botão de cena quando o preset tem mais de três (firmware 1.16+): as
+  /// cenas viram uma fita que rola na horizontal, cada uma com esta largura.
+  static const double larguraCenaNaFita = 152;
+
   /// Chave "Controlar" numa linha (rótulo e as duas opções lado a lado); com
   /// menos largura, o rótulo sobe e as opções dividem a linha inteira.
   static const double larguraChaveControlarEmLinha = 480;

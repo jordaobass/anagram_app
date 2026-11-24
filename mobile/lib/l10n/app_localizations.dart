@@ -2988,7 +2988,7 @@ abstract class AppLocalizations {
   /// **'CONTROLAR'**
   String get ceControlar;
 
-  /// Opção: a edição muda as três cenas (Controlling All Scenes da pedaleira)
+  /// Opção: a edição muda todas as cenas (Controlling All Scenes da pedaleira)
   ///
   /// In pt, this message translates to:
   /// **'TODAS AS CENAS'**
@@ -3003,7 +3003,7 @@ abstract class AppLocalizations {
   /// Tooltip da opção Todas as cenas
   ///
   /// In pt, this message translates to:
-  /// **'Knob, valor e liga/desliga mudam as 3 cenas: o valor deixa de variar entre elas.'**
+  /// **'Knob, valor e liga/desliga mudam todas as cenas: o valor deixa de variar entre elas.'**
   String get ceTodasDica;
 
   /// Tooltip da opção Só a cena ativa

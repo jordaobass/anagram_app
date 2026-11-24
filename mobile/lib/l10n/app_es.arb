@@ -483,6 +483,6 @@
   "ceControlar": "CONTROLAR",
   "ceTodas": "TODAS LAS ESCENAS",
   "ceAtiva": "SOLO LA ESCENA ACTIVA",
-  "ceTodasDica": "Knob, valor y encendido cambian las 3 escenas: el valor deja de variar entre ellas.",
+  "ceTodasDica": "Knob, valor y encendido cambian todas las escenas: el valor deja de variar entre ellas.",
   "ceAtivaDica": "Knob, valor y encendido cambian solo la escena activa; las demás quedan como estaban."
 }

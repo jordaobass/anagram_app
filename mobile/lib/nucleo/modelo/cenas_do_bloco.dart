@@ -4,6 +4,7 @@
 // o bloco tem sempre exatamente os valores da cena ativa. Por isso trocar de
 // cena guarda a foto da cena que sai e carrega no bloco a da que entra.
 import 'json_util.dart';
+import 'preset_bruto.dart';
 
 /// Onde vale uma edição (parâmetro ou liga/desliga) com uma cena ativa: a
 /// chave "Controlar" do editor, espelho do botão que a Anagram mostra no modo
@@ -17,6 +18,36 @@ enum EscopoCenas {
   /// Todas as cenas mudam: o valor vai para o bloco e sai das fotos de cena,
   /// que voltam a seguir o bloco (o parâmetro deixa de variar entre as cenas).
   todasAsCenas,
+}
+
+/// Cenas que um preset sem registro de cena tem: as três de sempre.
+const cenasMinimas = 3;
+
+/// O firmware 1.16+ aceita até 126 cenas pelo MIDI (CC 107) e o 1.19.2 fala
+/// em 127 (issue #39); acima disso a chave é lixo, não cena.
+const cenasMaximas = 127;
+
+/// Quantas cenas o preset tem: a maior cena que ele registra em algum lugar
+/// (nome, foto de bloco, mensagens MIDI por cena ou a cena ativa), nunca
+/// menos que três. O arquivo não guarda a quantidade (504 presets lidos do
+/// 1.19.2, nenhum com campo para isso). HIPÓTESE (DECISOES CE3): cena a mais
+/// usa as mesmas chaves numéricas das três; uma cena que não registra nada
+/// (sem nome, sem foto) não aparece.
+int quantidadeDeCenas(Map<String, dynamic> preset) {
+  var maior = (numeroOuNulo(preset['scene'])?.toInt() ?? 0) + 1;
+  void considerar(Object? mapa) {
+    for (final chave in chavesNumericas(mapaOuVazio(mapa))) {
+      final cena = int.parse(chave);
+      if (cena > maior && cena <= cenasMaximas) maior = cena;
+    }
+  }
+
+  considerar(preset['sceneNames']);
+  considerar(mapaOuVazio(preset['metadata'])['midi_messages_on_scene_change']);
+  for (final bloco in todosOsBlocos(preset)) {
+    considerar(bloco['scenes']);
+  }
+  return maior.clamp(cenasMinimas, cenasMaximas);
 }
 
 /// Guarda na foto da cena [cena] o estado atual do bloco, só no que a foto
@@ -36,9 +67,9 @@ void guardarFotoDaCena(Map<String, dynamic> bloco, int cena) {
 
 /// Antes de o liga/desliga mudar na cena ativa, as outras cenas sem registro
 /// recebem o estado que tinham (o do bloco), para não mudarem junto.
-void fixarLigaNasOutrasCenas(Map<String, dynamic> bloco, int ativa) {
+void fixarLigaNasOutrasCenas(Map<String, dynamic> bloco, int ativa, int quantidade) {
   final cenas = bloco.putIfAbsent('scenes', () => <String, dynamic>{}) as Map<String, dynamic>;
-  for (final cena in [1, 2, 3].where((c) => c != ativa)) {
+  for (final cena in _cenas(quantidade).where((c) => c != ativa)) {
     final foto = cenas.putIfAbsent('$cena', () => <String, dynamic>{'parameters': <dynamic>[]}) as Map<String, dynamic>;
     foto.putIfAbsent('enabled', () => bloco['enabled'] ?? true);
   }
@@ -47,9 +78,9 @@ void fixarLigaNasOutrasCenas(Map<String, dynamic> bloco, int ativa) {
 /// Antes de um parâmetro mudar só na cena ativa, as outras cenas sem registro
 /// dele recebem o valor que tinham ([valorAntes], o do bloco ou o padrão do
 /// catálogo quando o bloco não o guarda), para não mudarem junto.
-void fixarValorNasOutrasCenas(Map<String, dynamic> bloco, int ativa, String simbolo, num valorAntes) {
+void fixarValorNasOutrasCenas(Map<String, dynamic> bloco, int ativa, int quantidade, String simbolo, num valorAntes) {
   final cenas = bloco.putIfAbsent('scenes', () => <String, dynamic>{}) as Map<String, dynamic>;
-  for (final cena in [1, 2, 3].where((c) => c != ativa)) {
+  for (final cena in _cenas(quantidade).where((c) => c != ativa)) {
     final foto = cenas.putIfAbsent('$cena', () => <String, dynamic>{'parameters': <dynamic>[]}) as Map<String, dynamic>;
     if (!_registra(foto, simbolo)) _gravarNaCena(foto, simbolo, valorAntes);
   }
@@ -63,16 +94,16 @@ void gravarNaFotoDaCena(Map<String, dynamic> bloco, int cena, String simbolo, nu
 }
 
 /// Ao abrir um preset: o que alguma foto de cena registra (parâmetro ou
-/// liga/desliga) passa a estar nas três, e as que não o tinham recebem o
+/// liga/desliga) passa a estar em todas as [quantidade] cenas, e as que não o tinham recebem o
 /// valor do bloco no arquivo (DECISOES CE2). Sem isso a cena sem registro
 /// tocava o que a última cena visitada deixou no bloco, sem "NÃO SALVO".
 /// Preset em que toda foto registra o mesmo que as outras não muda.
-void completarFotosParciais(Map<String, dynamic> bloco) {
+void completarFotosParciais(Map<String, dynamic> bloco, int quantidade) {
   final cenas = bloco['scenes'];
   if (cenas is! Map<String, dynamic> || cenas.isEmpty) return;
   final comLiga = cenas.values.any((c) => mapaOuVazio(c).containsKey('enabled'));
   final simbolos = _simbolosQueVariam(cenas);
-  for (final cena in const [1, 2, 3]) {
+  for (final cena in _cenas(quantidade)) {
     if (comLiga) _fotoDaCena(cenas, cena).putIfAbsent('enabled', () => bloco['enabled'] ?? true);
     for (final simbolo in simbolos) {
       // o bloco não guarda o parâmetro: a cena segue o padrão do catálogo
@@ -82,6 +113,8 @@ void completarFotosParciais(Map<String, dynamic> bloco) {
     }
   }
 }
+
+Iterable<int> _cenas(int quantidade) => [for (var cena = 1; cena <= quantidade; cena++) cena];
 
 Map<String, dynamic> _fotoDaCena(Map<String, dynamic> cenas, int cena) =>
     cenas.putIfAbsent('$cena', () => <String, dynamic>{'parameters': <dynamic>[]}) as Map<String, dynamic>;

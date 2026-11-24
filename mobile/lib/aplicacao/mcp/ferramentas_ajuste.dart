@@ -19,7 +19,7 @@ class MudarParametro extends FerramentaMcp {
       'number in the parameter unit, or an option label for option parameters, or true/false for toggles. '
       'Out-of-range values are clamped and the applied value is returned. Scenes: scope "scene" changes ONLY the '
       'active scene (the others keep what they had). "all_scenes" ERASES the per-scene values of this parameter: '
-      'the three scenes end up with the same value and the difference between them is lost. Without "scope" it '
+      'every scene ends up with the same value and the difference between them is lost. Without "scope" it '
       'follows the "Control" switch the player chose in the app, which may be set to all scenes. Always send '
       'scope "scene" explicitly; use "all_scenes" only when the player asks for the same value in every scene. '
       'The result says which scope was applied. Change 2-4 parameters, then ask the player how it sounds before '
@@ -159,17 +159,20 @@ class EscolherCena extends FerramentaMcp {
   String get nome => 'select_scene';
 
   @override
-  String get descricao => 'Switch the active scene (1-3). Parameter changes made afterwards apply to that scene.';
+  String get descricao => 'Switch the active scene. A preset has 3 scenes or more (firmware 1.16+ allows many): '
+      'the valid numbers are the "scenes" listed by get_current_preset. Parameter changes made afterwards apply to '
+      'that scene.';
 
   @override
-  Map<String, dynamic> get esquema =>
-      esquemaObjeto({'scene': inteiro('Scene number.', minimo: 1, maximo: 3)}, obrigatorias: const ['scene']);
+  Map<String, dynamic> get esquema => esquemaObjeto(
+      {'scene': inteiro('Scene number, 1 to the number of scenes of the open preset.', minimo: 1, maximo: cenasMaximas)},
+      obrigatorias: const ['scene']);
 
   @override
   Future<ResultadoFerramenta> executar(Map<String, dynamic> argumentos) async {
     final cena = argumentos.inteiroObrigatorio('scene');
-    if (cena < 1 || cena > 3) throw const RecusaFerramenta('"scene" must be 1, 2 or 3.');
-    sessao.presetAberto();
+    final quantidade = sessao.presetAberto().quantidadeCenas;
+    if (cena < 1 || cena > quantidade) throw RecusaFerramenta('"scene" must be 1 to $quantidade (this preset has $quantidade scenes).');
     await sessao.mudar('scene $cena', () => sessao.editor.escolherCena(cena));
     return ResultadoFerramenta.dados({'active_scene': cena});
   }

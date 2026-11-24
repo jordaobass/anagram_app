@@ -1763,7 +1763,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get ceTodasDica =>
-      'Potard, valeur et on/off changent les 3 scènes : la valeur ne varie plus entre elles.';
+      'Potard, valeur et on/off changent toutes les scènes : la valeur ne varie plus entre elles.';
 
   @override
   String get ceAtivaDica =>

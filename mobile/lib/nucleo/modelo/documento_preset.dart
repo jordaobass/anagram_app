@@ -40,8 +40,9 @@ class DocumentoPreset {
   static Map<String, dynamic> _comCenaAtivaNoBloco(Map<String, dynamic> json) {
     final preset = json['preset'] as Map<String, dynamic>;
     final ativa = (numeroOuNulo(preset['scene'])?.toInt() ?? 0) + 1;
+    final quantidade = quantidadeDeCenas(preset);
     for (final bloco in todosOsBlocos(preset)) {
-      completarFotosParciais(bloco);
+      completarFotosParciais(bloco, quantidade);
       carregarCena(bloco, ativa);
     }
     return json;
@@ -66,7 +67,13 @@ class DocumentoPreset {
   String get nome => textoOuNulo(_preset['name']) ?? 'Sem nome';
   String? get uuid => textoOuNulo(_preset['uuid']);
 
-  /// Cena ativa de 1 a 3 (no arquivo ela conta a partir de 0).
+  /// Cena ativa a partir de 1 (no arquivo ela conta a partir de 0).
+  /// Quantas cenas o preset tem (3 ou mais, ver [quantidadeDeCenas]).
+  late final int quantidadeCenas = quantidadeDeCenas(_preset);
+
+  /// As cenas do preset, de 1 a [quantidadeCenas].
+  List<int> get cenas => [for (var cena = 1; cena <= quantidadeCenas; cena++) cena];
+
   int get cenaAtiva => (numeroOuNulo(_preset['scene'])?.toInt() ?? 0) + 1;
 
   /// O preset sem a cena ativa, serializado uma vez por documento. Trocar de
@@ -96,13 +103,13 @@ class DocumentoPreset {
       for (final chave in chavesNumericas(blocos))
         // casa que não é objeto (arquivo editado à mão, firmware novo) é ignorada
         if (blocos[chave] case final Map<String, dynamic> bruto)
-          BlocoPreset(PosicaoBloco(linha, int.parse(chave)), bruto),
+          BlocoPreset(PosicaoBloco(linha, int.parse(chave)), bruto, quantidadeCenas: quantidadeCenas),
     ];
   }
 
   BlocoPreset? bloco(PosicaoBloco posicao) {
     final bruto = blocosBrutos(_preset, posicao.linha)['${posicao.casa}'];
-    return bruto is Map<String, dynamic> ? BlocoPreset(posicao, bruto) : null;
+    return bruto is Map<String, dynamic> ? BlocoPreset(posicao, bruto, quantidadeCenas: quantidadeCenas) : null;
   }
 
   /// Footswitches, pots e pedal de expressão que o preset usa.
@@ -146,7 +153,7 @@ class DocumentoPreset {
         }
         // as outras cenas guardam o liga/desliga que tinham antes: senão,
         // sem registro, passariam a seguir o bloco, que vai mudar agora
-        fixarLigaNasOutrasCenas(bloco, cenaAtiva);
+        fixarLigaNasOutrasCenas(bloco, cenaAtiva, quantidadeCenas);
         bloco['enabled'] = habilitado;
         final cenas = bloco.putIfAbsent('scenes', () => <String, dynamic>{}) as Map<String, dynamic>;
         final cena = cenas.putIfAbsent('$cenaAtiva', () => <String, dynamic>{'parameters': <dynamic>[]})
@@ -169,7 +176,7 @@ class DocumentoPreset {
       _editarBloco(posicao, (bloco) {
         switch (escopo) {
           case EscopoCenas.soNaCena:
-            fixarValorNasOutrasCenas(bloco, cenaAtiva, simbolo, valorNoBloco(bloco, simbolo) ?? valorAntes ?? valor);
+            fixarValorNasOutrasCenas(bloco, cenaAtiva, quantidadeCenas, simbolo, valorNoBloco(bloco, simbolo) ?? valorAntes ?? valor);
             gravarNaFotoDaCena(bloco, cenaAtiva, simbolo, valor);
           case EscopoCenas.todasAsCenas:
             tirarDasFotos(bloco, simbolo);

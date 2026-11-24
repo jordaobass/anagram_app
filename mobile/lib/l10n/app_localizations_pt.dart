@@ -1755,7 +1755,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get ceTodasDica =>
-      'Knob, valor e liga/desliga mudam as 3 cenas: o valor deixa de variar entre elas.';
+      'Knob, valor e liga/desliga mudam todas as cenas: o valor deixa de variar entre elas.';
 
   @override
   String get ceAtivaDica =>

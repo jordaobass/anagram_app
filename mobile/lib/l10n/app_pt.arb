@@ -1642,13 +1642,13 @@
   },
   "ceTodas": "TODAS AS CENAS",
   "@ceTodas": {
-    "description": "Opção: a edição muda as três cenas (Controlling All Scenes da pedaleira)"
+    "description": "Opção: a edição muda todas as cenas (Controlling All Scenes da pedaleira)"
   },
   "ceAtiva": "SÓ A CENA ATIVA",
   "@ceAtiva": {
     "description": "Opção: a edição muda só a cena ativa (Controlling Active Scene da pedaleira)"
   },
-  "ceTodasDica": "Knob, valor e liga/desliga mudam as 3 cenas: o valor deixa de variar entre elas.",
+  "ceTodasDica": "Knob, valor e liga/desliga mudam todas as cenas: o valor deixa de variar entre elas.",
   "@ceTodasDica": {
     "description": "Tooltip da opção Todas as cenas"
   },
