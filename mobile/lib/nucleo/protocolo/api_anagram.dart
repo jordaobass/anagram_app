@@ -26,15 +26,19 @@ abstract final class AcoesAnagram {
   static const gravarAjustes = 'edit_settings';
   static const trocarPresets = 'swap_anagram_presets';
   static const trocarBancos = 'swap_anagram_banks';
-  /// O app não pede mais; fica porque a pedaleira de demonstração responde a ela.
+  /// Definição de um bloco pela uri (nome, portas, faixas): o app pede a dos
+  /// blocos fora do catálogo de fábrica (Marketplace, DECISOES P4).
   static const infoBloco = 'get_plugin_info';
+  /// Os blocos instalados (firmware 1.14+, capacidade `plugin-management`;
+  /// o Darkglass Suite 6.11.4 pede com `filterOption: "USER"`).
+  static const plugins = 'read_all_plugins';
   /// Só leitura dos tons do TONE3000 (DECISOES T3K1); nada de enviar nem apagar.
   static const tonsDeFabrica = 'get_t3k_factory_tones';
   static const tonsDoUsuario = 'get_t3k_tones_metadata';
 
   static const todas = {
     firmware, posicoes, lerPreset, salvar, excluir, tocarAoVivo, lerAjustes, gravarAjustes, trocarPresets,
-    trocarBancos, infoBloco, tonsDeFabrica, tonsDoUsuario,
+    trocarBancos, infoBloco, plugins, tonsDeFabrica, tonsDoUsuario,
   };
 }
 
@@ -44,6 +48,16 @@ class ApiAnagram {
   final ClienteAnagram cliente;
 
   static const prazoAjustes = Duration(seconds: 3);
+
+  static const prazoPlugins = Duration(seconds: 5);
+
+  /// A resposta crua de `read_all_plugins` (lista de `{uri, version, type}`).
+  /// Sem filtro: a pedaleira lista também os de fábrica, e o app separa.
+  Future<Map<String, dynamic>> listarPlugins() => cliente.chamar(AcoesAnagram.plugins, const {}, prazoPlugins);
+
+  /// A resposta crua de `get_plugin_info` para [uri].
+  Future<Map<String, dynamic>> infoDoPlugin(String uri) =>
+      cliente.chamar(AcoesAnagram.infoBloco, {'uri': uri}, prazoPlugins);
 
   Future<String> firmware({Duration? prazo}) async {
     final dados = (await cliente.chamar(AcoesAnagram.firmware, const {}, prazo))['data'];

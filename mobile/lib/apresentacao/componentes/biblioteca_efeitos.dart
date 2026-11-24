@@ -47,7 +47,7 @@ class _EstadoBiblioteca extends ConsumerState<_BibliotecaEfeitos> {
 
   @override
   Widget build(BuildContext context) {
-    final catalogo = ref.watch(catalogoProvider).value;
+    final catalogo = ref.watch(catalogoEmUsoProvider);
     final grupos =
         catalogo == null ? const <GrupoBiblioteca>[] : blocosDaBiblioteca(catalogo, busca: _busca, familia: _familia);
     return Dialog(

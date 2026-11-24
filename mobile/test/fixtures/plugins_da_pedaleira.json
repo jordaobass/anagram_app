@@ -1,0 +1,262 @@
+{
+ "_origem": "Respostas reais da Anagram do dono (firmware v1.19.2.24, 2026-11-21) a read_all_plugins {} (3 primeiras entradas e as de terceiros) e get_plugin_info {uri} (Cognate Aperture), gravadas por ferramentas/catalogo_da_pedaleira.dart.",
+ "read_all_plugins": {
+  "success": 1,
+  "data": [
+   {
+    "uri": "http://gareus.org/oss/lv2/modmeter",
+    "version": "0.0-0",
+    "type": 0
+   },
+   {
+    "uri": "http://gareus.org/oss/lv2/modspectre",
+    "version": "0.0-0",
+    "type": 0
+   },
+   {
+    "uri": "https://atlantida-audio.com/plugins/Groove_Preamp",
+    "version": "0.0-2",
+    "type": 0
+   },
+   {
+    "uri": "https://cognate.audio/plugins/cognate-aperture",
+    "version": "2.0-1",
+    "type": 0
+   },
+   {
+    "uri": "https://cognate.audio/plugins/cognate-metro",
+    "version": "0.2-5",
+    "type": 0
+   },
+   {
+    "uri": "https://cognate.audio/plugins/cognate-tuner",
+    "version": "2.1-2",
+    "type": 0
+   },
+   {
+    "uri": "https://falktx.com/plugins/auto-drummer",
+    "version": "2.0-5",
+    "type": 0
+   },
+   {
+    "uri": "https://shedspaceapp.com/plugins/ShedSpace",
+    "version": "0.0-7",
+    "type": 0
+   }
+  ],
+  "err_message": ""
+ },
+ "get_plugin_info": {
+  "data": {
+   "abbreviation": "APT",
+   "blockImageOff": "/root/.lv2/CognateAperture.lv2/anagram-block-off.png",
+   "blockImageOn": "/root/.lv2/CognateAperture.lv2/anagram-block-on.png",
+   "bundlepath": "/root/.lv2/CognateAperture.lv2/",
+   "category": 11,
+   "flags": 20,
+   "name": "Cognate Aperture",
+   "ports": [
+    {
+     "symbol": "lv2_audio_in_1",
+     "name": "Audio Input 1",
+     "shortname": "",
+     "flags": 1,
+     "designation": 0,
+     "def": 0.0,
+     "min": 0.0,
+     "max": 1.0,
+     "unit": "",
+     "scalePoints": []
+    },
+    {
+     "symbol": "lv2_audio_out_1",
+     "name": "Audio Output 1",
+     "shortname": "",
+     "flags": 5,
+     "designation": 0,
+     "def": 0.0,
+     "min": 0.0,
+     "max": 1.0,
+     "unit": "",
+     "scalePoints": []
+    },
+    {
+     "symbol": "lv2_enabled",
+     "name": "Enabled",
+     "shortname": "",
+     "flags": 50,
+     "designation": 1,
+     "def": 1.0,
+     "min": 0.0,
+     "max": 1.0,
+     "unit": "",
+     "scalePoints": []
+    },
+    {
+     "symbol": "hpf_freq",
+     "name": "HPF Cutoff",
+     "shortname": "HP Freq",
+     "flags": 130,
+     "designation": 0,
+     "def": 20.0,
+     "min": 10.0,
+     "max": 300.0,
+     "unit": "Hz",
+     "scalePoints": []
+    },
+    {
+     "symbol": "hpf_slope",
+     "name": "HPF Slope",
+     "shortname": "HP Slope",
+     "flags": 98,
+     "designation": 0,
+     "def": 2.0,
+     "min": 0.0,
+     "max": 4.0,
+     "unit": "",
+     "scalePoints": [
+      {
+       "label": "Off",
+       "value": 0.0
+      },
+      {
+       "label": "12 dB/oct",
+       "value": 1.0
+      },
+      {
+       "label": "24 dB/oct",
+       "value": 2.0
+      },
+      {
+       "label": "36 dB/oct",
+       "value": 3.0
+      },
+      {
+       "label": "48 dB/oct",
+       "value": 4.0
+      }
+     ]
+    },
+    {
+     "symbol": "hpf_emph",
+     "name": "HPF Emphasis",
+     "shortname": "HP Emph",
+     "flags": 2,
+     "designation": 0,
+     "def": 0.0,
+     "min": -12.0,
+     "max": 12.0,
+     "unit": "dB",
+     "scalePoints": []
+    },
+    {
+     "symbol": "lpf_freq",
+     "name": "LPF Cutoff",
+     "shortname": "LP Freq",
+     "flags": 130,
+     "designation": 0,
+     "def": 20000.0,
+     "min": 20.0,
+     "max": 20000.0,
+     "unit": "Hz",
+     "scalePoints": []
+    },
+    {
+     "symbol": "lpf_slope",
+     "name": "LPF Slope",
+     "shortname": "LP Slope",
+     "flags": 98,
+     "designation": 0,
+     "def": 2.0,
+     "min": 0.0,
+     "max": 4.0,
+     "unit": "",
+     "scalePoints": [
+      {
+       "label": "Off",
+       "value": 0.0
+      },
+      {
+       "label": "12 dB/oct",
+       "value": 1.0
+      },
+      {
+       "label": "24 dB/oct",
+       "value": 2.0
+      },
+      {
+       "label": "36 dB/oct",
+       "value": 3.0
+      },
+      {
+       "label": "48 dB/oct",
+       "value": 4.0
+      }
+     ]
+    },
+    {
+     "symbol": "lpf_emph",
+     "name": "LPF Emphasis",
+     "shortname": "LP Emph",
+     "flags": 2,
+     "designation": 0,
+     "def": 0.0,
+     "min": -12.0,
+     "max": 12.0,
+     "unit": "dB",
+     "scalePoints": []
+    },
+    {
+     "symbol": "warmth",
+     "name": "Warmth",
+     "shortname": "Warmth",
+     "flags": 2,
+     "designation": 0,
+     "def": 0.0,
+     "min": 0.0,
+     "max": 100.0,
+     "unit": "%",
+     "scalePoints": []
+    },
+    {
+     "symbol": "phase",
+     "name": "Phase Invert",
+     "shortname": "Phase",
+     "flags": 114,
+     "designation": 0,
+     "def": 0.0,
+     "min": 0.0,
+     "max": 1.0,
+     "unit": "",
+     "scalePoints": [
+      {
+       "label": "Normal",
+       "value": 0.0
+      },
+      {
+       "label": "Inverted",
+       "value": 1.0
+      }
+     ]
+    },
+    {
+     "symbol": "output",
+     "name": "Output Level",
+     "shortname": "Output",
+     "flags": 2,
+     "designation": 0,
+     "def": 0.0,
+     "min": -24.0,
+     "max": 12.0,
+     "unit": "dB",
+     "scalePoints": []
+    }
+   ],
+   "properties": [],
+   "uri": "https://cognate.audio/plugins/cognate-aperture",
+   "version": "2.0-1"
+  },
+  "success": 1,
+  "err_message": ""
+ }
+}

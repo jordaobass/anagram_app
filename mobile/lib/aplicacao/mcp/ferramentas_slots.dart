@@ -202,6 +202,7 @@ class AbrirSlot extends FerramentaMcp {
     // slot vazio: o mesmo "Criar preset aqui" da tela, com este slot como destino
     if (novo) await sessao.editor.novoPresetNoSlot(nomeNovo);
     sessao.avisar('open ${slot.rotulo}');
+    await sessao.esperarBlocosDaPedaleira();
     return _aberto(slot, area, novo: novo);
   }
 

@@ -31,6 +31,7 @@ class AdicionarBloco extends FerramentaMcp {
     final posicao = SessaoMcp.posicaoDe(argumentos);
     final documento = sessao.presetAberto();
     final tipo = argumentos.textoObrigatorio('type');
+    await sessao.esperarBlocosDaPedaleira();
     final definicao = blocosDaBiblioteca(sessao.catalogo()).expand((g) => g.blocos).where((b) => b.uri == tipo).firstOrNull;
     if (definicao == null) throw RecusaFerramenta('Unknown block type "$tipo". Use list_block_types.');
     if (documento.bloco(posicao) != null) {

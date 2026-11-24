@@ -19,6 +19,7 @@ import '../../nucleo/mcp/ferramenta_mcp.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/cenas_do_bloco.dart';
 import '../../nucleo/modelo/documento_preset.dart';
+import '../estado/blocos_da_pedaleira.dart';
 import '../estado/controlador_ajustes.dart';
 import '../estado/controlador_conexao.dart';
 import '../estado/controlador_editor.dart';
@@ -62,8 +63,13 @@ class SessaoMcp {
     return atual;
   }
 
+  /// Espera a pedaleira terminar de descrever os blocos fora do catálogo
+  /// (instalados e do preset aberto, P4) antes de listar ou descrever blocos.
+  Future<void> esperarBlocosDaPedaleira() => _ref.read(blocosDaPedaleiraProvider.notifier).emAndamento;
+
+  /// O catálogo de fábrica com os blocos que a pedaleira descreveu (P4).
   CatalogoBlocos catalogo() =>
-      _ref.read(catalogoProvider).value ?? (throw const RecusaFerramenta('The block catalog is still loading.'));
+      _ref.read(catalogoEmUsoProvider) ?? (throw const RecusaFerramenta('The block catalog is still loading.'));
 
   CatalogoGabinetes gabinetes() =>
       _ref.read(indiceMiniaturasProvider).value?.escolhasDeGabinete ?? const CatalogoGabinetes.vazio();

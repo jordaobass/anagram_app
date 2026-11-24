@@ -86,6 +86,15 @@ class RepositorioPedaleira {
   Future<Resultado<TonsDaPedaleira>> lerTonsDaPedaleira() =>
       _proteger('ler os tons do TONE3000', _api.lerTonsDaPedaleira);
 
+  /// Os blocos instalados (resposta crua). Firmware sem a ação responde com
+  /// erro ou não responde: é aviso, não falha.
+  Future<Resultado<Map<String, dynamic>>> listarPlugins() =>
+      _proteger('listar os blocos instalados', _api.listarPlugins, nivelDaFalha: Level.warning);
+
+  /// A definição de um bloco pela uri (resposta crua).
+  Future<Resultado<Map<String, dynamic>>> infoDoPlugin(String uri) =>
+      _proteger('ler a definição de $uri', () => _api.infoDoPlugin(uri), nivelDaFalha: Level.warning);
+
   Future<Resultado<T>> _proteger<T>(String operacao, Future<T> Function() acao,
       {Level nivelDaFalha = Level.error}) async {
     try {

@@ -14,6 +14,7 @@ import '../protocolo/quadros_hid.dart';
 import '../protocolo/transporte_anagram.dart';
 import 'ajustes_globais_demonstracao.dart';
 import 'organizacao_demonstracao.dart';
+import 'plugins_demonstracao.dart';
 import 'slots_demonstracao.dart';
 import 'tons_demonstracao.dart';
 
@@ -53,6 +54,10 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
 
   /// Falha injetada: firmware sem a capacidade `t3k` (recusa as ações dos tons).
   bool semTone3000 = false;
+
+  /// Falha injetada: firmware sem `plugin-management` (anterior ao 1.14),
+  /// que recusa `read_all_plugins`.
+  bool semListaDePlugins = false;
   final Duration latencia;
   final String firmware;
   final _montador = MontadorQuadros();
@@ -168,7 +173,8 @@ class TransporteDemonstracao with FluxosDoTransporte implements TransporteAnagra
         AcoesAnagram.tocarAoVivo => _tocar(m.carga['presetData']),
         AcoesAnagram.trocarPresets => trocarSlots(_daArea(m), m.carga['fromIndex'], m.carga['toIndex']),
         AcoesAnagram.trocarBancos => trocarBancosDeSlots(_daArea(m), m.carga['positions']),
-        AcoesAnagram.infoBloco => {'data': {'name': '${m.carga['uri']}'.split(':').last}},
+        AcoesAnagram.infoBloco => infoDePluginDemonstracao('${m.carga['uri']}'),
+        AcoesAnagram.plugins when !semListaDePlugins => listaDePluginsDemonstracao(),
         AcoesAnagram.tonsDeFabrica when !semTone3000 => {'success': 1, 'data': {'tones': tonsDeFabricaDemonstracao}},
         AcoesAnagram.tonsDoUsuario when !semTone3000 => paginaDeTonsDemonstracao(m.carga['page'], m.carga['itemsPerPage']),
         _ => {'error': 'Ação desconhecida: ${m.acao}'},

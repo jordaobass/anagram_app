@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../aplicacao/estado/blocos_da_pedaleira.dart';
 import '../aplicacao/conectar_ao_abrir.dart';
 import '../aplicacao/idioma.dart';
 import '../aplicacao/tema.dart';
@@ -42,6 +43,9 @@ class _AppAnagramState extends ConsumerState<AppAnagram> {
 
   @override
   Widget build(BuildContext context) {
+    // os blocos que a pedaleira descreve (Marketplace, P4) são lidos desde a
+    // conexão, não só quando alguma tela os pede; ouvir não redesenha o app
+    ref.listen(blocosDaPedaleiraProvider, (_, _) {});
     final escolhido = ref.watch(idiomaProvider);
     return MaterialApp.router(
       title: AppAnagram.titulo,
