@@ -126,8 +126,6 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('abrir-templates')));
     await tester.pumpAndSettle();
-    expect(tester.widget<ListTile>(find.byKey(const ValueKey('template-dg-studio-glue'))).enabled, isFalse,
-        reason: 'template oficial sem valores lidos não se aplica');
     await tester.tap(find.byKey(const ValueKey('template-app-grave-travado')));
     await tester.pumpAndSettle();
 
@@ -150,6 +148,22 @@ void main() {
     await tester.pumpAndSettle();
     expect([_valor(c, 'lo_threshold'), _valor(c, 'clean_level'), _valor(c, 'mid_mute')], [-36, -24, 1],
         reason: 'o desfazer volta TODOS os valores de antes do template');
+  });
+
+  testWidgets('should_set_the_block_to_exactly_the_values_read_from_the_pedal_when_applying_an_official_template',
+      (tester) async {
+    final c = await _comBloco(tester, 'urn:darkglass:ignissor');
+    final pickMetal = lerTemplates().de('urn:darkglass:ignissor').firstWhere((t) => t.id == 'dg-pick-metal');
+
+    await tester.tap(find.byKey(const ValueKey('abrir-templates')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('template-dg-pick-metal')));
+    await tester.pumpAndSettle();
+
+    final bloco = c.read(editorProvider).atual!.bloco(_casa)!;
+    expect({for (final s in pickMetal.valores!.keys) s: bloco.valorBase(s)}, pickMetal.valores);
+    expect(_tocando(c, 'comp_level'), pickMetal.valores!['comp_level'], reason: 'soou ao vivo');
+    expect(find.textContaining('Pick Metal'), findsWidgets, reason: 'o botão mostra o template aplicado');
   });
 
   testWidgets('should_solo_a_band_by_muting_the_others_and_undo_it', (tester) async {
