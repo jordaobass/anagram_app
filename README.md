@@ -44,7 +44,7 @@ change it in **Settings**, the gear icon).
 | | |
 |---|---|
 | <img src="docs/imagens/en/ignissor.webp" width="420" alt="Ignissor"><br>**Multiband compressor (Ignissor)**: band curves, draggable Threshold and Level, Solo and Mute, a compression curve per band | <img src="docs/imagens/en/entropia.webp" width="420" alt="Entropia"><br>**Multiband drive (Entropia)**: Drive Type and Drive Mode like on the pedal, a waveform that saturates with the drive |
-| <img src="docs/imagens/en/templates.webp" width="420" alt="Templates"><br>**Templates**: Darkglass's own plus starting points from the app, applied live with undo | <img src="docs/imagens/en/axioma.webp" width="420" alt="Axioma"><br>**Axioma Mono Synth**: oscillators, filter and envelope drawn live |
+| <img src="docs/imagens/en/templates.webp" width="420" alt="Templates"><br>**Templates**: Darkglass's official ones for the Ignissor (6) and Entropia (17), with the values read from the pedal, plus starting points from the app, applied live with undo | <img src="docs/imagens/en/axioma.webp" width="420" alt="Axioma"><br>**Axioma Mono Synth**: oscillators, filter and envelope drawn live |
 | <img src="docs/imagens/en/gabinete.webp" width="420" alt="Cabinet"><br>**Cabinets**: model photo, microphone and position, with a searchable gallery | <img src="docs/imagens/en/explicacao.webp" width="420" alt="Parameter explanation"><br>**Every control explained**: rest the mouse on its name to see what it does to the sound on that pedal |
 
 <p align="center"><img src="docs/imagens/en/celular.webp" width="260" alt="On a phone"><br><em>On a phone (Android) the chain becomes a compact grid.</em></p>
@@ -60,6 +60,26 @@ blocks are laid out like the pedal's own screen, with tap tempo; a TONE3000 bloc
 tone already on the pedal; menus have icons and are compact with a mouse; and live editing over USB is
 faster. Output levels, Global EQ and input gain are shown **read-only**: the Anagram accepts those values
 over USB but doesn't apply them to the sound, so adjust them on the pedal itself.
+
+### New in 0.2.0
+
+- **Local AI, fully live**: the assistant edits per scene (`scope`), reads and assigns footswitches,
+  pots and the expression pedal, renames the preset and controls, lists, reads and opens slots, and starts
+  a new preset in an empty slot. Saving is always confirmed by you in the app.
+- **Control: All scenes / Active scene** switch, and presets with **more than 3 scenes** are kept whole
+  and editable. The on/off label of a block says exactly in which scenes it is on or off (e.g. "OFF IN
+  SCENES 1, 3").
+- **Light theme**, or follow the system (**Settings**), and a new top bar: the pedal connection chip on
+  the left, the gear on the right.
+- **Backups**: the app saves a copy of a slot before writing over it (switch in **Settings › Preset
+  backups**), can back up every preset at once, and opens a backup in the editor so you can restore it.
+- **Darkglass Marketplace blocks** are read from the pedal itself (firmware 1.14 or newer), with their
+  real parameters, and show up in the block library.
+- **Official templates** of the Ignissor (6) and Entropia (17) with values read from the pedal; the
+  Axioma templates are listed, their values are still to be read.
+- The Ignissor and Entropia panels take on the pedal's metal look, and the Axioma its neon screen.
+- **French** interface; on macOS the app asks for **Input Monitoring** the right way; **VS Code + GitHub
+  Copilot** configuration in the AI settings.
 
 ## How to install
 
@@ -184,7 +204,7 @@ preset and adjusts the blocks; every change is **heard immediately**, shows up o
 > `choose_cabinet`, `get_controls`, `assign_control` and `release_control` (footswitches, knobs and
 > expression pedal; footswitches follow them in Stomp mode), `rename` (preset or control),
 > `list_slots`, `read_slot` (without opening), `open_slot` (refuses over unsaved edits unless told to
-> discard them), `undo`, `save_preset` (always confirmed by you in the app), `get_global_settings`
+> discard them; on an empty slot it starts a new preset there), `undo`, `save_preset` (always confirmed by you in the app), `get_global_settings`
 > (read only) and `set_global_setting` (footswitch mode only).
 
 **The app teaches the AI the pedal.** It ships a tone-building knowledge base that the assistant reads

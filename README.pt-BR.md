@@ -44,7 +44,7 @@ Interface em **português, inglês, espanhol e francês** (segue o idioma do sis
 | | |
 |---|---|
 | <img src="docs/imagens/ignissor.webp" width="420" alt="Ignissor"><br>**Compressor multibanda (Ignissor)** — curvas das três bandas, Threshold e Level arrastáveis, Solo e Mudo, curva de compressão por banda | <img src="docs/imagens/entropia.webp" width="420" alt="Entropia"><br>**Drive multibanda (Entropia)** — Drive Type e Drive Mode como na pedaleira, onda que satura com o drive |
-| <img src="docs/imagens/templates.webp" width="420" alt="Templates"><br>**Templates** — os da Darkglass e pontos de partida do app, aplicados ao vivo com desfazer | <img src="docs/imagens/axioma.webp" width="420" alt="Axioma"><br>**Axioma Mono Synth** — osciladores, filtro e envelope desenhados ao vivo |
+| <img src="docs/imagens/templates.webp" width="420" alt="Templates"><br>**Templates** — os oficiais da Darkglass do Ignissor (6) e do Entropia (17), com os valores lidos da pedaleira, e pontos de partida do app, aplicados ao vivo com desfazer | <img src="docs/imagens/axioma.webp" width="420" alt="Axioma"><br>**Axioma Mono Synth** — osciladores, filtro e envelope desenhados ao vivo |
 | <img src="docs/imagens/gabinete.webp" width="420" alt="Gabinete"><br>**Gabinetes** — foto do modelo, microfone e posição, com galeria e busca | <img src="docs/imagens/explicacao.webp" width="420" alt="Explicação do parâmetro"><br>**Explicação de cada controle** — pare o mouse no nome e veja o que ele faz com o som naquele pedal |
 
 <p align="center"><img src="docs/imagens/celular.webp" width="260" alt="No celular"><br><em>No celular (Android) a cadeia vira uma grade compacta.</em></p>
@@ -61,6 +61,27 @@ para outro tom que já está na pedaleira; os menus têm ícones e ficam compact
 vivo pelo USB ficou mais rápida. Volume das saídas, Global EQ e ganho de entrada aparecem **só para
 leitura**: a Anagram aceita esses valores pelo USB, mas não os aplica ao som, então ajuste na própria
 pedaleira.
+
+### Novidades da 0.2.0
+
+- **IA local completa, ao vivo**: o assistente edita por cena (`scope`), lê e atribui footswitches, pots
+  e pedal de expressão, renomeia o preset e os controles, lista, lê e abre slots e cria um preset novo num
+  slot vazio. Salvar sempre passa pela sua confirmação no app.
+- Chave **Controlar: Todas as cenas / Só a cena ativa**, e presets com **mais de 3 cenas** são preservados
+  inteiros e editáveis. O rótulo de liga/desliga do bloco diz exatamente em quais cenas ele está ligado ou
+  desligado (ex.: "DESLIGADO NAS CENAS 1, 3").
+- **Tema claro**, ou seguir o sistema (**Configurações**), e barra superior nova: o chip da conexão com a
+  pedaleira à esquerda, a engrenagem à direita.
+- **Backups**: o app guarda uma cópia do slot antes de gravar por cima (interruptor em **Configurações ›
+  Backup dos presets**), faz backup de todos os presets de uma vez e abre um backup no editor para
+  restaurar.
+- **Blocos do Darkglass Marketplace** lidos da própria pedaleira (firmware 1.14 ou mais novo), com os
+  parâmetros reais, e listados na biblioteca de blocos.
+- **Templates oficiais** do Ignissor (6) e do Entropia (17) com valores lidos da pedaleira; os do Axioma
+  estão listados, com os valores ainda por ler.
+- Os painéis do Ignissor e do Entropia ganham o visual metálico da pedaleira, e o do Axioma a tela neon.
+- Interface em **francês**; no macOS o app pede o **Monitoramento de Entrada** do jeito certo;
+  configuração para **VS Code + GitHub Copilot** nos ajustes de IA.
 
 ## Como instalar
 
@@ -186,7 +207,7 @@ na pedaleira só acontece se você confirmar no app.
 > `choose_cabinet`, `get_controls`, `assign_control` e `release_control` (footswitches, pots e pedal de
 > expressão; os footswitches obedecem no modo Stomp), `rename` (preset ou controle), `list_slots`,
 > `read_slot` (sem abrir), `open_slot` (recusa por cima de edição não salva, a menos que a IA diga para
-> descartar), `undo`, `save_preset` (sempre confirmado por você no app), `get_global_settings` (só
+> descartar; num slot vazio, começa um preset novo ali), `undo`, `save_preset` (sempre confirmado por você no app), `get_global_settings` (só
 > leitura) e `set_global_setting` (só o modo dos footswitches) (decisões IA1–IA7, IC1–IC9 e IM1–IM7 em
 > `docs/DECISOES.md`).
 
