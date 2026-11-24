@@ -435,7 +435,7 @@
     }
   },
   "creditoFontesTitulo": "Fontes",
-  "creditoFontes": "Barlow, Saira Stencil e Share Tech Mono (SIL Open Font License) · Permanent Marker (Apache 2.0).",
+  "creditoFontes": "Barlow, Saira Stencil, Share Tech Mono e Orbitron (SIL Open Font License) · Permanent Marker (Apache 2.0).",
   "creditoAvisoTitulo": "Aviso",
   "creditoAviso": "App não oficial, sem vínculo com a Darkglass Electronics. Anagram é marca do fabricante.",
   "diagnosticoPausa": "DIAGNÓSTICO · PAUSA ENTRE RELATÓRIOS USB",
@@ -968,6 +968,18 @@
   "axSaida": "Saída",
   "@axSaida": {
     "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axFecharPainel": "Fechar o painel do bloco",
+  "@axFecharPainel": {
+    "description": "Painel do Axioma Mono Synth (barra do aparelho)"
+  },
+  "axSemTemplates": "O Axioma ainda não tem templates no app",
+  "@axSemTemplates": {
+    "description": "Painel do Axioma Mono Synth (barra do aparelho)"
+  },
+  "axVisorSlot": "Preset aberto",
+  "@axVisorSlot": {
+    "description": "Painel do Axioma Mono Synth (barra do aparelho)"
   },
   "axOutros": "Outros",
   "@axOutros": {

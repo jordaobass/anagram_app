@@ -2058,6 +2058,24 @@ abstract class AppLocalizations {
   /// **'Saída'**
   String get axSaida;
 
+  /// Painel do Axioma Mono Synth (barra do aparelho)
+  ///
+  /// In pt, this message translates to:
+  /// **'Fechar o painel do bloco'**
+  String get axFecharPainel;
+
+  /// Painel do Axioma Mono Synth (barra do aparelho)
+  ///
+  /// In pt, this message translates to:
+  /// **'O Axioma ainda não tem templates no app'**
+  String get axSemTemplates;
+
+  /// Painel do Axioma Mono Synth (barra do aparelho)
+  ///
+  /// In pt, this message translates to:
+  /// **'Preset aberto'**
+  String get axVisorSlot;
+
   /// Título de seção do painel do Axioma Mono Synth
   ///
   /// In pt, this message translates to:
