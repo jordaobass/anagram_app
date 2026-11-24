@@ -51,6 +51,7 @@ Future<void> carregarFontes() async {
     'BarlowCondensed': ['BarlowCondensed-SemiBold', 'BarlowCondensed-Bold'],
     'SairaStencil': ['SairaStencilOne-Regular'],
     'PermanentMarker': ['PermanentMarker-Regular'],
+    'ShareTechMono': ['ShareTechMono-Regular'],
   };
   for (final MapEntry(key: familia, value: arquivos) in familias.entries) {
     final carregador = FontLoader(familia);

@@ -369,6 +369,10 @@ abstract final class Fontes {
   static const rotulo = 'BarlowCondensed';
   static const estencil = 'SairaStencil';
   static const marcador = 'PermanentMarker';
+
+  /// Só no painel do Axioma (tema neon): a voz de display de hardware
+  /// retrô-futurista, monoespaçada, então os valores não dançam.
+  static const tecno = 'ShareTechMono';
 }
 
 /// Estilos de texto fora da escala do Material, cada um com um papel só.

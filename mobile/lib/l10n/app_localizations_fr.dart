@@ -552,7 +552,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get creditoFontes =>
-      'Barlow et Saira Stencil (SIL Open Font License) · Permanent Marker (Apache 2.0).';
+      'Barlow, Saira Stencil et Share Tech Mono (SIL Open Font License) · Permanent Marker (Apache 2.0).';
 
   @override
   String get creditoAvisoTitulo => 'Avertissement';

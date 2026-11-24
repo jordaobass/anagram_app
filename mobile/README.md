@@ -162,4 +162,4 @@ Decisões e pendências: `../docs/DECISOES.md`.
   ao fabricante na tela Sobre (DECISOES A17). Fotos dos tons de fábrica do TONE3000: do Darkglass
   Suite (DECISOES A18). Utilitários sem arte em fonte nenhuma (afinador, mixer, medidores, MIDI,
   gerador, pedal de expressão, looper) têm ícone desenhado pelo app (DECISOES A19).
-- Fontes: Barlow e Saira Stencil (OFL), Permanent Marker (Apache 2.0) — licenças em `assets/fontes/`.
+- Fontes: Barlow, Saira Stencil e Share Tech Mono (OFL; a Share Tech Mono só no painel do Axioma), Permanent Marker (Apache 2.0) — licenças em `assets/fontes/`.
