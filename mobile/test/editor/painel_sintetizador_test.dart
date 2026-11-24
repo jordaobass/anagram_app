@@ -3,6 +3,7 @@
 // liga pela chave do cartão; no celular as seções empilham sem estourar.
 import 'dart:async';
 
+import 'package:anagram_app/apresentacao/componentes/cartao_template.dart';
 import 'package:anagram_app/apresentacao/componentes/desenhos_sintetizador.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
@@ -111,7 +112,7 @@ void main() {
     for (final id in ['dg-filthy-funk', 'dg-burning-bass']) {
       final item = find.byKey(ValueKey('template-$id'));
       await _rolarAte(tester, item);
-      expect(tester.widget<ListTile>(item).enabled, isFalse, reason: '$id sem valores lidos não se aplica');
+      expect(tester.widget<CartaoTemplate>(item).habilitado, isFalse, reason: '$id sem valores lidos não se aplica');
     }
   });
 }

@@ -126,6 +126,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('abrir-templates')));
     await tester.pumpAndSettle();
+    await _rolarAte(tester, find.byKey(const ValueKey('template-app-grave-travado')));
     await tester.tap(find.byKey(const ValueKey('template-app-grave-travado')));
     await tester.pumpAndSettle();
 
@@ -142,6 +143,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('abrir-templates')));
     await tester.pumpAndSettle();
+    await _rolarAte(tester, find.byKey(const ValueKey('template-app-paralelo')));
     await tester.tap(find.byKey(const ValueKey('template-app-paralelo')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('DESFAZER'));
@@ -157,6 +159,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('abrir-templates')));
     await tester.pumpAndSettle();
+    await _rolarAte(tester, find.byKey(const ValueKey('template-dg-pick-metal')));
     await tester.tap(find.byKey(const ValueKey('template-dg-pick-metal')));
     await tester.pumpAndSettle();
 
@@ -278,6 +281,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('abrir-templates')));
     await tester.pumpAndSettle();
+    await _rolarAte(tester, find.byKey(const ValueKey('template-app-grave-travado')));
     await tester.tap(find.byKey(const ValueKey('template-app-grave-travado')));
     await tester.pumpAndSettle();
     expect(porCena(), [-36, -36, -36], reason: 'em "todas as cenas" o template vale nas três');
