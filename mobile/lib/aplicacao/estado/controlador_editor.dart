@@ -159,6 +159,9 @@ class ControladorEditor extends Notifier<EstadoEditor>
 
   void selecionarBloco(PosicaoBloco posicao) => state = state.copiar(selecionado: posicao);
 
+  /// Fecha o painel do bloco (o X da barra do Axioma), sem mexer no preset.
+  void desselecionarBloco() => state = state.copiar(selecionado: null);
+
   /// `arrastando`: ainda no gesto (envio com vazão limitada); ao soltar, final.
   /// `posicao`: o bloco do controle (o Desfazer pode chegar com outro selecionado).
   /// `padrao`: o do catálogo, que as outras cenas tocavam se o bloco não o guarda.

@@ -1,13 +1,9 @@
-// As cores dos painéis temáticos (tema_painel.dart), nos dois brilhos. Cada
-// jogo DERIVA da paleta do app (Paleta.escura / Paleta.clara) e troca só as
-// superfícies, as tintas e os destaques: âmbar de ação, fitas, alertas e LEDs
-// continuam os do case. Os pares passam no AA medido em
-// test/tema/contraste_tema_painel_test.dart (texto 4,5:1; traço 3:1; tinta de
-// marcador sobre o destaque 4,5:1). No claro, destaque e banda seguem a regra
-// TC3: mesma matiz e saturação, luminância ~0,218. No claro o `fundoCase`
-// (a tela dos desenhos: onda, filtro, envelope) é o degrau MAIS claro, e não
-// o mais fundo como no app: o destaque escuro precisa de 3:1 sobre ele, e no
-// cinza do alumínio dava 2,7:1.
+// As cores dos painéis com o tema da tela da pedaleira (tema_painel.dart).
+// Decisão do dono (DECISOES PT9): a aparência é FIXA, a mesma com o app no
+// tema claro ou no escuro, como a tela de um aparelho, que não muda com a
+// luz da sala. Cada jogo deriva de Paleta.escura e troca só superfícies,
+// tintas e destaques; âmbar de ação, fitas, alerta e LEDs são os do case.
+// Os pares passam no AA medido em test/tema/contraste_tema_painel_test.dart.
 import 'package:flutter/material.dart';
 
 import '../../nucleo/catalogo/arranjo_multibanda.dart';
@@ -19,96 +15,54 @@ import 'paleta.dart';
 enum DestaquePainel { ignissor, entropia, axioma }
 
 abstract final class PaletasPainel {
-  /// Alumínio escovado (Ignissor e Entropia): cinza-chumbo no escuro, o
-  /// próprio alumínio da pedaleira no claro.
-  static Paleta metal(Brightness brilho, DestaquePainel destaque) => brilho == Brightness.dark
-      ? _derivar(Paleta.escura, _metalEscuro, _destaquesEscuros[destaque]!, _bandasMetalEscuro)
-      : _derivar(Paleta.clara, _metalClaro, _destaquesClaros[destaque]!, _bandasMetalClaro);
+  /// A tela do Ignissor e do Entropia: alumínio anodizado escuro dentro do
+  /// chassi de alumínio escovado.
+  static Paleta metal(DestaquePainel destaque) => _derivar(_metal, _destaques[destaque]!, _bandasMetal);
 
-  /// Synthwave (Axioma): roxo profundo no escuro, lilás no claro.
-  static Paleta neon(Brightness brilho) => brilho == Brightness.dark
-      ? _derivar(Paleta.escura, _neonEscuro, _destaquesEscuros[DestaquePainel.axioma]!, const {})
-      : _derivar(Paleta.clara, _neonClaro, _destaquesClaros[DestaquePainel.axioma]!, const {});
+  /// A tela do Axioma: synthwave, roxo profundo com neon.
+  static Paleta neon() => _derivar(_neon, _destaques[DestaquePainel.axioma]!, const {});
 
-  /// Fundo da moldura, de cima para baixo, e o reflexo/grade pintado por cima
-  /// (com a opacidade já aplicada). O teste mede o texto sobre cada degrau
-  /// com e sem o reflexo.
-  static List<Color> fundoMetal(Brightness b) =>
-      b == Brightness.dark ? const [Color(0xFF3A4047), Color(0xFF2B2F34), Color(0xFF212428)] : const [Color(0xFFCDD2D7), Color(0xFFB9C0C6), Color(0xFFAAB2B9)];
-  static Color reflexoMetal(Brightness b) =>
-      b == Brightness.dark ? const Color(0x0FFFFFFF) : const Color(0x38FFFFFF);
-  static List<Color> fundoNeon(Brightness b) =>
-      b == Brightness.dark ? const [Color(0xFF2B1D55), Color(0xFF1D1437), Color(0xFF130C27)] : const [Color(0xFFDCD2F5), Color(0xFFCEC2EE), Color(0xFFC2B3E8)];
-  static Color gradeNeon(Brightness b) => b == Brightness.dark ? const Color(0x1AFF4FD0) : const Color(0x1AC21E8F);
+  /// O fundo da tela, de cima para baixo, e o reflexo/grade por cima (com a
+  /// opacidade já aplicada). O teste mede o texto sobre cada degrau.
+  static const telaMetal = [Color(0xFF30353B), Color(0xFF262A2F), Color(0xFF1C1F23)];
+  static const reflexoMetal = Color(0x14FFFFFF);
+  static const telaNeon = [Color(0xFF2B1D55), Color(0xFF1D1437), Color(0xFF130C27)];
+  static const gradeNeon = Color(0x2EFF4FD0);
 
-  /// O friso magenta dos trilhos e dos títulos do neon; no metal, o filete.
-  static Color frisoNeon(Brightness b) => b == Brightness.dark ? const Color(0xFFFF5CD4) : const Color(0xFFD8009E);
-
-  static const _destaquesEscuros = {
+  static const _destaques = {
     DestaquePainel.ignissor: Color(0xFFC4EC3A),
     DestaquePainel.entropia: Color(0xFFF2A33C),
     DestaquePainel.axioma: Color(0xFF43E8F2),
   };
-  static const _destaquesClaros = {
-    DestaquePainel.ignissor: Color(0xFF758A1E),
-    DestaquePainel.entropia: Color(0xFFB96F0E),
-    DestaquePainel.axioma: Color(0xFF0A8F98),
-  };
 
-  static const _metalEscuro = _Superficies(
-    fundoCase: Color(0xFF2A2E33),
+  static const _metal = _Superficies(
+    fundoCase: Color(0xFF25292E),
     painel: Color(0xFF33383E),
-    painelElevado: Color(0xFF3D434A),
+    painelElevado: Color(0xFF41474F),
     filete: Color(0xFF5A626B),
     aluminio: Color(0xFF9CA3AB),
     aluminioClaro: Color(0xFFD5D9DE),
     texto: Color(0xFFF2F4F6),
-    textoSecundario: Color(0xFFBCC2C9),
-    corpoKnob: Color(0xFF1C1F23),
+    textoSecundario: Color(0xFFBEC4CB),
+    corpoKnob: Color(0xFF16181B),
     erro: Color(0xFFFF9C8C),
     linhaThreshold: Color(0xFFC4EC3A),
     linhaLevel: Color(0xFFF55FCB),
   );
-  static const _metalClaro = _Superficies(
-    fundoCase: Color(0xFFF4F5F7),
-    painel: Color(0xFFE3E6E9),
-    painelElevado: Color(0xFFEEF0F2),
-    filete: Color(0xFF9CA4AC),
-    aluminio: Color(0xFF555C64),
-    aluminioClaro: Color(0xFF383E45),
-    texto: Color(0xFF14171A),
-    textoSecundario: Color(0xFF3E444B),
-    tallyTinta: Color(0xFF764C00),
-    linhaThreshold: Color(0xFF637B11),
-    linhaLevel: Color(0xFFD50E9D),
-  );
-  static const _neonEscuro = _Superficies(
-    fundoCase: Color(0xFF1D1437),
+  static const _neon = _Superficies(
+    fundoCase: Color(0xFF4A3290),
     painel: Color(0xFF2A1D50),
-    painelElevado: Color(0xFF352862),
-    filete: Color(0xFF6B52B3),
+    painelElevado: Color(0xFF3A2A6C),
+    filete: Color(0xFF7A5FD0),
     aluminio: Color(0xFFA794DE),
     aluminioClaro: Color(0xFFDED5F8),
     texto: Color(0xFFF5F1FF),
-    textoSecundario: Color(0xFFC5B9EA),
+    textoSecundario: Color(0xFFCABFF0),
     corpoKnob: Color(0xFF140C29),
-  );
-  static const _neonClaro = _Superficies(
-    fundoCase: Color(0xFFFBF9FF),
-    painel: Color(0xFFF0EBFC),
-    painelElevado: Color(0xFFF9F7FE),
-    filete: Color(0xFFA592DB),
-    aluminio: Color(0xFF5E48A5),
-    aluminioClaro: Color(0xFF3D2E70),
-    texto: Color(0xFF1A1233),
-    textoSecundario: Color(0xFF463A74),
-    tallyTinta: Color(0xFF764C00),
-    corpoKnob: Color(0xFF2A1D50),
-    alcaGrafico: Color(0xFF2A1D50),
-    mioloAlca: Color(0xFFF9F7FE),
+    erro: Color(0xFFFFA99C),
   );
 
-  static const _bandasMetalEscuro = {
+  static const _bandasMetal = {
     (PaletaBandas.ignissor, BandaMultibanda.graves): Color(0xFF6F98F2),
     (PaletaBandas.ignissor, BandaMultibanda.medios): Color(0xFF3CCBA6),
     (PaletaBandas.ignissor, BandaMultibanda.agudos): Color(0xFFE070BE),
@@ -116,19 +70,11 @@ abstract final class PaletasPainel {
     (PaletaBandas.entropia, BandaMultibanda.medios): Color(0xFFA989F0),
     (PaletaBandas.entropia, BandaMultibanda.agudos): Color(0xFFF2A33C),
   };
-  static const _bandasMetalClaro = {
-    (PaletaBandas.ignissor, BandaMultibanda.graves): Color(0xFF487CED),
-    (PaletaBandas.ignissor, BandaMultibanda.medios): Color(0xFF279077),
-    (PaletaBandas.ignissor, BandaMultibanda.agudos): Color(0xFFCD52A6),
-    (PaletaBandas.entropia, BandaMultibanda.graves): Color(0xFF288E88),
-    (PaletaBandas.entropia, BandaMultibanda.medios): Color(0xFF8E6AE7),
-    (PaletaBandas.entropia, BandaMultibanda.agudos): Color(0xFFB96F0E),
-  };
 
   /// Dentro do painel temático só existe um bloco: toda família vira o
   /// destaque dele (a chave Comp, o arco, a opção marcada).
-  static Paleta _derivar(Paleta base, _Superficies s, Color destaque, Map<(PaletaBandas, BandaMultibanda), Color> bandas) =>
-      base.copyWith(
+  static Paleta _derivar(_Superficies s, Color destaque, Map<(PaletaBandas, BandaMultibanda), Color> bandas) =>
+      Paleta.escura.copyWith(
         fundoCase: s.fundoCase,
         painel: s.painel,
         painelElevado: s.painelElevado,
@@ -137,16 +83,73 @@ abstract final class PaletasPainel {
         aluminioClaro: s.aluminioClaro,
         texto: s.texto,
         textoSecundario: s.textoSecundario,
-        tallyTinta: s.tallyTinta,
         erro: s.erro,
         corpoKnob: s.corpoKnob,
-        alcaGrafico: s.alcaGrafico,
-        mioloAlca: s.mioloAlca,
         linhaThreshold: s.linhaThreshold,
         linhaLevel: s.linhaLevel,
         familias: {for (final f in FamiliaBloco.values) f: destaque},
-        bandas: {...base.bandas, ...bandas},
+        bandas: {...Paleta.escura.bandas, ...bandas},
       );
+}
+
+/// O chassi de alumínio escovado em volta da tela (os três painéis).
+abstract final class CoresChassi {
+  static const gradiente = [Color(0xFFD3D8DC), Color(0xFFAEB5BC), Color(0xFF8C949C)];
+  static const riscoClaro = Color(0x40FFFFFF);
+  static const riscoEscuro = Color(0x1F000000);
+  static const biselLuz = Color(0xFFF7F9FA);
+  static const biselSombra = Color(0xFF4A5057);
+  static const especular = Color(0x59FFFFFF);
+
+  /// Letra "gravada" no alumínio: tinta escura com a borda de luz embaixo.
+  static const tintaGravada = Color(0xFF1B1E22);
+  static const luzGravada = Color(0x99FFFFFF);
+  static const parafuso = Color(0xFFDCE0E4);
+
+  /// A barra de cima da tela do metal: alumínio claro com letra gravada.
+  static const barra = [Color(0xFFE6EAED), Color(0xFFC6CCD1)];
+  static const tintaSecundariaGravada = Color(0xFF30353B);
+  static const placaBotao = Color(0xFFF1F3F5);
+  static const fendaParafuso = Color(0xFF3A3F45);
+  static const sombraRelevo = Color(0x8C000000);
+
+  /// A placa anodizada escura (colunas e cartões do metal).
+  static const escovadoPlacaClaro = Color(0x1AFFFFFF);
+  static const escovadoPlacaEscuro = Color(0x33000000);
+  static const especularPlaca = Color(0x12FFFFFF);
+  static const luzBiselPlaca = Color(0x40FFFFFF);
+  static const luzRanhura = Color(0x1FFFFFFF);
+  static const luzGravacaoPlaca = Color(0x26FFFFFF);
+}
+
+/// O neon do Axioma: as cores que não são papel do case.
+abstract final class CoresNeon {
+  static const ciano = Color(0xFF43E8F2);
+  static const rosa = Color(0xFFFF5CD4);
+  static const azul = Color(0xFF3D8BFF);
+  static const nucleo = Color(0xFFF2FFFF);
+
+  /// A faixa do título dos módulos ("Osc 1 Vol"): magenta fundo, texto branco.
+  static const faixaTitulo = Color(0xFF8A1E78);
+  static const sobreFaixa = Color(0xFFFFFFFF);
+
+  /// O visor de LCD (o slot) e o campo "Controlar".
+  static const lcdFundo = Color(0xFF062B33);
+  static const lcdTinta = Color(0xFF6CF6FF);
+  static const campoFundo = Color(0xFF1C3AA6);
+  static const campoTinta = Color(0xFFE3F7FF);
+  static const barra = [Color(0xFF3B2C7E), Color(0xFF241848)];
+  static const furo = Color(0xFF0E0820);
+
+  /// A barra azul da janela "Select Block Template".
+  static const barraJanela = Color(0xFF2347B8);
+
+  /// Linhas de varredura e grão por cima da tela.
+  static const varredura = Color(0x0A000000);
+  static const grao = Color(0x08FFFFFF);
+
+  /// Quanto o brilho espalha (sigma do desfoque), no pico do pulso.
+  static const espalhamento = 7.0;
 }
 
 /// Os papéis que o tema do painel troca; nulo herda da paleta do app.
@@ -160,11 +163,8 @@ class _Superficies {
     required this.aluminioClaro,
     required this.texto,
     required this.textoSecundario,
-    this.tallyTinta,
     this.erro,
     this.corpoKnob,
-    this.alcaGrafico,
-    this.mioloAlca,
     this.linhaThreshold,
     this.linhaLevel,
   });
@@ -177,11 +177,8 @@ class _Superficies {
   final Color aluminioClaro;
   final Color texto;
   final Color textoSecundario;
-  final Color? tallyTinta;
   final Color? erro;
   final Color? corpoKnob;
-  final Color? alcaGrafico;
-  final Color? mioloAlca;
   final Color? linhaThreshold;
   final Color? linhaLevel;
 }

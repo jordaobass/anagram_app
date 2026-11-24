@@ -62,9 +62,9 @@ class PainelParametros extends ConsumerWidget {
         const SizedBox(height: Espacos.m),
         SeletorGabinete(bloco: bloco, definicao: definicao),
         SeletorTone3000(bloco: bloco, definicao: definicao),
+        // a tela da pedaleira é a mesma com o app claro ou escuro (PT9)
         MolduraTemaPainel(
-          tema: TemaPainel.doBloco(definicao.uri, Theme.of(context).brightness),
-          titulo: definicao.nome,
+          tema: TemaPainel.doBloco(definicao.uri),
           child: _painelDoBloco(ref, parametros, bloco, definicao, cena),
         ),
       ]),
