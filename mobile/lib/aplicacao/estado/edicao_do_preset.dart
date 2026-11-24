@@ -27,10 +27,12 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
   }
 
   /// Volta ao documento de antes do [ponto], se o preset ainda é o que ele
-  /// deixou; devolve se voltou. Soa ao vivo, como qualquer edição.
+  /// deixou (trocar de cena depois não conta); fica na cena atual. Devolve se
+  /// voltou. Soa ao vivo, como qualquer edição.
   Future<bool> desfazer(PontoDesfazer ponto) async {
-    if (!ponto.valeEm(state.atual)) return false;
-    await aplicarDocumento(ponto.antes);
+    final atual = state.atual;
+    if (atual == null || !ponto.valeEm(atual)) return false;
+    await aplicarDocumento(ponto.voltarEm(atual));
     return true;
   }
 

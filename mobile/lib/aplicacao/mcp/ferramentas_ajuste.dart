@@ -173,7 +173,9 @@ class EscolherCena extends FerramentaMcp {
     final cena = argumentos.inteiroObrigatorio('scene');
     final quantidade = sessao.presetAberto().quantidadeCenas;
     if (cena < 1 || cena > quantidade) throw RecusaFerramenta('"scene" must be 1 to $quantidade (this preset has $quantidade scenes).');
-    await sessao.mudar('scene $cena', () => sessao.editor.escolherCena(cena));
+    // trocar de cena não é edição: não entra no histórico do undo
+    await sessao.editor.escolherCena(cena);
+    sessao.avisar('scene $cena');
     return ResultadoFerramenta.dados({'active_scene': cena});
   }
 }
@@ -186,7 +188,8 @@ class Desfazer extends FerramentaMcp {
   String get nome => 'undo';
 
   @override
-  String get descricao => 'Undo the last change made through these tools (one step per call).';
+  String get descricao => 'Undo the last change made through these tools (one step per call). Switching scene is '
+      'not a change: undo skips it and keeps the current scene.';
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto(const {});
