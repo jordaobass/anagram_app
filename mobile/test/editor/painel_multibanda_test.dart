@@ -5,6 +5,8 @@ import 'dart:async';
 
 import 'package:anagram_app/aplicacao/estado/controlador_conexao.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
+import 'package:anagram_app/aplicacao/estado/escopo_cenas.dart';
+import 'package:anagram_app/nucleo/modelo/cenas_do_bloco.dart';
 import 'package:anagram_app/apresentacao/tema/tokens.dart';
 import 'package:anagram_app/nucleo/demonstracao/transporte_demonstracao.dart';
 import 'package:anagram_app/nucleo/modelo/bloco_preset.dart';
@@ -124,8 +126,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('abrir-templates')));
     await tester.pumpAndSettle();
-    expect(tester.widget<ListTile>(find.byKey(const ValueKey('template-dg-studio-glue'))).enabled, isFalse,
-        reason: 'template oficial sem valores lidos não se aplica');
+    await _rolarAte(tester, find.byKey(const ValueKey('template-app-grave-travado')));
     await tester.tap(find.byKey(const ValueKey('template-app-grave-travado')));
     await tester.pumpAndSettle();
 
@@ -142,12 +143,30 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('abrir-templates')));
     await tester.pumpAndSettle();
+    await _rolarAte(tester, find.byKey(const ValueKey('template-app-paralelo')));
     await tester.tap(find.byKey(const ValueKey('template-app-paralelo')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('DESFAZER'));
     await tester.pumpAndSettle();
     expect([_valor(c, 'lo_threshold'), _valor(c, 'clean_level'), _valor(c, 'mid_mute')], [-36, -24, 1],
         reason: 'o desfazer volta TODOS os valores de antes do template');
+  });
+
+  testWidgets('should_set_the_block_to_exactly_the_values_read_from_the_pedal_when_applying_an_official_template',
+      (tester) async {
+    final c = await _comBloco(tester, 'urn:darkglass:ignissor');
+    final pickMetal = lerTemplates().de('urn:darkglass:ignissor').firstWhere((t) => t.id == 'dg-pick-metal');
+
+    await tester.tap(find.byKey(const ValueKey('abrir-templates')));
+    await tester.pumpAndSettle();
+    await _rolarAte(tester, find.byKey(const ValueKey('template-dg-pick-metal')));
+    await tester.tap(find.byKey(const ValueKey('template-dg-pick-metal')));
+    await tester.pumpAndSettle();
+
+    final bloco = c.read(editorProvider).atual!.bloco(_casa)!;
+    expect({for (final s in pickMetal.valores!.keys) s: bloco.valorBase(s)}, pickMetal.valores);
+    expect(_tocando(c, 'comp_level'), pickMetal.valores!['comp_level'], reason: 'soou ao vivo');
+    expect(find.textContaining('Pick Metal'), findsWidgets, reason: 'o botão mostra o template aplicado');
   });
 
   testWidgets('should_solo_a_band_by_muting_the_others_and_undo_it', (tester) async {
@@ -241,5 +260,35 @@ void main() {
     expect(_valor(c, 'lo_threshold'), lessThan(depoisDoLeitor));
     semantica.dispose();
   });
-}
 
+  testWidgets('should_restore_every_scene_when_undoing_a_template_applied_to_all_scenes', (tester) async {
+    final c = await _comBloco(tester, 'urn:darkglass:ignissor');
+    final editor = c.read(editorProvider.notifier);
+    // só a cena ativa (o padrão): um lo_threshold próprio em cada cena
+    for (final (cena, valor) in [(1, -10), (2, -20), (3, -30)]) {
+      unawaited(editor.escolherCena(cena));
+      await tester.pumpAndSettle();
+      editor.alterarParametro('lo_threshold', valor, arrastando: false, posicao: _casa);
+      await tester.pumpAndSettle();
+    }
+    unawaited(editor.escolherCena(2));
+    await tester.pumpAndSettle();
+    List<num?> porCena() =>
+        [for (final cena in [1, 2, 3]) c.read(editorProvider).atual!.bloco(_casa)!.valorNaCena('lo_threshold', cena)];
+    expect(porCena(), [-10, -20, -30]);
+
+    c.read(escopoCenasProvider.notifier).definir(EscopoCenas.todasAsCenas);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('abrir-templates')));
+    await tester.pumpAndSettle();
+    await _rolarAte(tester, find.byKey(const ValueKey('template-app-grave-travado')));
+    await tester.tap(find.byKey(const ValueKey('template-app-grave-travado')));
+    await tester.pumpAndSettle();
+    expect(porCena(), [-36, -36, -36], reason: 'em "todas as cenas" o template vale nas três');
+
+    await tester.tap(find.text('DESFAZER'));
+    await tester.pumpAndSettle();
+    expect(porCena(), [-10, -20, -30], reason: 'o desfazer devolve o valor de cada cena');
+    expect(_tocando(c, 'lo_threshold'), -20, reason: 'e a pedaleira volta a tocar o da cena 2');
+  });
+}

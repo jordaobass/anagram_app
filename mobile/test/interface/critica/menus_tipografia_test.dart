@@ -44,7 +44,7 @@ void main() {
     expect(tester.getSize(find.byKey(const ValueKey('op-mover'))).height, Medidas.alturaItemMenuComMouse);
     final limpar = _estiloDesenhado(tester, textosPt.mpLimpar);
     _confereTipoDeMenu(limpar);
-    expect(limpar.color, Cores.erro);
+    expect(limpar.color, Paleta.escura.erro);
   }, variant: _computador);
 
   testWidgets('should_draw_block_menu_items_in_the_menu_type', (tester) async {
@@ -67,13 +67,13 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       theme: TemaApp.escuro(),
       home: Scaffold(
-          body: SeletorOpcao(parametro: parametro, valor: 1, cor: Cores.aluminio, largura: 240, aoMudar: (_, {required arrastando}) {})),
+          body: SeletorOpcao(parametro: parametro, valor: 1, cor: Paleta.escura.aluminio, largura: 240, aoMudar: (_, {required arrastando}) {})),
     ));
     await _tocar(tester, find.byKey(const ValueKey('abrir-modo')));
 
     final marcada = find.byKey(const ValueKey('opcao-modo-1'));
     expect(find.descendant(of: marcada, matching: find.byIcon(Icons.check)), findsOneWidget);
-    expect(tester.widget<Icon>(find.descendant(of: marcada, matching: find.byIcon(Icons.check))).color, Cores.tally);
+    expect(tester.widget<Icon>(find.descendant(of: marcada, matching: find.byIcon(Icons.check))).color, Paleta.escura.tally);
     expect(find.descendant(of: find.byKey(const ValueKey('opcao-modo-0')), matching: find.byIcon(Icons.check)), findsNothing);
     expect(tester.getSize(marcada).height, Medidas.alturaItemMenuComMouse, reason: 'sem o ListTile de 56px');
     _confereTipoDeMenu(_estiloDesenhado(tester, 'Pesado'));

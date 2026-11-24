@@ -126,7 +126,7 @@ void main() {
     expect(find.byKey(_pulso), findsNothing);
     final desenho = find.descendant(of: _pilula('scene'), matching: find.byType(DecoratedBox)).first;
     final cor = (tester.widget<DecoratedBox>(desenho).decoration as BoxDecoration).color;
-    expect(cor, Cores.modoScene, reason: 'acesa por inteiro já no primeiro quadro, sem transição');
+    expect(cor, Paleta.escura.modoScene, reason: 'acesa por inteiro já no primeiro quadro, sem transição');
     expect(_acesas(tester), ['scene']);
   });
 

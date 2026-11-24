@@ -6,7 +6,9 @@ import 'package:flutter/rendering.dart';
 import '../tema/tokens.dart';
 
 class PintorFader extends CustomPainter {
-  const PintorFader({required this.fracao, required this.origem, required this.cor, required this.focado});
+  const PintorFader({required this.cores, required this.fracao, required this.origem, required this.cor, required this.focado});
+
+  final Paleta cores;
 
   final double fracao;
 
@@ -21,24 +23,24 @@ class PintorFader extends CustomPainter {
     final topo = Medidas.alturaCursorFader / 2;
     final curso = size.height - Medidas.alturaCursorFader;
     double y(double f) => topo + curso * (1 - f);
-    canvas.drawLine(Offset(x, y(0)), Offset(x, y(1)), _traco(Cores.filete));
+    canvas.drawLine(Offset(x, y(0)), Offset(x, y(1)), _traco(cores.filete));
     canvas.drawLine(Offset(x - Medidas.marcaZeroFader, y(origem)), Offset(x + Medidas.marcaZeroFader, y(origem)),
-        _traco(Cores.aluminio)..strokeWidth = Medidas.filete);
+        _traco(cores.aluminio)..strokeWidth = Medidas.filete);
     canvas.drawLine(Offset(x, y(origem)), Offset(x, y(fracao)), _traco(cor));
     final cursor = RRect.fromRectAndRadius(
       Rect.fromCenter(center: Offset(x, y(fracao)), width: Medidas.larguraCursorFader, height: Medidas.alturaCursorFader),
       const Radius.circular(Raios.canto),
     );
-    canvas.drawRRect(cursor, Paint()..color = Cores.painelElevado);
+    canvas.drawRRect(cursor, Paint()..color = cores.corpoKnob);
     canvas.drawRRect(
       cursor,
       Paint()
-        ..color = focado ? Cores.tally : Cores.aluminio
+        ..color = focado ? cores.tallyTinta : cores.aluminio
         ..style = PaintingStyle.stroke
         ..strokeWidth = focado ? Medidas.contornoSelecao : Medidas.filete,
     );
     canvas.drawLine(Offset(x - Medidas.larguraCursorFader / 2 + Medidas.espessuraArco, y(fracao)),
-        Offset(x + Medidas.larguraCursorFader / 2 - Medidas.espessuraArco, y(fracao)), _traco(Cores.fitaGaffer));
+        Offset(x + Medidas.larguraCursorFader / 2 - Medidas.espessuraArco, y(fracao)), _traco(cores.fitaGaffer));
   }
 
   Paint _traco(Color cor) => Paint()
@@ -49,5 +51,5 @@ class PintorFader extends CustomPainter {
 
   @override
   bool shouldRepaint(PintorFader antigo) =>
-      antigo.fracao != fracao || antigo.origem != origem || antigo.cor != cor || antigo.focado != focado;
+      antigo.cores != cores || antigo.fracao != fracao || antigo.origem != origem || antigo.cor != cor || antigo.focado != focado;
 }

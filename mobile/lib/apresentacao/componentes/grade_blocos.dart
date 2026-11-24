@@ -32,7 +32,7 @@ class GradeBlocos extends ConsumerWidget {
           width: geometria.larguraTotal,
           height: geometria.alturaLinha * 2 + Espacos.s,
           child: CustomPaint(
-            painter: _pintor(documento, geometria),
+            painter: _pintor(documento, geometria, context.cores),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: Medidas.margemJaque),
               child: Column(children: [
@@ -61,7 +61,7 @@ class GradeBlocos extends ConsumerWidget {
     );
   }
 
-  static PintorLinhaSinal _pintor(DocumentoPreset documento, GeometriaGrade geometria) {
+  static PintorLinhaSinal _pintor(DocumentoPreset documento, GeometriaGrade geometria, Paleta cores) {
     int? casaCom(String uri) {
       for (final bloco in documento.blocosDaLinha(1)) {
         if (bloco.uri == uri) return bloco.posicao.casa;
@@ -70,6 +70,7 @@ class GradeBlocos extends ConsumerWidget {
     }
 
     return PintorLinhaSinal(
+      cores: cores,
       geometria: geometria,
       ocupadas: [for (final bloco in documento.blocosDaLinha(1)) bloco.posicao.casa]..sort(),
       ocupadas2: [for (final bloco in documento.blocosDaLinha(2)) bloco.posicao.casa]..sort(),

@@ -34,7 +34,7 @@ void main() {
     _todosComIcone(tester);
     final limpar = find.byKey(const ValueKey('op-limpar'));
     final texto = tester.widget<Text>(find.descendant(of: limpar, matching: find.text(textosPt.mpLimpar)));
-    expect(texto.style?.color, Cores.erro);
+    expect(texto.style?.color, Paleta.escura.erro);
     final divisores = find.byType(PopupMenuDivider).evaluate().map((e) => tester.getCenter(find.byWidget(e.widget)).dy);
     final exportar = tester.getCenter(find.byKey(const ValueKey('op-exportar'))).dy;
     expect(divisores.any((y) => y > exportar && y < tester.getCenter(limpar).dy), isTrue,
@@ -57,12 +57,15 @@ void main() {
     expect(tester.widget<PopupMenuButton<Object?>>(menu).tooltip, textosPt.uiMenuArquivo);
   });
 
-  testWidgets('should_write_cancel_in_neutral_text_in_the_templates_dialog', (tester) async {
+  testWidgets('should_close_the_templates_window_with_a_neutral_x_not_an_action_amber', (tester) async {
     await abrirComBloco(tester, 'urn:darkglass:ignissor', tamanho: const Size(1440, 2400));
     await _tocar(tester, find.byKey(const ValueKey('abrir-templates')));
 
-    final cancelar = find.widgetWithText(TextButton, textosPt.cancelar);
-    final estilo = tester.widget<TextButton>(cancelar).style;
-    expect(estilo?.foregroundColor?.resolve({}), Cores.texto);
+    // a janela "Select Block Template" fecha pelo X, como na pedaleira: ele é
+    // neutro (a tinta da barra), nunca o âmbar de ação
+    final fechar = find.byKey(const ValueKey('fechar-templates'));
+    final cor = tester.widget<IconButton>(fechar).color;
+    expect(cor, isNot(tester.element(fechar).cores.tallyTinta));
+    expect(cor, isNot(tester.element(fechar).cores.tally));
   });
 }

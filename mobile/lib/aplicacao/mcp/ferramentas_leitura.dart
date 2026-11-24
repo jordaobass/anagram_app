@@ -23,9 +23,10 @@ class LerPresetAtual extends FerramentaMcp {
 
   @override
   Future<ResultadoFerramenta> executar(Map<String, dynamic> argumentos) async {
-    final documento = sessao.presetAberto();
+    sessao.presetAberto();
+    await sessao.esperarBlocosDaPedaleira();
     final descricao = DescricaoPreset(sessao.definicao, sessao.gabinetes());
-    return ResultadoFerramenta.dados(descricao.preset(sessao.estado, documento));
+    return ResultadoFerramenta.dados(descricao.preset(sessao.estado, sessao.presetAberto()));
   }
 }
 
@@ -55,6 +56,7 @@ class ListarTiposDeBloco extends FerramentaMcp {
   @override
   Future<ResultadoFerramenta> executar(Map<String, dynamic> argumentos) async {
     final familia = FamiliaBloco.values.where((f) => f.name == argumentos['family']).firstOrNull;
+    await sessao.esperarBlocosDaPedaleira();
     final grupos = blocosDaBiblioteca(sessao.catalogo(), busca: argumentos.textoOpcional('search') ?? '', familia: familia);
     final comParametros = argumentos['include_parameters'] == true;
     return ResultadoFerramenta.dados([

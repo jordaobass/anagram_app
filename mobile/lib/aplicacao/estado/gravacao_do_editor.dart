@@ -10,6 +10,7 @@ import '../../nucleo/modelo/presets_fabrica.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../../nucleo/protocolo/erros_anagram.dart';
 import '../casos_de_uso/salvar_no_slot.dart';
+import '../copias/copia_automatica.dart';
 import 'ao_vivo_do_editor.dart';
 import 'controlador_biblioteca.dart';
 import 'estado_editor.dart';
@@ -92,7 +93,7 @@ mixin GravacaoDoEditor on Notifier<EstadoEditor>, AoVivoDoEditor {
     final documento = mesmoPreset ? atual : atual.comUuid(novoUuidPreset());
     state = state.copiar(salvando: true);
     try {
-      final resultado = await SalvarNoSlot(repositorio)
+      final resultado = await SalvarNoSlot(repositorio, copia: ref.read(guardaDeCopiaProvider))
           .executar(slot, documento, sobrescreverConfirmado: confirmado, area: area, aberto: aberto);
       if (resultado case PresetSalvo(:final relido)) await _aplicarSalvo(slot, area, relido, gravado: atual);
       return resultado;

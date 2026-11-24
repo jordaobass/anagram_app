@@ -38,7 +38,9 @@ class GeometriaGlobalEq {
 }
 
 class PintorGlobalEq extends CustomPainter {
-  const PintorGlobalEq(this.bandas, {required this.cor, this.ativa, this.ganhoGeral = 0});
+  const PintorGlobalEq(this.bandas, {required this.cores, required this.cor, this.ativa, this.ganhoGeral = 0});
+
+  final Paleta cores;
 
   final List<BandaGlobalEq> bandas;
   final Color cor;
@@ -77,26 +79,26 @@ class PintorGlobalEq extends CustomPainter {
   static const _escalaDb = EscalaGanho(topo: GeometriaGlobalEq.dbVisivel, base: -GeometriaGlobalEq.dbVisivel, passo: 5);
 
   void _grade(Canvas canvas, Size size, GeometriaGlobalEq g) {
-    final fina = _traco(Cores.filete, Medidas.filete);
+    final fina = _traco(cores.filete, Medidas.filete);
     for (final hz in marcasDeFrequencia) {
       final x = g.x(hz.toDouble());
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), fina);
     }
     for (final db in _escalaDb.marcas) {
-      final linha = db == 0 ? _traco(Cores.aluminio, Medidas.filete) : fina;
+      final linha = db == 0 ? _traco(cores.aluminio, Medidas.filete) : fina;
       canvas.drawLine(Offset(0, g.y(db)), Offset(size.width, g.y(db)), linha);
     }
     final (topo, base) = (_escalaDb.topo, _escalaDb.base);
-    pintarRotuloDoEixo(canvas, rotuloDoDb(topo), Medidas.fonteEixoEq, (_) => Offset(Espacos.xs, g.y(topo)));
-    pintarRotuloDoEixo(canvas, rotuloDoDb(base), Medidas.fonteEixoEq,
+    pintarRotuloDoEixo(canvas, cores, rotuloDoDb(topo), Medidas.fonteEixoEq, (_) => Offset(Espacos.xs, g.y(topo)));
+    pintarRotuloDoEixo(canvas, cores, rotuloDoDb(base), Medidas.fonteEixoEq,
         (_) => Offset(Espacos.xs, g.y(base) - Medidas.fonteEixoEq - Espacos.xs));
   }
 
   void _ponto(Canvas canvas, Offset centro, {required bool destaque, required bool ligada}) {
-    final miolo = ligada ? Cores.fitaGaffer : Cores.fitaGaffer.withValues(alpha: Opacidades.itemIndisponivel);
+    final miolo = ligada ? cores.alcaGrafico : cores.alcaGrafico.withValues(alpha: Opacidades.itemIndisponivel);
     canvas.drawCircle(centro, Medidas.raioPontoEq, Paint()..color = miolo);
     canvas.drawCircle(centro, Medidas.raioPontoEq,
-        _traco(destaque ? Cores.tally : Cores.painel, destaque ? Medidas.contornoSelecao : Medidas.filete));
+        _traco(destaque ? cores.tallyTinta : cores.painel, destaque ? Medidas.contornoSelecao : Medidas.filete));
   }
 
   Paint _traco(Color cor, double espessura) => Paint()
@@ -106,7 +108,7 @@ class PintorGlobalEq extends CustomPainter {
 
   @override
   bool shouldRepaint(PintorGlobalEq antigo) {
-    if (antigo.ativa != ativa || antigo.cor != cor || antigo.ganhoGeral != ganhoGeral) return true;
+    if (antigo.cores != cores || antigo.ativa != ativa || antigo.cor != cor || antigo.ganhoGeral != ganhoGeral) return true;
     if (antigo.bandas.length != bandas.length) return true;
     for (var i = 0; i < bandas.length; i++) {
       final (a, b) = (antigo.bandas[i], bandas[i]);

@@ -17,3 +17,16 @@ Future<bool> abrirNoNavegador(Uri endereco) async {
     return false;
   }
 }
+
+/// Abre a pasta no gerenciador de arquivos do sistema (a dos backups).
+Future<bool> abrirPasta(String caminho) async {
+  final endereco = Uri.directory(caminho);
+  try {
+    final abriu = await launchUrl(endereco);
+    if (!abriu) registro.w('pasta: o sistema não abriu $caminho');
+    return abriu;
+  } on Object catch (erro) {
+    registro.w('pasta: falha ao abrir $caminho', error: erro);
+    return false;
+  }
+}

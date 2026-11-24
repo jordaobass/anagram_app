@@ -8,6 +8,7 @@ import '../../nucleo/modelo/documento_preset.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../../nucleo/protocolo/erros_anagram.dart';
 import '../../nucleo/resultado.dart';
+import '../copias/copia_automatica.dart';
 import '../provedores.dart';
 import 'controlador_biblioteca.dart';
 import 'controlador_conexao.dart';
@@ -31,6 +32,10 @@ class AcoesDaLista {
     // a fábrica é do app, não da pedaleira: não há o que apagar (o menu nem oferece)
     if (biblioteca.naFabrica) return const Falha(ErroRespostaInvalida('A área Fábrica é só leitura.'));
     final area = biblioteca.areaSelecionada;
+    // limpar não tem volta: o que está no slot vai para o backup antes (BK1)
+    if (await _ref.read(guardaDeCopiaProvider)?.lerEGuardar(repositorio, slot, area) case final erro?) {
+      return Falha(erro);
+    }
     final resultado = await repositorio.excluir(slot, area: area);
     if (resultado is Sucesso) {
       _ref.read(bibliotecaProvider.notifier).registrarVazio(slot);

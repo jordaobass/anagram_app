@@ -12,12 +12,12 @@ class MolduraCase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => CustomPaint(
-        foregroundPainter: const _PintorCantoneiras(),
+        foregroundPainter: _PintorCantoneiras(cores: context.cores),
         child: Container(
           padding: preenchimento,
           decoration: BoxDecoration(
-            color: Cores.painel,
-            border: Border.all(color: Cores.filete, width: Medidas.filete),
+            color: context.cores.painel,
+            border: Border.all(color: context.cores.filete, width: Medidas.filete),
             borderRadius: BorderRadius.circular(Raios.canto),
           ),
           child: child,
@@ -26,12 +26,14 @@ class MolduraCase extends StatelessWidget {
 }
 
 class _PintorCantoneiras extends CustomPainter {
-  const _PintorCantoneiras();
+  const _PintorCantoneiras({required this.cores});
+
+  final Paleta cores;
 
   @override
   void paint(Canvas canvas, Size size) {
     final tinta = Paint()
-      ..color = Cores.aluminio
+      ..color = cores.aluminio
       ..style = PaintingStyle.stroke
       ..strokeWidth = Medidas.contornoSelecao;
     const t = Medidas.cantoneira;
@@ -51,5 +53,5 @@ class _PintorCantoneiras extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_PintorCantoneiras antigo) => false;
+  bool shouldRepaint(_PintorCantoneiras antigo) => antigo.cores != cores;
 }

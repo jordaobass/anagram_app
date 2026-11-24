@@ -28,12 +28,14 @@ class EditorPrincipal extends ConsumerWidget {
       return carregando ? const Center(child: CircularProgressIndicator()) : EditorVazio(aoAbrirLista: aoAbrirLista);
     }
     final espaco = compacto ? Espacos.m : Espacos.l;
+    // entre a fita, as cenas e a cadeia: mais junto com mouse (DECISOES BC1)
+    final entreFaixas = compacto ? Espacos.m : MedidasDoTopo.daPlataforma.entreFaixas;
     return ListView(
       key: const ValueKey('rolagem-editor'),
       padding: EdgeInsets.all(espaco),
       children: [
         FaixaPreset(compacta: compacto, aoTocarSlot: aoAbrirLista),
-        SizedBox(height: espaco),
+        SizedBox(height: entreFaixas),
         const SeletorCenas(),
         SizedBox(height: espaco),
         MolduraCase(

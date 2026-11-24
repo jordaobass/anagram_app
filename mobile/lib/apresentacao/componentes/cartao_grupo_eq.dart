@@ -41,7 +41,7 @@ class ChaveDaSecao extends ConsumerWidget {
       nome: chave.nome,
       parametro: chave,
       ligado: ligada,
-      cor: Cores.daFamilia(definicao.familia),
+      cor: context.cores.daFamilia(definicao.familia),
       texto: ligada ? l.valorLigado : l.valorDesligado,
       empilhada: empilhada,
       aoMudar: (novo) => ControleNoPainel.alterar(ref, chave, bloco)(novo ? 1 : 0, arrastando: false),

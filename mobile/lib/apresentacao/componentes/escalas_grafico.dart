@@ -20,9 +20,9 @@ String rotuloDoDb(double db) => db > 0 ? '+${db.round()}' : '${db.round()}';
 
 /// Escreve [texto] no eixo, em [tamanho] da fonte de rótulo; [onde] recebe
 /// o tamanho do texto e devolve o canto de cima à esquerda.
-void pintarRotuloDoEixo(Canvas canvas, String texto, double tamanho, Offset Function(Size) onde) {
+void pintarRotuloDoEixo(Canvas canvas, Paleta cores, String texto, double tamanho, Offset Function(Size) onde) {
   final pintor = TextPainter(
-    text: TextSpan(text: texto, style: TextStyle(fontFamily: Fontes.rotulo, color: Cores.textoSecundario, fontSize: tamanho)),
+    text: TextSpan(text: texto, style: TextStyle(fontFamily: Fontes.rotulo, color: cores.textoSecundario, fontSize: tamanho)),
     textDirection: TextDirection.ltr,
   )..layout();
   pintor.paint(canvas, onde(pintor.size));

@@ -26,7 +26,7 @@ class AtribuirDoBloco extends ConsumerWidget {
     final bloco = ref.watch(editorProvider.select((e) => e.blocoSelecionado));
     if (bloco == null) {
       return Text(l.ctlSemBlocoAberto,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario));
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.textoSecundario));
     }
     final definicao = ref.watch(definicaoBlocoProvider(bloco.uri));
     final footswitch = id.tipo == TipoControle.footswitch;

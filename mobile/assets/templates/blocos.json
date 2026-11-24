@@ -10,13 +10,16 @@
      "nome": {
       "pt": "Neutral Ground",
       "en": "Neutral Ground",
-      "es": "Neutral Ground"
+      "es": "Neutral Ground",
+      "fr": "Neutral Ground"
      },
      "descricao": {
       "pt": "Padrão do Ignissor — comece a ajustar daqui!",
       "en": "Ignissor default - Start tweaking!",
-      "es": "Valores por defecto del Ignissor: ¡empieza a ajustar!"
+      "es": "Valores por defecto del Ignissor: ¡empieza a ajustar!",
+      "fr": "Réglage par défaut de l'Ignissor : à vous de jouer !"
      },
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
      "valores": {
       "comp_level": 0,
       "clean_level": -24,
@@ -51,14 +54,43 @@
      "nome": {
       "pt": "Studio Glue",
       "en": "Studio Glue",
-      "es": "Studio Glue"
+      "es": "Studio Glue",
+      "fr": "Studio Glue"
      },
      "descricao": {
-      "pt": "Even sound with good sustain.",
+      "pt": "Som uniforme, com bom sustain.",
       "en": "Even sound with good sustain.",
-      "es": "Even sound with good sustain."
+      "es": "Sonido parejo con buen sustain.",
+      "fr": "Son homogène avec un bon sustain."
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "comp_level": 0,
+      "clean_level": -24,
+      "lomid_xo_freq": 120,
+      "midhi_xo_freq": 2000,
+      "lo_comp_enabled": 1,
+      "lo_threshold": -38,
+      "lo_ratio": 12,
+      "lo_attack": 5,
+      "lo_release": 150,
+      "lo_level": 2,
+      "mid_comp_enabled": 1,
+      "mid_threshold": -32,
+      "mid_ratio": 12,
+      "mid_attack": 5,
+      "mid_release": 120,
+      "mid_level": 1,
+      "hi_comp_enabled": 1,
+      "hi_threshold": -38,
+      "hi_ratio": 4,
+      "hi_attack": 5,
+      "hi_release": 80,
+      "hi_level": 0,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-slap-n-pop",
@@ -66,14 +98,43 @@
      "nome": {
       "pt": "Slap 'n' Pop",
       "en": "Slap 'n' Pop",
-      "es": "Slap 'n' Pop"
+      "es": "Slap 'n' Pop",
+      "fr": "Slap 'n' Pop"
      },
      "descricao": {
-      "pt": "Catch thumb and pop spikes but keep the attack",
+      "pt": "Segura os picos do polegar e do pop, mas mantém o ataque",
       "en": "Catch thumb and pop spikes but keep the attack",
-      "es": "Catch thumb and pop spikes but keep the attack"
+      "es": "Atrapa los picos del pulgar y del pop, pero conserva el ataque",
+      "fr": "Maîtrise les pics du pouce et du pop tout en gardant l'attaque"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "comp_level": 0,
+      "clean_level": -24,
+      "lomid_xo_freq": 145,
+      "midhi_xo_freq": 2500,
+      "lo_comp_enabled": 1,
+      "lo_threshold": -33,
+      "lo_ratio": 8,
+      "lo_attack": 30,
+      "lo_release": 180,
+      "lo_level": 0,
+      "mid_comp_enabled": 1,
+      "mid_threshold": -25,
+      "mid_ratio": 2,
+      "mid_attack": 25,
+      "mid_release": 120,
+      "mid_level": 0,
+      "hi_comp_enabled": 1,
+      "hi_threshold": -32,
+      "hi_ratio": 8,
+      "hi_attack": 3,
+      "hi_release": 60,
+      "hi_level": -2,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-demudifier",
@@ -81,14 +142,43 @@
      "nome": {
       "pt": "Demudifier",
       "en": "Demudifier",
-      "es": "Demudifier"
+      "es": "Demudifier",
+      "fr": "Demudifier"
      },
      "descricao": {
-      "pt": "Place in front of a drive to increase clarity",
+      "pt": "Coloque antes de um drive para ganhar clareza",
       "en": "Place in front of a drive to increase clarity",
-      "es": "Place in front of a drive to increase clarity"
+      "es": "Colócalo delante de un drive para ganar claridad",
+      "fr": "À placer devant un drive pour gagner en clarté"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "comp_level": 0,
+      "clean_level": -24,
+      "lomid_xo_freq": 150,
+      "midhi_xo_freq": 1000,
+      "lo_comp_enabled": 1,
+      "lo_threshold": -40,
+      "lo_ratio": 8,
+      "lo_attack": 1,
+      "lo_release": 5,
+      "lo_level": 3,
+      "mid_comp_enabled": 1,
+      "mid_threshold": -40,
+      "mid_ratio": 2,
+      "mid_attack": 1,
+      "mid_release": 200,
+      "mid_level": 0,
+      "hi_comp_enabled": 0,
+      "hi_threshold": -30,
+      "hi_ratio": 4,
+      "hi_attack": 1,
+      "hi_release": 200,
+      "hi_level": 0,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-cordial",
@@ -96,14 +186,43 @@
      "nome": {
       "pt": "Cordial",
       "en": "Cordial",
-      "es": "Cordial"
+      "es": "Cordial",
+      "fr": "Cordial"
      },
      "descricao": {
-      "pt": "Long sustain and overall control, a good companion for chords",
+      "pt": "Sustain longo e controle geral, bom companheiro para acordes",
       "en": "Long sustain and overall control, a good companion for chords",
-      "es": "Long sustain and overall control, a good companion for chords"
+      "es": "Sustain largo y control general, buen compañero para acordes",
+      "fr": "Long sustain et contrôle global, un bon compagnon pour les accords"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "comp_level": -7,
+      "clean_level": -6,
+      "lomid_xo_freq": 80,
+      "midhi_xo_freq": 2100,
+      "lo_comp_enabled": 1,
+      "lo_threshold": -34,
+      "lo_ratio": 8,
+      "lo_attack": 1,
+      "lo_release": 600,
+      "lo_level": 0,
+      "mid_comp_enabled": 1,
+      "mid_threshold": -32,
+      "mid_ratio": 2,
+      "mid_attack": 3,
+      "mid_release": 1000,
+      "mid_level": 1,
+      "hi_comp_enabled": 1,
+      "hi_threshold": -37,
+      "hi_ratio": 2,
+      "hi_attack": 2,
+      "hi_release": 550,
+      "hi_level": -2,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-pick-metal",
@@ -111,14 +230,43 @@
      "nome": {
       "pt": "Pick Metal",
       "en": "Pick Metal",
-      "es": "Pick Metal"
+      "es": "Pick Metal",
+      "fr": "Pick Metal"
      },
      "descricao": {
-      "pt": "Punchy and controlled low end with clear pick attack. Last in the signal chain",
+      "pt": "Graves firmes e controlados, com ataque de palheta nítido. Último na cadeia de sinal",
       "en": "Punchy and controlled low end with clear pick attack. Last in the signal chain",
-      "es": "Punchy and controlled low end with clear pick attack. Last in the signal chain"
+      "es": "Graves contundentes y controlados con un ataque de púa nítido. Último en la cadena de señal",
+      "fr": "Grave percutant et maîtrisé avec une attaque de médiator nette. En dernier dans la chaîne"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "comp_level": 0,
+      "clean_level": -24,
+      "lomid_xo_freq": 160,
+      "midhi_xo_freq": 1500,
+      "lo_comp_enabled": 1,
+      "lo_threshold": -30,
+      "lo_ratio": 20,
+      "lo_attack": 1,
+      "lo_release": 200,
+      "lo_level": 1,
+      "mid_comp_enabled": 1,
+      "mid_threshold": -30,
+      "mid_ratio": 4,
+      "mid_attack": 1,
+      "mid_release": 200,
+      "mid_level": 0,
+      "hi_comp_enabled": 1,
+      "hi_threshold": -30,
+      "hi_ratio": 4,
+      "hi_attack": 1,
+      "hi_release": 200,
+      "hi_level": 0,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "app-suave",
@@ -336,13 +484,16 @@
      "nome": {
       "pt": "Glass Drive",
       "en": "Glass Drive",
-      "es": "Glass Drive"
+      "es": "Glass Drive",
+      "fr": "Glass Drive"
      },
      "descricao": {
-      "pt": "Padrão do Entropia — clareza cristalina.",
+      "pt": "Padrão do Entropia — clareza cristalina",
       "en": "Entropia defaults - Glass-like clarity",
-      "es": "Valores por defecto del Entropia: claridad cristalina."
+      "es": "Valores por defecto del Entropia: claridad cristalina",
+      "fr": "Réglage par défaut de l'Entropia : une clarté cristalline"
      },
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
      "valores": {
       "mid_drive_typemode": 7,
       "hi_drive_typemode": 23,
@@ -371,14 +522,37 @@
      "nome": {
       "pt": "Hard Rock Bite",
       "en": "Hard Rock Bite",
-      "es": "Hard Rock Bite"
+      "es": "Hard Rock Bite",
+      "fr": "Hard Rock Bite"
      },
      "descricao": {
-      "pt": "Mid-Forward Distortion to fit and cut through a dense rock mix",
+      "pt": "Distorção com médios à frente para caber e se destacar numa mixagem densa de rock",
       "en": "Mid-Forward Distortion to fit and cut through a dense rock mix",
-      "es": "Mid-Forward Distortion to fit and cut through a dense rock mix"
+      "es": "Distorsión con medios al frente para encajar y destacar en una mezcla densa de rock",
+      "fr": "Distorsion axée sur les médiums pour trouver sa place et percer dans un mix rock chargé"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 21,
+      "hi_drive_typemode": 17,
+      "lo_level": -2,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 3,
+      "lo_comp_amount": 3.5,
+      "lo_comp_ratio": 0,
+      "lo_lp_freq": 200,
+      "mid_level": 0,
+      "mid_drive_amount": 8,
+      "mid_hp_freq": 220,
+      "mid_lp_freq": 2000,
+      "hi_level": 0,
+      "hi_drive_amount": 3.700000047683716,
+      "hi_hp_freq": 2000,
+      "hi_lp_freq": 9800,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-tubey-tone",
@@ -386,14 +560,37 @@
      "nome": {
       "pt": "Tubey Tone",
       "en": "Tubey Tone",
-      "es": "Tubey Tone"
+      "es": "Tubey Tone",
+      "fr": "Tubey Tone"
      },
      "descricao": {
-      "pt": "Tube amp-like low gain breakup, warm and woolly!",
+      "pt": "Saturação leve como a de um amp valvulado, quente e encorpada!",
       "en": "Tube amp-like low gain breakup, warm and woolly!",
-      "es": "Tube amp-like low gain breakup, warm and woolly!"
+      "es": "Saturación suave como la de un ampli a válvulas, ¡cálida y lanosa!",
+      "fr": "Saturation légère façon ampli à lampes, chaude et cotonneuse !"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 5,
+      "hi_drive_typemode": 7,
+      "lo_level": 11,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 1,
+      "lo_comp_amount": 6,
+      "lo_comp_ratio": 1,
+      "lo_lp_freq": 200,
+      "mid_level": 5.900000095367432,
+      "mid_drive_amount": 2,
+      "mid_hp_freq": 160,
+      "mid_lp_freq": 2000,
+      "hi_level": 3,
+      "hi_drive_amount": 2.5,
+      "hi_hp_freq": 5000,
+      "hi_lp_freq": 8500,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-nasty-attack",
@@ -401,14 +598,37 @@
      "nome": {
       "pt": "Nasty Attack",
       "en": "Nasty Attack",
-      "es": "Nasty Attack"
+      "es": "Nasty Attack",
+      "fr": "Nasty Attack"
      },
      "descricao": {
-      "pt": "Want to be heard and still support the low end? Try here!",
+      "pt": "Quer ser ouvido e ainda segurar os graves? Experimente este!",
       "en": "Want to be heard and still support the low end? Try here!",
-      "es": "Want to be heard and still support the low end? Try here!"
+      "es": "¿Quieres que te oigan y aun así sostener los graves? ¡Prueba aquí!",
+      "fr": "Envie d'être entendu tout en soutenant le grave ? Essayez celui-ci !"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 7,
+      "hi_drive_typemode": 4,
+      "lo_level": 5.5,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 1,
+      "lo_comp_amount": 5,
+      "lo_comp_ratio": 1,
+      "lo_lp_freq": 200,
+      "mid_level": 1.5,
+      "mid_drive_amount": 5,
+      "mid_hp_freq": 174,
+      "mid_lp_freq": 3080,
+      "hi_level": 5.5,
+      "hi_drive_amount": 5.099999904632568,
+      "hi_hp_freq": 1400,
+      "hi_lp_freq": 4110,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-panic",
@@ -416,14 +636,37 @@
      "nome": {
       "pt": "Panic!",
       "en": "Panic!",
-      "es": "Panic!"
+      "es": "Panic!",
+      "fr": "Panic!"
      },
      "descricao": {
-      "pt": "There was a muse that inspired this crazy overdriven sound!",
+      "pt": "Uma musa inspirou este som saturado e maluco!",
       "en": "There was a muse that inspired this crazy overdriven sound!",
-      "es": "There was a muse that inspired this crazy overdriven sound!"
+      "es": "¡Hubo una musa que inspiró este sonido saturado y loco!",
+      "fr": "Une muse a inspiré ce son saturé complètement fou !"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 17,
+      "hi_drive_typemode": 33,
+      "lo_level": 2,
+      "lo_comp_type": 2,
+      "lo_comp_mode": 0,
+      "lo_comp_amount": 4,
+      "lo_comp_ratio": 0,
+      "lo_lp_freq": 230,
+      "mid_level": -1,
+      "mid_drive_amount": 8,
+      "mid_hp_freq": 322,
+      "mid_lp_freq": 1680,
+      "hi_level": 3,
+      "hi_drive_amount": 5,
+      "hi_hp_freq": 1400,
+      "hi_lp_freq": 2800,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-alpha-and-omega",
@@ -431,14 +674,37 @@
      "nome": {
       "pt": "Alpha and Omega",
       "en": "Alpha and Omega",
-      "es": "Alpha and Omega"
+      "es": "Alpha and Omega",
+      "fr": "Alpha and Omega"
      },
      "descricao": {
-      "pt": "Combines middle drive from Alpha to the high end of Omega. Best of both worlds!",
+      "pt": "Junta o drive de médios do Alpha com os agudos do Omega. O melhor dos dois mundos!",
       "en": "Combines middle drive from Alpha to the high end of Omega. Best of both worlds!",
-      "es": "Combines middle drive from Alpha to the high end of Omega. Best of both worlds!"
+      "es": "Combina el drive de medios del Alpha con los agudos del Omega. ¡Lo mejor de los dos mundos!",
+      "fr": "Associe le drive des médiums de l'Alpha aux aigus de l'Omega. Le meilleur des deux mondes !"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 14,
+      "hi_drive_typemode": 11,
+      "lo_level": 2,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 3,
+      "lo_comp_amount": 5,
+      "lo_comp_ratio": 1,
+      "lo_lp_freq": 205,
+      "mid_level": -1.5,
+      "mid_drive_amount": 6,
+      "mid_hp_freq": 167,
+      "mid_lp_freq": 2000,
+      "hi_level": 3,
+      "hi_drive_amount": 6,
+      "hi_hp_freq": 1540,
+      "hi_lp_freq": 2710,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-electric-drive",
@@ -446,14 +712,37 @@
      "nome": {
       "pt": "Electric Drive",
       "en": "Electric Drive",
-      "es": "Electric Drive"
+      "es": "Electric Drive",
+      "fr": "Electric Drive"
      },
      "descricao": {
-      "pt": "Distortion insanity with the new B3K Turbo! Try slapping this!",
+      "pt": "Distorção insana com o novo B3K Turbo! Experimente tocar slap nele!",
       "en": "Distortion insanity with the new B3K Turbo! Try slapping this!",
-      "es": "Distortion insanity with the new B3K Turbo! Try slapping this!"
+      "es": "¡Distorsión demencial con el nuevo B3K Turbo! ¡Prueba a tocar slap!",
+      "fr": "Une distorsion démente avec le nouveau B3K Turbo ! Essayez-le en slap !"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 22,
+      "hi_drive_typemode": 23,
+      "lo_level": 6,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 2,
+      "lo_comp_amount": 5,
+      "lo_comp_ratio": 0,
+      "lo_lp_freq": 250,
+      "mid_level": 0,
+      "mid_drive_amount": 10,
+      "mid_hp_freq": 590,
+      "mid_lp_freq": 2000,
+      "hi_level": -1,
+      "hi_drive_amount": 10,
+      "hi_hp_freq": 1250,
+      "hi_lp_freq": 5000,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-synth-like-drive",
@@ -461,14 +750,37 @@
      "nome": {
       "pt": "Synth-like drive",
       "en": "Synth-like drive",
-      "es": "Synth-like drive"
+      "es": "Synth-like drive",
+      "fr": "Synth-like drive"
      },
      "descricao": {
-      "pt": "Low gain synth like tone",
+      "pt": "Timbre de pouco ganho que lembra um sintetizador",
       "en": "Low gain synth like tone",
-      "es": "Low gain synth like tone"
+      "es": "Tono de poca ganancia parecido a un sintetizador",
+      "fr": "Son à faible gain aux accents de synthé"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 20,
+      "hi_drive_typemode": 20,
+      "lo_level": 5.5,
+      "lo_comp_type": 2,
+      "lo_comp_mode": 2,
+      "lo_comp_amount": 4,
+      "lo_comp_ratio": 1,
+      "lo_lp_freq": 250,
+      "mid_level": 1,
+      "mid_drive_amount": 4,
+      "mid_hp_freq": 500,
+      "mid_lp_freq": 700,
+      "hi_level": -4.800000190734863,
+      "hi_drive_amount": 4.5,
+      "hi_hp_freq": 1100,
+      "hi_lp_freq": 4000,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-carnivore",
@@ -476,14 +788,37 @@
      "nome": {
       "pt": "Carnivore",
       "en": "Carnivore",
-      "es": "Carnivore"
+      "es": "Carnivore",
+      "fr": "Carnivore"
      },
      "descricao": {
-      "pt": "Dirty and warm grind. Works great with low tunings",
-      "en": "Dirty and warm grind. Works great with low tunings",
-      "es": "Dirty and warm grind. Works great with low tunings"
+      "pt": "Saturação suja e quente. Funciona muito bem em afinações graves.",
+      "en": "Dirty and warm grind. Works great with low tunings.",
+      "es": "Saturación sucia y cálida. Funciona muy bien con afinaciones graves.",
+      "fr": "Un grain sale et chaud. Idéal avec les accordages graves."
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 30,
+      "hi_drive_typemode": 29,
+      "lo_level": 2,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 1,
+      "lo_comp_amount": 3,
+      "lo_comp_ratio": 0,
+      "lo_lp_freq": 178,
+      "mid_level": -1.100000023841858,
+      "mid_drive_amount": 5,
+      "mid_hp_freq": 315,
+      "mid_lp_freq": 2660,
+      "hi_level": 5.5,
+      "hi_drive_amount": 3,
+      "hi_hp_freq": 1740,
+      "hi_lp_freq": 8000,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-vintage-growl",
@@ -491,14 +826,37 @@
      "nome": {
       "pt": "Vintage Growl",
       "en": "Vintage Growl",
-      "es": "Vintage Growl"
+      "es": "Vintage Growl",
+      "fr": "Vintage Growl"
      },
      "descricao": {
-      "pt": "High gain pushed tube amp growl",
+      "pt": "Rosnado de amp valvulado no talo, com muito ganho",
       "en": "High gain pushed tube amp growl",
-      "es": "High gain pushed tube amp growl"
+      "es": "Gruñido de ampli a válvulas forzado, con mucha ganancia",
+      "fr": "Grondement d'ampli à lampes poussé, à fort gain"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 25,
+      "hi_drive_typemode": 26,
+      "lo_level": 1,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 3,
+      "lo_comp_amount": 4,
+      "lo_comp_ratio": 0,
+      "lo_lp_freq": 155,
+      "mid_level": 3,
+      "mid_drive_amount": 6,
+      "mid_hp_freq": 315,
+      "mid_lp_freq": 800,
+      "hi_level": 3,
+      "hi_drive_amount": 4.5,
+      "hi_hp_freq": 1500,
+      "hi_lp_freq": 8000,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-ultimate-fuzz",
@@ -506,14 +864,37 @@
      "nome": {
       "pt": "Ultimate Fuzz",
       "en": "Ultimate Fuzz",
-      "es": "Ultimate Fuzz"
+      "es": "Ultimate Fuzz",
+      "fr": "Ultimate Fuzz"
      },
      "descricao": {
-      "pt": "Omega Turbo drive to cover your fuzz needs",
+      "pt": "Drive Omega Turbo para tudo o que você precisa de fuzz",
       "en": "Omega Turbo drive to cover your fuzz needs",
-      "es": "Omega Turbo drive to cover your fuzz needs"
+      "es": "Drive Omega Turbo para cubrir todo lo que necesites de fuzz",
+      "fr": "Drive Omega Turbo pour couvrir tous vos besoins de fuzz"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 34,
+      "hi_drive_typemode": 33,
+      "lo_level": -2,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 3,
+      "lo_comp_amount": 4,
+      "lo_comp_ratio": 0,
+      "lo_lp_freq": 155,
+      "mid_level": 0,
+      "mid_drive_amount": 7.199999809265137,
+      "mid_hp_freq": 315,
+      "mid_lp_freq": 1000,
+      "hi_level": 0,
+      "hi_drive_amount": 7,
+      "hi_hp_freq": 1500,
+      "hi_lp_freq": 8000,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-modern-metal",
@@ -521,14 +902,37 @@
      "nome": {
       "pt": "Modern Metal",
       "en": "Modern Metal",
-      "es": "Modern Metal"
+      "es": "Modern Metal",
+      "fr": "Modern Metal"
      },
      "descricao": {
-      "pt": "Very articulate hi-gain sound",
+      "pt": "Som de muito ganho e bem articulado",
       "en": "Very articulate hi-gain sound",
-      "es": "Very articulate hi-gain sound"
+      "es": "Sonido de alta ganancia muy articulado",
+      "fr": "Son à fort gain très articulé"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 4,
+      "hi_drive_typemode": 18,
+      "lo_level": -3,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 1,
+      "lo_comp_amount": 4,
+      "lo_comp_ratio": 0,
+      "lo_lp_freq": 357,
+      "mid_level": -5,
+      "mid_drive_amount": 9,
+      "mid_hp_freq": 300,
+      "mid_lp_freq": 6140,
+      "hi_level": -7,
+      "hi_drive_amount": 7,
+      "hi_hp_freq": 700,
+      "hi_lp_freq": 7050,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-rocky-road",
@@ -536,14 +940,37 @@
      "nome": {
       "pt": "Rocky Road",
       "en": "Rocky Road",
-      "es": "Rocky Road"
+      "es": "Rocky Road",
+      "fr": "Rocky Road"
      },
      "descricao": {
-      "pt": "Timeless hard rock tone",
+      "pt": "Timbre atemporal de hard rock",
       "en": "Timeless hard rock tone",
-      "es": "Timeless hard rock tone"
+      "es": "Tono atemporal de hard rock",
+      "fr": "Un son hard rock intemporel"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 8,
+      "hi_drive_typemode": 19,
+      "lo_level": 1,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 0,
+      "lo_comp_amount": 5,
+      "lo_comp_ratio": 0,
+      "lo_lp_freq": 250,
+      "mid_level": 1,
+      "mid_drive_amount": 10,
+      "mid_hp_freq": 250,
+      "mid_lp_freq": 2000,
+      "hi_level": -2,
+      "hi_drive_amount": 4,
+      "hi_hp_freq": 2000,
+      "hi_lp_freq": 8000,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-slightly-hairy",
@@ -551,14 +978,37 @@
      "nome": {
       "pt": "Slightly Hairy",
       "en": "Slightly Hairy",
-      "es": "Slightly Hairy"
+      "es": "Slightly Hairy",
+      "fr": "Slightly Hairy"
      },
      "descricao": {
-      "pt": "Oh, did I say slightly?",
+      "pt": "Ah, eu disse levemente?",
       "en": "Oh, did I say slightly?",
-      "es": "Oh, did I say slightly?"
+      "es": "Ah, ¿dije ligeramente?",
+      "fr": "Oh, j'ai dit légèrement ?"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 36,
+      "hi_drive_typemode": 17,
+      "lo_level": -2,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 0,
+      "lo_comp_amount": 4,
+      "lo_comp_ratio": 3,
+      "lo_lp_freq": 250,
+      "mid_level": -3,
+      "mid_drive_amount": 10,
+      "mid_hp_freq": 150,
+      "mid_lp_freq": 1000,
+      "hi_level": 1,
+      "hi_drive_amount": 10,
+      "hi_hp_freq": 1000,
+      "hi_lp_freq": 4000,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-sand-people",
@@ -566,14 +1016,37 @@
      "nome": {
       "pt": "Sand People",
       "en": "Sand People",
-      "es": "Sand People"
+      "es": "Sand People",
+      "fr": "Sand People"
      },
      "descricao": {
-      "pt": "Picture yourself in a desert in a galaxy far, far away...",
-      "en": "Picture yourself in a desert in a galaxy far, far away...",
-      "es": "Picture yourself in a desert in a galaxy far, far away..."
+      "pt": "Imagine-se num deserto, numa galáxia muito, muito distante...",
+      "en": "Picture yourself in a desert in galaxy far, far away...",
+      "es": "Imagínate en un desierto, en una galaxia muy, muy lejana...",
+      "fr": "Imaginez-vous dans un désert, dans une galaxie lointaine, très lointaine..."
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 18,
+      "hi_drive_typemode": 6,
+      "lo_level": 4,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 0,
+      "lo_comp_amount": 5,
+      "lo_comp_ratio": 1,
+      "lo_lp_freq": 250,
+      "mid_level": -1,
+      "mid_drive_amount": 4.5,
+      "mid_hp_freq": 250,
+      "mid_lp_freq": 1500,
+      "hi_level": 5,
+      "hi_drive_amount": 10,
+      "hi_hp_freq": 1500,
+      "hi_lp_freq": 7000,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-vintage-dirt",
@@ -581,14 +1054,37 @@
      "nome": {
       "pt": "Vintage Dirt",
       "en": "Vintage Dirt",
-      "es": "Vintage Dirt"
+      "es": "Vintage Dirt",
+      "fr": "Vintage Dirt"
      },
      "descricao": {
-      "pt": "Full mid-enhanced distortion",
+      "pt": "Distorção cheia, com médios realçados",
       "en": "Full mid-enhanced distortion",
-      "es": "Full mid-enhanced distortion"
+      "es": "Distorsión llena con los medios realzados",
+      "fr": "Distorsion pleine aux médiums renforcés"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 26,
+      "hi_drive_typemode": 5,
+      "lo_level": 3.299999952316284,
+      "lo_comp_type": 1,
+      "lo_comp_mode": 1,
+      "lo_comp_amount": 4.699999809265137,
+      "lo_comp_ratio": 2,
+      "lo_lp_freq": 308,
+      "mid_level": 4,
+      "mid_drive_amount": 8.199999809265137,
+      "mid_hp_freq": 749,
+      "mid_lp_freq": 19800,
+      "hi_level": 5,
+      "hi_drive_amount": 8.399999618530273,
+      "hi_hp_freq": 1090,
+      "hi_lp_freq": 6540,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "dg-modern-peaches",
@@ -596,14 +1092,37 @@
      "nome": {
       "pt": "Modern Peaches",
       "en": "Modern Peaches",
-      "es": "Modern Peaches"
+      "es": "Modern Peaches",
+      "fr": "Modern Peaches"
      },
      "descricao": {
-      "pt": "A modern distorted sound with a slight edge",
+      "pt": "Um som distorcido moderno, com um leve corte",
       "en": "A modern distorted sound with a slight edge",
-      "es": "A modern distorted sound with a slight edge"
+      "es": "Un sonido distorsionado moderno con un ligero filo",
+      "fr": "Un son distordu moderne avec un léger mordant"
      },
-     "valores": null
+     "fonte": "lido da pedaleira, fw 1.19.2, 2026-11-24",
+     "valores": {
+      "mid_drive_typemode": 15,
+      "hi_drive_typemode": 18,
+      "lo_level": 3.799999952316284,
+      "lo_comp_type": 2,
+      "lo_comp_mode": 2,
+      "lo_comp_amount": 5.199999809265137,
+      "lo_comp_ratio": 0,
+      "lo_lp_freq": 203,
+      "mid_level": 3.700000047683716,
+      "mid_drive_amount": 5.5,
+      "mid_hp_freq": 468,
+      "mid_lp_freq": 1290,
+      "hi_level": 5.5,
+      "hi_drive_amount": 6.800000190734863,
+      "hi_hp_freq": 2300,
+      "hi_lp_freq": 5600,
+      "lo_mute": 0,
+      "mid_mute": 0,
+      "hi_mute": 0
+     }
     },
     {
      "id": "app-drive-medios",
@@ -744,6 +1263,215 @@
       "hi_level": -3,
       "hi_mute": 0
      }
+    }
+   ]
+  },
+  {
+   "uri": "urn:darkglass:axioma_synth",
+   "templates": [
+    {
+     "id": "dg-filthy-funk",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Filthy Funk",
+      "en": "Filthy Funk",
+      "es": "Filthy Funk",
+      "fr": "Filthy Funk"
+     },
+     "descricao": {
+      "pt": "Filtrado, sujo e funkeado",
+      "en": "Filtered, filthy and funky",
+      "es": "Filtrado, sucio y funky",
+      "fr": "Filtré, crasseux et funky"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-80s-pop",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "80's Pop",
+      "en": "80's Pop",
+      "es": "80's Pop",
+      "fr": "80's Pop"
+     },
+     "descricao": {
+      "pt": "Som clássico das músicas pop dos anos 80",
+      "en": "Classic 80's pop song sound",
+      "es": "Sonido clásico de las canciones pop de los 80",
+      "fr": "Le son classique de la pop des années 80"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-percussive-sub",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Percussive Sub",
+      "en": "Percussive Sub",
+      "es": "Percussive Sub",
+      "fr": "Percussive Sub"
+     },
+     "descricao": {
+      "pt": "Sub grave e gostoso. Experimente com o arpejador!",
+      "en": "Low and nice sub. Try with arpeggiator!",
+      "es": "Sub grave y agradable. ¡Pruébalo con el arpegiador!",
+      "fr": "Un sub bien grave et agréable. Essayez avec l'arpégiateur !"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-fuzzy-filter",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Fuzzy Filter",
+      "en": "Fuzzy Filter",
+      "es": "Fuzzy Filter",
+      "fr": "Fuzzy Filter"
+     },
+     "descricao": {
+      "pt": "Modulado e com fuzz, ótimo para notas longas",
+      "en": "Modulated and fuzzy, great for longer notes",
+      "es": "Modulado y con fuzz, genial para notas largas",
+      "fr": "Modulé et fuzzé, idéal pour les notes longues"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-solid-gold",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Solid Gold",
+      "en": "Solid Gold",
+      "es": "Solid Gold",
+      "fr": "Solid Gold"
+     },
+     "descricao": {
+      "pt": "Som de pop moderno, é mágico!",
+      "en": "Modern pop sound, it's magic!",
+      "es": "Sonido pop moderno, ¡es magia!",
+      "fr": "Un son pop moderne, c'est magique !"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-808-sub-bass",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "808 Sub Bass",
+      "en": "808 Sub Bass",
+      "es": "808 Sub Bass",
+      "fr": "808 Sub Bass"
+     },
+     "descricao": {
+      "pt": "Clássico moderno, grande e encorpado",
+      "en": "Big and thicc modern classic",
+      "es": "Clásico moderno, grande y bien gordo",
+      "fr": "Un classique moderne, gros et épais"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-mougish",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Mougish",
+      "en": "Mougish",
+      "es": "Mougish",
+      "fr": "Mougish"
+     },
+     "descricao": {
+      "pt": "Som clássico de baixo de sintetizador analógico",
+      "en": "Classic analog synth bass sound",
+      "es": "Sonido clásico de bajo de sintetizador analógico",
+      "fr": "Le son classique de basse de synthé analogique"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-silky-bass",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Silky Bass",
+      "en": "Silky Bass",
+      "es": "Silky Bass",
+      "fr": "Silky Bass"
+     },
+     "descricao": {
+      "pt": "Som de baixo macio, ouvido em muitos discos",
+      "en": "Smooth bass sound heard in many albums",
+      "es": "Sonido de bajo suave que se oye en muchos discos",
+      "fr": "Un son de basse soyeux entendu sur de nombreux albums"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-acid-reptile",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Acid Reptile",
+      "en": "Acid Reptile",
+      "es": "Acid Reptile",
+      "fr": "Acid Reptile"
+     },
+     "descricao": {
+      "pt": "Hipnótico, borbulhante e funkeado!",
+      "en": "Hypnotic, squelching and funky!",
+      "es": "¡Hipnótico, burbujeante y funky!",
+      "fr": "Hypnotique, gargouillant et funky !"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-synthwave",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Synthwave",
+      "en": "Synthwave",
+      "es": "Synthwave",
+      "fr": "Synthwave"
+     },
+     "descricao": {
+      "pt": "Encorpado, com punch e retrofuturista!",
+      "en": "Thick, punchy and retro-futuristic!",
+      "es": "¡Denso, contundente y retrofuturista!",
+      "fr": "Épais, percutant et rétrofuturiste !"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-big-swell",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Big Swell",
+      "en": "Big Swell",
+      "es": "Big Swell",
+      "fr": "Big Swell"
+     },
+     "descricao": {
+      "pt": "Toque notas longas e deixe o baixo encher a sala",
+      "en": "Play long notes and let the bass fill the room",
+      "es": "Toca notas largas y deja que el bajo llene la sala",
+      "fr": "Jouez des notes longues et laissez la basse remplir la pièce"
+     },
+     "valores": null
+    },
+    {
+     "id": "dg-burning-bass",
+     "origem": "darkglass",
+     "nome": {
+      "pt": "Burning Bass",
+      "en": "Burning Bass",
+      "es": "Burning Bass",
+      "fr": "Burning Bass"
+     },
+     "descricao": {
+      "pt": "Este baixo vai queimar o seu subwoofer",
+      "en": "This bass will burn thru your subwoofer",
+      "es": "Este bajo va a quemar tu subwoofer",
+      "fr": "Cette basse va brûler votre caisson de basses"
+     },
+     "valores": null
     }
    ]
   }

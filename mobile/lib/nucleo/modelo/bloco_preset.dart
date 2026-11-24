@@ -23,10 +23,16 @@ class PosicaoBloco {
 }
 
 class BlocoPreset {
-  const BlocoPreset(this.posicao, this.bruto);
+  const BlocoPreset(this.posicao, this.bruto, {this.quantidadeCenas = 3});
 
   final PosicaoBloco posicao;
   final Map<String, dynamic> bruto;
+
+  /// Quantas cenas o preset tem (o bloco sozinho não sabe: a cena sem foto
+  /// segue o bloco, ver [DocumentoPreset.quantidadeCenas]).
+  final int quantidadeCenas;
+
+  Iterable<int> get _todasAsCenas => [for (var cena = 1; cena <= quantidadeCenas; cena++) cena];
 
   // O JSON vem do aparelho ou de arquivo importado: campo com tipo inesperado
   // vale como ausente, em vez de derrubar a tela com TypeError.
@@ -45,7 +51,7 @@ class BlocoPreset {
   Map<String, dynamic> get _parametros => mapaOuVazio(bruto['parameters']);
   Map<String, dynamic> get _cenas => mapaOuVazio(bruto['scenes']);
 
-  /// Habilitado na cena (1–3). Sem registro da cena, vale o do bloco.
+  /// Habilitado na cena (a partir de 1). Sem registro da cena, vale o do bloco.
   bool habilitadoNaCena(int cena) {
     final registro = _cenas['$cena'];
     if (registro is Map<String, dynamic> && registro['enabled'] is bool) {
@@ -54,14 +60,34 @@ class BlocoPreset {
     return habilitado;
   }
 
+  /// O liga/desliga varia entre as cenas do preset (o bloco em si sempre
+  /// acompanha a cena ativa, então a comparação é entre as cenas).
+  bool ligaVariaEntreCenas(int cena) => cenasComOMesmoLiga(cena) != null;
+
+  /// As cenas em que o bloco está ligado/desligado como na [cena] (ela
+  /// inclusa), ou nulo quando o estado é o mesmo em todas. É o que o rótulo
+  /// do cabeçalho diz: "desligado só na cena 2" era mentira com o bloco
+  /// desligado também na 3 (issue #39).
+  List<int>? cenasComOMesmoLiga(int cena) =>
+      _iguaisOuNulo([for (final outra in _todasAsCenas) if (habilitadoNaCena(outra) == habilitadoNaCena(cena)) outra]);
+
+  /// O valor varia entre as cenas e esta registra o seu (selo do knob):
+  /// editar só na cena ativa grava o parâmetro em todas, e o selo só aparece
+  /// onde o som de fato muda de uma cena para outra.
+  bool valorVariaEntreCenas(String simbolo, int cena) => cenasComOMesmoValor(simbolo, cena) != null;
+
+  /// As cenas que tocam o mesmo valor que a [cena] (ela inclusa), ou nulo
+  /// quando o valor não varia ou a cena não registra o seu.
+  List<int>? cenasComOMesmoValor(String simbolo, int cena) {
+    if (sobreposicaoDaCena(simbolo, cena) == null) return null;
+    final valor = valorNaCena(simbolo, cena);
+    return _iguaisOuNulo([for (final outra in _todasAsCenas) if (valorNaCena(simbolo, outra) == valor) outra]);
+  }
+
+  List<int>? _iguaisOuNulo(List<int> iguais) => iguais.length == quantidadeCenas ? null : iguais;
+
   /// Valor que soa na cena: a sobreposição da cena, senão o valor base.
   /// `null` quando o preset não guarda o parâmetro (vale o padrão do bloco).
-  /// A cena liga/desliga o bloco diferente da base (selo "SÓ NA CENA").
-  /// O liga/desliga desta cena difere de outra cena do preset (o bloco em si
-  /// sempre acompanha a cena ativa, então a comparação é entre as cenas).
-  bool bypassSoNaCena(int cena) =>
-      [1, 2, 3].any((outra) => outra != cena && habilitadoNaCena(outra) != habilitadoNaCena(cena));
-
   num? valorNaCena(String simbolo, int cena) =>
       sobreposicaoDaCena(simbolo, cena) ?? valorBase(simbolo);
 

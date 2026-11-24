@@ -8,30 +8,32 @@ import '../../nucleo/catalogo/familia_bloco.dart';
 import '../tema/tokens.dart';
 
 class PintorArteFamilia extends CustomPainter {
-  const PintorArteFamilia(this.familia);
+  const PintorArteFamilia(this.familia, {required this.cores});
+
+  final Paleta cores;
 
   final FamiliaBloco familia;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final (area, traco) = pintarGabinete(canvas, size, familia);
+    final (area, traco) = pintarGabinete(canvas, size, familia, cores);
     _glifo(canvas, area, traco);
   }
 
   /// O gabinete na cor da [familia]; devolve onde vai o glifo e o traço dele.
   /// Também é o corpo dos ícones de utilitário ([PintorArteUtilitario]).
-  static (Rect, Paint) pintarGabinete(Canvas canvas, Size size, FamiliaBloco familia) {
+  static (Rect, Paint) pintarGabinete(Canvas canvas, Size size, FamiliaBloco familia, Paleta cores) {
     final corpo = _corpo(size, familia);
-    canvas.drawRRect(corpo, Paint()..color = Cores.daFamilia(familia));
+    canvas.drawRRect(corpo, Paint()..color = cores.daFamilia(familia));
     canvas.drawRRect(
       corpo.deflate(size.width * 0.06),
       Paint()
-        ..color = Cores.tintaMarcador.withValues(alpha: Opacidades.sombraArteFamilia)
+        ..color = cores.tintaMarcador.withValues(alpha: Opacidades.sombraArteFamilia)
         ..style = PaintingStyle.stroke
         ..strokeWidth = size.width * 0.02,
     );
     final traco = Paint()
-      ..color = Cores.tintaMarcador
+      ..color = cores.tintaMarcador
       ..style = PaintingStyle.stroke
       ..strokeWidth = size.width * 0.045
       ..strokeCap = StrokeCap.round;
@@ -153,5 +155,5 @@ class PintorArteFamilia extends CustomPainter {
     ..lineTo(a.center.dx, a.bottom);
 
   @override
-  bool shouldRepaint(PintorArteFamilia antigo) => antigo.familia != familia;
+  bool shouldRepaint(PintorArteFamilia antigo) => antigo.cores != cores || antigo.familia != familia;
 }

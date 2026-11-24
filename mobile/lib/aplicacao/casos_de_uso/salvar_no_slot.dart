@@ -2,6 +2,7 @@
 // gravação só conta depois de relida do aparelho (como faz o cli.py de
 // referência).
 import '../../dados/repositorio_pedaleira.dart';
+import '../copias/copia_automatica.dart';
 import '../../nucleo/modelo/conferencia_gravacao.dart';
 import '../../nucleo/modelo/documento_preset.dart';
 import '../../nucleo/modelo/slot_preset.dart';
@@ -40,12 +41,17 @@ final class SlotAlteradoFora extends ResultadoSalvar {
 }
 
 class SalvarNoSlot {
-  const SalvarNoSlot(this._repositorio, {this.esperaReleitura = const Duration(milliseconds: 500)});
+  const SalvarNoSlot(this._repositorio,
+      {this.esperaReleitura = const Duration(milliseconds: 500), GuardaDeCopia? copia})
+      : _copia = copia;
 
   final RepositorioPedaleira _repositorio;
 
   /// Pausa antes de reler de novo um slot que voltou diferente do enviado.
   final Duration esperaReleitura;
+
+  /// Backup do que está no slot antes de substituir (DECISOES BK1); nulo = sem.
+  final GuardaDeCopia? _copia;
 
   Future<ResultadoSalvar> executar(
     SlotPreset slot,
@@ -54,28 +60,29 @@ class SalvarNoSlot {
     String? area,
     DocumentoPreset? aberto,
   }) async {
-    if (aberto != null) {
-      if (await _mudouDesde(slot, area, aberto) case final recusa?) return recusa;
-    } else if (!sobrescreverConfirmado) {
-      final ocupante = await _repositorio.lerPreset(slot, area: area);
-      if (ocupante case Falha(:final erro)) return FalhaAoSalvar(erro);
-      if (ocupante case Sucesso(valor: final DocumentoPreset atual)) {
-        return SlotOcupado(slot, atual.nome);
-      }
+    final (recusa, ocupante) = await _ocupante(slot, area, aberto: aberto, confirmado: sobrescreverConfirmado);
+    if (recusa != null) return recusa;
+    if (ocupante != null) {
+      if (await _copia?.antesDeSubstituir(ocupante, slot, area) case final erro?) return FalhaAoSalvar(erro);
     }
     final gravacao = await _repositorio.salvar(slot, preset, area: area);
     if (gravacao case Falha(:final erro)) return FalhaAoSalvar(erro);
     return _conferir(slot, area, preset);
   }
 
-  /// Relê o slot e compara com o que o app abriu dele ([aberto]): a cena
-  /// ativa não conta (trocar de cena é tocar, como no "não salvo").
-  Future<ResultadoSalvar?> _mudouDesde(SlotPreset slot, String? area, DocumentoPreset aberto) async {
+  /// O que está no slot antes de gravar, lido uma vez só: a mesma leitura
+  /// confere o "mudou por fora", pergunta pelo ocupado e dá o backup. Sem
+  /// backup e já confirmado, não lê (como antes do BK1).
+  Future<(ResultadoSalvar?, DocumentoPreset?)> _ocupante(SlotPreset slot, String? area,
+      {DocumentoPreset? aberto, required bool confirmado}) async {
+    if (aberto == null && confirmado && _copia == null) return (null, null);
     final leitura = await _repositorio.lerPreset(slot, area: area);
     return switch (leitura) {
-      Falha(:final erro) => FalhaAoSalvar(erro),
-      Sucesso(valor: final DocumentoPreset atual) when atual.assinaturaSemCena == aberto.assinaturaSemCena => null,
-      Sucesso(:final valor) => SlotAlteradoFora(slot, valor),
+      Falha(:final erro) => (FalhaAoSalvar(erro), null),
+      Sucesso(:final valor) when aberto != null && valor?.assinaturaSemCena != aberto.assinaturaSemCena =>
+        (SlotAlteradoFora(slot, valor), null),
+      Sucesso(valor: final DocumentoPreset atual) when aberto == null && !confirmado => (SlotOcupado(slot, atual.nome), null),
+      Sucesso(:final valor) => (null, valor),
     };
   }
 

@@ -54,7 +54,7 @@ class ListaRolante extends StatelessWidget {
     return TextButton(
       key: ValueKey('vizinha-$simbolo-$indice'),
       onPressed: () => aoMudar(parametro.valorDaOpcao(indice), arrastando: false),
-      style: TextButton.styleFrom(foregroundColor: Cores.textoSecundario, minimumSize: const Size.fromHeight(Medidas.alvoMinimo)),
+      style: TextButton.styleFrom(foregroundColor: context.cores.textoSecundario, minimumSize: const Size.fromHeight(Medidas.alvoMinimo)),
       child: Text(parametro.opcoes[indice], maxLines: 1, overflow: TextOverflow.ellipsis),
     );
   }
@@ -87,9 +87,9 @@ class RoloOpcoes extends StatelessWidget {
         Listener(
           onPointerSignal: (evento) => _girar(evento, atual),
           child: Row(children: [
-            _vizinha(atual - 1, 'anterior'),
+            _vizinha(context, atual - 1, 'anterior'),
             Expanded(child: _centro(context, atual)),
-            _vizinha(atual + 1, 'proxima'),
+            _vizinha(context, atual + 1, 'proxima'),
           ]),
         ),
     ]);
@@ -103,7 +103,7 @@ class RoloOpcoes extends StatelessWidget {
     if (evento is PointerScrollEvent && evento.scrollDelta.dy != 0) _escolher(atual + evento.scrollDelta.dy.sign.toInt());
   }
 
-  Widget _vizinha(int indice, String lado) {
+  Widget _vizinha(BuildContext context, int indice, String lado) {
     final existe = indice >= 0 && indice < parametro.opcoes.length;
     return SizedBox(
       width: Medidas.alvoMinimo,
@@ -111,7 +111,7 @@ class RoloOpcoes extends StatelessWidget {
       child: TextButton(
         key: ValueKey('$lado-${parametro.simbolo}'),
         onPressed: existe ? () => _escolher(indice) : null,
-        style: TextButton.styleFrom(foregroundColor: Cores.textoSecundario, padding: EdgeInsets.zero),
+        style: TextButton.styleFrom(foregroundColor: context.cores.textoSecundario, padding: EdgeInsets.zero),
         child: existe ? FittedBox(child: Text(parametro.opcoes[indice])) : const SizedBox.shrink(),
       ),
     );
@@ -186,4 +186,4 @@ class _EstadoBotaoToque extends ConsumerState<BotaoToque> {
 
 /// A frase discreta de apoio (o que só o visor mostra).
 Widget notaDoCartao(BuildContext context, String texto) => Text(texto,
-    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario));
+    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.textoSecundario));

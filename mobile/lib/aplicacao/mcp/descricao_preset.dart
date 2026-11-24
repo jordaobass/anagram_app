@@ -19,14 +19,20 @@ class DescricaoPreset {
   final DefinicaoPorUri definicaoDe;
   final CatalogoGabinetes gabinetes;
 
+  /// O preset aberto: o documento e em que pé ele está na tela.
   Map<String, dynamic> preset(EstadoEditor estado, DocumentoPreset documento) => {
-        'name': documento.nome,
         'slot': estado.slot?.rotulo,
         'unsaved': estado.naoSalvo,
         'live': estado.aoVivo,
+        ...conteudo(documento),
+      };
+
+  /// Só o que o arquivo do preset diz (serve também a um slot lido sem abrir).
+  Map<String, dynamic> conteudo(DocumentoPreset documento) => {
+        'name': documento.nome,
         'active_scene': documento.cenaAtiva,
         'scenes': [
-          for (var cena = 1; cena <= 3; cena++) {'number': cena, 'name': documento.nomeDaCena(cena) ?? 'Scene $cena'},
+          for (final cena in documento.cenas) {'number': cena, 'name': documento.nomeDaCena(cena) ?? 'Scene $cena'},
         ],
         'layout': 'Signal flows left to right on row 1 (columns 1-12). Row 2 is a parallel line that '
             'only exists between a Split and a Merge block on row 1.',
@@ -66,7 +72,19 @@ class DescricaoPreset {
     if (ajustaveis.isEmpty) {
       return [for (final s in bloco.simbolosGuardados) {'symbol': s, 'value': bloco.valorNaCena(s, cena)}];
     }
-    return [for (final p in ajustaveis) parametro(p, bloco.valorNaCena(p.simbolo, cena) ?? p.padrao)];
+    return [
+      for (final p in ajustaveis) {...parametro(p, bloco.valorNaCena(p.simbolo, cena) ?? p.padrao), ..._porCena(bloco, p)},
+    ];
+  }
+
+  /// Parâmetro com valor próprio em alguma cena: o valor de cada uma, para a
+  /// IA ver o que difere sem trocar de cena (sem registro, vale o do bloco).
+  static Map<String, dynamic> _porCena(BlocoPreset bloco, DefinicaoParametro p) {
+    final cenas = [for (var cena = 1; cena <= bloco.quantidadeCenas; cena++) cena];
+    if (cenas.every((c) => bloco.sobreposicaoDaCena(p.simbolo, c) == null)) return const {};
+    return {
+      'scene_values': {for (final c in cenas) '$c': bloco.valorNaCena(p.simbolo, c) ?? p.padrao},
+    };
   }
 
   static Map<String, dynamic> parametro(DefinicaoParametro p, num valor) => {

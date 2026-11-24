@@ -13,7 +13,7 @@ PopupMenuItem<T> itemDeMenu<T>(T valor,
       value: valor,
       enabled: ativo,
       height: alturaItemDeMenu,
-      child: LinhaDeMenu(icone: icone, ativo: ativo, destrutivo: destrutivo, child: Text(rotulo, style: _estilo(destrutivo))),
+      child: LinhaDeMenu(icone: icone, ativo: ativo, destrutivo: destrutivo, child: _TextoDoItem(rotulo, destrutivo: destrutivo)),
     );
 
 /// Item de escolha única (opção de parâmetro, tipo de drive): o check em
@@ -29,7 +29,7 @@ PopupMenuItem<T> itemMarcado<T>(T valor, {required String rotulo, required bool 
         child: Row(children: [
           SizedBox.square(
               dimension: Medidas.iconeMenu,
-              child: marcado ? const Icon(Icons.check, size: Medidas.iconeMenu, color: Cores.tally) : null),
+              child: marcado ? const _MarcaDoItem() : null),
           const SizedBox(width: Espacos.m),
           Expanded(child: Text(rotulo)),
         ]),
@@ -43,7 +43,37 @@ double get alturaItemDeMenu => switch (defaultTargetPlatform) {
       TargetPlatform.windows || TargetPlatform.macOS || TargetPlatform.linux => Medidas.alturaItemMenuComMouse,
     };
 
-TextStyle? _estilo(bool destrutivo) => destrutivo ? const TextStyle(color: Cores.erro) : null;
+/// O texto do item; destrutivo, em vermelho de erro.
+class _TextoDoItem extends StatelessWidget {
+  const _TextoDoItem(this.rotulo, {required this.destrutivo});
+
+  final String rotulo;
+  final bool destrutivo;
+
+  @override
+  Widget build(BuildContext context) =>
+      Text(rotulo, style: destrutivo ? TextStyle(color: context.cores.erro) : null);
+}
+
+/// O que fica à direita do item (o que o controle já move), como um atalho
+/// de teclado: menor e em texto secundário.
+class DetalheDeMenu extends StatelessWidget {
+  const DetalheDeMenu(this.texto, {super.key});
+
+  final String texto;
+
+  @override
+  Widget build(BuildContext context) =>
+      Text(texto, style: Tipos.detalheMenu.copyWith(color: context.cores.textoSecundario));
+}
+
+/// O check da opção marcada, em âmbar (é seleção).
+class _MarcaDoItem extends StatelessWidget {
+  const _MarcaDoItem();
+
+  @override
+  Widget build(BuildContext context) => Icon(Icons.check, size: Medidas.iconeMenu, color: context.cores.tallyTinta);
+}
 
 /// Ícone + conteúdo do item; também serve aos itens que trazem mais coisas
 /// à direita (o que cada controle da pedaleira já move).
@@ -57,7 +87,7 @@ class LinhaDeMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cor = destrutivo ? Cores.erro : Cores.aluminioClaro;
+    final cor = destrutivo ? context.cores.erro : context.cores.aluminioClaro;
     return Row(children: [
       Icon(icone, size: Medidas.iconeMenu, color: ativo ? cor : cor.withValues(alpha: Opacidades.itemIndisponivel)),
       const SizedBox(width: Espacos.m),

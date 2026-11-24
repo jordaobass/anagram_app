@@ -71,7 +71,7 @@ class BotoesBanda extends ConsumerWidget {
         cor: cor,
         // as cores de banda são claras demais para o branco (2,03 a 3,51:1):
         // o Solo aceso escreve em tinta de marcador, acima de 4,5:1 em todas
-        corTexto: Cores.tintaMarcador,
+        corTexto: context.cores.tintaMarcador,
         aoTocar: () => _alternarSolo(context, ref, mutadas, emSolo: solo),
       ),
       // o Mute pinta de alerta quando corta a banda: é o estado que mais se
@@ -80,8 +80,8 @@ class BotoesBanda extends ConsumerWidget {
         chave: 'mudo-${mudo.simbolo}',
         texto: l.mbMudo,
         ligado: muda,
-        cor: Cores.fitaAlerta,
-        corTexto: Cores.sobreAlerta,
+        cor: context.cores.fitaAlerta,
+        corTexto: context.cores.sobreAlerta,
         aoTocar: () => ControleNoPainel.alterar(ref, mudo, bloco)(muda ? 0 : 1, arrastando: false),
       ),
     ]);
@@ -93,7 +93,6 @@ class BotoesBanda extends ConsumerWidget {
     alterarEmGrupo(context, ref,
         bloco: bloco,
         definicao: definicao,
-        cena: cena,
         valores: mutesDoSolo(banda, mutes, mutadas),
         aviso: emSolo ? l.mbSoloDesligado : l.mbSoloLigado(l.mbNomeDaBanda(banda)));
   }
@@ -113,7 +112,7 @@ class BotoesBanda extends ConsumerWidget {
                 key: ValueKey(chave),
                 onPressed: aoTocar,
                 style: FilledButton.styleFrom(backgroundColor: cor, foregroundColor: corTexto)
-                    .copyWith(side: TemaApp.anelDeFoco(cor: corTexto)),
+                    .copyWith(side: TemaApp.anelDeFoco(corTexto)),
                 child: Text(texto),
               )
             : OutlinedButton(key: ValueKey(chave), onPressed: aoTocar, child: Text(texto)),

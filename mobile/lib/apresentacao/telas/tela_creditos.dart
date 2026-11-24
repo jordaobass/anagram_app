@@ -25,9 +25,9 @@ class TelaCreditos extends ConsumerWidget {
         padding: const EdgeInsets.all(Espacos.xl),
         children: [
           Text(AppAnagram.titulo, style: tema.titleLarge),
-          RotuloVersao(estilo: tema.bodyMedium?.copyWith(color: Cores.textoSecundario)),
+          RotuloVersao(estilo: tema.bodyMedium?.copyWith(color: context.cores.textoSecundario)),
           const SizedBox(height: Espacos.xl),
-          for (final (titulo, texto) in itens) ..._secao(tema, titulo, Text(texto, style: tema.bodyLarge)),
+          for (final (titulo, texto) in itens) ..._secao(tema, context.cores, titulo, Text(texto, style: tema.bodyLarge)),
         ],
       ),
     );
@@ -43,13 +43,13 @@ class TelaCreditos extends ConsumerWidget {
         (l.creditoAvisoTitulo, l.creditoAviso),
       ];
 
-  static List<Widget> _secao(TextTheme tema, String titulo, Widget conteudo) => [
-        Text(titulo.toUpperCase(), style: _estiloTitulo(tema)),
+  static List<Widget> _secao(TextTheme tema, Paleta cores, String titulo, Widget conteudo) => [
+        Text(titulo.toUpperCase(), style: _estiloTitulo(tema, cores)),
         const SizedBox(height: Espacos.xs),
         conteudo,
         const SizedBox(height: Espacos.l),
       ];
 
   /// Título de seção em alumínio: o âmbar é só de seleção e ação (DESIGN.md).
-  static TextStyle? _estiloTitulo(TextTheme tema) => tema.labelLarge?.copyWith(color: Cores.aluminioClaro);
+  static TextStyle? _estiloTitulo(TextTheme tema, Paleta cores) => tema.labelLarge?.copyWith(color: cores.aluminioClaro);
 }

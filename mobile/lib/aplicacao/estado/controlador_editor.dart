@@ -25,6 +25,7 @@ import 'controlador_conexao.dart';
 import 'controles_do_editor.dart';
 import 'edicao_do_preset.dart';
 import 'estado_conexao.dart';
+import 'escopo_cenas.dart';
 import 'estado_editor.dart';
 import 'gravacao_do_editor.dart';
 import 'limpeza_do_editor.dart';
@@ -158,14 +159,20 @@ class ControladorEditor extends Notifier<EstadoEditor>
 
   void selecionarBloco(PosicaoBloco posicao) => state = state.copiar(selecionado: posicao);
 
+  /// Fecha o painel do bloco (o X da barra do Axioma), sem mexer no preset.
+  void desselecionarBloco() => state = state.copiar(selecionado: null);
+
   /// `arrastando`: ainda no gesto (envio com vazão limitada); ao soltar, final.
   /// `posicao`: o bloco do controle (o Desfazer pode chegar com outro selecionado).
+  /// `padrao`: o do catálogo, que as outras cenas tocavam se o bloco não o guarda.
+  /// As cenas que mudam são as da chave "Controlar" ([escopoCenasProvider]).
   void alterarParametro(String simbolo, num valor,
-      {required bool arrastando, String? nome, PosicaoBloco? posicao}) {
+      {required bool arrastando, String? nome, PosicaoBloco? posicao, num? padrao}) {
     final atual = state.atual;
     posicao ??= state.selecionado;
     if (atual == null || posicao == null) return;
-    final editado = atual.comParametro(posicao, simbolo, valor, nomeExibicao: nome);
+    final editado = atual.comParametro(posicao, simbolo, valor,
+        nomeExibicao: nome, escopo: ref.read(escopoCenasProvider), valorAntes: padrao);
     state = state.copiar(atual: editado);
     if (!state.aoVivo) return;
     arrastando ? agendarAoVivo(editado) : unawaited(enviarAoVivo(editado));
@@ -190,6 +197,13 @@ class ControladorEditor extends Notifier<EstadoEditor>
     // só troca entre duas áreas: desconectar zera a área, e a edição não
     // salva tem de sobreviver ao cabo que saiu
     if (antes != null && depois != null && antes != depois) _soltarDoSlot();
+  }
+
+  /// Um preset de backup (DECISOES BK6): abre como o importado, mas sem slot,
+  /// para nenhum "Salvar" o pôr de volta sem passar pelo "Salvar como".
+  Future<void> abrirSemSlot(DocumentoPreset documento) async {
+    _soltarDoSlot();
+    await carregarDocumento(documento);
   }
 
   /// Outra área na tela: o preset aberto era de um slot da área anterior e não

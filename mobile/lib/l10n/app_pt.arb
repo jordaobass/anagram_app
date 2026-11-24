@@ -32,8 +32,25 @@
       }
     }
   },
-  "idaEVolta": "ida e volta {ms} ms",
-  "@idaEVolta": {
+  "barraConectadaCurta": "Anagram · fw {firmware}",
+  "@barraConectadaCurta": {
+    "placeholders": {
+      "firmware": {
+        "type": "String"
+      }
+    }
+  },
+  "barraDemonstracaoCurta": "Demonstração",
+  "latenciaCurta": "{ms} ms",
+  "@latenciaCurta": {
+    "placeholders": {
+      "ms": {
+        "type": "int"
+      }
+    }
+  },
+  "latenciaDica": "Ida e volta do último ajuste até a pedaleira: {ms} ms. Acima de 500 ms ela responde devagar; acima de 1500 ms, muito devagar.",
+  "@latenciaDica": {
     "placeholders": {
       "ms": {
         "type": "int"
@@ -75,7 +92,11 @@
   "avisoPresetAtualizado": "O {slot} mudou fora do app; a lista foi relida e a versão atual foi aberta.",
   "@avisoPresetAtualizado": {
     "description": "Slot alterado fora do app e reaberto depois de reler a lista",
-    "placeholders": { "slot": { "type": "String" } }
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
   },
   "avisoPresetTrocado": "A pedaleira devolveu outro preset para {slot} (id diferente da lista). A lista foi relida; abra de novo.",
   "@avisoPresetTrocado": {
@@ -139,7 +160,11 @@
   "versaoAppNaBarra": "App v{versao}",
   "@versaoAppNaBarra": {
     "description": "Versão do app na barra de cima, ao lado do firmware",
-    "placeholders": { "versao": { "type": "String" } }
+    "placeholders": {
+      "versao": {
+        "type": "String"
+      }
+    }
   },
   "versaoApp": "v{versao}",
   "@versaoApp": {
@@ -329,6 +354,45 @@
       }
     }
   },
+  "ligadoNasCenas": "LIGADO NAS CENAS {cenas}",
+  "@ligadoNasCenas": {
+    "placeholders": {
+      "cenas": {
+        "type": "String"
+      }
+    },
+    "description": "Cabeçalho do bloco: ligado na cena ativa e nestas outras (lista curta, ex.: \"2, 3\")"
+  },
+  "desligadoNasCenas": "DESLIGADO NAS CENAS {cenas}",
+  "@desligadoNasCenas": {
+    "placeholders": {
+      "cenas": {
+        "type": "String"
+      }
+    },
+    "description": "Cabeçalho do bloco: desligado na cena ativa e nestas outras (lista curta)"
+  },
+  "ligadoVariaEntreCenas": "LIGADO NESTA CENA · VARIA ENTRE AS CENAS",
+  "@ligadoVariaEntreCenas": {
+    "description": "Cabeçalho do bloco: ligado na cena ativa; o estado varia entre cenas demais para listar"
+  },
+  "desligadoVariaEntreCenas": "DESLIGADO NESTA CENA · VARIA ENTRE AS CENAS",
+  "@desligadoVariaEntreCenas": {
+    "description": "Cabeçalho do bloco: desligado na cena ativa; o estado varia entre cenas demais para listar"
+  },
+  "nasCenas": "NAS CENAS {cenas}",
+  "@nasCenas": {
+    "placeholders": {
+      "cenas": {
+        "type": "String"
+      }
+    },
+    "description": "Selo do knob: o valor mostrado vale nestas cenas (lista curta, ex.: \"1, 2\")"
+  },
+  "variaEntreCenas": "VARIA ENTRE AS CENAS",
+  "@variaEntreCenas": {
+    "description": "Selo do knob: o valor varia entre cenas demais para listar"
+  },
   "dicaMontarCadeia": "Toque num + da grade para adicionar um efeito. Toque num bloco para ajustar; segure e arraste para mudar de lugar.",
   "faixaEstimada": "{simbolo} (faixa estimada)",
   "@faixaEstimada": {
@@ -388,13 +452,20 @@
     }
   },
   "creditoFontesTitulo": "Fontes",
-  "creditoFontes": "Barlow e Saira Stencil (SIL Open Font License) · Permanent Marker (Apache 2.0).",
+  "creditoFontes": "Barlow, Saira Stencil, Share Tech Mono e Orbitron (SIL Open Font License) · Permanent Marker (Apache 2.0).",
   "creditoAvisoTitulo": "Aviso",
   "creditoAviso": "App não oficial, sem vínculo com a Darkglass Electronics. Anagram é marca do fabricante.",
   "diagnosticoPausa": "DIAGNÓSTICO · PAUSA ENTRE RELATÓRIOS USB",
   "diagnosticoPausaTexto": "Compare 0, 2 e 10 ms e veja a \"ida e volta\" na barra e no log.",
   "idioma": "Idioma",
   "idiomaDoSistema": "Do sistema",
+  "temaSecao": "Aparência",
+  "@temaSecao": {
+    "description": "Título da seção de tema nas Configurações"
+  },
+  "temaSistema": "Do sistema",
+  "temaEscuro": "Escuro",
+  "temaClaro": "Claro",
   "separadorDecimal": ",",
   "valorLigado": "Ligado",
   "valorDesligado": "Desligado",
@@ -794,7 +865,14 @@
   "mcpCopiado": "Copiado para a área de transferência.",
   "mcpLimitacoes": "A IA não ouve o som: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a ferramentas.",
   "mcpAtivoNaBarra": "IA",
-  "mcpAtivoDica": "IA local pode ajustar o timbre (MCP ligado)",
+  "mcpAtivoDicaPorta": "IA local escutando na porta {porta} (MCP ligado): ela pode ajustar o timbre",
+  "@mcpAtivoDicaPorta": {
+    "placeholders": {
+      "porta": {
+        "type": "int"
+      }
+    }
+  },
   "mcpMudancaDaIa": "IA: {resumo}",
   "@mcpMudancaDaIa": {
     "placeholders": {
@@ -914,6 +992,18 @@
   "axSaida": "Saída",
   "@axSaida": {
     "description": "Título de seção do painel do Axioma Mono Synth"
+  },
+  "axFecharPainel": "Fechar o painel do bloco",
+  "@axFecharPainel": {
+    "description": "Painel do Axioma Mono Synth (barra do aparelho)"
+  },
+  "axSemTemplates": "O Axioma ainda não tem templates no app",
+  "@axSemTemplates": {
+    "description": "Painel do Axioma Mono Synth (barra do aparelho)"
+  },
+  "axVisorSlot": "Preset aberto",
+  "@axVisorSlot": {
+    "description": "Painel do Axioma Mono Synth (barra do aparelho)"
   },
   "axOutros": "Outros",
   "@axOutros": {
@@ -1429,5 +1519,216 @@
   "caConectarAoAbrirMac": "No macOS, só depois de liberar o Monitoramento de Entrada para o Anagram App em Ajustes do Sistema › Privacidade e Segurança.",
   "@caConectarAoAbrirMac": {
     "description": "Linha extra do interruptor no macOS (DECISOES CA3)"
+  },
+  "salvarCopiaFalhou": "o backup do preset que está no slot não foi gravado em {pasta}, então nada foi para a pedaleira. A causa está no registro; se o disco não tiver jeito, desligue o backup automático nas Configurações.",
+  "@salvarCopiaFalhou": {
+    "description": "Motivo do \"Não salvou: …\" quando o backup antes de gravar falhou (DECISOES BK1)",
+    "placeholders": {
+      "pasta": {
+        "type": "String"
+      }
+    }
+  },
+  "bkErroCopia": "O backup do preset que está no slot não foi gravado em {pasta}, então nada mudou na pedaleira. A causa está no registro; se o disco não tiver jeito, desligue o backup automático nas Configurações.",
+  "@bkErroCopia": {
+    "description": "Aviso quando o backup antes de limpar, mover ou trocar falhou (DECISOES BK1)",
+    "placeholders": {
+      "pasta": {
+        "type": "String"
+      }
+    }
+  },
+  "bkPastaDesconhecida": "a pasta de dados do app (o sistema não informou qual é)",
+  "@bkPastaDesconhecida": {
+    "description": "Entra no lugar da pasta quando o sistema não informou onde ficam os backups"
+  },
+  "bkSecao": "Backup dos presets",
+  "@bkSecao": {
+    "description": "Seção das Configurações com os backups locais (DECISOES BK)"
+  },
+  "bkAutomatico": "Backup automático antes de gravar",
+  "@bkAutomatico": {
+    "description": "Interruptor das Configurações (DECISOES BK5)"
+  },
+  "bkAutomaticoTexto": "Antes de substituir, mover ou limpar um preset na pedaleira, o app guarda o que estava no slot, como um JSON que o Importar abre. Se o backup falhar, nada é gravado. Ficam os últimos 30 dias, até 500 arquivos.",
+  "@bkAutomaticoTexto": {
+    "description": "Explicação do interruptor do backup automático (DECISOES BK1, BK3)"
+  },
+  "bkOnde": "Os backups ficam nesta pasta, só neste computador:",
+  "@bkOnde": {
+    "description": "Antes do caminho da pasta de backups (D9: nada sai do computador)"
+  },
+  "bkAbrirPasta": "Abrir pasta de backups",
+  "@bkAbrirPasta": {
+    "description": "Botão que abre a pasta de backups no gerenciador de arquivos"
+  },
+  "bkPastaNaoAbriu": "O sistema não abriu a pasta. O caminho está acima, para copiar.",
+  "@bkPastaNaoAbriu": {
+    "description": "Aviso quando o gerenciador de arquivos não abriu"
+  },
+  "bkCompleto": "Fazer backup de todos os presets agora",
+  "@bkCompleto": {
+    "description": "Botão do backup completo (DECISOES BK4)"
+  },
+  "bkCompletoTexto": "Lê todas as áreas e todos os slots ocupados, um de cada vez, e guarda cada preset numa pasta com a data. O app não apaga os backups completos.",
+  "@bkCompletoTexto": {
+    "description": "Explicação do backup completo (DECISOES BK4)"
+  },
+  "bkSemPedaleira": "Conecte a pedaleira (ou abra a demonstração) para fazer o backup completo e abrir um backup no editor.",
+  "@bkSemPedaleira": {
+    "description": "Sem pedaleira, os botões de backup completo e restaurar ficam parados"
+  },
+  "bkCompletoTitulo": "Backup de todos os presets",
+  "@bkCompletoTitulo": {
+    "description": "Título do diálogo de progresso do backup completo"
+  },
+  "bkCompletoListando": "Lendo a lista de presets de cada área…",
+  "@bkCompletoListando": {
+    "description": "Progresso antes de saber quantos presets há"
+  },
+  "bkCompletoProgresso": "{feitos} de {total} presets guardados",
+  "@bkCompletoProgresso": {
+    "description": "Progresso do backup completo",
+    "placeholders": {
+      "feitos": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "bkCompletoConcluido": "Backup completo: {quantos} presets guardados em {pasta}.",
+  "@bkCompletoConcluido": {
+    "description": "Aviso no fim do backup completo",
+    "placeholders": {
+      "quantos": {
+        "type": "int"
+      },
+      "pasta": {
+        "type": "String"
+      }
+    }
+  },
+  "bkCompletoCancelado": "Backup cancelado: {feitos} de {total} presets guardados. O que já foi gravado fica na pasta.",
+  "@bkCompletoCancelado": {
+    "description": "Aviso quando a pessoa cancela o backup completo",
+    "placeholders": {
+      "feitos": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "bkCompletoFalhou": "Backup interrompido depois de {feitos} presets: {motivo}",
+  "@bkCompletoFalhou": {
+    "description": "Aviso quando o backup completo parou por um erro",
+    "placeholders": {
+      "feitos": {
+        "type": "int"
+      },
+      "motivo": {
+        "type": "String"
+      }
+    }
+  },
+  "bkRestaurar": "Restaurar de um backup…",
+  "@bkRestaurar": {
+    "description": "Botão que abre a lista de backups (DECISOES BK6)"
+  },
+  "bkRestaurarTexto": "Abre o preset guardado no editor, sem slot, para ouvir antes. Para pôr na pedaleira, use Salvar como.",
+  "@bkRestaurarTexto": {
+    "description": "Explicação no topo da lista de backups (DECISOES BK6)"
+  },
+  "bkNenhum": "Nenhum backup ainda.",
+  "@bkNenhum": {
+    "description": "Lista de backups vazia"
+  },
+  "bkAbrirNoEditor": "Abrir no editor",
+  "@bkAbrirNoEditor": {
+    "description": "Ação de cada backup da lista"
+  },
+  "bkAbertoNoEditor": "\"{nome}\" aberto no editor, sem slot. Use Salvar como para gravar.",
+  "@bkAbertoNoEditor": {
+    "description": "Aviso depois de abrir um backup no editor",
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "bkCompletoGrupo": "Backup completo · {hora} · {quantos} presets",
+  "@bkCompletoGrupo": {
+    "description": "Grupo de um backup completo na lista de restaurar",
+    "placeholders": {
+      "hora": {
+        "type": "String"
+      },
+      "quantos": {
+        "type": "int"
+      }
+    }
+  },
+  "bkAreaUnica": "Área única",
+  "@bkAreaUnica": {
+    "description": "Firmware sem áreas, na lista de backups"
+  },
+  "bkFechar": "FECHAR",
+  "@bkFechar": {
+    "description": "Fecha a lista de backups"
+  },
+  "bkRestaurarTitulo": "Restaurar de um backup",
+  "@bkRestaurarTitulo": {
+    "description": "Título da lista de backups (DECISOES BK6)"
+  },
+  "caMonitoramentoNegado": "O macOS ainda não deixa o Anagram App falar com a pedaleira. Em Ajustes do Sistema › Privacidade e Segurança › Monitoramento de Entrada, ligue o Anagram App.",
+  "@caMonitoramentoNegado": {
+    "description": "Tela de conectar no macOS sem Monitoramento de Entrada: o USB não foi aberto (DECISOES CA5)"
+  },
+  "caAbrirAjustes": "ABRIR AJUSTES",
+  "@caAbrirAjustes": {
+    "description": "Botão da tela de conectar que abre Ajustes › Privacidade e Segurança › Monitoramento de Entrada (DECISOES CA5)"
+  },
+  "caReabraDepois": "Depois de ligar, feche e reabra o Anagram App: o macOS só libera na próxima abertura.",
+  "@caReabraDepois": {
+    "description": "Abaixo do botão Abrir Ajustes: a permissão só vale reabrindo o app (DECISOES CA5)"
+  },
+  "mcpClienteVsCode": "VS Code + Copilot",
+  "@mcpClienteVsCode": {
+    "description": "Botão que copia a configuração para o GitHub Copilot no VS Code (DECISOES IA7)"
+  },
+  "mcpVsCodeOnde": "VS Code + GitHub Copilot: cole em ~/.copilot/mcp-config.json (ou em Chat: Open Customizations › MCP Servers › Copilot Global) e peça numa conversa do Copilot.",
+  "@mcpVsCodeOnde": {
+    "description": "Onde colar a configuração do VS Code + Copilot (formato mcpServers do Copilot, DECISOES IA7)"
+  },
+  "mcpCopilotComum": "O app Copilot do Windows e o Microsoft 365 Copilot não têm onde colar um servidor MCP local: use o GitHub Copilot dentro do VS Code.",
+  "@mcpCopilotComum": {
+    "description": "Frase honesta: o Copilot comum não conecta servidores MCP locais (DECISOES IA7)"
+  },
+  "mcpDocVsCode": "Documentação do VS Code",
+  "@mcpDocVsCode": {
+    "description": "Link para a referência de configuração MCP do VS Code"
+  },
+  "ceControlar": "CONTROLAR",
+  "@ceControlar": {
+    "description": "Rótulo da chave que escolhe quais cenas uma edição muda (DECISOES CE1)"
+  },
+  "ceTodas": "TODAS AS CENAS",
+  "@ceTodas": {
+    "description": "Opção: a edição muda todas as cenas (Controlling All Scenes da pedaleira)"
+  },
+  "ceAtiva": "SÓ A CENA ATIVA",
+  "@ceAtiva": {
+    "description": "Opção: a edição muda só a cena ativa (Controlling Active Scene da pedaleira)"
+  },
+  "ceTodasDica": "Knob, valor e liga/desliga mudam todas as cenas: o valor deixa de variar entre elas.",
+  "@ceTodasDica": {
+    "description": "Tooltip da opção Todas as cenas"
+  },
+  "ceAtivaDica": "Knob, valor e liga/desliga mudam só a cena ativa; as outras ficam como estavam.",
+  "@ceAtivaDica": {
+    "description": "Tooltip da opção Só a cena ativa"
   }
 }

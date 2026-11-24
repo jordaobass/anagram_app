@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
+import 'package:anagram_app/aplicacao/tema.dart';
 import 'package:anagram_app/aplicacao/provedores.dart' show indiceMiniaturasProvider;
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
 import 'package:anagram_app/nucleo/modelo/slot_preset.dart';
@@ -50,6 +51,8 @@ Future<void> carregarFontes() async {
     'BarlowCondensed': ['BarlowCondensed-SemiBold', 'BarlowCondensed-Bold'],
     'SairaStencil': ['SairaStencilOne-Regular'],
     'PermanentMarker': ['PermanentMarker-Regular'],
+    'ShareTechMono': ['ShareTechMono-Regular'],
+    'Orbitron': ['Orbitron-Variable'],
   };
   for (final MapEntry(key: familia, value: arquivos) in familias.entries) {
     final carregador = FontLoader(familia);
@@ -86,6 +89,7 @@ Future<void> assentarImagens(WidgetTester tester) async {
 Future<void> preparar(WidgetTester tester, Tamanho t,
     {List<Override> overrides = const [],
     IdiomaApp? idioma,
+    EscolhaTema tema = EscolhaTema.escuro,
     IndiceMiniaturas? indice,
     PresetsDeFabrica? fabrica}) {
   debugDefaultTargetPlatformOverride = t.plataforma;
@@ -94,6 +98,7 @@ Future<void> preparar(WidgetTester tester, Tamanho t,
       densidade: t.densidade,
       overrides: overrides,
       idioma: idioma ?? IdiomaApp.doCodigo(Platform.environment['CAPTURAS_IDIOMA']) ?? IdiomaApp.portugues,
+      tema: tema,
       indice: indice ?? lerIndiceDasCapturas(),
       fabrica: fabrica);
 }

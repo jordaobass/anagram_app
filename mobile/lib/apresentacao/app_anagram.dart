@@ -1,5 +1,5 @@
-// Raiz do app: tema escuro único (DESIGN.md), rotas tipadas do go_router e
-// idioma da interface (português, inglês ou espanhol; o do sistema por
+// Raiz do app: tema do sistema, escuro ou claro (DESIGN.md), rotas tipadas do go_router e
+// idioma da interface (português, inglês, espanhol ou francês; o do sistema por
 // padrão). O roteador nasce uma vez por app, no estado, para não perder a
 // pilha de telas a cada reconstrução. Depois do primeiro quadro, a consulta
 // de versão nova (DECISOES AV1) corre em segundo plano e, no computador, o app
@@ -10,8 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../aplicacao/estado/blocos_da_pedaleira.dart';
 import '../aplicacao/conectar_ao_abrir.dart';
 import '../aplicacao/idioma.dart';
+import '../aplicacao/tema.dart';
 import '../aplicacao/versao_nova.dart';
 import '../l10n/app_localizations.dart';
 import 'rotas.dart';
@@ -41,11 +43,16 @@ class _AppAnagramState extends ConsumerState<AppAnagram> {
 
   @override
   Widget build(BuildContext context) {
+    // os blocos que a pedaleira descreve (Marketplace, P4) são lidos desde a
+    // conexão, não só quando alguma tela os pede; ouvir não redesenha o app
+    ref.listen(blocosDaPedaleiraProvider, (_, _) {});
     final escolhido = ref.watch(idiomaProvider);
     return MaterialApp.router(
       title: AppAnagram.titulo,
       debugShowCheckedModeBanner: false,
-      theme: TemaApp.escuro(),
+      theme: TemaApp.claro(),
+      darkTheme: TemaApp.escuro(),
+      themeMode: _modo(ref.watch(temaProvider)),
       routerConfig: _roteador,
       locale: escolhido == null ? null : Locale(escolhido.codigo),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -53,4 +60,10 @@ class _AppAnagramState extends ConsumerState<AppAnagram> {
       localeResolutionCallback: (sistema, _) => Locale(IdiomaApp.doSistema(sistema?.toLanguageTag() ?? '').codigo),
     );
   }
+
+  static ThemeMode _modo(EscolhaTema tema) => switch (tema) {
+        EscolhaTema.sistema => ThemeMode.system,
+        EscolhaTema.escuro => ThemeMode.dark,
+        EscolhaTema.claro => ThemeMode.light,
+      };
 }

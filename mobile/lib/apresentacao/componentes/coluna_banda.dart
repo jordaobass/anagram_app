@@ -9,6 +9,7 @@ import '../../nucleo/catalogo/arranjo_multibanda.dart';
 import '../../nucleo/catalogo/arranjo_parametros.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
+import '../tema/tema_painel.dart';
 import '../tema/tokens.dart';
 import '../textos.dart';
 import 'botoes_banda.dart';
@@ -51,13 +52,10 @@ class ColunaBanda extends ConsumerWidget {
     return Container(
       key: ValueKey('coluna-${arranjo.banda.name}'),
       width: largura,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Raios.painel),
-        border: Border.all(color: Cores.filete),
-      ),
+      decoration: decoracaoCartao(context),
       clipBehavior: Clip.antiAlias,
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
-        Container(height: Medidas.fitaCategoria, color: Cores.daBanda(arranjo.banda, arranjo.paleta)),
+        Container(height: Medidas.fitaCategoria, color: context.cores.daBanda(arranjo.banda, arranjo.paleta)),
         Padding(
           padding: const EdgeInsets.all(Espacos.m),
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
@@ -67,7 +65,7 @@ class ColunaBanda extends ConsumerWidget {
             Opacity(
               opacity: muda ? Medidas.opacidadeBandaDesligada : 1,
               child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
-                ?_grafico(),
+                ?_grafico(context.cores),
                 _controles(),
               ]),
             ),
@@ -84,7 +82,7 @@ class ColunaBanda extends ConsumerWidget {
       Expanded(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(l.mbNomeDaBanda(arranjo.banda).toUpperCase(), style: tema.titleSmall),
-          Text(_faixa(l), style: tema.labelSmall?.copyWith(color: Cores.textoSecundario)),
+          Text(_faixa(l), style: tema.labelSmall?.copyWith(color: context.cores.textoSecundario)),
         ]),
       ),
       BotoesBanda(
@@ -93,7 +91,7 @@ class ColunaBanda extends ConsumerWidget {
           bloco: bloco,
           definicao: definicao,
           cena: cena,
-          cor: Cores.daBanda(arranjo.banda, arranjo.paleta)),
+          cor: context.cores.daBanda(arranjo.banda, arranjo.paleta)),
     ]);
   }
 
@@ -113,8 +111,8 @@ class ColunaBanda extends ConsumerWidget {
   }
 
   /// A curva do compressor (Ignissor) ou a onda do drive (Entropia).
-  Widget? _grafico() {
-    final cor = Cores.daBanda(arranjo.banda, arranjo.paleta);
+  Widget? _grafico(Paleta cores) {
+    final cor = cores.daBanda(arranjo.banda, arranjo.paleta);
     final limiar = _numero(arranjo.limiar);
     final razao = _numero(arranjo.razao);
     final drive = _numero(arranjo.drive);
@@ -143,7 +141,7 @@ class ColunaBanda extends ConsumerWidget {
         chave: ValueKey('chave-${chave.simbolo}'),
         nome: chave.nome,
         ligado: ligada,
-        cor: Cores.daFamilia(definicao.familia),
+        cor: context.cores.daFamilia(definicao.familia),
         texto: ligada ? l.mbCompLigada : l.mbCompDesligada,
         aoMudar: (novo) => ControleNoPainel.alterar(ref, chave, bloco)(novo ? 1 : 0, arrastando: false),
       ),
@@ -201,7 +199,7 @@ class ColunaBanda extends ConsumerWidget {
             key: ValueKey('param-${p.simbolo}'),
             parametro: p,
             valor: _valor(p),
-            cor: Cores.daFamilia(definicao.familia),
+            cor: context.cores.daFamilia(definicao.familia),
             largura: largura,
             aoMudar: ControleNoPainel.alterar(ref, p, bloco),
           ));

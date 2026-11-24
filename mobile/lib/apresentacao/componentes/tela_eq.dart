@@ -53,10 +53,10 @@ class TelaEq extends StatelessWidget {
         Row(children: [Expanded(child: SeletorModoEq(modo: modo, aoEscolher: aoEscolherModo)), ?acoes]),
         const SizedBox(height: Espacos.s),
         CurvaEqArrastavel(
-            key: chaveCurva, bandas: bandasDaCurva, cor: Cores.doModoEq(modo), ganhoGeral: ganhoGeral, aoArrastar: aoArrastar),
+            key: chaveCurva, bandas: bandasDaCurva, cor: context.cores.doModoEq(modo), ganhoGeral: ganhoGeral, aoArrastar: aoArrastar),
         if (dica case final texto?) ...[
           const SizedBox(height: Espacos.xs),
-          Text(texto, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario)),
+          Text(texto, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.textoSecundario)),
         ],
         const SizedBox(height: Espacos.m),
         LinhaDeBandas(filhos: bandas),
@@ -97,10 +97,10 @@ class SeletorModoEq extends StatelessWidget {
               key: ValueKey('modo-eq-${m.name}'),
               onPressed: () => aoEscolher(m),
               isSelected: m == modo,
-              icon: Icon(_icone(m), color: m == modo ? Cores.textoSobreModoEq : Cores.doModoEq(m)),
+              icon: Icon(_icone(m), color: m == modo ? context.cores.textoSobreModoEq : context.cores.doModoEq(m)),
               style: IconButton.styleFrom(
-                backgroundColor: m == modo ? Cores.doModoEq(m) : Colors.transparent,
-                side: BorderSide(color: Cores.doModoEq(m)),
+                backgroundColor: m == modo ? context.cores.doModoEq(m) : Colors.transparent,
+                side: BorderSide(color: context.cores.doModoEq(m)),
               ),
             ),
           ),
@@ -109,7 +109,7 @@ class SeletorModoEq extends StatelessWidget {
         child: Text(_nome(l, modo),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Cores.textoDoModoEq(modo))),
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(color: context.cores.textoDoModoEq(modo))),
       ),
     ]);
   }

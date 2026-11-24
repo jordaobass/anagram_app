@@ -8,16 +8,18 @@ import 'package:flutter/rendering.dart';
 
 import '../../nucleo/catalogo/familia_bloco.dart';
 import '../../nucleo/catalogo/utilitario_bloco.dart';
+import '../tema/tokens.dart';
 import 'pintor_arte_familia.dart';
 
 class PintorArteUtilitario extends CustomPainter {
-  const PintorArteUtilitario(this.tipo);
+  const PintorArteUtilitario(this.tipo, {required this.cores});
 
   final TipoUtilitario tipo;
+  final Paleta cores;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final (area, traco) = PintorArteFamilia.pintarGabinete(canvas, size, FamiliaBloco.utilitario);
+    final (area, traco) = PintorArteFamilia.pintarGabinete(canvas, size, FamiliaBloco.utilitario, cores);
     // os glifos daqui têm mais detalhe que os da família: ocupam mais do gabinete
     canvas.drawPath(_glifo(area.inflate(size.width * 0.06)), traco);
   }
@@ -198,5 +200,5 @@ class PintorArteUtilitario extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(PintorArteUtilitario antigo) => antigo.tipo != tipo;
+  bool shouldRepaint(PintorArteUtilitario antigo) => antigo.cores != cores || antigo.tipo != tipo;
 }

@@ -16,9 +16,10 @@ import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/controles_pedaleira.dart';
 import '../tema/tokens.dart';
 import '../textos.dart';
-import 'botao_giratorio.dart' show AoMudarValor;
+import 'botao_giratorio.dart' show AoMudarValor, MudancaDesfazivel;
 import 'controle_parametro.dart';
 import 'menu_atribuir.dart';
+import 'rotulos_por_cena.dart';
 import 'seletor_opcao.dart';
 
 /// Um controle desenhado pelo painel do bloco (a lista rolante, o rolo do
@@ -67,12 +68,21 @@ class ControleNoPainel extends ConsumerWidget {
   static AoMudarValor alterar(WidgetRef ref, DefinicaoParametro p, BlocoPreset bloco) =>
       (valor, {required arrastando}) => ref
           .read(editorProvider.notifier)
-          .alterarParametro(p.simbolo, valor, arrastando: arrastando, nome: p.nome, posicao: bloco.posicao);
+          .alterarParametro(p.simbolo, valor,
+              arrastando: arrastando, nome: p.nome, posicao: bloco.posicao, padrao: p.padrao);
+
+  /// O desfazer de uma mudança do editor: volta o preset inteiro de antes,
+  /// com a variação entre as cenas que "Todas as cenas" apaga.
+  static MudancaDesfazivel desfazivel(WidgetRef ref) => (mudanca) async {
+        final editor = ref.read(editorProvider.notifier);
+        final ponto = await editor.comDesfazer(mudanca);
+        return ponto == null ? null : () => editor.desfazer(ponto);
+      };
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
-    final marca = Theme.of(context).textTheme.labelSmall?.copyWith(color: Cores.aluminioClaro);
+    final marca = Theme.of(context).textTheme.labelSmall?.copyWith(color: context.cores.aluminioClaro);
     final chaves = ref.watch(editorProvider.select(_controlesDoParametro));
     final controles = [
       for (final chave in chaves.split(' '))
@@ -83,10 +93,11 @@ class ControleNoPainel extends ConsumerWidget {
       child: GestureDetector(
         onSecondaryTapUp: (detalhes) => _atribuir(context, ref, detalhes.globalPosition),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          _controle(ref),
+          _controle(context, ref),
           // como o valor "atribuído ao snapshot" do HX: esta cena sobrepõe
           // (neutro: o âmbar é da ação e da seleção, não de marca informativa)
-          if (bloco.sobreposicaoDaCena(parametro.simbolo, cena) != null) Text(l.soNaCena(cena), style: marca),
+          if (rotuloValorPorCena(l, iguais: bloco.cenasComOMesmoValor(parametro.simbolo, cena)) case final selo?)
+            Text(selo, key: ValueKey('selo-cena-${parametro.simbolo}'), style: marca),
           if (controles.isNotEmpty)
             Semantics(
               label: l.ctlAtribuidoA(controles),
@@ -111,9 +122,9 @@ class ControleNoPainel extends ConsumerWidget {
     abrirMenuAtribuir(context, ref, bloco.posicao, parametro, origem);
   }
 
-  Widget _controle(WidgetRef ref) {
+  Widget _controle(BuildContext context, WidgetRef ref) {
     final p = parametro;
-    final cor = Cores.daFamilia(definicao.familia);
+    final cor = context.cores.daFamilia(definicao.familia);
     final valor = valorNaCena(bloco, p, cena);
     if (construtor case final desenhar?) {
       return KeyedSubtree(key: ValueKey('param-${p.simbolo}'), child: desenhar(valor, cor, alterar(ref, p, bloco)));
@@ -138,6 +149,7 @@ class ControleNoPainel extends ConsumerWidget {
       cor: cor,
       tamanho: tamanho,
       aoMudar: alterar(ref, p, bloco),
+      desfazivel: desfazivel(ref),
     );
   }
 }

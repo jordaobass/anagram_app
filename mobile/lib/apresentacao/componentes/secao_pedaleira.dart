@@ -46,7 +46,7 @@ class _SecaoPedaleiraState extends ConsumerState<SecaoPedaleira> {
     final tema = Theme.of(context).textTheme;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Row(children: [
-        Expanded(child: Text(l.pdDica, style: tema.bodyMedium?.copyWith(color: Cores.textoSecundario))),
+        Expanded(child: Text(l.pdDica, style: tema.bodyMedium?.copyWith(color: context.cores.textoSecundario))),
         TextButton.icon(
           key: const ValueKey('atualizar-ajustes'),
           onPressed: estado.carregando ? null : ref.read(controladorAjustesProvider.notifier).carregar,
@@ -64,7 +64,7 @@ class _SecaoPedaleiraState extends ConsumerState<SecaoPedaleira> {
   Widget _semLeitura(AppLocalizations l, EstadoAjustes estado) {
     if (!estado.falhouLeitura) return Text(l.pdLendo, key: const ValueKey('lendo-ajustes'));
     return Row(children: [
-      Expanded(child: Text(l.pdFalhaLer, style: const TextStyle(color: Cores.erro))),
+      Expanded(child: Text(l.pdFalhaLer, style: TextStyle(color: context.cores.erro))),
       TextButton(onPressed: ref.read(controladorAjustesProvider.notifier).carregar, child: Text(l.pdTentarDeNovo)),
     ]);
   }
@@ -76,7 +76,7 @@ class _SecaoPedaleiraState extends ConsumerState<SecaoPedaleira> {
           filhos: const [SizedBox(width: double.infinity, child: SeletorModoFootswitches())],
         ),
         const SizedBox(height: Espacos.m),
-        _CartaoGrupo(titulo: l.pdSaidas, grupo: GrupoAjuste.saidas, forma: FormaControle.fader, cor: Cores.mixerGlobal),
+        _CartaoGrupo(titulo: l.pdSaidas, grupo: GrupoAjuste.saidas, forma: FormaControle.fader, cor: context.cores.mixerGlobal),
         const SizedBox(height: Espacos.m),
         CartaoGlobalEq(aoIrParaEntrada: _irParaEntrada),
         const SizedBox(height: Espacos.m),
@@ -108,7 +108,7 @@ class _CartaoGrupo extends StatelessWidget {
       largura: double.infinity,
       desenho: dica == null
           ? null
-          : Text(dica!, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario)),
+          : Text(dica!, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.textoSecundario)),
       filhos: [for (final a in ajustes) ControleAjuste(definicao: a, forma: forma, cor: cor)],
     );
   }
@@ -127,14 +127,14 @@ class _AvisoSemAcesso extends StatelessWidget {
         key: const ValueKey('aviso-sem-acesso-ajustes'),
         padding: const EdgeInsets.all(Espacos.m),
         decoration: BoxDecoration(
-          color: Cores.painelElevado,
-          border: Border.all(color: Cores.aluminio),
+          color: context.cores.painelElevado,
+          border: Border.all(color: context.cores.aluminio),
           borderRadius: BorderRadius.circular(Raios.painel),
         ),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Icon(Icons.info_outline, color: Cores.aluminioClaro),
+          Icon(Icons.info_outline, color: context.cores.aluminioClaro),
           const SizedBox(width: Espacos.s),
-          Expanded(child: Text(texto, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Cores.texto))),
+          Expanded(child: Text(texto, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: context.cores.texto))),
         ]),
       );
 }
@@ -153,7 +153,7 @@ class _CartaoPlaca extends ConsumerWidget {
       key: const ValueKey('cartao-placa'),
       titulo: l.pdPlaca,
       largura: double.infinity,
-      desenho: Text(l.pdPlacaDica, style: tema.bodySmall?.copyWith(color: Cores.textoSecundario)),
+      desenho: Text(l.pdPlacaDica, style: tema.bodySmall?.copyWith(color: context.cores.textoSecundario)),
       filhos: [
         for (final e in placa.entries)
           SizedBox(

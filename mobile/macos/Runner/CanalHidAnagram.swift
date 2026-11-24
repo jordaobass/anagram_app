@@ -9,6 +9,13 @@ import IOKit.hid
 /// Os envios vão para uma fila serial própria (na ordem em que chegam) e a
 /// resposta ao Flutter volta para a principal. Fechar passa pela mesma fila,
 /// para nunca fechar o aparelho no meio de um envio.
+///
+/// Só a consulta e o pedido de Monitoramento de Entrada saem da thread
+/// principal (DECISOES CA5): o pedido espera a pessoa no aviso do sistema.
+/// Abrir fica na principal, como na 0.1.19: o IOHIDManager é agendado na run
+/// loop dela ANTES do IOHIDManagerOpen, e fora de uma run loop o open e o
+/// CopyDevices não têm garantia de achar o aparelho. O clique só abre o USB
+/// com a permissão já concedida, então o open não espera o sistema.
 final class CanalHidAnagram: NSObject, FlutterStreamHandler {
   private static let tamanhoRelatorio = 64
   private static let paginasFornecedor: Set<Int> = [0xFF00, 0xFF]
@@ -59,9 +66,19 @@ final class CanalHidAnagram: NSObject, FlutterStreamHandler {
       fechar()
       resultado(nil)
     case "acessoEntrada":
-      resultado(Self.acessoEntrada())
+      Self.foraDaPrincipal(resultado) { Self.acessoEntrada() }
+    case "pedirAcessoEntrada":
+      Self.foraDaPrincipal(resultado) { Self.pedirAcessoEntrada() }
     default:
       resultado(FlutterMethodNotImplemented)
+    }
+  }
+
+  /// Roda [trabalho] numa fila de fundo e responde ao Flutter na principal.
+  private static func foraDaPrincipal(_ resultado: @escaping FlutterResult, _ trabalho: @escaping () -> Any?) {
+    DispatchQueue.global(qos: .userInitiated).async {
+      let resposta = trabalho()
+      DispatchQueue.main.async { resultado(resposta) }
     }
   }
 
@@ -70,9 +87,18 @@ final class CanalHidAnagram: NSObject, FlutterStreamHandler {
   /// faria o macOS mostrar o aviso no meio da abertura.
   private static func acessoEntrada() -> String {
     let acesso = IOHIDCheckAccess(kIOHIDRequestTypeListenEvent)
-    if acesso == kIOHIDAccessTypeGranted { return "concedido" }
-    if acesso == kIOHIDAccessTypeDenied { return "negado" }
-    return "nao_decidido"
+    let texto = acesso == kIOHIDAccessTypeGranted ? "concedido" : acesso == kIOHIDAccessTypeDenied ? "negado" : "nao_decidido"
+    NSLog("anagram_app: Monitoramento de Entrada consultado: %@", texto)
+    return texto
+  }
+
+  /// Só no clique em CONECTAR com a permissão ainda não decidida (DECISOES
+  /// CA5): mostra o pedido do sistema antes de abrir o USB.
+  private static func pedirAcessoEntrada() -> String {
+    NSLog("anagram_app: pedindo Monitoramento de Entrada ao macOS (IOHIDRequestAccess)")
+    let concedido = IOHIDRequestAccess(kIOHIDRequestTypeListenEvent)
+    NSLog("anagram_app: IOHIDRequestAccess devolveu %@", concedido ? "true" : "false")
+    return concedido ? "concedido" : acessoEntrada()
   }
 
   private func abrir(fornecedor: Int, produto: Int) -> Any? {

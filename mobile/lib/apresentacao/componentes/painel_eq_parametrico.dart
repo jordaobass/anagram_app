@@ -78,7 +78,7 @@ class _PainelEqParametricoState extends ConsumerState<PainelEqParametrico> {
       final p = parametroDoModo(grupo, modo)?.parametro;
       if (p == null) return;
       editor.alterarParametro(p.simbolo, p.limitar(valor),
-          arrastando: arrastando, nome: p.nome, posicao: widget.bloco.posicao);
+          arrastando: arrastando, nome: p.nome, posicao: widget.bloco.posicao, padrao: p.padrao);
     }
 
     mudar(ModoEq.freq, frequencia);
@@ -98,7 +98,6 @@ class _PainelEqParametricoState extends ConsumerState<PainelEqParametrico> {
     await alterarEmGrupo(context, ref,
         bloco: widget.bloco,
         definicao: widget.definicao,
-        cena: widget.cena,
         valores: {for (final p in widget.parametros) p.simbolo: p.padrao},
         aviso: l.eqbResetFeito);
   }
@@ -136,7 +135,7 @@ class _BandaDoBloco extends StatelessWidget {
             cena: painel.cena,
             tamanho: Medidas.knobCompacto,
             forma: FormaControle.knob,
-            corChip: Cores.doModoEq(modo),
+            corChip: context.cores.doModoEq(modo),
           ),
         ),
     ]);

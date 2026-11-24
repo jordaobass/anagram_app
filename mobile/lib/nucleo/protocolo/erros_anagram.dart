@@ -53,3 +53,13 @@ final class ErroOperacaoEmCurso extends ErroAnagram {
 final class ErroPlataformaSemSuporte extends ErroAnagram {
   const ErroPlataformaSemSuporte(super.mensagem);
 }
+
+/// O app não conseguiu guardar o backup do preset que ia ser substituído
+/// (DECISOES BK1). Não é da pedaleira: é o disco do computador. Nada foi
+/// gravado nela, porque o backup é a rede de segurança da gravação.
+final class ErroCopiaDeSeguranca extends ErroAnagram {
+  const ErroCopiaDeSeguranca(super.mensagem, {required this.pasta});
+
+  /// A pasta de backups (vazia se o sistema não disse qual é).
+  final String pasta;
+}

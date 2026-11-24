@@ -35,11 +35,14 @@ class DocumentoPreset {
   /// A pedaleira grava o bloco com os valores da cena ativa (é o que ela
   /// toca). Preset que não segue isso (escrito à mão, de outro editor) é
   /// acertado ao abrir, com os valores que a tela já mostra para a cena; num
-  /// preset da pedaleira nada muda.
+  /// preset da pedaleira nada muda. Antes, as fotos de cena parciais ficam
+  /// completas com o valor do bloco ([completarFotosParciais]).
   static Map<String, dynamic> _comCenaAtivaNoBloco(Map<String, dynamic> json) {
     final preset = json['preset'] as Map<String, dynamic>;
     final ativa = (numeroOuNulo(preset['scene'])?.toInt() ?? 0) + 1;
+    final quantidade = quantidadeDeCenas(preset);
     for (final bloco in todosOsBlocos(preset)) {
+      completarFotosParciais(bloco, quantidade);
       carregarCena(bloco, ativa);
     }
     return json;
@@ -64,7 +67,13 @@ class DocumentoPreset {
   String get nome => textoOuNulo(_preset['name']) ?? 'Sem nome';
   String? get uuid => textoOuNulo(_preset['uuid']);
 
-  /// Cena ativa de 1 a 3 (no arquivo ela conta a partir de 0).
+  /// Cena ativa a partir de 1 (no arquivo ela conta a partir de 0).
+  /// Quantas cenas o preset tem (3 ou mais, ver [quantidadeDeCenas]).
+  late final int quantidadeCenas = quantidadeDeCenas(_preset);
+
+  /// As cenas do preset, de 1 a [quantidadeCenas].
+  List<int> get cenas => [for (var cena = 1; cena <= quantidadeCenas; cena++) cena];
+
   int get cenaAtiva => (numeroOuNulo(_preset['scene'])?.toInt() ?? 0) + 1;
 
   /// O preset sem a cena ativa, serializado uma vez por documento. Trocar de
@@ -94,13 +103,13 @@ class DocumentoPreset {
       for (final chave in chavesNumericas(blocos))
         // casa que não é objeto (arquivo editado à mão, firmware novo) é ignorada
         if (blocos[chave] case final Map<String, dynamic> bruto)
-          BlocoPreset(PosicaoBloco(linha, int.parse(chave)), bruto),
+          BlocoPreset(PosicaoBloco(linha, int.parse(chave)), bruto, quantidadeCenas: quantidadeCenas),
     ];
   }
 
   BlocoPreset? bloco(PosicaoBloco posicao) {
     final bruto = blocosBrutos(_preset, posicao.linha)['${posicao.casa}'];
-    return bruto is Map<String, dynamic> ? BlocoPreset(posicao, bruto) : null;
+    return bruto is Map<String, dynamic> ? BlocoPreset(posicao, bruto, quantidadeCenas: quantidadeCenas) : null;
   }
 
   /// Footswitches, pots e pedal de expressão que o preset usa.
@@ -131,13 +140,20 @@ class DocumentoPreset {
   DocumentoPreset comArquivoDeIr(PosicaoBloco posicao, String caminho) =>
       _editarBloco(posicao, (bloco) => gravarArquivoDeIr(bloco, caminho));
 
-  /// Liga/desliga o bloco na cena ativa: no próprio bloco (é o que a pedaleira
-  /// toca ao vivo) e na foto da cena; as outras cenas não mudam.
-  DocumentoPreset comBlocoHabilitado(PosicaoBloco posicao, bool habilitado) =>
+  /// Liga/desliga o bloco no próprio bloco (é o que a pedaleira toca ao vivo)
+  /// e nas fotos de cena conforme o [escopo] (DECISOES CE1): só na cena ativa,
+  /// as outras guardam o que tinham; em todas, as fotos largam o liga/desliga
+  /// e as três cenas passam a seguir o bloco.
+  DocumentoPreset comBlocoHabilitado(PosicaoBloco posicao, bool habilitado,
+          {EscopoCenas escopo = EscopoCenas.soNaCena}) =>
       _editarBloco(posicao, (bloco) {
+        if (escopo == EscopoCenas.todasAsCenas) {
+          bloco['enabled'] = habilitado;
+          return tirarLigaDasFotos(bloco);
+        }
         // as outras cenas guardam o liga/desliga que tinham antes: senão,
         // sem registro, passariam a seguir o bloco, que vai mudar agora
-        fixarLigaNasOutrasCenas(bloco, cenaAtiva);
+        fixarLigaNasOutrasCenas(bloco, cenaAtiva, quantidadeCenas);
         bloco['enabled'] = habilitado;
         final cenas = bloco.putIfAbsent('scenes', () => <String, dynamic>{}) as Map<String, dynamic>;
         final cena = cenas.putIfAbsent('$cenaAtiva', () => <String, dynamic>{'parameters': <dynamic>[]})
@@ -145,17 +161,25 @@ class DocumentoPreset {
         cena['enabled'] = habilitado;
       });
 
-  /// Muda um parâmetro no bloco (o que soa) e, se a cena ativa tem valor
-  /// próprio para ele, também na foto dela; as outras cenas não mudam.
+  /// Muda um parâmetro no bloco (o que soa) e nas fotos de cena conforme o
+  /// [escopo] (DECISOES CE1). Só na cena ativa, [valorAntes] é o valor que as
+  /// outras cenas sem registro tinham, quando o bloco não guarda o parâmetro
+  /// (o padrão do catálogo).
   DocumentoPreset comParametro(
     PosicaoBloco posicao,
     String simbolo,
     num valor, {
     String? nomeExibicao,
+    EscopoCenas escopo = EscopoCenas.soNaCena,
+    num? valorAntes,
   }) =>
       _editarBloco(posicao, (bloco) {
-        if (!mudarSobreposicaoDaCena(bloco, cenaAtiva, simbolo, valor)) {
-          gravarNaCenaAtiva(bloco, cenaAtiva, simbolo, valor);
+        switch (escopo) {
+          case EscopoCenas.soNaCena:
+            fixarValorNasOutrasCenas(bloco, cenaAtiva, quantidadeCenas, simbolo, valorNoBloco(bloco, simbolo) ?? valorAntes ?? valor);
+            gravarNaFotoDaCena(bloco, cenaAtiva, simbolo, valor);
+          case EscopoCenas.todasAsCenas:
+            tirarDasFotos(bloco, simbolo);
         }
         mudarValorBase(bloco, simbolo, valor, nomeExibicao ?? simbolo);
       });
@@ -219,6 +243,9 @@ void _recusarMarcadorDeQuadro(Map<String, dynamic> json) {
     }
   }
 }
+
+/// Nome curto o bastante para o visor da pedaleira (hipótese: ver DECISOES).
+const tamanhoMaximoNome = 24;
 
 /// Id novo no formato do aparelho: 56 hexadecimais em grupos 16-8-8-24.
 String novoUuidPreset([Random? aleatorio]) {

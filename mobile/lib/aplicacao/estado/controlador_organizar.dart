@@ -15,6 +15,7 @@ import '../../nucleo/modelo/slot_preset.dart';
 import '../../nucleo/protocolo/erros_anagram.dart';
 import '../../nucleo/resultado.dart';
 import '../casos_de_uso/salvar_no_slot.dart';
+import '../copias/copia_automatica.dart';
 import 'controlador_biblioteca.dart';
 import 'controlador_conexao.dart';
 import 'controlador_editor.dart';
@@ -116,6 +117,10 @@ class ControladorOrganizar extends Notifier<OperacaoPendente?> {
     if (pendente.operacao == OperacaoPreset.clonar) {
       return _clonar(repositorio, origem, destino, area, confirmado: confirmado);
     }
+    // trocar não apaga nada, mas reescreve os slots: o backup vem antes (BK1)
+    final guarda = ref.read(guardaDeCopiaProvider);
+    final envolvidos = _envolvidos(pendente, destino);
+    if (await guarda?.lerEGuardarTodos(repositorio, envolvidos, area) case final erro?) return FalhaAoOrganizar(erro);
     final feito = pendente.operacao == OperacaoPreset.mover
         ? await repositorio.trocarPresets(origem, destino, area: area)
         : await repositorio.trocarBancos(origem.banco, destino.banco, area: area);
@@ -124,6 +129,12 @@ class ControladorOrganizar extends Notifier<OperacaoPendente?> {
       Falha(:final erro) => FalhaAoOrganizar(erro),
     };
   }
+
+  /// Os slots que uma troca reescreve: os dois presets, ou os três de cada banco.
+  static List<SlotPreset> _envolvidos(OperacaoPendente pendente, SlotPreset destino) =>
+      pendente.operacao == OperacaoPreset.trocarBanco
+          ? _bancosTrocados(pendente.origem.banco, destino.banco).keys.toList()
+          : [pendente.origem, destino];
 
   /// Com [confirmado] a pessoa já aceitou substituir o preset do destino.
   Future<ResultadoOrganizar> _clonar(
@@ -141,8 +152,8 @@ class ControladorOrganizar extends Notifier<OperacaoPendente?> {
     }
     // dois presets com o mesmo uuid confundiriam a pedaleira e a lista
     final copia = original.comUuid(novoUuidPreset());
-    final gravacao =
-        await SalvarNoSlot(repositorio).executar(destino, copia, sobrescreverConfirmado: confirmado, area: area);
+    final gravacao = await SalvarNoSlot(repositorio, copia: ref.read(guardaDeCopiaProvider))
+        .executar(destino, copia, sobrescreverConfirmado: confirmado, area: area);
     return switch (gravacao) {
       PresetSalvo() => Organizado(OperacaoPreset.clonar, origem, destino),
       SlotOcupado(:final nomeAtual) => DestinoOcupado(destino, nomeAtual),

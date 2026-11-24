@@ -22,7 +22,7 @@ void main() {
 
     expect(_naLinha('01B', find.text(textosPt.sbSubstitui(ocupado))), findsOneWidget);
     final substituir = tester.widget<Icon>(_naLinha('01B', find.byIcon(Icons.find_replace)));
-    expect(substituir.color, Cores.aluminioClaro);
+    expect(substituir.color, Paleta.escura.aluminioClaro);
     await tester.scrollUntilVisible(find.byKey(const ValueKey('slot-04A')), 200,
         scrollable: find.descendant(of: find.byKey(const ValueKey('lista-presets')), matching: find.byType(Scrollable)));
     expect(_naLinha('04A', find.byIcon(Icons.save_alt)), findsOneWidget, reason: 'vazio: gravar aqui');

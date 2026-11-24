@@ -3,6 +3,7 @@
 // clara; no celular a opção some; o pedido de gravação da IA só grava com o
 // "Salvar" da pessoa; e a mudança feita pela IA aparece na tela.
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:anagram_app/aplicacao/estado/controlador_editor.dart';
 import 'package:anagram_app/aplicacao/mcp/avisos_mcp.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../apoio/app_de_teste.dart';
 import '../apoio/demonstracao_na_tela.dart';
+import '../apoio/textos_pt.dart';
 
 /// Abre as Configurações já rolada até a seção da IA local.
 Future<void> abrirConfiguracoes(WidgetTester tester) async {
@@ -45,6 +47,34 @@ void main() {
     expect(copiado, contains('"url": "http://127.0.0.1:8765/mcp"'));
     expect(copiado, contains('Bearer ${servidor.tokenEmUso}'), reason: 'o token colado é o que o servidor exige');
     expect(servidor.tokenEmUso, hasLength(greaterThan(30)));
+  });
+
+  testWidgets('should_copy_a_vs_code_copilot_config_with_the_current_address_and_token', (tester) async {
+    final servidor = ServidorMcpFalso();
+    await montarApp(tester, servidorMcp: servidor);
+    String? copiado;
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, (chamada) async {
+      if (chamada.method == 'Clipboard.setData') copiado = (chamada.arguments as Map)['text'] as String;
+      return null;
+    });
+    addTearDown(() => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, null));
+    await abrirConfiguracoes(tester);
+    await tester.tap(find.byKey(const ValueKey('mcp-permitir')));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.byKey(const ValueKey('mcp-copiar-vsCodeCopilot')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('mcp-copiar-vsCodeCopilot')));
+    await tester.pumpAndSettle();
+
+    // formato do Copilot no VS Code (~/.copilot/mcp-config.json): mcpServers + type http
+    final trecho = jsonDecode(copiado!) as Map<String, dynamic>;
+    final anagram = (trecho['mcpServers'] as Map)['anagram'] as Map;
+    expect(anagram['type'], 'http');
+    expect(anagram['url'], 'http://127.0.0.1:8765/mcp');
+    expect(anagram['headers'], {'Authorization': 'Bearer ${servidor.tokenEmUso}'});
+    expect(find.text(textosPt.mcpCopilotComum), findsOneWidget,
+        reason: 'o Copilot do Windows/Microsoft 365 não conecta servidor MCP local');
   });
 
   testWidgets('should_restart_the_server_with_a_new_token_only_when_the_new_token_is_confirmed', (tester) async {

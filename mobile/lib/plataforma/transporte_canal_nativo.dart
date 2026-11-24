@@ -10,7 +10,7 @@ import '../nucleo/protocolo/transporte_anagram.dart';
 import '../nucleo/registro.dart';
 
 class TransporteCanalNativo with FluxosDoTransporte implements TransporteAnagram {
-  TransporteCanalNativo(this.descricao, {required this.pausaSugerida});
+  TransporteCanalNativo(this.descricao, {required this.pausaSugerida, this.prazoAbrir});
 
   static const _metodos = MethodChannel('anagram_app/hid');
   static const _eventos = EventChannel('anagram_app/hid/eventos');
@@ -23,6 +23,11 @@ class TransporteCanalNativo with FluxosDoTransporte implements TransporteAnagram
 
   @override
   final Duration pausaSugerida;
+
+  /// macOS: abrir o IOKit não pode deixar a tela em "Conectando" para sempre
+  /// (DECISOES CA5). Android não tem prazo: ali a espera é a pessoa decidindo
+  /// a permissão USB na tela.
+  final Duration? prazoAbrir;
   StreamSubscription<dynamic>? _assinatura;
   bool _aberto = false;
 
@@ -33,14 +38,20 @@ class TransporteCanalNativo with FluxosDoTransporte implements TransporteAnagram
   Future<void> abrir() async {
     anunciarEstado(EstadoTransporte.abrindo);
     try {
-      await _metodos.invokeMethod<void>('abrir', {
+      await _comPrazo(_metodos.invokeMethod<void>('abrir', {
         'idFornecedor': ProtocoloAnagram.idFornecedor,
         'idProduto': ProtocoloAnagram.idProduto,
-      });
+      }));
     } on PlatformException catch (erro) {
       // quem ouviu "abrindo" precisa saber que não abriu
       anunciarEstado(EstadoTransporte.fechado);
       throw _traduzir(erro);
+    } on TimeoutException {
+      // o fechar entra na fila da principal depois da abertura em curso e a desfaz
+      unawaited(_metodos.invokeMethod<void>('fechar').catchError((Object _) {}));
+      anunciarEstado(EstadoTransporte.fechado);
+      registro.w('$descricao: o lado nativo não abriu em ${prazoAbrir!.inSeconds}s');
+      throw ErroSemResposta('abrir', prazoAbrir!);
     }
     // só depois de abrir: o EventChannel é um só para o app, e uma tentativa
     // que falha tarde (permissão cancelada no Android) cancelaria a assinatura
@@ -48,6 +59,11 @@ class TransporteCanalNativo with FluxosDoTransporte implements TransporteAnagram
     _assinatura ??= _eventos.receiveBroadcastStream().listen(_aoReceber, onError: _aoFalharEvento);
     _aberto = true;
     anunciarEstado(EstadoTransporte.aberto);
+  }
+
+  Future<void> _comPrazo(Future<void> chamada) {
+    final prazo = prazoAbrir;
+    return prazo == null ? chamada : chamada.timeout(prazo);
   }
 
   @override

@@ -19,8 +19,11 @@ class ControleSynth {
 
 /// Um oscilador: a forma de onda (que o painel desenha) e os controles dele.
 class OsciladorSynth {
-  const OsciladorSynth({required this.titulo, required this.onda, required this.controles});
+  const OsciladorSynth({required this.titulo, required this.rotuloModulo, required this.onda, required this.controles});
   final String titulo;
+
+  /// O título do módulo como a tela da pedaleira escreve ("Osc 1 Vol").
+  final String rotuloModulo;
 
   /// Símbolo do seletor de forma de onda; nulo no sub-oscilador, que não tem.
   final String? onda;
@@ -89,13 +92,13 @@ const _axioma = ArranjoSintetizador(
       ControleSynth('sensitivity', 'Sensitivity', _k),
     ]),
     ArranjoSecao(secao: SecaoSintetizador.osciladores, osciladores: [
-      OsciladorSynth(titulo: 'Osc 1', onda: 'osc1_wave', controles: [ControleSynth('osc1_vol', 'Vol', _f)]),
-      OsciladorSynth(titulo: 'Osc 2', onda: 'osc2_wave', controles: [
+      OsciladorSynth(titulo: 'Osc 1', rotuloModulo: 'Osc 1 Vol', onda: 'osc1_wave', controles: [ControleSynth('osc1_vol', 'Vol', _f)]),
+      OsciladorSynth(titulo: 'Osc 2', rotuloModulo: 'Osc 2 Vol', onda: 'osc2_wave', controles: [
         ControleSynth('osc2_vol', 'Vol', _f),
         ControleSynth('osc2_semitone', 'Semitone', _k),
         ControleSynth('osc2_cents', 'Fine', _k),
       ]),
-      OsciladorSynth(titulo: 'Sub', onda: null, controles: [ControleSynth('sub_vol', 'Vol', _f)]),
+      OsciladorSynth(titulo: 'Sub', rotuloModulo: 'Sub Osc Vol', onda: null, controles: [ControleSynth('sub_vol', 'Vol', _f)]),
     ]),
     ArranjoSecao(secao: SecaoSintetizador.filtro, controles: [
       ControleSynth('cutoff', 'Cutoff', _k),

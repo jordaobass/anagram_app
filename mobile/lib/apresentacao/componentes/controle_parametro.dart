@@ -21,7 +21,11 @@ class ControleParametro extends StatelessWidget {
     this.rotulo,
     this.forma = FormaControle.knob,
     this.corChip,
+    this.desfazivel,
   });
+
+  /// Ver [BotaoGiratorio.desfazivel].
+  final MudancaDesfazivel? desfazivel;
 
   static const maximoSegmentos = 3;
 
@@ -52,7 +56,8 @@ class ControleParametro extends StatelessWidget {
         aoMudar: aoMudar,
         rotulo: rotulo,
         forma: forma,
-        corChipValor: corChip);
+        corChipValor: corChip,
+        desfazivel: desfazivel);
   }
 
   Widget _comTitulo(BuildContext context, Widget controle) => SizedBox(
@@ -150,7 +155,7 @@ class ChaveParametro extends StatelessWidget {
                   key: chave,
                   value: ligado,
                   onChanged: aoMudar,
-                  activeThumbColor: Cores.tintaMarcador,
+                  activeThumbColor: context.cores.tintaMarcador,
                   activeTrackColor: cor,
                 ),
                 const SizedBox(width: Espacos.xs, height: Espacos.xs),
@@ -162,5 +167,5 @@ class ChaveParametro extends StatelessWidget {
       );
 
   TextStyle? _estiloTexto(BuildContext context) =>
-      Theme.of(context).textTheme.titleMedium?.copyWith(color: ligado ? Cores.texto : Cores.textoSecundario);
+      Theme.of(context).textTheme.titleMedium?.copyWith(color: ligado ? context.cores.texto : context.cores.textoSecundario);
 }

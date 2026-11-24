@@ -21,6 +21,7 @@ import '../nucleo/registro.dart';
 import '../plataforma/fabrica_transporte.dart';
 import '../plataforma/fotos_suite.dart';
 import 'arte/indice_miniaturas.dart';
+import 'estado/blocos_da_pedaleira.dart';
 
 abstract final class CaminhosAssets {
   static const catalogo = 'assets/referencia/blocks-factory.json';
@@ -187,7 +188,17 @@ final arquivosPresetProvider = Provider<ArquivosPreset>((ref) => const ArquivosP
 
 final fabricaTransporteProvider = Provider<FabricaTransporte>((ref) => criarFabricaDaPlataforma());
 
-/// Definição de um bloco pela uri; fora do catálogo vira "desconhecido".
+/// O catálogo de fábrica com os blocos que a pedaleira conectada descreveu
+/// (Marketplace, DECISOES P4); nulo enquanto o de fábrica carrega.
+final catalogoEmUsoProvider = Provider<CatalogoBlocos?>((ref) {
+  final fabrica = ref.watch(catalogoProvider).value;
+  final daPedaleira = ref.watch(blocosDaPedaleiraProvider);
+  if (fabrica == null || daPedaleira.isEmpty) return fabrica;
+  return fabrica.comBlocos(daPedaleira);
+});
+
+/// Definição de um bloco pela uri; fora do catálogo (e sem a pedaleira
+/// descrever) vira "desconhecido".
 final definicaoBlocoProvider = Provider.family<DefinicaoBloco, String>(
-  (ref, uri) => ref.watch(catalogoProvider).value?.definicao(uri) ?? DefinicaoBloco.desconhecido(uri),
+  (ref, uri) => ref.watch(catalogoEmUsoProvider)?.definicao(uri) ?? DefinicaoBloco.desconhecido(uri),
 );

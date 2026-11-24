@@ -14,6 +14,7 @@ const _nomes = {
   IdiomaApp.portugues: 'Português',
   IdiomaApp.ingles: 'English',
   IdiomaApp.espanhol: 'Español',
+  IdiomaApp.frances: 'Français',
 };
 
 class SeletorIdioma extends ConsumerWidget {
@@ -58,9 +59,9 @@ class MenuIdioma extends ConsumerWidget {
           PopupMenuItem(value: idioma, height: alturaItemDeMenu, child: Text(nome)),
       ],
       child: Row(mainAxisSize: MainAxisSize.min, children: [
-        const Icon(Icons.language, color: Cores.textoSecundario),
+        Icon(Icons.language, color: context.cores.textoSecundario),
         const SizedBox(width: Espacos.xs),
-        Text(atual, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Cores.textoSecundario)),
+        Text(atual, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: context.cores.textoSecundario)),
       ]),
     );
   }

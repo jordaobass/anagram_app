@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
+import 'app_localizations_fr.dart';
 import 'app_localizations_pt.dart';
 
 // ignore_for_file: type=lint
@@ -63,7 +64,8 @@ import 'app_localizations_pt.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -71,7 +73,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -83,18 +86,20 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
     Locale('es'),
-    Locale('pt')
+    Locale('fr'),
+    Locale('pt'),
   ];
 
   /// No description provided for @desconectar.
@@ -145,11 +150,29 @@ abstract class AppLocalizations {
   /// **'Conexão: {texto}'**
   String conexaoSemantica(String texto);
 
-  /// No description provided for @idaEVolta.
+  /// No description provided for @barraConectadaCurta.
   ///
   /// In pt, this message translates to:
-  /// **'ida e volta {ms} ms'**
-  String idaEVolta(int ms);
+  /// **'Anagram · fw {firmware}'**
+  String barraConectadaCurta(String firmware);
+
+  /// No description provided for @barraDemonstracaoCurta.
+  ///
+  /// In pt, this message translates to:
+  /// **'Demonstração'**
+  String get barraDemonstracaoCurta;
+
+  /// No description provided for @latenciaCurta.
+  ///
+  /// In pt, this message translates to:
+  /// **'{ms} ms'**
+  String latenciaCurta(int ms);
+
+  /// No description provided for @latenciaDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ida e volta do último ajuste até a pedaleira: {ms} ms. Acima de 500 ms ela responde devagar; acima de 1500 ms, muito devagar.'**
+  String latenciaDica(int ms);
 
   /// No description provided for @aoVivo.
   ///
@@ -835,6 +858,42 @@ abstract class AppLocalizations {
   /// **'SÓ NA CENA {cena}'**
   String soNaCena(int cena);
 
+  /// Cabeçalho do bloco: ligado na cena ativa e nestas outras (lista curta, ex.: "2, 3")
+  ///
+  /// In pt, this message translates to:
+  /// **'LIGADO NAS CENAS {cenas}'**
+  String ligadoNasCenas(String cenas);
+
+  /// Cabeçalho do bloco: desligado na cena ativa e nestas outras (lista curta)
+  ///
+  /// In pt, this message translates to:
+  /// **'DESLIGADO NAS CENAS {cenas}'**
+  String desligadoNasCenas(String cenas);
+
+  /// Cabeçalho do bloco: ligado na cena ativa; o estado varia entre cenas demais para listar
+  ///
+  /// In pt, this message translates to:
+  /// **'LIGADO NESTA CENA · VARIA ENTRE AS CENAS'**
+  String get ligadoVariaEntreCenas;
+
+  /// Cabeçalho do bloco: desligado na cena ativa; o estado varia entre cenas demais para listar
+  ///
+  /// In pt, this message translates to:
+  /// **'DESLIGADO NESTA CENA · VARIA ENTRE AS CENAS'**
+  String get desligadoVariaEntreCenas;
+
+  /// Selo do knob: o valor mostrado vale nestas cenas (lista curta, ex.: "1, 2")
+  ///
+  /// In pt, this message translates to:
+  /// **'NAS CENAS {cenas}'**
+  String nasCenas(String cenas);
+
+  /// Selo do knob: o valor varia entre cenas demais para listar
+  ///
+  /// In pt, this message translates to:
+  /// **'VARIA ENTRE AS CENAS'**
+  String get variaEntreCenas;
+
   /// No description provided for @dicaMontarCadeia.
   ///
   /// In pt, this message translates to:
@@ -946,7 +1005,7 @@ abstract class AppLocalizations {
   /// No description provided for @creditoFontes.
   ///
   /// In pt, this message translates to:
-  /// **'Barlow e Saira Stencil (SIL Open Font License) · Permanent Marker (Apache 2.0).'**
+  /// **'Barlow, Saira Stencil, Share Tech Mono e Orbitron (SIL Open Font License) · Permanent Marker (Apache 2.0).'**
   String get creditoFontes;
 
   /// No description provided for @creditoAvisoTitulo.
@@ -984,6 +1043,30 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Do sistema'**
   String get idiomaDoSistema;
+
+  /// Título da seção de tema nas Configurações
+  ///
+  /// In pt, this message translates to:
+  /// **'Aparência'**
+  String get temaSecao;
+
+  /// No description provided for @temaSistema.
+  ///
+  /// In pt, this message translates to:
+  /// **'Do sistema'**
+  String get temaSistema;
+
+  /// No description provided for @temaEscuro.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escuro'**
+  String get temaEscuro;
+
+  /// No description provided for @temaClaro.
+  ///
+  /// In pt, this message translates to:
+  /// **'Claro'**
+  String get temaClaro;
 
   /// No description provided for @separadorDecimal.
   ///
@@ -1765,11 +1848,11 @@ abstract class AppLocalizations {
   /// **'IA'**
   String get mcpAtivoNaBarra;
 
-  /// No description provided for @mcpAtivoDica.
+  /// No description provided for @mcpAtivoDicaPorta.
   ///
   /// In pt, this message translates to:
-  /// **'IA local pode ajustar o timbre (MCP ligado)'**
-  String get mcpAtivoDica;
+  /// **'IA local escutando na porta {porta} (MCP ligado): ela pode ajustar o timbre'**
+  String mcpAtivoDicaPorta(int porta);
 
   /// No description provided for @mcpMudancaDaIa.
   ///
@@ -1992,6 +2075,24 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Saída'**
   String get axSaida;
+
+  /// Painel do Axioma Mono Synth (barra do aparelho)
+  ///
+  /// In pt, this message translates to:
+  /// **'Fechar o painel do bloco'**
+  String get axFecharPainel;
+
+  /// Painel do Axioma Mono Synth (barra do aparelho)
+  ///
+  /// In pt, this message translates to:
+  /// **'O Axioma ainda não tem templates no app'**
+  String get axSemTemplates;
+
+  /// Painel do Axioma Mono Synth (barra do aparelho)
+  ///
+  /// In pt, this message translates to:
+  /// **'Preset aberto'**
+  String get axVisorSlot;
 
   /// Título de seção do painel do Axioma Mono Synth
   ///
@@ -2748,9 +2849,244 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'No macOS, só depois de liberar o Monitoramento de Entrada para o Anagram App em Ajustes do Sistema › Privacidade e Segurança.'**
   String get caConectarAoAbrirMac;
+
+  /// Motivo do "Não salvou: …" quando o backup antes de gravar falhou (DECISOES BK1)
+  ///
+  /// In pt, this message translates to:
+  /// **'o backup do preset que está no slot não foi gravado em {pasta}, então nada foi para a pedaleira. A causa está no registro; se o disco não tiver jeito, desligue o backup automático nas Configurações.'**
+  String salvarCopiaFalhou(String pasta);
+
+  /// Aviso quando o backup antes de limpar, mover ou trocar falhou (DECISOES BK1)
+  ///
+  /// In pt, this message translates to:
+  /// **'O backup do preset que está no slot não foi gravado em {pasta}, então nada mudou na pedaleira. A causa está no registro; se o disco não tiver jeito, desligue o backup automático nas Configurações.'**
+  String bkErroCopia(String pasta);
+
+  /// Entra no lugar da pasta quando o sistema não informou onde ficam os backups
+  ///
+  /// In pt, this message translates to:
+  /// **'a pasta de dados do app (o sistema não informou qual é)'**
+  String get bkPastaDesconhecida;
+
+  /// Seção das Configurações com os backups locais (DECISOES BK)
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup dos presets'**
+  String get bkSecao;
+
+  /// Interruptor das Configurações (DECISOES BK5)
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup automático antes de gravar'**
+  String get bkAutomatico;
+
+  /// Explicação do interruptor do backup automático (DECISOES BK1, BK3)
+  ///
+  /// In pt, this message translates to:
+  /// **'Antes de substituir, mover ou limpar um preset na pedaleira, o app guarda o que estava no slot, como um JSON que o Importar abre. Se o backup falhar, nada é gravado. Ficam os últimos 30 dias, até 500 arquivos.'**
+  String get bkAutomaticoTexto;
+
+  /// Antes do caminho da pasta de backups (D9: nada sai do computador)
+  ///
+  /// In pt, this message translates to:
+  /// **'Os backups ficam nesta pasta, só neste computador:'**
+  String get bkOnde;
+
+  /// Botão que abre a pasta de backups no gerenciador de arquivos
+  ///
+  /// In pt, this message translates to:
+  /// **'Abrir pasta de backups'**
+  String get bkAbrirPasta;
+
+  /// Aviso quando o gerenciador de arquivos não abriu
+  ///
+  /// In pt, this message translates to:
+  /// **'O sistema não abriu a pasta. O caminho está acima, para copiar.'**
+  String get bkPastaNaoAbriu;
+
+  /// Botão do backup completo (DECISOES BK4)
+  ///
+  /// In pt, this message translates to:
+  /// **'Fazer backup de todos os presets agora'**
+  String get bkCompleto;
+
+  /// Explicação do backup completo (DECISOES BK4)
+  ///
+  /// In pt, this message translates to:
+  /// **'Lê todas as áreas e todos os slots ocupados, um de cada vez, e guarda cada preset numa pasta com a data. O app não apaga os backups completos.'**
+  String get bkCompletoTexto;
+
+  /// Sem pedaleira, os botões de backup completo e restaurar ficam parados
+  ///
+  /// In pt, this message translates to:
+  /// **'Conecte a pedaleira (ou abra a demonstração) para fazer o backup completo e abrir um backup no editor.'**
+  String get bkSemPedaleira;
+
+  /// Título do diálogo de progresso do backup completo
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup de todos os presets'**
+  String get bkCompletoTitulo;
+
+  /// Progresso antes de saber quantos presets há
+  ///
+  /// In pt, this message translates to:
+  /// **'Lendo a lista de presets de cada área…'**
+  String get bkCompletoListando;
+
+  /// Progresso do backup completo
+  ///
+  /// In pt, this message translates to:
+  /// **'{feitos} de {total} presets guardados'**
+  String bkCompletoProgresso(int feitos, int total);
+
+  /// Aviso no fim do backup completo
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup completo: {quantos} presets guardados em {pasta}.'**
+  String bkCompletoConcluido(int quantos, String pasta);
+
+  /// Aviso quando a pessoa cancela o backup completo
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup cancelado: {feitos} de {total} presets guardados. O que já foi gravado fica na pasta.'**
+  String bkCompletoCancelado(int feitos, int total);
+
+  /// Aviso quando o backup completo parou por um erro
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup interrompido depois de {feitos} presets: {motivo}'**
+  String bkCompletoFalhou(int feitos, String motivo);
+
+  /// Botão que abre a lista de backups (DECISOES BK6)
+  ///
+  /// In pt, this message translates to:
+  /// **'Restaurar de um backup…'**
+  String get bkRestaurar;
+
+  /// Explicação no topo da lista de backups (DECISOES BK6)
+  ///
+  /// In pt, this message translates to:
+  /// **'Abre o preset guardado no editor, sem slot, para ouvir antes. Para pôr na pedaleira, use Salvar como.'**
+  String get bkRestaurarTexto;
+
+  /// Lista de backups vazia
+  ///
+  /// In pt, this message translates to:
+  /// **'Nenhum backup ainda.'**
+  String get bkNenhum;
+
+  /// Ação de cada backup da lista
+  ///
+  /// In pt, this message translates to:
+  /// **'Abrir no editor'**
+  String get bkAbrirNoEditor;
+
+  /// Aviso depois de abrir um backup no editor
+  ///
+  /// In pt, this message translates to:
+  /// **'\"{nome}\" aberto no editor, sem slot. Use Salvar como para gravar.'**
+  String bkAbertoNoEditor(String nome);
+
+  /// Grupo de um backup completo na lista de restaurar
+  ///
+  /// In pt, this message translates to:
+  /// **'Backup completo · {hora} · {quantos} presets'**
+  String bkCompletoGrupo(String hora, int quantos);
+
+  /// Firmware sem áreas, na lista de backups
+  ///
+  /// In pt, this message translates to:
+  /// **'Área única'**
+  String get bkAreaUnica;
+
+  /// Fecha a lista de backups
+  ///
+  /// In pt, this message translates to:
+  /// **'FECHAR'**
+  String get bkFechar;
+
+  /// Título da lista de backups (DECISOES BK6)
+  ///
+  /// In pt, this message translates to:
+  /// **'Restaurar de um backup'**
+  String get bkRestaurarTitulo;
+
+  /// Tela de conectar no macOS sem Monitoramento de Entrada: o USB não foi aberto (DECISOES CA5)
+  ///
+  /// In pt, this message translates to:
+  /// **'O macOS ainda não deixa o Anagram App falar com a pedaleira. Em Ajustes do Sistema › Privacidade e Segurança › Monitoramento de Entrada, ligue o Anagram App.'**
+  String get caMonitoramentoNegado;
+
+  /// Botão da tela de conectar que abre Ajustes › Privacidade e Segurança › Monitoramento de Entrada (DECISOES CA5)
+  ///
+  /// In pt, this message translates to:
+  /// **'ABRIR AJUSTES'**
+  String get caAbrirAjustes;
+
+  /// Abaixo do botão Abrir Ajustes: a permissão só vale reabrindo o app (DECISOES CA5)
+  ///
+  /// In pt, this message translates to:
+  /// **'Depois de ligar, feche e reabra o Anagram App: o macOS só libera na próxima abertura.'**
+  String get caReabraDepois;
+
+  /// Botão que copia a configuração para o GitHub Copilot no VS Code (DECISOES IA7)
+  ///
+  /// In pt, this message translates to:
+  /// **'VS Code + Copilot'**
+  String get mcpClienteVsCode;
+
+  /// Onde colar a configuração do VS Code + Copilot (formato mcpServers do Copilot, DECISOES IA7)
+  ///
+  /// In pt, this message translates to:
+  /// **'VS Code + GitHub Copilot: cole em ~/.copilot/mcp-config.json (ou em Chat: Open Customizations › MCP Servers › Copilot Global) e peça numa conversa do Copilot.'**
+  String get mcpVsCodeOnde;
+
+  /// Frase honesta: o Copilot comum não conecta servidores MCP locais (DECISOES IA7)
+  ///
+  /// In pt, this message translates to:
+  /// **'O app Copilot do Windows e o Microsoft 365 Copilot não têm onde colar um servidor MCP local: use o GitHub Copilot dentro do VS Code.'**
+  String get mcpCopilotComum;
+
+  /// Link para a referência de configuração MCP do VS Code
+  ///
+  /// In pt, this message translates to:
+  /// **'Documentação do VS Code'**
+  String get mcpDocVsCode;
+
+  /// Rótulo da chave que escolhe quais cenas uma edição muda (DECISOES CE1)
+  ///
+  /// In pt, this message translates to:
+  /// **'CONTROLAR'**
+  String get ceControlar;
+
+  /// Opção: a edição muda todas as cenas (Controlling All Scenes da pedaleira)
+  ///
+  /// In pt, this message translates to:
+  /// **'TODAS AS CENAS'**
+  String get ceTodas;
+
+  /// Opção: a edição muda só a cena ativa (Controlling Active Scene da pedaleira)
+  ///
+  /// In pt, this message translates to:
+  /// **'SÓ A CENA ATIVA'**
+  String get ceAtiva;
+
+  /// Tooltip da opção Todas as cenas
+  ///
+  /// In pt, this message translates to:
+  /// **'Knob, valor e liga/desliga mudam todas as cenas: o valor deixa de variar entre elas.'**
+  String get ceTodasDica;
+
+  /// Tooltip da opção Só a cena ativa
+  ///
+  /// In pt, this message translates to:
+  /// **'Knob, valor e liga/desliga mudam só a cena ativa; as outras ficam como estavam.'**
+  String get ceAtivaDica;
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -2759,26 +3095,30 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'es', 'pt'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['en', 'es', 'fr', 'pt'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en': return AppLocalizationsEn();
-    case 'es': return AppLocalizationsEs();
-    case 'pt': return AppLocalizationsPt();
+    case 'en':
+      return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'pt':
+      return AppLocalizationsPt();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
+    'that was used.',
   );
 }

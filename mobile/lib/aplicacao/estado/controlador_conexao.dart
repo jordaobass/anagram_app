@@ -17,6 +17,7 @@ import '../../nucleo/registro.dart';
 import '../../nucleo/resultado.dart';
 import '../../plataforma/fabrica_transporte.dart';
 import '../avisos.dart';
+import '../liberacao_entrada_mac.dart';
 import '../provedores.dart';
 import 'estado_conexao.dart';
 
@@ -30,6 +31,11 @@ class ControladorConexao extends Notifier<EstadoConexao> {
   /// A tentativa em curso é a do app abrindo, não um clique.
   bool _automatica = false;
   TransporteAnagram? _transporte;
+
+  /// O transporte cuja abertura ainda não respondeu. O lado nativo do USB é um
+  /// só para o app: o CANCELAR o fecha na hora, e a abertura que terminar
+  /// depois não fecha de novo (seria o aparelho da tentativa seguinte).
+  TransporteAnagram? _abrindo;
   StreamSubscription<EstadoTransporte>? _vigia;
 
   /// MIDI da pedaleira, quando há (Program Change para trocar de slot).
@@ -75,16 +81,32 @@ class ControladorConexao extends Notifier<EstadoConexao> {
 
   Future<void> _conectarAparelho({required bool automatica}) async {
     final fabrica = ref.read(fabricaTransporteProvider);
-    if (fabrica.suporte case AparelhoIndisponivel(:final motivo)) {
-      if (!automatica) state = FalhaDeConexao(AvisoPlataformaIndisponivel(motivo));
-      return;
+    switch (fabrica.suporte) {
+      case AparelhoIndisponivel(:final motivo):
+        if (!automatica) state = FalhaDeConexao(AvisoPlataformaIndisponivel(motivo));
+        return;
+      // ao abrir, a CA3 já conferiu; no clique, o Mac pode pedir ou recusar (CA5)
+      case AparelhoDisponivel(:final meio) when !automatica:
+        if (!await _liberadoNoMac(meio)) return;
+      case AparelhoDisponivel():
     }
     await _conectar(fabrica.criarAparelho(), demonstracao: false, midi: fabrica.criarMidi(), automatica: automatica);
+  }
+
+  /// Enquanto o macOS mostra o pedido, a tela já diz "Conectando" e aceita CANCELAR.
+  Future<bool> _liberadoNoMac(String meio) async {
+    final tentativa = ++_tentativa;
+    state = Conectando(meio);
+    final liberado = await ref.read(liberacaoEntradaMacProvider)();
+    if (tentativa != _tentativa) return false;
+    if (!liberado) state = const FalhaDeConexao(AvisoMonitoramentoEntrada());
+    return liberado;
   }
 
   /// Desiste da tentativa em curso; o que ela terminar depois é ignorado.
   Future<void> cancelarConexao() async {
     _tentativa++;
+    await _largarAbertura();
     await _soltar();
     state = const SemConexao();
   }
@@ -96,12 +118,21 @@ class ControladorConexao extends Notifier<EstadoConexao> {
 
   Future<void> _conectar(TransporteAnagram transporte,
       {required bool demonstracao, SaidaMidiAnagram? midi, bool automatica = false}) async {
+    await _largarAbertura();
     await _soltar();
     final tentativa = ++_tentativa;
     _automatica = automatica;
     state = Conectando(transporte.descricao, demonstracao: demonstracao, automatica: automatica);
-    if (!await _abrirTransporte(transporte, tentativa)) return;
-    if (tentativa != _tentativa) return unawaited(_fecharSemFalhar(transporte.descricao, transporte.fechar));
+    _abrindo = transporte;
+    final abriu = await _abrirTransporte(transporte, tentativa);
+    // largada pelo CANCELAR (ou por outra tentativa): ela já fechou o lado nativo
+    final largada = !identical(_abrindo, transporte);
+    if (!largada) _abrindo = null;
+    if (!abriu) return;
+    if (tentativa != _tentativa) {
+      if (!largada) unawaited(_fecharSemFalhar(transporte.descricao, transporte.fechar));
+      return;
+    }
     final cliente = ClienteAnagram(
       transporte,
       pausaEntreRelatorios: () => ref.read(pausaRelatoriosProvider) ?? transporte.pausaSugerida,
@@ -184,6 +215,13 @@ class ControladorConexao extends Notifier<EstadoConexao> {
     // depois do transporte: com ele fechado, nenhuma resposta nova gera medição
     if (cliente != null) unawaited(cliente.encerrar());
     if (midi != null && midi.aberta) await _fecharSemFalhar(midi.descricao, midi.fechar);
+  }
+
+  /// Fecha o transporte que ainda está abrindo (ver [_abrindo]).
+  Future<void> _largarAbertura() async {
+    final abrindo = _abrindo;
+    _abrindo = null;
+    if (abrindo != null) await _fecharSemFalhar(abrindo.descricao, abrindo.fechar);
   }
 
   /// Fechar é arrumação: uma falha aqui (canal nativo que já sumiu) vai para o

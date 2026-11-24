@@ -10,12 +10,17 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import 'fixtures.dart';
 import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
+import 'package:anagram_app/aplicacao/tema.dart';
+import 'package:anagram_app/dados/preferencias_tema.dart';
 import 'package:anagram_app/aplicacao/mcp/controlador_mcp.dart';
 import 'package:anagram_app/dados/preferencias_idioma.dart';
 import 'package:anagram_app/dados/preferencias_mcp.dart';
 import 'package:anagram_app/dados/preferencias_pausa.dart';
 import 'package:anagram_app/dados/preferencias_paineis.dart';
 import 'package:anagram_app/aplicacao/estado/paineis_recolhidos.dart';
+import 'package:anagram_app/aplicacao/estado/escopo_cenas.dart';
+import 'package:anagram_app/dados/preferencias_cenas.dart';
+import 'package:anagram_app/nucleo/modelo/cenas_do_bloco.dart';
 import 'package:anagram_app/nucleo/mcp/protocolo_mcp.dart';
 import 'package:anagram_app/plataforma/servidor_mcp.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
@@ -23,13 +28,18 @@ import 'package:anagram_app/aplicacao/versao_nova.dart';
 import 'package:anagram_app/dados/preferencias_versao.dart';
 import 'package:anagram_app/aplicacao/conectar_ao_abrir.dart';
 import 'package:anagram_app/dados/preferencias_conexao.dart';
+import 'package:anagram_app/aplicacao/copias/copia_automatica.dart';
+import 'package:anagram_app/dados/preferencias_copias.dart';
 import 'package:anagram_app/plataforma/acesso_entrada_mac.dart';
+import 'package:anagram_app/aplicacao/liberacao_entrada_mac.dart';
 import 'versao_falsa.dart';
 
 /// Latência fixa: a real varia de execução para execução e sujaria as capturas.
 class CronometroFixo implements Stopwatch {
+  CronometroFixo([this.elapsed = latenciaNasCapturas]);
+
   @override
-  Duration get elapsed => const Duration(milliseconds: 42);
+  final Duration elapsed;
 
   @override
   void start() {}
@@ -43,6 +53,8 @@ class CronometroFixo implements Stopwatch {
 
 const versaoNasCapturas = '0.1.3';
 
+const latenciaNasCapturas = Duration(milliseconds: 42);
+
 /// [indice]: o índice de arte (o padrão é o das capturas, sem a arte de terceiros).
 /// [fabrica]: os presets de fábrica (o padrão é nenhum, como no build sem a arte).
 /// [github]: a última release roteirizada; sem ele, a verificação de versão
@@ -52,6 +64,7 @@ const versaoNasCapturas = '0.1.3';
 Widget appDeTeste(
         {List<Override> overrides = const [],
         IdiomaApp? idioma = IdiomaApp.portugues,
+        EscolhaTema? tema = EscolhaTema.escuro,
         IndiceMiniaturas? indice,
         PresetsDeFabrica? fabrica,
         ServidorMcp? servidorMcp,
@@ -60,9 +73,12 @@ Widget appDeTeste(
         PreferenciasVersao? preferenciasVersao,
         PreferenciasPausa? preferenciasPausa,
         PreferenciasPaineis? preferenciasPaineis,
+        PreferenciasCenas? preferenciasCenas,
         PlataformaDeAbertura abertura = PlataformaDeAbertura.semTentativa,
         PreferenciasConexao? preferenciasConexao,
-        ConsultaAcessoEntrada? acessoEntradaMac}) =>
+        ConsultaAcessoEntrada? acessoEntradaMac,
+        ConsultaAcessoEntrada? pedidoAcessoEntradaMac,
+        Duration latencia = latenciaNasCapturas}) =>
     ProviderScope(
       overrides: [
         ...overrides,
@@ -76,11 +92,16 @@ Widget appDeTeste(
         preferenciasVersaoProvider.overrideWithValue(preferenciasVersao ?? PreferenciasVersaoEmMemoria()),
         preferenciasPausaProvider.overrideWithValue(preferenciasPausa ?? PreferenciasPausaEmMemoria()),
         preferenciasPaineisProvider.overrideWithValue(preferenciasPaineis ?? PreferenciasPaineisEmMemoria()),
+        preferenciasCenasProvider.overrideWithValue(preferenciasCenas ?? PreferenciasCenasEmMemoria()),
         plataformaDeAberturaProvider.overrideWithValue(abertura),
         preferenciasConexaoProvider.overrideWithValue(preferenciasConexao ?? PreferenciasConexaoEmMemoria()),
+        // o interruptor do backup não lê o disco; a pasta só existe no teste que a passa
+        preferenciasCopiasProvider.overrideWithValue(PreferenciasCopiasEmMemoria()),
         // nenhum teste chama o canal nativo do Mac
         acessoEntradaMacProvider.overrideWithValue(acessoEntradaMac ?? () async => AcessoEntrada.desconhecido),
-        cronometroProvider.overrideWithValue(CronometroFixo.new),
+        pedidoAcessoEntradaMacProvider
+            .overrideWithValue(pedidoAcessoEntradaMac ?? () async => AcessoEntrada.desconhecido),
+        cronometroProvider.overrideWithValue(() => CronometroFixo(latencia)),
         catalogoProvider.overrideWith((ref) async => lerCatalogo()),
         explicacoesProvider.overrideWith((ref) async => lerExplicacoes()),
         templatesProvider.overrideWith((ref) async => lerTemplates()),
@@ -92,9 +113,23 @@ Widget appDeTeste(
         // o ambiente de teste é en-US: as capturas de referência são em português
         // (nulo = seguir o idioma do sistema)
         idiomaSalvoProvider.overrideWithValue(idioma),
+        // o ambiente de teste é claro: as capturas e os testes de tela são no
+        // escuro, a não ser que o teste peça outro tema
+        temaSalvoProvider.overrideWithValue(tema),
       ],
       child: const AppAnagram(),
     );
+
+/// Guarda a escolha de tema só em memória (o teste não toca no disco).
+class PreferenciasTemaEmMemoria implements PreferenciasTema {
+  String? salvo;
+
+  @override
+  Future<String?> ler() async => salvo;
+
+  @override
+  Future<void> gravar(String codigo) async => salvo = codigo;
+}
 
 /// Guarda a escolha de idioma só em memória (o teste não toca no disco).
 class PreferenciasIdiomaEmMemoria implements PreferenciasIdioma {
@@ -120,6 +155,19 @@ class PreferenciasConexaoEmMemoria implements PreferenciasConexao {
   Future<void> gravarConectarAoAbrir(bool ligado) async => this.ligado = ligado;
 }
 
+/// Guarda o "backup automático" só em memória (ligado, como na primeira abertura).
+class PreferenciasCopiasEmMemoria implements PreferenciasCopias {
+  PreferenciasCopiasEmMemoria([this.ligada = true]);
+
+  bool ligada;
+
+  @override
+  Future<bool> lerAutomatica() async => ligada;
+
+  @override
+  Future<void> gravarAutomatica(bool ligada) async => this.ligada = ligada;
+}
+
 /// Guarda a pausa USB só em memória (o teste não toca no disco).
 class PreferenciasPausaEmMemoria implements PreferenciasPausa {
   int? salvo;
@@ -139,6 +187,17 @@ class PreferenciasPaineisEmMemoria implements PreferenciasPaineis {
 
   @override
   Future<void> gravarControlesAbertos(bool abertos) async => controlesAbertos = abertos;
+}
+
+/// Guarda a chave "Controlar" das cenas só em memória (nada guardado = padrão).
+class PreferenciasCenasEmMemoria implements PreferenciasCenas {
+  EscopoCenas? salvo;
+
+  @override
+  Future<EscopoCenas?> lerEscopo() async => salvo;
+
+  @override
+  Future<void> gravarEscopo(EscopoCenas escopo) async => salvo = escopo;
 }
 
 class PreferenciasMcpEmMemoria implements PreferenciasMcp {

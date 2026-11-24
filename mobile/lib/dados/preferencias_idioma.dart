@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../nucleo/registro.dart';
 
 abstract interface class PreferenciasIdioma {
-  /// Código salvo ("pt", "en", "es") ou nulo para seguir o sistema.
+  /// Código salvo ("pt", "en", "es", "fr") ou nulo para seguir o sistema.
   Future<String?> ler();
 
   /// Nulo apaga a escolha (volta a seguir o sistema).

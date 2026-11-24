@@ -75,7 +75,7 @@ class _EstadoFaixaFrequencias extends State<FaixaFrequencias> {
   List<RaiaBanda> get _raias => [
         for (final b in widget.arranjo.bandas)
           RaiaBanda(
-            cor: Cores.daBanda(b.banda, b.paleta),
+            cor: context.cores.daBanda(b.banda, b.paleta),
             inferior: _corte(b.inferior),
             superior: _corte(b.superior),
             nivelDb: _nivel(b.nivel),
@@ -102,7 +102,7 @@ class _EstadoFaixaFrequencias extends State<FaixaFrequencias> {
         child: Stack(clipBehavior: Clip.none, children: [
           Positioned.fill(
             child: CustomPaint(
-                painter: PintorFaixaFrequencias(
+                painter: PintorFaixaFrequencias(cores: context.cores,
                     raias: _raias, rotulos: _rotulosDaRegua(), alturaRaia: Medidas.alturaRaiaBanda, escala: escala)),
           ),
           ..._tracos(largura, escala),
@@ -119,7 +119,7 @@ class _EstadoFaixaFrequencias extends State<FaixaFrequencias> {
     final altura = widget.arranjo.bandas.length * Medidas.alturaRaiaBanda;
     return [
       for (final b in widget.arranjo.bandas)
-        for (final (simbolo, cor) in [(b.limiar, Cores.linhaThreshold), (b.nivel, Cores.linhaLevel)])
+        for (final (simbolo, cor) in [(b.limiar, context.cores.linhaThreshold), (b.nivel, context.cores.linhaLevel)])
           if (simbolo != null && widget.parametro(simbolo) != null)
             if (_traco(b, widget.parametro(simbolo)!, cor) case final t when t.ate > t.de)
               Positioned(
@@ -259,7 +259,7 @@ class AlcaFrequencia extends StatelessWidget {
               onHorizontalDragEnd: (_) => aoSoltar(),
               onHorizontalDragCancel: aoSoltar,
               onTap: aoTocar,
-              child: CustomPaint(painter: PintorAlcaFrequencia(
+              child: CustomPaint(painter: PintorAlcaFrequencia(cores: context.cores,
                   texto: texto, estilo: _estilo(context), aEsquerda: rotuloAEsquerda, acima: acima, abaixo: abaixo)),
             ),
           ),
@@ -267,5 +267,5 @@ class AlcaFrequencia extends StatelessWidget {
       );
 
   TextStyle? _estilo(BuildContext context) => Theme.of(context).textTheme.labelSmall?.copyWith(
-      color: Cores.texto, fontFeatures: const [FontFeature.tabularFigures()]);
+      color: context.cores.texto, fontFeatures: const [FontFeature.tabularFigures()]);
 }

@@ -18,7 +18,7 @@ class InterruptorConectarAoAbrir extends ConsumerWidget {
     return SwitchListTile(
       key: const ValueKey('conectar-ao-abrir'),
       contentPadding: EdgeInsets.zero,
-      activeThumbColor: Cores.tally,
+      activeThumbColor: context.cores.tally,
       title: Text(l.caConectarAoAbrir),
       subtitle: Text(noMac ? '${l.caConectarAoAbrirTexto}\n${l.caConectarAoAbrirMac}' : l.caConectarAoAbrirTexto),
       value: ref.watch(conectarAoAbrirProvider),

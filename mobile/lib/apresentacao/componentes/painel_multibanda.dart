@@ -17,7 +17,7 @@ import 'coluna_banda.dart';
 import 'controle_no_painel.dart';
 import 'botoes_banda.dart' show mutesDoArranjo;
 import 'faixa_frequencias.dart';
-import 'seletor_templates.dart';
+import 'tela_pedaleira/barra_metal.dart';
 
 class PainelMultibanda extends ConsumerStatefulWidget {
   const PainelMultibanda({
@@ -82,21 +82,18 @@ class _EstadoPainelMultibanda extends ConsumerState<PainelMultibanda> {
       largura: largura,
       mutes: mutesDoArranjo(widget.arranjo));
 
-  /// Templates à esquerda; à direita, a legenda das linhas da faixa (só as
-  /// que o bloco tem: o Entropia não tem Threshold).
+  /// A barra da tela da pedaleira: nome, Templates, a legenda das linhas da
+  /// faixa (só as que o bloco tem: o Entropia não tem Threshold) e o
+  /// liga/desliga.
   Widget _topo(BuildContext context) {
     final temLimiar = widget.arranjo.bandas.any((b) => b.limiar != null);
-    return Wrap(
-      alignment: WrapAlignment.spaceBetween,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      spacing: Espacos.m,
-      runSpacing: Espacos.s,
-      children: [
-        SeletorTemplates(bloco: widget.bloco, definicao: widget.definicao, cena: widget.cena),
-        Wrap(spacing: Espacos.m, children: [
-          if (temLimiar) _legenda(context, 'Threshold', Cores.linhaThreshold),
-          _legenda(context, 'Level', Cores.linhaLevel),
-        ]),
+    return BarraPainelMetal(
+      bloco: widget.bloco,
+      definicao: widget.definicao,
+      cena: widget.cena,
+      legendas: [
+        if (temLimiar) _legenda(context, 'Threshold', context.cores.linhaThreshold),
+        _legenda(context, 'Level', context.cores.linhaLevel),
       ],
     );
   }
@@ -165,7 +162,7 @@ class _EstadoPainelMultibanda extends ConsumerState<PainelMultibanda> {
 
   Widget _explicacao(BuildContext context, String texto) => ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: Medidas.larguraColunaBanda),
-        child: Text(texto, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario)),
+        child: Text(texto, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.textoSecundario)),
       );
 
   List<Widget> _outros(BuildContext context) {

@@ -36,7 +36,7 @@ check on launch (Windows, macOS and Linux) that asks GitHub for the latest relea
 sends only the app's version (in the User-Agent header); as with any connection, GitHub sees your IP
 address. It can be turned off in **Settings › Updates**.
 
-The interface is in **English, Portuguese and Spanish** (it follows your system language; you can
+The interface is in **English, Portuguese, Spanish and French** (it follows your system language; you can
 change it in **Settings**, the gear icon).
 
 ## What you can do
@@ -44,7 +44,7 @@ change it in **Settings**, the gear icon).
 | | |
 |---|---|
 | <img src="docs/imagens/en/ignissor.webp" width="420" alt="Ignissor"><br>**Multiband compressor (Ignissor)**: band curves, draggable Threshold and Level, Solo and Mute, a compression curve per band | <img src="docs/imagens/en/entropia.webp" width="420" alt="Entropia"><br>**Multiband drive (Entropia)**: Drive Type and Drive Mode like on the pedal, a waveform that saturates with the drive |
-| <img src="docs/imagens/en/templates.webp" width="420" alt="Templates"><br>**Templates**: Darkglass's own plus starting points from the app, applied live with undo | <img src="docs/imagens/en/axioma.webp" width="420" alt="Axioma"><br>**Axioma Mono Synth**: oscillators, filter and envelope drawn live |
+| <img src="docs/imagens/en/templates.webp" width="420" alt="Templates"><br>**Templates**: Darkglass's official ones for the Ignissor (6) and Entropia (17), with the values read from the pedal, plus starting points from the app, applied live with undo | <img src="docs/imagens/en/axioma.webp" width="420" alt="Axioma"><br>**Axioma Mono Synth**: oscillators, filter and envelope drawn live |
 | <img src="docs/imagens/en/gabinete.webp" width="420" alt="Cabinet"><br>**Cabinets**: model photo, microphone and position, with a searchable gallery | <img src="docs/imagens/en/explicacao.webp" width="420" alt="Parameter explanation"><br>**Every control explained**: rest the mouse on its name to see what it does to the sound on that pedal |
 
 <p align="center"><img src="docs/imagens/en/celular.webp" width="260" alt="On a phone"><br><em>On a phone (Android) the chain becomes a compact grid.</em></p>
@@ -53,11 +53,33 @@ Also: a parallel row with Split and Merge, move/clone/swap presets and banks, cl
 and import JSON, the Factory area (36 Darkglass presets, read-only) and local AI via MCP.
 
 On the desktop the app connects to the pedal on launch (switch it off in **Settings**). The footswitch
-mode shows as **Stomp / Preset / Scene** pills on the scene row; the Auto Drummer and Cognate Metro
+mode shows as **Stomp / Preset / Scene** pills on the scene row, next to a **Control: All scenes / Active
+scene only** switch (like the pedal's Scene mode button: knobs and block on/off change every scene or only
+the active one); the Auto Drummer and Cognate Metro
 blocks are laid out like the pedal's own screen, with tap tempo; a TONE3000 block can switch to another
 tone already on the pedal; menus have icons and are compact with a mouse; and live editing over USB is
 faster. Output levels, Global EQ and input gain are shown **read-only**: the Anagram accepts those values
 over USB but doesn't apply them to the sound, so adjust them on the pedal itself.
+
+### New in 0.2.0
+
+- **Local AI, fully live**: the assistant edits per scene (`scope`), reads and assigns footswitches,
+  pots and the expression pedal, renames the preset and controls, lists, reads and opens slots, and starts
+  a new preset in an empty slot. Saving is always confirmed by you in the app.
+- **Control: All scenes / Active scene** switch, and presets with **more than 3 scenes** are kept whole
+  and editable. The on/off label of a block says exactly in which scenes it is on or off (e.g. "OFF IN
+  SCENES 1, 3").
+- **Light theme**, or follow the system (**Settings**), and a new top bar: the pedal connection chip on
+  the left, the gear on the right.
+- **Backups**: the app saves a copy of a slot before writing over it (switch in **Settings › Preset
+  backups**), can back up every preset at once, and opens a backup in the editor so you can restore it.
+- **Darkglass Marketplace blocks** are read from the pedal itself (firmware 1.14 or newer), with their
+  real parameters, and show up in the block library.
+- **Official templates** of the Ignissor (6) and Entropia (17) with values read from the pedal; the
+  Axioma templates are listed, their values are still to be read.
+- The Ignissor and Entropia panels take on the pedal's metal look, and the Axioma its neon screen.
+- **French** interface; on macOS the app asks for **Input Monitoring** the right way; **VS Code + GitHub
+  Copilot** configuration in the AI settings.
 
 ## How to install
 
@@ -99,9 +121,11 @@ Keep all the files together in the folder: `hidapi.dll` talks to the pedal over 
 
 - **"Apple could not verify…"**: the app isn't signed by Apple yet. Open **System Settings › Privacy &
   Security** and click **Open Anyway** (or run `xattr -cr "/Applications/Anagram App.app"` in Terminal).
-- **Input Monitoring**: macOS treats the Anagram's USB access as Input Monitoring. If the app doesn't
-  connect, or keeps bouncing in the Dock, turn **Anagram App** on in **System Settings › Privacy &
-  Security › Input Monitoring** and open the app again.
+- **Input Monitoring**: macOS treats the Anagram's USB access as Input Monitoring. The first time you
+  click **Connect over USB**, macOS asks for it; the app doesn't open the USB until it is allowed. If it
+  isn't, the connect screen says so and has an **Open System Settings** button: turn **Anagram App** on in
+  **System Settings › Privacy & Security › Input Monitoring**, then quit and reopen the app (macOS only
+  applies it on the next launch).
 
 ### Linux
 
@@ -124,8 +148,8 @@ No pedal? **Open demo** simulates an Anagram in memory so you can explore the ap
 
 ## Local AI via MCP (optional, desktop only)
 
-The app can take requests from an AI assistant running on your own computer (LM Studio, Claude Desktop
-or any other MCP client): *"make the low end fuller"*, *"build me a slap tone"*. The AI reads the open
+The app can take requests from an AI assistant running on your own computer (LM Studio, Claude Desktop,
+VS Code with GitHub Copilot or any other MCP client): *"make the low end fuller"*, *"build me a slap tone"*. The AI reads the open
 preset and adjusts the blocks; every change is **heard immediately**, shows up on screen and stays
 **unsaved**. Nothing is written to the pedal unless you confirm it in the app.
 
@@ -147,14 +171,41 @@ preset and adjusts the blocks; every change is **heard immediately**, shows up o
 
    Claude Desktop only speaks stdio, so the copied configuration uses the bridge
    `npx -y mcp-remote <url> --transport http-only --header "Authorization: Bearer <token>"`.
+
+   **VS Code + GitHub Copilot**: the copied configuration goes into `~/.copilot/mcp-config.json` (or
+   **Chat: Open Customizations › MCP Servers › Copilot Global**), in the format of the
+   [VS Code MCP reference](https://code.visualstudio.com/docs/copilot/reference/mcp-configuration):
+
+   ```json
+   {
+     "mcpServers": {
+       "anagram": {
+         "type": "http",
+         "url": "http://127.0.0.1:8765/mcp",
+         "headers": { "Authorization": "Bearer <token from Settings>" },
+         "tools": ["*"]
+       }
+     }
+   }
+   ```
+
+   The Copilot app on Windows and Microsoft 365 Copilot have no place to add a local MCP server: use
+   GitHub Copilot inside VS Code.
+
+   **Any other client**: Streamable HTTP transport, the URL above and the header
+   `Authorization: Bearer <token>` (that's what **Other client** copies).
 3. Open a preset in the app and talk to the AI.
 
 > **The AI can't hear the sound**: it adjusts based on what you describe, and you tell it whether it
 > got better. Small models tend to describe what they would do instead of calling the tools; prefer a
 > model with good tool calling. Tools: `get_current_preset`, `list_block_types`, `get_block_guide`,
-> `get_tone_building_guide`, `get_tone_recipe`, `set_parameter`, `set_block_enabled`, `select_scene`,
-> `add_block`, `move_block`, `remove_block`, `choose_cabinet`, `undo`, `save_preset`,
-> `get_global_settings` (read only) and `set_global_setting` (footswitch mode only).
+> `get_tone_building_guide`, `get_tone_recipe`, `set_parameter` and `set_block_enabled` (with `scope`: only
+> the active scene or all scenes; without it, the app's Control switch), `select_scene`, `add_block`, `move_block`, `remove_block`,
+> `choose_cabinet`, `get_controls`, `assign_control` and `release_control` (footswitches, knobs and
+> expression pedal; footswitches follow them in Stomp mode), `rename` (preset or control),
+> `list_slots`, `read_slot` (without opening), `open_slot` (refuses over unsaved edits unless told to
+> discard them; on an empty slot it starts a new preset there), `undo`, `save_preset` (always confirmed by you in the app), `get_global_settings`
+> (read only) and `set_global_setting` (footswitch mode only).
 
 **The app teaches the AI the pedal.** It ships a tone-building knowledge base that the assistant reads
 through the same connection: what each of the 109 factory blocks does (role, key parameters with

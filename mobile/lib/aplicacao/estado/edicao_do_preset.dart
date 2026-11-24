@@ -1,5 +1,7 @@
 // Edições do documento aberto (bloco, cena, nome). Cada uma passa por
 // [aplicarDocumento], que atualiza o estado e toca ao vivo se ligado.
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../nucleo/catalogo/biblioteca_blocos.dart';
@@ -7,21 +9,45 @@ import '../../nucleo/catalogo/linha_paralela.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
 import '../../nucleo/modelo/documento_preset.dart';
+import 'escopo_cenas.dart';
 import 'estado_editor.dart';
+import 'ponto_desfazer.dart';
 
 mixin EdicaoDoPreset on Notifier<EstadoEditor> {
   Future<void> aplicarDocumento(DocumentoPreset documento);
 
+  /// Faz a [mudanca] e devolve como voltar ao documento de antes dela (nulo
+  /// se nada mudou). Ver [PontoDesfazer].
+  Future<PontoDesfazer?> comDesfazer(FutureOr<void> Function() mudanca) async {
+    final antes = state.atual;
+    await mudanca();
+    final depois = state.atual;
+    if (antes == null || depois == null || identical(antes, depois)) return null;
+    return PontoDesfazer(antes, depois);
+  }
+
+  /// Volta ao documento de antes do [ponto], se o preset ainda é o que ele
+  /// deixou (trocar de cena depois não conta); fica na cena atual. Devolve se
+  /// voltou. Soa ao vivo, como qualquer edição.
+  Future<bool> desfazer(PontoDesfazer ponto) async {
+    final atual = state.atual;
+    if (atual == null || !ponto.valeEm(atual)) return false;
+    await aplicarDocumento(ponto.voltarEm(atual));
+    return true;
+  }
+
+  /// Nas cenas da chave "Controlar" ([escopoCenasProvider]).
   Future<void> alternarBypass(PosicaoBloco posicao) async {
     final bloco = state.atual?.bloco(posicao);
     if (bloco == null) return;
     final ligado = bloco.habilitadoNaCena(state.atual!.cenaAtiva);
-    await aplicarDocumento(state.atual!.comBlocoHabilitado(posicao, !ligado));
+    await aplicarDocumento(state.atual!.comBlocoHabilitado(posicao, !ligado, escopo: ref.read(escopoCenasProvider)));
   }
 
+  /// Cena que o preset não tem é ignorada (atalho 9 num preset de três).
   Future<void> escolherCena(int cena) async {
     final atual = state.atual;
-    if (atual != null) await aplicarDocumento(atual.comCena(cena));
+    if (atual != null && cena >= 1 && cena <= atual.quantidadeCenas) await aplicarDocumento(atual.comCena(cena));
   }
 
   void copiarBloco(PosicaoBloco posicao) {
@@ -55,14 +81,16 @@ mixin EdicaoDoPreset on Notifier<EstadoEditor> {
   }
 
   /// Vários parâmetros do mesmo bloco numa alteração só (template, solo da
-  /// banda): cada um vale como o knob (bloco e cena ativa), mas a pedaleira
-  /// recebe um envio só, sem passar pelos estados intermediários.
+  /// banda): cada um vale como o knob (nas cenas da chave "Controlar"), mas a
+  /// pedaleira recebe um envio só, sem passar pelos estados intermediários.
   Future<void> alterarParametros(PosicaoBloco posicao, Map<String, num> valores,
-      {Map<String, String> nomes = const {}}) async {
+      {Map<String, String> nomes = const {}, Map<String, num> padroes = const {}}) async {
     var documento = state.atual;
     if (documento == null || documento.bloco(posicao) == null || valores.isEmpty) return;
+    final escopo = ref.read(escopoCenasProvider);
     for (final MapEntry(key: simbolo, value: valor) in valores.entries) {
-      documento = documento!.comParametro(posicao, simbolo, valor, nomeExibicao: nomes[simbolo]);
+      documento = documento!.comParametro(posicao, simbolo, valor,
+          nomeExibicao: nomes[simbolo], escopo: escopo, valorAntes: padroes[simbolo]);
     }
     await aplicarDocumento(documento!);
   }

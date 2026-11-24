@@ -13,7 +13,6 @@ import '../tema/tokens.dart';
 import '../textos.dart';
 import 'alvo_do_controle.dart';
 import 'atribuir_do_bloco.dart';
-import 'dialogo_renomear.dart' show tamanhoMaximoNome;
 import 'linha_alvo_controle.dart';
 
 Future<void> abrirEdicaoControle(BuildContext context, WidgetRef ref, IdControle id) =>
@@ -85,7 +84,7 @@ class _EstadoDialogoControle extends ConsumerState<DialogoControle> {
           // tirar não é a ação principal: texto neutro, o âmbar fica no FECHAR
           TextButton(
               key: const ValueKey('soltar-controle'),
-              style: TextButton.styleFrom(foregroundColor: Cores.texto),
+              style: TextButton.styleFrom(foregroundColor: context.cores.texto),
               onPressed: _soltar,
               child: Text(l.ctlRemoverControle))
         else
@@ -100,7 +99,7 @@ class _EstadoDialogoControle extends ConsumerState<DialogoControle> {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
       if (controle != null) _campoNome(l),
       if (alvos.isEmpty)
-        Text(l.ctlSemAlvos, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Cores.textoSecundario)),
+        Text(l.ctlSemAlvos, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: context.cores.textoSecundario)),
       for (var i = 0; i < alvos.length; i++)
         LinhaAlvoControle(id: widget.id, indice: i, alvo: AlvoNaTela.de(ref, documento!, alvos[i])),
       const SizedBox(height: Espacos.m),

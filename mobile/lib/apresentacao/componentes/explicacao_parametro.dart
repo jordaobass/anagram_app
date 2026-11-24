@@ -62,14 +62,14 @@ Widget comExplicacao(BuildContext context, DefinicaoParametro parametro, Widget 
     constraints: const BoxConstraints(maxWidth: Medidas.larguraExplicacao),
     padding: const EdgeInsets.all(Espacos.m),
     decoration: BoxDecoration(
-      color: Cores.painelElevado,
+      color: context.cores.painelElevado,
       borderRadius: BorderRadius.circular(Raios.controle),
-      border: Border.all(color: Cores.filete),
+      border: Border.all(color: context.cores.filete),
     ),
     richMessage: TextSpan(children: [
-      TextSpan(text: nome ?? parametro.nome, style: tema.titleSmall?.copyWith(color: Cores.texto)),
-      if (faixa != null) TextSpan(text: '\n$faixa', style: tema.labelMedium?.copyWith(color: Cores.textoSecundario)),
-      TextSpan(text: '\n$texto', style: tema.bodyMedium?.copyWith(color: Cores.texto)),
+      TextSpan(text: nome ?? parametro.nome, style: tema.titleSmall?.copyWith(color: context.cores.texto)),
+      if (faixa != null) TextSpan(text: '\n$faixa', style: tema.labelMedium?.copyWith(color: context.cores.textoSecundario)),
+      TextSpan(text: '\n$texto', style: tema.bodyMedium?.copyWith(color: context.cores.texto)),
     ]),
     child: filho,
   );

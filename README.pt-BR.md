@@ -36,7 +36,7 @@ uma verificação opcional ao abrir (Windows, macOS e Linux) que pergunta ao Git
 versão. Essa consulta envia apenas a versão do app (no cabeçalho User-Agent); como em toda conexão,
 o GitHub vê o seu endereço IP. Ela pode ser desligada em **Configurações › Atualizações**.
 
-Interface em **português, inglês e espanhol** (segue o idioma do sistema; dá para trocar em
+Interface em **português, inglês, espanhol e francês** (segue o idioma do sistema; dá para trocar em
 **Configurações**, na engrenagem).
 
 ## O que dá para fazer
@@ -44,7 +44,7 @@ Interface em **português, inglês e espanhol** (segue o idioma do sistema; dá 
 | | |
 |---|---|
 | <img src="docs/imagens/ignissor.webp" width="420" alt="Ignissor"><br>**Compressor multibanda (Ignissor)** — curvas das três bandas, Threshold e Level arrastáveis, Solo e Mudo, curva de compressão por banda | <img src="docs/imagens/entropia.webp" width="420" alt="Entropia"><br>**Drive multibanda (Entropia)** — Drive Type e Drive Mode como na pedaleira, onda que satura com o drive |
-| <img src="docs/imagens/templates.webp" width="420" alt="Templates"><br>**Templates** — os da Darkglass e pontos de partida do app, aplicados ao vivo com desfazer | <img src="docs/imagens/axioma.webp" width="420" alt="Axioma"><br>**Axioma Mono Synth** — osciladores, filtro e envelope desenhados ao vivo |
+| <img src="docs/imagens/templates.webp" width="420" alt="Templates"><br>**Templates** — os oficiais da Darkglass do Ignissor (6) e do Entropia (17), com os valores lidos da pedaleira, e pontos de partida do app, aplicados ao vivo com desfazer | <img src="docs/imagens/axioma.webp" width="420" alt="Axioma"><br>**Axioma Mono Synth** — osciladores, filtro e envelope desenhados ao vivo |
 | <img src="docs/imagens/gabinete.webp" width="420" alt="Gabinete"><br>**Gabinetes** — foto do modelo, microfone e posição, com galeria e busca | <img src="docs/imagens/explicacao.webp" width="420" alt="Explicação do parâmetro"><br>**Explicação de cada controle** — pare o mouse no nome e veja o que ele faz com o som naquele pedal |
 
 <p align="center"><img src="docs/imagens/celular.webp" width="260" alt="No celular"><br><em>No celular (Android) a cadeia vira uma grade compacta.</em></p>
@@ -53,12 +53,35 @@ Também: linha paralela com Split e Merge, mover/clonar/trocar presets e bancos,
 exportar e importar JSON, área Fábrica (36 presets da Darkglass, só leitura) e IA local via MCP.
 
 No computador o app conecta na pedaleira ao abrir (dá para desligar em **Configurações**). O modo dos
-footswitches aparece em pílulas **Stomp / Preset / Scene** na linha das cenas; os blocos Auto Drummer e
+footswitches aparece em pílulas **Stomp / Preset / Scene** na linha das cenas, ao lado da chave
+**Controlar: Todas as cenas / Só a cena ativa** (como o botão do modo Scene da pedaleira: knobs e
+liga/desliga do bloco mudam todas as cenas ou só a ativa); os blocos Auto Drummer e
 Cognate Metro ficam dispostos como na tela da própria pedaleira, com tap tempo; um bloco TONE3000 troca
 para outro tom que já está na pedaleira; os menus têm ícones e ficam compactos com mouse; e a edição ao
 vivo pelo USB ficou mais rápida. Volume das saídas, Global EQ e ganho de entrada aparecem **só para
 leitura**: a Anagram aceita esses valores pelo USB, mas não os aplica ao som, então ajuste na própria
 pedaleira.
+
+### Novidades da 0.2.0
+
+- **IA local completa, ao vivo**: o assistente edita por cena (`scope`), lê e atribui footswitches, pots
+  e pedal de expressão, renomeia o preset e os controles, lista, lê e abre slots e cria um preset novo num
+  slot vazio. Salvar sempre passa pela sua confirmação no app.
+- Chave **Controlar: Todas as cenas / Só a cena ativa**, e presets com **mais de 3 cenas** são preservados
+  inteiros e editáveis. O rótulo de liga/desliga do bloco diz exatamente em quais cenas ele está ligado ou
+  desligado (ex.: "DESLIGADO NAS CENAS 1, 3").
+- **Tema claro**, ou seguir o sistema (**Configurações**), e barra superior nova: o chip da conexão com a
+  pedaleira à esquerda, a engrenagem à direita.
+- **Backups**: o app guarda uma cópia do slot antes de gravar por cima (interruptor em **Configurações ›
+  Backup dos presets**), faz backup de todos os presets de uma vez e abre um backup no editor para
+  restaurar.
+- **Blocos do Darkglass Marketplace** lidos da própria pedaleira (firmware 1.14 ou mais novo), com os
+  parâmetros reais, e listados na biblioteca de blocos.
+- **Templates oficiais** do Ignissor (6) e do Entropia (17) com valores lidos da pedaleira; os do Axioma
+  estão listados, com os valores ainda por ler.
+- Os painéis do Ignissor e do Entropia ganham o visual metálico da pedaleira, e o do Axioma a tela neon.
+- Interface em **francês**; no macOS o app pede o **Monitoramento de Entrada** do jeito certo;
+  configuração para **VS Code + GitHub Copilot** nos ajustes de IA.
 
 ## Como instalar
 
@@ -99,9 +122,11 @@ Mantenha todos os arquivos juntos na pasta: a `hidapi.dll` é quem fala com a pe
 - **"A Apple não pôde verificar…"**: o app ainda não é assinado pela Apple. Abra **Ajustes do Sistema ›
   Privacidade e Segurança** e clique em **Abrir Mesmo Assim** (ou rode
   `xattr -cr "/Applications/Anagram App.app"` no Terminal).
-- **Monitoramento de Entrada**: o macOS trata o acesso USB da Anagram como Monitoramento de Entrada. Se o
-  app não conectar, ou ficar pulando no Dock, ligue o **Anagram App** em **Ajustes do Sistema ›
-  Privacidade e Segurança › Monitoramento de Entrada** e abra o app de novo.
+- **Monitoramento de Entrada**: o macOS trata o acesso USB da Anagram como Monitoramento de Entrada. Na
+  primeira vez que você clica em **Conectar pelo USB**, o macOS pede essa permissão; o app só abre o USB
+  depois de liberado. Se não estiver, a tela de conectar avisa e traz o botão **Abrir Ajustes**: ligue o
+  **Anagram App** em **Ajustes do Sistema › Privacidade e Segurança › Monitoramento de Entrada** e depois
+  feche e reabra o app (o macOS só aplica na próxima abertura).
 
 ### Linux
 
@@ -126,8 +151,8 @@ Sem pedaleira, **Abrir demonstração** simula uma Anagram em memória para voc�
 
 ## IA local via MCP (opcional, só no computador)
 
-O app pode receber pedidos de um assistente de IA que roda no seu computador (LM Studio, Claude Desktop ou
-outro cliente com suporte a MCP): *"deixa o grave mais encorpado"*, *"monta um timbre de slap"*. A IA lê o
+O app pode receber pedidos de um assistente de IA que roda no seu computador (LM Studio, Claude Desktop,
+VS Code com GitHub Copilot ou outro cliente com suporte a MCP): *"deixa o grave mais encorpado"*, *"monta um timbre de slap"*. A IA lê o
 preset aberto e mexe nos blocos; cada mudança **soa na hora**, aparece na tela e fica **não salva**. Gravar
 na pedaleira só acontece se você confirmar no app.
 
@@ -149,14 +174,42 @@ na pedaleira só acontece se você confirmar no app.
 
    No Claude Desktop, que só fala stdio, a configuração copiada usa a ponte
    `npx -y mcp-remote <url> --transport http-only --header "Authorization: Bearer <token>"`.
+
+   **VS Code + GitHub Copilot**: a configuração copiada vai em `~/.copilot/mcp-config.json` (ou em
+   **Chat: Open Customizations › MCP Servers › Copilot Global**), no formato da
+   [referência de MCP do VS Code](https://code.visualstudio.com/docs/copilot/reference/mcp-configuration):
+
+   ```json
+   {
+     "mcpServers": {
+       "anagram": {
+         "type": "http",
+         "url": "http://127.0.0.1:8765/mcp",
+         "headers": { "Authorization": "Bearer <token das Configurações>" },
+         "tools": ["*"]
+       }
+     }
+   }
+   ```
+
+   O app Copilot do Windows e o Microsoft 365 Copilot não têm onde colar um servidor MCP local: use o
+   GitHub Copilot dentro do VS Code.
+
+   **Outro cliente**: transporte Streamable HTTP, a URL acima e o cabeçalho
+   `Authorization: Bearer <token>` (é o que **Outro cliente** copia).
 3. Abra um preset no app e converse com a IA.
 
 > **A IA não ouve o som**: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos
 > costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a
 > ferramentas (*tool calling*). Ferramentas: `get_current_preset`, `list_block_types`, `get_block_guide`,
-> `get_tone_building_guide`, `get_tone_recipe`, `set_parameter`, `set_block_enabled`, `select_scene`,
-> `add_block`, `move_block`, `remove_block`, `choose_cabinet`, `undo`, `save_preset`,
-> `get_global_settings` (só leitura) e `set_global_setting` (só o modo dos footswitches) (decisões IA1–IA6 e IC1–IC9 em `docs/DECISOES.md`).
+> `get_tone_building_guide`, `get_tone_recipe`, `set_parameter` e `set_block_enabled` (com `scope`: só a
+> cena ativa ou todas as cenas; sem ele, vale a chave Controlar do app), `select_scene`, `add_block`, `move_block`, `remove_block`,
+> `choose_cabinet`, `get_controls`, `assign_control` e `release_control` (footswitches, pots e pedal de
+> expressão; os footswitches obedecem no modo Stomp), `rename` (preset ou controle), `list_slots`,
+> `read_slot` (sem abrir), `open_slot` (recusa por cima de edição não salva, a menos que a IA diga para
+> descartar; num slot vazio, começa um preset novo ali), `undo`, `save_preset` (sempre confirmado por você no app), `get_global_settings` (só
+> leitura) e `set_global_setting` (só o modo dos footswitches) (decisões IA1–IA7, IC1–IC9 e IM1–IM7 em
+> `docs/DECISOES.md`).
 
 **O app ensina a pedaleira à IA.** Ele traz uma base de conhecimento de timbre que o assistente lê pela
 mesma conexão: o que cada um dos 109 blocos de fábrica faz (papel, parâmetros que importam com faixas,

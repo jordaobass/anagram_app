@@ -25,7 +25,7 @@ class SecaoRegistro extends StatelessWidget {
         Text(l.registroOnde, style: Theme.of(context).textTheme.bodyMedium),
         const SizedBox(height: Espacos.xs),
         SelectableText(arquivo.caminho,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Cores.textoSecundario)),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.cores.textoSecundario)),
         const SizedBox(height: Espacos.m),
         OutlinedButton.icon(
           key: const ValueKey('copiar-registro'),

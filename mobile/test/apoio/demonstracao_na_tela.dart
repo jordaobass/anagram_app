@@ -4,11 +4,13 @@ import 'dart:async';
 
 import 'package:anagram_app/aplicacao/arte/indice_miniaturas.dart';
 import 'package:anagram_app/aplicacao/idioma.dart';
+import 'package:anagram_app/aplicacao/tema.dart';
 import 'package:anagram_app/nucleo/modelo/presets_fabrica.dart';
 import 'package:anagram_app/plataforma/servidor_mcp.dart';
 import 'package:anagram_app/dados/preferencias_pausa.dart';
 import 'package:anagram_app/dados/preferencias_versao.dart';
 import 'package:anagram_app/dados/preferencias_paineis.dart';
+import 'package:anagram_app/dados/preferencias_cenas.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -37,6 +39,7 @@ Future<void> montarApp(WidgetTester tester,
     double densidade = 1,
     List<Override> overrides = const [],
     IdiomaApp? idioma = IdiomaApp.portugues,
+    EscolhaTema? tema = EscolhaTema.escuro,
     IndiceMiniaturas? indice,
     PresetsDeFabrica? fabrica,
     ServidorMcp? servidorMcp,
@@ -45,15 +48,19 @@ Future<void> montarApp(WidgetTester tester,
     PreferenciasVersao? preferenciasVersao,
     PreferenciasPausa? preferenciasPausa,
     PreferenciasPaineis? preferenciasPaineis,
+    PreferenciasCenas? preferenciasCenas,
     PlataformaDeAbertura abertura = PlataformaDeAbertura.semTentativa,
     PreferenciasConexao? preferenciasConexao,
-    ConsultaAcessoEntrada? acessoEntradaMac}) async {
+    ConsultaAcessoEntrada? acessoEntradaMac,
+    ConsultaAcessoEntrada? pedidoAcessoEntradaMac,
+    Duration latencia = latenciaNasCapturas}) async {
   tester.view.physicalSize = tamanho * densidade;
   tester.view.devicePixelRatio = densidade;
   addTearDown(tester.view.reset);
   await tester.pumpWidget(appDeTeste(
       overrides: overrides,
       idioma: idioma,
+      tema: tema,
       indice: indice,
       fabrica: fabrica,
       servidorMcp: servidorMcp,
@@ -62,9 +69,12 @@ Future<void> montarApp(WidgetTester tester,
       preferenciasVersao: preferenciasVersao,
       preferenciasPausa: preferenciasPausa,
       preferenciasPaineis: preferenciasPaineis,
+      preferenciasCenas: preferenciasCenas,
       abertura: abertura,
       preferenciasConexao: preferenciasConexao,
-      acessoEntradaMac: acessoEntradaMac));
+      acessoEntradaMac: acessoEntradaMac,
+      pedidoAcessoEntradaMac: pedidoAcessoEntradaMac,
+      latencia: latencia));
   await tester.pumpAndSettle();
 }
 
@@ -74,9 +84,10 @@ Future<ProviderContainer> abrirDemonstracao(WidgetTester tester,
     double densidade = 1,
     List<Override> overrides = const [],
     IndiceMiniaturas? indice,
-    PresetsDeFabrica? fabrica}) async {
+    PresetsDeFabrica? fabrica,
+    EscolhaTema tema = EscolhaTema.escuro}) async {
   await montarApp(tester,
-      tamanho: tamanho, densidade: densidade, overrides: overrides, indice: indice, fabrica: fabrica);
+      tamanho: tamanho, densidade: densidade, overrides: overrides, indice: indice, fabrica: fabrica, tema: tema);
   return entrarNaDemonstracao(tester);
 }
 

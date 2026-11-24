@@ -21,7 +21,8 @@ bool gravacaoConfere(DocumentoPreset gravado, DocumentoPreset enviado) {
 
 bool _blocoConfere(BlocoPreset gravado, BlocoPreset enviado) {
   if (gravado.arquivoDeIr != enviado.arquivoDeIr) return false;
-  for (var cena = 1; cena <= 3; cena++) {
+  final quantidade = gravado.quantidadeCenas > enviado.quantidadeCenas ? gravado.quantidadeCenas : enviado.quantidadeCenas;
+  for (var cena = 1; cena <= quantidade; cena++) {
     if (gravado.habilitadoNaCena(cena) != enviado.habilitadoNaCena(cena)) return false;
     for (final simbolo in enviado.simbolosGuardados) {
       if (!_mesmoValor(gravado.valorNaCena(simbolo, cena), enviado.valorNaCena(simbolo, cena))) return false;

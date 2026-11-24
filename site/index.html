@@ -94,7 +94,7 @@
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-multibanda"/></svg></span>
             <span class="pedal-fita" aria-hidden="true"></span>
             <h3>Multiband panels</h3>
-            <p>Ignissor and Entropia by band, with draggable crossovers and thresholds.</p>
+            <p>Ignissor and Entropia by band, with draggable crossovers and thresholds, the pedal's metal look and its official templates.</p>
           </li>
           <li class="pedal familia-equalizador">
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-eq"/></svg></span>
@@ -112,7 +112,7 @@
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-presets"/></svg></span>
             <span class="pedal-fita" aria-hidden="true"></span>
             <h3>Presets in order</h3>
-            <p>Move, clone and swap presets and banks. Export and import JSON.</p>
+            <p>Move, clone and swap presets and banks. Export and import JSON. A backup of the slot before every write, and one of all your presets on demand.</p>
           </li>
           <li class="pedal familia-utilitario">
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-controles"/></svg></span>
@@ -124,7 +124,7 @@
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-modo"/></svg></span>
             <span class="pedal-fita" aria-hidden="true"></span>
             <h3>Footswitch mode</h3>
-            <p>Stomp, Preset and Scene pills on the scene row show the mode and switch it from the app.</p>
+            <p>Stomp, Preset and Scene pills show the mode and switch it from the app. Edit all scenes or only the active one, even in presets with more than 3 scenes.</p>
           </li>
           <li class="pedal familia-drive">
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-tom"/></svg></span>
@@ -142,7 +142,7 @@
             <span class="pedal-caixa"><svg aria-hidden="true"><use href="#i-ia"/></svg></span>
             <span class="pedal-fita" aria-hidden="true"></span>
             <h3>AI tone building</h3>
-            <p>Describe the tone; your AI assistant builds and tweaks the chain.</p>
+            <p>Describe the tone; your AI assistant builds and tweaks the chain per scene, sets up the footswitches and opens slots. Saving is always yours to confirm.</p>
           </li>
         </ol>
 
@@ -153,7 +153,8 @@
               each crossover, Threshold and Level you can drag, Solo and Mute, and the compression curve of each band.</p>
             <ul>
               <li>Entropia drive with Drive Type and Drive Mode, and a waveform that saturates as you push it.</li>
-              <li>Axioma synth with the oscillators, filter and envelope drawn live.</li>
+              <li>Axioma synth with the oscillators, filter and envelope drawn live, on a neon screen like the pedal's.</li>
+              <li>Darkglass's official templates for the Ignissor (6) and Entropia (17), with the values read from the pedal.</li>
             </ul>
           </div>
           <div class="case"><span class="quinas" aria-hidden="true"></span>
@@ -166,7 +167,7 @@
             <h3>Know what a knob does before you turn it</h3>
             <p>Rest the mouse on a control's name to read what it does to the sound on that specific block.
               Type an exact value when you know it, or drag, scroll and use the arrow keys when you don't.
-              Menus have icons and stay compact when you use a mouse.</p>
+              Menus have icons and stay compact when you use a mouse, in a dark or light theme, or following your system.</p>
           </div>
           <div class="case"><span class="quinas" aria-hidden="true"></span>
             <img src="imagens/en/explicacao.webp" width="1440" height="900" loading="lazy"
@@ -188,7 +189,7 @@
     <section class="secao" id="ai" aria-labelledby="t-ia">
       <div class="conteudo">
         <h2 id="t-ia">Describe the tone. Hear the chain.</h2>
-        <p class="intro">Connect an AI assistant running on your computer (Claude Desktop, LM Studio or any MCP client).
+        <p class="intro">Connect an AI assistant running on your computer (Claude Desktop, LM Studio, VS Code with GitHub Copilot or any MCP client).
           It reads the open preset and changes it through the app, so every step is heard on the pedal and shows on screen.
           It never writes to a slot unless you confirm in the app.</p>
         <p class="intro">The app teaches the assistant the pedal: what each of the 109 factory blocks does and how to set it,
@@ -215,7 +216,8 @@
       "headers": { "Authorization": "Bearer &lt;token&gt;" }
     }
   }
-}</code></pre></div></li>
+}</code></pre>
+              <p class="nota">VS Code + GitHub Copilot: the app copies the <code>mcpServers</code> entry with <code>"type": "http"</code> for <code>~/.copilot/mcp-config.json</code> (<a href="https://code.visualstudio.com/docs/copilot/reference/mcp-configuration">VS Code docs</a>). The Copilot app on Windows and Microsoft 365 Copilot can't add a local MCP server.</p></div></li>
             <li><div><strong>Open a preset and talk.</strong> "Tighter low end", "split the drive at 250 Hz", "a slap tone for funk".</div></li>
           </ol>
         </div>
@@ -232,7 +234,7 @@
           </details>
           <details>
             <summary>Does it work with blocks bought on the marketplace?</summary>
-            <p>Partly, for now. A marketplace or trial block that is already in a preset shows up in the chain and can be edited live (it may have a generic picture). Adding it from the app's block library isn't possible yet: the library lists the factory blocks. Reading the installed blocks straight from the pedal is the next step on the roadmap.</p>
+            <p>Yes. Since version 0.2.0 the app asks the pedal (firmware 1.14 or newer) which blocks are installed and reads their real parameters, so a Marketplace block shows up in the block library, can be added to a preset and is edited live like any other. It uses the product's store image when there is one, or a generic picture.</p>
           </details>
           <details>
             <summary>Windows says "Windows protected your PC". Is it safe?</summary>
@@ -241,7 +243,7 @@
           <details id="macos">
             <summary>macOS: first launch</summary>
             <p>The app isn't signed by Apple yet, so the first time macOS blocks it: open System Settings › Privacy &amp; Security and click <em>Open Anyway</em> (or run <code>xattr -cr "/Applications/Anagram App.app"</code> in Terminal).</p>
-            <p>macOS treats the Anagram's USB access as <em>Input Monitoring</em>. If the app doesn't connect, or keeps bouncing in the Dock, turn Anagram App on in System Settings › Privacy &amp; Security › <em>Input Monitoring</em> and open the app again.</p>
+            <p>macOS treats the Anagram's USB access as <em>Input Monitoring</em>. The first time you click <em>Connect over USB</em>, macOS asks for it, and the app doesn't open the USB until it's allowed. If it isn't, the connect screen has an <em>Open System Settings</em> button: turn Anagram App on under Privacy &amp; Security › <em>Input Monitoring</em>, then quit and reopen the app.</p>
           </details>
           <details>
             <summary>Why can't I change the Global EQ, output levels or input gain?</summary>
