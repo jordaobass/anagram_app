@@ -4,6 +4,8 @@
 // desenho: tudo aqui pede a cor pelo papel na [Paleta].
 import 'package:flutter/material.dart';
 
+import 'paletas_painel.dart';
+import 'tema_painel.dart';
 import 'tokens.dart';
 
 abstract final class TemaApp {
@@ -11,12 +13,32 @@ abstract final class TemaApp {
 
   static ThemeData claro() => _tema(Paleta.clara);
 
-  static ThemeData _tema(Paleta p) {
-    final texto = _texto(p);
+  /// O tema da área de configuração de um bloco temático: o mesmo desenho
+  /// do app sobre a paleta e a tipografia do painel; os botões de contorno
+  /// viram placas (fundo elevado, forma do painel).
+  static ThemeData doPainel(TemaPainel t) {
+    final base = _tema(t.paleta, ajusteTexto: t.ajustarTexto, extras: [t]);
+    final placa = ButtonStyle(
+      backgroundColor: WidgetStatePropertyAll(t.paleta.painelElevado),
+      shape: WidgetStatePropertyAll(t.forma(BorderSide.none, raio: Raios.controle)),
+      textStyle: WidgetStatePropertyAll(base.textTheme.labelLarge),
+      // relevo: a placa sai da tela com sombra (metal) ou contorno ciano (neon)
+      elevation: WidgetStatePropertyAll(t.ehNeon ? 0 : _relevoPlaca),
+      shadowColor: const WidgetStatePropertyAll(CoresChassi.sombraRelevo),
+      side: anelDeFoco(t.paleta.tallyTinta,
+          semFoco: BorderSide(color: t.ehNeon ? CoresNeon.ciano : t.paleta.aluminio, width: t.ehNeon ? 1.5 : 1)),
+    );
+    return base.copyWith(outlinedButtonTheme: OutlinedButtonThemeData(style: placa.merge(base.outlinedButtonTheme.style)));
+  }
+
+  static const _relevoPlaca = 3.0;
+
+  static ThemeData _tema(Paleta p, {TextTheme Function(TextTheme)? ajusteTexto, List<ThemeExtension<dynamic>> extras = const []}) {
+    final texto = (ajusteTexto ?? (t) => t)(_texto(p));
     return ThemeData(
       brightness: p.brilho,
       colorScheme: _esquema(p),
-      extensions: [p],
+      extensions: [p, ...extras],
       scaffoldBackgroundColor: p.fundoCase,
       fontFamily: Fontes.ui,
       textTheme: texto,

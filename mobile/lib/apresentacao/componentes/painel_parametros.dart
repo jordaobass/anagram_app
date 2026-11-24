@@ -17,11 +17,13 @@ import '../../nucleo/catalogo/curva_eq_parametrico.dart';
 import '../../nucleo/catalogo/definicao_bloco.dart';
 import '../../nucleo/catalogo/explicacoes_parametros.dart';
 import '../../nucleo/modelo/bloco_preset.dart';
+import '../tema/tema_painel.dart';
 import '../tema/tokens.dart';
 import 'cabecalho_bloco.dart';
 import 'controle_no_painel.dart';
 import 'explicacao_parametro.dart';
 import 'painel_eq_parametrico.dart';
+import 'moldura_tema_painel.dart';
 import 'painel_multibanda.dart';
 import 'painel_sintetizador.dart';
 import 'painel_utilitario.dart';
@@ -60,7 +62,11 @@ class PainelParametros extends ConsumerWidget {
         const SizedBox(height: Espacos.m),
         SeletorGabinete(bloco: bloco, definicao: definicao),
         SeletorTone3000(bloco: bloco, definicao: definicao),
-        _painelDoBloco(ref, parametros, bloco, definicao, cena),
+        // a tela da pedaleira é a mesma com o app claro ou escuro (PT9)
+        MolduraTemaPainel(
+          tema: TemaPainel.doBloco(definicao.uri),
+          child: _painelDoBloco(ref, parametros, bloco, definicao, cena),
+        ),
       ]),
     );
   }

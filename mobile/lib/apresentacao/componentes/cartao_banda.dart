@@ -3,6 +3,7 @@
 // preparar o ajuste antes de ligar.
 import 'package:flutter/material.dart';
 
+import '../tema/tema_painel.dart';
 import '../tema/tokens.dart';
 
 class CartaoBanda extends StatelessWidget {
@@ -22,10 +23,7 @@ class CartaoBanda extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         padding: const EdgeInsets.all(Espacos.m),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Raios.painel),
-          border: Border.all(color: context.cores.filete),
-        ),
+        decoration: decoracaoCartao(context),
         child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
           if (titulo != null || chave != null)
             Row(mainAxisSize: MainAxisSize.min, children: [

@@ -66,3 +66,9 @@ flutter:
     - family: PermanentMarker
       fonts:
         - asset: assets/fontes/PermanentMarker-Regular.ttf
+    - family: ShareTechMono
+      fonts:
+        - asset: assets/fontes/ShareTechMono-Regular.ttf
+    - family: Orbitron
+      fonts:
+        - asset: assets/fontes/Orbitron-Variable.ttf

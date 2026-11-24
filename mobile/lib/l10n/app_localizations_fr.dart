@@ -565,7 +565,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get creditoFontes =>
-      'Barlow et Saira Stencil (SIL Open Font License) · Permanent Marker (Apache 2.0).';
+      'Barlow, Saira Stencil, Share Tech Mono et Orbitron (SIL Open Font License) · Permanent Marker (Apache 2.0).';
 
   @override
   String get creditoAvisoTitulo => 'Avertissement';
@@ -1194,6 +1194,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get axSaida => 'Sortie';
+
+  @override
+  String get axFecharPainel => 'Fermer le panneau du bloc';
+
+  @override
+  String get axSemTemplates =>
+      'L\'Axioma n\'a pas encore de modèles dans l\'app';
+
+  @override
+  String get axVisorSlot => 'Preset ouvert';
 
   @override
   String get axOutros => 'Autres';

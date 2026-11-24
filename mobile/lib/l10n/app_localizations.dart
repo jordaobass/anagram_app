@@ -1005,7 +1005,7 @@ abstract class AppLocalizations {
   /// No description provided for @creditoFontes.
   ///
   /// In pt, this message translates to:
-  /// **'Barlow e Saira Stencil (SIL Open Font License) · Permanent Marker (Apache 2.0).'**
+  /// **'Barlow, Saira Stencil, Share Tech Mono e Orbitron (SIL Open Font License) · Permanent Marker (Apache 2.0).'**
   String get creditoFontes;
 
   /// No description provided for @creditoAvisoTitulo.
@@ -2075,6 +2075,24 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Saída'**
   String get axSaida;
+
+  /// Painel do Axioma Mono Synth (barra do aparelho)
+  ///
+  /// In pt, this message translates to:
+  /// **'Fechar o painel do bloco'**
+  String get axFecharPainel;
+
+  /// Painel do Axioma Mono Synth (barra do aparelho)
+  ///
+  /// In pt, this message translates to:
+  /// **'O Axioma ainda não tem templates no app'**
+  String get axSemTemplates;
+
+  /// Painel do Axioma Mono Synth (barra do aparelho)
+  ///
+  /// In pt, this message translates to:
+  /// **'Preset aberto'**
+  String get axVisorSlot;
 
   /// Título de seção do painel do Axioma Mono Synth
   ///
