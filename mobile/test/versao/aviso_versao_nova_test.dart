@@ -1,7 +1,8 @@
 // O caminho inteiro do aviso de versão nova: o app abre, pergunta ao GitHub
-// (falso), a barra de cima anuncia a versão, "Baixar" abre a página da
-// release e "Lembrar depois" some com o aviso e guarda a versão dispensada.
-// Nas Configurações, a pessoa vê em que pé está e pode desligar a consulta.
+// (falso), a engrenagem da barra ganha um ponto (DECISOES BS1), e nas
+// Configurações "Baixar" abre a página da release e "Lembrar depois" apaga o
+// ponto e guarda a versão dispensada. Lá a pessoa também vê em que pé está e
+// pode desligar a consulta.
 import 'package:anagram_app/aplicacao/versao_nova.dart';
 import 'package:anagram_app/dados/preferencias_versao.dart';
 import 'package:flutter/material.dart';
@@ -26,50 +27,47 @@ Future<void> _abrirConfiguracoes(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
+bool _pontoNaEngrenagem(WidgetTester tester) =>
+    tester.widget<Badge>(find.byKey(const ValueKey('selo-versao-nova'))).isLabelVisible;
+
 void main() {
   setUp(_abertos.clear);
 
-  testWidgets('should_announce_in_the_top_bar_open_the_release_page_and_hide_when_dismissed', (tester) async {
+  testWidgets('should_mark_the_gear_open_the_release_page_and_clear_the_mark_when_dismissed', (tester) async {
     final preferencias = PreferenciasVersaoEmMemoria();
     await montarApp(tester, github: GithubFalso(tag: 'v9.9.9'), preferenciasVersao: preferencias, overrides: [_abridorFalso]);
 
-    expect(find.text('v9.9.9 disponível'), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('versao-nova-baixar')));
+    expect(_pontoNaEngrenagem(tester), isTrue);
+    expect(find.byTooltip('Configurações · v9.9.9 disponível'), findsOneWidget);
+    expect(find.text('v9.9.9 disponível'), findsNothing, reason: 'a barra não tem mais o aviso por extenso');
+
+    await _abrirConfiguracoes(tester);
+    final baixar = find.byKey(const ValueKey('versao-nova-baixar-configuracoes'));
+    await tester.ensureVisible(baixar);
+    await tester.pumpAndSettle();
+    await tester.tap(baixar);
     await tester.pumpAndSettle();
     expect(_abertos, [Uri.parse(GithubFalso.paginaDa('v9.9.9'))]);
 
     await tester.tap(find.byKey(const ValueKey('versao-nova-dispensar')));
     await tester.pumpAndSettle();
-    expect(find.text('v9.9.9 disponível'), findsNothing);
     expect(preferencias.salvo.dispensada, '9.9.9');
+    expect(find.byKey(const ValueKey('versao-nova-dispensar')), findsNothing);
+    await tester.tap(find.byTooltip('Voltar'));
+    await tester.pumpAndSettle();
+    expect(_pontoNaEngrenagem(tester), isFalse);
   });
 
-  testWidgets('should_offer_download_and_remind_later_from_a_menu_on_a_narrow_window', (tester) async {
-    final preferencias = PreferenciasVersaoEmMemoria();
-    await montarApp(tester,
-        tamanho: const Size(480, 800),
-        github: GithubFalso(tag: 'v9.9.9'),
-        preferenciasVersao: preferencias,
-        overrides: [_abridorFalso]);
+  testWidgets('should_keep_the_gear_mark_on_a_narrow_window', (tester) async {
+    await montarApp(tester, tamanho: const Size(480, 800), github: GithubFalso(tag: 'v9.9.9'), overrides: [_abridorFalso]);
 
-    await tester.tap(find.byKey(const ValueKey('versao-nova-menu')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('BAIXAR'));
-    await tester.pumpAndSettle();
-    expect(_abertos, hasLength(1));
-
-    await tester.tap(find.byKey(const ValueKey('versao-nova-menu')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Lembrar depois'));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('versao-nova-menu')), findsNothing);
-    expect(preferencias.salvo.dispensada, '9.9.9');
+    expect(_pontoNaEngrenagem(tester), isTrue);
   });
 
   testWidgets('should_show_in_settings_the_available_version_even_after_it_was_dismissed', (tester) async {
     final preferencias = PreferenciasVersaoEmMemoria(const ConfiguracaoVersao(dispensada: '9.9.9'));
     await montarApp(tester, github: GithubFalso(tag: 'v9.9.9'), preferenciasVersao: preferencias, overrides: [_abridorFalso]);
-    expect(find.text('v9.9.9 disponível'), findsNothing, reason: 'dispensada não volta à barra');
+    expect(_pontoNaEngrenagem(tester), isFalse, reason: 'dispensada não volta à barra');
 
     await _abrirConfiguracoes(tester);
     expect(find.text('Versão 9.9.9 disponível.'), findsOneWidget);

@@ -2,8 +2,9 @@
 // claro), a pedaleira (ajustes globais da conectada, a pausa entre pacotes
 // USB e o conectar ao abrir) e, no computador, o backup dos presets, a IA
 // local pelo MCP, as atualizações e o registro para suporte; por último, o
-// Sobre. Abre pela engrenagem da barra de cima, conectado ou não; no celular,
-// onde a barra não tem lugar para o "i", é por aqui que se chega ao Sobre.
+// Sobre, com a versão do app. Abre pela engrenagem, à direita da barra de
+// cima, conectado ou não; é por aqui que se chega ao Sobre em toda tela
+// (a barra não tem mais o "i", DECISOES BS1).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,6 +14,7 @@ import '../../aplicacao/diagnostico.dart';
 import '../../aplicacao/estado/controlador_conexao.dart';
 import '../../aplicacao/estado/estado_conexao.dart';
 import '../../aplicacao/mcp/controlador_mcp.dart';
+import '../../aplicacao/versao_app.dart';
 import '../../aplicacao/versao_nova.dart';
 import '../../l10n/app_localizations.dart';
 import '../componentes/interruptor_conectar_ao_abrir.dart';
@@ -66,10 +68,19 @@ class TelaConfiguracoes extends ConsumerWidget {
         contentPadding: EdgeInsets.zero,
         leading: const Icon(Icons.info_outline),
         title: Text(l.sobreTitulo),
+        subtitle: _versaoDoApp(ref, l),
         trailing: const Icon(Icons.chevron_right),
         onTap: () => const RotaCreditos().push<void>(context),
       ),
     ];
+  }
+
+  /// "App v0.2.0" sob o Sobre: quem vai relatar um problema acha a versão
+  /// sem abrir mais nada.
+  static Widget? _versaoDoApp(WidgetRef ref, AppLocalizations l) {
+    final (:versao, comArte: _) = ref.watch(rotuloVersaoProvider);
+    if (versao.isEmpty) return null;
+    return Text(l.versaoAppNaBarra(versao), key: const ValueKey('versao-app-configuracoes'));
   }
 
   /// Os ajustes globais só existem com uma pedaleira (ou a demonstração) do

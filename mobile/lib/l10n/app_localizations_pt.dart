@@ -39,8 +39,21 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String idaEVolta(int ms) {
-    return 'ida e volta $ms ms';
+  String barraConectadaCurta(String firmware) {
+    return 'Anagram · fw $firmware';
+  }
+
+  @override
+  String get barraDemonstracaoCurta => 'Demonstração';
+
+  @override
+  String latenciaCurta(int ms) {
+    return '$ms ms';
+  }
+
+  @override
+  String latenciaDica(int ms) {
+    return 'Ida e volta do último ajuste até a pedaleira: $ms ms. Acima de 500 ms ela responde devagar; acima de 1500 ms, muito devagar.';
   }
 
   @override
@@ -1040,7 +1053,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get mcpAtivoNaBarra => 'IA';
 
   @override
-  String get mcpAtivoDica => 'IA local pode ajustar o timbre (MCP ligado)';
+  String mcpAtivoDicaPorta(int porta) {
+    return 'IA local escutando na porta $porta (MCP ligado): ela pode ajustar o timbre';
+  }
 
   @override
   String mcpMudancaDaIa(String resumo) {

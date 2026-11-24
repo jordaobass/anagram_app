@@ -52,7 +52,8 @@ Future<void> montarApp(WidgetTester tester,
     PlataformaDeAbertura abertura = PlataformaDeAbertura.semTentativa,
     PreferenciasConexao? preferenciasConexao,
     ConsultaAcessoEntrada? acessoEntradaMac,
-    ConsultaAcessoEntrada? pedidoAcessoEntradaMac}) async {
+    ConsultaAcessoEntrada? pedidoAcessoEntradaMac,
+    Duration latencia = latenciaNasCapturas}) async {
   tester.view.physicalSize = tamanho * densidade;
   tester.view.devicePixelRatio = densidade;
   addTearDown(tester.view.reset);
@@ -72,7 +73,8 @@ Future<void> montarApp(WidgetTester tester,
       abertura: abertura,
       preferenciasConexao: preferenciasConexao,
       acessoEntradaMac: acessoEntradaMac,
-      pedidoAcessoEntradaMac: pedidoAcessoEntradaMac));
+      pedidoAcessoEntradaMac: pedidoAcessoEntradaMac,
+      latencia: latencia));
   await tester.pumpAndSettle();
 }
 

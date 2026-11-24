@@ -70,15 +70,16 @@ void main() {
           (tester) => _noWindows(() => _editorComEq(tester, Size(largura, 900), idioma)));
     }
 
-    for (final largura in [Quebras.amplo, Quebras.barraComAvisoVersao]) {
-      testWidgets('should_fit_the_connection_bar_with_the_new_version_notice_at_${largura}_${idioma.name}',
+    // com versão nova, a barra só marca a engrenagem com um ponto (DECISOES
+    // BS1): nada de texto que estoure, da janela mínima à barra larga
+    for (final largura in [Medidas.larguraMinimaJanela, Quebras.amplo]) {
+      testWidgets('should_fit_the_connection_bar_with_the_new_version_dot_at_${largura}_${idioma.name}',
           (tester) => _noWindows(() async {
                 await montarApp(tester,
                     tamanho: Size(largura, 900), idioma: idioma, github: GithubFalso(tag: 'v10.10.10'));
                 await entrarNaDemonstracao(tester);
 
-                final emMenu = largura < Quebras.barraComAvisoVersao;
-                expect(find.byKey(const ValueKey('versao-nova-menu')), emMenu ? findsOneWidget : findsNothing);
+                expect(tester.widget<Badge>(find.byKey(const ValueKey('selo-versao-nova'))).isLabelVisible, isTrue);
               }));
     }
   }

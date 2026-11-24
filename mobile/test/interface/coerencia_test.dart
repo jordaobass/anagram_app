@@ -97,14 +97,20 @@ void main() {
     expect(find.textContaining('ativa na pedaleira'), findsNothing, reason: 'o nome não pode carregar a frase e cortar');
   });
 
-  testWidgets('should_show_the_app_version_next_to_the_connection_state_on_the_main_screen', (tester) async {
-    // pedido do dono: firmware e versão do app lado a lado na tela principal
+  testWidgets('should_show_the_app_version_under_about_in_the_settings_and_not_in_the_top_bar', (tester) async {
+    // pedido do dono (DECISOES BS1, substitui a UI11): a barra fica só com o
+    // que muda enquanto se toca; a versão mora em Configurações › Sobre
     await abrirDemonstracao(tester);
+    expect(find.textContaining('App v'), findsNothing);
 
-    final versao = find.byKey(const ValueKey('versao-app-barra'));
-    expect(versao, findsOneWidget);
-    expect(tester.widget<Text>(versao).data, startsWith('App v'));
-    expect(tester.getTopLeft(versao).dx, greaterThan(tester.getTopLeft(find.byKey(const ValueKey('led-conexao'))).dx));
+    await tester.tap(find.byKey(const ValueKey('botao-configuracoes')));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.byKey(const ValueKey('versao-app-configuracoes')), 300,
+        scrollable: find.byType(Scrollable).first);
+
+    final versao = find.byKey(const ValueKey('versao-app-configuracoes'));
+    expect(tester.widget<Text>(versao).data, 'App v0.1.3');
+    expect(find.descendant(of: find.byKey(const ValueKey('abrir-sobre')), matching: versao), findsOneWidget);
   });
 
   test('should_keep_protocol_details_out_of_portuguese_messages_when_an_operation_fails', () {
