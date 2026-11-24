@@ -174,12 +174,15 @@ class AbrirSlot extends FerramentaMcp {
   String get descricao => 'Open a slot in the app, as if the player picked it in the preset list: the pedal '
       'plays it and it becomes the preset your other tools change. If the open preset has unsaved edits this is '
       'refused; ask the player first, and only then call again with discard_edits=true (those edits are lost). '
-      'Opening never writes to the pedal.';
+      'An EMPTY slot opens a new empty preset with that slot as its destination (like "Create preset here" in the '
+      'app): build it with add_block and save it there with save_preset. Opening never writes to the pedal.';
 
   @override
   Map<String, dynamic> get esquema => esquemaObjeto({
         ..._esquemaSlot(),
         'discard_edits': {'type': 'boolean', 'description': 'true = drop the unsaved edits of the open preset.'},
+        'new_preset_name': texto('Name of the new preset when the slot is empty (default: "New preset" in the '
+            'app language). Max $tamanhoMaximoNome characters.'),
       }, obrigatorias: const ['slot']);
 
   @override
@@ -193,12 +196,25 @@ class AbrirSlot extends FerramentaMcp {
     }
     final biblioteca = _ref.read(bibliotecaProvider.notifier);
     if (area != null && area != _ref.read(bibliotecaProvider).areaSelecionada) await biblioteca.selecionarArea(area);
+    final nomeNovo = _nomeDoPresetNovo(argumentos);
     await sessao.editor.abrirSlot(slot);
+    final novo = sessao.estado.slot == slot && sessao.estado.atual == null;
+    // slot vazio: o mesmo "Criar preset aqui" da tela, com este slot como destino
+    if (novo) await sessao.editor.novoPresetNoSlot(nomeNovo);
     sessao.avisar('open ${slot.rotulo}');
-    return _aberto(slot, area);
+    return _aberto(slot, area, novo: novo);
   }
 
-  ResultadoFerramenta _aberto(SlotPreset slot, String? area) {
+  String _nomeDoPresetNovo(Map<String, dynamic> argumentos) {
+    final pedido = argumentos['new_preset_name'];
+    if (pedido == null) return sessao.nomeDePresetNovo();
+    if (pedido is! String || motivoNomeInvalido(pedido) != null || pedido.trim().length > tamanhoMaximoNome) {
+      throw const RecusaFerramenta('"new_preset_name" must be 1-$tamanhoMaximoNome characters, without "DSTART" or "DEND".');
+    }
+    return pedido.trim();
+  }
+
+  ResultadoFerramenta _aberto(SlotPreset slot, String? area, {bool novo = false}) {
     final estado = sessao.estado;
     if (estado.aviso case AvisoErro(:final erro)) {
       throw RecusaFerramenta('Opening ${slot.rotulo} failed: ${erro.mensagem}');
@@ -210,6 +226,7 @@ class AbrirSlot extends FerramentaMcp {
       'slot': slot.rotulo,
       'area': area,
       'empty': documento == null,
+      if (novo) 'new_preset': true,
       if (documento != null) 'preset': descricao.preset(estado, documento),
     });
   }

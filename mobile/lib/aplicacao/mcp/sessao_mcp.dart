@@ -3,7 +3,11 @@
 // deixa o preset "não salvo". O app não tem histórico geral de desfazer;
 // a sessão guarda o das mudanças feitas pela IA, e só volta se a pessoa não
 // mexeu no preset depois (senão o desfazer apagaria a edição dela).
+import 'dart:ui' show Locale, PlatformDispatcher;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../l10n/app_localizations.dart';
 
 import '../../nucleo/ajustes/modo_footswitches.dart';
 import '../../nucleo/catalogo/catalogo_blocos.dart';
@@ -23,6 +27,7 @@ import '../estado/estado_conexao.dart';
 import '../estado/escopo_cenas.dart';
 import '../estado/estado_editor.dart';
 import '../estado/ponto_desfazer.dart';
+import '../idioma.dart';
 import '../provedores.dart';
 import 'avisos_mcp.dart';
 
@@ -101,6 +106,13 @@ class SessaoMcp {
   Future<ModoFootswitches?> modoFootswitches() async {
     await _ref.read(controladorModoProvider.notifier).garantirLeitura();
     return _ref.read(controladorAjustesProvider).lidos?.modo;
+  }
+
+  /// O nome que a tela dá a um preset novo ("Novo preset"), no idioma do
+  /// app: o escolhido, ou o do sistema como a tela resolve.
+  String nomeDePresetNovo() {
+    final idioma = _ref.read(idiomaProvider) ?? IdiomaApp.doSistema(PlatformDispatcher.instance.locale.toLanguageTag());
+    return lookupAppLocalizations(Locale(idioma.codigo)).cdNovoPreset;
   }
 
   /// A tela mostra o aviso "IA: …" também do que não muda o preset aberto.
