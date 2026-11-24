@@ -373,6 +373,10 @@ abstract final class Fontes {
   /// Só no painel do Axioma (tema neon): a voz de display de hardware
   /// retrô-futurista, monoespaçada, então os valores não dançam.
   static const tecno = 'ShareTechMono';
+
+  /// Só no logotipo do Axioma: a display larga e geométrica, em itálico
+  /// desenhado (inclinação), como o letreiro da tela da pedaleira.
+  static const logotipo = 'Orbitron';
 }
 
 /// Estilos de texto fora da escala do Material, cada um com um papel só.

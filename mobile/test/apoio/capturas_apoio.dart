@@ -52,6 +52,7 @@ Future<void> carregarFontes() async {
     'SairaStencil': ['SairaStencilOne-Regular'],
     'PermanentMarker': ['PermanentMarker-Regular'],
     'ShareTechMono': ['ShareTechMono-Regular'],
+    'Orbitron': ['Orbitron-Variable'],
   };
   for (final MapEntry(key: familia, value: arquivos) in familias.entries) {
     final carregador = FontLoader(familia);

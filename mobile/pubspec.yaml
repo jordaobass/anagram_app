@@ -69,3 +69,6 @@ flutter:
     - family: ShareTechMono
       fonts:
         - asset: assets/fontes/ShareTechMono-Regular.ttf
+    - family: Orbitron
+      fonts:
+        - asset: assets/fontes/Orbitron-Variable.ttf
