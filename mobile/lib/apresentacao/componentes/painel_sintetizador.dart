@@ -2,7 +2,8 @@
 // osciladores (com a onda desenhada), filtro (com a curva), envelope (com a
 // curva), arpejador e saída, cada um num cartão. No computador os cartões
 // pequenos andam em pares; no celular, empilham. Parâmetro que o arranjo não
-// conhece (firmware novo) cai em "Outros", para nunca sumir.
+// conhece (firmware novo) cai em "Outros", para nunca sumir. No topo, os
+// templates do bloco, como no multibanda (DECISOES PP).
 import 'package:flutter/material.dart';
 
 import '../../l10n/app_localizations.dart';
@@ -12,6 +13,7 @@ import '../../nucleo/modelo/bloco_preset.dart';
 import '../tema/tokens.dart';
 import 'cartao_secao_synth.dart';
 import 'secoes_sintetizador.dart';
+import 'seletor_templates.dart';
 
 class PainelSintetizador extends StatelessWidget {
   const PainelSintetizador({
@@ -47,6 +49,8 @@ class PainelSintetizador extends StatelessWidget {
         final secoes = SecoesSintetizador(arranjo: arranjo, bloco: bloco, definicao: definicao, cena: cena, cores: context.cores);
         final fileiras = duas ? _pares : [for (final s in SecaoSintetizador.values) [s]];
         return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Align(alignment: Alignment.centerLeft, child: SeletorTemplates(bloco: bloco, definicao: definicao, cena: cena)),
+          const SizedBox(height: Espacos.m),
           for (final fileira in fileiras) ...[
             _fileira(context, secoes, fileira, largura),
             const SizedBox(height: Espacos.m),

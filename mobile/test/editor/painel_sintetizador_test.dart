@@ -99,4 +99,19 @@ void main() {
     expect(envelope.dy, greaterThan(filtro.dy), reason: 'no celular, um cartão embaixo do outro');
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('should_list_the_axioma_official_templates_disabled_while_their_values_are_not_read', (tester) async {
+    await _comAxioma(tester);
+    final abrir = find.byKey(const ValueKey('abrir-templates'));
+    await _rolarAte(tester, abrir);
+
+    await tester.tap(abrir);
+    await tester.pumpAndSettle();
+
+    for (final id in ['dg-filthy-funk', 'dg-burning-bass']) {
+      final item = find.byKey(ValueKey('template-$id'));
+      await _rolarAte(tester, item);
+      expect(tester.widget<ListTile>(item).enabled, isFalse, reason: '$id sem valores lidos não se aplica');
+    }
+  });
 }
