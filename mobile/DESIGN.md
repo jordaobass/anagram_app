@@ -241,7 +241,7 @@ Casco preto neutro com alumínio frio, um único acento âmbar de ação e uma f
 - **Erro** (`erro`): mensagem de falha de conexão.
 
 ### Named Rules
-**The One Tally Rule.** Âmbar é seleção e ação, nada mais. Não use âmbar como decoração nem como cor de família.
+**The One Tally Rule.** Âmbar é seleção e ação, nada mais. Não use âmbar como decoração nem como cor de família. Exceção única: a latência lenta na barra de cima (DECISOES BS1).
 
 **The Family Stripe Rule.** Cor de família só existe onde há um bloco (fita, arco, arte, opção marcada). Superfícies, textos e botões de ação nunca usam cor de família.
 
@@ -346,7 +346,7 @@ Pedal numa caixa fixa (`painel`, filete de 1px, canto de 6px) para as fotos de p
 Nome do parâmetro em caixa alta acima, valor tabular abaixo. Trilho em filete, arco na cor da família, corpo `painel-elevado` com aro de alumínio (âmbar 2px quando focado), ponteiro em fita gaffer. Arraste vertical/horizontal, rodinha, setas (Shift = passo de 10%), toque duplo volta ao padrão. Parâmetros com poucas opções viram coluna de botões: marcado em cor da família (ou, em família neutra, `painel-elevado` + contorno âmbar + check), demais em contorno.
 
 ### Navigation
-- **Barra de conexão:** 64px no toque, 48px com mouse (ícones e interruptor sem a margem de toque, 40px), `painel`, filete inferior. LED de 10px + estado em title-small, "AO VIVO" + interruptor âmbar, latência "ida e volta N ms" (só na ampla), ícones de desconectar e créditos. Com versão nova publicada, aviso discreto: ícone em `aluminio-claro` + "vX.Y.Z disponível" em label-medium + BAIXAR (texto em âmbar, é ação) + fechar ("Lembrar depois"); abaixo de 1200px de janela, só o ícone, com as duas ações num menu.
+- **Barra de conexão:** 64px no toque, 48px com mouse, `painel`, filete inferior, em **dois grupos** (DECISOES BS1). À esquerda, a pedaleira: o **chip da conexão** (LED de 10px + estado curto em title-small + seta de 18px em `aluminio-claro`; alvo de 32px com mouse, 48 no toque; canto `controle`), que conectado ou na demonstração abre o menu com a frase inteira e Desconectar; a 16px, a latência curta ("42 ms", label-medium tabular, `texto-secundario`; `tallyTinta` acima de 500 ms e `erro` acima de 1500 ms, a única exceção da One Tally Rule, pedida pelo dono), "AO VIVO" e o interruptor âmbar. À direita, o app: "IA" (ponto `led-ligado` de 8px + label-large) só com o MCP escutando, e a engrenagem encostada à borda, com ponto âmbar de 8px quando há versão nova. Nada de versão do app, "i" ou aviso por extenso na barra: Sobre, versão e Atualizações moram nas Configurações. O LED fica a 16px da borda, alinhado à lista.
 - **Lista de presets:** linhas de 48px, slot em title-small (`aluminio-claro`, âmbar quando aberto), nome em body-large ou "vazio" em body-small; linha aberta ganha `painel-elevado` e filete esquerdo âmbar de 2px. A marca "a pedaleira está neste slot" usa a cor do LED da barra (azul na demonstração) e não aparece em slot vazio.
 
 ### Avisos
@@ -452,7 +452,7 @@ Este bloco vale por cima de qualquer frase anterior deste arquivo que diga o con
   texto normal com ícone de informação.
 - **Área de presets:** o campo mostra só o nome que a pessoa deu; a área ativa na pedaleira é marcada ao
   lado com o LED `led-ligado` e o rótulo ATIVA, nunca colada no nome.
-- **Versão do app:** na tela Sobre, com "· arte da pedaleira" quando o build traz a arte, e também na barra de cima a partir de 880px de janela, ao lado do estado e do firmware (pedido do dono depois desta regra; DECISOES UI9).
+- **Versão do app:** na tela Sobre, com "· arte da pedaleira" quando o build traz a arte, e sob o item Sobre das Configurações ("App v0.2.0"); fora da barra de cima (pedido do dono, DECISOES BS1, que substitui a UI11).
 - **Idioma:** pílulas no topo da tela Sobre e um menu compacto (globo + idioma atual) na tela de conectar.
 - **Sem USB na plataforma** (iPhone/iPad, navegador sem WebHID): título "Modo demonstração", uma frase,
   ABRIR DEMONSTRAÇÃO como botão primário e "POR QUÊ?" com a explicação inteira.

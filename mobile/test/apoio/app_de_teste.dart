@@ -36,8 +36,10 @@ import 'versao_falsa.dart';
 
 /// Latência fixa: a real varia de execução para execução e sujaria as capturas.
 class CronometroFixo implements Stopwatch {
+  CronometroFixo([this.elapsed = latenciaNasCapturas]);
+
   @override
-  Duration get elapsed => const Duration(milliseconds: 42);
+  final Duration elapsed;
 
   @override
   void start() {}
@@ -50,6 +52,8 @@ class CronometroFixo implements Stopwatch {
 }
 
 const versaoNasCapturas = '0.1.3';
+
+const latenciaNasCapturas = Duration(milliseconds: 42);
 
 /// [indice]: o índice de arte (o padrão é o das capturas, sem a arte de terceiros).
 /// [fabrica]: os presets de fábrica (o padrão é nenhum, como no build sem a arte).
@@ -73,7 +77,8 @@ Widget appDeTeste(
         PlataformaDeAbertura abertura = PlataformaDeAbertura.semTentativa,
         PreferenciasConexao? preferenciasConexao,
         ConsultaAcessoEntrada? acessoEntradaMac,
-        ConsultaAcessoEntrada? pedidoAcessoEntradaMac}) =>
+        ConsultaAcessoEntrada? pedidoAcessoEntradaMac,
+        Duration latencia = latenciaNasCapturas}) =>
     ProviderScope(
       overrides: [
         ...overrides,
@@ -96,7 +101,7 @@ Widget appDeTeste(
         acessoEntradaMacProvider.overrideWithValue(acessoEntradaMac ?? () async => AcessoEntrada.desconhecido),
         pedidoAcessoEntradaMacProvider
             .overrideWithValue(pedidoAcessoEntradaMac ?? () async => AcessoEntrada.desconhecido),
-        cronometroProvider.overrideWithValue(CronometroFixo.new),
+        cronometroProvider.overrideWithValue(() => CronometroFixo(latencia)),
         catalogoProvider.overrideWith((ref) async => lerCatalogo()),
         explicacoesProvider.overrideWith((ref) async => lerExplicacoes()),
         templatesProvider.overrideWith((ref) async => lerTemplates()),

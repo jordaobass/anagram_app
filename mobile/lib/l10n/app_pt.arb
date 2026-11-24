@@ -32,8 +32,25 @@
       }
     }
   },
-  "idaEVolta": "ida e volta {ms} ms",
-  "@idaEVolta": {
+  "barraConectadaCurta": "Anagram · fw {firmware}",
+  "@barraConectadaCurta": {
+    "placeholders": {
+      "firmware": {
+        "type": "String"
+      }
+    }
+  },
+  "barraDemonstracaoCurta": "Demonstração",
+  "latenciaCurta": "{ms} ms",
+  "@latenciaCurta": {
+    "placeholders": {
+      "ms": {
+        "type": "int"
+      }
+    }
+  },
+  "latenciaDica": "Ida e volta do último ajuste até a pedaleira: {ms} ms. Acima de 500 ms ela responde devagar; acima de 1500 ms, muito devagar.",
+  "@latenciaDica": {
     "placeholders": {
       "ms": {
         "type": "int"
@@ -848,7 +865,14 @@
   "mcpCopiado": "Copiado para a área de transferência.",
   "mcpLimitacoes": "A IA não ouve o som: ela ajusta pelo que você descreve, e você diz se melhorou. Modelos pequenos costumam descrever o que fariam em vez de chamar as ferramentas; prefira um modelo com bom suporte a ferramentas.",
   "mcpAtivoNaBarra": "IA",
-  "mcpAtivoDica": "IA local pode ajustar o timbre (MCP ligado)",
+  "mcpAtivoDicaPorta": "IA local escutando na porta {porta} (MCP ligado): ela pode ajustar o timbre",
+  "@mcpAtivoDicaPorta": {
+    "placeholders": {
+      "porta": {
+        "type": "int"
+      }
+    }
+  },
   "mcpMudancaDaIa": "IA: {resumo}",
   "@mcpMudancaDaIa": {
     "placeholders": {

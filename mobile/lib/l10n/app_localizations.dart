@@ -150,11 +150,29 @@ abstract class AppLocalizations {
   /// **'Conexão: {texto}'**
   String conexaoSemantica(String texto);
 
-  /// No description provided for @idaEVolta.
+  /// No description provided for @barraConectadaCurta.
   ///
   /// In pt, this message translates to:
-  /// **'ida e volta {ms} ms'**
-  String idaEVolta(int ms);
+  /// **'Anagram · fw {firmware}'**
+  String barraConectadaCurta(String firmware);
+
+  /// No description provided for @barraDemonstracaoCurta.
+  ///
+  /// In pt, this message translates to:
+  /// **'Demonstração'**
+  String get barraDemonstracaoCurta;
+
+  /// No description provided for @latenciaCurta.
+  ///
+  /// In pt, this message translates to:
+  /// **'{ms} ms'**
+  String latenciaCurta(int ms);
+
+  /// No description provided for @latenciaDica.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ida e volta do último ajuste até a pedaleira: {ms} ms. Acima de 500 ms ela responde devagar; acima de 1500 ms, muito devagar.'**
+  String latenciaDica(int ms);
 
   /// No description provided for @aoVivo.
   ///
@@ -1830,11 +1848,11 @@ abstract class AppLocalizations {
   /// **'IA'**
   String get mcpAtivoNaBarra;
 
-  /// No description provided for @mcpAtivoDica.
+  /// No description provided for @mcpAtivoDicaPorta.
   ///
   /// In pt, this message translates to:
-  /// **'IA local pode ajustar o timbre (MCP ligado)'**
-  String get mcpAtivoDica;
+  /// **'IA local escutando na porta {porta} (MCP ligado): ela pode ajustar o timbre'**
+  String mcpAtivoDicaPorta(int porta);
 
   /// No description provided for @mcpMudancaDaIa.
   ///

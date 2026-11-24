@@ -167,8 +167,15 @@ abstract final class Medidas {
   static const double arrasteFaixaInteira = 200;
   static const double barraConexaoAltura = 64;
 
-  /// Ícone do aviso de versão nova ao lado do texto da barra.
-  static const double iconeAvisoVersao = 18;
+  /// Ponto do selo de versão nova sobre a engrenagem da barra.
+  static const double seloEngrenagem = 8;
+
+  /// Ponto do indicador "IA" da barra: menor que o LED da conexão, que é o
+  /// estado principal (DECISOES BS1).
+  static const double pontoIa = 8;
+
+  /// Seta que diz "abre um menu" no chip da conexão.
+  static const double setaChip = 18;
   static const double larguraDialogo = 440;
 
   /// Biblioteca de efeitos: cabe uma lista confortável no notebook, e no
@@ -268,6 +275,7 @@ abstract final class Medidas {
 class MedidasDoTopo {
   const MedidasDoTopo._({
     required this.barraConexao,
+    required this.chipConexao,
     required this.controle,
     required this.fita,
     required this.folgaFita,
@@ -280,6 +288,9 @@ class MedidasDoTopo {
 
   /// Altura mínima da barra de conexão.
   final double barraConexao;
+
+  /// Altura do chip da conexão (LED + estado + seta do menu), à esquerda da barra.
+  final double chipConexao;
 
   /// Altura dos botões da faixa do preset (SALVAR, SALVAR COMO, DESCARTAR, menu).
   final double controle;
@@ -303,6 +314,7 @@ class MedidasDoTopo {
 
   static const toque = MedidasDoTopo._(
     barraConexao: 64,
+    chipConexao: Medidas.alvoMinimo,
     controle: Medidas.alvoMinimo,
     fita: Medidas.alvoMinimo + Espacos.s,
     folgaFita: Espacos.s,
@@ -315,6 +327,7 @@ class MedidasDoTopo {
 
   static const mouse = MedidasDoTopo._(
     barraConexao: Medidas.alvoMinimo,
+    chipConexao: 32,
     controle: 40,
     fita: 40,
     folgaFita: Espacos.xs,
@@ -334,15 +347,6 @@ class MedidasDoTopo {
 }
 
 abstract final class Quebras {
-  /// Abaixo disto a versão do app sai da barra de conexão larga (fica no
-  /// Sobre): em espanhol, entre 780 e 840 px, ela empurrava a barra para fora.
-  static const double barraComVersao = 880;
-
-  /// Abaixo disto o aviso de versão nova vira só um ícone com menu: por
-  /// extenso (texto, BAIXAR e fechar) ele estourava a barra em 159 px a
-  /// 780 px, conectada e em espanhol.
-  static const double barraComAvisoVersao = 1200;
-
   /// A partir daqui a lista de presets fica ao lado (iPad em retrato já entra).
   static const double amplo = 780;
 

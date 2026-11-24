@@ -1,5 +1,7 @@
 // Seção "Atualizações" das Configurações: ligar ou desligar a consulta ao
 // GitHub ao abrir e ver em que pé está (em dia, versão nova, sem resposta).
+// Com versão nova, é aqui que se baixa ou se pede para lembrar depois: a barra
+// só marca a engrenagem com um ponto (DECISOES BS1).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -52,6 +54,13 @@ class _SituacaoVersao extends ConsumerWidget {
               label: Text(l.versaoNovaBaixar),
               onPressed: () => ref.read(versaoNovaProvider.notifier).baixar(release),
             ),
+            // só enquanto a engrenagem mostra o ponto: dispensada, não há o que lembrar
+            if (ref.watch(versaoNovaProvider.select((e) => e.avisoNaBarra)) != null)
+              TextButton(
+                key: const ValueKey('versao-nova-dispensar'),
+                onPressed: ref.read(versaoNovaProvider.notifier).dispensar,
+                child: Text(l.versaoNovaLembrarDepois),
+              ),
           ]),
       },
     );

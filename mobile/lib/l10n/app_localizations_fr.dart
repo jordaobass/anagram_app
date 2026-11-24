@@ -39,8 +39,21 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String idaEVolta(int ms) {
-    return 'aller-retour $ms ms';
+  String barraConectadaCurta(String firmware) {
+    return 'Anagram · fw $firmware';
+  }
+
+  @override
+  String get barraDemonstracaoCurta => 'Démo';
+
+  @override
+  String latenciaCurta(int ms) {
+    return '$ms ms';
+  }
+
+  @override
+  String latenciaDica(int ms) {
+    return 'Aller-retour du dernier réglage jusqu’à la pédale : $ms ms. Au-delà de 500 ms elle répond lentement ; au-delà de 1500 ms, très lentement.';
   }
 
   @override
@@ -1042,7 +1055,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpAtivoNaBarra => 'IA';
 
   @override
-  String get mcpAtivoDica => 'L’IA locale peut ajuster le son (MCP actif)';
+  String mcpAtivoDicaPorta(int porta) {
+    return 'IA locale à l’écoute sur le port $porta (MCP actif) : elle peut ajuster le son';
+  }
 
   @override
   String mcpMudancaDaIa(String resumo) {

@@ -40,6 +40,9 @@ Future<void> _presetEditado(WidgetTester tester, Size tamanho, IdiomaApp idioma)
 /// As duas opções da chave "Controlar" sob as cenas (DECISOES CE1).
 const _chaveControlar = ['controlar-todasAsCenas', 'controlar-soNaCena'];
 
+/// O chip da conexão e a engrenagem, os dois alvos da barra de cima (DECISOES BS1).
+const _alvosDaBarra = ['chip-conexao', 'botao-configuracoes'];
+
 /// Onde começa a cadeia de blocos (a primeira casa) num editor de [tamanho].
 Future<double> _topoDaCadeia(WidgetTester tester, TargetPlatform plataforma, Size tamanho) async {
   var topo = 0.0;
@@ -65,7 +68,7 @@ void main() {
               await _presetEditado(tester, const Size(Medidas.larguraMinimaJanela, Medidas.alturaMinimaJanela), idioma);
 
               expect(tester.getSize(find.byType(BarraConexao)).height, lessThanOrEqualTo(48));
-              for (final chave in ['botao-salvar', 'botao-salvar-como', 'cena-1', 'cena-2', 'cena-3', ..._chaveControlar]) {
+              for (final chave in [..._alvosDaBarra, 'botao-salvar', 'botao-salvar-como', 'cena-1', 'cena-2', 'cena-3', ..._chaveControlar]) {
                 expect(_altura(tester, chave), inInclusiveRange(_alvoMinimoComMouse, 40), reason: chave);
               }
               expect(_altura(tester, 'fita-nome'), lessThanOrEqualTo(44));
@@ -86,7 +89,7 @@ void main() {
       (tester) => _naPlataforma(TargetPlatform.android, () async {
             await _presetEditado(tester, const Size(1366, 1024), IdiomaApp.portugues);
 
-            for (final chave in ['botao-salvar', 'botao-salvar-como', 'cena-1', ..._chaveControlar]) {
+            for (final chave in [..._alvosDaBarra, 'botao-salvar', 'botao-salvar-como', 'cena-1', ..._chaveControlar]) {
               expect(_altura(tester, chave), greaterThanOrEqualTo(Medidas.alvoMinimo), reason: chave);
             }
           }));
