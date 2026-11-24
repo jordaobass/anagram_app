@@ -459,81 +459,76 @@ Este bloco vale por cima de qualquer frase anterior deste arquivo que diga o con
 <!-- /produto-arte-acoes -->
 
 
-<!-- paineis-tema: bloco mantido junto com docs/DECISOES.md (PT1 a PT8) -->
-## Painéis com o tema da tela da pedaleira (2026-11-24)
+<!-- paineis-tema: bloco mantido junto com docs/DECISOES.md (PT1 a PT16) -->
+## Painéis como o aparelho da pedaleira (2026-11-24)
 
 Este bloco vale por cima de qualquer frase anterior deste arquivo que diga o contrário, **só dentro da
-área de configuração** (o painel de parâmetros) do Ignissor, do Entropia e do Axioma. Lista de presets,
-cadeia, cabeçalho do bloco, cenas e todo o resto continuam no case de estrada.
+área de configuração** do Ignissor, do Entropia e do Axioma. Lista, cadeia, cabeçalho do bloco, cenas e os
+outros blocos continuam no case de estrada. Fidelidade de espírito à tela da Anagram, nada copiado: tudo
+pintado em código (CustomPainter), sem arte, fonte ou imagem da Darkglass.
 
-Pedido do dono: cada um desses blocos ganha o tema visual que tem na tela da própria Anagram. Fidelidade
-de espírito, não cópia: nada de arte, fonte ou imagem da Darkglass; tudo pintado em código.
+**The Device Rule.** O painel é um aparelho: um chassi de alumínio escovado (bisel, reflexo especular,
+sulco usinado em volta da tela, parafusos Philips nos cantos) com a tela do bloco encaixada em baixo-relevo.
+**A aparência é fixa**: a mesma com o app claro ou escuro, como a tela de um equipamento (DECISOES PT9).
+
+**The Same-Hands Rule.** A pele muda, o gesto não: knob, fader, seletor, Solo, Templates, digitar o valor
+e voltar ao padrão funcionam igual, com 48dp de alvo no toque.
 
 ### Como funciona
-- `TemaPainel` (`lib/apresentacao/tema/tema_painel.dart`) é uma `ThemeExtension` com estilo
-  (`metal` ou `neon`), uma `Paleta` derivada, o gradiente do fundo, o reflexo/grade e o friso.
-  `TemaPainel.doBloco(uri, brilho)` devolve o tema do bloco ou nulo.
-- `MolduraTemaPainel` aplica `TemaApp.doPainel(tema)` em volta do painel: o mesmo ThemeData do app sobre
-  a paleta do painel, com os botões de contorno virando **placas** (fundo `painel-elevado`, forma do
-  painel). Knob, fader, seletor, chave e gráficos se repintam sozinhos porque pedem a cor pelo papel.
-- `decoracaoCartao(context)` desenha coluna de banda, cartão de seção e caixa de desenho: sem tema, a
-  decoração de sempre (pixel igual); com tema, a forma e a placa dele.
-- As cores vivem em `lib/apresentacao/tema/paletas_painel.dart`, derivadas de `Paleta.escura`/`clara`
-  por `Paleta.copyWith`. Âmbar de ação, fita gaffer, alerta e LEDs são os do case.
+- `TemaPainel.doBloco(uri)` (`tema/tema_painel.dart`) devolve o tema (`metal` ou `neon`) ou nulo. A
+  `MolduraTemaPainel` aplica `TemaApp.doPainel(tema)` (paleta e tipografia do painel, botões em placa com
+  relevo) e pinta chassi e tela (`pintor_fundo_painel.dart`).
+- Cores em `tema/paletas_painel.dart`: `PaletasPainel` (papéis derivados de `Paleta.escura`), `CoresChassi`
+  (alumínio, tinta gravada, parafusos) e `CoresNeon` (ciano, rosa, faixa magenta, LCD, campo azul).
+  O metal é desenhado por `tema/desenho_metal.dart` (escovado, especular, bisel, ranhura, parafusos).
+- `decoracaoCartao(context)`: sem tema, a decoração de sempre (pixel igual); no metal, a
+  `DecoracaoPlacaMetal` (placa anodizada escovada, bisel, ranhura, parafusos sextavados).
 
-### Alumínio escovado (Ignissor e Entropia)
-- Fundo: gradiente vertical de três degraus + riscos horizontais finos (escovado) + duas ondas largas de
-  reflexo (uma faixa em S à esquerda, um arco à direita).
-- Letreiro: o nome do bloco em Barlow 400, 20px, caixa alta, espaçamento 8px, seguido de um filete.
-- Títulos de cartão (`titleSmall`): Barlow 400 com +2,4px, caixa alta fina. Cartões são placas com
-  gradiente `painel-elevado` → `painel`, canto de 8px.
-- Ignissor: Threshold em **verde-limão** e Level em **magenta**, como na tela dele (no case, Threshold é
-  rosa e Level verde). Destaque (chave Comp, arco, opção marcada) verde-limão.
-- Entropia: as três bandas mantêm verde-água, lilás e laranja; destaque laranja.
+### Ignissor e Entropia (metal)
+- Tela de alumínio anodizado escuro, escovada, com as duas ondas de reflexo da tela do Ignissor.
+- **Barra de cima numa linha** (`tela_pedaleira/barra_metal.dart`), placa de alumínio claro escovado com
+  letra gravada: "I G N I S S O R" fino e espaçado, o botão **Templates** compacto em placa com o template
+  aplicado discreto ao lado, a legenda das linhas e, à direita, a pílula azul de liga/desliga.
+- Colunas e cartões como placas anodizadas; rótulos com gravação (sombra em cima, luz embaixo).
+- Ignissor: Threshold verde-limão, Level magenta, destaque verde-limão. Entropia: bandas verde-água,
+  lilás e laranja; destaque laranja.
 
-| Papel | Escuro | Claro |
+### Axioma (neon)
+- Tela synthwave roxa com chão em grade, serra em arame e linhas de varredura com grão bem leves.
+- **Barra do aparelho** (`tela_pedaleira/barra_axioma.dart`), tudo de verdade: X fecha o painel;
+  logotipo AXIOMA em Orbitron 900 inclinada, com halo; Templates; cinco abas desenhadas (mixer, onda,
+  envelope, escada, engrenagem) que rolam até a seção; pílula de liga/desliga; molas de neon (enfeite);
+  LCD com o slot aberto; campo azul "Controlar" (todas as cenas / só a ativa); remover, trocar de linha e o
+  menu do bloco.
+- Faixa de medidores: visor + barras + minimontanha em arame em cada ponta, com valores reais
+  (Sensitivity e Level), nunca um nível de áudio que o app não recebe.
+- Módulos de **moldura dupla chanfrada** (tubo ciano fora, rosa dentro, halo de neon) com a faixa magenta do
+  título em Share Tech Mono ("Osc 1 Vol", "Osc 2 Vol", "Sub Osc Vol", "Cutoff · Resonance · Envelope"),
+  a onda grande em neon ciano dentro do módulo, e a **grade de furos com parafusos** entre módulos.
+- Títulos e valores em Share Tech Mono; nome do parâmetro, seletor e botões na Barlow Condensed (na mono
+  "SENSITIVITY" virava "SENSITIVI…").
+- Movimento: só o brilho, duas respirações lentas (1,4 s cada) ao abrir; parado depois e nenhum com
+  "reduzir movimento".
+
+| Papel | Metal | Neon |
 |---|---|---|
-| fundo pintado (cima → baixo) | #3A4047 · #2B2F34 · #212428 | #CDD2D7 · #B9C0C6 · #AAB2B9 |
-| reflexo | branco 6% | branco 22% |
-| fundo-case (tela dos desenhos) | #2A2E33 | #F4F5F7 |
-| painel / painel-elevado | #33383E / #3D434A | #E3E6E9 / #EEF0F2 |
-| filete / alumínio / alumínio-claro | #5A626B / #9CA3AB / #D5D9DE | #9CA4AC / #555C64 / #383E45 |
-| texto / texto-secundário | #F2F4F6 / #BCC2C9 | #14171A / #3E444B |
-| destaque Ignissor / Entropia | #C4EC3A / #F2A33C | #758A1E / #B96F0E |
-| Threshold / Level | #C4EC3A / #F55FCB | #637B11 / #D50E9D |
-| tally-tinta / erro / corpo-knob | (do app) / #FF9C8C / #1C1F23 | #764C00 / (do app) / (do app) |
+| tela (cima → baixo) | #30353B · #262A2F · #1C1F23 | #2B1D55 · #1D1437 · #130C27 |
+| painel / elevado / fundo-case | #33383E / #41474F / #25292E | #2A1D50 / #3A2A6C / #4A3290 |
+| texto / secundário | #F2F4F6 / #BEC4CB | #F5F1FF / #CABFF0 |
+| destaque | Ignissor #C4EC3A · Entropia #F2A33C | ciano #43E8F2 (rosa #FF5CD4) |
+| chassi (cima → baixo) | #D3D8DC · #AEB5BC · #8C949C, tinta gravada #1B1E22 | (o mesmo) |
+| barra / faixa | alumínio claro #E6EAED → #C6CCD1 | faixa #8A1E78 com texto branco, LCD #6CF6FF em #062B33 |
 
-### Synthwave (Axioma)
-- Fundo: gradiente roxo, chão em grade de perspectiva no terço de baixo, serra de montanhas em arame nos
-  dois cantos e dois trilhos magenta (em cima e embaixo).
-- Cartões e caixas de desenho com **cantos chanfrados** (10px; 5px nos pequenos), friso magenta de 2px
-  sob o título de cada seção. Letreiro em Share Tech Mono com friso magenta e filete ciano.
-- Títulos e valores em **Share Tech Mono** (monoespaçada: o valor não dança, a regra tabular continua).
-  O nome do parâmetro acima do knob, o seletor e os botões ficam na Barlow Condensed: na mono,
-  "SENSITIVITY" virava "SENSITIVI…" e "5-String Bass", "5-String Ba…".
-- Destaque (arco, ondas, curvas do filtro e do envelope, opção marcada) em ciano.
+### Janela de templates ("Select Block Template")
+`janela_templates.dart`, `cartao_template.dart`, `estilo_janela_templates.dart`. Barra com o X e o título
+centralizado; **fileira horizontal rolável de cartões** (nome em destaque, descrição em até três linhas,
+~6 à vista no computador) com barra de rolagem fina; os da Darkglass primeiro e, depois de um separador,
+os do app. O aplicado leva o contorno âmbar; o sem valores lidos fica apagado, sem foco, com o selo
+"Valores ainda não lidos da pedaleira" sempre à vista. Setas andam, Enter aplica, Esc fecha. Metal:
+janela e cartões de alumínio com tinta gravada; neon: cartões de moldura dupla com a grade de furos
+entre eles e a barra azul com título em display; sem tema de painel: o case.
 
-| Papel | Escuro | Claro |
-|---|---|---|
-| fundo pintado (cima → baixo) | #2B1D55 · #1D1437 · #130C27 | #DCD2F5 · #CEC2EE · #C2B3E8 |
-| grade / friso | #FF4FD0 a 10% / #FF5CD4 | #C21E8F a 10% / #D8009E |
-| fundo-case (tela dos desenhos) | #1D1437 | #FBF9FF |
-| painel / painel-elevado | #2A1D50 / #352862 | #F0EBFC / #F9F7FE |
-| filete / alumínio / alumínio-claro | #6B52B3 / #A794DE / #DED5F8 | #A592DB / #5E48A5 / #3D2E70 |
-| texto / texto-secundário | #F5F1FF / #C5B9EA | #1A1233 / #463A74 |
-| destaque (ciano) | #43E8F2 | #0A8F98 |
-| tally-tinta / corpo-knob | (do app) / #140C29 | #764C00 / #2A1D50 |
-
-### Regras
-**The Screen-Theme Rule.** Tema de tela só existe DENTRO da moldura do painel do bloco. Fora dela,
-nenhuma cor, fonte ou forma desses temas.
-
-**The Same-Hands Rule.** O tema muda a pele, nunca o gesto: knob, fader, seletor, solo, templates, digitar
-o valor e voltar ao padrão funcionam igual, com os mesmos alvos (48dp no toque).
-
-**Contraste medido.** `test/tema/contraste_tema_painel_test.dart`: texto e valor ≥ 4,5:1 sobre as três
-superfícies e sobre cada degrau do fundo pintado com e sem o reflexo; foco, contorno, destaque, bandas e
-traços ≥ 3:1; tinta de marcador sobre destaque e bandas ≥ 4,5:1. Nos dois brilhos.
-
-**Movimento.** Nenhum: o fundo é estático, então "reduzir movimento" não tem o que desligar.
+**Contraste medido** em `test/tema/contraste_tema_painel_test.dart` (texto 4,5:1 em toda superfície e
+degrau da tela com e sem reflexo/grade; traços 3:1; marcador sobre destaque e bandas 4,5:1; faixa, LCD,
+campo, barra azul, cartões e tinta gravada).
 <!-- /paineis-tema -->
