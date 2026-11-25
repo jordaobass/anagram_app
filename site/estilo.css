@@ -161,6 +161,8 @@ figure.case { margin: 0; }
 }
 .chamada strong { color: var(--texto); font-weight: 600; }
 .acoes { display: flex; flex-wrap: wrap; gap: var(--m); }
+/* no celular os três downloads viram uma coluna, cada um com a largura toda */
+.acoes-baixar { display: grid; }
 .miudo {
   margin-top: var(--l);
   font: 600 14px/1.4 var(--fonte-rotulo); letter-spacing: 0.7px; text-transform: uppercase;
@@ -276,6 +278,7 @@ pre {
 
 @media (min-width: 640px) {
   .barra nav .so-largo { display: inline-flex; }
+  .acoes-baixar { display: flex; }
 }
 
 @media (min-width: 900px) {

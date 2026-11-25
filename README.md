@@ -6,10 +6,23 @@ A **free and open-source** preset editor for the **Darkglass Anagram** bass mult
 bank, a signal chain with the pedal's own block art, big knobs, scenes and **live editing** over USB.
 One Flutter codebase for macOS, Windows, Linux, Android and the browser (Chrome/Edge).
 
-<p align="center">
-  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Download for Windows" src="https://img.shields.io/badge/Download-Windows%2010%2F11-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
-  <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Download for macOS" src="https://img.shields.io/badge/Download-macOS%20(Apple%20Silicon)-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
-</p>
+## Download
+
+Current version: **0.2.0**. Pick the file for your computer; it's a zip, no installer.
+
+| Your computer | File |
+|---|---|
+| **Windows 10/11** (64-bit) | [anagram-app-windows-0.2.0.zip](https://github.com/jordaobass/anagram_app/releases/download/v0.2.0/anagram-app-windows-0.2.0.zip) |
+| **macOS · Apple Silicon** (M1, M2, M3, M4) | [anagram-app-macos-0.2.0.zip](https://github.com/jordaobass/anagram_app/releases/download/v0.2.0/anagram-app-macos-0.2.0.zip) |
+| **macOS · Intel** (experimental, not tested on Intel hardware yet) | [anagram-app-macos-intel-0.2.0.zip](https://github.com/jordaobass/anagram_app/releases/download/v0.2.0/anagram-app-macos-intel-0.2.0.zip) |
+
+**Which Mac do I have?** Apple menu () › **About This Mac**: "Chip Apple M…" = Apple Silicon; "Processor Intel…" =
+Intel. The Apple Silicon build doesn't open on an Intel Mac (macOS says it "is not supported on this Mac").
+
+- **Linux:** no ready-made build; build it from source (`flutter build linux`, see [Linux](#linux)).
+  Experimental, not tested with the pedal; it may need a udev rule for the USB.
+- **iPad / iPhone:** not yet. iPadOS doesn't let apps open the Anagram's USB.
+- **All versions** and checksums: [Releases](https://github.com/jordaobass/anagram_app/releases/latest).
 
 <p align="center">
   <a href="https://github.com/jordaobass/anagram_app/releases/latest"><img alt="Latest version" src="https://img.shields.io/github/v/release/jordaobass/anagram_app?label=version&color=F0B429"></a>
@@ -107,11 +120,10 @@ Keep all the files together in the folder: `hidapi.dll` talks to the pedal over 
 - **Uninstall:** delete the folder (and the shortcut, if you made one). The app writes nothing to the
   registry.
 
-### macOS (Apple Silicon, M1 or newer)
+### macOS (Apple Silicon or Intel)
 
-1. Download `anagram-app-macos-<version>.zip` from **Assets** in the
-   [latest release](https://github.com/jordaobass/anagram_app/releases/latest) and double-click it to
-   extract.
+1. Download the zip for your Mac (see [Download](#download)): `anagram-app-macos-<version>.zip` for
+   Apple Silicon (M1–M4), `anagram-app-macos-intel-<version>.zip` for Intel. Double-click it to extract.
 2. Drag **Anagram App** to **Applications**.
 3. The first time, macOS blocks it because the app isn't notarized yet: open **System Settings ›
    Privacy & Security** and click **Open Anyway**. Or, in Terminal:
@@ -129,8 +141,10 @@ Keep all the files together in the folder: `hidapi.dll` talks to the pedal over 
 
 ### Linux
 
-There's no ready-made build yet; build it from source (see [the app README](mobile/README.md)). Install
-`libhidapi-hidraw0` and a udev rule that gives your user access to the Anagram's USB device.
+There's no ready-made build yet; build it from source with `flutter build linux` (see
+[the app README](mobile/README.md)). Experimental: it hasn't been tested with the pedal. Install
+`libhidapi-hidraw0` and, if the app can't open the USB, a udev rule that gives your user access to the
+Anagram's USB device.
 
 ### Connecting to the pedal for the first time
 

@@ -68,6 +68,13 @@ More details in [`mobile/README.md`](mobile/README.md); design decisions and ope
 5. Anything about the pedal's behavior that you **tested on real hardware** is gold: say the firmware
    version and what you observed in the PR.
 
+## Releases (maintainers)
+
+When you bump `version:` in `mobile/pubspec.yaml`, update the three direct download links at the top of
+`README.md` and `README.pt-BR.md` to the new tag (Windows, macOS Apple Silicon, macOS Intel).
+`flutter test test/versao/links_download_readme_test.dart` fails until both READMEs point to it. The
+release steps are in [`mobile/README.md`](mobile/README.md#publicar-release).
+
 ## Code of conduct
 
 Be kind and assume good intent. We're all here because we like playing bass.

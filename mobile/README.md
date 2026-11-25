@@ -96,6 +96,11 @@ git clone git@github.com:jordaobass/anagram_app.git && cd anagram_app/mobile
 ferramentas/verificar_release.sh && flutter build <plataforma> --release
 ```
 
+Os zips seguem o nome `anagram-app-<windows|macos|macos-intel>-<versão>.zip` (o `site/baixar.js` e os
+READMEs dependem dele). Ao subir a versão no `pubspec.yaml`, troque também os três links diretos da
+seção de download do `README.md` e do `README.pt-BR.md` para a tag nova:
+`test/versao/links_download_readme_test.dart` fica vermelho até os dois apontarem para ela.
+
 **Atualizar a arte** (Suite ou firmware novo): os gabinetes e os blocos neurais vêm do Darkglass Suite
 instalado (`<Suite>` = …\WindowsApps\DarkglassElectronics.DarkglassSuite_<versão>\app\resources no
 Windows).
