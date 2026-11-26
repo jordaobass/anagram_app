@@ -874,6 +874,130 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fbCopiarPara => 'Copier dans ma zone…';
 
   @override
+  String get bbModo => 'BIBLIOTHÈQUE';
+
+  @override
+  String get bbModoDica =>
+      'Presets prêts par groupe : touchez-en un pour l’écouter, puis appliquez-le à l’emplacement voulu.';
+
+  @override
+  String get bbTitulo => 'PRESETS PRÊTS';
+
+  @override
+  String get bbTexto =>
+      'Toucher un preset le fait seulement sonner. Appliquer l’enregistre dans un emplacement choisi dans la liste du pédalier ; un emplacement occupé demande d’abord.';
+
+  @override
+  String get bbAplicar => 'Appliquer à un emplacement…';
+
+  @override
+  String get bbVazia =>
+      'Cette version n’inclut pas la bibliothèque de presets.';
+
+  @override
+  String get bbMenu => 'Fichier de la bibliothèque';
+
+  @override
+  String bbIgnorados(int n) {
+    return 'Ignorés (blocs inconnus de l’app) : $n.';
+  }
+
+  @override
+  String get bbExportar => 'Exporter toute la bibliothèque…';
+
+  @override
+  String get bbImportar => 'Importer une collection…';
+
+  @override
+  String get bbBuscar => 'Chercher preset, groupe ou collection';
+
+  @override
+  String get bbLimparBusca => 'Effacer la recherche';
+
+  @override
+  String get bbOrdem => 'Trier';
+
+  @override
+  String get bbOrdemArquivo => 'Ordre du fichier';
+
+  @override
+  String get bbOrdemAZ => 'Nom A–Z';
+
+  @override
+  String get bbOrdemZA => 'Nom Z–A';
+
+  @override
+  String bbSemResultados(String busca) {
+    return 'Aucun résultat pour « $busca ».';
+  }
+
+  @override
+  String get bbColecaoEmbutida => 'Presets de l’app';
+
+  @override
+  String get bbAcoesColecao => 'Actions de la collection';
+
+  @override
+  String get bbExportarColecao => 'Exporter la collection…';
+
+  @override
+  String get bbApagarColecao => 'Supprimer la collection';
+
+  @override
+  String bbApagarTitulo(String nome) {
+    return 'Supprimer « $nome » ?';
+  }
+
+  @override
+  String get bbApagarTexto =>
+      'La collection quitte la bibliothèque. Les presets déjà enregistrés sur le pédalier restent tels quels.';
+
+  @override
+  String get bbApagarConfirmar => 'Supprimer';
+
+  @override
+  String bbApagada(String nome) {
+    return 'Collection « $nome » supprimée.';
+  }
+
+  @override
+  String bbColecaoImportada(String nome, int n) {
+    return 'Collection « $nome » ajoutée avec $n presets.';
+  }
+
+  @override
+  String get bbMostrarPasta => 'Afficher le dossier de la bibliothèque';
+
+  @override
+  String bbPastaNaoAbriu(String caminho) {
+    return 'Le dossier ne s’est pas ouvert : $caminho';
+  }
+
+  @override
+  String bbApagarFalhou(String nome) {
+    return 'Le fichier de « $nome » n’a pas pu être retiré du dossier.';
+  }
+
+  @override
+  String get bbSoltarAqui =>
+      'Déposez le fichier pour l’ajouter à la bibliothèque de presets';
+
+  @override
+  String bbArquivoRecusado(String nome) {
+    return '« $nome » n’est ni une bibliothèque de presets ni un export d’Anagram App.';
+  }
+
+  @override
+  String get bbImportacaoRecusada =>
+      'Ce fichier n’est ni une bibliothèque de presets ni un export d’Anagram App.';
+
+  @override
+  String get bbExportada => 'Bibliothèque exportée.';
+
+  @override
+  String get bbCopiada => 'Bibliothèque copiée dans le presse-papiers.';
+
+  @override
   String get eqBandaGeral => 'Général';
 
   @override

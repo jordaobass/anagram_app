@@ -32,6 +32,8 @@ abstract final class CaminhosAssets {
   static const demonstracao = 'assets/demonstracao/presets.json';
   static const explicacoes = 'assets/explicacoes/parametros.json';
   static const templates = 'assets/templates/blocos.json';
+  /// Presets prontos por banda, do modo Biblioteca da barra (DECISOES BB1).
+  static const bibliotecaBandas = 'assets/biblioteca/bandas.json';
   /// Conhecimento de timbre que o MCP entrega à IA (DECISOES IC1).
   static const conhecimentoBlocos = 'assets/conhecimento/blocos.json';
   static const conhecimentoTimbre = 'assets/conhecimento/guia_timbre.json';
@@ -76,6 +78,16 @@ final presetsFabricaProvider = FutureProvider<PresetsDeFabrica>((ref) async {
   } on FlutterError catch (erro) {
     registro.i('presets de fábrica ausentes; sem área Fábrica (${erro.message})');
     return const PresetsDeFabrica.vazio();
+  }
+});
+
+/// O texto da biblioteca de presets por banda; nulo sem o arquivo no build.
+final textoBibliotecaBandasProvider = FutureProvider<String?>((ref) async {
+  try {
+    return await ref.watch(pacoteAssetsProvider).loadString(CaminhosAssets.bibliotecaBandas);
+  } on FlutterError catch (erro) {
+    registro.i('biblioteca de presets por banda ausente (${erro.message})');
+    return null;
   }
 });
 

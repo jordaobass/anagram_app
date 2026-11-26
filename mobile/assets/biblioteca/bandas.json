@@ -1,0 +1,1696 @@
+{
+ "fonte": "Anagram App export 2026-11-26 (firmware 1.19.0.16)",
+ "bandas": [
+  {
+   "nome": "Muse",
+   "presets": [
+    {
+     "name": "MUSE HYSTERIA",
+     "blocks": [
+      {
+       "row": 1,
+       "col": 1,
+       "type": "urn:darkglass:FETComp",
+       "enabled": true,
+       "params": {
+        "Input": 6,
+        "Output": 5,
+        "Attack": 5,
+        "Release": 5,
+        "Ratio": 1,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 2,
+       "type": "urn:darkglass-anagram:split",
+       "enabled": true,
+       "params": {
+        "LevelRow1": 0,
+        "LevelRow2": 0,
+        "Crossover": 1,
+        "CrossoverFreq": 150
+       }
+      },
+      {
+       "row": 1,
+       "col": 3,
+       "type": "urn:darkglass:neural-plugins:peggy-bass",
+       "enabled": true,
+       "params": {
+        "ultra_lo": 0,
+        "ultra_hi": 0,
+        "bass": 6,
+        "midrange": 5,
+        "mid_shift": 0.5,
+        "treble": 4,
+        "level": 0
+       }
+      },
+      {
+       "row": 1,
+       "col": 4,
+       "type": "urn:darkglass-anagram:cabinet-bass",
+       "enabled": true,
+       "params": {
+        "Blend": 100,
+        "Level": 0
+       },
+       "cabinet": {
+        "model": "Peggy 8x10",
+        "microphone": "Condenser 103",
+        "position": "Cap On Axis"
+       }
+      },
+      {
+       "row": 1,
+       "col": 7,
+       "type": "urn:darkglass-anagram:merge",
+       "enabled": true,
+       "params": {
+        "Blend": 50,
+        "Level": -3
+       }
+      },
+      {
+       "row": 1,
+       "col": 12,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -40.3,
+        "Ratio": 2,
+        "Attack": 4,
+        "Release": 0,
+        "OutputGain": 5,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 2,
+       "col": 1,
+       "type": "urn:darkglass:neural-plugins:pirate",
+       "enabled": true,
+       "params": {
+        "dist": 7,
+        "tone_enabled": 1,
+        "tone": 6,
+        "level": 5,
+        "blend": 100
+       }
+      },
+      {
+       "row": 2,
+       "col": 2,
+       "type": "urn:darkglass:Suppressor",
+       "enabled": true,
+       "params": {
+        "Threshold": -42,
+        "Amount": 6
+       }
+      },
+      {
+       "row": 2,
+       "col": 3,
+       "type": "urn:darkglass:JimBass",
+       "enabled": true,
+       "params": {
+        "Volume": 4,
+        "Master": 5,
+        "Bass": 5,
+        "Middle": 7,
+        "Treble": 6
+       }
+      },
+      {
+       "row": 2,
+       "col": 4,
+       "type": "urn:darkglass-anagram:cabinet-guitar",
+       "enabled": true,
+       "params": {
+        "Blend": 100,
+        "Level": 0
+       },
+       "cabinet": {
+        "model": "Fashionista 4x12",
+        "microphone": "Condenser 184",
+        "position": "Cap On-axis"
+       }
+      }
+     ],
+     "footswitches": {}
+    },
+    {
+     "name": "MUSE FUZZ",
+     "blocks": [
+      {
+       "row": 1,
+       "col": 1,
+       "type": "urn:darkglass:FETComp",
+       "enabled": true,
+       "params": {
+        "Input": 5,
+        "Output": 5,
+        "Attack": 5,
+        "Release": 5,
+        "Ratio": 1,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 2,
+       "type": "urn:darkglass:AlphaOmicron",
+       "enabled": true,
+       "params": {
+        "Drive": 8.5,
+        "Growl": 0,
+        "Bite": 0,
+        "Mod": 5,
+        "Level": 3.1,
+        "Blend": 80
+       }
+      },
+      {
+       "row": 1,
+       "col": 3,
+       "type": "urn:darkglass:PitchShifter",
+       "enabled": false,
+       "params": {
+        "Semitone": 1,
+        "Detune": -20,
+        "DryLevel": 0,
+        "WetLevel": 10,
+        "FilterCutoff": 10
+       }
+      },
+      {
+       "row": 1,
+       "col": 4,
+       "type": "urn:darkglass:neural-plugins:pirate",
+       "enabled": false,
+       "params": {
+        "dist": 6,
+        "tone_enabled": 1,
+        "tone": 7.6,
+        "level": 5,
+        "blend": 50
+       }
+      },
+      {
+       "row": 1,
+       "col": 5,
+       "type": "urn:darkglass:Sublime",
+       "enabled": false,
+       "params": {
+        "CleanLevel": 5,
+        "OctaveLevel": 5,
+        "FilterCutoff": 5
+       }
+      },
+      {
+       "row": 1,
+       "col": 6,
+       "type": "urn:darkglass:fil4#mono",
+       "enabled": true,
+       "params": {
+        "gain": 0,
+        "peakreset": 1,
+        "HighPass": 0,
+        "HPfreq": 20,
+        "HPQ": 0.7,
+        "LowPass": 0,
+        "LPfreq": 20000,
+        "LPQ": 1,
+        "LSsec": 1,
+        "LSfreq": 80,
+        "LSwidth": 0.33,
+        "LSgain": 0,
+        "sec1": 1,
+        "freq1": 80,
+        "width1": 0.5,
+        "gain1": 5,
+        "sec2": 1,
+        "freq2": 350,
+        "width2": 0.5,
+        "gain2": -3,
+        "sec3": 1,
+        "freq3": 1500,
+        "width3": 0.5,
+        "gain3": 4,
+        "sec4": 1,
+        "freq4": 4000,
+        "width4": 0.5,
+        "gain4": 3,
+        "HSsec": 1,
+        "HSfreq": 8000,
+        "HSwidth": 0.33,
+        "HSgain": 0
+       }
+      },
+      {
+       "row": 1,
+       "col": 7,
+       "type": "urn:darkglass:Chorus",
+       "enabled": false,
+       "params": {
+        "Depth": 5,
+        "Rate": 1.9,
+        "Blend": 50,
+        "HPF": 0
+       }
+      },
+      {
+       "row": 1,
+       "col": 8,
+       "type": "urn:darkglass:Suppressor",
+       "enabled": true,
+       "params": {
+        "Threshold": -30.9,
+        "Amount": 6
+       }
+      },
+      {
+       "row": 1,
+       "col": 9,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -20.6,
+        "Ratio": 3,
+        "Attack": 2,
+        "Release": 0,
+        "OutputGain": 0.5,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 10,
+       "type": "urn:darkglass:JimBass",
+       "enabled": true,
+       "params": {
+        "Volume": 5,
+        "Master": 5,
+        "Bass": 5,
+        "Middle": 5,
+        "Treble": 5
+       }
+      },
+      {
+       "row": 1,
+       "col": 11,
+       "type": "urn:darkglass-anagram:cabinet-bass",
+       "enabled": true,
+       "params": {
+        "Blend": 100,
+        "Level": 2
+       },
+       "cabinet": {
+        "model": "Peggy 4x10",
+        "microphone": "Condenser 103",
+        "position": "Cap On Axis"
+       }
+      },
+      {
+       "row": 1,
+       "col": 12,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -40.3,
+        "Ratio": 2,
+        "Attack": 4,
+        "Release": 0,
+        "OutputGain": 5,
+        "Blend": 100
+       }
+      }
+     ],
+     "footswitches": {
+      "foot1": [
+       1,
+       3
+      ],
+      "foot2": [
+       1,
+       4
+      ],
+      "foot3": [
+       1,
+       5
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "nome": "Queens of the Stone Age",
+   "presets": [
+    {
+     "name": "QOTSA FUZZ",
+     "blocks": [
+      {
+       "row": 1,
+       "col": 1,
+       "type": "urn:darkglass:FETComp",
+       "enabled": true,
+       "params": {
+        "Input": 5,
+        "Output": 5,
+        "Attack": 5,
+        "Release": 5,
+        "Ratio": 1,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 2,
+       "type": "urn:darkglass:neural-plugins:comic",
+       "enabled": true,
+       "params": {
+        "drive": {
+         "value": 4,
+         "scenes": {
+          "1": 4,
+          "2": 1.5,
+          "3": 1.5
+         }
+        },
+        "pres": 5.5,
+        "blend": 99,
+        "treb": 5.4,
+        "mid_shift": {
+         "value": 1,
+         "scenes": {
+          "1": 1,
+          "2": 0,
+          "3": 0
+         }
+        },
+        "mids": {
+         "value": 7,
+         "scenes": {
+          "1": 7,
+          "2": 6.5,
+          "3": 6.5
+         }
+        },
+        "bass_shift": 0,
+        "bass": 5.4,
+        "level": {
+         "value": 7,
+         "scenes": {
+          "1": 7,
+          "2": 10,
+          "3": 10
+         }
+        }
+       }
+      },
+      {
+       "row": 1,
+       "col": 3,
+       "type": "urn:darkglass:PitchShifter",
+       "enabled": false,
+       "params": {
+        "Semitone": 1,
+        "Detune": -20,
+        "DryLevel": 0,
+        "WetLevel": 10,
+        "FilterCutoff": 10
+       }
+      },
+      {
+       "row": 1,
+       "col": 4,
+       "type": "urn:darkglass:neural-plugins:pirate",
+       "enabled": true,
+       "params": {
+        "dist": 6,
+        "tone_enabled": 1,
+        "tone": {
+         "value": 5,
+         "scenes": {
+          "1": 5,
+          "2": 7.6,
+          "3": 7.6
+         }
+        },
+        "level": 5,
+        "blend": {
+         "value": 40,
+         "scenes": {
+          "1": 40,
+          "2": 50,
+          "3": 50
+         }
+        }
+       }
+      },
+      {
+       "row": 1,
+       "col": 5,
+       "type": "urn:darkglass:Sublime",
+       "enabled": false,
+       "params": {
+        "CleanLevel": 5,
+        "OctaveLevel": 5,
+        "FilterCutoff": 5
+       }
+      },
+      {
+       "row": 1,
+       "col": 6,
+       "type": "urn:darkglass:axioma_synth",
+       "enabled": false,
+       "params": {
+        "sensitivity": 4,
+        "osc1_vol": 8,
+        "osc1_wave": 0,
+        "osc2_vol": 5,
+        "osc2_wave": 0,
+        "osc2_semitone": 12,
+        "osc2_cents": -12,
+        "sub_vol": 0,
+        "cutoff": 5.5,
+        "reso": 4,
+        "env": 5.5,
+        "attack": 0,
+        "decay": 3,
+        "release": 0,
+        "blend": 10,
+        "level": 3,
+        "instrument": 1,
+        "arp_enable": 0,
+        "TempoBPM": 90,
+        "arp_key": 0,
+        "arp_scale": 0,
+        "arp_pattern": 0,
+        "arp_octaves": 1
+       }
+      },
+      {
+       "row": 1,
+       "col": 7,
+       "type": "urn:darkglass:Chorus",
+       "enabled": false,
+       "params": {
+        "Depth": 5,
+        "Rate": 1.9,
+        "Blend": 50,
+        "HPF": 0
+       }
+      },
+      {
+       "row": 1,
+       "col": 8,
+       "type": "urn:darkglass:Suppressor",
+       "enabled": false,
+       "params": {
+        "Threshold": {
+         "value": -38,
+         "scenes": {
+          "1": -38,
+          "2": -30.9,
+          "3": -30.9
+         }
+        },
+        "Amount": 6
+       }
+      },
+      {
+       "row": 1,
+       "col": 9,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": false,
+       "params": {
+        "Threshold": -20.6,
+        "Ratio": {
+         "value": 2,
+         "scenes": {
+          "1": 2,
+          "2": 1,
+          "3": 1
+         }
+        },
+        "Attack": 4,
+        "Release": 0,
+        "OutputGain": 0.5,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 10,
+       "type": "urn:darkglass:neural-plugins:peggy-bass",
+       "enabled": true,
+       "params": {
+        "ultra_lo": 0,
+        "ultra_hi": 0,
+        "bass": {
+         "value": 4,
+         "scenes": {
+          "1": 4,
+          "2": 2,
+          "3": 2
+         }
+        },
+        "midrange": {
+         "value": 6,
+         "scenes": {
+          "1": 6,
+          "2": 2.8,
+          "3": 2.8
+         }
+        },
+        "mid_shift": 0.5,
+        "treble": {
+         "value": 4,
+         "scenes": {
+          "1": 4,
+          "2": 2.5,
+          "3": 2.5
+         }
+        },
+        "level": {
+         "value": 8,
+         "scenes": {
+          "1": 8,
+          "2": 12,
+          "3": 12
+         }
+        }
+       }
+      },
+      {
+       "row": 1,
+       "col": 11,
+       "type": "urn:darkglass-anagram:cabinet-bass",
+       "enabled": true,
+       "params": {
+        "Blend": 100,
+        "Level": 3
+       },
+       "cabinet": {
+        "model": "Peggy 8x10",
+        "microphone": "Condenser 103",
+        "position": "Cap On Axis"
+       }
+      },
+      {
+       "row": 1,
+       "col": 12,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -40.3,
+        "Ratio": 2,
+        "Attack": 4,
+        "Release": 0,
+        "OutputGain": 5,
+        "Blend": 100
+       }
+      }
+     ],
+     "footswitches": {
+      "foot1": [
+       1,
+       3
+      ],
+      "foot2": [
+       1,
+       4
+      ],
+      "foot3": [
+       1,
+       5
+      ]
+     }
+    },
+    {
+     "name": "QOTSA DIST",
+     "blocks": [
+      {
+       "row": 1,
+       "col": 1,
+       "type": "urn:darkglass:FETComp",
+       "enabled": true,
+       "params": {
+        "Input": 5,
+        "Output": 5,
+        "Attack": 5,
+        "Release": 5,
+        "Ratio": 1,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 2,
+       "type": "urn:darkglass:AlphaOmicron",
+       "enabled": true,
+       "params": {
+        "Drive": 7.5,
+        "Growl": 1,
+        "Bite": 0,
+        "Mod": 5,
+        "Level": 3.1,
+        "Blend": 75
+       }
+      },
+      {
+       "row": 1,
+       "col": 3,
+       "type": "urn:darkglass:PitchShifter",
+       "enabled": false,
+       "params": {
+        "Semitone": 1,
+        "Detune": -20,
+        "DryLevel": 0,
+        "WetLevel": 10,
+        "FilterCutoff": 10
+       }
+      },
+      {
+       "row": 1,
+       "col": 4,
+       "type": "urn:darkglass:neural-plugins:pirate",
+       "enabled": false,
+       "params": {
+        "dist": 6,
+        "tone_enabled": 1,
+        "tone": 7.6,
+        "level": 5,
+        "blend": 50
+       }
+      },
+      {
+       "row": 1,
+       "col": 5,
+       "type": "urn:darkglass:Sublime",
+       "enabled": false,
+       "params": {
+        "CleanLevel": 5,
+        "OctaveLevel": 5,
+        "FilterCutoff": 5
+       }
+      },
+      {
+       "row": 1,
+       "col": 6,
+       "type": "urn:darkglass:fil4#mono",
+       "enabled": true,
+       "params": {
+        "gain": 0,
+        "peakreset": 1,
+        "HighPass": 0,
+        "HPfreq": 20,
+        "HPQ": 0.7,
+        "LowPass": 0,
+        "LPfreq": 20000,
+        "LPQ": 1,
+        "LSsec": 1,
+        "LSfreq": 80,
+        "LSwidth": 0.33,
+        "LSgain": 0,
+        "sec1": 1,
+        "freq1": 80,
+        "width1": 0.5,
+        "gain1": 5,
+        "sec2": 1,
+        "freq2": 250,
+        "width2": 0.5,
+        "gain2": 5,
+        "sec3": 1,
+        "freq3": 1200,
+        "width3": 0.5,
+        "gain3": 0,
+        "sec4": 1,
+        "freq4": 3000,
+        "width4": 0.5,
+        "gain4": -4,
+        "HSsec": 1,
+        "HSfreq": 8000,
+        "HSwidth": 0.33,
+        "HSgain": 0
+       }
+      },
+      {
+       "row": 1,
+       "col": 7,
+       "type": "urn:darkglass:Chorus",
+       "enabled": false,
+       "params": {
+        "Depth": 5,
+        "Rate": 1.9,
+        "Blend": 50,
+        "HPF": 0
+       }
+      },
+      {
+       "row": 1,
+       "col": 8,
+       "type": "urn:darkglass:Suppressor",
+       "enabled": true,
+       "params": {
+        "Threshold": -30.9,
+        "Amount": 6
+       }
+      },
+      {
+       "row": 1,
+       "col": 9,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -20.6,
+        "Ratio": 2,
+        "Attack": 4,
+        "Release": 1,
+        "OutputGain": 0.5,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 10,
+       "type": "urn:darkglass:neural-plugins:peggy-bass",
+       "enabled": true,
+       "params": {
+        "ultra_lo": 0,
+        "ultra_hi": 0,
+        "bass": 5,
+        "midrange": 5,
+        "mid_shift": 0.5,
+        "treble": 5,
+        "level": 4
+       }
+      },
+      {
+       "row": 1,
+       "col": 11,
+       "type": "urn:darkglass-anagram:cabinet-bass",
+       "enabled": true,
+       "params": {
+        "Blend": 100,
+        "Level": 2
+       },
+       "cabinet": {
+        "model": "Peggy 8x10",
+        "microphone": "Condenser 103",
+        "position": "Cap On Axis"
+       }
+      },
+      {
+       "row": 1,
+       "col": 12,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -40.3,
+        "Ratio": 2,
+        "Attack": 4,
+        "Release": 0,
+        "OutputGain": 5,
+        "Blend": 100
+       }
+      }
+     ],
+     "footswitches": {
+      "foot1": [
+       1,
+       3
+      ],
+      "foot2": [
+       1,
+       4
+      ],
+      "foot3": [
+       1,
+       5
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "nome": "System of a Down",
+   "presets": [
+    {
+     "name": "SOAD CLEAN",
+     "blocks": [
+      {
+       "row": 1,
+       "col": 1,
+       "type": "urn:darkglass:FETComp",
+       "enabled": true,
+       "params": {
+        "Input": 5,
+        "Output": 5,
+        "Attack": 5,
+        "Release": 5,
+        "Ratio": 1,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 2,
+       "type": "urn:darkglass:PitchShifter",
+       "enabled": false,
+       "params": {
+        "Semitone": 1,
+        "Detune": 0,
+        "DryLevel": 0,
+        "WetLevel": 10,
+        "FilterCutoff": 10
+       }
+      },
+      {
+       "row": 1,
+       "col": 3,
+       "type": "urn:darkglass:PitchShifter",
+       "enabled": false,
+       "params": {
+        "Semitone": 2,
+        "Detune": 0,
+        "DryLevel": 0,
+        "WetLevel": 10,
+        "FilterCutoff": 10
+       }
+      },
+      {
+       "row": 1,
+       "col": 4,
+       "type": "urn:darkglass:neural-plugins:comic",
+       "enabled": true,
+       "params": {
+        "drive": 4.5,
+        "pres": 4.5,
+        "blend": 70,
+        "treb": 5,
+        "mid_shift": 0,
+        "mids": 6.5,
+        "bass_shift": 1,
+        "bass": 5,
+        "level": 6
+       }
+      },
+      {
+       "row": 1,
+       "col": 5,
+       "type": "urn:darkglass:Suppressor",
+       "enabled": true,
+       "params": {
+        "Threshold": -38,
+        "Amount": 6
+       }
+      },
+      {
+       "row": 1,
+       "col": 6,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -20.6,
+        "Ratio": 1,
+        "Attack": 4,
+        "Release": 0,
+        "OutputGain": 0.5,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 7,
+       "type": "urn:darkglass:neural-plugins:peggy-bass",
+       "enabled": true,
+       "params": {
+        "ultra_lo": 0,
+        "ultra_hi": 0,
+        "bass": 5,
+        "midrange": 5.5,
+        "mid_shift": 0.5,
+        "treble": 5,
+        "level": 6
+       }
+      },
+      {
+       "row": 1,
+       "col": 8,
+       "type": "urn:darkglass-anagram:cabinet-bass",
+       "enabled": true,
+       "params": {
+        "Blend": 100,
+        "Level": 2
+       },
+       "cabinet": {
+        "model": "Peggy 8x10",
+        "microphone": "Condenser 103",
+        "position": "Cap On Axis"
+       }
+      },
+      {
+       "row": 1,
+       "col": 9,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -40.3,
+        "Ratio": 2,
+        "Attack": 4,
+        "Release": 0,
+        "OutputGain": 5,
+        "Blend": 100
+       }
+      }
+     ],
+     "footswitches": {}
+    },
+    {
+     "name": "SOAD DIST",
+     "blocks": [
+      {
+       "row": 1,
+       "col": 1,
+       "type": "urn:darkglass:FETComp",
+       "enabled": true,
+       "params": {
+        "Input": 5,
+        "Output": 5,
+        "Attack": 5,
+        "Release": 5,
+        "Ratio": 1,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 2,
+       "type": "urn:darkglass:AlphaOmicron",
+       "enabled": true,
+       "params": {
+        "Drive": 6.5,
+        "Growl": 0,
+        "Bite": 1,
+        "Mod": 5,
+        "Level": 3.1,
+        "Blend": 65
+       }
+      },
+      {
+       "row": 1,
+       "col": 3,
+       "type": "urn:darkglass:PitchShifter",
+       "enabled": false,
+       "params": {
+        "Semitone": 1,
+        "Detune": -20,
+        "DryLevel": 0,
+        "WetLevel": 10,
+        "FilterCutoff": 10
+       }
+      },
+      {
+       "row": 1,
+       "col": 4,
+       "type": "urn:darkglass:neural-plugins:pirate",
+       "enabled": false,
+       "params": {
+        "dist": 6,
+        "tone_enabled": 1,
+        "tone": 7.6,
+        "level": 5,
+        "blend": 50
+       }
+      },
+      {
+       "row": 1,
+       "col": 5,
+       "type": "urn:darkglass:Sublime",
+       "enabled": false,
+       "params": {
+        "CleanLevel": 5,
+        "OctaveLevel": 5,
+        "FilterCutoff": 5
+       }
+      },
+      {
+       "row": 1,
+       "col": 6,
+       "type": "urn:darkglass:fil4#mono",
+       "enabled": true,
+       "params": {
+        "gain": 0,
+        "peakreset": 1,
+        "HighPass": 0,
+        "HPfreq": 20,
+        "HPQ": 0.7,
+        "LowPass": 0,
+        "LPfreq": 20000,
+        "LPQ": 1,
+        "LSsec": 1,
+        "LSfreq": 80,
+        "LSwidth": 0.33,
+        "LSgain": 0,
+        "sec1": 1,
+        "freq1": 80,
+        "width1": 0.5,
+        "gain1": 3,
+        "sec2": 1,
+        "freq2": 400,
+        "width2": 0.5,
+        "gain2": 3,
+        "sec3": 1,
+        "freq3": 1500,
+        "width3": 0.5,
+        "gain3": 4,
+        "sec4": 1,
+        "freq4": 5000,
+        "width4": 0.5,
+        "gain4": 3,
+        "HSsec": 1,
+        "HSfreq": 8000,
+        "HSwidth": 0.33,
+        "HSgain": 0
+       }
+      },
+      {
+       "row": 1,
+       "col": 7,
+       "type": "urn:darkglass:Chorus",
+       "enabled": false,
+       "params": {
+        "Depth": 5,
+        "Rate": 1.9,
+        "Blend": 50,
+        "HPF": 0
+       }
+      },
+      {
+       "row": 1,
+       "col": 8,
+       "type": "urn:darkglass:Suppressor",
+       "enabled": true,
+       "params": {
+        "Threshold": -40,
+        "Amount": 6
+       }
+      },
+      {
+       "row": 1,
+       "col": 9,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -20.6,
+        "Ratio": 2,
+        "Attack": 3,
+        "Release": 0,
+        "OutputGain": 0.5,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 10,
+       "type": "urn:darkglass:neural-plugins:peggy-bass",
+       "enabled": true,
+       "params": {
+        "ultra_lo": 0,
+        "ultra_hi": 0,
+        "bass": 5,
+        "midrange": 5,
+        "mid_shift": 0.5,
+        "treble": 5,
+        "level": 4
+       }
+      },
+      {
+       "row": 1,
+       "col": 11,
+       "type": "urn:darkglass-anagram:cabinet-bass",
+       "enabled": true,
+       "params": {
+        "Blend": 100,
+        "Level": 2
+       },
+       "cabinet": {
+        "model": "Peggy 8x10",
+        "microphone": "Condenser 103",
+        "position": "Cap On Axis"
+       }
+      },
+      {
+       "row": 1,
+       "col": 12,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -40.3,
+        "Ratio": 2,
+        "Attack": 4,
+        "Release": 0,
+        "OutputGain": 5,
+        "Blend": 100
+       }
+      }
+     ],
+     "footswitches": {
+      "foot1": [
+       1,
+       3
+      ],
+      "foot2": [
+       1,
+       4
+      ],
+      "foot3": [
+       1,
+       5
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "nome": "Limp Bizkit",
+   "presets": [
+    {
+     "name": "LB CLEAN SAM RIVERS",
+     "blocks": [
+      {
+       "row": 1,
+       "col": 1,
+       "type": "urn:darkglass:FETComp",
+       "enabled": true,
+       "params": {
+        "Input": 6,
+        "Output": 5,
+        "Attack": 5,
+        "Release": 5,
+        "Ratio": 1,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 2,
+       "type": "urn:darkglass:neural-plugins:comic",
+       "enabled": true,
+       "params": {
+        "drive": 3,
+        "pres": 5,
+        "blend": 30,
+        "treb": 5,
+        "mid_shift": 0,
+        "mids": 5.5,
+        "bass_shift": 0,
+        "bass": 5,
+        "level": 5
+       }
+      },
+      {
+       "row": 1,
+       "col": 3,
+       "type": "urn:darkglass:Suppressor",
+       "enabled": true,
+       "params": {
+        "Threshold": -40,
+        "Amount": 6
+       }
+      },
+      {
+       "row": 1,
+       "col": 4,
+       "type": "urn:darkglass:neural-plugins:peggy-bass",
+       "enabled": true,
+       "params": {
+        "ultra_lo": 0,
+        "ultra_hi": 0,
+        "bass": 6,
+        "midrange": 4.5,
+        "mid_shift": 0.5,
+        "treble": 6,
+        "level": 4
+       }
+      },
+      {
+       "row": 1,
+       "col": 5,
+       "type": "urn:darkglass-anagram:cabinet-bass",
+       "enabled": true,
+       "params": {
+        "Blend": 100,
+        "Level": 2
+       },
+       "cabinet": {
+        "model": "Peggy 8x10",
+        "microphone": "Condenser 103",
+        "position": "Cap On Axis"
+       }
+      },
+      {
+       "row": 1,
+       "col": 6,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -40.3,
+        "Ratio": 2,
+        "Attack": 4,
+        "Release": 0,
+        "OutputGain": 5,
+        "Blend": 100
+       }
+      }
+     ],
+     "footswitches": {}
+    },
+    {
+     "name": "LB DIST SAM RIVERS",
+     "blocks": [
+      {
+       "row": 1,
+       "col": 1,
+       "type": "urn:darkglass:FETComp",
+       "enabled": true,
+       "params": {
+        "Input": 5,
+        "Output": 5,
+        "Attack": 5,
+        "Release": 5,
+        "Ratio": 1,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 2,
+       "type": "urn:darkglass:B3K",
+       "enabled": true,
+       "params": {
+        "Drive": 6.5,
+        "Grunt": 1,
+        "MidBoost": 0,
+        "Tone": 7.5,
+        "Level": 5,
+        "Blend": 70
+       }
+      },
+      {
+       "row": 1,
+       "col": 3,
+       "type": "urn:darkglass:PitchShifter",
+       "enabled": false,
+       "params": {
+        "Semitone": 1,
+        "Detune": -20,
+        "DryLevel": 0,
+        "WetLevel": 10,
+        "FilterCutoff": 10
+       }
+      },
+      {
+       "row": 1,
+       "col": 4,
+       "type": "urn:darkglass:neural-plugins:pirate",
+       "enabled": false,
+       "params": {
+        "dist": 6,
+        "tone_enabled": 1,
+        "tone": 7.6,
+        "level": 5,
+        "blend": 50
+       }
+      },
+      {
+       "row": 1,
+       "col": 5,
+       "type": "urn:darkglass:Sublime",
+       "enabled": false,
+       "params": {
+        "CleanLevel": 5,
+        "OctaveLevel": 5,
+        "FilterCutoff": 5
+       }
+      },
+      {
+       "row": 1,
+       "col": 6,
+       "type": "urn:darkglass:fil4#mono",
+       "enabled": true,
+       "params": {
+        "gain": 0,
+        "peakreset": 1,
+        "HighPass": 0,
+        "HPfreq": 20,
+        "HPQ": 0.7,
+        "LowPass": 0,
+        "LPfreq": 20000,
+        "LPQ": 1,
+        "LSsec": 1,
+        "LSfreq": 80,
+        "LSwidth": 0.33,
+        "LSgain": 0,
+        "sec1": 1,
+        "freq1": 80,
+        "width1": 0.5,
+        "gain1": 4,
+        "sec2": 1,
+        "freq2": 500,
+        "width2": 0.5,
+        "gain2": -2,
+        "sec3": 1,
+        "freq3": 2000,
+        "width3": 0.5,
+        "gain3": 4,
+        "sec4": 1,
+        "freq4": 5000,
+        "width4": 0.5,
+        "gain4": 3,
+        "HSsec": 1,
+        "HSfreq": 8000,
+        "HSwidth": 0.33,
+        "HSgain": 0
+       }
+      },
+      {
+       "row": 1,
+       "col": 7,
+       "type": "urn:darkglass:Chorus",
+       "enabled": false,
+       "params": {
+        "Depth": 5,
+        "Rate": 1.9,
+        "Blend": 50,
+        "HPF": 0
+       }
+      },
+      {
+       "row": 1,
+       "col": 8,
+       "type": "urn:darkglass:Suppressor",
+       "enabled": true,
+       "params": {
+        "Threshold": -30.9,
+        "Amount": 6
+       }
+      },
+      {
+       "row": 1,
+       "col": 9,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -20.6,
+        "Ratio": 2,
+        "Attack": 3,
+        "Release": 0,
+        "OutputGain": 0.5,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 10,
+       "type": "urn:darkglass:neural-plugins:swirl",
+       "enabled": true,
+       "params": {
+        "gain": 5,
+        "aurashaper": 7,
+        "bass": 7,
+        "lowmid": 6,
+        "lowmidfreq": 89,
+        "mid": 2.5,
+        "midfreq": 637,
+        "himid": 4,
+        "hiwmidfreq": 3750,
+        "treble": 6,
+        "level": 3
+       }
+      },
+      {
+       "row": 1,
+       "col": 11,
+       "type": "urn:darkglass-anagram:cabinet-bass",
+       "enabled": true,
+       "params": {
+        "Blend": 100,
+        "Level": 2
+       },
+       "cabinet": {
+        "model": "SWIRL 8x10",
+        "microphone": "Condenser 103",
+        "position": "Cap On Axis"
+       }
+      },
+      {
+       "row": 1,
+       "col": 12,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -40.3,
+        "Ratio": 2,
+        "Attack": 4,
+        "Release": 0,
+        "OutputGain": 5,
+        "Blend": 100
+       }
+      }
+     ],
+     "footswitches": {
+      "foot1": [
+       1,
+       3
+      ],
+      "foot2": [
+       1,
+       4
+      ],
+      "foot3": [
+       1,
+       5
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "nome": "Tool",
+   "presets": [
+    {
+     "name": "TOOL DRIVE",
+     "blocks": [
+      {
+       "row": 1,
+       "col": 1,
+       "type": "urn:darkglass:FETComp",
+       "enabled": true,
+       "params": {
+        "Input": 5,
+        "Output": 5,
+        "Attack": 5,
+        "Release": 5,
+        "Ratio": 1,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 2,
+       "type": "urn:darkglass:AlphaOmicron",
+       "enabled": true,
+       "params": {
+        "Drive": 6,
+        "Growl": 1,
+        "Bite": 1,
+        "Mod": 5,
+        "Level": 3.1,
+        "Blend": 50
+       }
+      },
+      {
+       "row": 1,
+       "col": 3,
+       "type": "urn:darkglass:PitchShifter",
+       "enabled": false,
+       "params": {
+        "Semitone": 1,
+        "Detune": -20,
+        "DryLevel": 0,
+        "WetLevel": 10,
+        "FilterCutoff": 10
+       }
+      },
+      {
+       "row": 1,
+       "col": 4,
+       "type": "urn:darkglass:neural-plugins:pirate",
+       "enabled": false,
+       "params": {
+        "dist": 6,
+        "tone_enabled": 1,
+        "tone": 7.6,
+        "level": 5,
+        "blend": 50
+       }
+      },
+      {
+       "row": 1,
+       "col": 5,
+       "type": "urn:darkglass:Sublime",
+       "enabled": false,
+       "params": {
+        "CleanLevel": 5,
+        "OctaveLevel": 5,
+        "FilterCutoff": 5
+       }
+      },
+      {
+       "row": 1,
+       "col": 6,
+       "type": "urn:darkglass:fil4#mono",
+       "enabled": true,
+       "params": {
+        "gain": 0,
+        "peakreset": 1,
+        "HighPass": 0,
+        "HPfreq": 20,
+        "HPQ": 0.7,
+        "LowPass": 0,
+        "LPfreq": 20000,
+        "LPQ": 1,
+        "LSsec": 1,
+        "LSfreq": 80,
+        "LSwidth": 0.33,
+        "LSgain": 0,
+        "sec1": 1,
+        "freq1": 80,
+        "width1": 0.5,
+        "gain1": 3,
+        "sec2": 1,
+        "freq2": 500,
+        "width2": 0.5,
+        "gain2": 5,
+        "sec3": 1,
+        "freq3": 1500,
+        "width3": 0.5,
+        "gain3": 4,
+        "sec4": 1,
+        "freq4": 5000,
+        "width4": 0.5,
+        "gain4": 2,
+        "HSsec": 1,
+        "HSfreq": 8000,
+        "HSwidth": 0.33,
+        "HSgain": 0
+       }
+      },
+      {
+       "row": 1,
+       "col": 7,
+       "type": "urn:darkglass:Chorus",
+       "enabled": true,
+       "params": {
+        "Depth": 5,
+        "Rate": 1.9,
+        "Blend": 40,
+        "HPF": 0
+       }
+      },
+      {
+       "row": 1,
+       "col": 8,
+       "type": "urn:darkglass:DigitalDelay",
+       "enabled": false,
+       "params": {
+        "Blend": 33,
+        "Time": 3.1,
+        "Range": 1,
+        "Subdivision": 0,
+        "Feedback": 2,
+        "Trails": 0
+       }
+      },
+      {
+       "row": 1,
+       "col": 9,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -20.6,
+        "Ratio": 2,
+        "Attack": 4,
+        "Release": 0,
+        "OutputGain": 0.5,
+        "Blend": 100
+       }
+      },
+      {
+       "row": 1,
+       "col": 10,
+       "type": "urn:darkglass:neural-plugins:gallen-kallinen",
+       "enabled": true,
+       "params": {
+        "mid_contour": 0,
+        "bass": 5,
+        "lo_mid": 5,
+        "hi_mid": 5,
+        "treble": 5,
+        "level": 4
+       }
+      },
+      {
+       "row": 1,
+       "col": 11,
+       "type": "urn:darkglass-anagram:cabinet-bass",
+       "enabled": true,
+       "params": {
+        "Blend": 100,
+        "Level": 2
+       },
+       "cabinet": {
+        "model": "Modern Bass 8x10",
+        "microphone": "Condenser 103",
+        "position": "Cap On Axis"
+       }
+      },
+      {
+       "row": 1,
+       "col": 12,
+       "type": "urn:darkglass:BUSComp",
+       "enabled": true,
+       "params": {
+        "Threshold": -40.3,
+        "Ratio": 2,
+        "Attack": 4,
+        "Release": 0,
+        "OutputGain": 5,
+        "Blend": 100
+       }
+      }
+     ],
+     "footswitches": {
+      "foot1": [
+       1,
+       3
+      ],
+      "foot2": [
+       1,
+       4
+      ],
+      "foot3": [
+       1,
+       5
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

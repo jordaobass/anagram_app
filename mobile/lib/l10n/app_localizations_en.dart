@@ -866,6 +866,128 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fbCopiarPara => 'Copy to my area…';
 
   @override
+  String get bbModo => 'LIBRARY';
+
+  @override
+  String get bbModoDica =>
+      'Ready-made presets by band: tap one to hear it, then apply it to any slot.';
+
+  @override
+  String get bbTitulo => 'READY PRESETS';
+
+  @override
+  String get bbTexto =>
+      'Tapping a preset only plays it. Apply saves it to a slot you pick in the pedal list; an occupied slot asks first.';
+
+  @override
+  String get bbAplicar => 'Apply to a slot…';
+
+  @override
+  String get bbVazia => 'This build has no preset library.';
+
+  @override
+  String get bbMenu => 'Library file';
+
+  @override
+  String bbIgnorados(int n) {
+    return 'Skipped (blocks this app doesn’t know): $n.';
+  }
+
+  @override
+  String get bbExportar => 'Export whole library…';
+
+  @override
+  String get bbImportar => 'Import collection…';
+
+  @override
+  String get bbBuscar => 'Search presets, bands, collections';
+
+  @override
+  String get bbLimparBusca => 'Clear search';
+
+  @override
+  String get bbOrdem => 'Sort';
+
+  @override
+  String get bbOrdemArquivo => 'File order';
+
+  @override
+  String get bbOrdemAZ => 'Name A–Z';
+
+  @override
+  String get bbOrdemZA => 'Name Z–A';
+
+  @override
+  String bbSemResultados(String busca) {
+    return 'Nothing matches “$busca”.';
+  }
+
+  @override
+  String get bbColecaoEmbutida => 'Built-in presets';
+
+  @override
+  String get bbAcoesColecao => 'Collection actions';
+
+  @override
+  String get bbExportarColecao => 'Export collection…';
+
+  @override
+  String get bbApagarColecao => 'Delete collection';
+
+  @override
+  String bbApagarTitulo(String nome) {
+    return 'Delete “$nome”?';
+  }
+
+  @override
+  String get bbApagarTexto =>
+      'The collection leaves the library. Presets already saved on the pedal stay as they are.';
+
+  @override
+  String get bbApagarConfirmar => 'Delete';
+
+  @override
+  String bbApagada(String nome) {
+    return 'Collection “$nome” deleted.';
+  }
+
+  @override
+  String bbColecaoImportada(String nome, int n) {
+    return 'Added collection “$nome” with $n presets.';
+  }
+
+  @override
+  String get bbMostrarPasta => 'Show library folder';
+
+  @override
+  String bbPastaNaoAbriu(String caminho) {
+    return 'The folder didn’t open: $caminho';
+  }
+
+  @override
+  String bbApagarFalhou(String nome) {
+    return 'The file for “$nome” couldn’t be removed from the folder.';
+  }
+
+  @override
+  String get bbSoltarAqui => 'Drop the file to add it to the preset library';
+
+  @override
+  String bbArquivoRecusado(String nome) {
+    return '“$nome” is not a preset library or an Anagram App export.';
+  }
+
+  @override
+  String get bbImportacaoRecusada =>
+      'This file is not a preset library or an Anagram App export.';
+
+  @override
+  String get bbExportada => 'Library exported.';
+
+  @override
+  String get bbCopiada => 'Library copied to the clipboard.';
+
+  @override
   String get eqBandaGeral => 'Overall';
 
   @override

@@ -744,6 +744,185 @@
   "@fbCopiarPara": {
     "description": "Item do menu de um preset da fábrica"
   },
+  "bbModo": "BIBLIOTECA",
+  "@bbModo": {
+    "description": "Rótulo do interruptor do modo Biblioteca na barra de cima, ao lado do Ao vivo"
+  },
+  "bbModoDica": "Presets prontos por banda: toque para ouvir e aplique no slot que quiser.",
+  "@bbModoDica": {
+    "description": "Dica do interruptor do modo Biblioteca"
+  },
+  "bbTitulo": "PRESETS PRONTOS",
+  "@bbTitulo": {
+    "description": "Título da lista do modo Biblioteca"
+  },
+  "bbTexto": "Tocar um preset só o faz soar. Aplicar grava num slot escolhido na lista da pedaleira; slot ocupado pergunta antes.",
+  "@bbTexto": {
+    "description": "Explicação no topo da lista do modo Biblioteca"
+  },
+  "bbAplicar": "Aplicar num slot…",
+  "@bbAplicar": {
+    "description": "Botão de um preset da biblioteca que escolhe o slot de destino"
+  },
+  "bbVazia": "Este build não traz a biblioteca de presets.",
+  "@bbVazia": {
+    "description": "Lista do modo Biblioteca sem o arquivo no build"
+  },
+  "bbMenu": "Arquivo da biblioteca",
+  "@bbMenu": {
+    "description": "Dica do menu de importar/exportar a biblioteca"
+  },
+  "@bbImportar": {
+    "description": "Item: acrescenta um arquivo de biblioteca ou um export do Anagram App como coleção nova"
+  },
+  "@bbExportar": {
+    "description": "Item: grava todas as coleções num arquivo"
+  },
+  "bbIgnorados": "Ignorados (blocos que o app não conhece): {n}.",
+  "@bbIgnorados": {
+    "description": "Complemento do aviso de importar quando algum preset não monta",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "bbExportar": "Exportar a biblioteca inteira…",
+  "bbImportar": "Importar coleção…",
+  "bbBuscar": "Buscar preset, banda ou coleção",
+  "@bbBuscar": {
+    "description": "Dica do campo de busca da biblioteca"
+  },
+  "bbLimparBusca": "Limpar a busca",
+  "@bbLimparBusca": {
+    "description": "Botão que esvazia a busca da biblioteca"
+  },
+  "bbOrdem": "Ordenar",
+  "@bbOrdem": {
+    "description": "Dica do menu de ordem da biblioteca"
+  },
+  "bbOrdemArquivo": "Ordem do arquivo",
+  "@bbOrdemArquivo": {
+    "description": "Ordem da biblioteca: a do arquivo"
+  },
+  "bbOrdemAZ": "Nome A–Z",
+  "@bbOrdemAZ": {
+    "description": "Ordem da biblioteca: pelo nome, crescente"
+  },
+  "bbOrdemZA": "Nome Z–A",
+  "@bbOrdemZA": {
+    "description": "Ordem da biblioteca: pelo nome, decrescente"
+  },
+  "bbSemResultados": "Nada encontrado para “{busca}”.",
+  "@bbSemResultados": {
+    "description": "Lista da biblioteca quando a busca não acha nada",
+    "placeholders": {
+      "busca": {
+        "type": "String"
+      }
+    }
+  },
+  "bbColecaoEmbutida": "Presets do app",
+  "@bbColecaoEmbutida": {
+    "description": "Nome na tela da coleção que vem no build"
+  },
+  "bbAcoesColecao": "Ações da coleção",
+  "@bbAcoesColecao": {
+    "description": "Dica do menu de uma coleção"
+  },
+  "bbExportarColecao": "Exportar coleção…",
+  "@bbExportarColecao": {
+    "description": "Item: grava só esta coleção num arquivo"
+  },
+  "bbApagarColecao": "Apagar coleção",
+  "@bbApagarColecao": {
+    "description": "Item: tira a coleção importada da biblioteca"
+  },
+  "bbApagarTitulo": "Apagar “{nome}”?",
+  "@bbApagarTitulo": {
+    "description": "Título da confirmação de apagar uma coleção",
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "bbApagarTexto": "A coleção sai da biblioteca. Os presets já gravados na pedaleira continuam como estão.",
+  "@bbApagarTexto": {
+    "description": "Texto da confirmação de apagar uma coleção"
+  },
+  "bbApagarConfirmar": "Apagar",
+  "@bbApagarConfirmar": {
+    "description": "Botão que confirma apagar a coleção"
+  },
+  "bbApagada": "Coleção “{nome}” apagada.",
+  "@bbApagada": {
+    "description": "Aviso depois de apagar uma coleção",
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "bbColecaoImportada": "Coleção “{nome}” adicionada com {n} presets.",
+  "@bbColecaoImportada": {
+    "description": "Aviso depois de importar",
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "bbMostrarPasta": "Mostrar a pasta da biblioteca",
+  "@bbMostrarPasta": {
+    "description": "Item: abre a pasta das coleções no gerenciador de arquivos"
+  },
+  "bbPastaNaoAbriu": "A pasta não abriu: {caminho}",
+  "@bbPastaNaoAbriu": {
+    "description": "Aviso quando o sistema não abre a pasta da biblioteca",
+    "placeholders": {
+      "caminho": {
+        "type": "String"
+      }
+    }
+  },
+  "bbApagarFalhou": "O arquivo de “{nome}” não saiu da pasta.",
+  "@bbApagarFalhou": {
+    "description": "Aviso quando apagar a coleção falha no disco",
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "bbSoltarAqui": "Solte o arquivo para acrescentá-lo à biblioteca de presets",
+  "@bbSoltarAqui": {
+    "description": "Moldura enquanto um arquivo é arrastado sobre a janela"
+  },
+  "bbArquivoRecusado": "“{nome}” não é uma biblioteca de presets nem um export do Anagram App.",
+  "@bbArquivoRecusado": {
+    "description": "Aviso quando um arquivo arrastado ou aberto com o app não serve",
+    "placeholders": {
+      "nome": {
+        "type": "String"
+      }
+    }
+  },
+  "bbImportacaoRecusada": "Este arquivo não é uma biblioteca de presets nem um export do Anagram App.",
+  "@bbImportacaoRecusada": {
+    "description": "Aviso quando o arquivo importado não serve"
+  },
+  "bbExportada": "Biblioteca exportada.",
+  "@bbExportada": {
+    "description": "Aviso depois de exportar para arquivo"
+  },
+  "bbCopiada": "Biblioteca copiada para a área de transferência.",
+  "@bbCopiada": {
+    "description": "Aviso depois de exportar onde não há salvar como"
+  },
   "eqBandaGeral": "Geral",
   "@eqBandaGeral": {
     "description": "Título do grupo com o ganho geral do equalizador paramétrico"

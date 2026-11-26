@@ -18,6 +18,7 @@ class MainFlutterWindow: NSWindow {
     RegisterGeneratedPlugins(registry: flutterViewController)
     canalHid = CanalHidAnagram(mensageiro: flutterViewController.engine.binaryMessenger)
     canalMidi = CanalMidiAnagram(mensageiro: flutterViewController.engine.binaryMessenger)
+    CanalArquivosAbertos.ligar(mensageiro: flutterViewController.engine.binaryMessenger)
 
     super.awakeFromNib()
   }

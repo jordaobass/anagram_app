@@ -10,12 +10,14 @@ import '../../aplicacao/estado/controlador_conexao.dart';
 import '../../aplicacao/estado/controlador_editor.dart';
 import '../../aplicacao/estado/controlador_organizar.dart';
 import '../../aplicacao/estado/estado_conexao.dart';
+import '../../aplicacao/estado/modo_biblioteca.dart';
 import '../../nucleo/modelo/slot_preset.dart';
 import '../textos.dart';
 import '../tema/tokens.dart';
 import 'dialogo_confirmar.dart';
 import 'faixa_escolher_destino.dart';
 import 'faixas_lista.dart';
+import 'lista_biblioteca.dart';
 import 'fluxo_salvar.dart';
 import 'menu_preset.dart';
 import 'seletor_area.dart';
@@ -32,6 +34,9 @@ class ListaPresets extends ConsumerWidget {
     final biblioteca = ref.watch(bibliotecaProvider);
     final escolhendo = ref.watch(editorProvider.select((e) => e.escolhendoDestino));
     final organizando = ref.watch(organizarProvider);
+    // modo Biblioteca (BB1): presets prontos no lugar da lista da pedaleira;
+    // escolher o destino de um deles desliga o modo e traz a lista de volta
+    if (ref.watch(modoBibliotecaProvider) && !escolhendo && organizando == null) return ListaBiblioteca(aoAbrir: aoAbrir);
     // o seletor de área fica à vista também enquanto a lista da área carrega
     final carregandoLista = biblioteca.carregando && biblioteca.ocupados.isEmpty;
     return Column(children: [
