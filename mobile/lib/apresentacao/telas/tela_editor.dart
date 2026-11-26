@@ -12,6 +12,7 @@ import '../componentes/editor_principal.dart';
 import '../componentes/lista_presets.dart';
 import '../componentes/ouvinte_mcp.dart';
 import '../componentes/painel_conectar.dart';
+import '../componentes/recebedor_de_arquivos.dart';
 import '../rotas.dart';
 import '../tema/tokens.dart';
 import '../../l10n/app_localizations.dart';
@@ -23,7 +24,9 @@ class TelaEditor extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final conectada = ref.watch(conexaoProvider) is Conectada;
-    return OuvinteMcp(
+    // coleções arrastadas para a janela ou abertas com o app (BB5)
+    return RecebedorDeArquivos(
+        child: OuvinteMcp(
         child: Scaffold(
       body: SafeArea(
         child: LayoutBuilder(builder: (context, restricoes) {
@@ -39,7 +42,7 @@ class TelaEditor extends ConsumerWidget {
           ]);
         }),
       ),
-    ));
+    )));
   }
 
   Widget _conteudo(BuildContext context, bool amplo, double larguraLista) {

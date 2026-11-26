@@ -1,6 +1,7 @@
 // Barra de cima em dois grupos (DECISOES BS1). À esquerda, o que diz respeito
 // à pedaleira: o chip da conexão (que abre o menu com Desconectar) e o "Ao
-// vivo" com a latência. À direita, o que é do app: o indicador "IA" quando o
+// vivo" com a latência e, ao lado, o modo Biblioteca (presets prontos por
+// banda, BB1). À direita, o que é do app: o indicador "IA" quando o
 // MCP escuta e a engrenagem das Configurações, com um ponto quando há versão
 // nova. O Sobre, a versão do app e o aviso de versão nova moram nas
 // Configurações: a barra fica só com o que muda enquanto se toca.
@@ -13,6 +14,7 @@ import '../tema/tokens.dart';
 import 'acoes_da_barra.dart';
 import 'ao_vivo_da_barra.dart';
 import 'chip_conexao.dart';
+import 'interruptor_biblioteca.dart';
 
 class BarraConexao extends ConsumerWidget {
   const BarraConexao({super.key, required this.compacta});
@@ -37,7 +39,13 @@ class BarraConexao extends ConsumerWidget {
         Expanded(
           child: Row(children: [
             Flexible(child: ChipConexao(compacta: compacta)),
-            if (conectada) ...[const SizedBox(width: Espacos.l), AoVivoDaBarra(compacta: compacta)],
+            if (conectada) ...[
+              const SizedBox(width: Espacos.l),
+              AoVivoDaBarra(compacta: compacta),
+              // presets prontos por banda (DECISOES BB1); no celular a barra
+              // não tem espaço: o interruptor fica no topo da lista de presets
+              if (!compacta) ...[const SizedBox(width: Espacos.m), const InterruptorBiblioteca(compacta: false)],
+            ],
           ]),
         ),
         const SizedBox(width: Espacos.s),

@@ -1524,6 +1524,210 @@ abstract class AppLocalizations {
   /// **'Copiar para a minha área…'**
   String get fbCopiarPara;
 
+  /// Rótulo do interruptor do modo Biblioteca na barra de cima, ao lado do Ao vivo
+  ///
+  /// In pt, this message translates to:
+  /// **'BIBLIOTECA'**
+  String get bbModo;
+
+  /// Dica do interruptor do modo Biblioteca
+  ///
+  /// In pt, this message translates to:
+  /// **'Presets prontos por banda: toque para ouvir e aplique no slot que quiser.'**
+  String get bbModoDica;
+
+  /// Título da lista do modo Biblioteca
+  ///
+  /// In pt, this message translates to:
+  /// **'PRESETS PRONTOS'**
+  String get bbTitulo;
+
+  /// Explicação no topo da lista do modo Biblioteca
+  ///
+  /// In pt, this message translates to:
+  /// **'Tocar um preset só o faz soar. Aplicar grava num slot escolhido na lista da pedaleira; slot ocupado pergunta antes.'**
+  String get bbTexto;
+
+  /// Botão de um preset da biblioteca que escolhe o slot de destino
+  ///
+  /// In pt, this message translates to:
+  /// **'Aplicar num slot…'**
+  String get bbAplicar;
+
+  /// Lista do modo Biblioteca sem o arquivo no build
+  ///
+  /// In pt, this message translates to:
+  /// **'Este build não traz a biblioteca de presets.'**
+  String get bbVazia;
+
+  /// Dica do menu de importar/exportar a biblioteca
+  ///
+  /// In pt, this message translates to:
+  /// **'Arquivo da biblioteca'**
+  String get bbMenu;
+
+  /// Complemento do aviso de importar quando algum preset não monta
+  ///
+  /// In pt, this message translates to:
+  /// **'Ignorados (blocos que o app não conhece): {n}.'**
+  String bbIgnorados(int n);
+
+  /// Item: grava todas as coleções num arquivo
+  ///
+  /// In pt, this message translates to:
+  /// **'Exportar a biblioteca inteira…'**
+  String get bbExportar;
+
+  /// Item: acrescenta um arquivo de biblioteca ou um export do Anagram App como coleção nova
+  ///
+  /// In pt, this message translates to:
+  /// **'Importar coleção…'**
+  String get bbImportar;
+
+  /// Dica do campo de busca da biblioteca
+  ///
+  /// In pt, this message translates to:
+  /// **'Buscar preset, banda ou coleção'**
+  String get bbBuscar;
+
+  /// Botão que esvazia a busca da biblioteca
+  ///
+  /// In pt, this message translates to:
+  /// **'Limpar a busca'**
+  String get bbLimparBusca;
+
+  /// Dica do menu de ordem da biblioteca
+  ///
+  /// In pt, this message translates to:
+  /// **'Ordenar'**
+  String get bbOrdem;
+
+  /// Ordem da biblioteca: a do arquivo
+  ///
+  /// In pt, this message translates to:
+  /// **'Ordem do arquivo'**
+  String get bbOrdemArquivo;
+
+  /// Ordem da biblioteca: pelo nome, crescente
+  ///
+  /// In pt, this message translates to:
+  /// **'Nome A–Z'**
+  String get bbOrdemAZ;
+
+  /// Ordem da biblioteca: pelo nome, decrescente
+  ///
+  /// In pt, this message translates to:
+  /// **'Nome Z–A'**
+  String get bbOrdemZA;
+
+  /// Lista da biblioteca quando a busca não acha nada
+  ///
+  /// In pt, this message translates to:
+  /// **'Nada encontrado para “{busca}”.'**
+  String bbSemResultados(String busca);
+
+  /// Nome na tela da coleção que vem no build
+  ///
+  /// In pt, this message translates to:
+  /// **'Presets do app'**
+  String get bbColecaoEmbutida;
+
+  /// Dica do menu de uma coleção
+  ///
+  /// In pt, this message translates to:
+  /// **'Ações da coleção'**
+  String get bbAcoesColecao;
+
+  /// Item: grava só esta coleção num arquivo
+  ///
+  /// In pt, this message translates to:
+  /// **'Exportar coleção…'**
+  String get bbExportarColecao;
+
+  /// Item: tira a coleção importada da biblioteca
+  ///
+  /// In pt, this message translates to:
+  /// **'Apagar coleção'**
+  String get bbApagarColecao;
+
+  /// Título da confirmação de apagar uma coleção
+  ///
+  /// In pt, this message translates to:
+  /// **'Apagar “{nome}”?'**
+  String bbApagarTitulo(String nome);
+
+  /// Texto da confirmação de apagar uma coleção
+  ///
+  /// In pt, this message translates to:
+  /// **'A coleção sai da biblioteca. Os presets já gravados na pedaleira continuam como estão.'**
+  String get bbApagarTexto;
+
+  /// Botão que confirma apagar a coleção
+  ///
+  /// In pt, this message translates to:
+  /// **'Apagar'**
+  String get bbApagarConfirmar;
+
+  /// Aviso depois de apagar uma coleção
+  ///
+  /// In pt, this message translates to:
+  /// **'Coleção “{nome}” apagada.'**
+  String bbApagada(String nome);
+
+  /// Aviso depois de importar
+  ///
+  /// In pt, this message translates to:
+  /// **'Coleção “{nome}” adicionada com {n} presets.'**
+  String bbColecaoImportada(String nome, int n);
+
+  /// Item: abre a pasta das coleções no gerenciador de arquivos
+  ///
+  /// In pt, this message translates to:
+  /// **'Mostrar a pasta da biblioteca'**
+  String get bbMostrarPasta;
+
+  /// Aviso quando o sistema não abre a pasta da biblioteca
+  ///
+  /// In pt, this message translates to:
+  /// **'A pasta não abriu: {caminho}'**
+  String bbPastaNaoAbriu(String caminho);
+
+  /// Aviso quando apagar a coleção falha no disco
+  ///
+  /// In pt, this message translates to:
+  /// **'O arquivo de “{nome}” não saiu da pasta.'**
+  String bbApagarFalhou(String nome);
+
+  /// Moldura enquanto um arquivo é arrastado sobre a janela
+  ///
+  /// In pt, this message translates to:
+  /// **'Solte o arquivo para acrescentá-lo à biblioteca de presets'**
+  String get bbSoltarAqui;
+
+  /// Aviso quando um arquivo arrastado ou aberto com o app não serve
+  ///
+  /// In pt, this message translates to:
+  /// **'“{nome}” não é uma biblioteca de presets nem um export do Anagram App.'**
+  String bbArquivoRecusado(String nome);
+
+  /// Aviso quando o arquivo importado não serve
+  ///
+  /// In pt, this message translates to:
+  /// **'Este arquivo não é uma biblioteca de presets nem um export do Anagram App.'**
+  String get bbImportacaoRecusada;
+
+  /// Aviso depois de exportar para arquivo
+  ///
+  /// In pt, this message translates to:
+  /// **'Biblioteca exportada.'**
+  String get bbExportada;
+
+  /// Aviso depois de exportar onde não há salvar como
+  ///
+  /// In pt, this message translates to:
+  /// **'Biblioteca copiada para a área de transferência.'**
+  String get bbCopiada;
+
   /// Título do grupo com o ganho geral do equalizador paramétrico
   ///
   /// In pt, this message translates to:

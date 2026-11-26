@@ -13,9 +13,13 @@ import 'dados/preferencias_idioma.dart';
 import 'dados/preferencias_pausa.dart';
 import 'dados/preferencias_tema.dart';
 import 'plataforma/copias_de_seguranca.dart';
+import 'plataforma/pasta_biblioteca.dart';
+import 'plataforma/arquivos_abertos.dart';
+import 'apresentacao/componentes/recebedor_de_arquivos.dart';
+import 'aplicacao/estado/biblioteca_presets.dart';
 import 'plataforma/registro_em_arquivo.dart';
 
-Future<void> main() async {
+Future<void> main(List<String> argumentos) async {
   WidgetsFlutterBinding.ensureInitialized();
   registrarErrosNaoTratados();
   final arquivoDeRegistro = ligarRegistroEmArquivo();
@@ -28,6 +32,8 @@ Future<void> main() async {
   // a pasta de backups antes da primeira gravação (no macOS vem do path_provider)
   final pastaDeCopias = await ligarPastaDeCopias();
   final backupAutomatico = await PreferenciasCopiasLocais().lerAutomatica();
+  // a pasta da biblioteca de presets (BB4): no macOS também vem do path_provider
+  final pastaBiblioteca = await ligarPastaBiblioteca();
   runApp(ProviderScope(
     overrides: [
       idiomaSalvoProvider.overrideWithValue(salvo),
@@ -36,6 +42,9 @@ Future<void> main() async {
       registroEmArquivoProvider.overrideWithValue(arquivoDeRegistro),
       pastaDeCopiasProvider.overrideWithValue(pastaDeCopias),
       copiaAutomaticaSalvaProvider.overrideWithValue(backupAutomatico),
+      pastaBibliotecaProvider.overrideWithValue(pastaBiblioteca),
+      // "Abrir com" o app: argumentos no Windows/Linux, canal no macOS (BB5)
+      arquivosAbertosProvider.overrideWithValue(ArquivosAbertos.daPlataforma(argumentos)),
     ],
     child: const AppAnagram(),
   ));

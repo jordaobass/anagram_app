@@ -32,6 +32,8 @@ import 'package:anagram_app/aplicacao/copias/copia_automatica.dart';
 import 'package:anagram_app/dados/preferencias_copias.dart';
 import 'package:anagram_app/plataforma/acesso_entrada_mac.dart';
 import 'package:anagram_app/aplicacao/liberacao_entrada_mac.dart';
+import 'package:anagram_app/aplicacao/estado/biblioteca_presets.dart';
+import 'package:anagram_app/dados/preferencias_biblioteca.dart';
 import 'versao_falsa.dart';
 
 /// Latência fixa: a real varia de execução para execução e sujaria as capturas.
@@ -97,6 +99,8 @@ Widget appDeTeste(
         preferenciasConexaoProvider.overrideWithValue(preferenciasConexao ?? PreferenciasConexaoEmMemoria()),
         // o interruptor do backup não lê o disco; a pasta só existe no teste que a passa
         preferenciasCopiasProvider.overrideWithValue(PreferenciasCopiasEmMemoria()),
+        // a biblioteca de presets importada fica só em memória
+        preferenciasBibliotecaProvider.overrideWithValue(PreferenciasBibliotecaEmMemoria()),
         // nenhum teste chama o canal nativo do Mac
         acessoEntradaMacProvider.overrideWithValue(acessoEntradaMac ?? () async => AcessoEntrada.desconhecido),
         pedidoAcessoEntradaMacProvider
