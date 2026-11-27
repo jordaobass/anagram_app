@@ -61,3 +61,44 @@ class PedidosSalvar extends Notifier<PedidoSalvar?> {
 
 /// Quanto o `save_preset` espera a pessoa responder (os testes encurtam).
 final prazoConfirmarSalvarProvider = Provider<Duration>((ref) => const Duration(minutes: 2));
+
+/// O que a IA pediu para fazer com os slots gravados (DECISOES IA9).
+enum TipoOrganizar { limpar, mover }
+
+/// A IA pediu para limpar ou mover slots: [linhas] diz o que acontece com
+/// cada um, na ordem, para a pessoa confirmar o lote de uma vez.
+class PedidoOrganizar {
+  PedidoOrganizar(this.tipo, this.linhas);
+
+  final TipoOrganizar tipo;
+  final List<String> linhas;
+  final Completer<bool> _resposta = Completer<bool>();
+
+  Future<bool> get resposta => _resposta.future;
+  bool get respondido => _resposta.isCompleted;
+
+  void responder(bool confirmado) {
+    if (!respondido) _resposta.complete(confirmado);
+  }
+}
+
+final pedidoOrganizarProvider = NotifierProvider<PedidosOrganizar, PedidoOrganizar?>(PedidosOrganizar.new);
+
+class PedidosOrganizar extends Notifier<PedidoOrganizar?> {
+  @override
+  PedidoOrganizar? build() => null;
+
+  /// Abre o pedido e espera a pessoa; sem resposta no [prazo], `null`.
+  Future<bool?> pedir(TipoOrganizar tipo, List<String> linhas, Duration prazo) async {
+    state?.responder(false);
+    final pedido = PedidoOrganizar(tipo, linhas);
+    state = pedido;
+    try {
+      return await pedido.resposta.timeout(prazo);
+    } on TimeoutException {
+      return null;
+    } finally {
+      if (identical(state, pedido)) state = null;
+    }
+  }
+}

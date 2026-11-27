@@ -1082,6 +1082,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpAgoraNao => 'AHORA NO';
 
   @override
+  String get mcpPedidoLimparTitulo => '¿Vaciar estos slots en el pedal?';
+
+  @override
+  String get mcpPedidoLimparTexto =>
+      'La IA pidió borrar estos presets. La app guarda antes una copia de cada uno.';
+
+  @override
+  String get mcpLimpar => 'VACIAR';
+
+  @override
+  String get mcpPedidoMoverTitulo => '¿Mover estos presets?';
+
+  @override
+  String get mcpPedidoMoverTexto =>
+      'La IA pidió reorganizar los slots, en este orden. Un preset movido a un slot ocupado intercambia su lugar con el que estaba allí.';
+
+  @override
+  String get mcpMover => 'MOVER';
+
+  @override
   String get ttDicaMouse =>
       'Deja el ratón sobre el nombre de un control para ver qué hace con el sonido';
 

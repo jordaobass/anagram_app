@@ -1084,6 +1084,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpAgoraNao => 'PAS MAINTENANT';
 
   @override
+  String get mcpPedidoLimparTitulo => 'Vider ces emplacements sur la pédale ?';
+
+  @override
+  String get mcpPedidoLimparTexto =>
+      'L’IA a demandé d’effacer ces presets. L’app en garde d’abord une sauvegarde.';
+
+  @override
+  String get mcpLimpar => 'VIDER';
+
+  @override
+  String get mcpPedidoMoverTitulo => 'Déplacer ces presets ?';
+
+  @override
+  String get mcpPedidoMoverTexto =>
+      'L’IA a demandé de réorganiser les emplacements, dans cet ordre. Un preset déplacé vers un emplacement occupé échange sa place avec celui qui s’y trouve.';
+
+  @override
+  String get mcpMover => 'DÉPLACER';
+
+  @override
   String get ttDicaMouse =>
       'Passez la souris sur le nom d’un réglage pour voir ce qu’il fait au son';
 

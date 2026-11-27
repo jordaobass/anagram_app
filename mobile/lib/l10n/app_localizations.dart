@@ -1890,6 +1890,42 @@ abstract class AppLocalizations {
   /// **'AGORA NÃO'**
   String get mcpAgoraNao;
 
+  /// No description provided for @mcpPedidoLimparTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Limpar estes slots na pedaleira?'**
+  String get mcpPedidoLimparTitulo;
+
+  /// No description provided for @mcpPedidoLimparTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'A IA pediu para apagar estes presets. O app guarda um backup de cada um antes.'**
+  String get mcpPedidoLimparTexto;
+
+  /// No description provided for @mcpLimpar.
+  ///
+  /// In pt, this message translates to:
+  /// **'LIMPAR'**
+  String get mcpLimpar;
+
+  /// No description provided for @mcpPedidoMoverTitulo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mover estes presets?'**
+  String get mcpPedidoMoverTitulo;
+
+  /// No description provided for @mcpPedidoMoverTexto.
+  ///
+  /// In pt, this message translates to:
+  /// **'A IA pediu para reorganizar os slots, nesta ordem. Um preset movido para um slot ocupado troca de lugar com o que estava lá.'**
+  String get mcpPedidoMoverTexto;
+
+  /// No description provided for @mcpMover.
+  ///
+  /// In pt, this message translates to:
+  /// **'MOVER'**
+  String get mcpMover;
+
   /// No description provided for @ttDicaMouse.
   ///
   /// In pt, this message translates to:
