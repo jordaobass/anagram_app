@@ -2,13 +2,19 @@
 // pessoa deixou ligado), avisa cada mudança feita pela IA — o som mudou sem
 // ninguém tocar no app — e mostra o pedido de gravação, que só a pessoa
 // confirma. Se a IA desistir (prazo), o diálogo fecha sozinho.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../aplicacao/mcp/avisos_mcp.dart';
 import '../../aplicacao/mcp/controlador_mcp.dart';
 import '../../l10n/app_localizations.dart';
+import '../../plataforma/janela_do_app.dart';
 import '../tema/tokens.dart';
+
+/// A janela do app; o `main` passa a da plataforma.
+final janelaDoAppProvider = Provider<JanelaDoApp>((ref) => const JanelaDoApp.nenhuma());
 
 class OuvinteMcp extends ConsumerWidget {
   const OuvinteMcp({super.key, required this.child});
@@ -27,7 +33,10 @@ class OuvinteMcp extends ConsumerWidget {
       ));
     });
     ref.listen(pedidoSalvarProvider, (_, pedido) {
-      if (pedido != null) _perguntar(context, pedido);
+      if (pedido == null) return;
+      // quem pediu está noutra janela: sem isto o diálogo espera escondido (IA8)
+      unawaited(ref.read(janelaDoAppProvider).pedirAtencao());
+      _perguntar(context, pedido);
     });
     return child;
   }
