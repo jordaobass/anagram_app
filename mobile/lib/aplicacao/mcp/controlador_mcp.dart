@@ -14,6 +14,7 @@ import '../../nucleo/registro.dart';
 import '../../plataforma/servidor_mcp.dart';
 import '../versao_app.dart';
 import 'ferramenta_salvar.dart';
+import 'ferramentas_organizar.dart';
 import 'ferramentas_ajuste.dart';
 import 'ferramentas_ajustes_globais.dart';
 import 'ferramentas_cadeia.dart';
@@ -181,6 +182,8 @@ List<FerramentaMcp> ferramentasDoTimbre(SessaoMcp sessao, Ref ref) => [
       AbrirSlot(sessao, ref),
       Desfazer(sessao),
       SalvarPreset(sessao, ref),
+      LimparSlots(sessao, ref),
+      MoverSlots(sessao, ref),
       LerAjustesGlobais(ref),
       MudarAjusteGlobal(ref),
     ];
