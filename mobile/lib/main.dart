@@ -7,12 +7,14 @@ import 'aplicacao/erros_nao_tratados.dart';
 import 'aplicacao/idioma.dart';
 import 'aplicacao/tema.dart';
 import 'apresentacao/app_anagram.dart';
+import 'apresentacao/componentes/ouvinte_mcp.dart';
 import 'aplicacao/provedores.dart';
 import 'dados/preferencias_copias.dart';
 import 'dados/preferencias_idioma.dart';
 import 'dados/preferencias_pausa.dart';
 import 'dados/preferencias_tema.dart';
 import 'plataforma/copias_de_seguranca.dart';
+import 'plataforma/janela_do_app.dart';
 import 'plataforma/registro_em_arquivo.dart';
 
 Future<void> main() async {
@@ -36,6 +38,7 @@ Future<void> main() async {
       registroEmArquivoProvider.overrideWithValue(arquivoDeRegistro),
       pastaDeCopiasProvider.overrideWithValue(pastaDeCopias),
       copiaAutomaticaSalvaProvider.overrideWithValue(backupAutomatico),
+      janelaDoAppProvider.overrideWithValue(JanelaDoApp.daPlataforma()),
     ],
     child: const AppAnagram(),
   ));
